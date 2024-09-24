@@ -213,6 +213,10 @@ Premium Addonsis light weight and we also gave you the control to enable only th
 
 Premium Addonsis 100% Ads Free, Ads can only be detected from Youtube videos, that can be added to Premium Widgets ( eg. Modal Box, Video Box, Blog, etc.)
 
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/premium-addons-for-elementor)
+
 == Screenshots ==
 
 1. Premium Addons Dashboard Tab
