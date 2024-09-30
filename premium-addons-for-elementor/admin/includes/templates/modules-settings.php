@@ -8,7 +8,8 @@ use PremiumAddons\Includes\Helper_Functions;
 
 $elements = self::get_elements_list();
 
-$used_widgets = self::get_used_widgets();
+// Causes performance issues on large websites. We will get them using AJAX only.
+// $used_widgets = self::get_used_widgets();
 
 // Get elements settings
 $enabled_elements = self::get_enabled_elements();
@@ -58,9 +59,12 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 					<div class="pa-btn-group">
 						<button type="button" class="pa-btn pa-btn-enable <?php echo esc_attr( $enable_btn ); ?>"><?php echo esc_html_e( 'Switch On', 'premium-addons-for-elementor' ); ?></button>
 						<button type="button" class="pa-btn pa-btn-disable <?php echo esc_attr( $disable_btn ); ?>"><?php echo esc_html_e( 'Switch Off', 'premium-addons-for-elementor' ); ?></button>
-						<?php if ( false !== $used_widgets ) { ?>
-							<button type="button" class="pa-btn-unused"><?php echo esc_html_e( 'Disable Unused Widgets', 'premium-addons-for-elementor' ); ?></button>
-						<?php } ?>
+
+                        <button type="button" class="pa-btn-unused dimmed">
+                            <?php echo esc_html_e( 'Disable Unused Widgets', 'premium-addons-for-elementor' ); ?>
+                            <i class="dashicons dashicons-image-rotate"></i>
+                        </button>
+
 					</div>
 				</div>
 
@@ -121,8 +125,8 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 												<?php echo esc_html( $elem['title'] ); ?>
 											<span class="pa-total-use" title="Total Use">
 											<?php
-											if ( ! isset( $elem['is_global'] ) && is_array( $used_widgets ) ) {
-												echo esc_html__( in_array( $elem['name'], array_keys( $used_widgets ) ) ? '(' . $used_widgets[ $elem['name'] ] . ')' : '(0)' );}
+											// if ( ! isset( $elem['is_global'] ) && is_array( $used_widgets ) ) {
+											// 	echo esc_html__( in_array( $elem['name'], array_keys( $used_widgets ) ) ? '(' . $used_widgets[ $elem['name'] ] . ')' : '(0)' );}
 											?>
 											</span>
 												<?php if ( isset( $elem['is_pro'] ) ) : ?>
@@ -165,6 +169,17 @@ $row_meta = Helper_Functions::is_hide_row_meta();
                                                         <span><?php esc_html_e( 'Enable SVG Draw', 'premium-addons-for-elementor' ); ?></span>
                                                     <?php endif; ?>
                                                 </div>
+
+												<?php if ('mini-cart' === $elem['key'] ) : ?>
+													<div>
+                                                    <?php
+														$mc_temp_key = 'pa_mc_temp';
+														?>
+														<input type="checkbox" id="<?php echo esc_attr( $mc_temp_key ); ?>" name="<?php echo esc_attr( $mc_temp_key ); ?>" <?php echo checked( 1, $enabled_elements[ $mc_temp_key ], false ); ?>>
+														<label for="<?php echo esc_attr( $mc_temp_key ); ?>"></label>
+														<span><?php esc_html_e( 'Enable Custom Mini Cart Template', 'premium-addons-for-elementor' ); ?></span>
+													</div>
+												<?php endif; ?>
                                             </div>
 										</div>
 									</div>

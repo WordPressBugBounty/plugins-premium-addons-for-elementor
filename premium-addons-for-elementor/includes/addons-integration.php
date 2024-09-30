@@ -388,7 +388,7 @@ class Addons_Integration {
 			'PremiumPanelSettings',
 			array(
 				'papro_installed' => Helper_Functions::check_papro_version(),
-				'papro_widgets'   => Admin_Helper::get_pro_elements(),
+				// 'papro_widgets'   => Admin_Helper::get_pro_elements(),
 			)
 		);
 
@@ -642,13 +642,13 @@ class Addons_Integration {
 						'pa-frontend',
 						'PremiumWooSettings',
 						array(
-							'ajaxurl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
-							'products_nonce' => wp_create_nonce( 'pa-woo-products-nonce' ),
-							'qv_nonce'       => wp_create_nonce( 'pa-woo-qv-nonce' ),
-							'cta_nonce'      => wp_create_nonce( 'pa-woo-cta-nonce' ),
-							'woo_cart_url'   => get_permalink( wc_get_page_id( 'cart' ) ),
-							'view_cart'      => __( 'View cart', 'woocommerce' ),
-							'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' )
+							'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+							'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
+							'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
+							'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+							'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
+							'view_cart'       => __( 'View cart', 'woocommerce' ),
+							'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
 						)
 					);
 
@@ -663,11 +663,11 @@ class Addons_Integration {
 
 		// if ( !wp_script_is( 'wc-cart-fragments', 'enqueued' ) && wp_script_is( 'wc-cart-fragments', 'registered' ) ) {
 
-		// 	// Enqueue the wc-cart-fragments script
+		// Enqueue the wc-cart-fragments script
 
-		// 	wp_enqueue_script( 'wc-cart-fragments' );
+		// wp_enqueue_script( 'wc-cart-fragments' );
 
-		// 	 }
+		// }
 
 		wp_register_script( 'tiktok-embed', 'https://www.tiktok.com/embed.js', array(), false, true );
 
@@ -1082,10 +1082,10 @@ class Addons_Integration {
 				'premium-woo-cta',
 				'PremiumWooSettings',
 				array(
-					'ajaxurl'   => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'cta_nonce' => wp_create_nonce( 'pa-woo-cta-nonce' ),
-					'view_cart' => __( 'View cart', 'woocommerce' ),
-					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' )
+					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+					'view_cart'       => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
 				)
 			);
 
@@ -1093,10 +1093,10 @@ class Addons_Integration {
 				'premium-mini-cart',
 				'PremiumWooSettings',
 				array(
-					'ajaxurl'   => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'cta_nonce' => wp_create_nonce( 'pa-woo-cta-nonce' ),
-					'view_cart' => __( 'View cart', 'woocommerce' ),
-					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' )
+					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+					'view_cart'       => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
 				)
 			);
 
@@ -1104,13 +1104,13 @@ class Addons_Integration {
 				'premium-woocommerce',
 				'PremiumWooSettings',
 				array(
-					'ajaxurl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'products_nonce' => wp_create_nonce( 'pa-woo-products-nonce' ),
-					'qv_nonce'       => wp_create_nonce( 'pa-woo-qv-nonce' ),
-					'cta_nonce'      => wp_create_nonce( 'pa-woo-cta-nonce' ),
-					'woo_cart_url'   => get_permalink( wc_get_page_id( 'cart' ) ),
-					'view_cart'      => __( 'View cart', 'woocommerce' ),
-					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' )
+					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
+					'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
+					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+					'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
+					'view_cart'       => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
 				)
 			);
 
@@ -1165,17 +1165,7 @@ class Addons_Integration {
 	 * @since 1.0.0
 	 * @access public
 	 */
-	public function widgets_area() {
-		$this->widgets_register();
-	}
-
-	/**
-	 * Requires widgets files
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 */
-	private function widgets_register() {
+	public function widgets_area( $widgets_manager ) {
 
 		$enabled_elements = self::$modules;
 
@@ -1196,10 +1186,52 @@ class Addons_Integration {
 			$enabled = isset( $enabled_elements[ $slug ] ) ? $enabled_elements[ $slug ] : '';
 
 			if ( filter_var( $enabled, FILTER_VALIDATE_BOOLEAN ) || ! $enabled_elements ) {
-				$this->register_addon( $file );
+
+				$base  = basename( str_replace( '.php', '', $file ) );
+				$class = ucwords( str_replace( '-', ' ', $base ) );
+				$class = str_replace( ' ', '_', $class );
+				$class = sprintf( 'PremiumAddons\Widgets\%s', $class );
+
+				$this->load_widget_files( $file, $class );
+
+				if ( class_exists( $class, false ) ) {
+
+					$widgets_manager->register( new $class() );
+
+				}
 			}
 		}
 	}
+
+    public function load_widget_files( $file, $class ) {
+
+        if ( 'PremiumAddons\Widgets\Premium_Contactform' !== $class ) {
+            require $file;
+        } elseif ( function_exists( 'wpcf7' ) ) {
+            require $file;
+        }
+
+        if ( 'PremiumAddons\Widgets\Premium_Videobox' === $class || 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
+            require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
+        }
+
+        if ( 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
+            require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-weather-handler.php';
+        }
+
+        if ( in_array( $class, array( 'PremiumAddons\Widgets\Premium_Pinterest_Feed', 'PremiumAddons\Widgets\Premium_Tiktok_Feed' ), true ) ) {
+            require_once PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/mobile-detector.php';
+
+            if ( 'PremiumAddons\Widgets\Premium_Pinterest_Feed' == $class ) {
+                require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-pins-handler.php';
+            }
+
+            if ( 'PremiumAddons\Widgets\Premium_Tiktok_Feed' == $class ) {
+                require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-tiktok-handler.php';
+            }
+        }
+
+    }
 
 	/**
 	 * Enqueue editor scripts
@@ -1541,58 +1573,6 @@ class Addons_Integration {
 		);
 
 		wp_send_json_success( $data );
-	}
-
-	/**
-	 *
-	 * Register addon by file name.
-	 *
-	 * @access public
-	 *
-	 * @param  string $file            File name.
-	 *
-	 * @return void
-	 */
-	public function register_addon( $file ) {
-
-		$widgets_manager = \Elementor\Plugin::instance()->widgets_manager;
-
-		$base  = basename( str_replace( '.php', '', $file ) );
-		$class = ucwords( str_replace( '-', ' ', $base ) );
-		$class = str_replace( ' ', '_', $class );
-		$class = sprintf( 'PremiumAddons\Widgets\%s', $class );
-
-		if ( 'PremiumAddons\Widgets\Premium_Contactform' !== $class ) {
-			require $file;
-		} elseif ( function_exists( 'wpcf7' ) ) {
-				require $file;
-		}
-
-		if ( 'PremiumAddons\Widgets\Premium_Videobox' === $class || 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
-			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
-		}
-
-		if ( 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
-			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-weather-handler.php';
-		}
-
-		if ( in_array( $class, array( 'PremiumAddons\Widgets\Premium_Pinterest_Feed', 'PremiumAddons\Widgets\Premium_Tiktok_Feed' ), true ) ) {
-			require_once PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/mobile-detector.php';
-
-			if ( 'PremiumAddons\Widgets\Premium_Pinterest_Feed' == $class ) {
-				require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-pins-handler.php';
-			}
-
-			if ( 'PremiumAddons\Widgets\Premium_Tiktok_Feed' == $class ) {
-				require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-tiktok-handler.php';
-			}
-		}
-
-		if ( class_exists( $class, false ) ) {
-
-			$widgets_manager->register( new $class() );
-
-		}
 	}
 
 	/**

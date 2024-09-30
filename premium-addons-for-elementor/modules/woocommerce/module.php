@@ -68,9 +68,9 @@ class Module extends Module_Base {
 	public function get_widgets() {
 		return array(
 			'Woo_Products',
-            'Woo_Categories',
+			'Woo_Categories',
 			'Mini_Cart',
-			'Woo_CTA'
+			'Woo_CTA',
 		);
 	}
 
@@ -131,9 +131,13 @@ class Module extends Module_Base {
 			Categories_Module::get_instance();
 		}
 
+		$mc_custom_temp_enabled = isset( $enabled_elements['pa_mc_temp'] ) ? $enabled_elements['pa_mc_temp'] : false;
+
 		if ( isset( $enabled_elements['mini-cart'] ) && $enabled_elements['mini-cart'] ) {
 
-			add_filter( 'woocommerce_locate_template', array( $this, 'pa_locate_custom_mini_cart_template' ), 10, 3 );
+			if ( $mc_custom_temp_enabled ) {
+				add_filter( 'woocommerce_locate_template', array( $this, 'pa_locate_custom_mini_cart_template' ), 10, 3 );
+			}
 
 			Mini_Cart_Module::get_instance();
 		}

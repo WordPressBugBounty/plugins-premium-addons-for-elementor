@@ -61,10 +61,8 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'woo_mini',
+			'woo_mini_hide',
 		);
-
-		delete_option( 'woo_cta' );
 
 	}
 
@@ -89,14 +87,15 @@ class Admin_Notices {
 
 		$this->required_plugins_check();
 
-		$cache_key = 'premium_notice_' . PREMIUM_ADDONS_VERSION;
-
-		$response = get_transient( $cache_key );
-
 		$show_review = get_option( 'pa_review_notice' );
 
-		// Make sure Already did was not clicked before.
+		// Make sure "Already did" was not clicked before.
 		if ( '1' !== $show_review ) {
+
+            $cache_key = 'premium_notice_' . PREMIUM_ADDONS_VERSION;
+
+            $response = get_transient( $cache_key );
+
 			if ( false == $response ) {
 				$this->get_review_notice();
 			}
@@ -106,7 +105,7 @@ class Admin_Notices {
 			return;
 		}
 
-		$this->get_woo_mini_notice();
+		// $this->get_woo_mini_notice();
 
 	}
 
@@ -244,9 +243,9 @@ class Admin_Notices {
 	 */
 	public function get_woo_mini_notice() {
 
-		$option = get_option( 'woo_mini' );
+        $time     = time();
 
-		if ( '1' === $option ) {
+		if ( $time > 1728086400 || get_transient( 'woo_mini_hide' ) ) {
 			return;
 		}
 
@@ -375,7 +374,7 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			update_option( $key, '1' );
+			set_transient( $key, true, 20 * DAY_IN_SECONDS );
 
 			wp_send_json_success();
 

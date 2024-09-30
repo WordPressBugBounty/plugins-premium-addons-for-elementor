@@ -5,8 +5,6 @@
 
 use PremiumAddons\Includes\Helper_Functions;
 
-$prefix = Helper_Functions::get_prefix();
-
 $elements = array(
 	'cat-1'  => array(
 		'icon'     => 'all',

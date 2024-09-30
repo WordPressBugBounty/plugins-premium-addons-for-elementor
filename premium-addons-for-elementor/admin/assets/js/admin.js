@@ -78,9 +78,10 @@
         //get unused widgets.
         self.getUnusedWidget = function () {
 
-            if ($(".pa-btn-group .pa-btn-disable").hasClass("active")) {
-                $(".pa-btn-group .pa-btn-unused").addClass("dimmed");
-            }
+            // No need, we will remove dimmed class always after unused widgets are loaded.
+            // if ($(".pa-btn-group .pa-btn-disable").hasClass("active")) {
+            //     $(".pa-btn-unused").addClass("dimmed");
+            // }
 
             $.ajax(
                 {
@@ -90,9 +91,16 @@
                         action: 'pa_get_unused_widgets',
                         security: settings.nonce,
                     },
+                    beforeSend: function () {
+                        $(".pa-btn-unused i").addClass("loading");
+                    },
                     success: function (response) {
                         console.log('unused widgets retrieved');
+
                         self.unusedElements = response.data;
+
+                        $(".pa-btn-unused").removeClass("dimmed").find("i").remove();
+
                     },
                     error: function (err) {
                         console.log(err);
@@ -181,7 +189,7 @@
             //Disable unused widgets.
             $(".pa-btn-group").on(
                 "click",
-                '.pa-btn-unused',
+                '.pa-btn-unused:not(.dimmed)',
                 function () {
 
                     $.each(self.unusedElements, function (index, selector) {
@@ -240,7 +248,7 @@
             );
 
             // Clear saved site cursor settings.
-            $('.pa-btn-clear-cusror').on('click', function () {
+            $('.pa-btn-clear-cursor').on('click', function () {
                 var _this = $(this);
                 _this.addClass("loading");
                 console.log('hellooooo');

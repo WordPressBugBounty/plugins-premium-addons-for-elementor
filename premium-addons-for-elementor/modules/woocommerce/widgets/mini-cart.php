@@ -933,10 +933,11 @@ class Mini_Cart extends Widget_Base {
 		$this->add_responsive_control(
 			'cart_dir',
 			array(
-				'label'      => __( 'Direction', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::CHOOSE,
-				'toggle'     => false,
-				'options'    => array(
+				'label'              => __( 'Direction', 'premium-addons-for-elementor' ),
+				'frontend_available' => true,
+				'type'               => Controls_Manager::CHOOSE,
+				'toggle'             => false,
+				'options'            => array(
 					'left'  => array(
 						'title' => __( 'left', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-order-start',
@@ -946,11 +947,11 @@ class Mini_Cart extends Widget_Base {
 						'icon'  => 'eicon-order-end',
 					),
 				),
-				'default'    => 'right',
-				'selectors'  => array(
+				'default'            => 'right',
+				'selectors'          => array(
 					'{{WRAPPER}} .pa-woo-mc__content-wrapper' => '{{VALUE}}: 0',
 				),
-				'conditions' => $slide_connected_conds,
+				'conditions'         => $slide_connected_conds,
 			)
 		);
 

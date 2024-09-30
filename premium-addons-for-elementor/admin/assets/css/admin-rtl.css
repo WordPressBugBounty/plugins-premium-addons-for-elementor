@@ -697,7 +697,8 @@
 }
 
 .pa-section-info-wrap .pa-btn-regenerate,
-.pa-section-info-wrap .pa-btn-clear-cusror {
+.pa-section-info-wrap .pa-btn-clear-cursor,
+.pa-btn-unused i {
     border: none;
     outline: none;
     margin-left: 5px;
@@ -707,11 +708,13 @@
 }
 
 .pa-section-info-wrap .pa-btn-regenerate.loading,
-.pa-section-info-wrap .pa-btn-clear-cusror.loading {
+.pa-section-info-wrap .pa-btn-clear-cursor.loading,
+.pa-btn-unused i.loading {
+    -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
 }
 
-.pa-section-info-wrap .pa-btn-clear-cusror {
+.pa-section-info-wrap .pa-btn-clear-cursor {
     color: #252c59;
     position: relative;
     z-index: 10;

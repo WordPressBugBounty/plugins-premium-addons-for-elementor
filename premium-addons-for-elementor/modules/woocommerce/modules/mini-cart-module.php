@@ -63,7 +63,7 @@ class Mini_Cart_Module extends Module_Base {
 		parent::__construct();
 
 		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-			add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'pa_maybe_init_cart' ] );
+			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'pa_maybe_init_cart' ) );
 		}
 
 		add_action( 'wp_ajax_pa_update_mc_qty', array( $this, 'pa_update_mc_qty' ) );
@@ -72,7 +72,13 @@ class Mini_Cart_Module extends Module_Base {
 		add_action( 'wp_ajax_pa_delete_cart_item', array( $this, 'pa_delete_cart_item' ) );
 		add_action( 'wp_ajax_nopriv_pa_delete_cart_item', array( $this, 'pa_delete_cart_item' ) );
 
-		add_filter( 'woocommerce_add_to_cart_fragments', array( $this, 'pa_add_mini_cart_fragments' ) );
+		$enabled_keys = get_option( 'pa_save_settings', array() );
+
+		$mc_custom_temp_enabled = isset( $enabled_keys['pa_mc_temp'] ) ? $enabled_keys['pa_mc_temp'] : false;
+
+		if ( $mc_custom_temp_enabled ) {
+			add_filter( 'woocommerce_add_to_cart_fragments', array( $this, 'pa_add_mini_cart_fragments' ) );
+		}
 	}
 
 	public function pa_maybe_init_cart() {
@@ -80,9 +86,9 @@ class Mini_Cart_Module extends Module_Base {
 
 		if ( ! $has_cart ) {
 			$session_class = apply_filters( 'woocommerce_session_handler', 'WC_Session_Handler' );
-			WC()->session = new $session_class();
+			WC()->session  = new $session_class();
 			WC()->session->init();
-			WC()->cart = new \WC_Cart();
+			WC()->cart     = new \WC_Cart();
 			WC()->customer = new \WC_Customer( get_current_user_id(), true );
 		}
 	}

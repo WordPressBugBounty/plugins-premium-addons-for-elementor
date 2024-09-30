@@ -8,11 +8,6 @@ use PremiumAddons\Includes\Helper_Functions;
 
 $prefix = Helper_Functions::get_prefix();
 
-// Get elements settings
-$enabled_elements = self::get_enabled_elements();
-
-$elements = self::get_elements_list();
-
 $features = $elements['cat-11']['elements'];
 
 ?>
@@ -89,7 +84,7 @@ $features = $elements['cat-11']['elements'];
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
 						<h4 class = "pa-inline-flex"><?php echo esc_html( __( 'Custom Mouse Cursor', 'premium-addons-for-elementor' ) ); ?>
-							<button type="button" class="pa-btn-clear-cusror pa-inline-flex" title="<?php esc_html_e( 'Clear Site Cursor Settings', 'premium-addons-for-elementor' ); ?>">
+							<button type="button" class="pa-btn-clear-cursor pa-inline-flex" title="<?php esc_html_e( 'Clear Site Cursor Settings', 'premium-addons-for-elementor' ); ?>">
 								<i class="dashicons dashicons-image-rotate"></i>
 							</button>
 						</h4>

@@ -32,6 +32,9 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			// Autoloader.
 			spl_autoload_register( array( $this, 'autoload' ) );
 
+            //Load plugin textdomain.
+            add_action( 'init', array( $this, 'i18n' ) );
+
 			// Run plugin and require the necessary files.
 			add_action( 'plugins_loaded', array( $this, 'premium_addons_elementor_setup' ) );
 
@@ -85,9 +88,6 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 * @return void
 		 */
 		public function premium_addons_elementor_setup() {
-
-			// Load plugin textdomain.
-			$this->load_domain();
 
 			// load plugin necessary files.
 			$this->load_files();
@@ -167,7 +167,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 *
 		 * @return void
 		 */
-		public function load_domain() {
+		public function i18n() {
 
 			load_plugin_textdomain( 'premium-addons-for-elementor' );
 		}
@@ -186,7 +186,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			require_once PREMIUM_ADDONS_PATH . 'includes/class-premium-template-tags.php';
 
-			Compatibility\Premium_Addons_Wpml::get_instance();
+            // Outdated WPML compatibility.
+			// Compatibility\Premium_Addons_Wpml::get_instance();
 
 			Addons_Integration::get_instance();
 		}

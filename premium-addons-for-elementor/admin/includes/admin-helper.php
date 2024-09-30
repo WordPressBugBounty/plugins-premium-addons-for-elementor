@@ -52,6 +52,27 @@ class Admin_Helper {
 	 */
 	public static $elements_list = null;
 
+    /**
+	 * Elements Keys
+	 *
+	 * @var elements_list
+	 */
+	public static $elements_keys = null;
+
+    /**
+	 * Enabled Elements
+	 *
+	 * @var enabled_elements
+	 */
+	public static $enabled_elements = null;
+
+    /**
+	 * Integrations Settings
+	 *
+	 * @var integrations_settings
+	 */
+	public static $integrations_settings = null;
+
 	/**
 	 * Elements Names
 	 *
@@ -75,7 +96,6 @@ class Admin_Helper {
 		add_action( 'current_screen', array( $this, 'get_current_screen' ) );
 
 		// Insert admin settings submenus.
-		$this->set_admin_tabs();
 		add_action( 'admin_menu', array( $this, 'add_menu_tabs' ), 100 );
 
 		// Enqueue required admin scripts.
@@ -97,8 +117,8 @@ class Admin_Helper {
 		// Register AJAX Hooks for regenerate assets.
 		add_action( 'wp_ajax_pa_clear_cached_assets', array( $this, 'clear_cached_assets' ) );
 
-        // Register Deactivation hooks.
-        register_deactivation_hook( PREMIUM_ADDONS_FILE, array( $this, 'clear_dynamic_assets_data' ) );
+		// Register Deactivation hooks.
+		register_deactivation_hook( PREMIUM_ADDONS_FILE, array( $this, 'clear_dynamic_assets_data' ) );
 
 		// Register AJAX Hooks for clearing saved site cursor.
 		add_action( 'wp_ajax_pa_clear_site_cursor_settings', array( $this, 'clear_site_cursor_settings' ) );
@@ -113,35 +133,34 @@ class Admin_Helper {
 		add_action( 'admin_post_premium_addons_rollback', array( $this, 'run_pa_rollback' ) );
 
 		if ( is_admin() ) {
-			if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-				$current_page = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
-				if ( false === strpos( $current_page, 'action=elementor' ) ) {
-					Admin_Notices::get_instance();
 
-					// Beta tester.
-                    // Not currently needed.
-					// Beta_Testers::get_instance();
+            Admin_Notices::get_instance();
 
-					// PA Duplicator.
-					if ( self::check_duplicator() ) {
-						Duplicator::get_instance();
-					}
-				}
-			}
+            // Beta tester.
+            // Not currently needed.
+            // Beta_Testers::get_instance();
 
-            if( self::check_user_can( 'install_plugins' ) ) {
-                Feedback::get_instance();
+            // PA Duplicator.
+            if ( self::check_duplicator() ) {
+                Duplicator::get_instance();
             }
 
+			if ( self::check_user_can( 'install_plugins' ) ) {
+				Feedback::get_instance();
+			}
+
 		}
 
-		if ( is_user_logged_in() && self::check_user_can( 'manage_options' ) ) {
-			// PA Dynamic Assets.
-			$row_meta = Helper_Functions::is_hide_row_meta();
-			if ( self::check_dynamic_assets() && ! $row_meta ) {
-				Admin_Bar::get_instance();
-			}
-		}
+        if ( is_user_logged_in() && self::check_user_can( 'manage_options' ) ) {
+
+            // PA Dynamic Assets.
+            $row_meta = Helper_Functions::is_hide_row_meta();
+
+            if ( self::check_dynamic_assets() && ! $row_meta ) {
+                Admin_Bar::get_instance();
+            }
+
+        }
 
 	}
 
@@ -166,7 +185,7 @@ class Admin_Helper {
 	 * @since 3.20.9
 	 * @access private
 	 *
-	 * @return array widget_list
+	 * @return array elements_list
 	 */
 	public static function get_elements_list() {
 
@@ -177,6 +196,28 @@ class Admin_Helper {
 		}
 
 		return self::$elements_list;
+
+	}
+
+    /**
+	 * Get Elements Keys
+	 *
+	 * Get a list of all the keys available in the plugin
+	 *
+	 * @since 4.10.54
+	 * @access private
+	 *
+	 * @return array elements_keys
+	 */
+	public static function get_elements_keys() {
+
+		if ( null === self::$elements_keys ) {
+
+			self::$elements_keys = require_once PREMIUM_ADDONS_PATH . 'admin/includes/keys.php';
+
+		}
+
+		return self::$elements_keys;
 
 	}
 
@@ -433,7 +474,7 @@ class Admin_Helper {
 		}
 
 		$settings = array_map(
-			function( $setting ) {
+			function ( $setting ) {
 				return htmlspecialchars( $setting, ENT_QUOTES );
 			},
 			wp_unslash( $_POST['settings'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
@@ -543,7 +584,6 @@ class Admin_Helper {
 		}
 
 		return $meta;
-
 	}
 
 	/**
@@ -559,7 +599,6 @@ class Admin_Helper {
 		self::$current_screen = get_current_screen()->id;
 
 		return isset( self::$current_screen ) ? self::$current_screen : false;
-
 	}
 
 	/**
@@ -625,7 +664,6 @@ class Admin_Helper {
 		);
 
 		self::$tabs = apply_filters( 'pa_admin_register_tabs', self::$tabs );
-
 	}
 
 	/**
@@ -639,6 +677,8 @@ class Admin_Helper {
 	 * @return void
 	 */
 	public function add_menu_tabs() {
+
+        $this->set_admin_tabs();
 
 		$plugin_name = Helper_Functions::name();
 
@@ -781,7 +821,7 @@ class Admin_Helper {
 
 		parse_str( sanitize_text_field( wp_unslash( $_POST['fields'] ) ), $settings );
 
-		$defaults = self::get_default_elements();
+		$defaults = self::get_default_keys();
 
 		$elements = array_fill_keys( array_keys( array_intersect_key( $settings, $defaults ) ), true );
 
@@ -820,7 +860,6 @@ class Admin_Helper {
 		update_option( 'pa_maps_save_settings', $new_settings );
 
 		wp_send_json_success( $settings );
-
 	}
 
 	/**
@@ -844,7 +883,6 @@ class Admin_Helper {
 		update_option( 'pa_global_btn_value', $global_btn_value );
 
 		wp_send_json_success();
-
 	}
 
 	/**
@@ -855,30 +893,30 @@ class Admin_Helper {
 	 *
 	 * @return $default_keys array keys defaults
 	 */
-	private static function get_default_elements() {
+	private static function get_default_keys() {
 
-		$elements = self::get_elements_list();
+		$elements = self::get_elements_keys();
 
 		$keys = array();
 
 		// Now, we need to fill our array with elements keys.
-		foreach ( $elements as $cat ) {
-			if ( count( $cat['elements'] ) ) {
-				foreach ( $cat['elements'] as $elem ) {
 
-					array_push( $keys, $elem['key'] );
+        foreach ( $elements as $elem ) {
 
-					if ( isset( $elem['draw_svg'] ) ) {
-						array_push( $keys, 'svg_' . $elem['key'] );
-					}
-				}
-			}
-		}
+            array_push( $keys, $elem['key'] );
+
+            if ( isset( $elem['draw_svg'] ) ) {
+                array_push( $keys, 'svg_' . $elem['key'] );
+            }
+
+            if ( 'mini-cart' === $elem['key'] ) {
+                array_push( $keys, 'pa_mc_temp' );
+            }
+        }
 
 		$default_keys = array_fill_keys( $keys, true );
 
 		return $default_keys;
-
 	}
 
 	/**
@@ -935,10 +973,10 @@ class Admin_Helper {
 		return $pa_elements;
 	}
 
-    /**
+	/**
 	 * Get Info By Key
-     *
-     * Returns elements by its key
+	 *
+	 * Returns elements by its key
 	 *
 	 * @since 4.10.49
 	 * @access public
@@ -949,16 +987,15 @@ class Admin_Helper {
 
 		$elements = self::get_elements_list()['cat-1']['elements'];
 
-        $element = false;
+		$element = false;
 
-        foreach ( $elements as $elem ) {
+		foreach ( $elements as $elem ) {
 
-            if( $key === $elem['name'] ) {
-                $element = $elem;
-                break;
-            }
-
-        }
+			if ( $key === $elem['name'] ) {
+				$element = $elem;
+				break;
+			}
+		}
 
 		return $element;
 	}
@@ -1009,7 +1046,6 @@ class Admin_Helper {
 		$default_keys['is-beta-tester'] = false;
 
 		return $default_keys;
-
 	}
 
 	/**
@@ -1022,21 +1058,27 @@ class Admin_Helper {
 	 */
 	public static function get_enabled_elements() {
 
-		$defaults = self::get_default_elements();
+        if ( null === self::$enabled_elements ) {
 
-		$enabled_keys = get_option( 'pa_save_settings', $defaults );
+            $defaults = self::get_default_keys();
 
-		foreach ( $defaults as $key => $value ) {
-			if ( ! isset( $enabled_keys[ $key ] ) ) {
-				$defaults[ $key ] = 0;
-			}
+            $enabled_keys = get_option( 'pa_save_settings', $defaults );
+
+            foreach ( $defaults as $key => $value ) {
+                if ( ! isset( $enabled_keys[ $key ] ) ) {
+                    $defaults[ $key ] = 0;
+                }
+            }
+
+            self::$enabled_elements = $defaults;
+
 		}
 
-		return $defaults;
+        return self::$enabled_elements;
 
 	}
 
-    /**
+	/**
 	 * Check Elementor By Key
 	 *
 	 * @since 4.10.52
@@ -1046,18 +1088,17 @@ class Admin_Helper {
 	 */
 	public static function check_element_by_key( $key ) {
 
-        if( ! $key ) {
-            return;
-        }
+		if ( ! $key ) {
+			return;
+		}
 
-        $settings = self::get_enabled_elements();
+		$settings = self::get_enabled_elements();
 
-        if( ! isset( $settings[ $key ] ) ) {
-            return false;
-        }
+		if ( ! isset( $settings[ $key ] ) ) {
+			return false;
+		}
 
 		return $settings[ $key ];
-
 	}
 
 	/**
@@ -1072,12 +1113,11 @@ class Admin_Helper {
 	 */
 	public static function check_svg_draw( $key ) {
 
-		$enabled_keys = get_option( 'pa_save_settings', array() );
+		$enabled_keys = self::get_enabled_elements();
 
 		$is_enabled = isset( $enabled_keys[ 'svg_' . $key ] ) ? $enabled_keys[ 'svg_' . $key ] : false;
 
 		return $is_enabled;
-
 	}
 
 	/**
@@ -1156,9 +1196,13 @@ class Admin_Helper {
 	 */
 	public static function get_integrations_settings() {
 
-		$enabled_keys = get_option( 'pa_maps_save_settings', self::get_default_integrations() );
+        if ( null === self::$integrations_settings ) {
 
-		return $enabled_keys;
+            self::$integrations_settings = get_option( 'pa_maps_save_settings', self::get_default_integrations() );
+
+        }
+
+		return self::$integrations_settings;
 
 	}
 
@@ -1194,7 +1238,6 @@ class Admin_Helper {
 				'response' => 200,
 			)
 		);
-
 	}
 
 	/**
@@ -1218,7 +1261,6 @@ class Admin_Helper {
 		$unused_widgets = array_diff( $pa_elements, array_keys( $used_widgets ) );
 
 		wp_send_json_success( $unused_widgets );
-
 	}
 
 	/**
@@ -1235,12 +1277,12 @@ class Admin_Helper {
 
 		check_ajax_referer( 'pa-generate-nonce', 'security' );
 
-        $this->clear_dynamic_assets_data();
+		$this->clear_dynamic_assets_data();
 
 		wp_send_json_success( 'Cached Assets Cleared' );
 	}
 
-    /**
+	/**
 	 * Clear Dynamic Assets Data.
 	 *
 	 * Deletes assets options from DB And
@@ -1335,7 +1377,6 @@ class Admin_Helper {
 				unlink( Helper_Functions::get_safe_path( $file ) );
 			}
 		}
-
 	}
 
 	/**
@@ -1353,7 +1394,7 @@ class Admin_Helper {
 		if ( null === $names ) {
 
 			$names = array_map(
-				function( $item ) {
+				function ( $item ) {
 					return isset( $item['name'] ) ? $item['name'] : 'global';
 				},
 				self::get_elements_list()['cat-1']['elements']
@@ -1361,7 +1402,7 @@ class Admin_Helper {
 
 			$names = array_filter(
 				$names,
-				function( $name ) {
+				function ( $name ) {
 					return 'global' !== $name;
 				}
 			);
@@ -1385,9 +1426,9 @@ class Admin_Helper {
 
 		if ( class_exists( 'Elementor\Modules\Usage\Module' ) ) {
 
-			$module   = Module::instance();
+			$module = Module::instance();
 
-            $module->recalc_usage();
+			$module->recalc_usage();
 
 			$elements = $module->get_formatted_usage( 'raw' );
 
@@ -1455,7 +1496,6 @@ class Admin_Helper {
 		$body = json_decode( $body, true );
 
 		wp_send_json_success( $body );
-
 	}
 
 	/**
@@ -1499,7 +1539,6 @@ class Admin_Helper {
 		}
 
 		return $posts;
-
 	}
 
 	/**
