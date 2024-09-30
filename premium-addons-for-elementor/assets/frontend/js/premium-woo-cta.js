@@ -9,7 +9,8 @@
             grouped_products = $container.find('.grouped_product_qty'),
             minusButton = $container.find('.quantity-button.minus'),
             plusButton = $container.find('.quantity-button.plus'),
-            redirectToCart = $button.data('redirect-to-cart');
+            redirectToCart = $button.data('redirect-to-cart'),
+            connectToMC = $container.data('pa-mc-id');
 
 
         minusButton.on('click', function () {
@@ -174,6 +175,11 @@
                                 }
                             }
 
+                            // check if it is connected to premium mc
+                            if ( connectToMC ) {
+                                $(connectToMC + '.elementor-widget-premium-mini-cart').find('.pa-woo-mc__inner-container').trigger('click.paToggleMiniCart');
+                                $(document.body).trigger('wc_fragment_refresh');
+                            }
                         } else {
 
                             $spinnerWrap.removeClass('loader-visible').find(".premium-loading-feed").remove();

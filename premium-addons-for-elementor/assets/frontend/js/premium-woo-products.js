@@ -551,14 +551,17 @@
 
                         if ($elem.hasClass("premium-woo-products-masonry")) {
 
-                            $currentProducts.isotope('reloadItems')
+                            $currentProducts.isotope('reloadItems');
 
-                            $currentProducts.isotope({
-                                itemSelector: "li.product",
-                                percentPosition: true,
-                                layoutMode: "masonry",
-                            });
+                            setTimeout(function () {
 
+                                $currentProducts.isotope({
+                                    itemSelector: "li.product",
+                                    percentPosition: true,
+                                    layoutMode: "masonry",
+                                });
+
+                            }, 100);
                         }
 
                         // //Trigger carousel for products in the next pages.

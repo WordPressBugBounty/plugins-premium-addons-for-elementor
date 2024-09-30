@@ -623,16 +623,6 @@ $elements = array(
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/contact-form-7-widget-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
 			),
 			array(
-				'key'        => 'premium-fb-chat',
-				'name'       => 'premium-addon-facebook-chat',
-				'title'      => __( 'Facebook Messenger Chat', 'premium-addons-for-elementor' ),
-				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/facebook-messenger-widget-for-elementor-page-builder/', 'settings-page', 'wp-dash', 'dashboard' ),
-				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/facebook-messenger/', 'settings-page', 'wp-dash', 'dashboard' ),
-				'is_pro'     => true,
-				'icon'       => 'pa-pro-messenger-chat',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/facebook-messenger-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
-			),
-			array(
 				'key'        => 'premium-whatsapp-chat',
 				'name'       => 'premium-whatsapp-chat',
 				'title'      => __( 'WhatsApp Chat', 'premium-addons-for-elementor' ),
@@ -656,6 +646,13 @@ $elements = array(
 				'name'  => 'premium-woo-categories',
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-categories-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
+			),
+			array(
+				'key'   => 'mini-cart',
+				'title' => __( 'Woo Mini Cart', 'premium-addons-for-elementor' ),
+				'name'  => 'premium-mini-cart',
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-mini-cart-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-mini-cart-widget-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
 			),
 			array(
 				'key'      => 'woo-cta',
@@ -1327,14 +1324,6 @@ $elements = array(
 				'title' => __( 'Contact Form 7', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/contact-form-7-widget-for-elementor-page-builder/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/contact-form-7-widget-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
-			),
-			array(
-				'key'    => 'premium-fb-chat',
-				'name'   => 'premium-addon-facebook-chat',
-				'title'  => __( 'Facebook Messenger Chat', 'premium-addons-for-elementor' ),
-				'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/facebook-messenger-widget-for-elementor-page-builder/', 'settings-page', 'wp-dash', 'dashboard' ),
-				'doc'    => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/facebook-messenger/', 'settings-page', 'wp-dash', 'dashboard' ),
-				'is_pro' => true,
 			),
 			array(
 				'key'      => 'premium-whatsapp-chat',

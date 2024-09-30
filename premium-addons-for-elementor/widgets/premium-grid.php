@@ -159,6 +159,10 @@ class Premium_Grid extends Widget_Base {
 		return array( 'pa', 'premium', 'premium media grid', 'layout', 'gallery', 'image', 'video', 'portfolio', 'visual', 'masonry', 'youtube', 'vimeo' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *
@@ -2882,7 +2886,7 @@ class Premium_Grid extends Widget_Base {
 								$lightbox_key,
 								array(
 									'class' => 'pa-gallery-whole-link',
-									'href'  => $image['premium_gallery_img']['url'],
+									'href'  => esc_url( $image['premium_gallery_img']['url'] ),
 								)
 							);
 
@@ -3120,7 +3124,7 @@ class Premium_Grid extends Widget_Base {
 						array(
 							'data-elementor-open-lightbox' => 'yes',
 							'data-elementor-lightbox'      => wp_json_encode( $lightbox_options ),
-							'data-elementor-lightbox-video' => $item['video_link'],
+							'data-elementor-lightbox-video' => esc_url( $item['video_link'] ),
 						)
 					);
 
@@ -3137,7 +3141,7 @@ class Premium_Grid extends Widget_Base {
 					$this->add_render_attribute(
 						$lightbox_key,
 						array(
-							'href'     => $link,
+							'href'     => esc_url( $link ),
 							'data-rel' => $rel,
 						)
 					);

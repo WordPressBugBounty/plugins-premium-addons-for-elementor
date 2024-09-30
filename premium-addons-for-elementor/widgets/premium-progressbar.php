@@ -136,6 +136,10 @@ class Premium_Progressbar extends Widget_Base {
 		return array( 'pa', 'premium', 'premium progress bar', 'circle', 'chart', 'line', 'graph', 'percent' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

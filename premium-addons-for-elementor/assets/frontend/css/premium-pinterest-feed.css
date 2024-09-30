@@ -11,7 +11,6 @@
   /*Boards Layout**/
   /*End of Boards Layout**/
 }
-
 .premium-pinterest-feed__outer-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -20,7 +19,6 @@
   -ms-flex-direction: column;
   flex-direction: column;
 }
-
 .premium-pinterest-feed__pins-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -29,31 +27,24 @@
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
-
 .premium-pinterest-feed__pin-outer-wrapper {
-  padding: 0 -webkit-calc(5px / 2);
-  padding: 0 calc(5px / 2);
+  padding: 0 2.5px;
 }
-
 .premium-pinterest-feed__pin-wrapper {
   height: 100%;
 }
-
 .premium-pinterest-feed__pin-creator a {
   display: inline-block;
   text-transform: capitalize;
 }
-
 .premium-pinterest-feed__shares {
   margin-left: auto;
 }
-
 .premium-pinterest-feed__share-outer {
   -webkit-order: 10;
   -ms-flex-order: 10;
   order: 10;
 }
-
 .premium-pinterest-feed__meta {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -65,13 +56,11 @@
   -ms-flex-pack: center;
   justify-content: center;
 }
-
 .premium-pinterest-feed__pin-media {
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
-
 .premium-pinterest-feed__pin-media img {
   width: 100%;
   height: 100% !important;
@@ -79,16 +68,13 @@
   transition: all 0.3s ease-in-out;
   display: block;
 }
-
 .premium-pinterest-feed__cover_wrap {
   width: 100%;
   overflow: hidden;
 }
-
 .premium-pinterest-feed__pinterest-icon svg {
   display: block;
 }
-
 .premium-pinterest-feed__overlay {
   position: absolute;
   left: 0;
@@ -97,24 +83,20 @@
   right: 0;
   z-index: 8;
 }
-
 .premium-pinterest-feed__pin-meta-wrapper {
   z-index: 9;
 }
-
 .premium-pinterest-feed__pin-layout-1 .premium-pinterest-feed__pin-meta-wrapper,
 .premium-pinterest-feed__pin-layout-1 .premium-pinterest-feed__pin-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
-
 .premium-pinterest-feed__pin-layout-1 .premium-pinterest-feed__pin-wrapper {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
 }
-
 .premium-pinterest-feed__pin-layout-1 .premium-pinterest-feed__pin-meta-wrapper {
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -126,13 +108,11 @@
   -ms-flex-order: 0;
   order: 0;
 }
-
 .premium-pinterest-feed__pin-layout-2 .premium-pinterest-feed__pin-wrapper {
   position: relative;
   cursor: pointer;
   overflow: hidden;
 }
-
 .premium-pinterest-feed__pin-layout-2 .premium-pinterest-feed__pin-inner-meta {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -144,7 +124,6 @@
   -ms-flex-align: center;
   align-items: center;
 }
-
 .premium-pinterest-feed__pin-layout-2 .premium-pinterest-feed__pin-meta-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -158,19 +137,16 @@
   width: 100%;
   height: 100%;
 }
-
 .premium-pinterest-feed__pin-layout-2 .premium-pinterest-feed__pin-desc {
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
   margin-top: auto !important;
 }
-
 .premium-pinterest-feed__pin-layout-2 .premium-pinterest-feed__pin-media {
   width: 100%;
   height: 100%;
 }
-
 .premium-pinterest-feed__pin-layout-3 .premium-pinterest-feed__pin-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -180,12 +156,10 @@
   flex-wrap: nowrap;
   overflow: hidden;
 }
-
 .premium-pinterest-feed__pin-layout-3 .premium-pinterest-feed__pin-meta-wrapper,
 .premium-pinterest-feed__pin-layout-3 .premium-pinterest-feed__pin-media {
   width: 50%;
 }
-
 .premium-pinterest-feed__pin-layout-3 .premium-pinterest-feed__pin-meta-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -201,52 +175,42 @@
   justify-content: center;
   position: relative;
 }
-
 .premium-pinterest-feed__pin-layout-3 .premium-pinterest-feed__meta {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
 }
-
 .premium-pinterest-feed__pin-layout-3 .premium-pinterest-feed__pin-media {
   height: 400px;
 }
-
 .premium-pinterest-feed__pin-layout-3 .premium-pinterest-feed__pin-media img {
   object-fit: cover;
 }
-
 .premium-pinterest-feed__pin-layout-3 .premium-pinterest-feed__pin-desc {
   text-align: center;
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__pin-wrapper {
   position: relative;
   cursor: pointer;
   overflow: hidden;
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__pin-wrapper:hover .premium-pinterest-feed__pin-meta-wrapper {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   bottom: -1px !important;
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__pinterest-icon {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 1;
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__pin-desc {
   padding-left: 15px;
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__pin-meta-wrapper {
   padding: 30px 15px 15px 0;
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__pin-meta-wrapper {
   position: absolute;
   width: 100%;
@@ -256,12 +220,10 @@
   transform: translate3d(0, 100%, 0);
   bottom: 10px;
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__pin-media {
   width: 100%;
   height: 100%;
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__dots {
   position: absolute;
   top: 0;
@@ -270,7 +232,6 @@
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 }
-
 .premium-pinterest-feed__pin-layout-4 .premium-pinterest-feed__dot {
   width: 7px;
   height: 7px;
@@ -279,7 +240,6 @@
   display: inline-block;
   margin: 0 3px;
 }
-
 .premium-pinterest-feed__profile-header {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -290,13 +250,11 @@
   border-radius: 12px;
   margin-bottom: 5px;
 }
-
 .premium-pinterest-feed__profile-header > * {
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
 }
-
 .premium-pinterest-feed__profile-counts {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -311,12 +269,10 @@
   line-height: 20px;
   font-weight: 400;
 }
-
 .premium-pinterest-feed__profile-counts span {
   display: inline-block;
   white-space: nowrap;
 }
-
 .premium-pinterest-feed__profile-counts > span {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -326,7 +282,6 @@
   -webkit-column-gap: 6px;
   column-gap: 6px;
 }
-
 .premium-pinterest-feed__user-info-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -338,7 +293,6 @@
   -ms-flex-align: center;
   align-items: center;
 }
-
 .premium-pinterest-feed__user-info {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -352,27 +306,23 @@
   -webkit-column-gap: 15px;
   column-gap: 15px;
 }
-
 .premium-pinterest-feed__avatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
 }
-
 .premium-pinterest-feed__avatar img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-
 .premium-pinterest-feed__username a {
   text-transform: capitalize;
   font-size: 17px;
   color: #202020;
   font-weight: 700px;
 }
-
 .premium-pinterest-feed__follow-button {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -392,15 +342,12 @@
   -webkit-column-gap: 5px;
   column-gap: 5px;
 }
-
 .premium-pinterest-feed__follow-button .premium-pinterest-feed__pinterest-icon * {
   fill: #fff !important;
 }
-
 .premium-pinterest-feed__follow-button:hover {
   color: #fff;
 }
-
 .premium-pinterest-feed__profile-desc {
   font-size: 14px;
   line-height: 20px;
@@ -408,12 +355,10 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
 .premium-pinterest-feed__board-trigger-wrapper, .premium-pinterest-feed__load-more-wrapper {
   width: 100%;
   text-align: center;
 }
-
 .premium-pinterest-feed__board-trigger, .premium-pinterest-feed__load-more-btn {
   cursor: pointer;
   display: inline-block;
@@ -424,7 +369,6 @@
   border-radius: 5px;
   background-color: #efefef;
 }
-
 .premium-pinterest-feed__boards-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -436,7 +380,6 @@
   -webkit-transition: 0.3s all ease-in-out;
   transition: 0.3s all ease-in-out;
 }
-
 .premium-pinterest-feed__board-wrapper {
   position: relative;
   width: 250px;
@@ -453,17 +396,14 @@
   overflow: hidden;
   margin: 4px;
 }
-
 .premium-pinterest-feed__board-wrapper > * {
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
 }
-
 .premium-pinterest-feed__board-wrapper span {
   display: inline-block;
 }
-
 .premium-pinterest-feed__board-wrapper > a {
   position: absolute;
   left: 0;
@@ -472,25 +412,21 @@
   bottom: 0;
   z-index: 2;
 }
-
 .premium-pinterest-feed__board-wrapper .premium-pinterest-feed__pinterest-icon {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 1;
 }
-
 .premium-pinterest-feed__board-cover {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .premium-pinterest-feed__board-layout-cover .premium-pinterest-feed__board-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .premium-pinterest-feed__board-layout-2 .premium-pinterest-feed__board-cover {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -500,20 +436,17 @@
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
-
 .premium-pinterest-feed__board-layout-2 .premium-pinterest-feed__board-cover img:nth-of-type(1),
 .premium-pinterest-feed__board-layout-2 .premium-pinterest-feed__board-cover img:nth-of-type(2) {
   width: -webkit-calc((100% - 2px) / 2);
   width: calc((100% - 2px) / 2);
 }
-
 .premium-pinterest-feed__board-layout-2 .premium-pinterest-feed__board-cover img:nth-of-type(3),
 .premium-pinterest-feed__board-layout-2 .premium-pinterest-feed__board-cover img:nth-of-type(4),
 .premium-pinterest-feed__board-layout-2 .premium-pinterest-feed__board-cover img:nth-of-type(5) {
   width: -webkit-calc((100% - 4px) / 3);
   width: calc((100% - 4px) / 3);
 }
-
 .premium-pinterest-feed__board-layout-3 .premium-pinterest-feed__board-cover {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -524,7 +457,6 @@
   gap: 2px;
   height: 150px;
 }
-
 .premium-pinterest-feed__board-layout-3 .premium-pinterest-feed__board-cover .premium-cover-divider {
   width: 35%;
   display: grid;
@@ -533,13 +465,11 @@
   overflow: hidden;
   gap: 2px;
 }
-
 .premium-pinterest-feed__board-layout-3 .premium-pinterest-feed__board-cover .premium-cover-divider img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .premium-pinterest-feed__board-layout-3 .premium-pinterest-feed__board-cover > img:nth-of-type(1) {
   width: -webkit-calc(65% - 2px);
   width: calc(65% - 2px);
@@ -550,11 +480,9 @@
   display: -ms-flexbox;
   display: flex;
 }
-
 .premium-carousel-yes.premium-pinterest-feed__grid .slick-slide {
   height: inherit !important;
 }
-
 .premium-carousel-yes ul.slick-dots {
   width: 100%;
 }

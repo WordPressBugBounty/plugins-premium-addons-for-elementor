@@ -133,6 +133,10 @@ class Premium_Carousel extends Widget_Base {
 		return array( 'pa', 'premium', 'premium carousel', 'slider', 'advanced', 'testimonial' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Categories.
 	 *

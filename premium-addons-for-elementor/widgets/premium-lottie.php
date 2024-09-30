@@ -115,6 +115,10 @@ class Premium_Lottie extends Widget_Base {
 		return array( 'premium-elements' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

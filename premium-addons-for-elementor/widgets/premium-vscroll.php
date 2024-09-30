@@ -101,6 +101,10 @@ class Premium_Vscroll extends Widget_Base {
 		return array( 'pa', 'premium', 'premium vertical scroll', 'full', 'section', 'navigation', 'one', 'page' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Dependent CSS.
 	 *

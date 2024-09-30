@@ -39,17 +39,14 @@
   -ms-flex-align: center;
   align-items: center;
 }
-
 .premium-tcloud-default .premium-tcloud-term:hover,
 .premium-tcloud-ribbon .premium-tcloud-term:hover {
   background-color: var(--tag-hover-color);
 }
-
 .premium-tcloud-default .premium-tcloud-term:hover::before,
 .premium-tcloud-ribbon .premium-tcloud-term:hover::before {
   border-color: transparent var(--tag-hover-color) transparent transparent;
 }
-
 .premium-tcloud-default .premium-tcloud-term-link,
 .premium-tcloud-ribbon .premium-tcloud-term-link {
   color: var(--tag-text-color);
@@ -69,7 +66,6 @@
 .premium-tcloud-ribbon .premium-tcloud-term {
   position: relative;
 }
-
 .premium-tcloud-ribbon .premium-tcloud-term::before {
   position: absolute;
   content: "";
@@ -84,7 +80,6 @@
   -webkit-transition: all 0.3s ease-in-out, border-width 0s;
   transition: all 0.3s ease-in-out, border-width 0s;
 }
-
 .premium-tcloud-ribbon .premium-tcloud-term::after {
   position: absolute;
   content: "";

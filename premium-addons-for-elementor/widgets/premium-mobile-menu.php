@@ -128,6 +128,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+            'font-awesome-5-all',
 			'pa-slick',
 			'premium-addons',
 		);

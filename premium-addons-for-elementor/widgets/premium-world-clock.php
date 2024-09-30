@@ -123,6 +123,10 @@ class Premium_World_Clock extends Widget_Base {
 		return array( 'pa', 'premium', 'premium world clock', 'world', 'clock', 'timezone', 'time' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

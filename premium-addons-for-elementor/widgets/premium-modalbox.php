@@ -156,6 +156,10 @@ class Premium_Modalbox extends Widget_Base {
 		return array( 'pa', 'premium', 'premium modal box', 'popup', 'lightbox', 'advanced', 'embed' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Categories.
 	 *

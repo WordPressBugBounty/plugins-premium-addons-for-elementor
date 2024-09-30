@@ -161,6 +161,10 @@ class Premium_Icon_List extends Widget_Base {
 		return array( 'pa', 'premium', 'premium bullet list', 'icon', 'feature', 'list' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

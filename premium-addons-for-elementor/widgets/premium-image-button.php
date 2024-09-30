@@ -142,6 +142,10 @@ class Premium_Image_Button extends Widget_Base {
 		return array( 'pa', 'premium', 'premium image button', 'cta', 'call', 'link', 'btn' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Categories.
 	 *

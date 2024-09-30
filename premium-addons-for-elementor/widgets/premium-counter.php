@@ -125,6 +125,10 @@ class Premium_Counter extends Widget_Base {
 		return array( 'pa', 'premium', 'premium counter', 'time', 'number' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Categories.
 	 *

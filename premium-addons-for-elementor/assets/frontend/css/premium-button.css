@@ -36,9 +36,7 @@
   -ms-transform: translateX(5px);
   transform: translateX(5px);
 }
-
-.premium-button-style3-after:hover i,
-.premium-button-style3-after:hover svg {
+.premium-button-style3-after:hover i, .premium-button-style3-after:hover svg {
   opacity: 1;
 }
 
@@ -56,7 +54,6 @@
   -ms-flex-align: center;
   align-items: center;
 }
-
 .elementor-widget-premium-addon-button .premium-button-text-icon-wrapper span,
 .elementor-widget-premium-addon-button .premium-button-text-icon-wrapper i,
 .elementor-widget-premium-addon-button .premium-button-text-icon-wrapper svg {
@@ -83,22 +80,18 @@
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .premium-button-style4-icon-wrapper.top {
   bottom: -100%;
   left: 0;
 }
-
 .premium-button-style4-icon-wrapper.bottom {
   top: -100%;
   left: 0;
 }
-
 .premium-button-style4-icon-wrapper.left {
   top: 0;
   left: -100%;
 }
-
 .premium-button-style4-icon-wrapper.right {
   top: 0;
   right: -100%;

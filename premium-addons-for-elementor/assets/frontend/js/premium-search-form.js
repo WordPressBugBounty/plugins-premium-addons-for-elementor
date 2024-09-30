@@ -195,10 +195,10 @@
                         var $textElems = $(settings.target).find('li,h1,h2,h3,h4,h5,h6,p,span,i'),
                             $fadeElems = $(settings.fadeout_target).find('li,h1,h2,h3,h4,h5,h6,p,span,i');
 
-
                         $textElems.css('transition', 'filter 0.3s ease-in-out');
                         $fadeElems.css('transition', 'opacity 0.3s ease-in-out');
 
+                        $textElems.find('.pa-highlighted-text-' + widgetID).removeClass('pa-highlighted-text-' + widgetID);
                         $textElems.css('filter', 'blur(0px)');
                         $fadeElems.css('opacity', '1');
 
@@ -220,11 +220,14 @@
 
                             $matchedElems.map(function (index, textElem) {
 
-                                textElem = $(this).text().toLowerCase();
+                                if ($(this).is(':visible') && 'LI' !== $(this).prop('tagName')) {
 
-                                textElem = textElem.replace(new RegExp(searchQuery, 'g'), '<span class="pa-highlighted-text-' + widgetID + '">' + searchQuery + '</span>');
+                                    textElem = $(this).text().toLowerCase();
 
-                                $(this).html(textElem);
+                                    textElem = textElem.replace(new RegExp(searchQuery, 'g'), '<span class="pa-highlighted-text pa-highlighted-text-' + widgetID + '">' + searchQuery + '</span>');
+
+                                    $(this).html(textElem);
+                                }
                             });
 
                         } else {

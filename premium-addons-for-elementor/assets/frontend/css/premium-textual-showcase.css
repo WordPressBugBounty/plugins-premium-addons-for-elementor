@@ -3,7 +3,6 @@
   display: -ms-flexbox;
   display: flex;
 }
-
 .pa-txt-sc__outer-container {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
@@ -13,17 +12,14 @@
   align-items: center;
   gap: 10px;
 }
-
 .pa-txt-sc__outer-container .premium-lottie-animation {
   width: 150px;
   height: 150px;
 }
-
 .pa-txt-sc__outer-container .premium-lottie-animation > svg {
   width: 100%;
   height: 100%;
 }
-
 .pa-txt-sc__hov-item {
   position: absolute;
   visibility: hidden;
@@ -42,12 +38,10 @@
   -webkit-transition: opacity 0.13s;
   transition: opacity 0.13s;
 }
-
 .pa-txt-sc__hov-item :not(.pa-txt-sc__item-img) {
   left: 0;
   top: 0;
 }
-
 .pa-txt-sc__hov-item.pa-txt-sc__item-img {
   left: 50%;
   top: 50%;
@@ -55,12 +49,10 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-
 .pa-txt-sc__hov-hide:hover .pa-txt-sc__main-item {
   visibility: hidden;
   opacity: 0;
 }
-
 .pa-txt-sc__item-container {
   -webkit-align-items: center;
   -ms-flex-align: center;
@@ -72,26 +64,21 @@
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
-
 .pa-txt-sc__item-container:hover .pa-txt-sc__hov-item {
   visibility: visible !important;
 }
-
 .pa-txt-sc__item-container:hover .pa-txt-sc__main-item,
 .pa-txt-sc__item-container:hover .pa-txt-sc__hov-item {
   -webkit-transition: opacity 0.13s ease-in-out;
   transition: opacity 0.13s ease-in-out;
 }
-
 .pa-txt-sc__item-text {
   font-size: 35px;
   margin: 0;
 }
-
 .pa-txt-sc__item-text.pa-txt-sc__main-item {
   width: 100%;
 }
-
 .pa-txt-sc__link {
   position: absolute;
   top: 0;
@@ -99,7 +86,6 @@
   right: 0;
   bottom: 0;
 }
-
 .pa-txt-sc__item-svg, .pa-txt-sc__item-icon {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -111,14 +97,12 @@
   -ms-flex-align: center;
   align-items: center;
 }
-
 .pa-txt-sc__effect-grow {
   -webkit-clip-path: inset(0 100% 100% 0);
   clip-path: inset(0 100% 100% 0);
   -webkit-transition: 1.2s cubic-bezier(0.16, 0.09, 0, 1.02);
   transition: 1.2s cubic-bezier(0.16, 0.09, 0, 1.02);
 }
-
 .pa-txt-sc__effect-outline svg.outline-svg, .pa-txt-sc__effect-circle svg.outline-svg, .pa-txt-sc__effect-h-underline svg.outline-svg, .pa-txt-sc__effect-x svg.outline-svg, .pa-txt-sc__effect-underline-zigzag svg.outline-svg, .pa-txt-sc__effect-double-underline svg.outline-svg, .pa-txt-sc__effect-diagonal svg.outline-svg, .pa-txt-sc__effect-strikethrough svg.outline-svg, .pa-txt-sc__effect-curly svg.outline-svg {
   fill: none;
   stroke-width: 2px;
@@ -131,25 +115,21 @@
   width: 110%;
   height: 113%;
 }
-
 .pa-txt-sc__effect-outline svg.outline-svg.outline, .pa-txt-sc__effect-circle svg.outline-svg.outline, .pa-txt-sc__effect-h-underline svg.outline-svg.outline, .pa-txt-sc__effect-x svg.outline-svg.outline, .pa-txt-sc__effect-underline-zigzag svg.outline-svg.outline, .pa-txt-sc__effect-double-underline svg.outline-svg.outline, .pa-txt-sc__effect-diagonal svg.outline-svg.outline, .pa-txt-sc__effect-strikethrough svg.outline-svg.outline, .pa-txt-sc__effect-curly svg.outline-svg.outline {
   stroke: currentColor;
 }
-
 .pa-txt-sc__effect-outline svg.outline-svg.outline path:first-child, .pa-txt-sc__effect-circle svg.outline-svg.outline path:first-child, .pa-txt-sc__effect-h-underline svg.outline-svg.outline path:first-child, .pa-txt-sc__effect-x svg.outline-svg.outline path:first-child, .pa-txt-sc__effect-underline-zigzag svg.outline-svg.outline path:first-child, .pa-txt-sc__effect-double-underline svg.outline-svg.outline path:first-child, .pa-txt-sc__effect-diagonal svg.outline-svg.outline path:first-child, .pa-txt-sc__effect-strikethrough svg.outline-svg.outline path:first-child, .pa-txt-sc__effect-curly svg.outline-svg.outline path:first-child {
   -webkit-animation: pa-svg-outline 0.5s ease-in-out 0s forwards;
   animation: pa-svg-outline 0.5s ease-in-out 0s forwards;
   stroke-dasharray: 1740 1742;
   stroke-dashoffset: 1741;
 }
-
 .pa-txt-sc__effect-outline svg.outline-svg.outline path:nth-child(2), .pa-txt-sc__effect-circle svg.outline-svg.outline path:nth-child(2), .pa-txt-sc__effect-h-underline svg.outline-svg.outline path:nth-child(2), .pa-txt-sc__effect-x svg.outline-svg.outline path:nth-child(2), .pa-txt-sc__effect-underline-zigzag svg.outline-svg.outline path:nth-child(2), .pa-txt-sc__effect-double-underline svg.outline-svg.outline path:nth-child(2), .pa-txt-sc__effect-diagonal svg.outline-svg.outline path:nth-child(2), .pa-txt-sc__effect-strikethrough svg.outline-svg.outline path:nth-child(2), .pa-txt-sc__effect-curly svg.outline-svg.outline path:nth-child(2) {
   -webkit-animation: pa-svg-outline 0.5s ease-in-out 499ms forwards;
   animation: pa-svg-outline 0.5s ease-in-out 499ms forwards;
   stroke-dasharray: 1743 1745;
   stroke-dashoffset: 1744;
 }
-
 .pa-txt-sc__effect-min-mask .premium-mask-span {
   position: relative;
   overflow: hidden;
@@ -158,7 +138,6 @@
   display: inline-flex !important;
   background: inherit;
 }
-
 .pa-txt-sc__effect-min-mask .premium-mask-span::after {
   content: "";
   position: absolute;
@@ -170,7 +149,6 @@
   -webkit-backface-visibility: visible;
   backface-visibility: visible;
 }
-
 .pa-txt-sc__effect-underline::after {
   content: "";
   position: absolute;
@@ -191,23 +169,19 @@
   transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
   z-index: 1;
 }
-
 .pa-txt-sc__effect-underline.underline::after {
   -webkit-transform: scaleX(1);
   -ms-transform: scaleX(1);
   transform: scaleX(1);
 }
-
 .pa-txt-sc__effect-hvr-pulse-grow.hvr-pulse-grow {
   -webkit-animation: hvr-pulse-grow 0.3s ease-in-out alternate infinite;
   animation: hvr-pulse-grow 0.3s ease-in-out alternate infinite;
 }
-
 .pa-txt-sc__effect-hvr-buzz.hvr-buzz {
   -webkit-animation: hvr-buzz 0.3s ease-in-out alternate infinite;
   animation: hvr-buzz 0.3s ease-in-out alternate infinite;
 }
-
 .pa-txt-sc__effect-rotate {
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
@@ -215,25 +189,21 @@
   -ms-transform: rotate(0deg);
   transform: rotate(0deg);
 }
-
 .pa-txt-sc__effect-rotate.rotate {
   -webkit-transform: rotate(360deg);
   -ms-transform: rotate(360deg);
   transform: rotate(360deg);
 }
-
 .pa-txt-sc__effect-d-rotate {
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
   -webkit-transform: rotateY(0deg);
   transform: rotateY(0deg);
 }
-
 .pa-txt-sc__effect-d-rotate.d-rotate {
   -webkit-transform: rotateY(360deg);
   transform: rotateY(360deg);
 }
-
 .pa-txt-sc__effect-hvr-wobble-vertical {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
@@ -242,7 +212,6 @@
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
 }
-
 .pa-txt-sc__effect-hvr-wobble-vertical.hvr-wobble-vertical {
   -webkit-animation-name: hvr-wobble-vertical;
   animation-name: hvr-wobble-vertical;
@@ -253,7 +222,6 @@
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
 }
-
 .pa-txt-sc__effect-hvr-float-shadow {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
@@ -269,7 +237,6 @@
   transition-property: transform;
   transition-property: transform, -webkit-transform;
 }
-
 .pa-txt-sc__effect-hvr-float-shadow:after {
   pointer-events: none;
   position: absolute;
@@ -289,13 +256,11 @@
   transition-property: transform, opacity;
   transition-property: transform, opacity, -webkit-transform;
 }
-
 .pa-txt-sc__effect-hvr-float-shadow.hvr-float-shadow {
   -webkit-transform: translateY(-5px);
   -ms-transform: translateY(-5px);
   transform: translateY(-5px);
 }
-
 .pa-txt-sc__effect-hvr-float-shadow.hvr-float-shadow::after {
   opacity: 1;
   -webkit-transform: translateY(5px);
@@ -320,21 +285,18 @@
     stroke-dashoffset: 0;
   }
 }
-
 @-webkit-keyframes hvr-pulse-grow {
   to {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
 }
-
 @keyframes hvr-pulse-grow {
   to {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
 }
-
 /* Buzz */
 @-webkit-keyframes hvr-buzz {
   50% {
@@ -346,7 +308,6 @@
     transform: translateX(-3px) rotate(-2deg);
   }
 }
-
 @keyframes hvr-buzz {
   50% {
     -webkit-transform: translateX(3px) rotate(3deg);
@@ -357,7 +318,6 @@
     transform: translateX(-3px) rotate(-3deg);
   }
 }
-
 @-webkit-keyframes hvr-wobble-vertical {
   16.65% {
     -webkit-transform: translateY(8px);
@@ -384,7 +344,6 @@
     transform: translateY(0);
   }
 }
-
 @keyframes hvr-wobble-vertical {
   16.65% {
     -webkit-transform: translateY(8px);

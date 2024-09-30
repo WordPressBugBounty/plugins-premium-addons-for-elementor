@@ -2,42 +2,34 @@
   position: relative;
   z-index: 99;
 }
-
 .premium-mobile-menu__dir-row .premium-mobile-menu__list {
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
 }
-
 .premium-mobile-menu__dir-column .premium-mobile-menu__list {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
 }
-
 .premium-mobile-menu__left .premium-mobile-menu__wrap {
   left: 0;
 }
-
 .premium-mobile-menu__center .premium-mobile-menu__wrap {
   left: 50%;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 }
-
 .premium-mobile-menu__right .premium-mobile-menu__wrap {
   right: 0;
 }
-
 .premium-mobile-menu__top .premium-mobile-menu__wrap {
   top: 0;
 }
-
 .premium-mobile-menu__bottom .premium-mobile-menu__wrap {
   bottom: 0;
 }
-
 .premium-mobile-menu__list {
   margin: 0;
   padding: 0;
@@ -51,7 +43,6 @@
   -webkit-column-gap: 5px;
   column-gap: 5px;
 }
-
 .premium-mobile-menu__item {
   position: relative;
   display: -webkit-flex;
@@ -73,11 +64,9 @@
   -ms-flex: 1;
   flex: 1;
 }
-
 .premium-mobile-menu__item-inner {
   background: #eee;
 }
-
 .premium-mobile-menu__item-inner .premium-mobile-menu__icon-wrap,
 .premium-mobile-menu__item-inner .premium-lottie-animation,
 .premium-mobile-menu__item-inner .premium-drawable-icon {
@@ -85,16 +74,13 @@
   display: -ms-flexbox;
   display: flex;
 }
-
 .premium-mobile-menu__item-inner i {
   font-size: 20px;
 }
-
 .premium-mobile-menu__item-inner svg {
   width: 20px;
   height: 20px;
 }
-
 .premium-mobile-menu__items-wrap {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -103,7 +89,6 @@
   -ms-flex-pack: center;
   justify-content: center;
 }
-
 .premium-mobile-menu__link {
   position: relative;
   display: -webkit-flex;
@@ -119,7 +104,6 @@
   overflow: hidden;
   min-height: 70px;
 }
-
 .premium-mobile-menu__badge {
   position: absolute;
   display: -webkit-flex;
@@ -128,16 +112,13 @@
   top: 5px;
   right: 5px;
 }
-
 .premium-mobile-menu__badge span {
   font-size: 10px;
 }
-
 .premium-mobile-menu__text span, .premium-mobile-menu__badge span {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .premium-mobile-menu__indicator-yes .active-menu-item .premium-mobile-menu__link::after {
   position: absolute;
   content: "";

@@ -23,7 +23,6 @@
   border: none;
   box-shadow: none;
 }
-
 .premium-carousel-wrapper a.carousel-arrow svg, .premium-carousel-wrapper a.ver-carousel-arrow svg {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -36,11 +35,9 @@
 .premium-carousel-wrapper a.slick-arrow:hover {
   box-shadow: none !important;
 }
-
 .premium-carousel-wrapper .premium-carousel-content-hidden {
   visibility: hidden;
 }
-
 .premium-carousel-wrapper a.carousel-arrow {
   top: 50%;
 }
@@ -76,7 +73,6 @@
 .premium-carousel-wrapper .premium-carousel-nav-arrow-next {
   display: none;
 }
-
 .premium-carousel-wrapper ul.slick-dots svg {
   width: 20px;
   height: 20px;
@@ -108,20 +104,16 @@
     opacity: 0;
   }
 }
-
 .premium-carousel-ripple-yes .premium-carousel-wrapper {
   padding-bottom: 1px;
 }
-
 .premium-carousel-ripple-yes ul.slick-dots li {
   position: relative;
 }
-
 .premium-carousel-ripple-yes ul.slick-dots li i {
   position: relative;
   z-index: 1;
 }
-
 .premium-carousel-ripple-yes ul.slick-dots li:hover:before {
   content: "";
   position: absolute;
@@ -136,11 +128,9 @@
   pointer-events: none;
   background-color: rgba(0, 0, 0, 0.15);
 }
-
 .premium-carousel-ripple-yes ul.slick-dots li.slick-active:hover:before {
   background-color: rgba(0, 0, 0, 0.3);
 }
-
 .premium-carousel-ripple-yes ul.slick-dots li:hover:before {
   -webkit-animation: hvr-ripple-out 1.3s infinite;
   animation: hvr-ripple-out 1.3s infinite;
@@ -153,14 +143,13 @@
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .premium-carousel-wrapper.premium-carousel-scale div.slick-active {
   -webkit-transform: scale(1, 1);
   -ms-transform: scale(1, 1);
   transform: scale(1, 1);
 }
 
-[dir="rtl"] .premium-carousel-inner .slick-slide {
+[dir=rtl] .premium-carousel-inner .slick-slide {
   float: right;
 }
 
@@ -181,7 +170,6 @@
   transform: translateZ(0);
   z-index: 10;
 }
-
 .premium-carousel-nav-progressbar .premium-carousel-nav-progressbar-fill {
   background: #6ec1e4;
   position: absolute;
@@ -204,7 +192,6 @@
   height: 20px;
   background-color: rgba(0, 0, 0, 0.25);
 }
-
 .premium-carousel-nav-progress .premium-carousel-nav-progress-fill {
   width: 0%;
   height: 100%;

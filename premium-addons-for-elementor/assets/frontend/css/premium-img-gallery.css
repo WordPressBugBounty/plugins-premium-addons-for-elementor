@@ -22,11 +22,9 @@
   padding: 10px;
   float: left;
 }
-
 .premium-gallery-container .grid-sizer {
   width: 33.33%;
 }
-
 .premium-gallery-container .pa-gallery-item {
   padding: 10px;
 }
@@ -45,7 +43,6 @@
 .pa-gallery-img {
   position: relative;
 }
-
 .pa-gallery-img .pa-gallery-whole-link {
   position: absolute;
   top: 0;
@@ -54,11 +51,9 @@
   height: 100%;
   z-index: 2;
 }
-
 .pa-gallery-img .pa-gallery-whole-link span {
   display: none;
 }
-
 .pa-gallery-img.style2 .pa-gallery-whole-link, .pa-gallery-img.style3 .pa-gallery-whole-link {
   z-index: 99;
 }
@@ -70,7 +65,6 @@
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-
 .pa-gallery-img-container img {
   display: block;
   width: 100%;
@@ -82,24 +76,19 @@
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
-
-.premium-img-gallery.zoomout img,
-.premium-img-gallery.scale img {
+.premium-img-gallery.zoomout img, .premium-img-gallery.scale img {
   -webkit-transform: scale(1.2);
   -ms-transform: scale(1.2);
   transform: scale(1.2);
 }
-
 .premium-img-gallery.sepia img {
   -webkit-filter: sepia(30%);
   filter: sepia(30%);
 }
-
 .premium-img-gallery.bright img {
   -webkit-filter: brightness(1);
   filter: brightness(1);
 }
-
 .premium-img-gallery.trans img {
   -webkit-transform: translateX(-15px) scale(1.1);
   -ms-transform: translateX(-15px) scale(1.1);
@@ -113,7 +102,6 @@
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .pa-gallery-img .pa-gallery-magnific-image span,
 .pa-gallery-img .pa-gallery-img-link span {
   line-height: 1;
@@ -123,22 +111,18 @@
   padding: 15px;
   border-radius: 50%;
 }
-
 .pa-gallery-img.style2 .pa-gallery-magnific-image span,
 .pa-gallery-img.style2 .pa-gallery-img-link span {
   margin: 0 5px 20px;
 }
-
 .pa-gallery-img:hover .pa-gallery-magnific-image span {
   -webkit-transition: all 0.3s ease-in-out, opacity 0.5s ease-in-out 0.3s;
   transition: all 0.3s ease-in-out, opacity 0.5s ease-in-out 0.3s;
 }
-
 .pa-gallery-img:hover .pa-gallery-img-link span {
   -webkit-transition: all 0.3s ease-in-out, opacity 0.5s ease-in-out 0.6s;
   transition: all 0.3s ease-in-out, opacity 0.5s ease-in-out 0.6s;
 }
-
 .pa-gallery-img:hover .pa-gallery-magnific-image span,
 .pa-gallery-img:hover .pa-gallery-img-link span {
   opacity: 1;
@@ -168,40 +152,33 @@
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
-
 .premium-img-gallery.zoomout .pa-gallery-img:hover img {
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
 }
-
 .premium-img-gallery.scale .pa-gallery-img:hover img {
   -webkit-transform: scale(1.3) rotate(5deg);
   -ms-transform: scale(1.3) rotate(5deg);
   transform: scale(1.3) rotate(5deg);
 }
-
 .premium-img-gallery.gray .pa-gallery-img:hover img {
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
 }
-
 .premium-img-gallery.blur .pa-gallery-img:hover img {
   -webkit-filter: blur(3px);
   filter: blur(3px);
 }
-
 .premium-img-gallery.sepia .pa-gallery-img:hover img {
   -webkit-filter: sepia(0%);
   filter: sepia(0%);
 }
-
 .premium-img-gallery.trans .pa-gallery-img:hover img {
   -webkit-transform: translateX(0px) scale(1.1);
   -ms-transform: translateX(0px) scale(1.1);
   transform: translateX(0px) scale(1.1);
 }
-
 .premium-img-gallery.bright .pa-gallery-img:hover img {
   -webkit-filter: brightness(1.2);
   filter: brightness(1.2);
@@ -210,16 +187,13 @@
 .pa-gallery-img .premium-gallery-caption {
   padding: 10px;
 }
-
 .pa-gallery-img .premium-gallery-caption .premium-gallery-img-name {
   display: block;
   margin-bottom: 0;
 }
-
 .pa-gallery-img.style1 {
   overflow: hidden;
 }
-
 .pa-gallery-img:not(.style2) .pa-gallery-icons-wrapper {
   position: absolute;
   top: 0;
@@ -229,7 +203,6 @@
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .pa-gallery-img:not(.style2) .pa-gallery-icons-inner-container {
   position: absolute;
   top: 33.33%;
@@ -240,7 +213,6 @@
   transform: translateY(-50%);
   z-index: 3;
 }
-
 .pa-gallery-img.style1 .premium-gallery-caption {
   position: absolute;
   top: auto;
@@ -253,13 +225,11 @@
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
-
 .pa-gallery-img.style1:hover .premium-gallery-caption {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   bottom: -1px !important;
 }
-
 .pa-gallery-img.default .premium-gallery-caption {
   position: absolute;
   top: auto;
@@ -268,7 +238,6 @@
   width: 100%;
   bottom: 0;
 }
-
 .pa-gallery-img.style2 .pa-gallery-icons-caption-container {
   position: absolute;
   top: 0;
@@ -292,11 +261,9 @@
   -ms-flex-align: center;
   align-items: center;
 }
-
 .pa-gallery-img.style2 .pa-gallery-icons-caption-cell {
   width: 100%;
 }
-
 .pa-gallery-img.style2:hover .pa-gallery-icons-caption-container {
   opacity: 1;
   -webkit-transform: translate(15px, 15px);
@@ -314,15 +281,12 @@
 .premium-img-gallery-metro .premium-gallery-item {
   overflow: hidden;
 }
-
 .premium-img-gallery-metro .pa-gallery-img {
   height: 100%;
 }
-
 .premium-img-gallery-metro .pa-gallery-img-container {
   height: 100%;
 }
-
 .premium-img-gallery-metro .pa-gallery-img-container img {
   min-height: 100%;
   width: 100%;
@@ -340,7 +304,6 @@
 .premium-gallery-load-more {
   position: relative;
 }
-
 .premium-gallery-load-more .premium-gallery-load-more-btn {
   box-shadow: none;
   text-shadow: none;
@@ -372,7 +335,6 @@
 .premium-gallery-load-more-btn div {
   margin-left: 3px;
 }
-
 .premium-gallery-load-more-btn .premium-loader {
   display: inline-block;
   width: 20px;
@@ -400,7 +362,6 @@
   line-height: 1;
   border: none;
 }
-
 .pa-gallery-img-container video {
   position: absolute;
   visibility: hidden;
@@ -426,6 +387,6 @@
   bottom: 40px;
   width: 100%;
   height: 20px;
-  background: -webkit-linear-gradient(bottom, #17181f 0%, rgba(255, 255, 255, 0) 100%);
-  background: linear-gradient(to top, #17181f 0%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-linear-gradient(bottom, rgb(23, 24, 31) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to top, rgb(23, 24, 31) 0%, rgba(255, 255, 255, 0) 100%);
 }

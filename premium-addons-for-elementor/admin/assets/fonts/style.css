@@ -1,9 +1,11 @@
 @font-face {
     font-family: "pa-dash";
-    src: url("pa-dashboard.eot?f3z94d");
-    src: url("pa-dashboard.eot?f3z94d#iefix") format("embedded-opentype"),
-        url("pa-dashboard.ttf?f3z94d") format("truetype"), url("pa-dashboard.woff?f3z94d") format("woff"),
-        url("pa-dashboard.svg?f3z94d#pa-dashboard") format("svg");
+    src: url("pa-dashboard.eot?plfx4e");
+    src:
+        url("pa-dashboard.eot?plfx4e#iefix") format("embedded-opentype"),
+        url("pa-dashboard.ttf?plfx4e") format("truetype"),
+        url("pa-dashboard.woff?plfx4e") format("woff"),
+        url("pa-dashboard.svg?plfx4e#pa-dashboard") format("svg");
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -24,7 +26,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.toplevel_page_premium-addons>div.wp-menu-image::before {
+.toplevel_page_premium-addons > div.wp-menu-image::before {
     position: relative;
     top: 5px;
     content: "\e950";

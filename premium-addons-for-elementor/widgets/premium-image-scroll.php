@@ -101,6 +101,10 @@ class Premium_Image_Scroll extends Widget_Base {
 		return array( 'pa', 'premium', 'premium image scroll', 'link', 'cta', 'animation' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Categories.
 	 *

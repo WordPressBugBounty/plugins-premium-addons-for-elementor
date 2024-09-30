@@ -324,8 +324,20 @@
                     return false;
                 });
 
-                if ("default" === this.settings.lightbox_type)
-                    this.$element.find(".premium-img-gallery a[data-rel^='prettyPhoto']").prettyPhoto(this.getPrettyPhotoSettings());
+                if ("default" === this.settings.lightbox_type) {
+                    var $video = this.$element.find(".premium-img-gallery a[data-rel^='prettyPhoto']"),
+                        videoLink = $video.attr('href');
+
+                    videoLink = this.escapeHtml(videoLink);
+                    $video.attr('href', videoLink);
+
+                    this.$element.find(".premium-img-gallery a[data-rel^='prettyPhoto']").prettyPhoto(videoLink);
+                }
+            },
+
+            escapeHtml: function (unsafe) {
+                return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(
+                    /"/g, "&quot;");
             },
 
             getPrettyPhotoSettings: function () {

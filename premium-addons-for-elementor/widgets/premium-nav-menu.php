@@ -138,6 +138,10 @@ class Premium_Nav_Menu extends Widget_Base {
 		return array( 'pa', 'premium', 'premium mega menu', 'menu', 'nav', 'navigation', 'mega menu', 'header' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

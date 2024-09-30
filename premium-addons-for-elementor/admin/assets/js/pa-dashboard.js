@@ -5,7 +5,7 @@
 
     var adminNotices = {
         'radius': 'radius_notice',
-        'woo-cta': 'woo_cta',
+        'woo-mini': 'woo_mini',
     };
 
     if (undefined !== notice) {

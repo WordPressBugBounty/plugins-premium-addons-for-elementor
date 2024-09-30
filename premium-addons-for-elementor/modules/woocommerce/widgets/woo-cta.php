@@ -278,6 +278,28 @@ class Woo_CTA extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'connect_to_pa_mc',
+			array(
+				'label'       => __( 'Automatically Open The Mini Cart List', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Use this option to open the Premium Mini Cart when a product is added.', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			'connected_mc_id',
+			array(
+				'label'       => __( 'Widget ID', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'label_block' => true,
+				'description' => __( 'Add your Premium Mini Cart widget custom ID ( EX: #my-custom-id )', 'premium-addons-for-elementor' ),
+				'condition'   => array(
+					'connect_to_pa_mc' => array( 'yes' ),
+				),
+			)
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1021,263 +1043,263 @@ class Woo_CTA extends Widget_Base {
 
 		}
 
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            array(
-                'name'           => 'woo_cta_button_background',
-                'types'          => array( 'classic', 'gradient' ),
-                'fields_options' => array(
-                    'color' => array(
-                        'global' => array(
-                            'default' => Global_Colors::COLOR_PRIMARY,
-                        ),
-                    ),
-                ),
-                'selector'       => '{{WRAPPER}} .premium-woo-cta-button, {{WRAPPER}} .premium-button-style2-shutinhor:before , {{WRAPPER}} .premium-button-style2-shutinver:before , {{WRAPPER}} .premium-button-style5-radialin:before , {{WRAPPER}} .premium-button-style5-rectin:before',
-            )
-        );
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			array(
+				'name'           => 'woo_cta_button_background',
+				'types'          => array( 'classic', 'gradient' ),
+				'fields_options' => array(
+					'color' => array(
+						'global' => array(
+							'default' => Global_Colors::COLOR_PRIMARY,
+						),
+					),
+				),
+				'selector'       => '{{WRAPPER}} .premium-woo-cta-button, {{WRAPPER}} .premium-button-style2-shutinhor:before , {{WRAPPER}} .premium-button-style2-shutinver:before , {{WRAPPER}} .premium-button-style5-radialin:before , {{WRAPPER}} .premium-button-style5-rectin:before',
+			)
+		);
 
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            array(
-                'name'     => 'woo_cta_button_border',
-                'selector' => '{{WRAPPER}} .premium-woo-cta-button',
-            )
-        );
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'woo_cta_button_border',
+				'selector' => '{{WRAPPER}} .premium-woo-cta-button',
+			)
+		);
 
-        $this->add_control(
-            'woo_box_button_radius',
-            array(
-                'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => array( 'px', 'em', '%' ),
-                'default'    => array(
-                    'size' => 0,
-                ),
-                'selectors'  => array(
-                    '{{WRAPPER}} .premium-woo-cta-button' => 'border-radius: {{SIZE}}{{UNIT}};',
-                ),
-            )
-        );
+		$this->add_control(
+			'woo_box_button_radius',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', '%' ),
+				'default'    => array(
+					'size' => 0,
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-cta-button' => 'border-radius: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
 
-        $this->add_group_control(
-            Group_Control_Box_Shadow::get_type(),
-            array(
-                'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
-                'name'     => 'woo_cta_button_box_shadow',
-                'selector' => '{{WRAPPER}} .premium-woo-cta-button',
-            )
-        );
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			array(
+				'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
+				'name'     => 'woo_cta_button_box_shadow',
+				'selector' => '{{WRAPPER}} .premium-woo-cta-button',
+			)
+		);
 
-        $this->add_responsive_control(
-            'woo_cta_button_margin',
-            array(
-                'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => array( 'px', 'em', '%' ),
-                'selectors'  => array(
-                    '{{WRAPPER}} .premium-woo-btn-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ),
-            )
-        );
+		$this->add_responsive_control(
+			'woo_cta_button_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-btn-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
 
-        $this->add_responsive_control(
-            'woo_cta_button_padding',
-            array(
-                'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => array( 'px', 'em', '%' ),
-                'selectors'  => array(
-                    '{{WRAPPER}} .premium-woo-cta-button, {{WRAPPER}} .premium-button-line6::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ),
-            )
-        );
+		$this->add_responsive_control(
+			'woo_cta_button_padding',
+			array(
+				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-cta-button, {{WRAPPER}} .premium-button-line6::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
 
-        $this->end_controls_tab();
+		$this->end_controls_tab();
 
-        $this->start_controls_tab(
-            'woo_cta_button_style_hover',
-            array(
-                'label' => __( 'Hover', 'premium-addons-for-elementor' ),
-            )
-        );
+		$this->start_controls_tab(
+			'woo_cta_button_style_hover',
+			array(
+				'label' => __( 'Hover', 'premium-addons-for-elementor' ),
+			)
+		);
 
-        $this->add_control(
-            'woo_button_text_hover_color',
-            array(
-                'label'     => __( 'Text Color', 'premium-addons-for-elementor' ),
-                'type'      => Controls_Manager::COLOR,
-                'global'    => array(
-                    'default' => Global_Colors::COLOR_PRIMARY,
-                ),
-                'selectors' => array(
-                    '{{WRAPPER}} .premium-woo-cta-button:hover .premium-woo-btn-text , {{WRAPPER}} .premium-button-line6::after'  => 'color: {{VALUE}};',
-                ),
-            )
-        );
+		$this->add_control(
+			'woo_button_text_hover_color',
+			array(
+				'label'     => __( 'Text Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_PRIMARY,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-woo-cta-button:hover .premium-woo-btn-text , {{WRAPPER}} .premium-button-line6::after'  => 'color: {{VALUE}};',
+				),
+			)
+		);
 
-        $this->add_control(
-            'button_icon_color_hover',
-            array(
-                'label'      => __( 'Icon Color', 'premium-addons-pro' ),
-                'type'       => Controls_Manager::COLOR,
-                'global'     => array(
-                    'default' => Global_Colors::COLOR_PRIMARY,
-                ),
-                'selectors'  => array(
-                    '{{WRAPPER}} .premium-woo-cta-button:hover i' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .premium-woo-cta-button:hover .premium-woo-btn-icon *' => 'fill: {{VALUE}}',
-                ),
-                'conditions' => array(
-                    'relation' => 'or',
-                    'terms'    => array(
-                        array(
-                            'terms' => array(
-                                array(
-                                    'name'  => 'icon_switcher',
-                                    'value' => 'yes',
-                                ),
-                                array(
-                                    'name'  => 'icon_type',
-                                    'value' => 'icon',
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            )
-        );
+		$this->add_control(
+			'button_icon_color_hover',
+			array(
+				'label'      => __( 'Icon Color', 'premium-addons-pro' ),
+				'type'       => Controls_Manager::COLOR,
+				'global'     => array(
+					'default' => Global_Colors::COLOR_PRIMARY,
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-cta-button:hover i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-woo-cta-button:hover .premium-woo-btn-icon *' => 'fill: {{VALUE}}',
+				),
+				'conditions' => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'terms' => array(
+								array(
+									'name'  => 'icon_switcher',
+									'value' => 'yes',
+								),
+								array(
+									'name'  => 'icon_type',
+									'value' => 'icon',
+								),
+							),
+						),
+					),
+				),
+			)
+		);
 
-        $this->add_control(
-            'underline_color',
-            array(
-                'label'     => __( 'Line Color', 'premium-addons-for-elementor' ),
-                'type'      => Controls_Manager::COLOR,
-                'global'    => array(
-                    'default' => Global_Colors::COLOR_SECONDARY,
-                ),
-                'selectors' => array(
-                    '{{WRAPPER}} .premium-btn-svg' => 'stroke: {{VALUE}};',
-                    '{{WRAPPER}} .premium-button-line2::before,  {{WRAPPER}} .premium-button-line4::before, {{WRAPPER}} .premium-button-line5::before, {{WRAPPER}} .premium-button-line5::after, {{WRAPPER}} .premium-button-line6::before, {{WRAPPER}} .premium-button-line7::before' => 'background-color: {{VALUE}};',
-                ),
-                'condition' => array(
-                    'premium_button_hover_effect' => 'style8',
-                ),
-            )
-        );
+		$this->add_control(
+			'underline_color',
+			array(
+				'label'     => __( 'Line Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_SECONDARY,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-btn-svg' => 'stroke: {{VALUE}};',
+					'{{WRAPPER}} .premium-button-line2::before,  {{WRAPPER}} .premium-button-line4::before, {{WRAPPER}} .premium-button-line5::before, {{WRAPPER}} .premium-button-line5::after, {{WRAPPER}} .premium-button-line6::before, {{WRAPPER}} .premium-button-line7::before' => 'background-color: {{VALUE}};',
+				),
+				'condition' => array(
+					'premium_button_hover_effect' => 'style8',
+				),
+			)
+		);
 
-        $this->add_control(
-            'first_layer_hover',
-            array(
-                'label'     => __( 'Layer #1 Color', 'premium-addons-for-elementor' ),
-                'type'      => Controls_Manager::COLOR,
-                'global'    => array(
-                    'default' => Global_Colors::COLOR_SECONDARY,
-                ),
-                'selectors' => array(
-                    '{{WRAPPER}} .premium-button-style7 .premium-button-text-icon-wrapper:before' => 'background-color: {{VALUE}}',
-                ),
-                'condition' => array(
-                    'premium_button_hover_effect' => 'style7',
+		$this->add_control(
+			'first_layer_hover',
+			array(
+				'label'     => __( 'Layer #1 Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_SECONDARY,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-button-style7 .premium-button-text-icon-wrapper:before' => 'background-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'premium_button_hover_effect' => 'style7',
 
-                ),
-            )
-        );
+				),
+			)
+		);
 
-        $this->add_control(
-            'second_layer_hover',
-            array(
-                'label'     => __( 'Layer #2 Color', 'premium-addons-for-elementor' ),
-                'type'      => Controls_Manager::COLOR,
-                'global'    => array(
-                    'default' => Global_Colors::COLOR_TEXT,
-                ),
-                'selectors' => array(
-                    '{{WRAPPER}} .premium-button-style7 .premium-button-text-icon-wrapper:after' => 'background-color: {{VALUE}}',
-                ),
-                'condition' => array(
-                    'premium_button_hover_effect' => 'style7',
-                ),
-            )
-        );
+		$this->add_control(
+			'second_layer_hover',
+			array(
+				'label'     => __( 'Layer #2 Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_TEXT,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-button-style7 .premium-button-text-icon-wrapper:after' => 'background-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'premium_button_hover_effect' => 'style7',
+				),
+			)
+		);
 
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            array(
-                'name'           => 'woo_cta_button_background_hover',
-                'types'          => array( 'classic', 'gradient' ),
-                'fields_options' => array(
-                    'color' => array(
-                        'global' => array(
-                            'default' => Global_Colors::COLOR_TEXT,
-                        ),
-                    ),
-                ),
-                'selector'       => '{{WRAPPER}} .premium-button-none:hover, {{WRAPPER}} .premium-button-style8:hover, {{WRAPPER}} .premium-button-style1:before, {{WRAPPER}} .premium-button-style2-shutouthor:before, {{WRAPPER}} .premium-button-style2-shutoutver:before, {{WRAPPER}} .premium-button-style2-shutinhor, {{WRAPPER}} .premium-button-style2-shutinver, {{WRAPPER}} .premium-button-style2-dshutinhor:before, {{WRAPPER}} .premium-button-style2-dshutinver:before, {{WRAPPER}} .premium-button-style2-scshutouthor:before, {{WRAPPER}} .premium-button-style2-scshutoutver:before, {{WRAPPER}} .premium-button-style5-radialin, {{WRAPPER}} .premium-button-style5-radialout:before, {{WRAPPER}} .premium-button-style5-rectin, {{WRAPPER}} .premium-button-style5-rectout:before, {{WRAPPER}} .premium-button-style6-bg, {{WRAPPER}} .premium-button-style6:before',
-                'condition'      => array(
-                    'premium_button_hover_effect!' => 'style7',
-                ),
-            ),
-        );
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			array(
+				'name'           => 'woo_cta_button_background_hover',
+				'types'          => array( 'classic', 'gradient' ),
+				'fields_options' => array(
+					'color' => array(
+						'global' => array(
+							'default' => Global_Colors::COLOR_TEXT,
+						),
+					),
+				),
+				'selector'       => '{{WRAPPER}} .premium-button-none:hover, {{WRAPPER}} .premium-button-style8:hover, {{WRAPPER}} .premium-button-style1:before, {{WRAPPER}} .premium-button-style2-shutouthor:before, {{WRAPPER}} .premium-button-style2-shutoutver:before, {{WRAPPER}} .premium-button-style2-shutinhor, {{WRAPPER}} .premium-button-style2-shutinver, {{WRAPPER}} .premium-button-style2-dshutinhor:before, {{WRAPPER}} .premium-button-style2-dshutinver:before, {{WRAPPER}} .premium-button-style2-scshutouthor:before, {{WRAPPER}} .premium-button-style2-scshutoutver:before, {{WRAPPER}} .premium-button-style5-radialin, {{WRAPPER}} .premium-button-style5-radialout:before, {{WRAPPER}} .premium-button-style5-rectin, {{WRAPPER}} .premium-button-style5-rectout:before, {{WRAPPER}} .premium-button-style6-bg, {{WRAPPER}} .premium-button-style6:before',
+				'condition'      => array(
+					'premium_button_hover_effect!' => 'style7',
+				),
+			),
+		);
 
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            array(
-                'name'     => 'woo_cta_button_border_hover',
-                'selector' => '{{WRAPPER}} .premium-woo-cta-button:hover',
-            )
-        );
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'woo_cta_button_border_hover',
+				'selector' => '{{WRAPPER}} .premium-woo-cta-button:hover',
+			)
+		);
 
-        $this->add_control(
-            'woo_cta_button_border_radius_hover',
-            array(
-                'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => array( 'px', 'em', '%' ),
-                'selectors'  => array(
-                    '{{WRAPPER}} .premium-woo-cta-button:hover' => 'border-radius: {{SIZE}}{{UNIT}};',
-                ),
-            )
-        );
+		$this->add_control(
+			'woo_cta_button_border_radius_hover',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-cta-button:hover' => 'border-radius: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
 
-        $this->add_group_control(
-            Group_Control_Box_Shadow::get_type(),
-            array(
-                'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
-                'name'     => 'woo_cta_button_shadow_hover',
-                'selector' => '{{WRAPPER}} .premium-woo-cta-button:hover',
-            )
-        );
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			array(
+				'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
+				'name'     => 'woo_cta_button_shadow_hover',
+				'selector' => '{{WRAPPER}} .premium-woo-cta-button:hover',
+			)
+		);
 
-        $this->add_responsive_control(
-            'woo_cta_button_margin_hover',
-            array(
-                'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => array( 'px', 'em', '%' ),
-                'selectors'  => array(
-                    '{{WRAPPER}} .premium-woo-cta-button:hover' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ),
-            )
-        );
+		$this->add_responsive_control(
+			'woo_cta_button_margin_hover',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-cta-button:hover' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
 
-        $this->add_responsive_control(
-            'woo_cta_button_padding_hover',
-            array(
-                'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => array( 'px', 'em', '%' ),
-                'selectors'  => array(
-                    '{{WRAPPER}} .premium-woo-cta-button:hover' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ),
-            )
-        );
+		$this->add_responsive_control(
+			'woo_cta_button_padding_hover',
+			array(
+				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-cta-button:hover' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
 
-        $this->end_controls_tab();
+		$this->end_controls_tab();
 
-        $this->end_controls_tabs();
+		$this->end_controls_tabs();
 
-        $this->end_controls_section();
+		$this->end_controls_section();
 
 		// Quantity style section.
 		$this->start_controls_section(
@@ -1980,6 +2002,12 @@ class Woo_CTA extends Widget_Base {
 			)
 		);
 
+		$connected_to_mc = 'yes' === $settings['connect_to_pa_mc'];
+
+		if ( $connected_to_mc ) {
+			$this->add_render_attribute( 'woo_cta_wrapper', 'data-pa-mc-id', $settings['connected_mc_id'] );
+		}
+
 		$product_type = $product->get_type();
 
 		if ( 'grouped' === $product_type ) {
@@ -2024,7 +2052,7 @@ class Woo_CTA extends Widget_Base {
 
 		if ( 'add_to_cart' === $button_action ) {
 
-            $redirect_to_cart = $settings['redirect_to_cart'];
+			$redirect_to_cart = $settings['redirect_to_cart'];
 
 			$this->add_render_attribute( 'button', 'data-redirect-to-cart', $redirect_to_cart );
 

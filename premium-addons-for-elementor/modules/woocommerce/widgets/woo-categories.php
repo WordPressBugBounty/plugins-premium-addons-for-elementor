@@ -22,8 +22,6 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 // Premium Addons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
-use PremiumAddons\Modules\Woocommerce\Skins;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -42,16 +40,6 @@ class Woo_Categories extends Widget_Base {
 	 * @var template_instance
 	 */
 	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
-	}
 
 	/**
 	 * Retrieve Widget Name.

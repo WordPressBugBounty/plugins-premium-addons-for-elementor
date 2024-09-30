@@ -152,6 +152,10 @@ class Premium_Image_Separator extends Widget_Base {
 		return array( 'pa', 'premium', 'premium image separator', 'divider', 'section', 'shape' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

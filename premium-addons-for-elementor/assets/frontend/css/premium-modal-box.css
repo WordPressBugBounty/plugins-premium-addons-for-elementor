@@ -27,7 +27,6 @@
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .premium-modal-trigger-btn > svg {
   width: 30px;
   height: 30px;
@@ -40,7 +39,6 @@
   line-height: 1;
   color: #000;
 }
-
 .premium-modal-box-modal-close:hover, .premium-modal-box-modal-close:focus {
   color: #000;
   text-decoration: none;
@@ -74,7 +72,6 @@ button.premium-modal-box-modal-close {
   -ms-flex-pack: center;
   justify-content: center;
 }
-
 .premium-modal-box-modal .premium-modal-box-modal-dialog {
   position: absolute;
   max-height: -webkit-calc(100vh - 150px);
@@ -135,11 +132,9 @@ button.premium-modal-box-modal-close {
   padding: 5px 15px;
   border-bottom: 1px solid #e5e5e5;
 }
-
 .premium-modal-box-modal-header .premium-modal-box-modal-close {
   margin-top: -2px;
 }
-
 .premium-modal-box-modal-header .premium-modal-box-modal-title {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -150,7 +145,6 @@ button.premium-modal-box-modal-close {
   margin: 0;
   padding: 0;
 }
-
 .premium-modal-box-modal-header .premium-modal-box-modal-title svg {
   width: 50px;
   height: 60px;
@@ -196,19 +190,16 @@ button.premium-modal-box-modal-close {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .premium-modal-trigger-container .premium-modal-trigger-btn.premium-btn-block {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
 }
-
 .premium-modal-trigger-container .premium-modal-trigger-img,
 .premium-modal-trigger-container .premium-modal-trigger-text,
 .premium-modal-trigger-container .premium-modal-trigger-animation {
   cursor: pointer;
 }
-
 .premium-modal-trigger-container .premium-modal-trigger-animation {
   display: inline-block;
   -webkit-transition: all 0.3s ease-in-out;
@@ -220,7 +211,6 @@ button.premium-modal-box-modal-close {
   width: 48px;
   padding-right: 5px;
 }
-
 .premium-modal-box-modal-header i,
 .premium-modal-box-modal-header svg {
   padding-right: 6px;
@@ -247,7 +237,6 @@ button.premium-modal-box-modal-close {
     overflow: auto;
   }
 }
-
 @media (max-width: 767px) {
   .premium-modal-box-modal-dialog {
     width: 100%;
@@ -255,7 +244,6 @@ button.premium-modal-box-modal-close {
     overflow: auto;
   }
 }
-
-.premium-modal-box-container[data-modal-animation*="animated-"] {
+.premium-modal-box-container[data-modal-animation*=animated-] {
   opacity: 0;
 }

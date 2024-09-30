@@ -94,6 +94,10 @@ class Premium_Banner extends Widget_Base {
 		return array( 'pa', 'premium', 'premium banner', 'image', 'box', 'info', 'cta' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Categories.
 	 *

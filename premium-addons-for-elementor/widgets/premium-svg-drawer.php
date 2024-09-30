@@ -84,6 +84,10 @@ class Premium_SVG_Drawer extends Widget_Base {
 		return array( 'pa', 'premium', 'premium svg draw', 'icon', 'animate', 'custom', 'library', 'animation' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Dependent CSS.
 	 *

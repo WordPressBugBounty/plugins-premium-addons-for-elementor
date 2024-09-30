@@ -159,6 +159,10 @@ class Premium_Textual_Showcase extends Widget_Base {
 		return array( 'pa', 'premium', 'premium textual showcase', 'textual', 'showcase', 'image' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

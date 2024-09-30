@@ -155,6 +155,10 @@ class Premium_Title extends Widget_Base {
 		return array( 'pa', 'premium', 'premium heading', 'title', 'text', 'headline' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

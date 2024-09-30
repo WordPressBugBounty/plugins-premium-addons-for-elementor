@@ -339,5 +339,14 @@
             <field name="Next Page" editor_type="LINE">premium_blog_next_text</field>
         </widget>
 
+        <widget name="premium-mini-cart">
+            <fields>
+                <field name="Mini Cart: Cart Text" editor_type="LINE">cart_txt</field>
+                <field name="Mini Cart: Cart Link" editor_type="LINK">cart_link>url</field>
+                <field name="Mini Cart: Cart Header" editor_type="LINE">cart_header</field>
+                <field name="Mini Cart: Cart Header" editor_type="LINE">subtotal_txt</field>
+                <field name="Mini Cart: Remove Text" editor_type="LINE">remove_txt</field>
+            </fields>
+        </widget>
     </elementor-widgets>
 </wpml-config>

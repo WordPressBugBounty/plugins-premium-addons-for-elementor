@@ -538,7 +538,7 @@ class Addons_Integration {
 			'all'
 		);
 
-		$assets_gen_enabled = self::$modules['premium-assets-generator'] ? true : false;
+		$assets_gen_enabled = isset( self::$modules['premium-assets-generator'] ) && self::$modules['premium-assets-generator'] ? true : false;
 
 		$type = get_post_type();
 
@@ -603,7 +603,7 @@ class Addons_Integration {
 		$suffix = Helper_Functions::get_assets_suffix();
 
 		$locale             = isset( $maps_settings['premium-map-locale'] ) ? $maps_settings['premium-map-locale'] : 'en';
-		$assets_gen_enabled = self::$modules['premium-assets-generator'] ? true : false;
+		$assets_gen_enabled = isset( self::$modules['premium-assets-generator'] ) && self::$modules['premium-assets-generator'] ? true : false;
 
 		$type = get_post_type();
 
@@ -648,6 +648,7 @@ class Addons_Integration {
 							'cta_nonce'      => wp_create_nonce( 'pa-woo-cta-nonce' ),
 							'woo_cart_url'   => get_permalink( wc_get_page_id( 'cart' ) ),
 							'view_cart'      => __( 'View cart', 'woocommerce' ),
+							'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' )
 						)
 					);
 
@@ -659,6 +660,14 @@ class Addons_Integration {
 		if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) || 'empty' === self::$css_content ) {
 			$this->register_old_scripts( $dir, $suffix );
 		}
+
+		// if ( !wp_script_is( 'wc-cart-fragments', 'enqueued' ) && wp_script_is( 'wc-cart-fragments', 'registered' ) ) {
+
+		// 	// Enqueue the wc-cart-fragments script
+
+		// 	wp_enqueue_script( 'wc-cart-fragments' );
+
+		// 	 }
 
 		wp_register_script( 'tiktok-embed', 'https://www.tiktok.com/embed.js', array(), false, true );
 
@@ -1046,6 +1055,14 @@ class Addons_Integration {
 			);
 
 			wp_register_script(
+				'premium-mini-cart',
+				PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-mini-cart' . $suffix . '.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_register_script(
 				'premium-woo-cart',
 				PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-woo-cart' . $suffix . '.js',
 				array( 'jquery' ),
@@ -1068,6 +1085,18 @@ class Addons_Integration {
 					'ajaxurl'   => esc_url( admin_url( 'admin-ajax.php' ) ),
 					'cta_nonce' => wp_create_nonce( 'pa-woo-cta-nonce' ),
 					'view_cart' => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' )
+				)
+			);
+
+			wp_localize_script(
+				'premium-mini-cart',
+				'PremiumWooSettings',
+				array(
+					'ajaxurl'   => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'cta_nonce' => wp_create_nonce( 'pa-woo-cta-nonce' ),
+					'view_cart' => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' )
 				)
 			);
 
@@ -1081,6 +1110,7 @@ class Addons_Integration {
 					'cta_nonce'      => wp_create_nonce( 'pa-woo-cta-nonce' ),
 					'woo_cart_url'   => get_permalink( wc_get_page_id( 'cart' ) ),
 					'view_cart'      => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' )
 				)
 			);
 
@@ -1673,8 +1703,8 @@ class Addons_Integration {
 			Floating_Effects::get_instance();
 		}
 
-		if ( class_exists( 'woocommerce' ) && ( self::$modules['woo-products'] || self::$modules['woo-categories'] || self::$modules['woo-cta'] ) ) {
-			Woocommerce::get_instance();			
+		if ( class_exists( 'woocommerce' ) && ( self::$modules['woo-products'] || self::$modules['woo-categories'] || self::$modules['mini-cart'] || self::$modules['woo-cta'] ) ) {
+			Woocommerce::get_instance();
 		}
 
 		if ( self::$modules['premium-global-tooltips'] ) {

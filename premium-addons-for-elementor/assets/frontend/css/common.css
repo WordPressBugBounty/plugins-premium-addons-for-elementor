@@ -20,7 +20,6 @@
 .premium-mask-yes .premium-dual-header-second-clip .premium-mask-span {
   background: inherit;
 }
-
 .premium-mask-yes .premium-mask-span {
   position: relative;
   overflow: hidden;
@@ -28,7 +27,6 @@
   display: -ms-inline-flexbox !important;
   display: inline-flex !important;
 }
-
 .premium-mask-yes .premium-mask-span::after {
   content: "";
   position: absolute;
@@ -48,7 +46,6 @@
   -ms-transform: translateX(-103%);
   transform: translateX(-103%);
 }
-
 .premium-mask-active.premium-mask-tl .premium-mask-span::after {
   -webkit-animation: pa-mask-tl 1.7s cubic-bezier(1, 0, 0.18, 1) forwards;
   animation: pa-mask-tl 1.7s cubic-bezier(1, 0, 0.18, 1) forwards;
@@ -56,7 +53,6 @@
   -ms-transform: translateX(103%);
   transform: translateX(103%);
 }
-
 .premium-mask-active.premium-mask-tb .premium-mask-span::after {
   -webkit-animation: pa-mask-tb 1.7s cubic-bezier(1, 0, 0.18, 1) forwards;
   animation: pa-mask-tb 1.7s cubic-bezier(1, 0, 0.18, 1) forwards;
@@ -64,7 +60,6 @@
   -ms-transform: translateY(-103%);
   transform: translateY(-103%);
 }
-
 .premium-mask-active.premium-mask-tt .premium-mask-span::after {
   -webkit-animation: pa-mask-tt 1.7s cubic-bezier(1, 0, 0.18, 1) forwards;
   animation: pa-mask-tt 1.7s cubic-bezier(1, 0, 0.18, 1) forwards;
@@ -94,7 +89,6 @@
     transform: translateX(103%);
   }
 }
-
 @-webkit-keyframes pa-mask-tl {
   0% {
     -webkit-transform: translateX(0%);
@@ -105,7 +99,6 @@
     transform: translateX(-103%);
   }
 }
-
 @keyframes pa-mask-tl {
   0% {
     -webkit-transform: translateX(0%);
@@ -116,7 +109,6 @@
     transform: translateX(-103%);
   }
 }
-
 @-webkit-keyframes pa-mask-tb {
   0% {
     -webkit-transform: translateY(0%);
@@ -127,7 +119,6 @@
     transform: translateY(103%);
   }
 }
-
 @keyframes pa-mask-tb {
   0% {
     -webkit-transform: translateY(0%);
@@ -138,7 +129,6 @@
     transform: translateY(103%);
   }
 }
-
 @-webkit-keyframes pa-mask-tt {
   0% {
     -webkit-transform: translateY(0%);
@@ -149,7 +139,6 @@
     transform: translateY(-103%);
   }
 }
-
 @keyframes pa-mask-tt {
   0% {
     -webkit-transform: translateY(0%);
@@ -160,7 +149,6 @@
     transform: translateY(-103%);
   }
 }
-
 /*
 * Common Buttons Style.
 */
@@ -170,7 +158,6 @@
   display: -ms-flexbox;
   display: flex;
 }
-
 .premium-button svg:not(.premium-btn-svg),
 .premium-image-button svg:not(.premium-btn-svg) {
   width: 30px;
@@ -186,7 +173,6 @@
   margin: 0px;
   text-decoration: none;
 }
-
 .premium-btn-sm:hover,
 .premium-btn-md:hover,
 .premium-btn-lg:hover,
@@ -195,45 +181,38 @@
   color: #eee;
 }
 
-div[class*="elementor-widget-premium"] .premium-btn-sm {
+div[class*=elementor-widget-premium] .premium-btn-sm {
   padding: 12px 24px;
   font-size: 14px;
   line-height: 1;
 }
-
-div[class*="elementor-widget-premium"] .premium-btn-sm.premium-button-line6::after {
+div[class*=elementor-widget-premium] .premium-btn-sm.premium-button-line6::after {
   padding: 12px 24px;
 }
-
-div[class*="elementor-widget-premium"] .premium-btn-md {
+div[class*=elementor-widget-premium] .premium-btn-md {
   padding: 14px 26px;
   font-size: 16px;
   line-height: 1.2;
 }
-
-div[class*="elementor-widget-premium"] .premium-btn-md.premium-button-line6::after {
+div[class*=elementor-widget-premium] .premium-btn-md.premium-button-line6::after {
   padding: 14px 26px;
 }
-
-div[class*="elementor-widget-premium"] .premium-btn-lg {
+div[class*=elementor-widget-premium] .premium-btn-lg {
   padding: 16px 28px;
   font-size: 18px;
   line-height: 1.3333;
 }
-
-div[class*="elementor-widget-premium"] .premium-btn-lg.premium-button-line6::after {
+div[class*=elementor-widget-premium] .premium-btn-lg.premium-button-line6::after {
   padding: 16px 28px;
 }
-
-div[class*="elementor-widget-premium"] .premium-btn-block {
+div[class*=elementor-widget-premium] .premium-btn-block {
   font-size: 18px;
   line-height: 1;
   padding: 20px 0px;
   width: 100%;
   text-align: center;
 }
-
-div[class*="elementor-widget-premium"] .premium-btn-block.premium-button-line6::after {
+div[class*=elementor-widget-premium] .premium-btn-block.premium-button-line6::after {
   padding: 20px 0px;
 }
 
@@ -257,15 +236,13 @@ div[class*="elementor-widget-premium"] .premium-btn-block.premium-button-line6::
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  -webkit-transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
+  -webkit-transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
 }
-
 .premium-mouse-detect-yes .premium-button-style6:hover .premium-button-style6-bg {
   width: 225%;
   height: 560px;
 }
-
 .premium-mouse-detect-yes .premium-button-style6:before {
   width: 0;
   height: 0;
@@ -299,7 +276,6 @@ because it's rendered as div with custom SVG code.
   -webkit-transition-property: stroke, fill, background-color;
   transition-property: stroke, fill, background-color;
 }
-
 .premium-svg-nodraw .no-transition,
 .premium-svg-drawer .no-transition {
   -webkit-transition: none !important;
@@ -327,7 +303,6 @@ because it's rendered as div with custom SVG code.
     transform: rotate(360deg);
   }
 }
-
 @-webkit-keyframes pa-btn-glitch {
   0% {
     -webkit-transform: scale3d(1, 1, 1);
@@ -379,7 +354,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 @keyframes pa-btn-glitch {
   0% {
     -webkit-transform: scale3d(1, 1, 1);
@@ -431,7 +405,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 @-webkit-keyframes pa-text-glitch {
   0% {
     opacity: 1;
@@ -480,7 +453,6 @@ because it's rendered as div with custom SVG code.
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
-
 @keyframes pa-text-glitch {
   0% {
     opacity: 1;
@@ -529,7 +501,6 @@ because it's rendered as div with custom SVG code.
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
-
 /**Notice*/
 .premium-error-notice {
   width: 100%;
@@ -539,7 +510,6 @@ because it's rendered as div with custom SVG code.
   border-color: #eed3d7;
   text-align: center;
 }
-
 .premium-error-notice a {
   color: #252c59;
 }
@@ -560,13 +530,11 @@ because it's rendered as div with custom SVG code.
   display: -ms-flexbox;
   display: flex;
 }
-
 .premium-instafeed-share-container .fa.fa-share,
 .premium-pinterest-share-container .fa.fa-share,
 .premium-tiktok-share-container .fa.fa-share {
   color: transparent;
 }
-
 .premium-instafeed-share-container .fa.custom-fa,
 .premium-pinterest-share-container .fa.custom-fa,
 .premium-tiktok-share-container .fa.custom-fa {
@@ -686,7 +654,6 @@ because it's rendered as div with custom SVG code.
   line-height: 30px;
   font-weight: 200;
 }
-
 .premium-instafeed-share-item *,
 .premium-instafeed-share-item ::before,
 .premium-instafeed-share-item ::after,
@@ -698,13 +665,12 @@ because it's rendered as div with custom SVG code.
 .premium-tiktok-share-item ::after {
   word-break: keep-all !important;
 }
-
 .premium-instafeed-share-item i,
 .premium-pinterest-share-item i,
 .premium-tiktok-share-item i {
   text-align: center;
-  -ms-flex-negative: 0;
   -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
   flex-shrink: 0;
   width: 1.25em;
 }
@@ -819,7 +785,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 @-webkit-keyframes pa-smart-slide-down {
   0% {
     -webkit-transform: translateY(-20px);
@@ -832,7 +797,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 @keyframes pa-smart-slide-down {
   0% {
     -webkit-transform: translateY(-20px);
@@ -845,7 +809,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 @-webkit-keyframes pa-smart-slide-left {
   0% {
     -webkit-transform: translateX(20px);
@@ -858,7 +821,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 @keyframes pa-smart-slide-left {
   0% {
     -webkit-transform: translateX(20px);
@@ -871,7 +833,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 @-webkit-keyframes pa-smart-slide-right {
   0% {
     -webkit-transform: translateX(-20px);
@@ -884,7 +845,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 @keyframes pa-smart-slide-right {
   0% {
     -webkit-transform: translateX(-20px);
@@ -897,7 +857,6 @@ because it's rendered as div with custom SVG code.
     opacity: 1;
   }
 }
-
 /** End Of Loading Animation*/
 /**Image Hover Effects*/
 .premium-hover-effects__zoomout,
@@ -941,7 +900,6 @@ because it's rendered as div with custom SVG code.
   -ms-transform: scale(1.2);
   transform: scale(1.2);
 }
-
 .premium-pinterest-feed__board-wrapper:hover .premium-hover-effects__zoomout,
 .premium-pinterest-feed__pin-wrapper:hover .premium-hover-effects__zoomout,
 .premium-tiktok-feed__video-wrapper:hover .premium-hover-effects__zoomout,
@@ -950,7 +908,6 @@ because it's rendered as div with custom SVG code.
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
-
 .premium-pinterest-feed__board-wrapper:hover .premium-hover-effects__scale,
 .premium-pinterest-feed__pin-wrapper:hover .premium-hover-effects__scale,
 .premium-tiktok-feed__video-wrapper:hover .premium-hover-effects__scale,
@@ -959,7 +916,6 @@ because it's rendered as div with custom SVG code.
   -ms-transform: scale(1.3) rotate(5deg);
   transform: scale(1.3) rotate(5deg);
 }
-
 .premium-pinterest-feed__board-wrapper:hover .premium-hover-effects__gray,
 .premium-pinterest-feed__pin-wrapper:hover .premium-hover-effects__gray,
 .premium-tiktok-feed__video-wrapper:hover .premium-hover-effects__gray,
@@ -967,7 +923,6 @@ because it's rendered as div with custom SVG code.
   -webkit-filter: grayscale(0);
   filter: grayscale(0);
 }
-
 .premium-pinterest-feed__board-wrapper:hover .premium-hover-effects__blur,
 .premium-pinterest-feed__pin-wrapper:hover .premium-hover-effects__blur,
 .premium-tiktok-feed__video-wrapper:hover .premium-hover-effects__blur,
@@ -975,7 +930,6 @@ because it's rendered as div with custom SVG code.
   -webkit-filter: blur(0px);
   filter: blur(0px);
 }
-
 .premium-pinterest-feed__board-wrapper:hover .premium-hover-effects__sepia,
 .premium-pinterest-feed__pin-wrapper:hover .premium-hover-effects__sepia,
 .premium-tiktok-feed__video-wrapper:hover .premium-hover-effects__sepia,
@@ -983,7 +937,6 @@ because it's rendered as div with custom SVG code.
   -webkit-filter: sepia(0%);
   filter: sepia(0%);
 }
-
 .premium-pinterest-feed__board-wrapper:hover .premium-hover-effects__bright,
 .premium-pinterest-feed__pin-wrapper:hover .premium-hover-effects__bright,
 .premium-tiktok-feed__video-wrapper:hover .premium-hover-effects__bright,
@@ -991,7 +944,6 @@ because it's rendered as div with custom SVG code.
   -webkit-filter: brightness(1.2);
   filter: brightness(1.2);
 }
-
 .premium-pinterest-feed__board-wrapper:hover .premium-hover-effects__trans,
 .premium-pinterest-feed__pin-wrapper:hover .premium-hover-effects__trans,
 .premium-tiktok-feed__video-wrapper:hover .premium-hover-effects__trans,
@@ -1009,7 +961,7 @@ because it's rendered as div with custom SVG code.
   display: flex;
 }
 
-[class*="premium-button-style"]:not(.premium-button-style8),
+[class*=premium-button-style]:not(.premium-button-style8),
 .premium-image-button:not(.premium-button-style8) {
   overflow: hidden;
 }
@@ -1090,7 +1042,6 @@ because it's rendered as div with custom SVG code.
   -ms-transform: scale(0);
   transform: scale(0);
 }
-
 .premium-button-style5-rectout:hover:before {
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
@@ -1256,7 +1207,6 @@ because it's rendered as div with custom SVG code.
 .premium-button-style6 {
   position: relative;
 }
-
 .premium-button-style6:before {
   content: "";
   position: absolute;
@@ -1271,13 +1221,11 @@ because it's rendered as div with custom SVG code.
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .premium-button-style6:hover:before {
   -webkit-transform: translate(-50%, -50%) scale(3);
   -ms-transform: translate(-50%, -50%) scale(3);
   transform: translate(-50%, -50%) scale(3);
 }
-
 .premium-button-style6 > *:not(.premium-button-style6-bg) {
   position: relative;
   z-index: 1;
@@ -1288,7 +1236,6 @@ because it's rendered as div with custom SVG code.
   -webkit-transition: width 0.3s ease-out 0.15s;
   transition: width 0.3s ease-out 0.15s;
 }
-
 .premium-button-style7-right .premium-button-text-icon-wrapper:after,
 .premium-button-style7-left .premium-button-text-icon-wrapper:after {
   -webkit-transition: width 0.3s ease-out 0s;
@@ -1300,7 +1247,6 @@ because it's rendered as div with custom SVG code.
   -webkit-transition: height 0.3s ease-out 0.15s;
   transition: height 0.3s ease-out 0.15s;
 }
-
 .premium-button-style7-bottom .premium-button-text-icon-wrapper:after,
 .premium-button-style7-top .premium-button-text-icon-wrapper:after {
   -webkit-transition: height 0.3s ease-out 0s;
@@ -1311,7 +1257,6 @@ because it's rendered as div with custom SVG code.
   -webkit-transition-delay: 0s;
   transition-delay: 0s;
 }
-
 .premium-button-style7:hover .premium-button-text-icon-wrapper:after {
   -webkit-transition-delay: 0.15s;
   transition-delay: 0.15s;
@@ -1395,13 +1340,11 @@ because it's rendered as div with custom SVG code.
   left: 0;
   width: 100%;
 }
-
 .premium-button-line1 .premium-btn-svg {
   stroke: currentColor;
   stroke-width: 1px;
   height: auto;
 }
-
 .premium-button-line1 .premium-btn-svg path {
   -webkit-transition: stroke-dashoffset 0.6s cubic-bezier(0.7, 0, 0.3, 1);
   transition: stroke-dashoffset 0.6s cubic-bezier(0.7, 0, 0.3, 1);
@@ -1409,7 +1352,6 @@ because it's rendered as div with custom SVG code.
   stroke-dashoffset: 1;
   fill: none;
 }
-
 .premium-button-line1:hover .premium-btn-svg path {
   -webkit-transition-timing-function: cubic-bezier(0.8, 1, 0.7, 1);
   transition-timing-function: cubic-bezier(0.8, 1, 0.7, 1);
@@ -1421,7 +1363,6 @@ because it's rendered as div with custom SVG code.
 .premium-button-line4 {
   overflow: hidden;
 }
-
 .premium-button-line4::before {
   position: absolute;
   content: "";
@@ -1431,7 +1372,6 @@ because it's rendered as div with custom SVG code.
   left: 0;
   pointer-events: none;
 }
-
 .premium-button-line4 .premium-btn-svg {
   position: absolute;
   left: 0;
@@ -1449,11 +1389,9 @@ because it's rendered as div with custom SVG code.
   -webkit-transition-timing-function: cubic-bezier(0, 0.25, 0.5, 1);
   transition-timing-function: cubic-bezier(0, 0.25, 0.5, 1);
 }
-
 .premium-button-line4 .premium-btn-svg path {
   fill: none;
 }
-
 .premium-button-line4:hover .premium-btn-svg {
   -webkit-transform: translate3d(-66.6%, 0, 0);
   transform: translate3d(-66.6%, 0, 0);
@@ -1479,12 +1417,10 @@ because it's rendered as div with custom SVG code.
   transition: transform 0.3s cubic-bezier(0.4, 1, 0.8, 1);
   transition: transform 0.3s cubic-bezier(0.4, 1, 0.8, 1), -webkit-transform 0.3s cubic-bezier(0.4, 1, 0.8, 1);
 }
-
 .premium-button-line2:hover span {
   -webkit-transform: scale3d(1.1, 1.1, 1.1);
   transform: scale3d(1.1, 1.1, 1.1);
 }
-
 .premium-button-line2:hover::before {
   -webkit-transform-origin: 0 50%;
   -ms-transform-origin: 0 50%;
@@ -1499,13 +1435,11 @@ because it's rendered as div with custom SVG code.
   left: 0;
   width: 100%;
 }
-
 .premium-button-line3 .premium-btn-svg {
   stroke: currentColor;
   stroke-width: 1px;
   height: auto;
 }
-
 .premium-button-line3 .premium-btn-svg path {
   -webkit-transition: stroke-dashoffset 0.6s cubic-bezier(0.7, 0, 0.3, 1);
   transition: stroke-dashoffset 0.6s cubic-bezier(0.7, 0, 0.3, 1);
@@ -1513,7 +1447,6 @@ because it's rendered as div with custom SVG code.
   stroke-dashoffset: 1;
   fill: none;
 }
-
 .premium-button-line3:hover .premium-btn-svg path {
   -webkit-transition-timing-function: cubic-bezier(0.8, 1, 0.7, 1);
   transition-timing-function: cubic-bezier(0.8, 1, 0.7, 1);
@@ -1531,7 +1464,6 @@ because it's rendered as div with custom SVG code.
   left: 0;
   pointer-events: none;
 }
-
 .premium-button-line5::before {
   -webkit-transform-origin: 100% 50%;
   -ms-transform-origin: 100% 50%;
@@ -1543,7 +1475,6 @@ because it's rendered as div with custom SVG code.
   transition: transform 0.3s cubic-bezier(0.2, 1, 0.8, 1);
   transition: transform 0.3s cubic-bezier(0.2, 1, 0.8, 1), -webkit-transform 0.3s cubic-bezier(0.2, 1, 0.8, 1);
 }
-
 .premium-button-line5::after {
   top: -webkit-calc(100% + 4px);
   top: calc(100% + 4px);
@@ -1557,7 +1488,6 @@ because it's rendered as div with custom SVG code.
   transition: transform 0.4s 0.1s cubic-bezier(0.2, 1, 0.8, 1);
   transition: transform 0.4s 0.1s cubic-bezier(0.2, 1, 0.8, 1), -webkit-transform 0.4s 0.1s cubic-bezier(0.2, 1, 0.8, 1);
 }
-
 .premium-button-line5:hover::before, .premium-button-line5:hover::after {
   -webkit-transform-origin: 0 50%;
   -ms-transform-origin: 0 50%;
@@ -1565,12 +1495,10 @@ because it's rendered as div with custom SVG code.
   -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
   transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
 }
-
 .premium-button-line5:hover::before {
   -webkit-transform: scale3d(1, 2, 1);
   transform: scale3d(1, 2, 1);
 }
-
 .premium-button-line5:hover::after {
   -webkit-transform: scale3d(1, 1, 1);
   transform: scale3d(1, 1, 1);
@@ -1579,7 +1507,6 @@ because it's rendered as div with custom SVG code.
 .premium-button-line6 {
   overflow: hidden;
 }
-
 .premium-button-line6::before, .premium-button-line6::after {
   position: absolute;
   content: "";
@@ -1589,7 +1516,6 @@ because it's rendered as div with custom SVG code.
   left: 0;
   pointer-events: none;
 }
-
 .premium-button-line6::before {
   height: 2px;
   top: -webkit-calc(100% - 2px);
@@ -1604,7 +1530,6 @@ because it's rendered as div with custom SVG code.
   transition: transform 0.3s cubic-bezier(0.5, 0.5, 0.3, 1);
   transition: transform 0.3s cubic-bezier(0.5, 0.5, 0.3, 1), -webkit-transform 0.3s cubic-bezier(0.5, 0.5, 0.3, 1);
 }
-
 .premium-button-line6::after {
   content: attr(data-text);
   height: 100%;
@@ -1622,7 +1547,6 @@ because it's rendered as div with custom SVG code.
   padding: 16px 28px;
   text-align: center;
 }
-
 .premium-button-line6:hover::before {
   -webkit-transform-origin: 0 50%;
   -ms-transform-origin: 0 50%;
@@ -1630,17 +1554,14 @@ because it's rendered as div with custom SVG code.
   -webkit-transform: scale3d(1, 1, 1);
   transform: scale3d(1, 1, 1);
 }
-
 .premium-button-line6:hover::after {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-
 .premium-button-line6 span {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .premium-button-line6:hover span {
   -webkit-transform: translate3d(-200%, 0, 0);
   transform: translate3d(-200%, 0, 0);
@@ -1657,13 +1578,11 @@ because it's rendered as div with custom SVG code.
   pointer-events: none;
   opacity: 0;
 }
-
 .premium-button-line7:hover::before {
   opacity: 1;
   -webkit-animation: pa-btn-glitch 0.4s steps(2, start) forwards;
   animation: pa-btn-glitch 0.4s steps(2, start) forwards;
 }
-
 .premium-button-line7:hover span {
   -webkit-animation: pa-text-glitch 0.4s linear;
   animation: pa-text-glitch 0.4s linear;

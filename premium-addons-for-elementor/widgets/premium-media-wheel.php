@@ -147,6 +147,10 @@ class Premium_Media_Wheel extends Widget_Base {
 		return array( 'youtube', 'premium advanced carousel', 'vimeo', 'self', 'hosted', 'scroll', 'image scroll', 'carousel', 'flip', 'coverflow', 'media' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

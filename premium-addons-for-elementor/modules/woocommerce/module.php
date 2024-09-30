@@ -15,6 +15,7 @@ use PremiumAddons\Includes\Module_Base;
 use PremiumAddons\Modules\Woocommerce\Modules\Products_Module;
 use PremiumAddons\Modules\Woocommerce\Modules\CTA_Module;
 use PremiumAddons\Modules\Woocommerce\Modules\categories_Module;
+use PremiumAddons\Modules\Woocommerce\Modules\Mini_Cart_Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -67,8 +68,9 @@ class Module extends Module_Base {
 	public function get_widgets() {
 		return array(
 			'Woo_Products',
-			'Woo_Categories',
-			'Woo_CTA',
+            'Woo_Categories',
+			'Mini_Cart',
+			'Woo_CTA'
 		);
 	}
 
@@ -81,6 +83,31 @@ class Module extends Module_Base {
 		// Load individual widget modules.
 		$this->load_modules();
 	}
+
+	/**
+	 * Override Woocommerce default mini cart template.
+	 *
+	 * @param string $template_name Template name.
+	 * @param string $template_path Template path. (default: '').
+	 * @param string $default_path  Default path. (default: '').
+	 * @see https://woocommerce.github.io/code-reference/files/woocommerce-includes-wc-core-functions.html#source-view.381
+	 * @return string
+	 */
+	public function pa_locate_custom_mini_cart_template( $template, $template_name, $template_path ) {
+
+		if ( 'cart/mini-cart.php' !== $template_name ) {
+			return $template;
+		}
+
+		$plugin_path = plugin_dir_path( __DIR__ ) . 'woocommerce/templates/wc-templates/';
+
+		if ( file_exists( $plugin_path . 'mini-cart.php' ) ) {
+			$template = $plugin_path . 'mini-cart.php';
+		}
+
+		return $template;
+	}
+
 
 	/**
 	 * Load individual widget modules.
@@ -102,6 +129,13 @@ class Module extends Module_Base {
 
 		if ( isset( $enabled_elements['woo-categories'] ) && $enabled_elements['woo-categories'] ) {
 			Categories_Module::get_instance();
+		}
+
+		if ( isset( $enabled_elements['mini-cart'] ) && $enabled_elements['mini-cart'] ) {
+
+			add_filter( 'woocommerce_locate_template', array( $this, 'pa_locate_custom_mini_cart_template' ), 10, 3 );
+
+			Mini_Cart_Module::get_instance();
 		}
 	}
 

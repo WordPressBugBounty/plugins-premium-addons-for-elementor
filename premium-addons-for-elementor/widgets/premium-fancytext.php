@@ -102,6 +102,10 @@ class Premium_Fancytext extends Widget_Base {
 		return array( 'pa', 'premium', 'premium animated text', 'fancy', 'typing', 'headline', 'heading', 'animation' );
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	/**
 	 * Retrieve Widget Categories.
 	 *
@@ -325,6 +329,19 @@ class Premium_Fancytext extends Widget_Base {
 				'condition' => array(
 					'style' => 'switch',
 				),
+			)
+		);
+
+		$this->add_control(
+			'trigger',
+			array(
+				'label'   => __( 'Trigger On', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::SELECT,
+				'options' => array(
+					'page_load' => __( 'Page Load', 'premium-addons-for-elementor' ),
+					'viewport'  => __( 'Visible on Viewport', 'premium-addons-for-elementor' ),
+				),
+				'default' => 'page_load',
 			)
 		);
 
@@ -1197,6 +1214,8 @@ class Premium_Fancytext extends Widget_Base {
 
 		if ( 'switch' === $settings['style'] ) {
 
+			$this->add_render_attribute( 'wrapper', 'data-start-effect', $settings['trigger'] );
+
 			$loading_bar = 'yes' === $settings['loading_bar'];
 
 			$pause = '';
@@ -1437,6 +1456,12 @@ class Premium_Fancytext extends Widget_Base {
 		<?php
 	}
 
+	/**
+	 * Render Draw shape
+	 *
+	 * @since 4.10.34
+	 * @access protected
+	 */
 	protected function render_draw_shape() {
 
 		$settings = $this->get_settings_for_display();

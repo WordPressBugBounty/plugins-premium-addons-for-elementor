@@ -31,7 +31,6 @@
     word-wrap: break-word;
   }
 }
-
 .premium-dual-header-first-header.gradient .premium-dual-header-first-span,
 .premium-dual-header-second-header.gradient {
   background-size: 300% 300% !important;
@@ -42,7 +41,6 @@
 .premium-title-first-noise-yes .premium-dual-header-first-span {
   position: relative;
 }
-
 .premium-title-first-noise-yes .premium-dual-header-first-span::before {
   content: attr(data-text);
   position: absolute;
@@ -56,7 +54,6 @@
   width: 100%;
   height: 100%;
 }
-
 .premium-title-first-noise-yes .premium-dual-header-first-span::after {
   content: attr(data-text);
   position: absolute;
@@ -74,7 +71,6 @@
 .premium-title-second-noise-yes .premium-dual-header-second-header {
   position: relative;
 }
-
 .premium-title-second-noise-yes .premium-dual-header-second-header::before {
   content: attr(data-text);
   position: absolute;
@@ -88,7 +84,6 @@
   width: 100%;
   height: 100%;
 }
-
 .premium-title-second-noise-yes .premium-dual-header-second-header::after {
   content: attr(data-text);
   position: absolute;
@@ -105,8 +100,8 @@
 
 .premium-mask-yes.premium-header-inline .premium-dual-header-first-span,
 .premium-mask-yes.premium-header-inline .premium-dual-header-second-header,
-.premium-header-inline[class*="noise-yes"] .premium-dual-header-first-span,
-.premium-header-inline[class*="noise-yes"] .premium-dual-header-second-header {
+.premium-header-inline[class*=noise-yes] .premium-dual-header-first-span,
+.premium-header-inline[class*=noise-yes] .premium-dual-header-second-header {
   display: inline-block !important;
 }
 
@@ -133,7 +128,6 @@
     background-position: 0% 50%;
   }
 }
-
 @-webkit-keyframes pa-noise-anim-1 {
   0% {
     clip: rect(52px, 9999px, 45px, 0);
@@ -199,7 +193,6 @@
     clip: rect(63px, 9999px, 37px, 0);
   }
 }
-
 @keyframes pa-noise-anim-1 {
   0% {
     clip: rect(52px, 9999px, 45px, 0);
@@ -265,7 +258,6 @@
     clip: rect(63px, 9999px, 37px, 0);
   }
 }
-
 @-webkit-keyframes pa-noise-anim-2 {
   0% {
     clip: rect(14px, 9999px, 66px, 0);
@@ -331,7 +323,6 @@
     clip: rect(41px, 9999px, 55px, 0);
   }
 }
-
 @keyframes pa-noise-anim-2 {
   0% {
     clip: rect(14px, 9999px, 66px, 0);

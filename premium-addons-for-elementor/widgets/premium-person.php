@@ -120,6 +120,10 @@ class Premium_Person extends Widget_Base {
 		return array( 'pa', 'premium', 'premium team members', 'person', 'carousel', 'slider', 'group' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

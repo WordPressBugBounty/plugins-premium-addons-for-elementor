@@ -120,6 +120,10 @@ class Premium_Testimonials extends Widget_Base {
 		return array( 'pa', 'premium', 'premium testimonials', 'quote', 'appreciate', 'rating', 'review', 'recommendation' );
 	}
 
+    protected function is_dynamic_content():bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Support URL.
 	 *

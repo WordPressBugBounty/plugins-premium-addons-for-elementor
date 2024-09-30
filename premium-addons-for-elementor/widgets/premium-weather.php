@@ -751,7 +751,7 @@ class Premium_Weather extends Widget_Base {
 					'cur_weather_sec_display' => 'inline',
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-weather__current-weather' => 'column-gap: {{SIZE}}px',
+					'{{WRAPPER}} .premium-weather__current-weather' => 'column-gap: {{SIZE}}{{UNIT}}',
 				),
 			)
 		);
