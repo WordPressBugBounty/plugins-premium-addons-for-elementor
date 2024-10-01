@@ -555,6 +555,7 @@ class Premium_SVG_Drawer extends Widget_Base {
 				'render_type'  => 'template',
 				'condition'    => array(
 					'animate_icon'  => 'yes',
+                    'icon_type!' => 'icon',
 					'magic_scroll!' => 'yes',
 				),
 			)

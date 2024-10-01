@@ -909,12 +909,11 @@ class Admin_Helper {
                 array_push( $keys, 'svg_' . $elem['key'] );
             }
 
-            if ( 'mini-cart' === $elem['key'] ) {
-                array_push( $keys, 'pa_mc_temp' );
-            }
         }
 
 		$default_keys = array_fill_keys( $keys, true );
+
+        $default_keys[ 'pa_mc_temp'] = false;
 
 		return $default_keys;
 	}
@@ -1065,9 +1064,14 @@ class Admin_Helper {
             $enabled_keys = get_option( 'pa_save_settings', $defaults );
 
             foreach ( $defaults as $key => $value ) {
-                if ( ! isset( $enabled_keys[ $key ] ) ) {
+
+                if ( 'pa_mc_temp' !== $key && ! isset( $enabled_keys[ $key ] ) ) {
                     $defaults[ $key ] = 0;
-                }
+                } elseif( 'pa_mc_temp' === $key && isset( $enabled_keys[ $key ] ) && $enabled_keys[ $key ] ) {
+					$defaults[ $key ] = 1;
+				}
+
+
             }
 
             self::$enabled_elements = $defaults;
