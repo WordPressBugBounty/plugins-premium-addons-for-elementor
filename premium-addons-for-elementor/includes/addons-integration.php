@@ -206,8 +206,8 @@ class Addons_Integration {
 			wp_send_json_error( 'Insufficient user permission' );
 		}
 
-		$temp_id   = sanitize_text_field( wp_unslash( $_POST['templateID'] ) );
-		$temp_type = sanitize_text_field( wp_unslash( $_POST['tempType'] ) );
+		$temp_id   = isset( $_POST['templateID'] ) ? sanitize_text_field( wp_unslash( $_POST['templateID'] ) ) : '';
+		$temp_type = isset( $_POST['tempType'] ) ? sanitize_text_field( wp_unslash( $_POST['tempType'] ) ) : '';
 
 		if ( 'loop' === $temp_type ) {
 			/** @var LoopDocument $document */
@@ -1480,7 +1480,7 @@ class Addons_Integration {
 			'post_author'  => $current_user->ID,
 			'post_title'   => sprintf(
 				__( 'Form | %s', 'premium-addons-for-elementor' ),
-				date( 'Y-m-d H:i' )
+				gmdate( 'Y-m-d H:i' )
 			),
 		);
 

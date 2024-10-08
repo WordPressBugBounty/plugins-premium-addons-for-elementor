@@ -4128,14 +4128,14 @@ class Premium_Weather extends Widget_Base {
 
 				$item         = $data[ $i ];
 				$weather_desc = $item['weather'][0]['description'];
-				$date         = 'style-3' === $layout ? date( 'l', $item['dt'] ) : date( 'l, d', $item['dt'] );
+				$date         = 'style-3' === $layout ? gmdate( 'l', $item['dt'] ) : gmdate( 'l, d', $item['dt'] );
 
 				if ( 0 === $i ) {
-					$date = 'Today, ' . date( 'd', $item['dt'] );
+					$date = 'Today, ' . gmdate( 'd', $item['dt'] );
 				}
 
 				if ( 1 === $i ) {
-					$date = 'Tomorrow, ' . date( 'd', $item['dt'] );
+					$date = 'Tomorrow, ' . gmdate( 'd', $item['dt'] );
 				}
 				?>
 				<div class="premium-weather__forecast-item">
@@ -4274,7 +4274,7 @@ class Premium_Weather extends Widget_Base {
 
 			?>
 			<div class="premium-weather__hourly-item">
-				<span class="premium-weather__hourly-item-date"><?php echo esc_html( date( 'g A', $item['dt'] + $timezone ) ); ?></span>
+				<span class="premium-weather__hourly-item-date"><?php echo esc_html( gmdate( 'g A', $item['dt'] + $timezone ) ); ?></span>
 				<?php if ( ! $vertical_layout ) : ?>
 					<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $weather_desc ); ?>">
 						<?php $this->render_weather_icon( $item['weather'][0]['icon'] ); ?>
@@ -4637,7 +4637,7 @@ class Premium_Weather extends Widget_Base {
 		<?php
 		for ( $i = 0; $i < $limit; $i++ ) {
 			if ( isset( $headers[ $i ] ) ) {
-				$date = date( $date_format, strtotime( $headers[ $i ] ) );
+				$date = gmdate( $date_format, strtotime( $headers[ $i ] ) );
 				?>
 					<li class='premium-weather__tab-header <?php echo $i === 0 ? ' current' : ''; ?>' data-content-id="#premium-tab-content-<?php echo esc_attr( $i ); ?>" aria-label='<?php echo esc_attr__( $date, 'premium-addons-for-elementor' ); ?>' title='<?php echo esc_attr__( $date, 'premium-addons-for-elementor' ); ?>'> <?php echo esc_html( $date ); ?></li>
 					<?php
@@ -4775,7 +4775,7 @@ class Premium_Weather extends Widget_Base {
 
 				?>
 				<div class="premium-weather__hourly-item">
-					<span class="premium-weather__hourly-item-date"><?php echo esc_html( date( 'd-h:i A', $item['dt'] ) ); ?></span>
+					<span class="premium-weather__hourly-item-date"><?php echo esc_html( gmdate( 'd-h:i A', $item['dt'] ) ); ?></span>
 
 					<?php if ( $conditions_arr['desc_icon'] ) : ?>
 						<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $weather_desc ); ?>">

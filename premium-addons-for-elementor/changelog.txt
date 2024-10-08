@@ -1,5 +1,28 @@
 == Changelog ==
 
+= 4.10.56 =
+
+- Tweak: Dashboard settings tab loading speed improved.
+- Tweak: Improve layout rendering in Mini Cart widget for better loading speed.
+- Fixed: Compatibility issues with WPML translation plugin.
+
+= 4.10.55 =
+
+- Fixed: Issues with Slide-in WooCommerce cart and Mini Cart layout after v4.10.54.
+
+= 4.10.54 =
+
+- Tweak: Plugin performance and loading speed improved.
+- Fixed: WooCommerce mini-cart template broken after v4.10.53.
+
+= 4.10.53 =
+
+- New: Added WooCommerce Mini Cart widget - [here](https://premiumaddons.com/elementor-woocommerce-mini-cart-widget/).
+- Tweak: Compatibility with Elementor Elements Caching feature.
+- Tweak: Added "Load Animation on Page Load/Scroll" for Animated Text widget.
+- Fixed: Carousel arrows not showing in Mobile Menu widget.
+- Fixed: Layout break when Load More Products button clicked in Woo Products Listing widget.
+
 = 4.10.52 =
 
 - Tweak: Added Highlighted Text Color control in AJAX Search widget.

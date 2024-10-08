@@ -411,7 +411,7 @@ class Assets_Manager {
 	public static function clear_cached_file( $file_name ) {
 
 		if ( file_exists( $file_name ) ) {
-			unlink( $file_name );
+			wp_delete_file( $file_name );
 		}
 	}
 

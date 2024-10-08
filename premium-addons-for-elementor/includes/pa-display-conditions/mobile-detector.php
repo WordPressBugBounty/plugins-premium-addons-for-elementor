@@ -1193,8 +1193,10 @@ class PA_Mobile_Detect {
             return false;
         }
 
+        $device = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+
 		foreach ( self::$tabletDevices as $_regex ) {
-			if ( $this->match( $_regex, $_SERVER['HTTP_USER_AGENT'] ) ) {
+			if ( $this->match( $_regex, $device ) ) {
 				return true;
 			}
 		}

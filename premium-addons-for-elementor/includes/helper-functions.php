@@ -950,12 +950,13 @@ class Helper_Functions {
 		$product_cat = array();
 
 		$cat_args = array(
+            'taxonomy'  => 'product_cat',
 			'orderby'    => 'name',
 			'order'      => 'asc',
 			'hide_empty' => false,
 		);
 
-		$product_categories = get_terms( 'product_cat', $cat_args );
+		$product_categories = get_terms( $cat_args );
 
 		if ( ! empty( $product_categories ) ) {
 

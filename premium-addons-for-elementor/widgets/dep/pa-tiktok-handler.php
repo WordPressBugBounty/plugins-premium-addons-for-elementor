@@ -51,7 +51,7 @@ function get_tiktok_data( $id, $settings ) {
 				),
 			);
 
-			$args['body'] = json_encode( $filters );
+			$args['body'] = wp_remote_get( $filters );
 
 		} else {
 			$endpoint = 'video/list/';
@@ -62,7 +62,7 @@ function get_tiktok_data( $id, $settings ) {
 					'max_count' => $limit,
 				);
 
-				$args['body'] = json_encode( $limit );
+				$args['body'] = wp_remote_get( $limit );
 			}
 		}
 

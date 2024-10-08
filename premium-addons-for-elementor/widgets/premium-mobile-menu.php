@@ -1638,7 +1638,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 
 		$is_edit_mode = \Elementor\Plugin::$instance->editor->is_edit_mode();
 
-		$current_page_url = $_SERVER['REQUEST_URI'];
+        $current_page_url   = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 
 		$is_home = is_front_page();
 

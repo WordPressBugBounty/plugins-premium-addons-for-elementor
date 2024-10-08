@@ -325,13 +325,20 @@
                 });
 
                 if ("default" === this.settings.lightbox_type) {
-                    var $video = this.$element.find(".premium-img-gallery a[data-rel^='prettyPhoto']"),
-                        videoLink = $video.attr('href');
+                    var $videos = this.$element.find(".premium-img-gallery a[data-rel^='prettyPhoto']");
 
-                    videoLink = this.escapeHtml(videoLink);
-                    $video.attr('href', videoLink);
 
-                    this.$element.find(".premium-img-gallery a[data-rel^='prettyPhoto']").prettyPhoto(videoLink);
+                    $videos.map(function (index, video) {
+                        var $video = $(video);
+
+                        var videoLink = $video.attr('href');
+
+                        videoLink = _this.escapeHtml(videoLink);
+                        $video.attr('href', videoLink);
+
+                        $video.prettyPhoto(_this.getPrettyPhotoSettings());
+
+                    })
                 }
             },
 

@@ -11,8 +11,6 @@ $settings = self::get_integrations_settings();
 
 $locales = Helper_Functions::get_google_maps_prefixes();
 
-$prefix = Helper_Functions::get_prefix();
-
 ?>
 
 <div class="pa-section-content">
@@ -24,7 +22,7 @@ $prefix = Helper_Functions::get_prefix();
 				<div class="pa-section-info-wrap">
 					<div class="pa-section-info">
 						<h4><?php echo esc_html_e( 'Google API Keys', 'premium-addons-for-elementor' ); ?></h4>
-						<p><?php echo sprintf( 'Google APIs are used in %1$s Google Maps and %1$s Video Box widgets. If you don\'t have one, click %2$shere%3$s to get your key. Click %4$shere%3$s to enable Youtube Data for your API key', esc_html( $prefix ), '<a href="https://premiumaddons.com/docs/getting-your-api-key-for-google-reviews/" target="_blank">', '</a>', '<a href="https://premiumaddons.com/docs/how-to-enable-youtube-data-api-for-premium-video-box-widget" target="_blank">' ); ?></p>
+						<p><?php echo sprintf( 'Google APIs are used in Google Maps and Video Box widgets. If you don\'t have one, click %1$shere%2$s to get your key. Click %3$shere%2$s to enable Youtube Data for your API key', '<a href="https://premiumaddons.com/docs/getting-your-api-key-for-google-reviews/" target="_blank">', '</a>', '<a href="https://premiumaddons.com/docs/how-to-enable-youtube-data-api-for-premium-video-box-widget" target="_blank">' ); ?></p>
 					</div>
 				</div>
 

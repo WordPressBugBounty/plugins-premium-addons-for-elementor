@@ -1232,7 +1232,10 @@ class Premium_Notifications extends Widget_Base {
 				// Get all taxonomy values under the taxonomy.
 				foreach ( $taxonomy as $index => $tax ) {
 
-					$terms = get_terms( $index, array( 'hide_empty' => false ) );
+                    $terms = get_terms( array(
+                        'taxonomy'  => $index,
+                        'hide_empty' => false,
+                    ));
 
 					$related_tax = array();
 

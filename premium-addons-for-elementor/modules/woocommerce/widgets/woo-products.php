@@ -2740,12 +2740,13 @@ class Woo_Products extends Widget_Base {
 		$product_tag = array();
 
 		$tag_args = array(
+            'taxonomy'  => 'product_tag',
 			'orderby'    => 'name',
 			'order'      => 'asc',
 			'hide_empty' => false,
 		);
 
-		$terms = get_terms( 'product_tag', $tag_args );
+		$terms = get_terms( $tag_args );
 
 		if ( ! empty( $terms ) ) {
 

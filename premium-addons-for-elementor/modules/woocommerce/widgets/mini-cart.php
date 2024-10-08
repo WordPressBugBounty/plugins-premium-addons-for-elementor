@@ -3759,6 +3759,8 @@ class Mini_Cart extends Widget_Base {
 			}
 		}
 
+        update_option( 'pa_mc_layout', $settings['content_layout'] );
+
 		$icon_type = $settings['icon_type'];
 		$cart_txt  = $settings['cart_txt'];
 

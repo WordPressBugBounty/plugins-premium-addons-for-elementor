@@ -2876,7 +2876,6 @@ class Premium_Tiktok_Feed extends Widget_Base {
 					<iframe id="pa-tiktok-vid-control-iframe"></iframe>
 				</div>
 			</div>
-			<script async src='https://www.tiktok.com/embed.js'></script>
 		<?php
 	}
 
@@ -3086,7 +3085,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 			<?php endif; ?>
 
 			<?php if ( $vid_settings['date'] ) : ?>
-				<span class="premium-tiktok-feed__created-at"><?php echo esc_html( date( $settings['date_format'], $feed['create_time'] ) ); ?></span>
+				<span class="premium-tiktok-feed__created-at"><?php echo esc_html( gmdate( $settings['date_format'], $feed['create_time'] ) ); ?></span>
 			<?php endif; ?>
 
 		</div>

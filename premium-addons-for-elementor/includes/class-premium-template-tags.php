@@ -520,8 +520,8 @@ class Premium_Template_Tags {
 			if ( '' !== $settings['posts_from'] ) {
 				$last_time = strtotime( '-1 ' . $settings['posts_from'] );
 
-				$start_date = date( 'Y-m-d', $last_time );
-				$end_date   = date( 'Y-m-d' );
+				$start_date = gmdate( 'Y-m-d', $last_time );
+				$end_date   = gmdate( 'Y-m-d' );
 
 				$post_args['date_query'] = array(
 					array(

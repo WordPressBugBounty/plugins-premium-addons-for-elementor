@@ -1046,6 +1046,7 @@ class Woo_Categories extends Widget_Base {
 		$settings = $this->get_settings();
 
 		$args = array(
+            'taxonomy'  => 'product_cat',
 			'hide_empty' => $settings['hide_empty'],
 			'orderby'    => $settings['orderby'],
 			'order'      => $settings['order'],
@@ -1066,7 +1067,7 @@ class Woo_Categories extends Widget_Base {
 			$args['exclude'] = $exclude_ids;
 		}
 
-		$categories = get_terms( 'product_cat', $args );
+		$categories = get_terms( $args );
 
 		if ( empty( $categories ) ) {
 

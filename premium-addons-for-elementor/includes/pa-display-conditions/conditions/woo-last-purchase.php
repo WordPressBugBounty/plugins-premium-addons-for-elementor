@@ -72,7 +72,7 @@ class Woo_Last_Purchase extends Condition {
 
 		$order = wc_get_orders( $args );
 
-		$date_completed = $order && $order[0] ? date( 'Y-m-d', strtotime( $order[0]->get_Date_completed() ) ) : false;
+		$date_completed = $order && $order[0] ? gmdate( 'Y-m-d', strtotime( $order[0]->get_Date_completed() ) ) : false;
 
 		$condition_result = $value >= $date_completed ? true : false;
 

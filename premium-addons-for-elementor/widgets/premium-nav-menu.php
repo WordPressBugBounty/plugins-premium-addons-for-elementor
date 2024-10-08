@@ -4502,7 +4502,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		$this->add_render_attribute(
 			'wrapper',
 			array(
-				'data-settings' => json_encode( $menu_settings ),
+				'data-settings' => wp_json_encode( $menu_settings ),
 				'class'         => array(
 					'premium-nav-widget-container',
 					'premium-nav-pointer-' . $settings['pointer'],

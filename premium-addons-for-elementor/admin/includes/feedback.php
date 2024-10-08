@@ -209,7 +209,7 @@ class Feedback {
 				'memory'  => 'Memory: ' . size_format( wp_convert_hr_to_bytes( ini_get( 'memory_limit' ) ) ),
 				'time'    => 'Time: ' . ini_get( 'max_execution_time' ),
 				'install' => 'Activation: ' . get_option( 'pa_install_time' ),
-				'deactivate' => 'Deactivation: ' . date( 'j F, Y', time() )
+				'deactivate' => 'Deactivation: ' . gmdate( 'j F, Y', time() )
 			),
 		);
 

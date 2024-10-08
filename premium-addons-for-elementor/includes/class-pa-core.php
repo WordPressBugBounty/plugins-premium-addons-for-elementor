@@ -113,7 +113,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			if ( ! $install_time ) {
 
-				$current_time = date( 'j F, Y', time() );
+				$current_time = gmdate( 'j F, Y', time() );
 
 				update_option( 'pa_install_time', $current_time );
 

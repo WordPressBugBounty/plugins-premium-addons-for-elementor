@@ -77,7 +77,7 @@ $pa_news = self::get_pa_news();
 											<img src="<?php echo esc_url( $post['featured_img_url'] ); ?>">
 										</div>
 										<p><?php echo wp_kses_post( $post['title']['rendered'] ); ?></p>
-										<p><?php echo wp_kses_post( date( 'j F, Y', strtotime( $post['date'] ) ) ); ?></p>
+										<p><?php echo wp_kses_post( gmdate( 'j F, Y', strtotime( $post['date'] ) ) ); ?></p>
 										<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $post['link'], 'about-page', 'wp-dash', 'dashboard' ) ); ?>" target="_blank"></a>
 									</div>
 								<?php endforeach; ?>

@@ -207,7 +207,7 @@ class Pa_Weather_Handler {
 
 		foreach ( $data as $element ) {
 
-			$date = date( 'Y-m-d', $element['dt'] );
+			$date = gmdate( 'Y-m-d', $element['dt'] );
 
 			if ( ! isset( $days_forecast[ $date ] ) ) {
 				$days_forecast[ $date ] = array();

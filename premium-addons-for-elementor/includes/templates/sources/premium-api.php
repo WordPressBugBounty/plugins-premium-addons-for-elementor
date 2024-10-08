@@ -284,9 +284,9 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 
 		$id = str_replace( $this->id_prefix(), '', $template_id );
 
-		if ( ! $tab ) {
-			$tab = isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : false;
-		}
+		// if ( ! $tab ) {
+		// 	$tab = isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : false;
+		// }
 
 		$license_key = Templates\premium_templates()->config->get( 'key' );
 
