@@ -57,9 +57,8 @@ class Module {
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-		if ( Helper_Functions::check_elementor_experiment( 'container' ) ) {
-			add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-		}
+        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
+
 	}
 
 	/**

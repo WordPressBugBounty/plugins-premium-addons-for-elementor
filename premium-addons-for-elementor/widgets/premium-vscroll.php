@@ -174,7 +174,7 @@ class Premium_Vscroll extends Widget_Base {
 		$this->add_control(
 			'template_height_hint',
 			array(
-				'label' => '<span style="line-height: 1.4em;"><b>Important<br></b></span><ul style="line-height: 1.2"><li>1- Section Height needs to be set to default.</li><li>2- It\'s recommended that templates be the same height.</li><li>3- For navigation menu, you will need to add navigation menu items first</li></ul>',
+				'label' => '<span style="line-height: 1.4em;"><b>Important<br></b></span><ul style="line-height: 1.2"><li>1- Container Height needs to be set to default.</li><li>2- It\'s recommended that templates be the same height.</li><li>3- For navigation menu, you will need to add navigation menu items first</li></ul>',
 				'type'  => Controls_Manager::RAW_HTML,
 
 			)
@@ -185,7 +185,7 @@ class Premium_Vscroll extends Widget_Base {
 			array(
 				'label'       => __( 'Content Type', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
-				'description' => __( 'Choose which method you prefer to insert sections.', 'premium-addons-for-elementor' ),
+				'description' => __( 'Choose which method you prefer to insert containers.', 'premium-addons-for-elementor' ),
 				'options'     => array(
 					'templates' => __( 'Elementor Templates', 'premium-addons-for-elementor' ),
 					'ids'       => __( 'Section ID', 'premium-addons-for-elementor' ),
@@ -235,7 +235,7 @@ class Premium_Vscroll extends Widget_Base {
 			array(
 				'label'       => __( 'Section ID', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
-				'description' => __( 'Use this option to add unique ID to your template section', 'premium-addons-for-elementor' ),
+				'description' => __( 'Use this option to add unique ID to your template container', 'premium-addons-for-elementor' ),
 				'dynamic'     => array( 'active' => true ),
 			)
 		);
@@ -526,7 +526,7 @@ class Premium_Vscroll extends Widget_Base {
 		$this->add_control(
 			'cube_effect_note',
 			array(
-				'raw'             => __( 'Full Section scroll option is enabled by default for Cube effect for better UX.', 'premium-addons-for-elementor' ),
+				'raw'             => __( 'Full Container scroll option is enabled by default for Cube effect for better UX.', 'premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				'condition'       => array(
@@ -538,11 +538,7 @@ class Premium_Vscroll extends Widget_Base {
 		$this->add_control(
 			'new_effect_note',
 			array(
-				'raw'             => __(
-					'Please note that the
-				animation will automatically be changed to default on touch devices for better performance.',
-					'premium-addons-for-elementor'
-				),
+				'raw'             => __('Please note that the animation will automatically be changed to default on touch devices for better performance.','premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				'condition'       => array(
@@ -574,7 +570,7 @@ class Premium_Vscroll extends Widget_Base {
 		$this->add_control(
 			'full_section',
 			array(
-				'label'     => __( 'Full Section Scroll', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Full Container Scroll', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'default'   => 'yes',
 				'condition' => array(
@@ -588,7 +584,7 @@ class Premium_Vscroll extends Widget_Base {
 			array(
 				'label'       => __( 'Save to Browser History', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Enabling this option will save the current section ID to the browser history', 'premium-addons-for-elementor' ),
+				'description' => __( 'Enabling this option will save the current container ID to the browser history', 'premium-addons-for-elementor' ),
 				'default'     => 'yes',
 			)
 		);
@@ -596,8 +592,8 @@ class Premium_Vscroll extends Widget_Base {
 		$this->add_control(
 			'full_section_touch',
 			array(
-				'label'     => __( 'Enable Full Section Scroll on Touch Devices', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
+				'label'     => __( 'Enable Full Container Scroll on Touch Devices', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HIDDEN,
 				'condition' => array(
 					'full_section'   => 'yes',
 					'scroll_effect!' => 'rotate',
@@ -610,7 +606,7 @@ class Premium_Vscroll extends Widget_Base {
 			array(
 				'label'        => __( 'Check Content Overflow', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'description'  => __( 'Enable this option to check if sections height is larger than screen height and add a scroll bar for the content', 'premium-addons-for-elementor' ),
+				'description'  => __( 'Enable this option to check if containers height is larger than screen height and add a scroll bar for the content', 'premium-addons-for-elementor' ),
 				'condition'    => array(
 					'full_section'   => 'yes',
 					'scroll_effect!' => 'rotate',
@@ -1176,7 +1172,7 @@ class Premium_Vscroll extends Widget_Base {
 			'dotsPos'           => $settings['navigation_dots_pos'],
 			'dotsVPos'          => $settings['navigation_dots_v_pos'],
 			'fullSection'       => 'rotate' === $settings['scroll_effect'] || 'yes' === $settings['full_section'] ? true : false,
-			'fullTouch'         => 'rotate' === $settings['scroll_effect'] || 'yes' === $settings['full_section_touch'] ? true : false,
+			'fullTouch'         => false,
 			'fullCheckOverflow' => 'rotate' === $settings['scroll_effect'] || $settings['full_section_overflow'],
 			'addToHistory'      => 'yes' === $settings['save_state'] ? true : false,
 			'animation'         => $settings['dots_animation'],

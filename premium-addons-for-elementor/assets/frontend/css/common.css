@@ -273,8 +273,8 @@ because it's rendered as div with custom SVG code.
 .premium-svg-drawer * {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  -webkit-transition-property: stroke, fill, background-color;
-  transition-property: stroke, fill, background-color;
+  -webkit-transition-property: stroke, fill, background-color !important;
+  transition-property: stroke, fill, background-color !important;
 }
 .premium-svg-nodraw .no-transition,
 .premium-svg-drawer .no-transition {

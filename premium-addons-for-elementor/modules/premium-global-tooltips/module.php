@@ -52,13 +52,6 @@ class Module {
 	 */
 	public function __construct() {
 
-		// Checks if Global Tooltips addon is enabled.
-		$global_tooltip = Admin_Helper::check_element_by_key( 'premium-global-tooltips' );
-
-		if ( ! $global_tooltip ) {
-			return;
-		}
-
 		// Enqueue the required JS file.
 		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_styles' ) );
@@ -80,11 +73,10 @@ class Module {
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-		if ( Helper_Functions::check_elementor_experiment( 'container' ) ) {
-			add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-			add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
-			add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
-		}
+        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
+        add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
+        add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
+
 	}
 
 	/**

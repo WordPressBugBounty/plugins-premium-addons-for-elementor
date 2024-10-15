@@ -88,7 +88,7 @@ $features = $elements['cat-11']['elements'];
 								<i class="dashicons dashicons-image-rotate"></i>
 							</button>
 						</h4>
-							<p><?php echo esc_html( __( 'Change the default mouse cursor with icon, image, or Lottie animation for any Elementor section, container, column, or widget.', 'premium-addons-for-elementor' ) ); ?></p>
+							<p><?php echo esc_html( __( 'Change the default mouse cursor with icon, image, or Lottie animation for any Elementor container or widget.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
 						<?php
 
@@ -112,7 +112,7 @@ $features = $elements['cat-11']['elements'];
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
 							<h4><?php echo esc_html( __( 'Global Badge', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Add icon, image, Lottie, or SVG blob shape badge to any Elementor section, container, column, or widget.', 'premium-addons-for-elementor' ) ); ?></p>
+							<p><?php echo esc_html( __( 'Add icon, image, Lottie, or SVG blob shape badge to any Elementor container or widget.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
 						<?php
 
@@ -136,7 +136,7 @@ $features = $elements['cat-11']['elements'];
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
 							<h4><?php echo esc_html( __( 'Animated Shape Divider', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Add icon, image, Lottie, or SVG blob shape badge to any Elementor section, container, column, or widget.', 'premium-addons-for-elementor' ) ); ?></p>
+							<p><?php echo esc_html( __( 'Add icon, image, Lottie, or SVG blob shape badge to any Elementor container or widget.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
 												<div class="pa-section-info-cta">
 							<label class="switch">
@@ -153,7 +153,7 @@ $features = $elements['cat-11']['elements'];
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
 							<h4><?php echo esc_html( __( 'Global Tooltips', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Add icon, text, Lottie or Elementor template tooltip to any Elementor section, container, column, or widget.', 'premium-addons-for-elementor' ) ); ?></p>
+							<p><?php echo esc_html( __( 'Add icon, text, Lottie or Elementor template tooltip to any Elementor container or widget.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
 												<div class="pa-section-info-cta">
 							<label class="switch">
@@ -241,7 +241,7 @@ $features = $elements['cat-11']['elements'];
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
 						<h4><?php echo esc_html( __( 'Wrapper Link', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Add links to Elementor flexbox container, section, column or widgets.', 'premium-addons-for-elementor' ) ); ?></p>
+							<p><?php echo esc_html( __( 'Add links to Elementor flexbox containers or widgets.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">

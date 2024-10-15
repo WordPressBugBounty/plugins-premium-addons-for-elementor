@@ -50,13 +50,6 @@ class Module {
 	 */
 	public function __construct() {
 
-		// Checks if Wrapper Link addon is enabled.
-		$wrapper_link = Admin_Helper::check_element_by_key( 'premium-wrapper-link' );
-
-		if ( ! $wrapper_link ) {
-			return;
-		}
-
 		// Enqueue the required JS file.
 		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
@@ -72,10 +65,9 @@ class Module {
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-		if ( Helper_Functions::check_elementor_experiment( 'container' ) ) {
-			add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-			add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
-		}
+        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
+        add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
+
 	}
 
 	/**

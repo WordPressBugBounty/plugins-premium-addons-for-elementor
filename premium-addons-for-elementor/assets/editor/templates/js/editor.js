@@ -720,7 +720,7 @@
                         collection: templatesCollection
                     }));
 
-                    if ('premium_section' === tabName) {
+                    if ('premium_container' === tabName) {
 
                         contentView.searchField.show(new self.SearchFieldView());
 

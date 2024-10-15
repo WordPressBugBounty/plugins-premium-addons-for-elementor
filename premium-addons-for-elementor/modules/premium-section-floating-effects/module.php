@@ -43,13 +43,6 @@ class Module {
 	 */
 	public function __construct() {
 
-		// Checks if Floating Effects is enabled.
-		$floating_effect = Admin_Helper::check_element_by_key( 'premium-floating-effects' );
-
-		if ( ! $floating_effect ) {
-			return;
-		}
-
 		// Enqueue the required JS file.
 		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 

@@ -50,7 +50,7 @@ if ( ! class_exists( 'Premium_Templates_Types' ) ) {
 			require $base_path . 'base.php';
 
 			$temp_types = array(
-				__NAMESPACE__ . '\Premium_Structure_Section' => $base_path . 'section.php',
+				__NAMESPACE__ . '\Premium_Structure_Container' => $base_path . 'container.php',
 				__NAMESPACE__ . '\Premium_Structure_Page' => $base_path . 'page.php',
 			);
 

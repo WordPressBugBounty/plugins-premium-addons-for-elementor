@@ -163,7 +163,7 @@ class Premium_Maps extends Widget_Base {
 			$this->add_control(
 				'premium_maps_api_url',
 				array(
-					'raw'             => 'Premium Maps widget requires an API key. Get your API key from <a target="_blank" href="https://premiumaddons.com/docs/getting-your-api-key-for-google-reviews/">here</a> and add it to Premium Addons admin page. Go to Dashboard -> Premium Addons for Elementor -> Integrations tab',
+					'raw'             => 'Premium Maps widget requires an API key. Get your API key from <a target="_blank" href="https://premiumaddons.com/docs/getting-google-api-key-for-elementor-widgets//">here</a> and add it to Premium Addons admin page. Go to Dashboard -> Premium Addons for Elementor -> Integrations tab',
 					'type'            => Controls_Manager::RAW_HTML,
 					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				)
@@ -677,7 +677,7 @@ class Premium_Maps extends Widget_Base {
 			)
 		);
 
-		$doc2_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/getting-your-api-key-for-google-reviews', 'editor-page', 'wp-editor', 'get-support' );
+		$doc2_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/getting-google-api-key-for-elementor-widgets/', 'editor-page', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_2',

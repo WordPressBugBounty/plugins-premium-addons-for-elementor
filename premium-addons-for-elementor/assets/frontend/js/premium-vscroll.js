@@ -14,8 +14,14 @@
         }
 
         var $vScrollElem = $scope.find(".premium-vscroll-wrap"),
+            $sectionsWrap = $scope.find(".premium-vscroll-sections-wrap"),
             instance = null,
             vScrollSettings = $vScrollElem.data("settings");
+
+        //Change back to default animation on touch devices.
+        if (['mobile', 'mobile_extra', 'tablet', 'tablet_extra'].includes(deviceType)) {
+            $sectionsWrap.removeAttr('data-animation data-hijacking');
+        }
 
         vScrollSettings.deviceType = deviceType;
 
@@ -258,8 +264,8 @@
 
                 var $section = sections[section].selector;
 
-                new IntersectionObserver(function(entries, observer) {
-                    entries.forEach(function(entry) {
+                new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
                         if (entry.isIntersecting) {
 
                             var $this = $(entry.target),

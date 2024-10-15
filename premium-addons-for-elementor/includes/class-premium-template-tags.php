@@ -280,16 +280,22 @@ class Premium_Template_Tags {
 	 * @return array
 	 */
 	public static function get_authors() {
-		$users = get_users( array( 'role__in' => array( 'administrator', 'editor', 'author', 'contributor' ) ) );
+
+		$users = get_users(
+			array(
+				'role__in' => array( 'administrator', 'editor', 'author', 'contributor' ),
+				'fields'   => array( 'ID', 'display_name' ), // Only fetch the necessary fields
+			)
+		);
 
 		$options = array();
 
-		if ( ! empty( $users ) && ! is_wp_error( $users ) ) {
-			foreach ( $users as $user ) {
-				if ( 'wp_update_service' !== $user->display_name ) {
-					$options[ $user->ID ] = $user->display_name;
-				}
+		foreach ( $users as $user ) {
+			if ( 'wp_update_service' === $user->display_name ) {
+				continue;
 			}
+
+			$options[ $user->ID ] = $user->display_name;
 		}
 
 		return $options;
@@ -317,13 +323,12 @@ class Premium_Template_Tags {
 		$options = array();
 
 		foreach ( $post_types as $post_type ) {
+
+			if ( 'attachment' === $post_type->name ) {
+				continue;
+			}
+
 			$options[ $post_type->name ] = $post_type->label;
-		}
-
-		$key = array_search( 'Media', $options, true );
-
-		if ( 'attachment' === $key ) {
-			unset( $options[ $key ] );
 		}
 
 		return $options;
@@ -417,14 +422,23 @@ class Premium_Template_Tags {
 				'posts_per_page'         => -1,
 				'update_post_term_cache' => false,
 				'update_post_meta_cache' => false,
-				'fields'                 => array( 'ids' ),
+				'fields'                 => 'ids',
 			)
 		);
 
 		$options = array();
 
 		if ( ! empty( $list ) && ! is_wp_error( $list ) ) {
-			foreach ( $list as $post ) {
+
+			global $wpdb;
+
+			$query          = "SELECT ID, post_title FROM $wpdb->posts WHERE ID IN (%s)";
+			$post_ids       = implode( ',', array_map( 'absint', $list ) );
+			$prepared_query = $wpdb->prepare( $query, $post_ids );
+
+			$results = $wpdb->get_results( $prepared_query );
+
+			foreach ( $results as $post ) {
 				$options[ $post->ID ] = $post->post_title;
 			}
 		}
@@ -446,7 +460,8 @@ class Premium_Template_Tags {
 	public static function get_taxnomies( $type ) {
 
 		$taxonomies = get_object_taxonomies( $type, 'objects' );
-		$data       = array();
+
+		$data = array();
 
 		foreach ( $taxonomies as $tax_slug => $tax ) {
 
@@ -454,7 +469,9 @@ class Premium_Template_Tags {
 				continue;
 			}
 
-			$data[ $tax_slug ] = $tax;
+			$data[ $tax_slug ] = (object) array(
+				'label' => $tax->label,
+			);
 		}
 
 		return $data;
@@ -760,7 +777,7 @@ class Premium_Template_Tags {
 	 * @param integer $excerpt_length excerpt length.
 	 * @param string  $cta_type call to action type.
 	 * @param string  $read_more readmore text.
-     * @param string  $excerpt_all apply excerpt length on all posts.
+	 * @param string  $excerpt_all apply excerpt length on all posts.
 	 */
 	public function render_post_content( $source, $excerpt_length, $cta_type, $read_more, $excerpt_all ) {
 
@@ -780,15 +797,14 @@ class Premium_Template_Tags {
 
 			if ( count( $words ) > $excerpt_length ) {
 
-                if( 'yes' === $excerpt_all || ( 'yes' !== $excerpt_all && ! has_excerpt() ) ) {
+				if ( 'yes' === $excerpt_all || ( 'yes' !== $excerpt_all && ! has_excerpt() ) ) {
 
-                    array_pop( $words );
+					array_pop( $words );
 
-                    if ( 'dots' === $cta_type ) {
-                        array_push( $words, '…' );
-                    }
-
-                }
+					if ( 'dots' === $cta_type ) {
+						array_push( $words, '…' );
+					}
+				}
 			}
 
 			$excerpt = implode( ' ', $words );
@@ -1458,6 +1474,10 @@ class Premium_Template_Tags {
 	public function get_acf_options() {
 
 		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
+
+		if ( ! current_user_can( 'edit_acf_fields' ) ) {
+			wp_send_json_error( 'Insufficient user permission' );
+		}
 
 		$query_options = isset( $_POST['query_options'] ) ? array_map( 'strip_tags', $_POST['query_options'] ) : ''; // phpcs:ignore
 
@@ -2568,16 +2588,12 @@ class Premium_Template_Tags {
 
 		$args = array(
 			'taxonomy' => 'category',
+			'fields'   => 'id=>name',
 		);
 
 		$categories = get_categories( $args );
 
-		$category_names = array();
-
-		foreach ( $categories as $category ) {
-			$category_names[ $category->cat_ID ] = $category->name;
-		}
-
-		return $category_names;
+		// Return the array of category names with IDs as keys.
+		return $categories;
 	}
 }

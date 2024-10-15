@@ -156,6 +156,10 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 			$tabs    = $this->get_template_tabs();
 			$sources = $tabs[ $tab ]['sources'];
 
+            if( 'premium_container' === $tab ) {
+                $tab = 'premium_section';
+            }
+
 			$result = array(
 				'templates'  => array(),
 				'categories' => array(),

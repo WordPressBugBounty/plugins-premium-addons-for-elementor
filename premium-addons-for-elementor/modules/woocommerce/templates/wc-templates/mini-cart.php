@@ -163,7 +163,7 @@ $cart_items = WC()->cart->get_cart();
 ?>
 	<div class="pa-woo-mc__items-wrapper">
 		<?php if ( empty( $cart_items ) ) { ?>
-		<div class="pa-woo-mc__empty-msg">Your Cart Has No items</div>
+		<div class="pa-woo-mc__empty-msg"><?php echo __('Your cart is currently empty!', 'woocommerce'); ?></div>
 			<?php
 		} else {
 

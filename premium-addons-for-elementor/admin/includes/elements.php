@@ -8,7 +8,7 @@ use PremiumAddons\Includes\Helper_Functions;
 $elements = array(
 	'cat-1'  => array(
 		'icon'     => 'all',
-		'title'    => __( 'All Widgets', 'premium-addons-for-elementor' ),
+		'title'    => __( 'All Elements', 'premium-addons-for-elementor' ),
 		'elements' => array(
 			array(
 				'key'      => 'premium-mobile-menu',
@@ -300,7 +300,7 @@ $elements = array(
 			array(
 				'key'       => 'premium-parallax',
 				'title'     => __( 'Parallax', 'premium-addons-for-elementor' ),
-				'demo'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-parallax-addon/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'demo'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-parallax-container-addon/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'doc'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/parallax-section-addon-tutorial-2/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'tutorial'  => 'https://www.youtube.com/watch?v=hkMNjxLoZ2w',
 				'is_pro'    => true,
@@ -930,7 +930,7 @@ $elements = array(
 	),
 	'cat-4'  => array(
 		'icon'     => 'section',
-		'title'    => __( 'Section Addons & Widgets', 'premium-addons-for-elementor' ),
+		'title'    => __( 'Container Addons & Widgets', 'premium-addons-for-elementor' ),
 		'elements' => array(
 			array(
 				'key'      => 'premium-hscroll',
@@ -978,7 +978,7 @@ $elements = array(
 			array(
 				'key'       => 'premium-parallax',
 				'title'     => __( 'Parallax', 'premium-addons-for-elementor' ),
-				'demo'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-parallax-addon/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'demo'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-parallax-container-addon/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'doc'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/parallax-section-addon-tutorial-2/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'tutorial'  => 'https://www.youtube.com/watch?v=hkMNjxLoZ2w',
 				'is_pro'    => true,

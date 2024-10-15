@@ -496,6 +496,10 @@ class Admin_Helper {
 
 		check_ajax_referer( 'pa-live-editor', 'security' );
 
+        if ( ! current_user_can( 'edit_theme_options' ) ) {
+			wp_send_json_error( 'Insufficient user permission' );
+		}
+
 		if ( ! isset( $_POST['template_id'] ) ) {
 			wp_send_json_error( 'template id is not set!' );
 		}

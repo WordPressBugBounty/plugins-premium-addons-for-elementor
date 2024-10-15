@@ -128,7 +128,7 @@ class Addons_Integration {
 
 			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'enqueue_editor_cp_scripts' ), 99 );
 
-			Addons_Cross_CP::get_instance();
+            add_action( 'elementor/editor/init', array( $this, 'load_cp_module' ) );
 
 		}
 	}
@@ -1699,6 +1699,20 @@ class Addons_Integration {
 			Wrapper_Link::get_instance();
 		}
 	}
+
+
+    /**
+     * Load Copy Paste Module
+     *
+     * @since 4.10.57
+     * @access public
+     */
+    public function load_cp_module() {
+
+        Addons_Cross_CP::get_instance();
+
+    }
+
 
 	/**
 	 *

@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.6.2
 Requires PHP: 7.0
-Stable Tag: 4.10.56
+Stable Tag: 4.10.57
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,7 +125,7 @@ Each widget and addon has been tested on different screen sizes, mobile devices,
 * [**Badge Global Addon**](https://premiumaddons.com/elementor-badge-global-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add an icon, image, Lottie animation, or SVG blob shape badge to any container.
 * [**Animated Blob Generator**](https://premiumaddons.com/elementor-animated-blob-generator/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple animated blob layers to your containers with a wide range of smart customization options.
 * [**Lottie Animations Container Addon**](https://premiumaddons.com/elementor-lottie-animations-section-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple Lottie Animations easily to any container with allot of customization and interactivity options.
-* [**Parallax Container Addon**](https://premiumaddons.com/elementor-parallax-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: The only Parallax Container Addon that can be enabled for columns with freehand design experience and many styles to choose from.
+* [**Parallax Container Addon**](https://premiumaddons.com/elementor-parallax-container-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: The only Parallax Container Addon that can be enabled for columns with freehand design experience and many styles to choose from.
 * [**Particles Container Addon**](https://premiumaddons.com/particles-section-addon-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Create eye-catching particles background with many customization options.
 * [**Animated Gradient/Column Addon**](https://premiumaddons.com/animated-section-gradients-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Subtle animated gradients effect that makes your backgrounds attractive.
 * [**Ken Burns Container Addon**](https://premiumaddons.com/ken-burns-section-addon-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple images to your container background and animate them with the popular Ken Burns effect.
@@ -234,6 +234,18 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.57 =
+
+- Deprecated: Enable Full Section Scroll on Touch Devices control in Vertical Scroll widget.
+- Tweak: Global addons code refactored to minimize mmemory usage.
+- Tweak: Animated Shape Divider addon code refactored to improve editor loading speed.
+- Tweak: Premium Templates code refactored to improve site's frontend loading speed.
+- Fixed: Security issue in Display Conditions addon and Mega Menu widget.
+- Fixed: View and Empty Cart translation issue in Woo Mini Cart widget.
+- Fixed: Vertical Scroll widget causing scroll issues on touch devices.
+- Fixed: Media Grid lightbox always show the first image since v4.10.55.
+- Fixed: TikTok Feed widget throws PHP warning.
 
 = 4.10.56 =
 

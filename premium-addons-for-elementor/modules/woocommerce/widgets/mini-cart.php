@@ -4018,7 +4018,7 @@ class Mini_Cart extends Widget_Base {
 			<div class="pa-woo-mc__cart-buttons">
 				<?php if ( $view_cart ) : ?>
 				<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="pa-woo-mc__mc-btn pa-woo-mc__view-cart">
-					<span class="pa-woo-mc__btn-txt"><?php echo esc_html__( 'View Cart', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n ?></span>
+					<span class="pa-woo-mc__btn-txt"><?php echo esc_html__( 'View cart', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n ?></span>
 				</a>
 				<?php endif; ?>
 				<?php if ( $checkout ) : ?>
