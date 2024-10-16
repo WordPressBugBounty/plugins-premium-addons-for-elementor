@@ -773,7 +773,7 @@ class Premium_Image_Separator extends Widget_Base {
 				),
 				'condition' => array(
 					'separator_type' => array( 'icon', 'svg' ),
-					'draw_svg!'      => 'yes',
+					// 'draw_svg!'      => 'yes', we need user to control icon color even on draw
 				),
 			)
 		);
@@ -792,7 +792,7 @@ class Premium_Image_Separator extends Widget_Base {
 				),
 				'condition' => array(
 					'separator_type' => array( 'icon', 'svg' ),
-					'draw_svg!'      => 'yes',
+					// 'draw_svg!'      => 'yes', we need user to control icon color even on draw
 				),
 			)
 		);

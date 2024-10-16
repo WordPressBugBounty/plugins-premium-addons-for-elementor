@@ -416,32 +416,22 @@ class Premium_Template_Tags {
 	 */
 	public static function get_default_posts_list( $post_type ) {
 
-		$list = get_posts(
-			array(
-				'post_type'              => $post_type,
-				'posts_per_page'         => -1,
-				'update_post_term_cache' => false,
-				'update_post_meta_cache' => false,
-				'fields'                 => 'ids',
-			)
-		);
+        global $wpdb;
 
-		$options = array();
+		$list = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish'",
+                $post_type
+            )
+        );
 
-		if ( ! empty( $list ) && ! is_wp_error( $list ) ) {
+        $options = array();
 
-			global $wpdb;
-
-			$query          = "SELECT ID, post_title FROM $wpdb->posts WHERE ID IN (%s)";
-			$post_ids       = implode( ',', array_map( 'absint', $list ) );
-			$prepared_query = $wpdb->prepare( $query, $post_ids );
-
-			$results = $wpdb->get_results( $prepared_query );
-
-			foreach ( $results as $post ) {
-				$options[ $post->ID ] = $post->post_title;
-			}
-		}
+        if ( ! empty( $list ) ) {
+            foreach ( $list as $post ) {
+                $options[ $post->ID ] = $post->post_title;
+            }
+        }
 
 		return $options;
 	}

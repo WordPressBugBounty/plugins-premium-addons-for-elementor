@@ -363,21 +363,30 @@ class Addons_Integration {
 				array(
 					'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
 					'nonce'   => wp_create_nonce( 'pa-blog-widget-nonce' ),
+                    'unused_nonce'             => wp_create_nonce( 'pa-disable-unused' ),
 				)
 			);
 		}
 
 		$time_limit = ini_get( 'max_execution_time' );
 
-		if ( $time_limit < 300 ) {
+		if ( $time_limit < 400 ) {
 
 			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'editor-page', 'wp-editor', 'panel-issues' );
 
+            $disable_unused_url = add_query_arg(
+                array(
+                    'page' => sprintf( 'premium-addons&pa-action=unused#tab=elements', $search ),
+                ),
+                esc_url( admin_url( 'admin.php' ) )
+            );
+
 			wp_localize_script(
 				'pa-eq-editor',
-				'PremiumEditorLink',
+				'PremiumEditorLinks',
 				array(
 					$link,
+                    $disable_unused_url
 				),
 			);
 

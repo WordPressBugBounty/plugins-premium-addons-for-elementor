@@ -736,7 +736,7 @@
     color: #252c59;
     padding-bottom: 0;
     text-decoration: underline;
-    font-weight: normal;
+    /* font-weight: normal; */
 }
 
 .pa-section-info-wrap .pa-btn-unused.dimmed {
@@ -2605,4 +2605,176 @@
 
 .premium-live-editor-iframe-modal .dialog-type-lightbox {
     z-index: 100000;
+}
+
+.pa-deactivation-popup {
+    position: fixed;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+}
+
+.pa-deactivation-popup.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.pa-deactivation-popup .overlay {
+    position: relative;
+    padding: 20px;
+    background: #fff;
+    overflow: auto;
+    max-height: 90%;
+    max-width: 90%;
+    border-radius: 10px;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.pa-deactivation-popup * {
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.pa-deactivation-popup .close {
+    cursor: pointer;
+    position: absolute;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    top: 6px;
+    right: 6px;
+    width: 30px;
+    height: 30px;
+    color: #252c59;
+    background: #f7f7f7;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.pa-deactivation-popup .body {
+    position: relative;
+    display: block;
+    max-width: 360px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.pa-deactivation-popup .body .title-wrap {
+    position: relative;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.pa-deactivation-popup .pa-img-wrap {
+    margin-right: 10px;
+}
+
+.pa-deactivation-popup img {
+    width: 40px;
+}
+
+.pa-deactivation-popup .body section {
+    margin-bottom: 10px;
+}
+
+.pa-deactivation-popup .messages-wrap p {
+    margin: 5px 0;
+}
+
+.pa-deactivation-popup .options-wrap :not([type="radio"]):not([type="checkbox"]) {
+    width: 100%;
+}
+
+.pa-deactivation-popup .options-wrap textarea {
+    max-height: 150px;
+    min-height: 50px;
+}
+
+.pa-deactivation-popup .body .options-wrap {
+    padding: 10px;
+    border-radius: 10px;
+    background: #f3f3f3;
+}
+
+.options-wrap.pa-info-notice {
+    background-color: #f0f7ff !important;
+}
+
+.pa-deactivation-popup .options-wrap label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.pa-deactivation-popup .pa-deactivate-btn {
+    color: rgb(60, 67, 74);
+    background-color: #f3f3f3;
+    border: 0px solid;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.pa-deactivation-popup .buttons-wrap {
+    text-align: right;
+}
+
+.pa-deactivation-popup .pa-deactivate-btn:hover {
+    color: #fff;
+    background-color: #00a5e5;
+}
+
+.pa-fade {
+    font-weight: bold !important;
+    -webkit-animation: fade 1s linear infinite alternate-reverse;
+    animation: fade 1s linear infinite alternate-reverse;
+}
+
+@-webkit-keyframes fade {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes fade {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.3;
+    }
 }

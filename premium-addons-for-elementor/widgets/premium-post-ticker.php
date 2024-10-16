@@ -1104,10 +1104,12 @@ class Premium_Post_Ticker extends Widget_Base {
 				// Get all taxonomy values under the taxonomy.
 				foreach ( $taxonomy as $index => $tax ) {
 
-                    $terms = get_terms( array(
-                        'taxonomy'  => $index,
-                        'hide_empty' => false,
-                    ));
+					$terms = get_terms(
+						array(
+							'taxonomy'   => $index,
+							'hide_empty' => false,
+						)
+					);
 
 					$related_tax = array();
 
@@ -1335,6 +1337,37 @@ class Premium_Post_Ticker extends Widget_Base {
 			)
 		);
 
+		$this->add_responsive_control(
+			'txt_align',
+			array(
+				'label'     => __( 'Position', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'flex-start' => array(
+						'title' => __( 'Left', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-h-align-left',
+					),
+					'center'     => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-h-align-center',
+					),
+					'flex-end'   => array(
+						'title' => __( 'Right', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-h-align-right',
+					),
+				),
+				'default'   => 'flex-start',
+				'separator' => 'before',
+				'toggle'    => false,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-post-ticker__post-wrapper' => 'justify-content: {{VALUE}}',
+				),
+				'condition' => array(
+					'post_type_filter' => 'text',
+				)
+			)
+		);
+
 		$this->add_control(
 			'txt_icon_order',
 			array(
@@ -1351,8 +1384,6 @@ class Premium_Post_Ticker extends Widget_Base {
 						'icon'  => 'eicon-order-end',
 					),
 				),
-				'separator' => 'before',
-				'default'   => '0',
 				'condition' => array(
 					'post_type_filter' => 'text',
 				),

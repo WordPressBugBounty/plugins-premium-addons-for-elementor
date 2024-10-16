@@ -20,7 +20,8 @@
 
         var self = this,
             $tabs = $(".pa-settings-tab"),
-            $elementsTabs = $(".pa-elements-tab");
+            $elementsTabs = $(".pa-elements-tab"),
+            shouldDisableUnused = false;
 
         self.init = function () {
 
@@ -35,6 +36,8 @@
             self.initElementsTabs($elementsTabs);
 
             self.getUnusedWidget();
+
+            self.handleActionField();
 
             self.handleElementsActions();
 
@@ -89,7 +92,7 @@
                     type: 'POST',
                     data: {
                         action: 'pa_get_unused_widgets',
-                        security: settings.nonce,
+                        security: settings.unused_nonce,
                     },
                     beforeSend: function () {
                         $(".pa-btn-unused i").addClass("loading");
@@ -99,7 +102,24 @@
 
                         self.unusedElements = response.data;
 
-                        $(".pa-btn-unused").removeClass("dimmed").find("i").remove();
+                        $(".pa-btn-unused").removeClass("dimmed pa-fade").find("i").remove();
+
+                        if (shouldDisableUnused) {
+                            $('.pa-btn-unused').trigger('click');
+
+                            if (window.opener) {
+
+                                $(".pa-btn-unused").find('span').text('Redirecting to Elementor!');
+
+                                setTimeout(function () {
+
+                                    window.close();
+                                    window.opener.location.reload();
+                                }, 3000);
+
+                            }
+
+                        }
 
                     },
                     error: function (err) {
@@ -179,7 +199,7 @@
                         $(".pa-btn-group .pa-btn-unused").addClass("dimmed");
                     }
 
-                    $("#pa-modules .pa-switcher input").prop("checked", isChecked);
+                    $("#pa-modules .pa-switcher input").not('#pa_mc_temp').prop("checked", isChecked);
 
                     self.saveElementsSettings('elements');
 
@@ -196,7 +216,8 @@
                         $('#pa-modules .pa-switcher.' + selector).find('input').prop('checked', false);
                     });
 
-                    $(this).addClass('dimmed');
+                    if (!shouldDisableUnused)
+                        $(this).addClass('dimmed');
 
                     self.saveElementsSettings('elements');
                 }
@@ -251,7 +272,7 @@
             $('.pa-btn-clear-cursor').on('click', function () {
                 var _this = $(this);
                 _this.addClass("loading");
-                console.log('hellooooo');
+
                 $.ajax(
                     {
                         url: settings.ajaxurl,
@@ -291,6 +312,26 @@
 
 
         }
+
+        self.handleActionField = function () {
+
+            var urlString = window.location.href,
+                url = new URL(urlString);
+
+            var action = url.searchParams.get("pa-action");
+
+            if (!action)
+                return;
+
+            shouldDisableUnused = true;
+
+            $('body,html').animate({
+                scrollTop: $(".pa-btn-unused").offset().top - 100
+            }, 700);
+
+            $(".pa-btn-unused").toggleClass('dimmed pa-fade').find('span').text('Disabling Unused Widgets');
+
+        };
 
         // Handle Tabs Elements
         self.initElementsTabs = function ($elem) {

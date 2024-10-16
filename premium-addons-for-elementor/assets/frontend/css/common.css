@@ -282,6 +282,14 @@ because it's rendered as div with custom SVG code.
   transition: none !important;
 }
 
+/**
+This is added to give a default Path Thickness because the Icon will be invisible if icon color has no value.
+*/
+.premium-svg-drawer * {
+  stroke-width: 15px;
+  stroke: #000;
+}
+
 /** Common Animation */
 @-webkit-keyframes spin {
   0% {

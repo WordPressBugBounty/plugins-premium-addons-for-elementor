@@ -4,11 +4,15 @@
 
     window.elementor.on('panel:init', function () {
 
-        if ('undefined' !== typeof PremiumEditorLink) {
+        if ('undefined' !== typeof PremiumEditorLinks) {
 
             setTimeout(function () {
 
-                $("body.elementor-panel-loading #elementor-panel-state-loading").prepend("<div class='premium-editor-panel-loader'>Still loading? <br/><a href='" + PremiumEditorLink[0] + "' target='_blank' class='premium-editor-panel-loader-info'>Check Solution</a></div>");
+                $("body.elementor-panel-loading #elementor-panel-state-loading").append("<div class='premium-editor-panel-loader'><p>Still loading? <br/><a href='" + PremiumEditorLinks[0] + "' target='_blank' class='premium-editor-panel-loader-info'>Check Solution</a> or <a class='premium-disable-unused' href='javascript:;'>Disable PA unused widgets</a></div>");
+
+                $('.premium-disable-unused').on('click', function () {
+                    window.open(PremiumEditorLinks[1], '_blank');
+                });
 
             }, 10000);
 

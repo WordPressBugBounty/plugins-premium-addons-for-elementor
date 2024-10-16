@@ -61,7 +61,7 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 						<button type="button" class="pa-btn pa-btn-disable <?php echo esc_attr( $disable_btn ); ?>"><?php echo esc_html_e( 'Switch Off', 'premium-addons-for-elementor' ); ?></button>
 
                         <button type="button" class="pa-btn-unused dimmed">
-                            <?php echo esc_html_e( 'Disable Unused Widgets', 'premium-addons-for-elementor' ); ?>
+                            <span><?php echo esc_html_e( 'Disable Unused Widgets', 'premium-addons-for-elementor' ); ?></span>
                             <i class="dashicons dashicons-image-rotate"></i>
                         </button>
 

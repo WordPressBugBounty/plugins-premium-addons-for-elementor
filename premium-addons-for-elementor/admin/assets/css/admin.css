@@ -714,7 +714,7 @@
     color: #252c59;
     padding-bottom: 0;
     text-decoration: underline;
-    font-weight: normal;
+    /* font-weight: normal; */
 }
 
 .pa-section-info-wrap .pa-btn-unused.dimmed {
@@ -2559,4 +2559,30 @@
 .pa-deactivation-popup .pa-deactivate-btn:hover {
     color: #fff;
     background-color: #00a5e5;
+}
+
+.pa-fade {
+    font-weight: bold !important;
+    -webkit-animation: fade 1s linear infinite alternate-reverse;
+    animation: fade 1s linear infinite alternate-reverse;
+}
+
+@-webkit-keyframes fade {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes fade {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.3;
+    }
 }

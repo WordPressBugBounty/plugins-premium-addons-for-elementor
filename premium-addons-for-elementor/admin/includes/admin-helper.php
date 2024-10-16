@@ -333,6 +333,7 @@ class Admin_Helper {
 				'settings'               => array(
 					'ajaxurl'           => admin_url( 'admin-ajax.php' ),
 					'nonce'             => wp_create_nonce( 'pa-settings-tab' ),
+                    'unused_nonce'             => wp_create_nonce( 'pa-disable-unused' ),
 					'generate_nonce'    => wp_create_nonce( 'pa-generate-nonce' ),
 					'site_cursor_nonce' => wp_create_nonce( 'pa-site-cursor-nonce' ),
 					'theme'             => $theme_slug,
@@ -1256,7 +1257,7 @@ class Admin_Helper {
 	 */
 	public function get_unused_widgets() {
 
-		check_ajax_referer( 'pa-settings-tab', 'security' );
+		check_ajax_referer( 'pa-disable-unused', 'security' );
 
 		if ( ! current_user_can( 'install_plugins' ) ) {
 			wp_send_json_error();

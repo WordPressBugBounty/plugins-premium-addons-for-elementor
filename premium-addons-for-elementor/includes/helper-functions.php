@@ -44,6 +44,13 @@ class Helper_Functions {
 		'span',
 	);
 
+    /**
+	 * Theme
+	 *
+	 * @var theme
+	 */
+	private static $current_theme = null;
+
 	/**
 	 * Google maps prefixes
 	 *
@@ -147,6 +154,8 @@ class Helper_Functions {
 	 */
 	public static function is_hide_row_meta() {
 
+        $hide_meta = false;
+
 		if ( self::check_papro_version() ) {
 
 			$white_label = Helper::get_white_labeling_settings();
@@ -155,7 +164,7 @@ class Helper_Functions {
 
 		}
 
-		return isset( $hide_meta ) ? $hide_meta : false;
+		return $hide_meta;
 	}
 
 	/**
@@ -458,21 +467,27 @@ class Helper_Functions {
 	 */
 	public static function get_installed_theme() {
 
-		$theme = wp_get_theme();
+        if ( null === self::$current_theme ) {
 
-		if ( $theme->parent() ) {
+            $theme = wp_get_theme();
 
-			$theme_name = sanitize_key( $theme->parent()->get( 'Name' ) );
+            if ( $theme->parent() ) {
 
-			return $theme_name;
+                $theme_name = sanitize_key( $theme->parent()->get( 'Name' ) );
 
-		}
+            } else {
 
-		$theme_name = $theme->get( 'Name' );
+                $theme_name = $theme->get( 'Name' );
 
-		$theme_name = sanitize_key( $theme_name );
+                $theme_name = sanitize_key( $theme_name );
 
-		return $theme_name;
+            }
+
+            self::$current_theme = $theme_name;
+
+        }
+
+		return self::$current_theme;
 	}
 
 	/**
@@ -616,14 +631,16 @@ class Helper_Functions {
 	 */
 	public static function get_campaign_link( $link, $source, $medium, $campaign = '' ) {
 
-		$theme = self::get_installed_theme();
+        if ( null === self::$current_theme ) {
+            self::get_installed_theme();
+        }
 
 		$url = add_query_arg(
 			array(
 				'utm_source'   => $source,
 				'utm_medium'   => $medium,
 				'utm_campaign' => $campaign,
-				'utm_term'     => $theme,
+				'utm_term'     => self::$current_theme,
 			),
 			$link
 		);

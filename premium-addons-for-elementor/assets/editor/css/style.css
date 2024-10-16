@@ -850,3 +850,13 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 #elementor-panel-state-loading .pa-editor-panel-loader a {
     transition: all 0.3s ease-in-out;
 }
+
+#elementor-panel-state-loading {
+    flex-direction: column;
+}
+
+.premium-editor-panel-loader {
+    text-align: center;
+    line-height: 1.4em;
+    margin-top: 10px;
+}

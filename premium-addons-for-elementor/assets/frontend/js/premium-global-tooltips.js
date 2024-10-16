@@ -437,7 +437,9 @@
                 var instances = $.tooltipster.instances();
 
                 $.each(instances, function (i, instance) {
-                    instance.close();
+                    if (!instance._$origin.hasClass('premium-image-hotspots-main-icons')) {
+                        instance.close();
+                    }
                 });
             }
 

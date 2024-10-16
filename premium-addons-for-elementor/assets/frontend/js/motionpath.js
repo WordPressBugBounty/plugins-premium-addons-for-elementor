@@ -1828,6 +1828,12 @@
 
             //These are handled from their files JS files.
             $scope.not('.elementor-widget-premium-notifications, .elementor-widget-premium-notbar').find(".elementor-invisible").removeClass("elementor-invisible");
+
+            //Remove only for the icon, not for the posts containers.
+            if ($scope.hasClass('elementor-widget-premium-notifications')) {
+                $scope.find('.pa-recent-notification').removeClass('elementor-invisible');
+            }
+
         }, 50);
 
 
@@ -1975,8 +1981,8 @@
                     });
             } else {
                 // unsing IntersectionObserverAPI.
-                var eleObserver = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry, index) {
+                var eleObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry, index) {
 
                         if (entry.isIntersecting) {
 
@@ -1988,7 +1994,7 @@
                         }
                     });
                 }, {
-                    threshold:  parseFloat( (drawSettings.svgAnimOffset || "50%" )) / 100
+                    threshold: parseFloat((drawSettings.svgAnimOffset || "50%")) / 100
                 });
 
                 eleObserver.observe($scope[0]);
