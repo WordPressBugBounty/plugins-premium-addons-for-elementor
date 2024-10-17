@@ -376,7 +376,9 @@ class Addons_Integration {
 
             $disable_unused_url = add_query_arg(
                 array(
-                    'page' => sprintf( 'premium-addons&pa-action=unused#tab=elements', $search ),
+                    'page'     => 'premium-addons',
+                    'pa-action' => 'unused',
+                    '#tab'     => 'elements',
                 ),
                 esc_url( admin_url( 'admin.php' ) )
             );
