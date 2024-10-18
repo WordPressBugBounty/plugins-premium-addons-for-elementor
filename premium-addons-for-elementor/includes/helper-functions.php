@@ -243,15 +243,17 @@ class Helper_Functions {
 	 */
 	public static function check_hide_notifications() {
 
+        $hide_notification = false;
+
 		if ( self::check_papro_version() ) {
 
 			$white_label = Helper::get_white_labeling_settings();
 
-			$hide_notification = isset( $white_label['premium-wht-lbl-not'] ) ? $white_label['premium-wht-lbl-not'] : false;
+			$hide_notification = $white_label['premium-wht-lbl-not'];
 
 		}
 
-		return isset( $hide_notification ) ? $hide_notification : false;
+		return $hide_notification;
 	}
 
 	/**
@@ -1100,11 +1102,13 @@ class Helper_Functions {
 	public static function get_draw_svg_notice( $elem, $search, $conditions, $index = 0, $nested = 'condition' ) {
 
 		$url = add_query_arg(
-			array(
-				'page' => sprintf( 'premium-addons&search=%s#tab=elements', $search ),
-			),
-			esc_url( admin_url( 'admin.php' ) )
-		);
+            array(
+                'page'   => 'premium-addons',
+                'search' => $search,
+                '#tab'   => 'elements',
+            ),
+            esc_url( admin_url( 'admin.php' ) )
+        );
 
 		$control_attr = array(
 			'type'            => Controls_Manager::RAW_HTML,

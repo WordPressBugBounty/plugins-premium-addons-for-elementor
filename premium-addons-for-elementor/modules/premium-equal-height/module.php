@@ -61,7 +61,7 @@ class Module {
 
         add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
         add_action( 'elementor/container/print_template', array( $this, '_print_template' ), 10, 2 );
-        add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ), 10, 1 );
+        add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ), 100, 1 );
         add_action( 'elementor/frontend/container/before_render', array( $this, 'check_script_enqueue' ) );
 
 	}

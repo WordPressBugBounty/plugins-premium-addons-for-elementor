@@ -177,11 +177,12 @@ class Admin_Bar {
 	private function get_dashboard_widgets_link() {
 
 		return add_query_arg(
-			array(
-				'page' => 'premium-addons#tab=elements',
-			),
-			esc_url( admin_url( 'admin.php' ) )
-		);
+            array(
+                'page' => 'premium-addons',
+                '#tab' => 'elements',
+            ),
+            esc_url( admin_url( 'admin.php' ) )
+        );
 
 	}
 

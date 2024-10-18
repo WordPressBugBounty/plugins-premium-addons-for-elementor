@@ -105,7 +105,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			$cache_key = 'premium_notice_' . PREMIUM_ADDONS_VERSION;
 
-			$expiration = 3600 * 72;
+			$expiration = DAY_IN_SECONDS * 7;
 
 			set_transient( $cache_key, true, $expiration );
 

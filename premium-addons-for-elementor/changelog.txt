@@ -1,5 +1,27 @@
 == Changelog ==
 
+= 4.10.59 =
+
+- Fixed: PHP warning Undefined variable $search.
+
+= 4.10.58 =
+
+- Tweak: Added Text Content Position in News Ticker widget.
+- Fixed: Conflict between Global Tooltips addon and Premium Image Hotspots widget.
+- Fixed: Blog widget not working correctly after 4.10.57.
+
+= 4.10.57 =
+
+- Deprecated: Enable Full Section Scroll on Touch Devices control in Vertical Scroll widget.
+- Tweak: Global addons code refactored to minimize mmemory usage.
+- Tweak: Animated Shape Divider addon code refactored to improve editor loading speed.
+- Tweak: Premium Templates code refactored to improve site's frontend loading speed.
+- Fixed: Security issue in Display Conditions addon and Mega Menu widget.
+- Fixed: View and Empty Cart translation issue in Woo Mini Cart widget.
+- Fixed: Vertical Scroll widget causing scroll issues on touch devices.
+- Fixed: Media Grid lightbox always show the first image since v4.10.55.
+- Fixed: TikTok Feed widget throws PHP warning.
+
 = 4.10.56 =
 
 - Tweak: Dashboard settings tab loading speed improved.

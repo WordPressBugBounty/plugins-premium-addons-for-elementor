@@ -214,11 +214,13 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 			}
 
 			$url = add_query_arg(
-				array(
-					'page' => sprintf( 'premium-addons&search=%s#tab=elements', $info['title'] ),
-				),
-				esc_url( admin_url( 'admin.php' ) )
-			);
+                array(
+                    'page'   => 'premium-addons',
+                    'search' => $info['title'],
+                    '#tab'   => 'elements',
+                ),
+                esc_url( admin_url( 'admin.php' ) )
+            );
 
 			$demo_link = strstr( $info['demo'], '/?', true );
 

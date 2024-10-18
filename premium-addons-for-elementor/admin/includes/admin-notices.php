@@ -97,7 +97,7 @@ class Admin_Notices {
             $response = get_transient( $cache_key );
 
 			if ( false == $response ) {
-				$this->get_review_notice();
+				$this->show_review_notice();
 			}
 		}
 
@@ -209,7 +209,7 @@ class Admin_Notices {
 	 * @since 2.6.8
 	 * @return void
 	 */
-	public function get_review_notice() {
+	public function show_review_notice() {
 
 		$review_url = 'https://wordpress.org/support/plugin/premium-addons-for-elementor/reviews/?filter=5';
 
