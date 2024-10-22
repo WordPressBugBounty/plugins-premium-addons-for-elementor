@@ -5,7 +5,7 @@
 
     var adminNotices = {
         'radius': 'radius_notice',
-        'woo-mini': 'woo_mini_hide',
+        'halloween24': 'halloween24_hide',
     };
 
     if (undefined !== notice) {

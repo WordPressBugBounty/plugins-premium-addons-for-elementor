@@ -92,3 +92,7 @@
 .error.pa-notice-wrap .pa-text-wrap a:not(:first-of-type) {
     margin-right: 0.3em;
 }
+
+.pa-cta-btn {
+    margin-left: 10px;
+}

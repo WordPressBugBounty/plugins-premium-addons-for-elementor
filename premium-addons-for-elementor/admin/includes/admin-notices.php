@@ -61,7 +61,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'woo_mini_hide',
+			'halloween24_hide',
 		);
 
 	}
@@ -105,7 +105,7 @@ class Admin_Notices {
 			return;
 		}
 
-		// $this->get_woo_mini_notice();
+		$this->get_halloween_notice();
 
 	}
 
@@ -232,38 +232,45 @@ class Admin_Notices {
 
 	}
 
-	/**
-	 *
-	 * Shows admin notice for WooCommerce Mini Cart widget.
-	 *
-	 * @since 4.10.53
-	 * @access public
-	 *
-	 * @return void
-	 */
-	public function get_woo_mini_notice() {
+    public function get_halloween_notice() {
 
         $time     = time();
 
-		if ( $time > 1728086400 || get_transient( 'woo_mini_hide' ) ) {
+        if ( $time > 1730582400 || get_transient( 'halloween24_hide' ) ) {
 			return;
 		}
 
-		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-mini-cart-widget/', 'woo-mini-notification', 'wp-dash', 'woo-mini' );
+        $papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
+
+		$is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
+
+		$license_key = get_option( 'papro_license_key' );
+
+        if ( $is_papro_installed ) {
+			$status = $this->check_status( $license_key );
+
+            if( $status ) {
+                return;
+            }
+		}
+
+		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/halloween-sale/', 'wp-dash', 'halloween24-notification', 'halloween24' );
 
 		?>
 
-		<div class="error pa-notice-wrap pa-new-feature-notice">
+		<div class="error pa-notice-wrap pa-new-feature-notice pa-review-notice">
 			<div class="pa-img-wrap">
 				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<strong><?php echo __( 'Elementor WooCommerce Mini-Cart widget', 'premium-addons-for-elementor' ); ?></strong>
-					<?php echo sprintf( __( 'is now available in Premium Addons for Elementor. <a href="%s" target="_blank">Check it out now!</a>', 'premium-addons-for-elementor' ), $link ); ?>
+					<?php echo __( 'Halloween Sale! Save up to 20% on Premium Addons Pro.', 'premium-addons-for-elementor' ); ?>
+					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
+						<span><?php echo __( 'Catch The Deal', 'premium-addons-for-elementor' ); ?></span>
+					</a>
 				</p>
 			</div>
-			<div class="pa-notice-close" data-notice="woo-mini">
+			<div class="pa-notice-close" data-notice="halloween24">
 				<span class="dashicons dashicons-dismiss"></span>
 			</div>
 		</div>

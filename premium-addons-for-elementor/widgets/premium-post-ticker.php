@@ -1357,7 +1357,6 @@ class Premium_Post_Ticker extends Widget_Base {
 					),
 				),
 				'default'   => 'flex-start',
-				'separator' => 'before',
 				'toggle'    => false,
 				'selectors' => array(
 					'{{WRAPPER}} .premium-post-ticker__post-wrapper' => 'justify-content: {{VALUE}}',

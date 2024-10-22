@@ -3881,10 +3881,10 @@ class Premium_Notifications extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$queried_posts_ids = array();
-
 		if ( 'yes' !== $settings['cookies'] || is_user_logged_in() ) {
-			// if ( 'yes' !== $settings['cookies'] ) {
+
+            $queried_posts_ids = '';
+
 			$number = ! empty( $settings['posts_number'] ) ? $settings['posts_number'] : 3;
 		} else {
 
@@ -3896,6 +3896,8 @@ class Premium_Notifications extends Widget_Base {
 
 			$this->query_posts = $posts;
 
+            $queried_posts_ids = array();
+
 			foreach ( $posts as $post ) {
 				$queried_posts_ids[] = $post->ID;
 			}
@@ -3904,20 +3906,11 @@ class Premium_Notifications extends Widget_Base {
 
 			if ( count( $posts ) ) {
 
-				// setcookie( 'username', 'john_doe', time() + 3600 );
 				$queried_posts_ids = implode( ',', $queried_posts_ids );
 
-				// global $post;
-
-				// foreach ( $posts as $post ) {
-				// setup_postdata( $post );
-				// $this->get_post_layout();
-				// }
 			} else {
 				$queried_posts_ids = '';
 			}
-
-			// wp_reset_postdata();
 
 		}
 

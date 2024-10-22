@@ -674,6 +674,22 @@
 
                     var _this = this;
 
+                    if ('container' === error) {
+
+                        var disabledElementModel = new self.DisableElementModel({
+                            name: 'Flexbox Container',
+                            // url: '',
+                            // widgetURL: '',
+                        });
+
+                        _this.modalContent.show(new self.ModalDisabledElementErrorView({
+                            model: disabledElementModel
+                        }));
+
+                        return;
+                    }
+
+
                     $.ajax({
                         url: ajaxurl,
                         type: 'GET',
