@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.6.2
 Requires PHP: 7.0
-Stable Tag: 4.10.60
+Stable Tag: 4.10.61
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -234,6 +234,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.61 =
+
+- Tweak: Premium Templates loading speed improved.
+- Tweak: Added Item Name option in Advanced Carousel widget.
+- Fixed: ACF fields are not showing in Display Conditions.
+- Fixed: Typing effect not working in Animated Text widget when used multiple times on page.
+- Fixed: Media Grid widget shows the first image only in the lightbox.
 
 = 4.10.60 =
 

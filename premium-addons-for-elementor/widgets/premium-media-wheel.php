@@ -205,6 +205,16 @@ class Premium_Media_Wheel extends Widget_Base {
 
 		$repeater = new Repeater();
 
+        $repeater->add_control(
+			'item_name',
+			array(
+				'label'   => __( 'Item Name', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'description' => __('Use this option to give a unique name to this item', 'premium-addons-for-elementor'),
+                'separator' => 'after'
+			)
+		);
+
 		$repeater->add_control(
 			'pa_media_type',
 			array(
@@ -874,7 +884,7 @@ class Premium_Media_Wheel extends Widget_Base {
 						'pa_media_type' => 'image',
 					),
 				),
-				'title_field' => '{{{ pa_media_type }}}',
+				'title_field' => '<# if ( "" != item_name ) { #> {{{ item_name }}} <# } else { #> {{{ pa_media_type }}} <# } #>',
 			)
 		);
 

@@ -2,6 +2,10 @@
 
     var $ = jQuery;
 
+    $(window).on('elementor:init', function () {
+        $("<a href='" + PremiumEditorLinks[0] + "' target='_blank' class='premium-editor-panel-loader-info'>Check Solution</a>").insertAfter('#elementor-try-safe-mode .elementor-safe-mode-button');
+    });
+
     window.elementor.on('panel:init', function () {
 
         if ('undefined' !== typeof PremiumEditorLinks) {

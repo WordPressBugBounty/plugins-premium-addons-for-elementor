@@ -10,7 +10,7 @@
 		<div class="elementor-template-library-template-preview">
 			<i class="eicon-plus-circle-o"></i>
 		</div>
-		<img src="{{ thumbnail }}" alt="{{ title }}">
+		<img src="{{ thumbnail }}">
 	</div>
 </div>
 <div class="elementor-template-library-template-controls">

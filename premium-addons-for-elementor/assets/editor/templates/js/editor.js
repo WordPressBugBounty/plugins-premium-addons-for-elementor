@@ -282,7 +282,7 @@
                     if ("valid" === PremiumTempsData.license.status || !isPro) {
 
                         elementor.templates.requestTemplateContent(
-                            templateModel.get('source'),
+                            'premium-api',
                             templateModel.get('template_id'), {
                             data: {
                                 tab: PremiumEditor.getTab(),

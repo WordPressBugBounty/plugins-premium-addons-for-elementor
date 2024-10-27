@@ -27,7 +27,11 @@
                     settings.strings.forEach(function (item) {
                         fancyStrings.push(escapeHtml(item));
                     });
-                    var fancyTextID = '#' + $animatedText.attr('id');
+
+                    var uniqueID = 'animated-text-' + Math.floor(Math.random() * 100);
+                    $animatedText.attr('id', uniqueID);
+
+                    var fancyTextID = '#' + uniqueID;
                     var typedInstance = new Typed(fancyTextID, {
                         strings: fancyStrings,
                         typeSpeed: settings.typeSpeed,

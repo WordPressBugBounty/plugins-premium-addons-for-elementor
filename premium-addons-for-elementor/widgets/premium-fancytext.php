@@ -1370,7 +1370,7 @@ class Premium_Fancytext extends Widget_Base {
 
 		if ( 'typing' === $effect ) :
 			?>
-			<span id="<?php echo esc_attr( 'premium-atext__text-' . $this->get_id() ); ?>" class="premium-atext__text"></span>
+			<span class="premium-atext__text"></span>
 		<?php else : ?>
 			<div class="premium-atext__text" style='display: inline-block; text-align: center'>
 				<ul class="premium-atext__items-wrapper">

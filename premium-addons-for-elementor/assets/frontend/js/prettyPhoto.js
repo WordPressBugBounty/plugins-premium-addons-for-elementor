@@ -384,12 +384,18 @@
                                 s(pp_images[set_position]))
                             ) {
                                 case "image":
+
+                                    var selfHostedURL = pp_images[set_position];
+
+                                    selfHostedURL = selfHostedURL.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(
+                                        /"/g, "&quot;");
+
                                     (imgPreloader = new Image()),
                                         (nextImage = new Image()),
                                         isSet && set_position < w(pp_images).size() - 1 && (nextImage.src = pp_images[set_position + 1]),
                                         (prevImage = new Image()),
                                         isSet && pp_images[set_position - 1] && (prevImage.src = pp_images[set_position - 1]),
-                                        ($pp_pic_holder.find("#pp_full_res")[0].innerHTML = settings.image_markup.replace(/{path}/g, pp_images[set_position])),
+                                        ($pp_pic_holder.find("#pp_full_res")[0].innerHTML = settings.image_markup.replace(/{path}/g, selfHostedURL)),
                                         (imgPreloader.onload = function () {
                                             (r = o(imgPreloader.width, imgPreloader.height)), i();
                                         }),
@@ -442,6 +448,12 @@
                                             .replace(/{autoplay}/g, settings.autoplay));
                                     break;
                                 case "localvideo":
+
+                                    var selfHostedURL = pp_images[set_position];
+
+                                    selfHostedURL = selfHostedURL.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(
+                                        /"/g, "&quot;");
+
                                     ((r = o(movie_width, movie_height)).height += 15),
                                         (r.contentHeight += 15),
                                         (r.containerHeight += 15),
@@ -449,7 +461,7 @@
                                             .replace(/{width}/g, r.width)
                                             .replace(/{height}/g, r.height)
                                             .replace(/{wmode}/g, settings.wmode)
-                                            .replace(/{path}/g, pp_images[set_position])
+                                            .replace(/{path}/g, selfHostedURL)
                                             .replace(/{autoplay}/g, settings.autoplay));
                                     break;
                                 case "flash":

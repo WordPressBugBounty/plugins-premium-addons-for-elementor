@@ -1465,7 +1465,7 @@ class Premium_Template_Tags {
 
 		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
 
-		if ( ! current_user_can( 'edit_acf_fields' ) ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( 'Insufficient user permission' );
 		}
 
