@@ -117,7 +117,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 				update_option( 'pa_install_time', $current_time );
 
-				$api_url = 'https://feedback.premiumaddons.com/wp-json/install/v2/add';
+				$api_url = 'https://feedbackpa.leap13.com/wp-json/install/v2/add';
 
 				$response = wp_safe_remote_request(
 					$api_url,

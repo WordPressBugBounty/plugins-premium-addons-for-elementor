@@ -189,8 +189,8 @@ class Admin_Notices {
 	public function get_review_text( $review_url, $optout_url ) {
 
 		$notice = sprintf(
-			'<p>' . __( 'Can we take only 2 minutes of your time? We would be really grateful it if you give ', 'premium-addons-for-elementor' ) .
-			'<b>' . __( 'Premium Addons for Elementor', 'premium-addons-for-elementor' ) . '</b> a 5 Stars Rating on WordPress.org. By speading the love, we can create even greater free stuff in the future!</p>
+			'<p>' . __( 'Could we take just 2 minutes of your time? We\'d be incredibly grateful if you could give ', 'premium-addons-for-elementor' ) .
+			'<b>' . __( 'Premium Addons for Elementor', 'premium-addons-for-elementor' ) . '</b> a 5 Stars Rating on WordPress.org. Your support helps us continue creating even more amazing free features in the future!</p>
             <div>
                 <a class="button button-primary" href="%s" target="_blank"><span>' . __( 'Sure, leave a Review', 'premium-addons-for-elementor' ) . '</span></a>
                 <a class="button" href="%2$s"><span>' . __( 'I Already Did', 'premium-addons-for-elementor' ) . '</span></a>
@@ -270,7 +270,7 @@ class Admin_Notices {
 					</a>
 				</p>
 			</div>
-			<div class="pa-notice-close" data-notice="halloween24">
+			<div class="pa-notice-close" data-notice="halloween24_hide">
 				<span class="dashicons dashicons-dismiss"></span>
 			</div>
 		</div>

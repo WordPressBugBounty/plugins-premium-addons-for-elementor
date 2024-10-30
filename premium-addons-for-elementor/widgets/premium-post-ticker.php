@@ -3761,9 +3761,9 @@ class Premium_Post_Ticker extends Widget_Base {
 
 					} else {
 
-						if ( 'yes' === $settings['draw_svg'] ) {
+						$this->add_render_attribute( 'icon' . $index, 'class', 'premium-drawable-icon' );
 
-							$this->add_render_attribute( 'icon' . $index, 'class', 'premium-drawable-icon' );
+						if ( 'yes' === $settings['draw_svg'] ) {
 
 							$this->add_render_attribute( 'outer-wrapper' . $index, 'class', 'elementor-invisible' );
 

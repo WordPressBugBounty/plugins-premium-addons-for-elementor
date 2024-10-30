@@ -93,12 +93,23 @@ class Module {
 			)
 		);
 
+        $element->add_control(
+			'premium_wrapper_link_switcher',
+			array(
+				'label'              => __( 'Enable Wrapper Link', 'premium-addons-for-elementor' ),
+				'type'               => Controls_Manager::SWITCHER,
+			)
+		);
+
 		$element->add_control(
 			'wrapper_link_notice',
 			array(
 				'raw'             => __( 'Please note that Wrapper Link works on the frontend.', 'premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+                'condition'=> [
+                    'premium_wrapper_link_switcher'=> 'yes'
+                ]
 			)
 		);
 
@@ -113,6 +124,9 @@ class Module {
 				),
 				'default'     => 'url',
 				'label_block' => true,
+                'condition'=> [
+                    'premium_wrapper_link_switcher'=> 'yes'
+                ]
 			)
 		);
 
@@ -126,6 +140,7 @@ class Module {
 				),
 				'placeholder' => 'https://example.com',
 				'condition'   => array(
+                    'premium_wrapper_link_switcher'=> 'yes',
 					'premium_wrapper_link_selection' => 'url',
 				),
 			)
@@ -138,6 +153,7 @@ class Module {
 				'type'        => Controls_Manager::SELECT2,
 				'options'     => $this->getTemplateInstance()->get_all_posts(),
 				'condition'   => array(
+                    'premium_wrapper_link_switcher'=> 'yes',
 					'premium_wrapper_link_selection' => 'link',
 				),
 				'multiple'    => false,
@@ -162,27 +178,31 @@ class Module {
 
 		$settings = $element->get_settings_for_display();
 
-		if ( 'link' === $settings['premium_wrapper_link_selection'] ) {
-			$href = get_permalink( $settings['premium_wrapper_existing_link'] );
-		} else {
-			$href = $settings['premium_wrapper_link']['url'];
-		}
+        if ( 'yes' === $settings['premium_wrapper_link_switcher'] ) {
 
-		$link_settings = array(
-			'type' => $settings['premium_wrapper_link_selection'],
-			'link' => $settings['premium_wrapper_link'],
-			'href' => esc_url( $href ),
-		);
+            if ( 'link' === $settings['premium_wrapper_link_selection'] ) {
+                $href = get_permalink( $settings['premium_wrapper_existing_link'] );
+            } else {
+                $href = $settings['premium_wrapper_link']['url'];
+            }
 
-		if ( $link_settings && ( ! empty( $link_settings['link']['url'] ) || ! empty( $link_settings['existingPage'] ) ) ) {
-			$element->add_render_attribute(
-				'_wrapper',
-				array(
-					'data-premium-element-link' => wp_json_encode( $link_settings ),
-					'style'                     => 'cursor: pointer',
-				)
-			);
-		}
+            $link_settings = array(
+                'type' => $settings['premium_wrapper_link_selection'],
+                'link' => $settings['premium_wrapper_link'],
+                'href' => esc_url( $href ),
+            );
+
+            if ( $link_settings && ( ! empty( $link_settings['link']['url'] ) || ! empty( $link_settings['existingPage'] ) ) ) {
+                $element->add_render_attribute(
+                    '_wrapper',
+                    array(
+                        'data-premium-element-link' => wp_json_encode( $link_settings ),
+                        'style'                     => 'cursor: pointer',
+                    )
+                );
+            }
+
+        }
 	}
 
 	/**
@@ -208,17 +228,21 @@ class Module {
 	 * @since 4.7.7
 	 * @access public
 	 */
-	public function check_script_enqueue() {
+	public function check_script_enqueue( $element ) {
 
 		if ( self::$load_script ) {
 			return;
 		}
 
-		$this->enqueue_scripts();
+        if ( 'yes' === $element->get_settings_for_display( 'premium_wrapper_link_switcher' ) ) {
 
-		self::$load_script = true;
+            $this->enqueue_scripts();
 
-		remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
+            self::$load_script = true;
+
+            remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
+
+        }
 	}
 
 	/**

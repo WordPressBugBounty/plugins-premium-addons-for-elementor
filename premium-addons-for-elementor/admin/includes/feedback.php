@@ -68,7 +68,7 @@ class Feedback {
 			'wordpress' => $wordpress,
 		);
 
-		$api_url = 'https://feedback.premiumaddons.com/wp-json/feedback/v2/add';
+		$api_url = 'https://feedbackpa.leap13.com/wp-json/feedback/v2/add';
 
 		$response = wp_safe_remote_request(
 			$api_url,

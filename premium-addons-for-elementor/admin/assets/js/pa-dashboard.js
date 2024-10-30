@@ -3,11 +3,6 @@
     var $noticeWrap = $(".pa-notice-wrap"),
         notice = $noticeWrap.data('notice');
 
-    var adminNotices = {
-        'radius': 'radius_notice',
-        'halloween24': 'halloween24_hide',
-    };
-
     if (undefined !== notice) {
 
         $noticeWrap.find('.pa-notice-reset').on(
@@ -36,9 +31,9 @@
         "click",
         function () {
 
-            var noticeID = $(this).data('notice');
+            var transientID = $(this).data('notice');
 
-            if (noticeID) {
+            if (transientID) {
                 $(this).closest('.pa-new-feature-notice').remove();
 
                 $.ajax(
@@ -47,7 +42,7 @@
                         type: 'POST',
                         data: {
                             action: 'pa_dismiss_admin_notice',
-                            notice: adminNotices[noticeID],
+                            notice: transientID,
                             nonce: PaNoticeSettings.nonce,
                         },
                         success: function (res) {
