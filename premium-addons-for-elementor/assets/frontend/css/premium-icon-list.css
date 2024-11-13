@@ -12,20 +12,23 @@
   flex-direction: column;
   padding: 0;
 }
-.premium-bullet-list-box .premium-bullet-list-content-grow-lc {
+
+.premium-bullet-list-flex-start .premium-bullet-list-content {
   -webkit-transform-origin: left center;
   -ms-transform-origin: left center;
   transform-origin: left center;
 }
-.premium-bullet-list-box .premium-bullet-list-content-grow-rc {
-  -webkit-transform-origin: right center;
-  -ms-transform-origin: right center;
-  transform-origin: right center;
-}
-.premium-bullet-list-box .premium-bullet-list-content-grow-cc {
+
+.premium-bullet-list-center .premium-bullet-list-content {
   -webkit-transform-origin: center center;
   -ms-transform-origin: center center;
   transform-origin: center center;
+}
+
+.premium-bullet-list-flex-end .premium-bullet-list-content {
+  -webkit-transform-origin: right center;
+  -ms-transform-origin: right center;
+  transform-origin: right center;
 }
 
 .premium-bullet-list-content {

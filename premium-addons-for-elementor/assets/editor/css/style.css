@@ -867,3 +867,7 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
     margin-top: 0;
     text-align: right;
 }
+
+[dir="rtl"] #elementor-try-safe-mode .premium-editor-panel-loader-info {
+    text-align: left !important;
+}

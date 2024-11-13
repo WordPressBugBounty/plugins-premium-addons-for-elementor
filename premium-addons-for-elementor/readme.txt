@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, widgets, elementor elements, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 6.6.2
+Tested Up To: 6.7
 Requires PHP: 7.0
-Stable Tag: 4.10.62
+Stable Tag: 4.10.63
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -234,6 +234,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.63 =
+
+- Tweak: Added List Padding control in Bullet List widget.
+- Tweak: Added option to load boards dynamically in Pinterest Feed widget.
+- Fixed: Premium Templates not being inserted in correct position.
+- Fixed: Console JS error showing on the editor page.
+- Fixed: Alignment option not working correctly on responsive devices in Bullet List widget.
 
 = 4.10.62 =
 

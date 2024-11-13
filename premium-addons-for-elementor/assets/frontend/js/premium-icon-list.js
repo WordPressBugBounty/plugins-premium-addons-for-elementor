@@ -38,12 +38,32 @@
                         self.addRandomBadges();
                     });
 
+                $(window).on('resize', self.handleAlignment);
+
             },
 
             run: function () {
 
+                this.handleAlignment();
+
                 var $listItems = this.elements.$listItems,
-                    $items = this.elements.$items;
+                    $items = this.elements.$items,
+                    $scope = this.$element;
+
+                var devices = ['widescreen', 'desktop', 'laptop', 'tablet', 'tablet_extra', 'mobile', 'mobile_extra'].filter(function (ele) { return ele != elementorFrontend.getCurrentDeviceMode(); });
+
+                devices.map(function (device) {
+                    device = ('desktop' !== device) ? device + '-' : '';
+                    $scope.removeClass(function (index, selector) {
+                        return (selector.match(new RegExp("(^|\\s)premium-" + device + "type\\S+", 'g')) || []).join(' ');
+                    });
+                });
+
+                var typeRow = $scope.filter('*[class*="type-row"]');
+
+                if (typeRow.length > 0) {
+                    $items.addClass('premium-bullet-list-content-inline');
+                }
 
                 var eleObserver = new IntersectionObserver(function (entries) {
                     entries.forEach(function (entry) {
@@ -70,25 +90,23 @@
 
                         eleObserver.observe($(item)[0]); // we need to apply this on each item
 
-                        // elementorFrontend.waypoint($(item), function () {
-
-                        //     var element = $(item),
-                        //         delay = element.data('delay');
-
-                        //     setTimeout(function () {
-                        //         element.next('.premium-bullet-list-divider , .premium-bullet-list-divider-inline').css("opacity", "1");
-                        //         element.next('.premium-bullet-list-divider-inline , .premium-bullet-list-divider').addClass("animated " + $listItems.data("list-animation"));
-
-                        //         element.css("opacity", "1").addClass("animated " + $listItems.data("list-animation"));
-                        //     }, delay);
-
-                        // });
                     }
 
                 });
             },
 
+            handleAlignment: function () {
+
+                var $element = this.$element,
+                    computedStyle = getComputedStyle($element[0]),
+                    listAlignment = computedStyle.getPropertyValue('--pa-bullet-align');
+
+                $element.addClass('premium-bullet-list-' + listAlignment);
+
+            },
+
             addRandomBadges: function () {
+
                 var settings = this.getElementSettings();
 
                 if (settings.rbadges_repeater.length < 1)
@@ -132,8 +150,6 @@
 
                 this.$element.addClass('randomb-applied');
             }
-
-
 
         });
 

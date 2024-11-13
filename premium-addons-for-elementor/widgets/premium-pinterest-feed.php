@@ -370,10 +370,27 @@ class Premium_Pinterest_Feed extends Widget_Base {
 			)
 		);
 
+        $this->add_control(
+			'select_boards',
+			array(
+				'label'       => __( 'Select Specific Board(s) By', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => array(
+					'name' => __( 'Board Name', 'premium-addons-for-elementor' ),
+					'id' => __( 'Board ID', 'premium-addons-for-elementor' ),
+				),
+				'default'     => 'name',
+				'render_type' => 'template',
+				'condition'   => array(
+					'match_id'  => '',
+					'show_feed' => 'yes',
+				),
+			)
+		);
+
 		$this->add_control(
 			'board_id',
 			array(
-				'label'              => __( 'Specific Board(s)', 'premium-addons-for-elementor' ),
 				'type'               => Premium_Select::TYPE,
 				'render_type'        => 'template',
 				'label_block'        => true,
@@ -383,6 +400,23 @@ class Premium_Pinterest_Feed extends Widget_Base {
 				'condition'          => array(
 					'show_feed' => 'yes',
 					'match_id'  => '',
+                    'select_boards'=> 'name'
+				),
+			)
+		);
+
+        $this->add_control(
+			'board_ids_text',
+			array(
+				'type'        => Controls_Manager::TEXT,
+				'label_block' => true,
+				'description' => 'Enter the IDs you want to include separated by ","',
+				'dynamic'     => array( 'active' => true ),
+				'render_type' => 'template',
+				'condition'   => array(
+					'show_feed' => 'yes',
+					'match_id'  => '',
+                    'select_boards'=> 'id'
 				),
 			)
 		);
@@ -2537,6 +2571,10 @@ class Premium_Pinterest_Feed extends Widget_Base {
 			<?php
 			return;
 		}
+
+        if( ! empty( $settings['board_ids_text'] ) ) {
+            $settings['board_id'] = explode( ',', $settings['board_ids_text'] );
+        }
 
 		$show_feed    = 'yes' === $settings['show_feed'];
 		$show_profile = 'yes' === $settings['profile_header'];

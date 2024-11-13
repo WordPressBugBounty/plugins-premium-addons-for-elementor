@@ -1081,11 +1081,12 @@
             var $this = $(_this.target),
                 // The section above the add new section box.
                 $addSection = $this.closest('.elementor-add-section'),
-                $prevSections = $addSection.prev(".elementor-top-section"),
-                $nextSections = $addSection.next(".elementor-top-section"),
+                $prevSections = $addSection.prev(".elementor-top-section, .e-con"),
+                $nextSections = $addSection.next(".elementor-top-section, .e-con"),
                 modelID = $prevSections.data('model-cid');
 
             if (elementor.previewView.collection.length) {
+
                 $.each(elementor.previewView.collection.models, function (index, model) {
                     //Trying to insert before at the beginning of the page.
                     if ('undefined' === typeof modelID && $nextSections.length > 0) {
@@ -1095,8 +1096,6 @@
                     }
                 });
             }
-
-            //If at the end of the page atIndex = null
 
             this.getModal().show();
 

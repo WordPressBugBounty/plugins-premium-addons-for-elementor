@@ -6,6 +6,7 @@
 namespace PremiumAddons\Widgets;
 
 // Elementor Classes.
+use Elementor\Plugin;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Widget_Base;
 use Elementor\Utils;
@@ -159,9 +160,9 @@ class Premium_Grid extends Widget_Base {
 		return array( 'pa', 'premium', 'premium media grid', 'layout', 'gallery', 'image', 'video', 'portfolio', 'visual', 'masonry', 'youtube', 'vimeo' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -1444,9 +1445,9 @@ class Premium_Grid extends Widget_Base {
 			'premium_gallery_img_border_radius',
 			array(
 				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
-                'type'      => Controls_Manager::DIMENSIONS,
+				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%', 'em' ),
-				'selectors' => array(
+				'selectors'  => array(
 					'{{WRAPPER}} .pa-gallery-img-container, {{WRAPPER}} .pa-gallery-img:not(.style2) .pa-gallery-icons-wrapper, {{WRAPPER}} .pa-gallery-img.style2 .pa-gallery-icons-caption-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
 			)
@@ -1623,9 +1624,9 @@ class Premium_Grid extends Widget_Base {
 			'premium_gallery_content_border_radius',
 			array(
 				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
-                'type'      => Controls_Manager::DIMENSIONS,
+				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%', 'em' ),
-				'selectors' => array(
+				'selectors'  => array(
 					'{{WRAPPER}} .premium-gallery-caption' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
 			)
@@ -2486,7 +2487,6 @@ class Premium_Grid extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-
 	}
 
 	/**
@@ -2768,10 +2768,7 @@ class Premium_Grid extends Widget_Base {
 
 				$image_by_id = get_post( $image_id );
 
-				$alt = '';
-				if ( isset( $image_by_id->post_title ) ) {
-					$alt = apply_filters( 'pa_grid_image_alt', get_post( $image_id )->post_title );
-				}
+				$alt = $this->get_lightbox_title( $image_by_id );
 
 				$this->add_render_attribute(
 					$key,
@@ -2965,6 +2962,37 @@ class Premium_Grid extends Widget_Base {
 	<?php endif; ?>
 
 		<?php
+	}
+
+	/**
+	 * Gets lightbox Title according to the Global Lightbox Settings.
+	 *
+	 * @param object $attachement  image(post) object.
+	 *
+	 * @since 4.10.62
+	 *
+	 * @return string $title  lightbox title.
+	 */
+	protected function get_lightbox_title( $attachment ) {
+		$title = '';
+
+		$image_data = array(
+			'alt'         => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
+			'caption'     => $attachment->post_excerpt,
+			'description' => $attachment->post_content,
+			'title'       => $attachment->post_title,
+		);
+
+		$kit                = Plugin::$instance->kits_manager->get_active_kit();
+		$lightbox_title_src = $kit->get_settings( 'lightbox_title_src' );
+
+		if ( $lightbox_title_src && $image_data[ $lightbox_title_src ] ) {
+			$lightbox_title = $image_data[ $lightbox_title_src ];
+
+			$title = apply_filters( 'pa_grid_image_alt', $lightbox_title );
+		}
+
+		return $title;
 	}
 
 	/**

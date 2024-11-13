@@ -1149,7 +1149,8 @@ class Premium_Icon_List extends Widget_Base {
 					'row'    => __( 'Inline', 'premium-addons-for-elementor' ),
 					'column' => __( 'Block', 'premium-addons-for-elementor' ),
 				),
-				'render_type' => 'template',
+				'prefix_class' => 'premium%s-type-',
+				'render_type' => 'ui',
 				'default'     => 'column',
 				'selectors'   => array(
 					'{{WRAPPER}}  .premium-bullet-list-box ' => 'flex-direction: {{VALUE}};',
@@ -1178,8 +1179,9 @@ class Premium_Icon_List extends Widget_Base {
 					),
 				),
 				'selectors'   => array(
-					'{{WRAPPER}} .premium-bullet-list-content , {{WRAPPER}} .premium-bullet-list-box ' => 'justify-content:{{VALUE}};',
-					'{{WRAPPER}} .premium-bullet-list-divider , {{WRAPPER}} .premium-bullet-list-wrapper-top ' => 'align-self:{{VALUE}};',
+					'{{WRAPPER}} .premium-bullet-list-content, {{WRAPPER}} .premium-bullet-list-box' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} .premium-bullet-list-divider, {{WRAPPER}} .premium-bullet-list-wrapper-top' => 'align-self: {{VALUE}};',
+                    '{{WRAPPER}}' => '--pa-bullet-align: {{VALUE}}',
 				),
 				'toggle'      => false,
 				'default'     => 'flex-start',
@@ -1622,6 +1624,18 @@ class Premium_Icon_List extends Widget_Base {
 				'size_units' => array( 'px', '%', 'em' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-bullet-list-content ' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'list_padding',
+			array(
+				'label'      => __( 'List Padding', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%', 'em' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-bullet-list-box ' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -2428,40 +2442,6 @@ class Premium_Icon_List extends Widget_Base {
 					);
 				}
 
-				if ( 'row' === $settings['layout_type'] ) {
-					$this->add_render_attribute(
-						$list_content_key,
-						'class',
-						array(
-							'premium-bullet-list-content-inline',
-						)
-					);
-				} elseif ( 'flex-start' === $settings['premium_icon_list_align'] ) {
-
-						$this->add_render_attribute(
-							$list_content_key,
-							'class',
-							array(
-								'premium-bullet-list-content-grow-lc',
-							)
-						);
-				} elseif ( 'flex-end' === $settings['premium_icon_list_align'] ) {
-					$this->add_render_attribute(
-						$list_content_key,
-						'class',
-						array(
-							'premium-bullet-list-content-grow-rc',
-						)
-					);
-				} else {
-					$this->add_render_attribute(
-						$list_content_key,
-						'class',
-						array(
-							'premium-bullet-list-content-grow-cc',
-						)
-					);
-				}
 
 				?>
 
@@ -2720,37 +2700,6 @@ class Premium_Icon_List extends Widget_Base {
 
 				}
 
-				if ( 'row' === settings.layout_type ) {
-
-					view.addRenderAttribute( listContentKey, 'class',
-						[
-							'premium-bullet-list-content-inline'
-						]
-					);
-
-				} else {
-
-					if( 'flex-start' === settings.premium_icon_list_align ) {
-						view.addRenderAttribute( listContentKey, 'class',
-							[
-								'premium-bullet-list-content-grow-lc'
-							]
-						);
-					} else if( 'flex-end' === settings.premium_icon_list_align ) {
-						view.addRenderAttribute( listContentKey, 'class',
-							[
-								'premium-bullet-list-content-grow-rc'
-							]
-						);
-					} else {
-						view.addRenderAttribute( listContentKey, 'class',
-							[
-								'premium-bullet-list-content-grow-cc'
-							]
-						);
-					}
-
-				}
 
 				var gradient_effect_class ='';
 

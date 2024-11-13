@@ -389,7 +389,7 @@ class Addons_Integration {
 				array(
 					$link,
                     $disable_unused_url
-				),
+				)
 			);
 
 		}
