@@ -16,6 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Admin_Notices {
 
+    /**
+	 * Premium Addons Stories
+	 *
+	 * @var stories
+	 */
+	private $stories = array();
+
 	/**
 	 * Class object
 	 *
@@ -61,8 +68,13 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'halloween24_hide',
 		);
+
+        if ( Helper_Functions::check_hide_notifications() ) {
+			return;
+		}
+
+        add_action( 'wp_dashboard_setup', array( $this, 'show_story_widget' ), 111 );
 
 	}
 
@@ -100,12 +112,6 @@ class Admin_Notices {
 				$this->show_review_notice();
 			}
 		}
-
-		if ( Helper_Functions::check_hide_notifications() ) {
-			return;
-		}
-
-		$this->get_halloween_notice();
 
 	}
 
@@ -230,52 +236,6 @@ class Admin_Notices {
 
 		<?php
 
-	}
-
-    public function get_halloween_notice() {
-
-        $time     = time();
-
-        if ( $time > 1730582400 || get_transient( 'halloween24_hide' ) ) {
-			return;
-		}
-
-        $papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
-
-		$is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
-
-		$license_key = get_option( 'papro_license_key' );
-
-        if ( $is_papro_installed ) {
-			$status = $this->check_status( $license_key );
-
-            if( $status ) {
-                return;
-            }
-		}
-
-		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/halloween-sale/', 'wp-dash', 'halloween24-notification', 'halloween24' );
-
-		?>
-
-		<div class="error pa-notice-wrap pa-new-feature-notice pa-review-notice">
-			<div class="pa-img-wrap">
-				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
-			</div>
-			<div class="pa-text-wrap">
-				<p>
-					<?php echo __( 'Halloween Sale! Save up to 20% on Premium Addons Pro.', 'premium-addons-for-elementor' ); ?>
-					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
-						<span><?php echo __( 'Catch The Deal', 'premium-addons-for-elementor' ); ?></span>
-					</a>
-				</p>
-			</div>
-			<div class="pa-notice-close" data-notice="halloween24_hide">
-				<span class="dashicons dashicons-dismiss"></span>
-			</div>
-		</div>
-
-		<?php
 	}
 
 	/**
@@ -431,6 +391,205 @@ class Admin_Notices {
         }
 
         return $status;
+    }
+
+    /**
+	 * Get PA Stories
+	 *
+	 * Gets a list of the latest three blog posts
+	 *
+	 * @since 4.10.64
+	 *
+	 * @access public
+	 */
+	public function get_pa_stories() {
+
+		$stories = get_transient( 'pa_stories' );
+
+		if ( ! $stories ) {
+
+			$api_url = 'https://premiumaddons.com/wp-json/stories/v2/get';
+
+			$response = wp_remote_get(
+				$api_url,
+				array(
+					'timeout'   => 60,
+					'sslverify' => true,
+				)
+			);
+
+            if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+                return false;
+            }
+
+			$body  = wp_remote_retrieve_body( $response );
+			$stories = json_decode( $body, true );
+
+			set_transient( 'pa_stories', $stories, WEEK_IN_SECONDS );
+
+		}
+
+        $this->stories = $stories;
+
+		return $stories;
+	}
+
+    public function show_story_widget() {
+
+        $stories = $this->get_pa_stories();
+
+        if ( empty( $stories ) ) {
+            return;
+        }
+
+        wp_add_dashboard_widget( 'pa-stories', __( 'Premium Addons News', 'premium-addons-for-elementor' ), array( $this, 'show' ) );
+
+        // Move our widget to top.
+        global $wp_meta_boxes;
+
+        $core_widgets = $wp_meta_boxes['dashboard']['normal']['core'];
+
+        $pa_widgets = [];
+        if( isset( $core_widgets['pa-stories'] ) ) {
+
+            $pa_widgets      = array(
+                'pa-stories' => $core_widgets['pa-stories'],
+            );
+
+        }
+
+        $wp_meta_boxes['dashboard']['normal']['core'] = array_merge( $pa_widgets, $core_widgets );
+    }
+
+
+    public function show() {
+
+        $stories = $this->stories;
+
+        $time     = time();
+
+        $papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
+
+        $is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
+
+        if( $is_papro_installed ) {
+
+            array_unshift( $stories['posts'], array(
+                'link'=> 'https://premiumaddons.com/docs/upgrad-premium-addons-license/',
+                'title'=> __('Upgrade your Premium Addons Pro suubscription to lifetime and get FLAT 25% OFF using the code: <strong style="font-weight: bold">PREMIUM25OFF</strong>')
+            ));
+
+        }
+
+        ?>
+            <style>
+                .pa-banners-grid {
+                    margin-bottom: 10px;
+                }
+
+                .pa-stories-banner {
+                    position: relative;
+                }
+
+                .pa-stories-banner a {
+                    position: absolute;
+                    inset: 0;
+                }
+
+                .pa-story-img-container img {
+                    width: 100%;
+                    display: block;
+                }
+
+                .pa-news-post {
+                    margin-bottom: 5px;
+                }
+
+                .pa-news-post a {
+                    font-weight: 500;
+                    color: #0073aa;
+                    text-decoration: none;
+                    padding-bottom: 5px;
+                    display: inline-block;
+                }
+
+                .pa-dashboard-widget-block {
+                    width: 100%;
+                }
+
+                .pa-footer-bar {
+                    border-top: 1px solid #eee;
+                    padding-top: 1rem;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                .pa-dashboard-widget-block a {
+                    text-decoration: none;
+                    font-size: 13px;
+                    color: #007cba;
+                }
+
+                .pa-dashboard-widget-block .dashicons {
+                    vertical-align: middle;
+                    font-size: 17px;
+                }
+            </style>
+
+
+            <?php if( ! $is_papro_installed ) : ?>
+                <div class="pa-banners-grid">
+
+                    <?php foreach ( $stories['banners'] as $index => $banner ) : ?>
+
+                        <?php if( $time < $banner['end'] ) : ?>
+
+                            <div class="pa-stories-banner">
+                                <div class="pa-story-img-container">
+                                    <img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ) ?>">
+                                </div>
+                                <a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'dashboard' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ) ?>"></a>
+                            </div>
+
+                        <?php endif; ?>
+
+                    <?php endforeach; ?>
+
+                </div>
+            <?php endif; ?>
+
+            <div class="pa-posts-grid">
+
+                <?php foreach ( $stories['posts'] as $index => $post ) : ?>
+
+                    <div class="pa-news-post">
+                        <a target="_blank" href="<?php echo esc_url( $post['link'] ) ?>">
+                            <?php echo wp_kses_post( $post['title'] ) ?>
+                        </a>
+                    </div>
+
+                <?php endforeach; ?>
+
+            </div>
+
+            <div class="pa-dashboard-widget-block">
+                <div class="pa-footer-bar">
+                    <a href="https://my.leap13.com/contact-support" target="_blank" style="color: #27ae60">
+                        Need Help?
+                        <span aria-hidden="true" class="dashicons dashicons-external"></span>
+                    </a>
+                    <a href="https://www.youtube.com/leap13" target="_blank" style="color: #e1002d">
+                        YouTube Channel
+                        <span aria-hidden="true" class="dashicons dashicons-youtube"></span>
+                    </a>
+                    <a href="https://www.facebook.com/groups/PremiumAddons" target="_blank" style="color: #1877F2;">
+                        Facebook Community
+                        <span aria-hidden="true" class="dashicons dashicons-facebook-alt"></span>
+                    </a>
+                </div>
+            </div>
+
+        <?php
     }
 
 	/**

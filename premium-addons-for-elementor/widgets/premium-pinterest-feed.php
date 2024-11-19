@@ -2869,6 +2869,10 @@ class Premium_Pinterest_Feed extends Widget_Base {
 						continue;
 					}
 
+					// if( ! $settings['board_id'] ) {
+					// 	return;
+					// }
+
 					if ( $default && 1 < count( $settings['board_id'] ) && ! in_array( $feed['board_id'], $settings['board_id'], true ) ) {
 						continue;
 					}

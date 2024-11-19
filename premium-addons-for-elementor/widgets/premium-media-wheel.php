@@ -1025,8 +1025,8 @@ class Premium_Media_Wheel extends Widget_Base {
 				'prefix_class' => 'premium-adv-carousel__',
 				'default'      => 'horizontal',
 				'options'      => array(
-					'vertical'   => __( 'Vertical', 'premium-addons-for-elementor' ),
 					'horizontal' => __( 'Horizontal', 'premium-addons-for-elementor' ),
+                    'vertical'   => __( 'Vertical', 'premium-addons-for-elementor' ),
 				),
 				'render_type'  => 'template',
 				'condition'    => array(

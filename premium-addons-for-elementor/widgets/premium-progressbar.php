@@ -412,6 +412,7 @@ class Premium_Progressbar extends Widget_Base {
 			array(
 				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
+                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
 				'condition' => array_merge(
 					$common_conditions,

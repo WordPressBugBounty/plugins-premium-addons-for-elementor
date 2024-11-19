@@ -98,6 +98,7 @@ class Module {
 			array(
 				'label'              => __( 'Enable Wrapper Link', 'premium-addons-for-elementor' ),
 				'type'               => Controls_Manager::SWITCHER,
+                'prefix_class'       => 'premium-wrapper-link-',
 			)
 		);
 

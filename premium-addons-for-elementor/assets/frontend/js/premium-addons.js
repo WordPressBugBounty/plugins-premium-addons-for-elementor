@@ -4471,35 +4471,69 @@
                         repeat: -1
                     });
 
-                    //Pause on hover
-                    if (settings.pauseOnHover) {
-                        $scope.hover(function () {
-                            animation.pause();
-                        }, function () {
-                            animation.play();
-                        })
-                    }
-
-
                 } else {
-
-                    start = 'transform: translateY(' + transformOffset + 'px)';
-                    end = 'transform: translateY(-101%)';
 
                     $mediaItem.each(function () {
                         verAlignWidth += $(this).outerHeight(true);
                     });
 
-                    $mediaItemsContainer.css({ 'height': verAlignWidth });
+                    $mediaItemsContainer.css({
+                        'position': 'relative',
+                        'height': verAlignWidth
+                    });
 
-                    var keyFrames = document.createElement("style");
+                    $mediaItemsContainer.find('.premium-adv-carousel__item-outer-wrapper').css('position', 'absolute');
 
-                    keyFrames.innerHTML = '@keyframes ' + animeName + ' { 0%{ ' + start + '} 100% {' + end + '} }';
+                    if ('normal' === scrollDir) {
+                        $mediaItemsContainer.find('.premium-adv-carousel__item-outer-wrapper').css('bottom', 0);
+                    } else {
+                        $mediaItemsContainer.css('top', '-' + verAlignWidth / $mediaItem.length + 'px');
+                    }
 
-                    document.head.appendChild(keyFrames);
+                    var slidesSpacing = getComputedStyle($scope[0]).getPropertyValue('--pa-wheel-spacing') || 0,
+                        factor = 'normal' === scrollDir ? -1 : 1,
+                        accumlativeHeight = 0;
 
-                    $mediaItemsContainer.css('animation', animeName + ' ' + duration + ' linear 0s infinite ' + scrollDir + ' none');
+                    gsap.set($scope.find('.premium-adv-carousel__item-outer-wrapper'), { // animates the carousel.
+                        y: function (i) {
 
+                            transformVal = accumlativeHeight;
+
+                            accumlativeHeight = accumlativeHeight + $scope.find('.premium-adv-carousel__item').eq(i).outerHeight(true);
+
+                            return (transformVal) * factor
+                        }
+                    });
+
+
+                    var fullHeight = (verAlignWidth + ($scope.find('.premium-adv-carousel__item').length * parseFloat(slidesSpacing)));
+
+                    var animation = gsap.to($scope.find('.premium-adv-carousel__item-outer-wrapper'), {
+                        duration: settings.speed,
+                        ease: "none",
+                        y: ('normal' === scrollDir ? '-=' : '+=') + fullHeight,
+                        modifiers: {
+                            y: gsap.utils.unitize(function (y) {
+
+                                var remainder = parseFloat(y) % fullHeight,
+                                    clampedValue = Math.max(remainder, -fullHeight);
+
+                                return 'normal' === scrollDir ? clampedValue : remainder;
+
+                            })
+                        },
+                        repeat: -1
+                    })
+
+                }
+
+                //Pause on hover
+                if (settings.pauseOnHover) {
+                    $scope.hover(function () {
+                        animation.pause();
+                    }, function () {
+                        animation.play();
+                    })
                 }
 
             }

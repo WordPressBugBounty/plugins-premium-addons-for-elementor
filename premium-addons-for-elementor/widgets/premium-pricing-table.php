@@ -253,6 +253,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			array(
 				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
+                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
 				'condition' => array(
 					'icon_type' => array( 'icon', 'svg' ),
@@ -660,6 +661,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			array(
 				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
+                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
 				'condition' => array(
 					'icon_type' => array( 'icon', 'svg' ),
@@ -2931,7 +2933,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -3036,7 +3038,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 

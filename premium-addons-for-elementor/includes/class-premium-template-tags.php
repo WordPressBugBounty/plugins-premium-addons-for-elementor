@@ -701,6 +701,7 @@ class Premium_Template_Tags {
 			'category'       => '',
 			'orderby'        => '',
 			'posts_per_page' => 1,
+            'suppress_filters' => false
 		);
 
 		$query_args = wp_parse_args( $post_args, $defaults );

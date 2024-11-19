@@ -243,17 +243,15 @@ class Helper_Functions {
 	 */
 	public static function check_hide_notifications() {
 
-        $hide_notification = false;
-
 		if ( self::check_papro_version() ) {
 
 			$white_label = Helper::get_white_labeling_settings();
 
-			$hide_notification = $white_label['premium-wht-lbl-not'];
+			$hide_notification = isset( $white_label['premium-wht-lbl-not'] ) ? $white_label['premium-wht-lbl-not'] : false;
 
 		}
 
-		return $hide_notification;
+		return isset( $hide_notification ) ? $hide_notification : false;
 	}
 
 	/**

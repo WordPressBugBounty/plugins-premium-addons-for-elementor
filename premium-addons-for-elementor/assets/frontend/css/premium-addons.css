@@ -4121,6 +4121,8 @@ span.icon.flex-width {
   background-repeat: repeat-x;
   -webkit-animation: pa-reveal 2s forwards ease-in-out infinite;
   animation: pa-reveal 2s forwards ease-in-out infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
 }
 
 .premium-atext__loading-yes .premium-atext__text {

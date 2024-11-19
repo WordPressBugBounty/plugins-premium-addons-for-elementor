@@ -77,10 +77,9 @@ class Module {
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-        add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
-        add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
-
+		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
+		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
+		add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
 	}
 
 	/**
@@ -776,15 +775,17 @@ class Module {
 
 		$old_template = $template;
 		ob_start();
+
+		$papro_activated = apply_filters( 'papro_activated', false ) ? 'yes' : 'no';
+
 		?>
 		<#
 			var isEnabled = 'yes' === settings.premium_global_divider_sw ? true : false;
 
 			if ( isEnabled && settings.premium_shapes_data ) {
 
-				var source = settings.premium_gdivider_source,
-					dividerSettings = {},
-					shapesData = settings.premium_shapes_data,
+                var source = settings.premium_gdivider_source,
+                    shapesData = settings.premium_shapes_data,
 					shapeHTML = '',
 					customFill = 'color' !== settings.premium_gdivider_bg_type;
 
@@ -900,7 +901,11 @@ class Module {
 				if ( 'default' !== source ) {
 					shapeHTML = settings.premium_gdivider_custom;
 				} else {
-					shapeHTML = '' !== settings.premium_gdivider_defaults ? shapesData[ settings.premium_gdivider_defaults ]['imagesmall'] : '';
+
+                    var isProVersionActive = '<?php echo esc_html( $papro_activated ); ?>' === 'yes'
+                        selectedShapeIndex = parseInt(settings.premium_gdivider_defaults.replace(/[^\d]/g, ''), 10);
+
+                    shapeHTML = (selectedShapeIndex <= 25 || isProVersionActive) ? shapesData[ settings.premium_gdivider_defaults ]['imagesmall'] : '';
 				}
 
 				function getContainerClasses() {
@@ -924,11 +929,15 @@ class Module {
 						'class': getContainerClasses(),
 						'style': 'visibility:hidden; opacity:0;'
 					});
-					#>
-						<div {{{ view.getRenderAttributeString( 'paShapeDivider' ) }}} >{{{shapeHTML}}}</div>
-					<#
-				}
-			}
+                #>
+                    <div {{{ view.getRenderAttributeString( 'paShapeDivider' ) }}} >{{{shapeHTML}}}</div>
+                <# } else { #>
+                    <div class="premium-error-notice">
+                        <?php echo wp_kses_post( __( 'This option is available in <b>Premium Addons Pro</b>.', 'premium-addons-for-elementor' ) ); ?>
+                    </div>
+				<# }
+
+            }
 
 		#>
 
@@ -950,12 +959,9 @@ class Module {
 	 */
 	public function before_render( $element ) {
 
-		$element_type = $element->get_type();
-
-		$id = $element->get_id();
-
-		$settings = $element->get_settings_for_display();
-
+		$element_type    = $element->get_type();
+		$id              = $element->get_id();
+		$settings        = $element->get_settings_for_display();
 		$divider_enabled = $settings['premium_global_divider_sw'];
 
 		if ( 'yes' === $divider_enabled ) {
@@ -966,7 +972,7 @@ class Module {
 
 				$is_pro_shape = 'default' === $settings['premium_gdivider_source'] && str_replace( 'shape', '', $settings['premium_gdivider_defaults'] ) > 25;
 
-				if ( $is_pro_shape || 'custom' === $settings['premium_gdivider_source'] || 'color' !== $settings['premium_gdivider_bg_type'] || in_array( $settings['premium_gdivider_pos'], array( 'left', 'right' ) ) ) {
+				if ( $is_pro_shape || 'custom' === $settings['premium_gdivider_source'] || 'color' !== $settings['premium_gdivider_bg_type'] || in_array( $settings['premium_gdivider_pos'], array( 'left', 'right' ), true ) ) {
 
 					?>
 					<div class="premium-error-notice">
@@ -983,7 +989,6 @@ class Module {
 
 			$source           = $settings['premium_gdivider_source'];
 			$divider_settings = array();
-			$is_edit_mode     = \Elementor\Plugin::$instance->editor->is_edit_mode();
 			$hidden_style     = 'visibility:hidden; position: absolute; opacity:0;';
 			$shape            = '';
 			$custom_fill      = 'color' !== $settings['premium_gdivider_bg_type'];
@@ -1010,12 +1015,22 @@ class Module {
 
 			?>
 				<div <?php echo wp_kses_post( $element->get_render_attribute_string( 'shape_divider_cont' . $id ) ); ?>>
-					<?php echo $shape; ?>
+                    <?php echo $shape; ?>
 				</div>
 			<?php
 		}
 	}
 
+
+	/**
+	 * Add Custom Fill
+	 *
+	 * @since 1.0.0
+	 * @access public
+     *
+	 * @param number $id for id.
+	 * @param object $settings for settings.
+	 */
 	public function add_custom_fill( $id, $settings ) {
 
 		$img_fill = 'image' === $settings['premium_gdivider_bg_type'];
@@ -1038,7 +1053,7 @@ class Module {
 
 			'</pattern>';
 		} else {
-			// gradient
+			// gradient.
 			$gradient_type = $settings['premium_gdivider_grad_type'];
 			$grad_pos      = 'linear' === $gradient_type ? $settings['premium_gdivider_grad_angle']['size'] : array( $settings['premium_gdivider_grad_xpos']['size'], $settings['premium_gdivider_grad_ypos']['size'] );
 			$grad_unit     = 'linear' === $gradient_type ? 'deg' : '';
@@ -1086,9 +1101,9 @@ class Module {
 			return;
 		}
 
-        $settings = $element->get_active_settings();
+		$settings = $element->get_active_settings();
 
-		if ( ! empty( $settings[ 'premium_global_divider_sw' ] ) ) {
+		if ( ! empty( $settings['premium_global_divider_sw'] ) ) {
 
 			$this->enqueue_styles();
 			$this->enqueue_scripts();
