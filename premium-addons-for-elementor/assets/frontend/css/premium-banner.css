@@ -11,7 +11,6 @@
   overflow: hidden;
   margin: 0;
   text-align: center;
-  box-sizing: border-box;
 }
 .premium-banner-ib img {
   display: block;
@@ -38,10 +37,6 @@
   background: transparent;
 }
 
-.premium-banner-ib *,
-.premium-banner-ib .premium-banner-ib-desc {
-  box-sizing: border-box;
-}
 .premium-banner-ib img {
   min-width: 100%;
   max-width: 100%;
@@ -50,9 +45,6 @@
 }
 .premium-banner-ib .premium-banner-ib-desc {
   padding: 15px;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
@@ -789,11 +781,15 @@
 }
 .premium-banner-animation7 .premium-banner-ib-desc {
   padding: 70px;
-  display: table;
-}
-.premium-banner-animation7 .premium-banner-ib-desc .premium-banner-desc-centered {
-  display: table-cell;
-  vertical-align: middle;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 .premium-banner-animation7 .premium-banner-ib-title {
   margin-top: 0;

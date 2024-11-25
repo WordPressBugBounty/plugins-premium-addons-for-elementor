@@ -138,9 +138,9 @@ class Premium_Nav_Menu extends Widget_Base {
 		return array( 'pa', 'premium', 'premium mega menu', 'menu', 'nav', 'navigation', 'mega menu', 'header' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -448,6 +448,20 @@ class Premium_Nav_Menu extends Widget_Base {
 				'description' => __( 'Enable this option to set the dropdown width to the same width of the parent container', 'premium-addons-for-elementor' ),
 				'condition'   => array(
 					'item_type' => 'menu',
+				),
+			)
+		);
+
+		$repeater->add_control(
+			'full_width_selector',
+			array(
+				'label'       => __( 'Element CSS ID', 'premium-addons-for-elementor' ),
+				'description' => __( 'Enter the section ID you want to get the full width of. EX: #my-custom-cont', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'render_type' => 'template',
+				'condition'   => array(
+					'item_type'          => 'menu',
+					'section_full_width' => 'yes',
 				),
 			)
 		);
@@ -4900,6 +4914,10 @@ class Premium_Nav_Menu extends Widget_Base {
 
 				if ( 'yes' === $item['section_full_width'] ) {
 					$this->add_render_attribute( 'menu-item-' . $index, 'data-full-width', 'true' );
+
+					if ( ! empty( $item['full_width_selector'] ) ) {
+						$this->add_render_attribute( 'menu-item-' . $index, 'data-full-width-selector', $item['full_width_selector'] );
+					}
 				}
 
 				if ( $next_item_exists ) {

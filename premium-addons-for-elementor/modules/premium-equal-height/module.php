@@ -195,17 +195,28 @@ class Module {
 			)
 		);
 
-		$url     = 'https://premiumaddons.com/docs/elementor-column-equal-height/';
-		$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
-
-		$element->add_control(
-			'equal_height_notice',
-			array(
-				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => sprintf( '<a href="%s" target="_blank">%s</a>', $doc_url, __( 'How to use Premium Equal Height option »', 'premium-addons-for-elementor' ) ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-			)
+        $docs = array(
+			'https://premiumaddons.com/docs/elementor-column-equal-height/' => __( 'How to use Premium Equal Height feature »', 'premium-addons-for-elementor' ),
+            'https://www.youtube.com/watch?v=ZaZ163p-saA' => __( 'Video tutorial »', 'premium-addons-for-elementor' ),
 		);
+
+		$doc_index = 1;
+		foreach ( $docs as $url => $title ) {
+
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+
+			$element->add_control(
+				'doc_' . $doc_index,
+				array(
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => sprintf( '<a href="%s" target="_blank">%s</a>', $doc_url, $title ),
+					'content_classes' => 'editor-pa-doc',
+				)
+			);
+
+			++$doc_index;
+
+		}
 
 		$element->end_controls_section();
 	}

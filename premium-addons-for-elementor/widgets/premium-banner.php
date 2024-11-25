@@ -663,7 +663,6 @@ class Premium_Banner extends Widget_Base {
 						'step' => .1,
 					),
 				),
-				'separator' => 'after',
 				'selectors' => array(
 					'{{WRAPPER}}:hover .premium-banner-ib img' => 'opacity: {{SIZE}};',
 				),
@@ -871,7 +870,7 @@ class Premium_Banner extends Widget_Base {
 					'premium_banner_image_animation' => 'animation5',
 				),
 				'selectors'   => array(
-					'{{WRAPPER}} .premium-banner-animation5 .premium-banner-ib-desc'    => 'background: {{VALUE}};',
+					'{{WRAPPER}} .premium-banner-animation5 .premium-banner-ib-desc'    => 'background-color: {{VALUE}};',
 				),
 			)
 		);

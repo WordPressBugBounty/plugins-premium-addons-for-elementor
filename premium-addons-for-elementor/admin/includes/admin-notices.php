@@ -68,6 +68,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
+            'bf24_hide'
 		);
 
         if ( Helper_Functions::check_hide_notifications() ) {
@@ -112,6 +113,8 @@ class Admin_Notices {
 				$this->show_review_notice();
 			}
 		}
+
+        $this->get_bf_notice();
 
 	}
 
@@ -236,6 +239,52 @@ class Admin_Notices {
 
 		<?php
 
+	}
+
+    public function get_bf_notice() {
+
+        $time     = time();
+
+        if ( $time > 1738473600 || get_transient( 'bf24_hide' ) ) {
+			return;
+		}
+
+        $papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
+
+		$is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
+
+		$license_key = get_option( 'papro_license_key' );
+
+        if ( $is_papro_installed ) {
+			$status = $this->check_status( $license_key );
+
+            if( $status ) {
+                return;
+            }
+		}
+
+		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/black-friday/', 'wp-dash', 'bf24-notification', 'bf24' );
+
+		?>
+
+		<div class="error pa-notice-wrap pa-new-feature-notice pa-review-notice">
+			<div class="pa-img-wrap">
+				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
+			</div>
+			<div class="pa-text-wrap">
+				<p>
+					<?php echo __( 'Our Biggest Black Friday Sale: Save up to 35% on Premium Addons Pro!', 'premium-addons-for-elementor' ); ?>
+					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
+						<span><?php echo __( 'Catch The Deal', 'premium-addons-for-elementor' ); ?></span>
+					</a>
+				</p>
+			</div>
+			<div class="pa-notice-close" data-notice="bf24_hide">
+				<span class="dashicons dashicons-dismiss"></span>
+			</div>
+		</div>
+
+		<?php
 	}
 
 	/**
@@ -476,7 +525,7 @@ class Admin_Notices {
 
             array_unshift( $stories['posts'], array(
                 'link'=> 'https://premiumaddons.com/docs/upgrad-premium-addons-license/',
-                'title'=> __('Upgrade your Premium Addons Pro suubscription to lifetime and get FLAT 25% OFF using the code: <strong style="font-weight: bold">PREMIUM25OFF</strong>')
+                'title'=> __('Upgrade your Premium Addons Pro subscription to Lifetime and get FLAT 35% OFF using the code: <strong style="font-weight: bold">BFLifetime2024</strong>')
             ));
 
         }
@@ -535,28 +584,6 @@ class Admin_Notices {
                     font-size: 17px;
                 }
             </style>
-
-
-            <?php if( ! $is_papro_installed ) : ?>
-                <div class="pa-banners-grid">
-
-                    <?php foreach ( $stories['banners'] as $index => $banner ) : ?>
-
-                        <?php if( $time < $banner['end'] ) : ?>
-
-                            <div class="pa-stories-banner">
-                                <div class="pa-story-img-container">
-                                    <img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ) ?>">
-                                </div>
-                                <a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'dashboard' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ) ?>"></a>
-                            </div>
-
-                        <?php endif; ?>
-
-                    <?php endforeach; ?>
-
-                </div>
-            <?php endif; ?>
 
             <div class="pa-posts-grid">
 

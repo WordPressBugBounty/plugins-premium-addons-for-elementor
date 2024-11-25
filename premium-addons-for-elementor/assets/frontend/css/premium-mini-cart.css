@@ -281,7 +281,6 @@
   border-radius: 0;
 }
 .pa-woo-mc__qty-btn {
-  display: none;
   width: 13px;
   height: 13px;
   fill: rgba(0, 0, 0, 0.631372549);
@@ -630,6 +629,11 @@ html.offcanvas-open .eb-total-outer-container {
   z-index: 9;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+}
+
+.pa-woo-mc__qty-btn,
+svg:not(:root).pa-woo-mc__qty-btn {
+  display: none;
 }
 
 @media (max-width: 1024px) {

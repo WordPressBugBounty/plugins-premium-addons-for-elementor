@@ -2665,7 +2665,7 @@ class Premium_Media_Wheel extends Widget_Base {
 					</div>
 
 					<?php
-					if ( 'yes' === $lightbox ) {
+					// if ( 'yes' === $lightbox ) {
 						?>
 						<div class="pa-media-icons-wrapper">
 							<div class="pa-media-icons-inner-container">
@@ -2673,7 +2673,7 @@ class Premium_Media_Wheel extends Widget_Base {
 							</div>
 						</div>
 						<?php
-					}
+					// }
 					?>
 
 					<?php
@@ -2912,6 +2912,7 @@ class Premium_Media_Wheel extends Widget_Base {
 			}
 
 			if ( $play_icon_enabled ) {
+
 				?>
 				<div>
 					<a <?php echo wp_kses_post( $this->get_render_attribute_string( $lightbox_key ) ); ?>>

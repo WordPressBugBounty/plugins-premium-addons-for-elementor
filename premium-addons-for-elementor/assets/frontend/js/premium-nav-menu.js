@@ -371,11 +371,16 @@
          * Full Width Mega Content.
          */
         function fullWidthContent($item) {
+            var customSelector = $($item).data('full-width-selector');
 
-            var isContainer = elementorFrontend.config.experimentalFeatures.container,
-                $parentSec = $scope.parents('.e-con').last();
+            if (customSelector) {
+                var $parentSec = $(customSelector);
+            } else {
+                var isContainer = elementorFrontend.config.experimentalFeatures.container,
+                    $parentSec = $scope.parents('.e-con').last();
 
-            $parentSec = !isContainer || $parentSec.length < 1 ? $scope.closest('.elementor-top-section') : $parentSec;
+                $parentSec = !isContainer || $parentSec.length < 1 ? $scope.closest('.elementor-top-section') : $parentSec;
+            }
 
             var width = $parentSec.outerWidth(),
                 sectionLeft = $parentSec.offset().left - $item.offset().left;

@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, widgets, elementor elements, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 6.7
+Tested Up To: 6.7.1
 Requires PHP: 7.0
-Stable Tag: 4.10.64
+Stable Tag: 4.10.65
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -234,6 +234,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.65 =
+
+- Tweak: Added Full Width Custom CSS Selector option in Mega Menu widget.
+- Fixed: Alignment issue in animation #7 in Banner widget.
 
 = 4.10.64 =
 

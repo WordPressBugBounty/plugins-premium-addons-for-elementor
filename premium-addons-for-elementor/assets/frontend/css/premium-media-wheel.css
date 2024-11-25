@@ -254,10 +254,8 @@
 }
 .premium-adv-carousel__item .pa-media-icons-wrapper .pa-media-icons-inner-container .pa-media-magnific-image span {
   margin: 0 5px 20px;
-}
-.premium-adv-carousel__item:hover .pa-media-magnific-image span {
-  -webkit-transition: all 0.3s ease-in-out, opacity 0.5s ease-in-out 0.3s !important;
-  transition: all 0.3s ease-in-out, opacity 0.5s ease-in-out 0.3s !important;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .premium-adv-carousel__item:hover .pa-media-magnific-image span {
   opacity: 1 !important;
