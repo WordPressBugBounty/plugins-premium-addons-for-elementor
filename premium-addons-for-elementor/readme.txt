@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.7.1
 Requires PHP: 7.0
-Stable Tag: 4.10.65
+Stable Tag: 4.10.66
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -234,6 +234,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.66 =
+
+- Tweak: Added options to control Author Image size, border and border radius in Blog widget.
+- Tweak: Added Wave Effect in Dual Heading widget.
+- Tweak: Added On Page Exit Intent trigger in Modal Box widget.
 
 = 4.10.65 =
 

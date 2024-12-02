@@ -1481,7 +1481,7 @@ class Premium_Title extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}}.premium-title-gradient-yes .premium-title-text ,{{WRAPPER}}.premium-title-gradient-yes .premium-title-icon' => 'animation-duration: {{SIZE}}s ',
+					'{{WRAPPER}}.premium-title-gradient-yes .premium-title-text, {{WRAPPER}}.premium-title-gradient-yes .premium-title-icon' => 'animation-duration: {{SIZE}}s ',
 				),
 				'condition' => array(
 					'gradient_text_switcher' => 'yes',

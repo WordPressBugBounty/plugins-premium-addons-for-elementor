@@ -532,21 +532,21 @@ class Admin_Helper {
 	 */
 	public function insert_action_links( $links ) {
 
-		$papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
-
-		$is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
+		$is_papro_active = apply_filters( 'papro_activated', false );
 
 		$settings_link = sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=' . $this->page_slug . '#tab=elements' ), __( 'Settings', 'premium-addons-for-elementor' ) );
 
-		$rollback_link = sprintf( '<a href="%1$s">%2$s %3$s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=premium_addons_rollback' ), 'premium_addons_rollback' ), __( 'Rollback to Version ', 'premium-addons-for-elementor' ), PREMIUM_ADDONS_STABLE_VERSION );
+		// $rollback_link = sprintf( '<a href="%1$s">%2$s %3$s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=premium_addons_rollback' ), 'premium_addons_rollback' ), __( 'Rollback to Version ', 'premium-addons-for-elementor' ), PREMIUM_ADDONS_STABLE_VERSION );
 
-		$new_links = array( $settings_link, $rollback_link );
+		// $new_links = array( $settings_link, $rollback_link );
 
-		if ( ! $is_papro_installed ) {
+        $new_links = array( $settings_link );
 
-			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'plugins-page', 'wp-dash', 'get-pro' );
+		if ( ! $is_papro_active ) {
 
-			$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #FF6000; font-weight: bold;">%s</a>', $link, __( 'Go Pro', 'premium-addons-for-elementor' ) );
+			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/black-friday', 'plugins-page', 'wp-dash', 'get-pro' );
+
+			$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #FF6000; font-weight: bold;">%s</a>', $link, __( '35% Off on Upgrade!', 'premium-addons-for-elementor' ) );
 			array_push( $new_links, $pro_link );
 		}
 
@@ -710,6 +710,21 @@ class Admin_Helper {
 				'__return_null'
 			);
 		}
+
+        $is_papro_active = apply_filters( 'papro_activated', false );
+
+        if( ! $is_papro_active ) {
+            call_user_func(
+                'add_submenu_page',
+                $this->page_slug,
+                '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Premium</span>',
+                '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Premium</span>',
+                'manage_options',
+                'https://premiumaddons.com/black-friday',
+                ''
+            );
+        }
+
 
 		remove_submenu_page( $this->page_slug, $this->page_slug );
 	}

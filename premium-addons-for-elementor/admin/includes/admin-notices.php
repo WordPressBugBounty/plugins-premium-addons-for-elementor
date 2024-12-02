@@ -245,7 +245,7 @@ class Admin_Notices {
 
         $time     = time();
 
-        if ( $time > 1738473600 || get_transient( 'bf24_hide' ) ) {
+        if ( $time > 1733665574 || get_transient( 'bf24_hide' ) ) {
 			return;
 		}
 
@@ -263,7 +263,7 @@ class Admin_Notices {
             }
 		}
 
-		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/black-friday/', 'wp-dash', 'bf24-notification', 'bf24' );
+		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/black-friday/', 'wp-dash', 'cm24-notification', 'cm24' );
 
 		?>
 
@@ -273,7 +273,7 @@ class Admin_Notices {
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<?php echo __( 'Our Biggest Black Friday Sale: Save up to 35% on Premium Addons Pro!', 'premium-addons-for-elementor' ); ?>
+					<?php echo __( 'Cyber Monday Sale: Save up to 35% on Premium Addons Pro!', 'premium-addons-for-elementor' ); ?>
 					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
 						<span><?php echo __( 'Catch The Deal', 'premium-addons-for-elementor' ); ?></span>
 					</a>
@@ -584,6 +584,27 @@ class Admin_Notices {
                     font-size: 17px;
                 }
             </style>
+
+            <?php if( ! $is_papro_installed ) : ?>
+                <div class="pa-banners-grid">
+
+                    <?php foreach ( $stories['banners'] as $index => $banner ) : ?>
+
+                        <?php if( $time < $banner['end'] ) : ?>
+
+                            <div class="pa-stories-banner">
+                                <div class="pa-story-img-container">
+                                    <img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ) ?>">
+                                </div>
+                                <a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'cm24-dash' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ) ?>"></a>
+                            </div>
+
+                        <?php endif; ?>
+
+                    <?php endforeach; ?>
+
+                </div>
+            <?php endif; ?>
 
             <div class="pa-posts-grid">
 

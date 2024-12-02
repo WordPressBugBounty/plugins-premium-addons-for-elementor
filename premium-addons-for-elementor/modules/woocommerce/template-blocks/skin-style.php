@@ -254,9 +254,9 @@ abstract class Skin_Style {
 
 				$query_args['order'] = 'ASC';
 
-				self::$query_args = $query_args;
+				self::$query_args = apply_filters( 'pa_woo_main_query_args', $query_args );
 
-				self::$query = new \WP_Query( $query_args );
+				self::$query = new \WP_Query( self::$query_args );
 
 			} else {
 
@@ -269,6 +269,7 @@ abstract class Skin_Style {
 				self::$query_args = $main_query->query_vars;
 
 			}
+
 		} elseif ( 'related' === $settings['query_type'] ) {
 
 			if ( is_product() ) {

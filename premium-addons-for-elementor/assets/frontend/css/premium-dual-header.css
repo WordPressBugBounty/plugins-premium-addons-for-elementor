@@ -105,6 +105,41 @@
   display: inline-block !important;
 }
 
+.premium-title-first-wave-yes .premium-dual-header-first-span {
+  background-image: -webkit-linear-gradient(left, #ffa648, #f17cc1, #4da9fd);
+  background-image: linear-gradient(to right, #ffa648, #f17cc1, #4da9fd);
+  -webkit-animation: pa-text-gradient 8s infinite;
+  animation: pa-text-gradient 8s infinite;
+}
+
+.premium-title-second-wave-yes .premium-dual-header-second-clip {
+  background-image: -webkit-linear-gradient(left, #ffa648, #f17cc1, #4da9fd);
+  background-image: linear-gradient(to right, #ffa648, #f17cc1, #4da9fd);
+  -webkit-animation: pa-text-gradient 8s infinite;
+  animation: pa-text-gradient 8s infinite;
+}
+
+@-webkit-keyframes pa-text-gradient {
+  0%, 100% {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    -webkit-filter: hue-rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes pa-text-gradient {
+  0%, 100% {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    -webkit-filter: hue-rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
+}
 @-webkit-keyframes Gradient {
   0% {
     background-position: 0% 50%;
@@ -116,7 +151,6 @@
     background-position: 0% 50%;
   }
 }
-
 @keyframes Gradient {
   0% {
     background-position: 0% 50%;

@@ -508,9 +508,22 @@ class Premium_Modalbox extends Widget_Base {
 					'text'      => __( 'Text', 'premium-addons-for-elementor' ),
 					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
 					'pageload'  => __( 'On Page Load', 'premium-addons-for-elementor' ),
-				),
+                    'exit' => apply_filters( 'pa_pro_label', __( 'On Page Exit Intent (Pro)', 'premium-addons-for-elementor' ) ),
+                ),
 				'label_block' => true,
 				'default'     => 'button',
+			)
+		);
+
+        $this->add_control(
+			'page_exit_notice',
+			array(
+				'raw'             => __( 'When you are logged in, the modal box will normally show on page load. To try this open, you need to be logged out. This option uses localstorage to show the modal box for the first time only.', 'premium-addons-for-elementor' ),
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+                'condition'=> [
+                    'premium_modal_box_display_on'=> 'exit'
+                ]
 			)
 		);
 
@@ -1150,6 +1163,11 @@ class Premium_Modalbox extends Widget_Base {
 									'operator' => '!=',
 									'value'    => 'pageload',
 								),
+                                array(
+									'name'     => 'premium_modal_box_display_on',
+									'operator' => '!=',
+									'value'    => 'exit',
+								),
 							),
 						),
 						array(
@@ -1177,7 +1195,7 @@ class Premium_Modalbox extends Widget_Base {
 				'label'       => __( 'Trigger Z-Index', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
 				'condition'   => array(
-					'premium_modal_box_display_on!' => 'pageload',
+					'premium_modal_box_display_on!' => ['pageload', 'exit'],
 				),
                 'selectors' => array(
 					'{{WRAPPER}} .premium-modal-trigger-container' => 'position:relative; z-index: {{VALUE}};',
@@ -1226,7 +1244,7 @@ class Premium_Modalbox extends Widget_Base {
 				'label'     => __( 'Trigger', 'premium-addons-for-elementor' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
-					'premium_modal_box_display_on!' => 'pageload',
+					'premium_modal_box_display_on!' => ['pageload', 'exit'],
 				),
 			)
 		);
@@ -2282,7 +2300,26 @@ class Premium_Modalbox extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$trigger = $settings['premium_modal_box_display_on'];
+        $papro_activated = apply_filters( 'papro_activated', false );
+
+        $trigger = $settings['premium_modal_box_display_on'];
+
+		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.26', '<' ) ) {
+
+			if ( 'exit' === $trigger ) {
+
+				?>
+				<div class="premium-error-notice">
+					<?php
+						$message = __( 'This option is available in <b>Premium Addons Pro</b>.', 'premium-addons-for-elementor' );
+						echo wp_kses_post( $message );
+					?>
+				</div>
+				<?php
+				return false;
+
+			}
+		}
 
 		$this->add_inline_editing_attributes( 'premium_modal_box_selector_text' );
 

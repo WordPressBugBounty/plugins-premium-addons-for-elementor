@@ -1813,21 +1813,47 @@
 
             var $modalElem = $scope.find(".premium-modal-box-container"),
                 settings = $modalElem.data("settings"),
-                $modal = $modalElem.find(".premium-modal-box-modal-dialog");
+                $modal = $modalElem.find(".premium-modal-box-modal-dialog"),
+                id = $scope.data('id');
 
             if (!settings) {
                 return;
             }
 
-            if (settings.trigger === "pageload") {
-                $(document).ready(function ($) {
+            if ("pageload" === settings.trigger) {
+                $(document).ready(function () {
                     setTimeout(function () {
                         $modalElem.find(".premium-modal-box-modal").modal();
                     }, settings.delay * 1000);
                 });
+            } else if ("exit" === settings.trigger) {
+
+                if (elementorFrontend.config.user) {
+                    $modalElem.find(".premium-modal-box-modal").modal();
+                } else {
+                    if (!localStorage.getItem('paModal' + id)) {
+
+                        var isTriggered = false;
+
+                        elementorFrontend.elements.$window.on('mouseleave', function (e) {
+
+                            if (!isTriggered && e.clientY <= 0) {
+                                isTriggered = true;
+                                $modalElem.find(".premium-modal-box-modal").modal();
+                                $modalElem.find(".premium-modal-box-modal").on('hidden.bs.modal', function () {
+                                    console.log("tessssssssss");
+                                    localStorage.setItem('paModal' + id, true);
+                                });
+                            }
+
+                        });
+                    }
+                }
+
             }
 
             if ($modal.data("modal-animation") && " " != $modal.data("modal-animation")) {
+
                 var animationDelay = $modal.data('delay-animation');
 
                 // unsing IntersectionObserverAPI.

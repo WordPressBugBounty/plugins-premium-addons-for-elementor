@@ -803,27 +803,6 @@ class Premium_Blog extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'author_img_position',
-			array(
-				'label'      => __( 'Author Image Position', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px' ),
-				'range'      => array(
-					'px' => array(
-						'min' => -100,
-						'max' => 100,
-					),
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-blog-author-thumbnail' => 'top: {{SIZE}}{{UNIT}}',
-				),
-				'condition'  => array(
-					'premium_blog_skin' => 'cards',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
 			'premium_blog_posts_columns_spacing',
 			array(
 				'label'       => __( 'Rows Spacing', 'premium-addons-for-elementor' ),
@@ -1896,6 +1875,68 @@ class Premium_Blog extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+            'author_image_style_section',
+            array(
+                'label'     => __( 'Author Image', 'premium-addons-for-elementor' ),
+                'tab'       => Controls_Manager::TAB_STYLE,
+                'condition'  => array(
+                    'premium_blog_skin' => 'cards',
+                    'premium_blog_author_img_switcher' => 'yes'
+                ),
+            )
+        );
+
+        $this->add_responsive_control(
+            'author_img_size',
+            array(
+                'label'      => __( 'Author Image Size', 'premium-addons-for-elementor' ),
+                'type'       => Controls_Manager::SLIDER,
+                'selectors'  => array(
+                    '{{WRAPPER}} .premium-blog-author-thumbnail img' => 'width: {{SIZE}}px',
+                ),
+            ),
+        );
+
+        $this->add_responsive_control(
+            'author_img_position',
+            array(
+                'label'      => __( 'Author Image Position', 'premium-addons-for-elementor' ),
+                'type'       => Controls_Manager::SLIDER,
+                'range'      => array(
+                    'px' => array(
+                        'min' => -100,
+                        'max' => 100,
+                    ),
+                ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .premium-blog-author-thumbnail' => 'top: {{SIZE}}px',
+                ),
+            ),
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            array(
+                'name'     => 'author_image_border',
+                'selector' => '{{WRAPPER}} .premium-blog-author-thumbnail img',
+            )
+        );
+
+        $this->add_control(
+            'author_image_border_radius',
+            array(
+                'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => array( 'px', 'em', '%' ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .premium-blog-author-thumbnail img' => 'border-radius: {{SIZE}}{{UNIT}};',
+                ),
+            )
+        );
+
+        $this->end_controls_section();
 
 		$this->start_controls_section(
 			'premium_blog_title_style_section',

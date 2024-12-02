@@ -813,6 +813,40 @@ class Premium_Dual_Header extends Widget_Base {
 			)
 		);
 
+        $this->add_control(
+			'first_wave_switcher',
+			array(
+				'label'        => __( 'Wave Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'premium-title-first-wave-',
+				'condition'    => array(
+					'premium_dual_header_first_back_clip' => 'clipped',
+					'premium_dual_header_first_stroke!'   => 'yes',
+				),
+			)
+		);
+
+        $this->add_control(
+			'first_animation_speed',
+			array(
+				'label'     => __( 'Animation Speed (sec)', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SLIDER,
+				'range'     => array(
+					'px' => array(
+						'min'  => 0,
+						'max'  => 10,
+						'step' => .1,
+					),
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-dual-header-first-span' => 'animation-duration: {{SIZE}}s ',
+				),
+				'condition' => array(
+					'premium_dual_header_first_animated' => 'yes',
+				),
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -1049,6 +1083,40 @@ class Premium_Dual_Header extends Widget_Base {
 			)
 		);
 
+        $this->add_control(
+			'second_wave_switcher',
+			array(
+				'label'        => __( 'Wave Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'premium-title-second-wave-',
+				'condition'    => array(
+					'premium_dual_header_second_back_clip' => 'clipped',
+					'premium_dual_header_second_stroke!'   => 'yes',
+				),
+			)
+		);
+
+        $this->add_control(
+			'second_animation_speed',
+			array(
+				'label'     => __( 'Animation Speed (sec)', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SLIDER,
+				'range'     => array(
+					'px' => array(
+						'min'  => 0,
+						'max'  => 10,
+						'step' => .1,
+					),
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-dual-header-second-header' => 'animation-duration: {{SIZE}}s ',
+				),
+				'condition' => array(
+					'premium_dual_header_second_animated' => 'yes',
+				),
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -1276,9 +1344,14 @@ class Premium_Dual_Header extends Widget_Base {
 			$second_stroke = ' stroke';
 		}
 
-		$first_grad = 'yes' === $settings['premium_dual_header_first_animated'] ? ' gradient' : '';
+        $first_animation = $settings['premium_dual_header_first_animated'];
+        $first_wave = $settings['first_wave_switcher'];
+        $second_animation = $settings['premium_dual_header_second_animated'];
+        $second_wave = $settings['second_wave_switcher'];
 
-		$second_grad = 'yes' === $settings['premium_dual_header_second_animated'] ? ' gradient' : '';
+		$first_grad = ( 'yes' === $first_animation && 'yes' !== $first_wave ) ? ' gradient' : '';
+
+		$second_grad = ( 'yes' === $second_animation && 'yes' !== $second_wave ) ? ' gradient' : '';
 
 		$first_noise = 'yes' === $settings['noise_first'] ? 'data-text="' . $first_title_text . '"' : '';
 
@@ -1370,8 +1443,13 @@ class Premium_Dual_Header extends Widget_Base {
 			if( 'yes' === settings.premium_dual_header_second_stroke )
 				secondStroke = "stroke";
 
-			var firstGrad = 'yes' === settings.premium_dual_header_first_animated  ? ' gradient' : '',
-				secondGrad = 'yes' === settings.premium_dual_header_second_animated ? ' gradient' : '';
+            var firstAnimation = settings.premium_dual_header_first_animated,
+                firstWave = settings.first_wave_switcher,
+                secondAnimation = settings.premium_dual_header_second_animated,
+                secondWave = settings.second_wave_switcher;
+
+			var firstGrad = ('yes' === firstAnimation && 'yes' !== firstWave)  ? ' gradient' : '',
+				secondGrad = ('yes' === secondAnimation && 'yes' !== secondWave) ? ' gradient' : '';
 
 				view.addRenderAttribute('first_title', 'class', ['premium-dual-header-first-header', firstClip, firstGrad, firstStroke ] );
 				view.addRenderAttribute('second_title', 'class', ['premium-dual-header-second-header', secondClip, secondGrad, secondStroke ] );

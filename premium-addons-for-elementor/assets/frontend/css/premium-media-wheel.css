@@ -231,7 +231,7 @@
 }
 .premium-adv-carousel__item .pa-media-icons-wrapper .pa-media-icons-inner-container {
   position: absolute;
-  top: 33.33%;
+  top: 50%;
   width: 100%;
   text-align: center;
   -webkit-transform: translateY(-50%);
@@ -352,4 +352,11 @@
 .premium-adv-carousel__flat.premium-adv-carousel__gradual-yes .flipster--flat .flipster__item--future-1,
 .premium-adv-carousel__flat.premium-adv-carousel__gradual-yes .flipster--flat .flipster__item--past-1 {
   opacity: 0.8;
+}
+
+/**Responsive Layout*/
+@media (max-width: 1024px) {
+  .premium-adv-carousel__item .pa-media-icons-wrapper .pa-media-icons-inner-container .pa-media-magnific-image span {
+    opacity: 1;
+  }
 }

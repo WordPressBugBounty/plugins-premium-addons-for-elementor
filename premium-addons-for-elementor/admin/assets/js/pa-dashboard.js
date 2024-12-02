@@ -27,6 +27,10 @@
         );
     }
 
+    $(document).ready(function ($) {
+        $('.pa_pro_upgrade').parent().attr('target', '_blank');
+    });
+
     $(".pa-notice-close").on(
         "click",
         function () {
