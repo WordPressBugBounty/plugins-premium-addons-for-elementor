@@ -263,15 +263,18 @@
                         insertMedia = !$(event.currentTarget).hasClass("premium-template-insert-no-media");
 
                     PremiumEditor.layout.showLoadingView();
+
                     if (innerTemplatesLength > 0) {
                         for (var key in innerTemplates) {
+
                             $.ajax({
                                 url: ajaxurl,
                                 type: 'post',
                                 dataType: 'json',
                                 data: {
                                     action: 'premium_inner_template',
-                                    template: innerTemplates[key],
+                                    template: key,
+                                    title: innerTemplates[key],
                                     tab: PremiumEditor.getTab(),
                                     withMedia: insertMedia
                                 }

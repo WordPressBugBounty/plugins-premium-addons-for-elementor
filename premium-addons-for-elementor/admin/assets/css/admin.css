@@ -1662,8 +1662,16 @@
     content: "\e949";
 }
 
+.pa-dash-cat-magazine:before {
+    content: "\e965";
+}
+
 .pa-dash-cat-off-grid:before {
     content: "\e94b";
+}
+
+.pa-dash-cat-woocommerce:before {
+    content: "\e966";
 }
 
 .pa-dash-cat-section:before {

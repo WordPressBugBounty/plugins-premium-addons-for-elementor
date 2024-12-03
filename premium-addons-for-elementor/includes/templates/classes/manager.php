@@ -249,16 +249,14 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 				wp_send_json_error();
 			}
 
-			$template = isset( $_REQUEST['template'] ) ? filter_var_array( wp_unslash( $_REQUEST['template'] ), FILTER_UNSAFE_RAW ) : false; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $template_id = isset( $_REQUEST['template'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['template'] ) ) : false;
 
-			if ( ! $template ) {
+			if ( ! $template_id ) {
 				wp_send_json_error();
 			}
 
-			$template_id  = isset( $template['template_id'] ) ? esc_attr( $template['template_id'] ) : false;
-			$source_name  = isset( $template['source'] ) ? esc_attr( $template['source'] ) : false;
-			$source       = isset( $this->sources[ $source_name ] ) ? $this->sources[ $source_name ] : false;
-			$insert_media = isset( $template['withMedia'] ) ? $template['withMedia'] : true;
+			$source       = $this->sources[ 'premium-api' ];
+			$insert_media = isset( $_REQUEST['withMedia'] ) ? $_REQUEST['withMedia'] : true;
 
 			if ( ! $source || ! $template_id ) {
 				wp_send_json_error();
@@ -267,10 +265,13 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 			$template_data = $source->get_item( $template_id, $insert_media );
 
 			if ( ! empty( $template_data['content'] ) ) {
+
+                $template_title = isset( $_REQUEST['title'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['title'] ) ) : 'Template' . $template_id;
+
 				wp_insert_post(
 					array(
 						'post_type'   => 'elementor_library',
-						'post_title'  => $template['title'],
+						'post_title'  => $template_title,
 						'post_status' => 'publish',
 						'meta_input'  => array(
 							'_elementor_data'          => $template_data['content'],

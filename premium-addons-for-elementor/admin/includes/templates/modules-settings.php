@@ -84,7 +84,7 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 						<ul class="pa-elements-tabs-list">
 						<?php
 						foreach ( $elements as $index => $cat ) :
-							if ( 'cat-11' !== $index ) :
+							if ( 'cat-13' !== $index ) :
 								?>
 							<li class="pa-elements-tab">
 								<a class="pa-elements-tab-link" href="pa-elements-tab-<?php echo esc_attr( $index ); ?>">
@@ -99,7 +99,7 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 
 					<?php
 					foreach ( $elements as $index => $cat ) :
-						if ( 'cat-11' !== $index ) :
+						if ( 'cat-13' !== $index ) :
 							?>
 						<div id="pa-elements-tab-<?php echo esc_attr( $index ); ?>" class="pa-switchers-container hidden">
 						<h3 class="pa-elements-tab-title"><?php echo esc_attr( $cat['title'] ); ?></h3>

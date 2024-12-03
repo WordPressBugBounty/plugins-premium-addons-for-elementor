@@ -8,7 +8,7 @@ use PremiumAddons\Includes\Helper_Functions;
 
 $prefix = Helper_Functions::get_prefix();
 
-$features = $elements['cat-11']['elements'];
+$features = $elements['cat-13']['elements'];
 
 ?>
 

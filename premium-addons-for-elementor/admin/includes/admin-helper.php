@@ -717,8 +717,8 @@ class Admin_Helper {
             call_user_func(
                 'add_submenu_page',
                 $this->page_slug,
-                '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Premium</span>',
-                '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Premium</span>',
+                '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
+                '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
                 'manage_options',
                 'https://premiumaddons.com/black-friday',
                 ''

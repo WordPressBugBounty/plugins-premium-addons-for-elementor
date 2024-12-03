@@ -1022,7 +1022,59 @@ $elements = array(
 			),
 		),
 	),
-	'cat-5'  => array(
+    'cat-5'  => array(
+		'icon'     => 'magazine',
+		'title'    => __( 'Magazine Widgets', 'premium-addons-for-elementor' ),
+		'elements' => array(
+            array(
+				'key'      => 'premium-post-ticker',
+				'name'     => 'premium-post-ticker',
+				'title'    => __( 'News Ticker', 'premium-addons-for-elementor' ),
+				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-news-ticker-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-news-ticker-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'draw_svg' => true,
+			),
+			array(
+				'key'   => 'premium-world-clock',
+				'name'  => 'premium-world-clock',
+				'title' => __( 'World Clock', 'premium-addons-for-elementor' ),
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-world-clock-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-world-clock-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+			),
+			array(
+				'key'      => 'premium-weather',
+				'name'     => 'premium-weather',
+				'title'    => __( 'Weather', 'premium-addons-for-elementor' ),
+				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-weather-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-weather-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'draw_svg' => true,
+			),
+            array(
+				'key'      => 'premium-notifications',
+				'name'     => 'premium-notifications',
+				'title'    => __( 'Recent Posts Notification', 'premium-addons-for-elementor' ),
+				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-recent-posts-notification-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-recent-posts-notification-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'draw_svg' => true,
+			),
+			array(
+				'key'   => 'premium-tcloud',
+				'name'  => 'premium-tcloud',
+				'title' => __( 'Tags Cloud', 'premium-addons-for-elementor' ),
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-tags-cloud-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-tags-cloud-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+			),
+            array(
+				'key'        => 'premium-smart-post-listing',
+				'name'       => 'premium-smart-post-listing',
+				'title'      => __( 'Smart Post Listing', 'premium-addons-for-elementor' ),
+				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-smart-post-listing-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/smart-post-listing-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'is_pro'     => true,
+			),
+		),
+	),
+	'cat-6'  => array(
 		'icon'     => 'off-grid',
 		'title'    => __( 'Off-Grid Widgets', 'premium-addons-for-elementor' ),
 		'elements' => array(
@@ -1065,7 +1117,42 @@ $elements = array(
 			),
 		),
 	),
-	'cat-6'  => array(
+    'cat-7'  => array(
+		'icon'     => 'woocommerce',
+		'title'    => __( 'WooCommerce Widgets', 'premium-addons-for-elementor' ),
+		'elements' => array(
+			array(
+				'key'   => 'woo-products',
+				'title' => __( 'Woo Products', 'premium-addons-for-elementor' ),
+				'name'  => 'premium-woo-products',
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-products/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
+			),
+			array(
+				'key'   => 'woo-categories',
+				'title' => __( 'Woo Categories', 'premium-addons-for-elementor' ),
+				'name'  => 'premium-woo-categories',
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-categories-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
+			),
+			array(
+				'key'   => 'mini-cart',
+				'title' => __( 'Woo Mini Cart', 'premium-addons-for-elementor' ),
+				'name'  => 'premium-mini-cart',
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-mini-cart-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-mini-cart-widget-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
+			),
+			array(
+				'key'      => 'woo-cta',
+				'title'    => __( 'Woo CTA', 'premium-addons-for-elementor' ),
+				'name'     => 'premium-woo-cta',
+				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-cta-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woo-cta-widget-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'draw_svg' => true,
+			),
+		),
+	),
+	'cat-8'  => array(
 		'icon'     => 'social',
 		'title'    => __( 'Reviews & Testimonials Widgets', 'premium-addons-for-elementor' ),
 		'elements' => array(
@@ -1105,7 +1192,7 @@ $elements = array(
 			),
 		),
 	),
-	'cat-7'  => array(
+	'cat-9'  => array(
 		'icon'     => 'blurbs',
 		'title'    => __( 'Blurbs & CTA Widgets', 'premium-addons-for-elementor' ),
 		'elements' => array(
@@ -1193,7 +1280,7 @@ $elements = array(
 			),
 		),
 	),
-	'cat-8'  => array(
+	'cat-10'  => array(
 		'icon'     => 'feed',
 		'title'    => __( 'Social Feed Widgets', 'premium-addons-for-elementor' ),
 		'elements' => array(
@@ -1249,7 +1336,7 @@ $elements = array(
 			),
 		),
 	),
-	'cat-9'  => array(
+	'cat-11'  => array(
 		'icon'     => 'data',
 		'title'    => __( 'Tables, Charts & Anything Data Widgets', 'premium-addons-for-elementor' ),
 		'elements' => array(
@@ -1295,24 +1382,9 @@ $elements = array(
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/counter-widget-tutorial/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
 			),
-			array(
-				'key'   => 'premium-world-clock',
-				'name'  => 'premium-world-clock',
-				'title' => __( 'World Clock', 'premium-addons-for-elementor' ),
-				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-world-clock-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
-				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-world-clock-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
-			),
-			array(
-				'key'      => 'premium-weather',
-				'name'     => 'premium-weather',
-				'title'    => __( 'Weather', 'premium-addons-for-elementor' ),
-				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-weather-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
-				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-weather-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
-				'draw_svg' => true,
-			),
 		),
 	),
-	'cat-10' => array(
+	'cat-12' => array(
 		'icon'     => 'contact',
 		'title'    => __( 'Contact Widgets', 'premium-addons-for-elementor' ),
 		'elements' => array(
@@ -1334,7 +1406,7 @@ $elements = array(
 			),
 		),
 	),
-	'cat-11' => array(
+	'cat-13' => array(
 		'icon'     => 'extensions',
 		'elements' => array(
 			array(
