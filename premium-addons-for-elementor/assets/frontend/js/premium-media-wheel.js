@@ -15,7 +15,6 @@
         if ('infinite' === animationType) {
 
             var $mediaItemsContainer = $outerContainer.find('.premium-adv-carousel__items'),
-                light_box = settings.light_box,
                 lightbox_type = settings.lightbox_type;
 
             if ("load" === settings.renderEvent) {
@@ -24,7 +23,7 @@
 
             } else {
 
-                // unsing IntersectionObserverAPI.
+                // Using IntersectionObserverAPI.
                 var wheelObserver = new IntersectionObserver(function (entries) {
 
                     entries.forEach(function (entry) {
@@ -37,22 +36,10 @@
 
                 wheelObserver.observe($scope[0]);
 
-                // elementorFrontend.waypoint($scope, function () {
-
-                //     runInfiniteAnimation();
-
-                // }, {
-                //     offset: "100%",
-                //     triggerOnce: true
-                // });
             }
 
             $carouselContainer.css('visibility', 'inherit');
 
-            if (light_box) {
-                if ("default" === lightbox_type)
-                    $scope.find(".premium-adv-carousel__inner-container a[data-rel^='prettyPhoto']").prettyPhoto(getPrettyPhotoSettings());
-            }
 
             // We need to set the animation on reaching viewpoint.
             if (settings.pauseOnHover) {
@@ -149,8 +136,15 @@
             }
         }
 
-        // play video.
-        if ("yes" !== settings.light_box || undefined == settings.light_box) {
+
+        if ('yes' === settings.light_box) {
+
+            if ("default" === lightbox_type)
+                $scope.find(".premium-adv-carousel__inner-container a[data-rel^='prettyPhoto']").prettyPhoto(getPrettyPhotoSettings());
+
+        } else {
+
+            // Play video.
             $scope.find('.premium-adv-carousel__item .premium-adv-carousel__video-wrap').each(function (index, item) {
 
                 var type = $(item).data("type");
@@ -226,13 +220,8 @@
 
             var $mediaItem = $scope.find('.premium-adv-carousel__item'),
                 direction = settings.dir,
-                transformOffset = 'horizontal' === direction ? $carouselContainer.innerWidth() : $carouselContainer.innerHeight(),
-                start = 'transform: translateX(' + 0 + 'px)',
-                end = 'transform: translateX(-50%)',
                 scrollDir = settings.reverse,
                 verAlignWidth = 10,
-                duration = settings.speed * 1000 + 'ms',
-                animeName = 'pa-scroll-' + $scope.data('id'),
                 containerHeight = $mediaItemsContainer.outerHeight();
 
             if ('horizontal' === direction) {

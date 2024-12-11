@@ -772,6 +772,19 @@
     margin-top: 16px;
 }
 
+.pa-usage {
+    margin-right: 15px;
+}
+
+.pa-typed-search {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
 .pa-elements-filter {
     position: absolute;
     top: 10px;
@@ -795,11 +808,20 @@
 .pa-elements-filter select {
     padding: 5px 35px 5px 15px;
     /* margin-left: -5px; */
-    border-width: 1px 1px 1px 0;
+    border-width: 1px;
     border-color: #dcdcdc;
     border-radius: 10px;
+}
+
+#premium-elements-filter {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    border-left-width: 0px;
+}
+
+#pa-usage-select {
+    border-width: 1px !important;
+    border-radius: 10px !important;
 }
 
 .pa-elements-filter input {

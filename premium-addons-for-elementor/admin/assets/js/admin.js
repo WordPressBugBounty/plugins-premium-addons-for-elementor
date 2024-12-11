@@ -23,6 +23,9 @@
             $elementsTabs = $(".pa-elements-tab"),
             shouldDisableUnused = false;
 
+        var urlString = window.location.href,
+            url = new URL(urlString);
+
         self.init = function () {
 
             if (!$tabs.length) {
@@ -40,6 +43,8 @@
             self.handleActionField();
 
             self.handleElementsActions();
+
+            self.handleUsageActions();
 
             self.handleSearchField();
 
@@ -132,9 +137,10 @@
         // Handle global enable/disable buttons
         self.handleElementsActions = function () {
 
-            $(".pa-elements-filter select").on(
+            $(".pa-typed-search select").on(
                 'change',
                 function () {
+
                     var filter = $(this).val(),
                         $activeTab = $(".pa-switchers-container").not(".hidden");
 
@@ -298,10 +304,70 @@
             });
         };
 
-        self.handleSearchField = function () {
+        self.handleUsageActions = function () {
 
-            var urlString = window.location.href,
-                url = new URL(urlString);
+            $(".pa-usage select").on(
+                'change',
+                function () {
+
+                    var usageType = $(this).val();
+
+                    if ('custom' !== usageType) {
+
+                        var elementsToUse = null;
+
+                        //First, disable all elements.
+                        $('#pa-modules .pa-switcher').find('input').prop('checked', false);
+
+                        elementsToUse = [
+                            'premium-addon-blog',
+                            'premium-addon-maps',
+                            'premium-addon-dual-header',
+                            'premium-lottie',
+                            'premium-carousel-widget',
+                            'premium-addon-person',
+                            'premium-addon-fancy-text',
+                            'premium-addon-title',
+                            'premium-img-gallery',
+                            'premium-addon-image-separator',
+                            'premium-addon-video-box',
+                            'premium-addon-testimonials',
+                            'premium-addon-button',
+                            'premium-addon-progressbar',
+                            'premium-counter',
+                            'premium-addon-pricing-table'
+                        ];
+
+                        if ('advanced' === usageType) {
+                            elementsToUse.push(
+                                'premium-search-form',
+                                'premium-nav-menu',
+                                'premium-media-wheel',
+                                'premium-addon-modal-box'
+                            );
+                        }
+
+                        $.each(elementsToUse, function (index, selector) {
+                            $('#pa-modules .pa-switcher.' + selector).find('input').prop('checked', true);
+                        });
+
+                        self.saveElementsSettings('elements');
+
+                    }
+
+                }
+            );
+
+            var usageType = url.searchParams.get("usage");
+
+            if (usageType) {
+
+                $(".pa-usage select").val(usageType).trigger('change');
+            }
+
+        }
+
+        self.handleSearchField = function () {
 
             var searchInput = url.searchParams.get("search");
 
@@ -314,9 +380,6 @@
         }
 
         self.handleActionField = function () {
-
-            var urlString = window.location.href,
-                url = new URL(urlString);
 
             var action = url.searchParams.get("pa-action");
 

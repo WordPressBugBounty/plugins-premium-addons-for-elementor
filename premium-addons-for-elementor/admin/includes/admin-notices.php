@@ -91,6 +91,23 @@ class Admin_Notices {
 
 		$this->handle_review_notice();
 
+        if ( get_transient( 'pa_activation_redirect' ) ) {
+
+            delete_transient( 'pa_activation_redirect' );
+
+            // Perform the redirection.
+            $redirect = add_query_arg(
+                array(
+                    'page'     => Admin_Helper::$page_slug . '&usage=basic#tab=elements',
+                ),
+                admin_url( 'admin.php' )
+            );
+
+            wp_safe_redirect( $redirect );
+
+            exit;
+        }
+
 	}
 
 	/**

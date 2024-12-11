@@ -561,6 +561,7 @@ class Addons_Integration {
 			$css_path = '/pa-frontend' . $is_rtl . '-' . Assets_Manager::$post_id . $suffix . '.css';
 
 			if ( Assets_Manager::$is_updated && file_exists( PREMIUM_ASSETS_PATH . $css_path ) ) {
+
 				wp_enqueue_style(
 					'pa-frontend',
 					PREMIUM_ASSETS_URL . $css_path,
@@ -665,12 +666,17 @@ class Addons_Integration {
 
 				}
 			}
-		}
 
-		// If the assets are not ready, or file does not exist for any reson.
-		if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) || 'empty' === self::$css_content ) {
+            if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) || 'empty' === self::$css_content ) {
+				// If the assets are not ready, or file does not exist for any reson.
+				$this->register_old_scripts( $dir, $suffix );
+			}
+
+		} else {
 			$this->register_old_scripts( $dir, $suffix );
 		}
+
+
 
 		// if ( !wp_script_is( 'wc-cart-fragments', 'enqueued' ) && wp_script_is( 'wc-cart-fragments', 'registered' ) ) {
 

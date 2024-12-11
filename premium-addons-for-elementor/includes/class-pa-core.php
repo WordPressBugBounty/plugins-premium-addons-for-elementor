@@ -45,7 +45,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			add_action( 'init', array( $this, 'init' ), -999 );
 
 			// Register Activation hooks.
-			register_activation_hook( PREMIUM_ADDONS_FILE, array( $this, 'set_transient' ) );
+			register_activation_hook( PREMIUM_ADDONS_FILE, array( $this, 'handle_activation' ) );
+
 		}
 
 		/**
@@ -101,7 +102,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 *
 		 * @return void
 		 */
-		public function set_transient() {
+		public function handle_activation() {
 
 			$cache_key = 'premium_notice_' . PREMIUM_ADDONS_VERSION;
 
@@ -135,6 +136,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 						'httpversion' => '1.1',
 					)
 				);
+
+                set_transient( 'pa_activation_redirect', true, 30 );
 
 			}
 		}

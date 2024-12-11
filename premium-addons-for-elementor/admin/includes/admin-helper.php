@@ -36,7 +36,7 @@ class Admin_Helper {
 	 *
 	 * @var page_slug
 	 */
-	protected $page_slug = 'premium-addons';
+	public static $page_slug = 'premium-addons';
 
 	/**
 	 * Current Screen ID
@@ -151,16 +151,13 @@ class Admin_Helper {
 
 		}
 
-        if ( is_user_logged_in() && self::check_user_can( 'manage_options' ) ) {
+		// PA Dynamic Assets.
+		$row_meta = Helper_Functions::is_hide_row_meta();
 
-            // PA Dynamic Assets.
-            $row_meta = Helper_Functions::is_hide_row_meta();
+		if ( self::check_dynamic_assets() && ! $row_meta ) {
+			Admin_Bar::get_instance();
+		}
 
-            if ( self::check_dynamic_assets() && ! $row_meta ) {
-                Admin_Bar::get_instance();
-            }
-
-        }
 
 	}
 
@@ -293,7 +290,7 @@ class Admin_Helper {
 
 		}
 
-		if ( strpos( $current_screen, $this->page_slug ) !== false ) {
+		if ( strpos( $current_screen, self::$page_slug ) !== false ) {
 
 			wp_enqueue_style(
 				'pa-sweetalert-style',
@@ -534,7 +531,7 @@ class Admin_Helper {
 
 		$is_papro_active = apply_filters( 'papro_activated', false );
 
-		$settings_link = sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=' . $this->page_slug . '#tab=elements' ), __( 'Settings', 'premium-addons-for-elementor' ) );
+		$settings_link = sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=' . self::$page_slug . '#tab=elements' ), __( 'Settings', 'premium-addons-for-elementor' ) );
 
 		// $rollback_link = sprintf( '<a href="%1$s">%2$s %3$s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=premium_addons_rollback' ), 'premium_addons_rollback' ), __( 'Rollback to Version ', 'premium-addons-for-elementor' ), PREMIUM_ADDONS_STABLE_VERSION );
 
@@ -614,7 +611,7 @@ class Admin_Helper {
 	 */
 	private function set_admin_tabs() {
 
-		$slug = $this->page_slug;
+		$slug = self::$page_slug;
 
 		self::$tabs = array(
 			'general'         => array(
@@ -692,7 +689,7 @@ class Admin_Helper {
 			$plugin_name,
 			$plugin_name,
 			'manage_options',
-			$this->page_slug,
+			self::$page_slug,
 			array( $this, 'render_setting_tabs' ),
 			'',
 			100
@@ -702,7 +699,7 @@ class Admin_Helper {
 
 			call_user_func(
 				'add_submenu_page',
-				$this->page_slug,
+				self::$page_slug,
 				$tab['title'],
 				$tab['title'],
 				'manage_options',
@@ -716,7 +713,7 @@ class Admin_Helper {
         if( ! $is_papro_active ) {
             call_user_func(
                 'add_submenu_page',
-                $this->page_slug,
+                self::$page_slug,
                 '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
                 '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
                 'manage_options',
@@ -726,7 +723,7 @@ class Admin_Helper {
         }
 
 
-		remove_submenu_page( $this->page_slug, $this->page_slug );
+		remove_submenu_page( self::$page_slug, self::$page_slug );
 	}
 
 	/**

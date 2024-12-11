@@ -878,6 +878,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'     => __( 'Icon Size', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
+                'size_units' => array('px', 'em', 'vw'),
 				'range'     => array(
 					'px' => array(
 						'min' => 0,
@@ -889,8 +890,8 @@ class Premium_Button extends Widget_Base {
 					'premium_button_hover_effect!' => 'style4',
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-button-text-icon-wrapper i' => 'font-size: {{SIZE}}px',
-					'{{WRAPPER}} .premium-button-text-icon-wrapper svg' => 'width: {{SIZE}}px !important; height: {{SIZE}}px !important',
+					'{{WRAPPER}} .premium-button-text-icon-wrapper i' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .premium-button-text-icon-wrapper svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
 				),
 			)
 		);
@@ -900,12 +901,13 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'     => __( 'Icon Size', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
+                'size_units' => array('px', 'em', 'vw'),
 				'condition' => array(
 					'premium_button_hover_effect' => 'style4',
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-button-style4-icon-wrapper i' => 'font-size: {{SIZE}}px',
-					'{{WRAPPER}} .premium-button-style4-icon-wrapper svg' => 'width: {{SIZE}}px !important; height: {{SIZE}}px !important',
+					'{{WRAPPER}} .premium-button-style4-icon-wrapper i' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .premium-button-style4-icon-wrapper svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
 				),
 			)
 		);
@@ -1145,7 +1147,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'      => __( 'Width', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', '%', 'custom' ),
+				'size_units' => array( 'px', '%', 'vw', 'custom' ),
 				'range'      => array(
 					'px' => array(
 						'min' => 1,
@@ -1352,7 +1354,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
+				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
@@ -1364,7 +1366,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
+				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-button, {{WRAPPER}} .premium-button-line6::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
@@ -1628,7 +1630,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
+				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-button:hover' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
@@ -1640,7 +1642,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
+				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-button:hover' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),

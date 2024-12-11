@@ -6,10 +6,10 @@
 
         var hiddenClass = "elementor-hidden-" + deviceType;
 
-        if ("mobile" === deviceType)
-            hiddenClass = "elementor-hidden-phone";
+        // if ("mobile" === deviceType)
+        //     hiddenClass = "elementor-hidden-phone";
 
-        if ($scope.closest("section.elementor-element").hasClass(hiddenClass)) {
+        if ($scope.closest("section.elementor-element, .e-con").hasClass(hiddenClass)) {
             return
         }
 

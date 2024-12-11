@@ -271,7 +271,13 @@ class Assets_Manager {
 			return false;
 		}
 
-		return Plugin::$instance->documents->get( get_the_ID() )->is_built_with_elementor();
+		$document = Plugin::$instance->documents->get( get_the_ID() );
+
+		if( ! $document ) {
+			return false;
+		}
+
+		return $document->is_built_with_elementor();
 	}
 
 	/**
@@ -571,7 +577,7 @@ class Assets_Manager {
 				return 'not_found';
 			}
 
-			if ( in_array( $file_content['code'], array( 0, 401 ), true ) ) {
+			if ( in_array( $file_content['code'], array( 0, 401, 403 ), true ) ) {
 				return 'empty';
 			}
 		}
@@ -589,13 +595,13 @@ class Assets_Manager {
 	 */
 	public static function clean_content( $content ) {
 
-		if ( strpos( $content, '<!DOCTYPE html>' ) ) {
-			$content = explode( '<!DOCTYPE html>', $content )[0];
+		if ( strpos( $content, '<!DOCTYPE' ) ) {
+			$content = 'empty';
 		}
 
-		if ( strpos( $content, '<!doctype html>' ) ) {
-			$content = explode( '<!doctype html>', $content )[0];
-		}
+		// if ( strpos( $content, '<!doctype html>' ) ) {
+		// 	$content = explode( '<!doctype html>', $content )[0];
+		// }
 
 		return $content;
 	}

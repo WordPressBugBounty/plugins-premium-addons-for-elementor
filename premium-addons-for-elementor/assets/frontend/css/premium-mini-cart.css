@@ -294,7 +294,8 @@
   cursor: not-allowed;
   pointer-events: none;
 }
-.pa-woo-mc__qty-btn-yes .pa-woo-mc__qty-btn {
+.pa-woo-mc__qty-btn-yes .pa-woo-mc__qty-btn,
+.pa-woo-mc__qty-btn-yes svg:not(:root).pa-woo-mc__qty-btn {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;

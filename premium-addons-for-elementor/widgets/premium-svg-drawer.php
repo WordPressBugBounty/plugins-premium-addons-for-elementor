@@ -624,6 +624,7 @@ class Premium_SVG_Drawer extends Widget_Base {
 
 		$docs = array(
 			'https://premiumaddons.com/docs/elementor-svg-draw-widget/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
+            'https://www.youtube.com/watch?v=omoI4jHHvHQ' => __( 'Video tutorial »', 'premium-addons-for-elementor' ),
 		);
 
 		$doc_index = 1;
