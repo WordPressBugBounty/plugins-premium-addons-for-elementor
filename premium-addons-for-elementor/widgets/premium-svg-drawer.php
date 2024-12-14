@@ -84,9 +84,9 @@ class Premium_SVG_Drawer extends Widget_Base {
 		return array( 'pa', 'premium', 'premium svg draw', 'icon', 'animate', 'custom', 'library', 'animation' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Dependent CSS.
@@ -116,7 +116,6 @@ class Premium_SVG_Drawer extends Widget_Base {
 			'pa-scrolltrigger',
 			'pa-gsap',
 			'premium-addons',
-			'pa-fontawesome-all',
 			'pa-motionpath',
 		);
 	}
@@ -555,7 +554,7 @@ class Premium_SVG_Drawer extends Widget_Base {
 				'render_type'  => 'template',
 				'condition'    => array(
 					'animate_icon'  => 'yes',
-                    'icon_type!' => 'icon',
+					'icon_type!'    => 'icon',
 					'magic_scroll!' => 'yes',
 				),
 			)
@@ -624,7 +623,7 @@ class Premium_SVG_Drawer extends Widget_Base {
 
 		$docs = array(
 			'https://premiumaddons.com/docs/elementor-svg-draw-widget/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
-            'https://www.youtube.com/watch?v=omoI4jHHvHQ' => __( 'Video tutorial »', 'premium-addons-for-elementor' ),
+			'https://www.youtube.com/watch?v=omoI4jHHvHQ' => __( 'Video tutorial »', 'premium-addons-for-elementor' ),
 		);
 
 		$doc_index = 1;
@@ -793,7 +792,7 @@ class Premium_SVG_Drawer extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -901,17 +900,17 @@ class Premium_SVG_Drawer extends Widget_Base {
 						)
 					);
 
-					// Icons_Manager::render_icon(
-					// $settings['font_icon'],
-					// array(
-					// 'class'       => array(
-					// 'premium-svg-icon',
-					// ),
-					// 'aria-hidden' => 'true',
-					// )
-					// );
+                    echo Helper_Functions::get_svg_by_icon(
+                        $settings['font_icon'],
+                        array(
+                            'id'          => 'premium-svg-icon-' . $this->get_id(),
+                            'class'       => 'premium-svg-icon',
+                            'data-start'  => 'manual'
+                        )
+                    );
+
 					?>
-					<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'fa_icon' ) ); ?>></i>
+
 				<?php else : ?>
 
 					<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

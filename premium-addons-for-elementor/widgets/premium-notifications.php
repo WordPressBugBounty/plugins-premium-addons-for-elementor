@@ -155,7 +155,7 @@ class Premium_Notifications extends Widget_Base {
 	public function get_script_depends() {
 
 		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-fontawesome-all',
+			// 'pa-fontawesome-all',
 			'pa-tweenmax',
 			'pa-motionpath',
 		) : array();
@@ -3657,9 +3657,9 @@ class Premium_Notifications extends Widget_Base {
 			if ( 'yes' === $settings['draw_svg'] ) {
 				$this->add_render_attribute( 'wrap', 'class', 'elementor-invisible' );
 
-				if ( 'icon' === $icon_type ) {
-					$this->add_render_attribute( 'icon', 'class', $settings['icon']['value'] );
-				}
+				// if ( 'icon' === $icon_type ) {
+				// 	$this->add_render_attribute( 'icon', 'class', $settings['icon']['value'] );
+				// }
 
 				$this->add_render_attribute(
 					'icon',
@@ -3706,9 +3706,9 @@ class Premium_Notifications extends Widget_Base {
 
 				if ( 'yes' === $settings['header_draw_svg'] ) {
 
-					if ( 'icon' === $header_icon_type ) {
-						$this->add_render_attribute( 'header_icon', 'class', $settings['header_icon']['value'] );
-					}
+					// if ( 'icon' === $header_icon_type ) {
+					// 	$this->add_render_attribute( 'header_icon', 'class', $settings['header_icon']['value'] );
+					// }
 
 					$this->add_render_attribute(
 						'header_icon',
@@ -3752,9 +3752,13 @@ class Premium_Notifications extends Widget_Base {
 							)
 						);
 					else :
-						?>
-						<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-					<?php endif; ?>
+
+                        echo Helper_Functions::get_svg_by_icon(
+                            $settings['icon'],
+                            $this->get_render_attribute_string( 'icon' )
+                        );
+
+                    endif; ?>
 
 				<?php elseif ( 'svg' === $icon_type ) : ?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
@@ -3820,9 +3824,12 @@ class Premium_Notifications extends Widget_Base {
 										)
 									);
 								else :
-									?>
-									<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'header_icon' ) ); ?>></i>
-								<?php endif; ?>
+                                    echo Helper_Functions::get_svg_by_icon(
+                                        $settings['header_icon'],
+                                        $this->get_render_attribute_string( 'header_icon' )
+                                    );
+
+                                endif; ?>
 
 							<?php else : ?>
 								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'header_icon' ) ); ?>>

@@ -1553,4 +1553,79 @@ class Helper_Functions {
 		return $current_user_can;
 
 	}
+
+    public static function get_allowed_icon_tags() {
+        return [
+            'svg'   => [
+                'id'    => [],
+                'class'           => [],
+                'class'           => [],
+                'aria-hidden'     => [],
+                'aria-labelledby' => [],
+                'role'            => [],
+                'xmlns'           => [],
+                'width'           => [],
+                'height'          => [],
+                'viewbox'         => [],
+                'data-*'          => true,
+            ],
+            'g'     => [ 'fill'  => [] ],
+            'title' => [ 'title' => [] ],
+            'path'     => [
+                'd'    => [],
+                'fill' => []
+            ],
+			'i'      => [
+				'class' => [],
+				'id'    => [],
+				'style' => []
+			],
+        ];
+    }
+
+    /**
+     * Get SVG By Icon
+     *
+     * @since 4.10.69
+     * @access public
+     */
+    public static function get_svg_by_icon( $icon, $attributes = array() ) {
+
+        if ( empty( $icon ) || empty( $icon['value'] ) || empty( $icon['library'] ) ) return '';
+
+        $svg_html = "";
+
+        $icon_name  = str_replace( [ 'fas fa-', 'fab fa-', 'far fa-' ], '', $icon['value'] );
+        $library    = str_replace( 'fa-', '', $icon['library'] );
+        $svg_object = file_get_contents( PREMIUM_ADDONS_PATH . "assets/frontend/min-js/icons/{$library}.json" );
+        $svg_object = json_decode( $svg_object, true );
+        $i_class    = str_replace(' ', '-', $icon['value']);
+
+        if ( empty( $svg_object['icons'][$icon_name] ) )
+            return $svg_html;
+
+        $svg_html  = '<svg ';
+
+        $icon       = $svg_object['icons'][$icon_name];
+
+        $view_box   = "0 0 {$icon[0]} {$icon[1]}";
+
+        foreach ( $attributes as $key => $value ) {
+
+            if( 'class' === $key ) {
+                $svg_html .= 'class="svg-inline--'. $i_class . ' ' . $value . '"';
+            } else {
+                $svg_html .= " {$key}='{$value}' ";
+            }
+
+        }
+
+        $svg_html .= "aria-hidden='true' data-icon='store' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";
+
+        $svg_html  .= "<path d='{$icon[4]}'></path>";
+        $svg_html  .= "</svg>";
+
+        return wp_kses( $svg_html, self::get_allowed_icon_tags() );
+
+    }
 }

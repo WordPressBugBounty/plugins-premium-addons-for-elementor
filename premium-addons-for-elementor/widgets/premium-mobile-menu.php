@@ -144,7 +144,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 	 */
 	public function get_script_depends() {
 		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-fontawesome-all',
+			// 'pa-fontawesome-all',
 			'pa-tweenmax',
 			'pa-motionpath',
 		) : array();
@@ -1805,9 +1805,9 @@ class Premium_Mobile_Menu extends Widget_Base {
 													} else {
 														?>
 															<div <?php echo wp_kses_post( $this->get_render_attribute_string( $animation_key ) ); ?>>
-																<i class="<?php echo esc_attr( $item['icon']['value'] ); ?>"></i>
+                                                                <?php echo Helper_Functions::get_svg_by_icon( $item['icon'] ); ?>
 															</div>
-															<?php
+                                                        <?php
 													}
 												} elseif ( 'svg' === $item['icon_type'] ) {
 													?>

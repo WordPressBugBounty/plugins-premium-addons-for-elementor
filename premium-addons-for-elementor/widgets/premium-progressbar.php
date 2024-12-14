@@ -110,7 +110,7 @@ class Premium_Progressbar extends Widget_Base {
 	public function get_script_depends() {
 
 		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-fontawesome-all',
+			// 'pa-fontawesome-all',
 			'pa-tweenmax',
 			'pa-motionpath',
 		) : array();
@@ -1858,11 +1858,11 @@ class Premium_Progressbar extends Widget_Base {
 
 			if ( 'yes' === $settings['draw_svg'] ) {
 
-				if ( 'icon' === $icon_type ) {
+				// if ( 'icon' === $icon_type ) {
 
-					$this->add_render_attribute( 'icon', 'class', $settings['icon_select']['value'] );
+				// 	$this->add_render_attribute( 'icon', 'class', $settings['icon_select']['value'] );
 
-				}
+				// }
 
 				$this->add_render_attribute(
 					'icon',
@@ -1912,9 +1912,10 @@ class Premium_Progressbar extends Widget_Base {
 							)
 						);
 					else :
-						?>
-							<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-						<?php
+						echo Helper_Functions::get_svg_by_icon(
+                            $settings['icon_select'],
+                            $this->get_render_attribute_string( 'icon' )
+                        );
 					endif;
 
 				elseif ( 'svg' === $icon_type ) :

@@ -149,7 +149,7 @@ class Premium_Weather extends Widget_Base {
 	public function get_script_depends() {
 
 		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-fontawesome-all',
+			// 'pa-fontawesome-all',
 			'pa-tweenmax',
 			'pa-motionpath',
 		) : array();
@@ -4443,9 +4443,19 @@ class Premium_Weather extends Widget_Base {
 						)
 					);
 			} else {
-				?>
-				<i class='premium-drawable-icon premium-svg-drawer <?php echo esc_attr( $icon['value'] ); ?>' data-svg-loop='false' data-svg-fill='<?php echo esc_attr( $draw_fill ); ?>' data-svg-sync='yes' data-svg-frames='5' data-svg-point='0' aria-hidden='hidden'></i>
-					<?php
+
+                    echo Helper_Functions::get_svg_by_icon(
+                        $icon,
+                        array(
+                            'class' => 'premium-drawable-icon premium-svg-drawer',
+                            'data-svg-loop' => 'false',
+                            'data-svg-fill' => $draw_fill,
+                            'data-svg-sync' => 'yes',
+                            'data-svg-frames' => '5',
+                            'data-svg-point' => '0',
+                            'aria-hidden' => 'hidden'
+                        )
+                    );
 
 			}
 		} elseif ( 'image' === $icon_type ) {
