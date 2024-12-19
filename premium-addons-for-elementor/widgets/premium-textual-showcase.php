@@ -121,7 +121,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 	public function get_script_depends() {
 
 		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-fontawesome-all',
+			// 'pa-fontawesome-all',
 			'pa-tweenmax',
 			'pa-motionpath',
 		) : array();
@@ -173,6 +173,10 @@ class Premium_Textual_Showcase extends Widget_Base {
 	public function get_custom_help_url() {
 		return 'https://premiumaddons.com/support/';
 	}
+
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
 
 	/**
 	 * Register Tiktok Feed controls.
@@ -2325,19 +2329,19 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 			$this->add_render_attribute( 'item-content-' . $item['_id'] . $elem_type, 'class', 'premium-drawable-icon pa-txt-sc__item-' . $type );
 
-			if ( 'icon' === $type ) {
-				$icon = $item[ 'icon' . $elem_type ];
+			// if ( 'icon' === $type ) {
+			// 	$icon = $item[ 'icon' . $elem_type ];
 
-				if ( ! empty( $icon ) ) {
-					$this->add_render_attribute(
-						'item-content-icon' . $item['_id'] . $elem_type,
-						array(
-							'class'       => $icon['value'],
-							'aria-hidden' => 'true',
-						)
-					);
-				}
-			}
+			// 	if ( ! empty( $icon ) ) {
+			// 		$this->add_render_attribute(
+			// 			'item-content-icon' . $item['_id'] . $elem_type,
+			// 			array(
+			// 				'class'       => $icon['value'],
+			// 				'aria-hidden' => 'true',
+			// 			)
+			// 		);
+			// 	}
+			// }
 
 			if ( $draw_svg ) {
 				$hov_drawer_cls = ! empty( $elem_type ) ? ' premium-drawer-hover' : '';
@@ -2402,7 +2406,10 @@ class Premium_Textual_Showcase extends Widget_Base {
 		if ( $svg_draw ) {
 			?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ) ); ?>>
-				<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'item-content-icon' . $item['_id'] . $elem_type ) ); ?>></i>
+                <?php echo Helper_Functions::get_svg_by_icon(
+                        $item[ 'icon' . $elem_type ]
+                    );
+                ?>
 			</div>
 			<?php
 		} else {

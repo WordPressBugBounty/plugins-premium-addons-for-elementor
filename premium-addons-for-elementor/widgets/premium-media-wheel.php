@@ -162,6 +162,10 @@ class Premium_Media_Wheel extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Widget preview refresh button.
 	 *

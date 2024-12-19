@@ -98,6 +98,10 @@ class Premium_Banner extends Widget_Base {
         return false;
     }
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Categories.
 	 *

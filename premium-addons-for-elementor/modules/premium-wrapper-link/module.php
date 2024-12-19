@@ -54,19 +54,20 @@ class Module {
 		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// Creates Premium Wrapper Link tab at the end of layout/content tab.
-		add_action( 'elementor/element/section/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-		add_action( 'elementor/element/column/section_advanced/after_section_end', array( $this, 'register_controls' ), 10 );
-		add_action( 'elementor/element/common/_section_style/after_section_end', array( $this, 'register_controls' ), 10 );
+		add_action( 'elementor/element/section/section_layout/after_section_end', array( $this, 'register_controls' ));
+		add_action( 'elementor/element/column/section_advanced/after_section_end', array( $this, 'register_controls' ) );
+		add_action( 'elementor/element/common/_section_style/after_section_end', array( $this, 'register_controls' ) );
 
 		// Frontend Hooks.
-		add_action( 'elementor/frontend/section/before_render', array( $this, 'before_render' ) );
-		add_action( 'elementor/frontend/column/before_render', array( $this, 'before_render' ) );
-		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ), 10, 1 );
+		// add_action( 'elementor/frontend/section/before_render', array( $this, 'before_render' ) );
+		// add_action( 'elementor/frontend/column/before_render', array( $this, 'before_render' ) );
+		// add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ), 10, 1 );
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-        add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
+        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ) );
+        add_action( 'elementor/frontend/before_render', array( $this, 'before_render' ), 100 );
+
 
 	}
 
@@ -179,7 +180,7 @@ class Module {
 
 		$settings = $element->get_settings_for_display();
 
-        if ( 'yes' === $settings['premium_wrapper_link_switcher'] ) {
+        if ( 'yes' === $element->get_settings_for_display('premium_wrapper_link_switcher') ) {
 
             if ( 'link' === $settings['premium_wrapper_link_selection'] ) {
                 $href = get_permalink( $settings['premium_wrapper_existing_link'] );

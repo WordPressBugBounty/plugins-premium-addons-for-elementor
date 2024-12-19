@@ -105,6 +105,10 @@ class Premium_Image_Scroll extends Widget_Base {
         return false;
     }
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Retrieve Widget Categories.
 	 *

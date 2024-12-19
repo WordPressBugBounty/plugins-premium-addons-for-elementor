@@ -122,6 +122,10 @@ class Premium_Contactform extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Register Contact Form 7 controls.
 	 *

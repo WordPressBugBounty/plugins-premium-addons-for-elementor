@@ -168,6 +168,10 @@ class Premium_Button extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Register Button controls.
 	 *
@@ -1064,7 +1068,7 @@ class Premium_Button extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .elementor-widget-container' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}}' => 'text-align: {{VALUE}}',
 				),
 				'toggle'    => false,
 				'default'   => 'center',
@@ -1766,18 +1770,9 @@ class Premium_Button extends Widget_Base {
 
 			$slide_icon_type = $settings['slide_icon_type'];
 
-			if ( 'icon' === $slide_icon_type ) {
-				if ( ! empty( $settings['premium_button_style4_icon_selection'] ) ) {
-					$this->add_render_attribute( 'slide_icon', 'class', $settings['premium_button_style4_icon_selection'] );
-					$this->add_render_attribute( 'slide_icon', 'aria-hidden', 'true' );
-				}
+			if ( 'icon' !== $slide_icon_type ) {
 
-				$slide_migrated = isset( $settings['__fa4_migrated']['premium_button_style4_icon_selection_updated'] );
-				$slide_is_new   = empty( $settings['premium_button_style4_icon_selection'] ) && Icons_Manager::is_migration_allowed();
-
-			} else {
-
-				$this->add_render_attribute(
+                $this->add_render_attribute(
 					'slide_lottie',
 					array(
 						'class'               => 'premium-lottie-animation',
@@ -1788,6 +1783,7 @@ class Premium_Button extends Widget_Base {
 				);
 
 			}
+
 		} elseif ( 'style5' === $settings['premium_button_hover_effect'] ) {
 			$style_dir = 'premium-button-style5-' . $settings['premium_button_style5_dir'];
 		} elseif ( 'style6' === $settings['premium_button_hover_effect'] ) {
@@ -1840,7 +1836,6 @@ class Premium_Button extends Widget_Base {
 			<div class="premium-button-text-icon-wrapper">
 				<?php if ( 'yes' === $settings['premium_button_icon_switcher'] ) : ?>
 
-					<!-- Before Icon -->
 					<?php if ( 'before' === $settings['premium_button_icon_position'] && 'style4' !== $settings['premium_button_hover_effect'] ) : ?>
 						<?php if ( 'icon' === $icon_type ) : ?>
 							<?php
@@ -1853,9 +1848,13 @@ class Premium_Button extends Widget_Base {
 									)
 								);
 							else :
-								?>
-								<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-							<?php endif; ?>
+
+                                echo Helper_Functions::get_svg_by_icon(
+                                    $settings['premium_button_icon_selection_updated'],
+                                    $this->get_render_attribute_string( 'icon' )
+                                );
+
+							endif; ?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 								<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -1872,7 +1871,6 @@ class Premium_Button extends Widget_Base {
 					</span>
 				<?php endif; ?>
 
-				<!-- After Icon -->
 				<?php if ( 'yes' === $settings['premium_button_icon_switcher'] ) : ?>
 					<?php if ( 'after' === $settings['premium_button_icon_position'] && 'style4' !== $settings['premium_button_hover_effect'] ) : ?>
 						<?php if ( 'icon' === $icon_type ) : ?>
@@ -1886,9 +1884,13 @@ class Premium_Button extends Widget_Base {
 									)
 								);
 							else :
-								?>
-								<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-							<?php endif; ?>
+
+								echo Helper_Functions::get_svg_by_icon(
+                                    $settings['premium_button_icon_selection_updated'],
+                                    $this->get_render_attribute_string( 'icon' )
+                                );
+
+                            endif; ?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 								<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -1904,12 +1906,9 @@ class Premium_Button extends Widget_Base {
 				<div class="premium-button-style4-icon-wrapper <?php echo esc_attr( $settings['premium_button_style4_dir'] ); ?>">
 					<?php if ( 'icon' === $slide_icon_type ) : ?>
 						<?php
-						if ( $slide_is_new || $slide_migrated ) :
+
 							Icons_Manager::render_icon( $settings['premium_button_style4_icon_selection_updated'], array( 'aria-hidden' => 'true' ) );
-						else :
-							?>
-							<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'slide_icon' ) ); ?>></i>
-						<?php endif; ?>
+						?>
 					<?php else : ?>
 						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'slide_lottie' ) ); ?>></div>
 					<?php endif; ?>

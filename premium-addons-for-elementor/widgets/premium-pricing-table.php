@@ -171,6 +171,10 @@ class Premium_Pricing_Table extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Register Pricing Table controls.
 	 *
@@ -3173,22 +3177,22 @@ class Premium_Pricing_Table extends Widget_Base {
 
 				$this->add_render_attribute( 'icon', 'class', 'premium-drawable-icon' );
 
-				if ( 'icon' === $icon_type ) {
-					if ( ! empty( $settings['premium_pricing_table_icon_selection'] ) ) {
-						$this->add_render_attribute(
-							'icon',
-							array(
-								'class'       => $settings['premium_pricing_table_icon_selection'],
-								'aria-hidden' => 'true',
-							)
-						);
+				// if ( 'icon' === $icon_type ) {
+				// 	if ( ! empty( $settings['premium_pricing_table_icon_selection'] ) ) {
+				// 		$this->add_render_attribute(
+				// 			'icon',
+				// 			array(
+				// 				'class'       => $settings['premium_pricing_table_icon_selection'],
+				// 				'aria-hidden' => 'true',
+				// 			)
+				// 		);
 
-					}
+				// 	}
 
-					$migrated = isset( $settings['__fa4_migrated']['premium_pricing_table_icon_selection_updated'] );
-					$is_new   = empty( $settings['premium_pricing_table_icon_selection'] ) && Icons_Manager::is_migration_allowed();
+				// 	$migrated = isset( $settings['__fa4_migrated']['premium_pricing_table_icon_selection_updated'] );
+				// 	$is_new   = empty( $settings['premium_pricing_table_icon_selection'] ) && Icons_Manager::is_migration_allowed();
 
-				}
+				// }
 
 				if ( 'yes' === $settings['draw_svg'] ) {
 
@@ -3201,11 +3205,11 @@ class Premium_Pricing_Table extends Widget_Base {
 						)
 					);
 
-					if ( 'icon' === $icon_type ) {
+					// if ( 'icon' === $icon_type ) {
 
-						$this->add_render_attribute( 'icon', 'class', $settings['premium_pricing_table_icon_selection_updated']['value'] );
+					// 	$this->add_render_attribute( 'icon', 'class', $settings['premium_pricing_table_icon_selection_updated']['value'] );
 
-					}
+					// }
 
 					$this->add_render_attribute(
 						'icon',
@@ -3272,20 +3276,24 @@ class Premium_Pricing_Table extends Widget_Base {
 		if ( 'yes' === $settings['premium_pricing_table_icon_switcher'] ) :
 			?>
 			<div class="premium-pricing-icon-container">
-						<?php if ( 'icon' === $icon_type ) : ?>
-							<?php
-							if ( ( $is_new || $migrated ) && 'yes' !== $settings['draw_svg'] ) :
-								Icons_Manager::render_icon(
-									$settings['premium_pricing_table_icon_selection_updated'],
-									array(
-										'class'       => array( 'premium-svg-nodraw', 'premium-drawable-icon' ),
-										'aria-hidden' => 'true',
-									)
-								);
-					else :
-						?>
-						<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-					<?php endif; ?>
+                <?php if ( 'icon' === $icon_type ) : ?>
+                    <?php
+                        if ( 'yes' !== $settings['draw_svg'] ) :
+                            Icons_Manager::render_icon(
+                                $settings['premium_pricing_table_icon_selection_updated'],
+                                array(
+                                    'class'       => array( 'premium-svg-nodraw', 'premium-drawable-icon' ),
+                                    'aria-hidden' => 'true',
+                                )
+                        );
+                else :
+                    echo Helper_Functions::get_svg_by_icon(
+                        $settings['premium_pricing_table_icon_selection_updated'],
+                        $this->get_render_attribute_string( 'icon' )
+                    );
+
+                endif; ?>
+
 				<?php elseif ( 'svg' === $icon_type ) : ?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 						<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -3405,9 +3413,14 @@ class Premium_Pricing_Table extends Widget_Base {
 										)
 									);
 								else :
-									?>
-									<i class="premium-pricing-feature-icon <?php echo esc_attr( $item['premium_pricing_list_item_icon_updated']['value'] ); ?>"></i>
-								<?php endif; ?>
+									echo Helper_Functions::get_svg_by_icon(
+                                        $item['premium_pricing_list_item_icon_updated'],
+                                        array(
+                                            'class'       => 'premium-pricing-feature-icon',
+                                        )
+                                    );
+
+								endif; ?>
 							<?php elseif ( 'svg' === $item['icon_type'] ) : ?>
 								<?php echo $this->print_unescaped_setting( 'custom_svg', 'premium_fancy_text_list_items', $index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								<?php

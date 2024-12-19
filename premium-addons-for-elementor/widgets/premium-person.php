@@ -135,6 +135,10 @@ class Premium_Person extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Register Persons controls.
 	 *
@@ -250,7 +254,7 @@ class Premium_Person extends Widget_Base {
 				),
 				'default'   => 'center',
 				'selectors' => array(
-					'{{WRAPPER}} .elementor-widget-container' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}}' => 'justify-content: {{VALUE}};',
 				),
 			)
 		);

@@ -119,14 +119,16 @@
   right: -8px;
   border-radius: 4px 4px 0 4px;
 }
-.premium-badge-flag.premium-badge-right .corner::before, .premium-badge-flag.premium-badge-right .corner::after {
+.premium-badge-flag.premium-badge-right .corner::before,
+.premium-badge-flag.premium-badge-right .corner::after {
   right: 0;
 }
 .premium-badge-flag.premium-badge-left .corner {
   left: -8px;
   border-radius: 4px 4px 4px 0;
 }
-.premium-badge-flag.premium-badge-left .corner::before, .premium-badge-flag.premium-badge-left .corner::after {
+.premium-badge-flag.premium-badge-left .corner::before,
+.premium-badge-flag.premium-badge-left .corner::after {
   left: 0;
 }
 .premium-badge-flag .corner {
@@ -135,7 +137,8 @@
   position: absolute;
   top: 10%;
 }
-.premium-badge-flag .corner::before, .premium-badge-flag .corner::after {
+.premium-badge-flag .corner::before,
+.premium-badge-flag .corner::after {
   content: "";
   display: block;
   position: absolute;
@@ -145,7 +148,7 @@
   border-bottom: 8px solid transparent;
 }
 
-.elementor-widget-premium-addon-pricing-table .elementor-widget-container {
+.elementor-widget-premium-addon-pricing-table {
   overflow: visible !important;
 }
 

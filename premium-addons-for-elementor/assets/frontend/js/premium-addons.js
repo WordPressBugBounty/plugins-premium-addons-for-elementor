@@ -1240,19 +1240,24 @@
 
                 } else if ('shape' === highlightEffect) {
 
-                    var animationDelay = settings.delay || 4,
-                        animationSpeed = settings.duration || 1.2;
+                    var computedStyle = getComputedStyle($scope[0]),
+                        animationDelay = computedStyle.getPropertyValue('--pa-animation-delay') || 4,
+                        animationSpeed = computedStyle.getPropertyValue('--pa-animation-duration') || 1.2;
 
                     var eleObserver = new IntersectionObserver(function (entries) {
                         entries.forEach(function (entry) {
                             if (entry.isIntersecting) {
+
                                 $elem.addClass('draw-shape');
+
                                 setInterval(function () {
+
                                     $elem.addClass('hide-shape');
 
                                     setTimeout(function () {
                                         $elem.removeClass('hide-shape');
                                     }, 1000);
+
                                 }, 1000 * (animationSpeed + animationDelay));
 
                                 eleObserver.unobserve(entry.target); // to only excecute the callback func once.
@@ -1262,19 +1267,6 @@
 
                     eleObserver.observe($elem[0]);
 
-                    // elementorFrontend.waypoint($elem, function () {
-
-                    //     $elem.addClass('draw-shape');
-
-                    //     setInterval(function () {
-                    //         $elem.addClass('hide-shape');
-
-                    //         setTimeout(function () {
-                    //             $elem.removeClass('hide-shape');
-                    //         }, 1000);
-                    //     }, 1000 * (animationSpeed + animationDelay));
-
-                    // });
                 }
             }
 

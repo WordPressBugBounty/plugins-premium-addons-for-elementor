@@ -243,7 +243,7 @@
             applyEffects: function (eleSettings) {
                 var settings = eleSettings,
                     effectSettings = settings.effectSettings,
-                    $widgetContainer = this.$element.find('.elementor-widget-container')[0],
+                    $widgetContainer = this.$element[0],
                     filterArr = [];
 
                 if (settings.general.target) {

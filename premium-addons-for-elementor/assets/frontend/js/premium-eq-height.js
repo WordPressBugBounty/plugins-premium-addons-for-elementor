@@ -52,6 +52,12 @@
                 var $targets = section.find(selector),
                     heights = [];
 
+                //If the current widget doesn't have elementor-widget-container wrapper (Optimize Markup), then apply the effect on the outer container.
+                if ($targets.length < 1) {
+                    selector = selector.replace('.elementor-widget-container', '');
+                    $targets = section.find(selector);
+                }
+
                 section.find(selector).css('minHeight', 'unset');
 
                 jQuery.each($targets, function (key, valueObj) {

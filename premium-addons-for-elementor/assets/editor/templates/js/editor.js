@@ -1006,10 +1006,25 @@
 
                 if ($elementorNewSection) {
 
-                    var addPremiumTemplate = '<div class="elementor-add-section-area-button pa-add-section-btn" title="Add Premium Template"><i class="eicon-star"></i></div>',
+                    var addPremiumTemplate = $('<div class="elementor-add-section-area-button pa-add-section-btn" title="Add Premium Template"><i class="eicon-star"></i></div>'),
                         $elementorButton = window.elementor.$previewContents.find(".elementor-add-section-button");
 
                     $elementorButton.before(addPremiumTemplate);
+
+                    var addTemplatesButton = function (e, a) {
+
+                        var $eButton = $(e.target).parents(a).prev(".elementor-add-section").find(".elementor-add-section-button");
+
+                        $eButton.siblings(".pa-add-section-btn").length || $eButton.before(addPremiumTemplate.clone())
+                    };
+
+                    window.elementor.$previewContents.on('click.addPremiumTemplate', ".elementor-editor-section-settings .elementor-editor-element-add", (function (e) {
+                        addTemplatesButton(e, ".elementor-top-section")
+                    }));
+
+                    window.elementor.$previewContents.on('click.addPremiumTemplate', ".elementor-editor-container-settings .elementor-editor-element-add", (function (e) {
+                        addTemplatesButton(e, ".e-parent")
+                    }))
 
                     clearInterval(interval);
 

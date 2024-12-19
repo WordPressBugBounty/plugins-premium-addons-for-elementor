@@ -167,6 +167,10 @@ class Premium_Image_Separator extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Register Image Controls controls.
 	 *
@@ -1042,9 +1046,13 @@ class Premium_Image_Separator extends Widget_Base {
 					)
 				);
 			else :
-				?>
-				<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-			<?php endif; ?>
+
+                echo Helper_Functions::get_svg_by_icon(
+                    $settings['separator_icon'],
+                    $this->get_render_attribute_string( 'icon' )
+                );
+
+			endif; ?>
 		<?php elseif ( 'svg' === $type ) : ?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 				<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

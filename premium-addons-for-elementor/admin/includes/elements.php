@@ -373,7 +373,8 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-magic-section',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-off-canvas-widget', 'editor-page', 'wp-editor', 'get-pro' ),
+                'tutorial' => 'https://www.youtube.com/watch?v=t-aosch5Xzo',
+				// 'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-off-canvas-widget', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-prev-img',
@@ -1076,6 +1077,7 @@ $elements = array(
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-off-canvas-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'is_pro'   => true,
 				'draw_svg' => true,
+                'tutorial' => 'https://www.youtube.com/watch?v=t-aosch5Xzo',
 			),
 			array(
 				'key'      => 'premium-prev-img',

@@ -10301,7 +10301,7 @@ ul.premium-person-social-list {
   outline: none;
 }
 
-.elementor-widget-premium-addon-person .elementor-widget-container {
+.elementor-widget-premium-addon-person {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -10345,7 +10345,7 @@ ul.premium-person-social-list {
   bottom: 5px;
 }
 
-.premium-person-style1.multiple-persons:not([data-persons-equal=yes]) {
+.premium-person-style1.multiple-persons:not([data-persons-equal="yes"]) {
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
@@ -11718,7 +11718,7 @@ ul.premium-person-social-list {
   border-bottom: 8px solid transparent;
 }
 
-.elementor-widget-premium-addon-pricing-table .elementor-widget-container {
+.elementor-widget-premium-addon-pricing-table {
   overflow: visible !important;
 }
 

@@ -176,6 +176,10 @@ class Premium_Icon_List extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Register Bullet List controls.
 	 *
@@ -2490,7 +2494,7 @@ class Premium_Icon_List extends Widget_Base {
 						} else {
 							?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( $animation_key ) ); ?>>
-								<i class="<?php echo esc_attr( $item['premium_icon_list_font_updated']['value'] ); ?>"></i>
+                                <?php echo Helper_Functions::get_svg_by_icon( $item['premium_icon_list_font_updated'] ); ?>
 							</div>
 							<?php
 						}

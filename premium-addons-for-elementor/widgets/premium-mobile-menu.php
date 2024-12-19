@@ -170,6 +170,10 @@ class Premium_Mobile_Menu extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Register Banner controls.
 	 *
@@ -1756,7 +1760,7 @@ class Premium_Mobile_Menu extends Widget_Base {
                                     $segments    = explode( '/', $link );
                                     $target_link = end( $segments );
 
-                                    $this->add_render_attribute( 'menu-item-' . $index, 'data-target', $target_link );
+                                    $this->add_render_attribute( 'menu-item-' . $index, 'data-target', esc_url( $target_link ) );
 
 								} else {
 									$this->add_render_attribute( $item_link, 'href', $link_url );

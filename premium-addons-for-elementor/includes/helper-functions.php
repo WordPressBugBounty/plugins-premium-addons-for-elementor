@@ -1559,7 +1559,6 @@ class Helper_Functions {
             'svg'   => [
                 'id'    => [],
                 'class'           => [],
-                'class'           => [],
                 'aria-hidden'     => [],
                 'aria-labelledby' => [],
                 'role'            => [],
@@ -1610,14 +1609,25 @@ class Helper_Functions {
 
         $view_box   = "0 0 {$icon[0]} {$icon[1]}";
 
-        foreach ( $attributes as $key => $value ) {
+        if( is_array( $attributes ) ) {
 
-            if( 'class' === $key ) {
-                $svg_html .= 'class="svg-inline--'. $i_class . ' ' . $value . '"';
-            } else {
-                $svg_html .= " {$key}='{$value}' ";
+            foreach ( $attributes as $key => $value ) {
+
+                if( 'class' === $key ) {
+
+                    $svg_html .= 'class="svg-inline--'. $i_class . ' ' . $value . '" ';
+
+                } else {
+                    $svg_html .= " {$key}='{$value}' ";
+                }
+
             }
 
+        } else {
+
+            $attributes = str_replace( 'class="', 'class="svg-inline--'. $i_class . ' ', $attributes );
+
+            $svg_html .= $attributes;
         }
 
         $svg_html .= "aria-hidden='true' data-icon='store' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";

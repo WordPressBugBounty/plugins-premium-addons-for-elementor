@@ -130,6 +130,10 @@ class Premium_Lottie extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
+
 	/**
 	 * Register Testimonials controls.
 	 *
@@ -380,7 +384,7 @@ class Premium_Lottie extends Widget_Base {
 				'toggle'    => false,
 				'separator' => 'before',
 				'selectors' => array(
-					'{{WRAPPER}} .elementor-widget-container' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}}' => 'text-align: {{VALUE}}',
 				),
 			)
 		);

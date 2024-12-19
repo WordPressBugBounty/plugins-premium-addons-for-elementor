@@ -129,7 +129,7 @@ class Premium_Modalbox extends Widget_Base {
 	public function get_script_depends() {
 
 		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-fontawesome-all',
+			// 'pa-fontawesome-all',
 			'pa-tweenmax',
 			'pa-motionpath',
 		) : array();
@@ -182,6 +182,10 @@ class Premium_Modalbox extends Widget_Base {
 	public function get_custom_help_url() {
 		return 'https://premiumaddons.com/support/';
 	}
+
+    public function has_widget_inner_wrapper(): bool {
+        return false;
+    }
 
 	/**
 	 * Register Modal Box controls.
@@ -2335,22 +2339,22 @@ class Premium_Modalbox extends Widget_Base {
 
 			$icon_type = $settings['icon_type'];
 
-			if ( 'icon' === $icon_type ) {
+			// if ( 'icon' === $icon_type ) {
 
-				if ( ! empty( $settings['premium_modal_box_button_icon_selection'] ) ) {
-					$this->add_render_attribute(
-						'icon',
-						array(
-							'class'       => $settings['premium_modal_box_button_icon_selection'],
-							'aria-hidden' => 'true',
-						)
-					);
-				}
+			// 	if ( ! empty( $settings['premium_modal_box_button_icon_selection'] ) ) {
+			// 		$this->add_render_attribute(
+			// 			'icon',
+			// 			array(
+			// 				'class'       => $settings['premium_modal_box_button_icon_selection'],
+			// 				'aria-hidden' => 'true',
+			// 			)
+			// 		);
+			// 	}
 
-				$migrated = isset( $settings['__fa4_migrated']['premium_modal_box_button_icon_selection_updated'] );
-				$is_new   = empty( $settings['premium_modal_box_button_icon_selection'] ) && Icons_Manager::is_migration_allowed();
+			// 	$migrated = isset( $settings['__fa4_migrated']['premium_modal_box_button_icon_selection_updated'] );
+			// 	$is_new   = empty( $settings['premium_modal_box_button_icon_selection'] ) && Icons_Manager::is_migration_allowed();
 
-			}
+			// }
 
 			if ( 'yes' === $settings['draw_svg'] ) {
 
@@ -2363,11 +2367,11 @@ class Premium_Modalbox extends Widget_Base {
 					)
 				);
 
-				if ( 'icon' === $icon_type ) {
+				// if ( 'icon' === $icon_type ) {
 
-					$this->add_render_attribute( 'icon', 'class', $settings['premium_modal_box_button_icon_selection_updated']['value'] );
+				// 	$this->add_render_attribute( 'icon', 'class', $settings['premium_modal_box_button_icon_selection_updated']['value'] );
 
-				}
+				// }
 
 				$this->add_render_attribute(
 					'icon',
@@ -2523,7 +2527,7 @@ class Premium_Modalbox extends Widget_Base {
 						<?php
 						if ( 'yes' === $settings['premium_modal_box_icon_switcher'] && 'before' === $settings['premium_modal_box_icon_position'] ) :
 							if ( 'icon' === $icon_type ) :
-								if ( ( $is_new || $migrated ) && 'yes' !== $settings['draw_svg'] ) :
+								if ( 'yes' !== $settings['draw_svg'] ) :
 									Icons_Manager::render_icon(
 										$settings['premium_modal_box_button_icon_selection_updated'],
 										array(
@@ -2532,9 +2536,10 @@ class Premium_Modalbox extends Widget_Base {
 										)
 									);
 								else :
-									?>
-										<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-									<?php
+                                    echo Helper_Functions::get_svg_by_icon(
+                                        $settings['premium_modal_box_button_icon_selection_updated'],
+                                        $this->get_render_attribute_string( 'icon' )
+                                    );
 									endif;
 							else :
 								?>
@@ -2553,7 +2558,7 @@ class Premium_Modalbox extends Widget_Base {
 						<?php
 						if ( 'yes' === $settings['premium_modal_box_icon_switcher'] && 'after' === $settings['premium_modal_box_icon_position'] ) :
 							if ( 'icon' === $icon_type ) :
-								if ( ( $is_new || $migrated ) && 'yes' !== $settings['draw_svg'] ) :
+								if ( 'yes' !== $settings['draw_svg'] ) :
 									Icons_Manager::render_icon(
 										$settings['premium_modal_box_button_icon_selection_updated'],
 										array(
@@ -2562,9 +2567,10 @@ class Premium_Modalbox extends Widget_Base {
 										)
 									);
 								else :
-									?>
-									<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-									<?php
+									echo Helper_Functions::get_svg_by_icon(
+                                        $settings['premium_modal_box_button_icon_selection_updated'],
+                                        $this->get_render_attribute_string( 'icon' )
+                                    );
 								endif;
 							else :
 								?>

@@ -17,68 +17,68 @@
 .premium-person-zoomout-effect .premium-person-image-container img,
 .premium-person-scale-effect .premium-person-image-container img {
     -ms-transform: scale(1.2);
-        -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 .premium-person-sepia-effect .premium-person-image-container img {
     -webkit-filter: sepia(30%);
-            filter: sepia(30%);
+    filter: sepia(30%);
 }
 
 .premium-person-bright-effect .premium-person-image-container img {
     -webkit-filter: brightness(1);
-            filter: brightness(1);
+    filter: brightness(1);
 }
 
 .premium-person-trans-effect .premium-person-image-container img {
     -ms-transform: translateX(15px) scale(1.1);
-        -webkit-transform: translateX(15px) scale(1.1);
-            transform: translateX(15px) scale(1.1);
+    -webkit-transform: translateX(15px) scale(1.1);
+    transform: translateX(15px) scale(1.1);
 }
 
 .premium-person-zoomin-effect:hover .premium-person-image-container img {
     -ms-transform: scale(1.2);
-        -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 .premium-person-zoomout-effect:hover .premium-person-image-container img {
     -ms-transform: scale(1.1);
-        -webkit-transform: scale(1.1);
-            transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .premium-person-scale-effect:hover .premium-person-image-container img {
     -ms-transform: scale(1.3) rotate(-5deg);
-        -webkit-transform: scale(1.3) rotate(-5deg);
-            transform: scale(1.3) rotate(-5deg);
+    -webkit-transform: scale(1.3) rotate(-5deg);
+    transform: scale(1.3) rotate(-5deg);
 }
 
 .premium-person-grayscale-effect:hover .premium-person-image-container img {
     -webkit-filter: grayscale(100%);
-            filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 
 .premium-person-blur-effect:hover .premium-person-image-container img {
     -webkit-filter: blur(3px);
-            filter: blur(3px);
+    filter: blur(3px);
 }
 
 .premium-person-sepia-effect:hover .premium-person-image-container img {
     -webkit-filter: sepia(0%);
-            filter: sepia(0%);
+    filter: sepia(0%);
 }
 
 .premium-person-bright-effect:hover .premium-person-image-container img {
     -webkit-filter: brightness(1.2);
-            filter: brightness(1.2);
+    filter: brightness(1.2);
 }
 
 .premium-person-trans-effect:hover .premium-person-image-container img {
     -ms-transform: translateX(0px) scale(1.1);
-        -webkit-transform: translateX(0px) scale(1.1);
-            transform: translateX(0px) scale(1.1);
+    -webkit-transform: translateX(0px) scale(1.1);
+    transform: translateX(0px) scale(1.1);
 }
 
 .premium-person-container .premium-person-image-container img {
@@ -102,11 +102,11 @@
     display: -webkit-flex;
     display: flex;
     -ms-flex-pack: center;
-         -webkit-justify-content: center;
-            justify-content: center;
+    -webkit-justify-content: center;
+    justify-content: center;
     -ms-flex-align: center;
-         -webkit-align-items: center;
-            align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
     box-shadow: inset 0 0 120px 0 rgba(0, 0, 0, 0.5);
     -webkit-transition: all 0.5s linear 0s;
     transition: all 0.5s linear 0s;
@@ -124,8 +124,8 @@
 .premium-person-style2 .premium-person-list-item a {
     opacity: 0;
     -ms-transform: scale(0);
-        -webkit-transform: scale(0);
-            transform: scale(0);
+    -webkit-transform: scale(0);
+    transform: scale(0);
     -webkit-transition: all 0.5s ease-in-out 0s;
     transition: all 0.5s ease-in-out 0s;
 }
@@ -133,8 +133,8 @@
 .premium-person-style2 .premium-person-image-container:hover .premium-person-list-item a {
     opacity: 1;
     -ms-transform: scale(1);
-        -webkit-transform: scale(1);
-            transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
 }
 
 .premium-person-info-container {
@@ -249,14 +249,14 @@ ul.premium-person-social-list {
     font-size: 18px;
 }
 
-.elementor-widget-premium-addon-person .elementor-widget-container {
+.elementor-widget-premium-addon-person {
     -js-display: flex;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
     -ms-flex-pack: center;
-         -webkit-justify-content: center;
-            justify-content: center;
+    -webkit-justify-content: center;
+    justify-content: center;
 }
 
 .premium-persons-container.multiple-persons {
@@ -265,8 +265,8 @@ ul.premium-person-social-list {
     display: -webkit-flex;
     display: flex;
     -ms-flex-wrap: wrap;
-        -webkit-flex-wrap: wrap;
-            flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
     width: 100%;
 }
 
@@ -282,12 +282,12 @@ ul.premium-person-social-list {
     -webkit-transition: all 500ms ease 0s;
     transition: all 500ms ease 0s;
     -webkit-transform: translate3d(0, 100%, 0);
-            transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
 }
 
 .premium-person-style1 .premium-person-container:hover .premium-person-info {
     -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     bottom: -1px !important;
 }
 
@@ -297,8 +297,8 @@ ul.premium-person-social-list {
 
 .premium-person-style1.multiple-persons:not([data-persons-equal="yes"]) {
     -ms-flex-align: start;
-         -webkit-align-items: flex-start;
-            align-items: flex-start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
 }
 
 .premium-person-style1 .slick-track {
@@ -328,11 +328,11 @@ ul.premium-person-social-list {
     display: -webkit-flex;
     display: flex;
     -ms-flex-direction: column;
-         -webkit-flex-direction: column;
-            flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
     -ms-flex-pack: justify;
-         -webkit-justify-content: space-between;
-            justify-content: space-between;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
 }
 
 .premium-person-style3 .premium-person-title-desc-wrap {
@@ -341,14 +341,14 @@ ul.premium-person-social-list {
     display: -webkit-flex;
     display: flex;
     -ms-flex-direction: row-reverse;
-         -webkit-flex-direction: row-reverse;
-            flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
     -ms-flex-pack: justify;
-         -webkit-justify-content: space-between;
-            justify-content: space-between;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
     -ms-flex-align: start;
-         -webkit-align-items: flex-start;
-            align-items: flex-start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
 }
 
 .premium-person-style3 .premium-person-name-icons-wrap {
@@ -357,11 +357,11 @@ ul.premium-person-social-list {
     display: -webkit-flex;
     display: flex;
     -ms-flex-pack: justify;
-         -webkit-justify-content: space-between;
-            justify-content: space-between;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
     -ms-flex-align: end;
-         -webkit-align-items: flex-end;
-            align-items: flex-end;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
 }
 
 .premium-person-style3 .premium-person-title {
@@ -385,11 +385,11 @@ ul.premium-person-social-list {
     display: -webkit-flex;
     display: flex;
     -ms-flex-direction: column;
-         -webkit-flex-direction: column;
-            flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
     -ms-transform: translateY(20px);
-        -webkit-transform: translateY(20px);
-            transform: translateY(20px);
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
     opacity: 0;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
@@ -411,38 +411,38 @@ ul.premium-person-social-list {
 .premium-person-style3 .premium-person-container:hover .premium-person-social-list {
     opacity: 1;
     -ms-transform: translateY(0);
-        -webkit-transform: translateY(0);
-            transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
 }
 
 .premium-persons-title-cw .premium-person-title {
     -ms-transform: translateX(-15px) rotate(-90deg);
-        -webkit-transform: translateX(-15px) rotate(-90deg);
-            transform: translateX(-15px) rotate(-90deg);
+    -webkit-transform: translateX(-15px) rotate(-90deg);
+    transform: translateX(-15px) rotate(-90deg);
     -ms-transform-origin: top;
-        -webkit-transform-origin: top;
-            transform-origin: top;
+    -webkit-transform-origin: top;
+    transform-origin: top;
 }
 
 .premium-persons-title-cw .premium-person-container:hover .premium-person-title {
     -ms-transform: translateX(0) rotate(-90deg);
-        -webkit-transform: translateX(0) rotate(-90deg);
-            transform: translateX(0) rotate(-90deg);
+    -webkit-transform: translateX(0) rotate(-90deg);
+    transform: translateX(0) rotate(-90deg);
 }
 
 .premium-persons-title-ccw .premium-person-title {
     width: auto;
     margin-left: 20px;
     -ms-transform: translateX(-15px) rotate(90deg);
-        -webkit-transform: translateX(-15px) rotate(90deg);
-            transform: translateX(-15px) rotate(90deg);
+    -webkit-transform: translateX(-15px) rotate(90deg);
+    transform: translateX(-15px) rotate(90deg);
     -ms-transform-origin: center left;
-        -webkit-transform-origin: center left;
-            transform-origin: center left;
+    -webkit-transform-origin: center left;
+    transform-origin: center left;
 }
 
 .premium-persons-title-ccw .premium-person-container:hover .premium-person-title {
     -ms-transform: translateX(0) rotate(90deg);
-        -webkit-transform: translateX(0) rotate(90deg);
-            transform: translateX(0) rotate(90deg);
+    -webkit-transform: translateX(0) rotate(90deg);
+    transform: translateX(0) rotate(90deg);
 }

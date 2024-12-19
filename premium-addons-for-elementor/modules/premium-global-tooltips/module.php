@@ -1127,13 +1127,13 @@ class Module {
 
 		$papro_activated = apply_filters( 'papro_activated', false );
 
-		if ( ! $papro_activated && ( 'gallery' === $settings['premium_tooltip_type'] || 'template' === $settings['premium_tooltip_type'] || 'yes' === $settings['premium_tooltip_mouse_follow'] ) ) {
-			return;
-		}
-
-		$tooltips_enabled = $settings['premium_tooltip_switcher'];
+		$tooltips_enabled = $element->get_settings_for_display( 'premium_tooltip_switcher' );
 
 		if ( 'yes' === $tooltips_enabled ) {
+
+			if ( ! $papro_activated && ( 'gallery' === $settings['premium_tooltip_type'] || 'template' === $settings['premium_tooltip_type'] || 'yes' === $settings['premium_tooltip_mouse_follow'] ) ) {
+				return;
+			}
 
 			$type    = $settings['premium_tooltip_type'];
 			$content = '';

@@ -128,7 +128,7 @@ class Woo_CTA extends Widget_Base {
 	 */
 	public function get_script_depends() {
 		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-fontawesome-all',
+			// 'pa-fontawesome-all',
 			'pa-tweenmax',
 			'pa-motionpath',
 		) : array();
@@ -2131,9 +2131,9 @@ class Woo_CTA extends Widget_Base {
 					)
 				);
 
-				if ( 'icon' === $icon_type ) {
-					$this->add_render_attribute( 'icon', 'class', $settings['icon']['value'] );
-				}
+				// if ( 'icon' === $icon_type ) {
+				// 	$this->add_render_attribute( 'icon', 'class', $settings['icon']['value'] );
+				// }
 
 				$this->add_render_attribute(
 					'icon',
@@ -2268,10 +2268,14 @@ class Woo_CTA extends Widget_Base {
 								)
 							);
 							?>
-							<?php else : ?>
-							<i <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>></i>
-								<?php
-						endif;
+							<?php else :
+
+                                echo Helper_Functions::get_svg_by_icon(
+                                    $settings['icon'],
+                                    $this->get_render_attribute_string( 'icon' )
+                                );
+
+                            endif;
 
 					elseif ( 'image' === $icon_type ) :
 
