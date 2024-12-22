@@ -22,8 +22,13 @@
 
         plusButton.on('click', function () {
             var value = parseInt(inputQuantity.val());
+            var maxQuantity = parseInt(inputQuantity.attr('max'));
             if (!isNaN(value)) {
-                inputQuantity.val(value + 1);
+                if (!isNaN(maxQuantity) && value >= maxQuantity) {
+                    inputQuantity.val(maxQuantity); // Set to max if the limit is reached
+                } else {
+                    inputQuantity.val(value + 1); // Increment if within the limit
+                }
             }
         });
 
@@ -34,8 +39,13 @@
             $(this).on('click', function () {
                 var input = $(this).closest('.quantity-grouped-wrapper').find('.grouped_product_qty');
                 var value = parseInt(input.val());
+                var maxQuantity = parseInt(input.attr('max')); // Get the max value of product
                 if (!isNaN(value)) {
-                    input.val(value + 1);
+                    if (!isNaN(maxQuantity) && value >= maxQuantity) {
+                        input.val(maxQuantity); 
+                    } else {
+                        input.val(value + 1);
+                    }
                 }
             });
         });
@@ -49,6 +59,9 @@
                 }
             });
         });
+
+       // var cart = PremiumWooSettings.cart_contents; // Get cart data
+
 
         var btn_text = $button.find('.premium-woo-btn-text'),
             wishlistRemoveText = $button.attr('data-wishlist-remove-text'),
@@ -180,13 +193,18 @@
                                 $(connectToMC + '.elementor-widget-premium-mini-cart').find('.pa-woo-mc__inner-container').trigger('click.paToggleMiniCart');
                                 $(document.body).trigger('wc_fragment_refresh');
                             }
+
                         } else {
 
-                            $spinnerWrap.removeClass('loader-visible').find(".premium-loading-feed").remove();
-
-                            if (response.data.qty_message) {
-                                $container.append('<div class="premium-cta-message-box">' + response.data.qty_message + '</div>');
+                                // If adding to cart fails, redirect to single product page
+                                if(ajaxAction === 'custom_add_to_cart'){
+                                var singleProductURL = response.data.product_url;
+                                if (singleProductURL) {
+                                window.location.href = singleProductURL;
+                                }
                             }
+
+                            $spinnerWrap.removeClass('loader-visible').find(".premium-loading-feed").remove();
                         }
 
                     },

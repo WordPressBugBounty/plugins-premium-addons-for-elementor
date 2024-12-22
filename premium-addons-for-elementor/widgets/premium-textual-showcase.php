@@ -8,6 +8,7 @@ namespace PremiumAddons\Widgets;
 // Elementor Classes.
 use Elementor\Utils;
 use Elementor\Repeater;
+use Elementor\Plugin;
 use Elementor\Widget_Base;
 use Elementor\Icons_Manager;
 use Elementor\Controls_Manager;
@@ -175,7 +176,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 	}
 
     public function has_widget_inner_wrapper(): bool {
-        return false;
+        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
     }
 
 	/**

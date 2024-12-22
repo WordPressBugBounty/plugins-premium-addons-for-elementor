@@ -279,6 +279,32 @@ class Woo_CTA extends Widget_Base {
 		);
 
 		$this->add_control(
+			'show_available_quantity',
+			array(
+				'label'       => __( 'Show Available Quantity', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'condition' => array(
+					'button_action' => array( 'add_to_cart' ),
+				),
+			)
+		);
+
+		$this->add_control(
+			'pa_available_quantity_text',
+			array(
+				'label'       => __( 'Product quantity Text', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => ' {{number}} In Stock',
+				'description' => __( 'This helps to control number of product. {{number}} will be repalced with the number of stock quantity of product', 'premium-addons-pro' ),
+				'condition' => array(
+					'show_available_quantity' => 'yes',
+				),
+			),
+
+		);
+
+
+		$this->add_control(
 			'connect_to_pa_mc',
 			array(
 				'label'       => __( 'Automatically Open The Mini Cart List', 'premium-addons-for-elementor' ),
@@ -885,7 +911,8 @@ class Woo_CTA extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-woo-btn-container' => 'justify-content: {{VALUE}}',
+					//'{{WRAPPER}} .premium-woo-btn-container' => 'justify-content: {{VALUE}}',
+					'{{WRAPPER}} .pa-wrapper-container ' => 'justify-content: {{VALUE}}',
 				),
 				'default'   => 'center',
 				'toggle'    => false,
@@ -1498,6 +1525,63 @@ class Woo_CTA extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// product quantity message style section.
+		$this->start_controls_section(
+			'product_quantity_message',
+			array(
+				'label' => __( 'Available Quantity Text', 'premium-addons-for-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'button_action' => array( 'add_to_cart' ),
+					'show_available_quantity' => 'yes',
+
+				),
+			)
+		);
+
+		$this->add_control(
+			'product_quantity_message_color',
+			array(
+				'label'     => __( 'Text Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_PRIMARY,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .product-quantity-message '   => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'quantity_mesaage_typography',
+				'global'   => array(
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				),
+				'selector' => '{{WRAPPER}} .product-quantity-message ',
+			)
+		);
+
+		$this->add_responsive_control(
+			'quantity_message_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'default'    => array(
+					'size' => 10,
+				),
+				'separator'  => 'before',
+				'selectors'  => array(
+					'{{WRAPPER}} .product-quantity-message  ' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
 		// variation style section.
 		$this->start_controls_section(
 			'section_variation_styles',
@@ -2025,6 +2109,8 @@ class Woo_CTA extends Widget_Base {
 		}
 
 		$product_unavailable_message = $settings['product_unavailable_message'];
+		$product_quantity_message = $settings['pa_available_quantity_text'];
+
 
 		$show_quantity = $settings['show_quantity'];
 
@@ -2194,15 +2280,27 @@ class Woo_CTA extends Widget_Base {
 							<tr><th>Product</th><th>Price</th><th>Quantity</th></tr>
 							<?php
 							foreach ( $child_products as $child_id ) {
-								$child_product = wc_get_product( $child_id )
+								$child_product = wc_get_product( $child_id );
+								$stock_quantity = $child_product->get_stock_quantity(); 
+								$max_stock = $stock_quantity ? $stock_quantity : ''; 
+								if($max_stock){
+				                $quantity_text = str_replace('{{number}}', $max_stock, $product_quantity_message);?>
+				                <?php }
 								?>
 								<tr>
 									<td><?php echo wp_kses_post( $child_product->get_name() ); ?></td>
-									<td><?php echo wp_kses_post( wc_price( $child_product->get_price() ) ); ?></td>
+									<td>
+										<?php echo wp_kses_post( wc_price( $child_product->get_price() ) ); ?>
+										<?php if($max_stock){?>
+										<div class='product-quantity-message '>
+								        <?php  echo wp_kses_post($quantity_text) ?>
+							            </div>
+										<?php }?>
+								    </td>
 									<td>
 									<div class='pa-qty-wrapper'>
 										<div class="quantity-grouped-wrapper">
-											<input type="number" class="grouped_product_qty" name="<?php echo wp_kses_post( $child_id ); ?>" value="0" min="0">
+											<input type="number" class="grouped_product_qty" name="<?php echo wp_kses_post( $child_id ); ?>" value="0" min="0" max="<?php echo esc_attr( $max_stock ); ?>" aria-label="Product quantity">
 											<div class="add-to-cart-icons-quantity-wrapper">
 												<i type="button" class="fas fa-plus quantity-button g-plus"></i>
 												<i type="button" class="fas fa-minus quantity-button g-minus"></i>
@@ -2213,7 +2311,8 @@ class Woo_CTA extends Widget_Base {
 								</tr>
 							<?php } ?>
 						</table>
-				<?php } ?>
+				    <?php } ?>
+                
 					<?php if ( 'variable' === $product_type ) { ?>
 						<?php if ( ! empty( $attributes ) ) : ?>
 					<table class="premium-variations" cellspacing="0" role="presentation">
@@ -2243,10 +2342,22 @@ class Woo_CTA extends Widget_Base {
 			<?php } ?>
 			<?php } ?>
 
+			<div class='pa-wrapper-container'>
 			<div class='premium-woo-btn-container'>
+
+			<?php // show product quantity message
+				$stock_quantity = $product->get_stock_quantity(); // Get stock quantity
+                $max_stock = $stock_quantity ? $stock_quantity : ''; // Handle unlimited stock 
+				if($max_stock){
+				$quantity_text = str_replace('{{number}}', $max_stock, $product_quantity_message);?>
+					<div class='product-quantity-message '>
+						<?php echo wp_kses_post($quantity_text) ?>
+					</div>
+				<?php }?>
+
 				<?php if ( $show_quantity ) : ?>
 				<div class="quantity-input-wrapper">
-					<input type="number" class="product-quantity"  value="1" min="1">
+					<input type="number" class="product-quantity"  value="1" min="1" max="<?php echo esc_attr( $max_stock ); ?>"  aria-label="Product quantity">
 						<div class="add-to-cart-icons-quantity-wrapper">
 							<i type="button" class="fas fa-plus quantity-button plus"></i>
 							<i type="button" class="fas fa-minus quantity-button minus"></i>
@@ -2328,6 +2439,7 @@ class Woo_CTA extends Widget_Base {
 
 			</button>
 				<div class="premium-woo-cta__spinner"></div>
+			</div>
 
 			</div>
 			<?php } ?>

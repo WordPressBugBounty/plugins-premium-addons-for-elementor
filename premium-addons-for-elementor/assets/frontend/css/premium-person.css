@@ -268,7 +268,7 @@ ul.premium-person-social-list {
 .premium-person-style1 .premium-person-social-list li:hover {
   bottom: 5px;
 }
-.premium-person-style1.multiple-persons:not([data-persons-equal="yes"]) {
+.premium-person-style1.multiple-persons:not([data-persons-equal=yes]) {
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;

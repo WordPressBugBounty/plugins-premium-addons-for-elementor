@@ -7,6 +7,7 @@ namespace PremiumAddons\Widgets;
 
 // Elementor Classes.
 use Elementor\Modules\DynamicTags\Module as TagsModule;
+use Elementor\Plugin;
 use Elementor\Widget_Base;
 use Elementor\Utils;
 use Elementor\Control_Media;
@@ -133,7 +134,7 @@ class Premium_Tcloud extends Widget_Base {
 	}
 
     public function has_widget_inner_wrapper(): bool {
-        return false;
+        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
     }
 
 	/**

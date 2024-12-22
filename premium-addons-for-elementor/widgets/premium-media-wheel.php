@@ -9,6 +9,7 @@ namespace PremiumAddons\Widgets;
 use Elementor\Utils;
 use Elementor\Embed;
 use Elementor\Repeater;
+use Elementor\Plugin;
 use Elementor\Widget_Base;
 use Elementor\Icons_Manager;
 use Elementor\Control_Media;
@@ -163,7 +164,7 @@ class Premium_Media_Wheel extends Widget_Base {
 	}
 
     public function has_widget_inner_wrapper(): bool {
-        return false;
+        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
     }
 
 	/**

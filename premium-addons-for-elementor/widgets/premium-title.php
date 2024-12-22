@@ -6,6 +6,7 @@
 namespace PremiumAddons\Widgets;
 
 // Elementor Classes.
+use Elementor\Plugin;
 use Elementor\Widget_Base;
 use Elementor\Utils;
 use Elementor\Icons_Manager;
@@ -171,7 +172,7 @@ class Premium_Title extends Widget_Base {
 	}
 
     public function has_widget_inner_wrapper(): bool {
-        return false;
+        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
     }
 
 	/**

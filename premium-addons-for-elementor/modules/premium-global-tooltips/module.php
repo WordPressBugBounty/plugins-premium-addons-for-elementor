@@ -73,10 +73,9 @@ class Module {
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-        add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
-        add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
-
+		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
+		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
+		add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
 	}
 
 	/**
@@ -154,7 +153,7 @@ class Module {
 	 */
 	public function register_controls( $element ) {
 
-		$tab = 'common' !== $element->get_name() ? Controls_Manager::TAB_LAYOUT : Controls_Manager::TAB_CONTENT;
+		$tab = ! in_array( $element->get_name(), array( 'common', 'common-optimized' ) ) ? Controls_Manager::TAB_LAYOUT : Controls_Manager::TAB_CONTENT;
 
 		$element->start_controls_section(
 			'section_premium_global_tooltip',
@@ -1066,7 +1065,7 @@ class Module {
 					hideOn: settings.hide_tooltip_on,
 				};
 
-                if( settings.pa_tooltip_class ) {
+				if( settings.pa_tooltip_class ) {
 
 					tooltip_settings.uniqueClass  = settings.pa_tooltip_class;
 					tooltip_settings.follow_mouse = '' != settings.pa_tooltip_class && 'yes' === settings.premium_tooltip_mouse_follow;

@@ -1,7 +1,16 @@
+.elementor-widget-premium-woo-cta .pa-wrapper-container {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .premium-woo-btn-container {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .premium-woo-btn-container .premium-woo-cta-button {
   display: -webkit-inline-flex;
@@ -160,6 +169,13 @@
 }
 .premium-wrapper-woo-cta .unavailable-message {
   text-align: center;
+}
+.premium-wrapper-woo-cta .product-quantity-message {
+  display: block;
+  margin-bottom: 10px;
+  -ms-flex-preferred-size: 100%;
+  -webkit-flex-basis: 100%;
+  flex-basis: 100%;
 }
 .premium-wrapper-woo-cta .premium-variations,
 .premium-wrapper-woo-cta .premium-grouped-product {
