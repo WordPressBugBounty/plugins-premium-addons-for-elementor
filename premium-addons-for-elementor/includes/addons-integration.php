@@ -128,7 +128,7 @@ class Addons_Integration {
 
 			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'enqueue_editor_cp_scripts' ), 99 );
 
-            add_action( 'elementor/editor/init', array( $this, 'load_cp_module' ) );
+            $this->load_cp_module();
 
 		}
 	}
@@ -649,22 +649,22 @@ class Addons_Integration {
 					)
 				);
 
-				if ( class_exists( 'woocommerce' ) ) {
-					wp_localize_script(
-						'pa-frontend',
-						'PremiumWooSettings',
-						array(
-							'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
-							'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
-							'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
-							'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
-							'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
-							'view_cart'       => __( 'View cart', 'woocommerce' ),
-							'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
-						)
-					);
+				// if ( class_exists( 'woocommerce' ) ) {
+				// 	wp_localize_script(
+				// 		'pa-frontend',
+				// 		'PremiumWooSettings',
+				// 		array(
+				// 			'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+				// 			'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
+				// 			'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
+				// 			'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+				// 			'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
+				// 			'view_cart'       => __( 'View cart', 'woocommerce' ),
+				// 			'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
+				// 		)
+				// 	);
 
-				}
+				// }
 			}
 
             if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) || 'empty' === self::$css_content ) {
@@ -1101,7 +1101,7 @@ class Addons_Integration {
 
 			wp_localize_script(
 				'premium-woo-cta',
-				'PremiumWooSettings',
+				'PAWooCTASettings',
 				array(
 					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
 					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
@@ -1112,7 +1112,7 @@ class Addons_Integration {
 
 			wp_localize_script(
 				'premium-mini-cart',
-				'PremiumWooSettings',
+				'PAWooMCartSettings',
 				array(
 					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
 					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
@@ -1123,7 +1123,7 @@ class Addons_Integration {
 
 			wp_localize_script(
 				'premium-woocommerce',
-				'PremiumWooSettings',
+				'PAWooProductsSettings',
 				array(
 					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
 					'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),

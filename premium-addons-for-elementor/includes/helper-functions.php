@@ -100,6 +100,39 @@ class Helper_Functions {
 	 */
 	private static $assets_suffix = null;
 
+    /**
+     * Get Icon SVG Data
+     *
+     * @since 4.10.72
+     * @access private
+     *
+     * @return array icon data.
+     */
+    private static function get_icon_svg_data( $icon ) {
+
+		preg_match( '/fa(.*) fa-/', $icon['value'], $icon_name_matches );
+
+		$icon_name = str_replace( $icon_name_matches[0], '', $icon['value'] );
+
+		$icon_key = str_replace( ' fa-', '-', $icon['value'] );
+
+		$icon_file_name = str_replace( 'fa-', '', $icon['library'] );
+
+        $path = ELEMENTOR_ASSETS_PATH . 'lib/font-awesome/json/' . $icon_file_name . '.json';
+
+        $data = file_get_contents( $path );
+
+        $data = json_decode( $data, true );
+
+        $svg_data = $data['icons'][ $icon_name ];
+
+		return [
+			'width' => $svg_data[0],
+			'height' => $svg_data[1],
+			'path' => $svg_data[4]
+		];
+	}
+
 	/**
 	 * Check if white labeling - Free version author field is set
 	 *
@@ -1590,24 +1623,18 @@ class Helper_Functions {
      */
     public static function get_svg_by_icon( $icon, $attributes = array() ) {
 
-        if ( empty( $icon ) || empty( $icon['value'] ) || empty( $icon['library'] ) ) return '';
+        if ( empty( $icon ) || empty( $icon['value'] ) || empty( $icon['library'] ) )
+            return '';
 
-        $svg_html = "";
+        $icon['font_family'] = 'font-awesome';
 
-        $icon_name  = str_replace( [ 'fas fa-', 'fab fa-', 'far fa-' ], '', $icon['value'] );
-        $library    = str_replace( 'fa-', '', $icon['library'] );
-        $svg_object = file_get_contents( PREMIUM_ADDONS_PATH . "assets/frontend/min-js/icons/{$library}.json" );
-        $svg_object = json_decode( $svg_object, true );
-        $i_class    = str_replace(' ', '-', $icon['value']);
-
-        if ( empty( $svg_object['icons'][$icon_name] ) )
-            return $svg_html;
+        $i_class    = str_replace( ' ', '-', $icon['value'] );
 
         $svg_html  = '<svg ';
 
-        $icon       = $svg_object['icons'][$icon_name];
+        $icon       = self::get_icon_svg_data( $icon );
 
-        $view_box   = "0 0 {$icon[0]} {$icon[1]}";
+        $view_box   = '0 0 ' . $icon['width'] . ' ' . $icon['height'];
 
         if( is_array( $attributes ) ) {
 
@@ -1630,9 +1657,9 @@ class Helper_Functions {
             $svg_html .= $attributes;
         }
 
-        $svg_html .= "aria-hidden='true' data-icon='store' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";
+        $svg_html .= "aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";
 
-        $svg_html  .= "<path d='{$icon[4]}'></path>";
+        $svg_html  .= '<path d="' . esc_attr( $icon['path'] ). '"></path>';
         $svg_html  .= "</svg>";
 
         return wp_kses( $svg_html, self::get_allowed_icon_tags() );

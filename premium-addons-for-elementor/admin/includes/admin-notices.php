@@ -68,6 +68,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
+            'xmas24_hide'
 		);
 
         if ( Helper_Functions::check_hide_notifications() ) {
@@ -130,7 +131,7 @@ class Admin_Notices {
 			}
 		}
 
-        // $this->get_bf_notice();
+        $this->get_xmas_notice();
 
 	}
 
@@ -217,7 +218,7 @@ class Admin_Notices {
 			'<p>' . __( 'Could we take just 2 minutes of your time? We\'d be incredibly grateful if you could give ', 'premium-addons-for-elementor' ) .
 			'<b>' . __( 'Premium Addons for Elementor', 'premium-addons-for-elementor' ) . '</b> a 5 Stars Rating on WordPress.org. Your support helps us continue creating even more amazing free features in the future!</p>
             <div>
-                <a class="button button-primary" href="%s" target="_blank"><span>' . __( 'Sure, leave a Review', 'premium-addons-for-elementor' ) . '</span></a>
+                <a class="button pa-review-btn button-primary" href="%s" target="_blank"><span>' . __( 'Sure, leave a Review', 'premium-addons-for-elementor' ) . '</span></a>
                 <a class="button" href="%2$s"><span>' . __( 'I Already Did', 'premium-addons-for-elementor' ) . '</span></a>
                 <a class="button button-secondary pa-notice-reset"><span>' . __( 'Maybe Later', 'premium-addons-for-elementor' ) . '</span></a>
             </div>',
@@ -257,11 +258,11 @@ class Admin_Notices {
 
 	}
 
-    public function get_bf_notice() {
+    public function get_xmas_notice() {
 
         $time     = time();
 
-        if ( $time > 1733665574 || get_transient( 'bf24_hide' ) ) {
+        if ( $time > 1735776000 || get_transient( 'xmas24_hide' ) ) {
 			return;
 		}
 
@@ -279,7 +280,7 @@ class Admin_Notices {
             }
 		}
 
-		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/black-friday/', 'wp-dash', 'cm24-notification', 'cm24' );
+		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/christmas-sale/', 'wp-dash', 'xmas24-notification', 'xmas24' );
 
 		?>
 
@@ -289,13 +290,13 @@ class Admin_Notices {
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<?php echo __( 'Cyber Monday Sale: Save up to 35% on Premium Addons Pro!', 'premium-addons-for-elementor' ); ?>
+					<?php echo __( 'Spread holiday cheer with a festive upgrade to your Elementor website! <strong>SAVE UP TO 25% OFF Premium Addons PRO</strong>!', 'premium-addons-for-elementor' ); ?>
 					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
 						<span><?php echo __( 'Catch The Deal', 'premium-addons-for-elementor' ); ?></span>
 					</a>
 				</p>
 			</div>
-			<div class="pa-notice-close" data-notice="bf24_hide">
+			<div class="pa-notice-close" data-notice="xmas24_hide">
 				<span class="dashicons dashicons-dismiss"></span>
 			</div>
 		</div>

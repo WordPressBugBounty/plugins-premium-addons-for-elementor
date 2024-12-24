@@ -200,13 +200,13 @@
             var pageID = $elem.data('page-id');
 
             $.ajax({
-                url: PremiumWooSettings.ajaxurl,
+                url: PAWooProductsSettings.ajaxurl,
                 data: {
                     action: 'get_woo_product_qv',
                     pageID: pageID,
                     elemID: $scope.data('id'),
                     product_id: itemID,
-                    security: PremiumWooSettings.qv_nonce
+                    security: PAWooProductsSettings.qv_nonce
                 },
                 dataType: 'html',
                 type: 'POST',
@@ -386,11 +386,11 @@
             }
 
             $.ajax({
-                url: PremiumWooSettings.ajaxurl,
+                url: PAWooProductsSettings.ajaxurl,
                 type: 'POST',
                 data: {
                     action: 'premium_woo_add_cart_product',
-                    nonce: PremiumWooSettings.cta_nonce,
+                    nonce: PAWooProductsSettings.cta_nonce,
                     product_id: productID,
                     quantity: quantity,
                 },
@@ -409,7 +409,7 @@
                             if ('' == viewCartTxt)
                                 viewCartTxt = 'View Cart';
 
-                            $this.removeClass('add_to_cart_button').attr('href', PremiumWooSettings.woo_cart_url).text(viewCartTxt);
+                            $this.removeClass('add_to_cart_button').attr('href', PAWooProductsSettings.woo_cart_url).text(viewCartTxt);
 
                             $this.attr('data-added-to-cart', true);
                         }, 200);
@@ -511,7 +511,7 @@
                 $loadMoreBtn.css("opacity", 0.3);
 
                 $.ajax({
-                    url: PremiumWooSettings.ajaxurl,
+                    url: PAWooProductsSettings.ajaxurl,
                     data: {
                         action: 'get_woo_products',
                         pageID: pageID,
@@ -520,7 +520,7 @@
                         orderBy: $loadMoreBtn.data("order"),
                         skin: skin,
                         page_number: page_number,
-                        nonce: PremiumWooSettings.products_nonce,
+                        nonce: PAWooProductsSettings.products_nonce,
                     },
                     dataType: 'json',
                     type: 'POST',
@@ -607,7 +607,7 @@
                 }
 
                 $.ajax({
-                    url: PremiumWooSettings.ajaxurl,
+                    url: PAWooProductsSettings.ajaxurl,
                     data: {
                         action: 'get_woo_products',
                         pageID: pageID,
@@ -615,7 +615,7 @@
                         category: '',
                         skin: skin,
                         page_number: page_number,
-                        nonce: PremiumWooSettings.products_nonce,
+                        nonce: PAWooProductsSettings.products_nonce,
                     },
                     dataType: 'json',
                     type: 'POST',

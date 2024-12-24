@@ -42,7 +42,7 @@
                 var maxQuantity = parseInt(input.attr('max')); // Get the max value of product
                 if (!isNaN(value)) {
                     if (!isNaN(maxQuantity) && value >= maxQuantity) {
-                        input.val(maxQuantity); 
+                        input.val(maxQuantity);
                     } else {
                         input.val(value + 1);
                     }
@@ -60,7 +60,7 @@
             });
         });
 
-       // var cart = PremiumWooSettings.cart_contents; // Get cart data
+        // var cart = PAWooCTASettings.cart_contents; // Get cart data
 
 
         var btn_text = $button.find('.premium-woo-btn-text'),
@@ -137,7 +137,7 @@
                 }
 
                 $.ajax({
-                    url: PremiumWooSettings.ajaxurl,
+                    url: PAWooCTASettings.ajaxurl,
                     dataType: 'JSON',
                     type: 'POST',
                     data: {
@@ -147,7 +147,7 @@
                         quantity: quantity,
                         grouped_product_qty: quantities,
                         attributes: attributes,
-                        security: PremiumWooSettings.cta_nonce, // Ensure nonce matches
+                        security: PAWooCTASettings.cta_nonce, // Ensure nonce matches
                     },
                     success: function (response) {
 
@@ -183,24 +183,24 @@
 
                                     $button.siblings('.view-cart-button').remove();
 
-                                    $button.after('<a href="' + response.data.cart_url + '" target="_blank" class="view-cart-button" style="margin-left: 10px;">' + PremiumWooSettings.view_cart + '</a>');
+                                    $button.after('<a href="' + response.data.cart_url + '" target="_blank" class="view-cart-button" style="margin-left: 10px;">' + PAWooCTASettings.view_cart + '</a>');
 
                                 }
                             }
 
                             // check if it is connected to premium mc
-                            if ( connectToMC ) {
+                            if (connectToMC) {
                                 $(connectToMC + '.elementor-widget-premium-mini-cart').find('.pa-woo-mc__inner-container').trigger('click.paToggleMiniCart');
                                 $(document.body).trigger('wc_fragment_refresh');
                             }
 
                         } else {
 
-                                // If adding to cart fails, redirect to single product page
-                                if(ajaxAction === 'custom_add_to_cart'){
+                            // If adding to cart fails, redirect to single product page
+                            if (ajaxAction === 'custom_add_to_cart') {
                                 var singleProductURL = response.data.product_url;
                                 if (singleProductURL) {
-                                window.location.href = singleProductURL;
+                                    window.location.href = singleProductURL;
                                 }
                             }
 

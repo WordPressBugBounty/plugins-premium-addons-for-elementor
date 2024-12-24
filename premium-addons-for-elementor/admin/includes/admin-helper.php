@@ -541,9 +541,9 @@ class Admin_Helper {
 
 		if ( ! $is_papro_active ) {
 
-			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/black-friday', 'plugins-page', 'wp-dash', 'get-pro' );
+			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/christmas-sale/', 'plugins-page', 'wp-dash', 'get-pro' );
 
-			$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #FF6000; font-weight: bold;">%s</a>', $link, __( '35% Off on Upgrade!', 'premium-addons-for-elementor' ) );
+			$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #FF6000; font-weight: bold;">%s</a>', $link, __( '25% Off on Upgrade!', 'premium-addons-for-elementor' ) );
 			array_push( $new_links, $pro_link );
 		}
 
@@ -717,7 +717,7 @@ class Admin_Helper {
                 '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
                 '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
                 'manage_options',
-                'https://premiumaddons.com/black-friday',
+                'https://premiumaddons.com/christmas-sale/',
                 ''
             );
         }

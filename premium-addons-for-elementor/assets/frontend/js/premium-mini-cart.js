@@ -8,7 +8,7 @@
             return;
         }
 
-        if(elementorFrontend.isEditMode()) {
+        if (elementorFrontend.isEditMode()) {
             $(document.body).trigger('wc_fragment_refresh');
         }
 
@@ -23,7 +23,7 @@
             style = settings.style,
             hoverTimeout;
 
-            // shouldn't this be if it's a slide menu only?
+        // shouldn't this be if it's a slide menu only?
         if ($(".premium-magic-section-body-inner").length < 1)
             $("body").wrapInner('<div class="premium-magic-section-body-inner" />');
 
@@ -42,7 +42,7 @@
         updateCartDynamicText();
 
         // Reinitialize the event listeners after the mini cart is refreshed
-        $(document.body).on('wc_fragments_refreshed', function() {
+        $(document.body).on('wc_fragments_refreshed', function () {
             initCartContentEvents();
             updateCartDynamicText();
         });
@@ -76,18 +76,18 @@
 
         /** Handles Mini Cart Display */
         function toggleMiniCart(e) {
-            if ( 'hover' === triggerEvent ) {
+            if ('hover' === triggerEvent) {
                 e.stopPropagation();
 
                 clearTimeout(hoverTimeout);
                 $scope.find('.pa-woo-mc__content-wrapper-' + id).removeClass('premium-addons__v-hidden').addClass('pa-woo-mc__open');
             } else {
 
-                if ( 'menu' === type ) {
+                if ('menu' === type) {
                     $scope.find('.pa-woo-mc__content-wrapper-' + id).removeClass('premium-addons__v-hidden').toggleClass('pa-woo-mc__open');
 
                 } else {
-                    if ( isHidden ) {
+                    if (isHidden) {
                         $scope.find('.pa-woo-mc__content-wrapper-' + id).css('display', 'flex');
 
                         $('html').css({
@@ -121,7 +121,7 @@
         function updateCartDynamicText() {
             var footerTxt = $scope.find('.pa-woo-mc__cart-footer').data('pa-footer-txt');
 
-            if ( footerTxt && footerTxt.includes('{{count}}') ) {
+            if (footerTxt && footerTxt.includes('{{count}}')) {
 
                 var itemCount = $scope.find('.pa-woo-mc__cart-footer .pa-woo-mc__cart-count').text(),
                     newTxt = footerTxt.replace("{{count}}", '<span class="pa-woo-mc__cart-count">' + itemCount + '</span>');
@@ -129,8 +129,8 @@
                 $scope.find('.pa-woo-mc__cart-footer .pa-woo-mc__subtotal-heading').html(newTxt);
             }
 
-            if ( settings.removeTxt ) {
-                $scope.find('.pa-woo-mc__remove-item span').text( settings.removeTxt );
+            if (settings.removeTxt) {
+                $scope.find('.pa-woo-mc__remove-item span').text(settings.removeTxt);
             }
         }
 
@@ -139,15 +139,15 @@
         */
         function initCartContentEvents() {
 
-            $('.pa-woo-mc__qty-btn').on('click', function(e) {
+            $('.pa-woo-mc__qty-btn').on('click', function (e) {
                 e.stopPropagation();
 
                 var $input = $(this).parent().find('.pa-woo-mc__input')[0],
-                    itemStock = parseInt( $( $input ).attr('max') ),
-                    currentVal = parseInt( $($input ).val());
+                    itemStock = parseInt($($input).attr('max')),
+                    currentVal = parseInt($($input).val());
 
-                if ( $(this).hasClass('plus') ) {
-                    if ( currentVal >= itemStock ) {
+                if ($(this).hasClass('plus')) {
+                    if (currentVal >= itemStock) {
                         $(this).parents('.pa-woo-mc__item-wrapper').find('.pa-woo-mc__item-notice').text('*The current stock is only ' + itemStock);
                     } else {
                         $input.stepUp();
@@ -162,12 +162,12 @@
             });
 
             // update item quantity
-            $scope.find('.pa-woo-mc__input').on('change', function() {
+            $scope.find('.pa-woo-mc__input').on('change', function () {
 
                 var itemKey = $(this).attr('name').replace('cart-', ''),
                     newQty = $(this).val();
 
-                if (  '1' === newQty ) {
+                if ('1' === newQty) {
                     $(this).siblings('.pa-woo-mc__qty-btn.minus').addClass('disabled');
                 } else {
                     $(this).siblings('.pa-woo-mc__qty-btn.minus').removeClass('disabled');
@@ -177,13 +177,13 @@
             });
 
             // delete cart item.
-            $scope.find('.pa-woo-mc__remove-item').on('click.paRemoveCartItem', function(e) {
+            $scope.find('.pa-woo-mc__remove-item').on('click.paRemoveCartItem', function (e) {
                 e.stopPropagation();
                 var itemKey = $(this).data('pa-item-key').replace('cart-', '');
                 sendCartAjax('pa_delete_cart_item', itemKey, false);
             });
 
-            $scope.find('.pa-woo-mc__input').on('click', function(e){
+            $scope.find('.pa-woo-mc__input').on('click', function (e) {
                 e.stopPropagation();
             });
         }
@@ -200,22 +200,22 @@
             var data = {
                 action: action,
                 itemKey: itemKey,
-                nonce: PremiumWooSettings.mini_cart_nonce,
+                nonce: PAWooMCartSettings.mini_cart_nonce,
             };
 
-            if ( qty ) {
+            if (qty) {
                 data.quantity = qty;
             }
 
             $.ajax({
-                url: PremiumWooSettings.ajaxurl,
+                url: PAWooMCartSettings.ajaxurl,
                 dataType: 'JSON',
                 type: 'POST',
                 data: data,
                 beforeSend: function () {
                     $scope.find('.pa-woo-mc__widget-shopping-outer-wrapper').append('<div class="premium-loading-feed"><div class="premium-loader"></div></div>');
                 },
-                success: function(res) {
+                success: function (res) {
                     $(document.body).trigger('wc_fragment_refresh');
                 },
                 error: function (err) {
@@ -230,7 +230,7 @@
         /** Add the widget's basic events */
         function initWidgetEvents() {
 
-            if ('click' === triggerEvent ) {
+            if ('click' === triggerEvent) {
                 $scope.find('.pa-woo-mc__inner-container').on('click.paToggleMiniCart', toggleMiniCart);
             } else {
                 // hover => mini window
@@ -250,8 +250,8 @@
                     // we need to recheck this
                     var mcContent = ".premium-tabs-nav-list-item, .pa-woo-mc__content-wrapper, .pa-woo-mc__content-wrapper *, .pa-woo-mc__inner-container, .pa-woo-mc__inner-container *";
 
-                    if (!$(event.target).is($(mcContent)) ) {
-                        if ( 'menu' === type ) {
+                    if (!$(event.target).is($(mcContent))) {
+                        if ('menu' === type) {
                             $scope.find('.pa-woo-mc__content-wrapper-' + id).removeClass('pa-woo-mc__open');
                         } else {
                             !isHidden && $scope.find(".pa-woo-mc__close-button").trigger("click");
@@ -271,7 +271,7 @@
 
                 //We don't want to trigger this for each close action.
                 // if (!$('body').hasClass('animating'))
-                    // getWraptoOrg();
+                // getWraptoOrg();
 
                 setTimeout(function () {
                     isHidden = true;
