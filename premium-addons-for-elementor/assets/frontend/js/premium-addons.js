@@ -4874,7 +4874,7 @@
                     var searchQuery = $search.val(),
                         postType = $container.find('.premium-search__type-select').val() || [];
 
-                    window.location.href = settings.search_link + '?s=' + searchQuery + '&post_type[]=' + postType;
+                    window.location.href = settings.search_link + '?s=' + searchQuery + '&post_type=' + postType;
                 });
             }
 

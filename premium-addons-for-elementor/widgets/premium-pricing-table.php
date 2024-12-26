@@ -104,6 +104,7 @@ class Premium_Pricing_Table extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+            'pa-btn',
 			'premium-addons',
 		);
 	}

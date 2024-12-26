@@ -106,6 +106,9 @@ class Premium_Pinterest_Feed extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'font-awesome-5-all',
+            'pa-load-animations',
+            'pa-share-btn',
+            'pa-image-effects',
 			'pa-slick',
 			'premium-addons',
 		);

@@ -8,8 +8,8 @@
         // unsing IntersectionObserverAPI.
         $scope.off('.PaTextualHandler');
 
-        var eleObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
+        var eleObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
 
                     if (hasGrowEffect) {// grow always triggered on viewport.
@@ -85,7 +85,7 @@
             var target = '.premium-title-header';
             $scope.find(target).find('.premium-title-icon, .premium-title-img').addClass('premium-mask-span');
 
-        } else if ('premium-textual-showcase.default' === $scope.data('widget_type') ) {
+        } else if ('premium-textual-showcase.default' === $scope.data('widget_type')) {
             var target = '.pa-txt-sc__effect-min-mask';
 
         } else {
@@ -105,11 +105,11 @@
         });
 
         // unsing IntersectionObserverAPI.
-        var eleObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
+        var eleObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
 
-                    if ( txtShowcaseElem.length ) {
+                    if (txtShowcaseElem.length) {
 
                         $(txtShowcaseElem).addClass('premium-mask-active');
 
@@ -129,5 +129,5 @@
         elementorFrontend.hooks.addAction('frontend/element_ready/premium-textual-showcase.default', PremiumTextualShowcaseHandler);
         elementorFrontend.hooks.addAction('frontend/element_ready/premium-textual-showcase.default', PremiumMaskHandler);
     });
- })(jQuery);
+})(jQuery);
 

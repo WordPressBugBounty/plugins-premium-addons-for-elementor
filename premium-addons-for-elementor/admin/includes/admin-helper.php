@@ -52,21 +52,21 @@ class Admin_Helper {
 	 */
 	public static $elements_list = null;
 
-    /**
+	/**
 	 * Elements Keys
 	 *
 	 * @var elements_list
 	 */
 	public static $elements_keys = null;
 
-    /**
+	/**
 	 * Enabled Elements
 	 *
 	 * @var enabled_elements
 	 */
 	public static $enabled_elements = null;
 
-    /**
+	/**
 	 * Integrations Settings
 	 *
 	 * @var integrations_settings
@@ -134,21 +134,20 @@ class Admin_Helper {
 
 		if ( is_admin() ) {
 
-            Admin_Notices::get_instance();
+			Admin_Notices::get_instance();
 
-            // Beta tester.
-            // Not currently needed.
-            // Beta_Testers::get_instance();
+			// Beta tester.
+			// Not currently needed.
+			// Beta_Testers::get_instance();
 
-            // PA Duplicator.
-            if ( self::check_duplicator() ) {
-                Duplicator::get_instance();
-            }
+			// PA Duplicator.
+			if ( self::check_duplicator() ) {
+				Duplicator::get_instance();
+			}
 
 			if ( self::check_user_can( 'install_plugins' ) ) {
 				Feedback::get_instance();
 			}
-
 		}
 
 		// PA Dynamic Assets.
@@ -157,8 +156,6 @@ class Admin_Helper {
 		if ( self::check_dynamic_assets() && ! $row_meta ) {
 			Admin_Bar::get_instance();
 		}
-
-
 	}
 
 	/**
@@ -193,10 +190,9 @@ class Admin_Helper {
 		}
 
 		return self::$elements_list;
-
 	}
 
-    /**
+	/**
 	 * Get Elements Keys
 	 *
 	 * Get a list of all the keys available in the plugin
@@ -215,7 +211,6 @@ class Admin_Helper {
 		}
 
 		return self::$elements_keys;
-
 	}
 
 	/**
@@ -237,6 +232,7 @@ class Admin_Helper {
 				'premium-youtube-api',
 				'premium-map-disable-api',
 				'premium-map-cluster',
+                'premium-wp-optimize-exclude',
 				'premium-map-locale',
 				'is-beta-tester',
 			);
@@ -244,7 +240,6 @@ class Admin_Helper {
 		}
 
 		return self::$integrations_list;
-
 	}
 
 	/**
@@ -330,7 +325,7 @@ class Admin_Helper {
 				'settings'               => array(
 					'ajaxurl'           => admin_url( 'admin-ajax.php' ),
 					'nonce'             => wp_create_nonce( 'pa-settings-tab' ),
-                    'unused_nonce'             => wp_create_nonce( 'pa-disable-unused' ),
+					'unused_nonce'      => wp_create_nonce( 'pa-disable-unused' ),
 					'generate_nonce'    => wp_create_nonce( 'pa-generate-nonce' ),
 					'site_cursor_nonce' => wp_create_nonce( 'pa-site-cursor-nonce' ),
 					'theme'             => $theme_slug,
@@ -494,7 +489,7 @@ class Admin_Helper {
 
 		check_ajax_referer( 'pa-live-editor', 'security' );
 
-        if ( ! current_user_can( 'edit_theme_options' ) ) {
+		if ( ! current_user_can( 'edit_theme_options' ) ) {
 			wp_send_json_error( 'Insufficient user permission' );
 		}
 
@@ -512,7 +507,6 @@ class Admin_Helper {
 		update_post_meta( $item_id, 'pa_mega_content_temp', $temp_id );
 
 		wp_send_json_success( 'Item Mega Content Saved' );
-
 	}
 
 	/**
@@ -537,7 +531,7 @@ class Admin_Helper {
 
 		// $new_links = array( $settings_link, $rollback_link );
 
-        $new_links = array( $settings_link );
+		$new_links = array( $settings_link );
 
 		if ( ! $is_papro_active ) {
 
@@ -680,7 +674,7 @@ class Admin_Helper {
 	 */
 	public function add_menu_tabs() {
 
-        $this->set_admin_tabs();
+		$this->set_admin_tabs();
 
 		$plugin_name = Helper_Functions::name();
 
@@ -708,20 +702,19 @@ class Admin_Helper {
 			);
 		}
 
-        $is_papro_active = apply_filters( 'papro_activated', false );
+		$is_papro_active = apply_filters( 'papro_activated', false );
 
-        if( ! $is_papro_active ) {
-            call_user_func(
-                'add_submenu_page',
-                self::$page_slug,
-                '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
-                '<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
-                'manage_options',
-                'https://premiumaddons.com/christmas-sale/',
-                ''
-            );
-        }
-
+		if ( ! $is_papro_active ) {
+			call_user_func(
+				'add_submenu_page',
+				self::$page_slug,
+				'<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
+				'<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
+				'manage_options',
+				'https://premiumaddons.com/christmas-sale/',
+				''
+			);
+		}
 
 		remove_submenu_page( self::$page_slug, self::$page_slug );
 	}
@@ -866,12 +859,13 @@ class Admin_Helper {
 		parse_str( sanitize_text_field( wp_unslash( $_POST['fields'] ) ), $settings );
 
 		$new_settings = array(
-			'premium-map-api'         => sanitize_text_field( $settings['premium-map-api'] ),
-			'premium-youtube-api'     => sanitize_text_field( $settings['premium-youtube-api'] ),
-			'premium-map-disable-api' => intval( $settings['premium-map-disable-api'] ? 1 : 0 ),
-			'premium-map-cluster'     => intval( $settings['premium-map-cluster'] ? 1 : 0 ),
-			'premium-map-locale'      => sanitize_text_field( $settings['premium-map-locale'] ),
-			'is-beta-tester'          => intval( $settings['is-beta-tester'] ? 1 : 0 ),
+			'premium-map-api'             => sanitize_text_field( $settings['premium-map-api'] ),
+			'premium-youtube-api'         => sanitize_text_field( $settings['premium-youtube-api'] ),
+			'premium-map-disable-api'     => intval( $settings['premium-map-disable-api'] ? 1 : 0 ),
+			'premium-map-cluster'         => intval( $settings['premium-map-cluster'] ? 1 : 0 ),
+			'premium-wp-optimize-exclude' => intval( $settings['premium-wp-optimize-exclude'] ? 1 : 0 ),
+			'premium-map-locale'          => sanitize_text_field( $settings['premium-map-locale'] ),
+			'is-beta-tester'              => intval( $settings['is-beta-tester'] ? 1 : 0 ),
 		);
 
 		update_option( 'pa_maps_save_settings', $new_settings );
@@ -918,19 +912,18 @@ class Admin_Helper {
 
 		// Now, we need to fill our array with elements keys.
 
-        foreach ( $elements as $elem ) {
+		foreach ( $elements as $elem ) {
 
-            array_push( $keys, $elem['key'] );
+			array_push( $keys, $elem['key'] );
 
-            if ( isset( $elem['draw_svg'] ) ) {
-                array_push( $keys, 'svg_' . $elem['key'] );
-            }
-
-        }
+			if ( isset( $elem['draw_svg'] ) ) {
+				array_push( $keys, 'svg_' . $elem['key'] );
+			}
+		}
 
 		$default_keys = array_fill_keys( $keys, true );
 
-        $default_keys[ 'pa_mc_temp'] = false;
+		$default_keys['pa_mc_temp'] = false;
 
 		return $default_keys;
 	}
@@ -1074,29 +1067,26 @@ class Admin_Helper {
 	 */
 	public static function get_enabled_elements() {
 
-        if ( null === self::$enabled_elements ) {
+		if ( null === self::$enabled_elements ) {
 
-            $defaults = self::get_default_keys();
+			$defaults = self::get_default_keys();
 
-            $enabled_keys = get_option( 'pa_save_settings', $defaults );
+			$enabled_keys = get_option( 'pa_save_settings', $defaults );
 
-            foreach ( $defaults as $key => $value ) {
+			foreach ( $defaults as $key => $value ) {
 
-                if ( 'pa_mc_temp' !== $key && ! isset( $enabled_keys[ $key ] ) ) {
-                    $defaults[ $key ] = 0;
-                } elseif( 'pa_mc_temp' === $key && isset( $enabled_keys[ $key ] ) && $enabled_keys[ $key ] ) {
+				if ( 'pa_mc_temp' !== $key && ! isset( $enabled_keys[ $key ] ) ) {
+					$defaults[ $key ] = 0;
+				} elseif ( 'pa_mc_temp' === $key && isset( $enabled_keys[ $key ] ) && $enabled_keys[ $key ] ) {
 					$defaults[ $key ] = 1;
 				}
+			}
 
-
-            }
-
-            self::$enabled_elements = $defaults;
+			self::$enabled_elements = $defaults;
 
 		}
 
-        return self::$enabled_elements;
-
+		return self::$enabled_elements;
 	}
 
 	/**
@@ -1217,14 +1207,25 @@ class Admin_Helper {
 	 */
 	public static function get_integrations_settings() {
 
-        if ( null === self::$integrations_settings ) {
+		if ( null === self::$integrations_settings ) {
 
-            self::$integrations_settings = get_option( 'pa_maps_save_settings', self::get_default_integrations() );
+            $defaults = self::get_default_integrations();
 
-        }
+            $enabled_keys = get_option( 'pa_maps_save_settings', $defaults );
+
+            foreach ( $defaults as $key => $value ) {
+
+				if ( isset( $enabled_keys[ $key ] ) ) {
+
+					$defaults[ $key ] = $enabled_keys[ $key ];
+				}
+			}
+
+			self::$integrations_settings = $defaults;
+
+		}
 
 		return self::$integrations_settings;
-
 	}
 
 	/**
@@ -1298,7 +1299,7 @@ class Admin_Helper {
 
 		check_ajax_referer( 'pa-generate-nonce', 'security' );
 
-        $post_id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
+		$post_id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
 
 		$this->clear_dynamic_assets_data( $post_id );
 
@@ -1314,8 +1315,8 @@ class Admin_Helper {
 	 *
 	 * @access public
 	 * @since 4.10.51
-     *
-     * @param string $id post ID.
+	 *
+	 * @param string $id post ID.
 	 */
 	public function clear_dynamic_assets_data( $id = '' ) {
 
@@ -1364,13 +1365,13 @@ class Admin_Helper {
 		global $wpdb;
 
 		$query = $wpdb->prepare(
-            "DELETE FROM $wpdb->options
+			"DELETE FROM $wpdb->options
             WHERE (option_name LIKE %s OR option_name LIKE %s)
             AND autoload = %s",
-            '%pa_elements_%',
-            '%pa_edit_%',
-            'no'
-        );
+			'%pa_elements_%',
+			'%pa_edit_%',
+			'no'
+		);
 
 		$wpdb->query( $query );
 	}

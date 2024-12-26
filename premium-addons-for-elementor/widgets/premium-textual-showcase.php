@@ -107,6 +107,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'font-awesome-5-all',
+            'pa-btn',
 			'premium-addons',
 		);
 	}

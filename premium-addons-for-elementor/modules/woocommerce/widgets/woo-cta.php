@@ -112,6 +112,7 @@ class Woo_CTA extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+            'pa-btn',
 			'elementor-icons',
 			'woocommerce-general',
 			'premium-addons',
@@ -2281,8 +2282,8 @@ class Woo_CTA extends Widget_Base {
 							<?php
 							foreach ( $child_products as $child_id ) {
 								$child_product = wc_get_product( $child_id );
-								$stock_quantity = $child_product->get_stock_quantity(); 
-								$max_stock = $stock_quantity ? $stock_quantity : ''; 
+								$stock_quantity = $child_product->get_stock_quantity();
+								$max_stock = $stock_quantity ? $stock_quantity : '';
 								if($max_stock){
 				                $quantity_text = str_replace('{{number}}', $max_stock, $product_quantity_message);?>
 				                <?php }
@@ -2312,7 +2313,7 @@ class Woo_CTA extends Widget_Base {
 							<?php } ?>
 						</table>
 				    <?php } ?>
-                
+
 					<?php if ( 'variable' === $product_type ) { ?>
 						<?php if ( ! empty( $attributes ) ) : ?>
 					<table class="premium-variations" cellspacing="0" role="presentation">
@@ -2347,7 +2348,7 @@ class Woo_CTA extends Widget_Base {
 
 			<?php // show product quantity message
 				$stock_quantity = $product->get_stock_quantity(); // Get stock quantity
-                $max_stock = $stock_quantity ? $stock_quantity : ''; // Handle unlimited stock 
+                $max_stock = $stock_quantity ? $stock_quantity : ''; // Handle unlimited stock
 				if($max_stock){
 				$quantity_text = str_replace('{{number}}', $max_stock, $product_quantity_message);?>
 					<div class='product-quantity-message '>

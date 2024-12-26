@@ -49,11 +49,11 @@ class Addons_Integration {
 	private static $modules = null;
 
 	/**
-	 * Maps Keys
+	 * Integrations Keys
 	 *
-	 * @var maps
+	 * @var integrations
 	 */
-	private static $maps = null;
+	private static $integrations = null;
 
 	/**
 	 * Template Instance
@@ -79,7 +79,7 @@ class Addons_Integration {
 
 		self::$modules = Admin_Helper::get_enabled_elements();
 
-		self::$maps = Admin_Helper::get_integrations_settings();
+		self::$integrations = Admin_Helper::get_integrations_settings();
 
 		$this->template_instance = Premium_Template_Tags::getInstance();
 
@@ -131,6 +131,11 @@ class Addons_Integration {
             $this->load_cp_module();
 
 		}
+
+        //Exclude our dynamic assets from being minified with WP Optimize.
+        if( self::$integrations['premium-wp-optimize-exclude'] ) {
+            add_filter( 'wp-optimize-minify-default-exclusions', array( $this, 'exclude_pa_assets_from_wp_optimize') );
+        }
 	}
 
 	/**
@@ -509,6 +514,38 @@ class Addons_Integration {
 			'all'
 		);
 
+        wp_register_style(
+			'pa-btn',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/button-line' . $suffix . '.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
+        wp_register_style(
+			'pa-load-animations',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/load-animations' . $suffix . '.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
+        wp_register_style(
+			'pa-share-btn',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/share-button' . $suffix . '.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
+        wp_register_style(
+			'pa-image-effects',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/image-effects' . $suffix . '.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
 		wp_register_style(
 			'pa-slick',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/slick' . $is_rtl . $suffix . '.css',
@@ -609,7 +646,7 @@ class Addons_Integration {
 	 */
 	public function register_frontend_scripts() {
 
-		$maps_settings = self::$maps;
+		$maps_settings = self::$integrations;
 
 		$dir    = Helper_Functions::get_scripts_dir();
 		$suffix = Helper_Functions::get_assets_suffix();
@@ -997,6 +1034,87 @@ class Addons_Integration {
 			true
 		);
 
+        // We need to make sure premium-woocommerce.js will not be loaded twice if assets are generated.
+		if ( class_exists( 'woocommerce' ) ) {
+
+			wp_register_script(
+				'premium-woo-cats',
+				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-woo-categories' . $suffix . '.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_register_script(
+				'premium-mini-cart',
+				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-mini-cart' . $suffix . '.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_register_script(
+				'premium-woo-cart',
+				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-woo-cart' . $suffix . '.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_register_script(
+				'premium-woo-cta',
+				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-woo-cta' . $suffix . '.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+            wp_register_script(
+				'premium-woocommerce',
+				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-woo-products' . $suffix . '.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_localize_script(
+				'premium-woo-cta',
+				'PAWooCTASettings',
+				array(
+					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+					'view_cart'       => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
+				)
+			);
+
+			wp_localize_script(
+				'premium-mini-cart',
+				'PAWooMCartSettings',
+				array(
+					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+					'view_cart'       => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
+				)
+			);
+
+			wp_localize_script(
+				'premium-woocommerce',
+				'PAWooProductsSettings',
+				array(
+					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
+					'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
+					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+					'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
+					'view_cart'       => __( 'View cart', 'woocommerce' ),
+					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
+				)
+			);
+
+		}
+
 		// Localize jQuery with required data for Global Add-ons.
 		if ( self::$modules['premium-floating-effects'] ) {
 			wp_localize_script(
@@ -1057,85 +1175,6 @@ class Addons_Integration {
 			true
 		);
 
-		// We need to make sure premium-woocommerce.js will not be loaded twice if assets are generated.
-		if ( class_exists( 'woocommerce' ) ) {
-			wp_register_script(
-				'premium-woocommerce',
-				PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-woo-products' . $suffix . '.js',
-				array( 'jquery' ),
-				PREMIUM_ADDONS_VERSION,
-				true
-			);
-
-			wp_register_script(
-				'premium-woo-cats',
-				PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-woo-categories' . $suffix . '.js',
-				array( 'jquery' ),
-				PREMIUM_ADDONS_VERSION,
-				true
-			);
-
-			wp_register_script(
-				'premium-mini-cart',
-				PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-mini-cart' . $suffix . '.js',
-				array( 'jquery' ),
-				PREMIUM_ADDONS_VERSION,
-				true
-			);
-
-			wp_register_script(
-				'premium-woo-cart',
-				PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-woo-cart' . $suffix . '.js',
-				array( 'jquery' ),
-				PREMIUM_ADDONS_VERSION,
-				true
-			);
-
-			wp_register_script(
-				'premium-woo-cta',
-				PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-woo-cta' . $suffix . '.js',
-				array( 'jquery' ),
-				PREMIUM_ADDONS_VERSION,
-				true
-			);
-
-			wp_localize_script(
-				'premium-woo-cta',
-				'PAWooCTASettings',
-				array(
-					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
-					'view_cart'       => __( 'View cart', 'woocommerce' ),
-					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
-				)
-			);
-
-			wp_localize_script(
-				'premium-mini-cart',
-				'PAWooMCartSettings',
-				array(
-					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
-					'view_cart'       => __( 'View cart', 'woocommerce' ),
-					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
-				)
-			);
-
-			wp_localize_script(
-				'premium-woocommerce',
-				'PAWooProductsSettings',
-				array(
-					'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
-					'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
-					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
-					'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
-					'view_cart'       => __( 'View cart', 'woocommerce' ),
-					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
-				)
-			);
-
-		}
 	}
 
 	/**
@@ -1266,11 +1305,11 @@ class Addons_Integration {
 
 		if ( $map_enabled ) {
 
-			$premium_maps_api = self::$maps['premium-map-api'];
+			$premium_maps_api = self::$integrations['premium-map-api'];
 
-			$locale = isset( self::$maps['premium-map-locale'] ) ? self::$maps['premium-map-locale'] : 'en';
+			$locale = isset( self::$integrations['premium-map-locale'] ) ? self::$integrations['premium-map-locale'] : 'en';
 
-			$disable_api = self::$maps['premium-map-disable-api'];
+			$disable_api = self::$integrations['premium-map-disable-api'];
 
 			if ( $disable_api && '1' !== $premium_maps_api ) {
 
@@ -1731,6 +1770,20 @@ class Addons_Integration {
     public function load_cp_module() {
 
         Addons_Cross_CP::get_instance();
+
+    }
+
+    /**
+     * Exclude PA assets from WP Optimize
+     *
+     * @since 4.10.73
+     * @access public
+     */
+    function exclude_pa_assets_from_wp_optimize( $excluded_handles ) {
+
+        $excluded_handles[] = 'pa-frontend';
+
+        return $excluded_handles;
 
     }
 

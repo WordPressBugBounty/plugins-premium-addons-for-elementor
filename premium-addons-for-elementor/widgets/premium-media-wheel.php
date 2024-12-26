@@ -114,6 +114,7 @@ class Premium_Media_Wheel extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'pa-prettyphoto',
+            'pa-image-effects',
 			'pa-flipster',
 			'premium-addons',
 		);

@@ -75,6 +75,9 @@ class Premium_Tiktok_Feed extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'font-awesome-5-all',
+            'pa-share-btn',
+            'pa-load-animations',
+            'pa-image-effects',
 			'pa-slick',
 			'elementor-common-css',
 			'premium-addons',

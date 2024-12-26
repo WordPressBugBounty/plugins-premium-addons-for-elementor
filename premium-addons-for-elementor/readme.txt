@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.7.1
 Requires PHP: 7.0
-Stable Tag: 4.10.72
+Stable Tag: 4.10.73
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -234,6 +234,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.73 =
+
+- Tweak: Loading speed improved when Dynamic Assets feature is enabled.
+- Fixed: Compatibility issues with WP-Optimize plugin.
+- Fixed: Go to Search option not working in AJAX Search widget.
+- Fixed: Carousel option not working in Team Members widget.
 
 = 4.10.72 =
 

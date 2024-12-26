@@ -121,9 +121,9 @@ class Premium_Testimonials extends Widget_Base {
 		return array( 'pa', 'premium', 'premium testimonials', 'quote', 'appreciate', 'rating', 'review', 'recommendation' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -136,9 +136,9 @@ class Premium_Testimonials extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Testimonials controls.
@@ -267,7 +267,7 @@ class Premium_Testimonials extends Widget_Base {
 			array(
 				'label'       => __( 'Rating Score', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
-                'dynamic'     => array( 'active' => true ),
+				'dynamic'     => array( 'active' => true ),
 				'min'         => 0,
 				'max'         => 5,
 				'description' => __( 'Leave empty if not needed.', 'premium-addons-for-elementor' ),
@@ -278,9 +278,10 @@ class Premium_Testimonials extends Widget_Base {
 			'premium_testimonial_content',
 			array(
 				'label'       => __( 'Content', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::WYSIWYG,
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 10,
 				'dynamic'     => array( 'active' => true ),
-				'default'     => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.',
+				'default'     => esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.', 'premium-addons-for-elementor' ),
 				'label_block' => true,
 			)
 		);
@@ -365,7 +366,7 @@ class Premium_Testimonials extends Widget_Base {
 			array(
 				'label'       => __( 'Rating Score', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
-                'dynamic'     => array( 'active' => true ),
+				'dynamic'     => array( 'active' => true ),
 				'description' => __( 'Leave empty if not needed.', 'premium-addons-for-elementor' ),
 				'min'         => 0,
 				'max'         => 5,
@@ -376,9 +377,10 @@ class Premium_Testimonials extends Widget_Base {
 			'content',
 			array(
 				'label'       => __( 'Content', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::WYSIWYG,
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 10,
 				'dynamic'     => array( 'active' => true ),
-				'default'     => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.',
+				'default'     => esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.', 'premium-addons-for-elementor' ),
 				'label_block' => true,
 			)
 		);
@@ -1452,7 +1454,7 @@ class Premium_Testimonials extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 

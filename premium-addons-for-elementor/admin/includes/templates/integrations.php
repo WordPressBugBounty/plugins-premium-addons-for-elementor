@@ -93,6 +93,23 @@ $locales = Helper_Functions::get_google_maps_prefixes();
 							<span><?php echo esc_html_e( 'This will load the JS file for markers clusters.', 'premium-addons-for-elementor' ); ?></span>
 						</td>
 					</tr>
+
+                    <?php if( class_exists('WP_Optimize') ) : ?>
+                        <tr>
+                            <td>
+                                <span class="pa-maps-circle-icon"></span>
+                                <h4 class="pa-api-disable-title">
+                                    <?php echo esc_html_e( 'Exclude Dynamic Assets from WP-Optimize Minification:', 'premium-addons-for-elementor' ); ?>
+                                </h4>
+                            </td>
+                            <td>
+                                <input name="premium-wp-optimize-exclude" id="premium-wp-optimize-exclude" type="checkbox" <?php checked( 1, $settings['premium-wp-optimize-exclude'], true ); ?>>
+                                <label for="premium-wp-optimize-exclude"></label>
+                                <span><?php echo esc_html_e( 'This will exclude the dynamic generated CSS/JS files from being minified.', 'premium-addons-for-elementor' ); ?></span>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+
 				</table>
 			</div>
 			</form> <!-- End Form -->

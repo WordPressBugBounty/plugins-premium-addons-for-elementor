@@ -105,6 +105,11 @@
   display: inline-block !important;
 }
 
+.premium-mask-yes .premium-dual-header-first-clip .premium-dual-header-first-span .premium-mask-span,
+.premium-mask-yes .premium-dual-header-second-clip .premium-mask-span {
+  background: inherit;
+}
+
 .premium-title-first-wave-yes .premium-dual-header-first-span {
   background-image: -webkit-linear-gradient(left, #ffa648, #f17cc1, #4da9fd);
   background-image: linear-gradient(to right, #ffa648, #f17cc1, #4da9fd);

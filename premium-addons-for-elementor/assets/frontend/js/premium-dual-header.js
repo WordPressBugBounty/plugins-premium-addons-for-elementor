@@ -2,8 +2,7 @@
 
     var PremiumMaskHandler = function ($scope, $) {
 
-        var txtShowcaseElem = $scope.find('.pa-txt-sc__effect-min-mask .pa-txt-sc__main-item.pa-txt-sc__item-text'),
-            mask = $scope.hasClass('premium-mask-yes') || txtShowcaseElem.length;
+        var mask = $scope.hasClass('premium-mask-yes');
 
         if (!mask) return;
 
@@ -35,13 +34,7 @@
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
 
-                    if (txtShowcaseElem.length) {
-
-                        $(txtShowcaseElem).addClass('premium-mask-active');
-
-                    } else {
-                        $($scope).addClass('premium-mask-active');
-                    }
+                    $($scope).addClass('premium-mask-active');
 
                     eleObserver.unobserve(entry.target); // to only excecute the callback func once.
                 }

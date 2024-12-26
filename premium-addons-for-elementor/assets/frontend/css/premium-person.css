@@ -237,6 +237,10 @@ ul.premium-person-social-list {
   justify-content: center;
 }
 
+.elementor-widget-premium-addon-person .elementor-widget-container {
+  width: 100%;
+}
+
 .premium-persons-container.multiple-persons {
   display: -webkit-flex;
   display: -ms-flexbox;

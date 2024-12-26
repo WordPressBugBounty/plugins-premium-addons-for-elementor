@@ -102,6 +102,7 @@ class Woo_Products extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'pa-slick',
+            'font-awesome-5-all',
 			'woocommerce-general',
 			'premium-addons',
 			'premium-pro',
