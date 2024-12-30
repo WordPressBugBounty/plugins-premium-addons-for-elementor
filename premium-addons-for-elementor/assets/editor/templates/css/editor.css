@@ -131,6 +131,7 @@
 }
 
 #premium-template-modal-header-actions .template-library-activate-license {
+    background: #f47216;
     display: block;
     padding: 8px 10px;
     color: #fff;
@@ -506,7 +507,6 @@ div.premium-template-has-url:hover .premium-clone-template {
 }
 
 #premium-template-library-content #premium-modal-templates-container .template-library-activate-license {
-    display: none;
     color: #fcb92c;
     font-size: 12px;
 }

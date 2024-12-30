@@ -200,6 +200,7 @@ class Premium_Search_Form extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'.pa-highlighted-text-{{ID}}' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}}' => '--pa-search-hightlight: {{VALUE}}',
 				),
                 'condition'   => array(
 					'query_type' => 'elements',
@@ -3170,6 +3171,7 @@ class Premium_Search_Form extends Widget_Base {
 		} else {
 
 			$search_settings['hideOnClick'] = 'yes' === $settings['hide_on_click'];
+            $search_settings['results_number']  = 'yes' === $settings['show_results_number'];
 			// Add page ID to be used later to get posts by AJAX.
 			$page_id = '';
 			if ( null !== Plugin::$instance->documents->get_current() ) {
@@ -3190,6 +3192,7 @@ class Premium_Search_Form extends Widget_Base {
 				$search_settings['speed']          = '' !== $settings['carousel_speed'] ? $settings['carousel_speed'] : 300;
 
 			}
+
 		}
 
 		$this->add_render_attribute(

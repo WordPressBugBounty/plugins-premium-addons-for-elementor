@@ -12,7 +12,8 @@
             $spinnerWrap = $scope.find('.premium-search__spinner'),
             queryType = settings.query,
             buttonAction = settings.buttonAction,
-            lastSearchQuery = null;
+            lastSearchQuery = null,
+            highlightColor = getComputedStyle($scope[0]).getPropertyValue('--pa-search-hightlight');
 
         if ('post' === queryType) {
             var $resultsContainer = $scope.find('.premium-search__query-wrap'),
@@ -143,7 +144,8 @@
                                     page_number: 1,
                                     widget_id: $scope.data('id'),
                                     query: searchQuery,
-                                    post_type: $container.find('.premium-search__type-select').val()
+                                    post_type: $container.find('.premium-search__type-select').val(),
+                                    results_number: settings.results_number
                                 },
                                 beforeSend: function () {
 
@@ -214,21 +216,25 @@
                             $queriedElems.css('filter', 'blur(3px)');
                             $fadeElems.css('opacity', '0.4');
 
-                            var $matchedElems = $textElems.filter(function () {
-                                return $(this).text().toLowerCase().indexOf(searchQuery) !== -1;
-                            });
+                            if (highlightColor) {
 
-                            $matchedElems.map(function (index, textElem) {
+                                var $matchedElems = $textElems.filter(function () {
+                                    return $(this).text().toLowerCase().indexOf(searchQuery) !== -1;
+                                });
 
-                                if ($(this).is(':visible') && 'LI' !== $(this).prop('tagName')) {
+                                $matchedElems.map(function (index, textElem) {
 
-                                    textElem = $(this).text().toLowerCase();
+                                    if ($(this).is(':visible') && 'LI' !== $(this).prop('tagName')) {
 
-                                    textElem = textElem.replace(new RegExp(searchQuery, 'g'), '<span class="pa-highlighted-text pa-highlighted-text-' + widgetID + '">' + searchQuery + '</span>');
+                                        textElem = $(this).text().toLowerCase();
 
-                                    $(this).html(textElem);
-                                }
-                            });
+                                        textElem = textElem.replace(new RegExp(searchQuery, 'g'), '<span class="pa-highlighted-text pa-highlighted-text-' + widgetID + '">' + searchQuery + '</span>');
+
+                                        $(this).html(textElem);
+                                    }
+                                });
+
+                            }
 
                         } else {
                             $textElems.css('filter', 'blur(0px)');
@@ -322,7 +328,8 @@
                     page_number: pageNumber,
                     widget_id: $scope.data('id'),
                     query: lastSearchQuery,
-                    post_type: $container.find('.premium-search__type-select').val()
+                    post_type: $container.find('.premium-search__type-select').val(),
+                    results_number: settings.results_number
                 },
                 beforeSend: function () {
 

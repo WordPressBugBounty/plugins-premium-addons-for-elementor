@@ -25,7 +25,7 @@
 		</button>
 
 	<# } else if ( pro ) { #>
-	<a class="template-library-activate-license" href="{{{ window.PremiumTempsData.license.activateLink }}}" target="_blank">
+	<a class="elementor-template-library-template-action template-library-activate-license" href="{{{ window.PremiumTempsData.license.activateLink }}}" target="_blank">
 		{{{ window.PremiumTempsData.license.proMessage }}}
 	</a>
 	<# } #>

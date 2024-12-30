@@ -23,6 +23,6 @@
 	</button>
 <# } else { #>
 <a class="template-library-activate-license elementor-button elementor-button-go-pro" href="{{{ window.PremiumTempsData.license.activateLink }}}" target="_blank">
-	{{{ window.PremiumTempsData.license.proMessage }}}
+	{{{ window.PremiumTempsData.license.headerProMessage }}}
 </a>
 <# } #>

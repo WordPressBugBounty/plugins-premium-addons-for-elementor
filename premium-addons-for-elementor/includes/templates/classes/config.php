@@ -64,6 +64,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 				'status'        => $this->get_license_status(),
 				'license_page'  => $this->get_license_page(),
 				'pro_message'   => $this->get_pro_message(),
+                'header_pro_message'   => $this->get_header_pro_message(),
 				'api'           => array(
 					'enabled'   => true,
 					'base'      => 'https://premiumtemplates.io/',
@@ -146,7 +147,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 
 			} else {
 
-				$url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'premium-templates', 'wp-editor', 'get-pro' );
+				$url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'templates-library', 'wp-editor', 'get-pro' );
 
 				return $url;
 
@@ -168,6 +169,24 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 				return __( 'Activate License', 'premium-addons-for-elementor' );
 			} else {
 				return __( 'Get Pro', 'premium-addons-for-elementor' );
+			}
+		}
+
+        /**
+		 *
+		 * Get Header Pro Message
+		 *
+		 * @since 4.10.74
+		 * @access public
+		 *
+		 * @return string Pro version message
+		 */
+		public function get_header_pro_message() {
+
+			if ( Helper_Functions::check_papro_version() ) {
+				return __( 'Activate License', 'premium-addons-for-elementor' );
+			} else {
+				return __( 'Catch Xmas Deal', 'premium-addons-for-elementor' );
 			}
 		}
 

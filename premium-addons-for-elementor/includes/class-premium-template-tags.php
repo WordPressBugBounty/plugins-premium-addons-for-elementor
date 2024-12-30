@@ -1521,8 +1521,9 @@ class Premium_Template_Tags {
 			$widget = $elementor->elements_manager->create_element_instance( $widget_data );
 
 			$post_type = isset( $_POST['post_type'] ) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : '';
+            $results_number = isset( $_POST['results_number'] ) ? sanitize_text_field( wp_unslash( $_POST['results_number'] ) ) : '';
 
-			$posts = $this->render_search_results( $widget, $query, $post_type );
+			$posts = $this->render_search_results( $widget, $query, $post_type, $results_number );
 
 			$pagination = $this->inner_pagination_render();
 
@@ -1545,8 +1546,9 @@ class Premium_Template_Tags {
 	 * @param object $widget widget.
 	 * @param string $query query string.
 	 * @param string $post_type post type.
+     * @param boolean $results_number show results number.
 	 */
-	public function render_search_results( $widget, $search_string, $post_type ) {
+	public function render_search_results( $widget, $search_string, $post_type, $results_number ) {
 
 		ob_start();
 
@@ -1568,7 +1570,7 @@ class Premium_Template_Tags {
 
 		if ( count( $posts ) ) {
 
-			if ( 'yes' === $settings['show_results_number'] ) {
+			if ( 'true' === $results_number ) {
 				$this->render_results_number( count( $posts ) );
 			}
 

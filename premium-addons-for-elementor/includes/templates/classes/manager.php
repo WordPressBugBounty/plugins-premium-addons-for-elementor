@@ -156,9 +156,9 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 			$tabs    = $this->get_template_tabs();
 			$sources = $tabs[ $tab ]['sources'];
 
-            if( 'premium_container' === $tab ) {
-                $tab = 'premium_section';
-            }
+			if ( 'premium_container' === $tab ) {
+				$tab = 'premium_section';
+			}
 
 			$result = array(
 				'templates'  => array(),
@@ -214,13 +214,13 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 			}
 
 			$url = add_query_arg(
-                array(
-                    'page'   => 'premium-addons',
-                    'search' => $info['title'],
-                    '#tab'   => 'elements',
-                ),
-                esc_url( admin_url( 'admin.php' ) )
-            );
+				array(
+					'page'   => 'premium-addons',
+					'search' => $info['title'],
+					'#tab'   => 'elements',
+				),
+				esc_url( admin_url( 'admin.php' ) )
+			);
 
 			$demo_link = strstr( $info['demo'], '/?', true );
 
@@ -249,13 +249,13 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 				wp_send_json_error();
 			}
 
-            $template_id = isset( $_REQUEST['template'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['template'] ) ) : false;
+			$template_id = isset( $_REQUEST['template'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['template'] ) ) : false;
 
 			if ( ! $template_id ) {
 				wp_send_json_error();
 			}
 
-			$source       = $this->sources[ 'premium-api' ];
+			$source       = $this->sources['premium-api'];
 			$insert_media = isset( $_REQUEST['withMedia'] ) ? $_REQUEST['withMedia'] : true;
 
 			if ( ! $source || ! $template_id ) {
@@ -266,7 +266,7 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 
 			if ( ! empty( $template_data['content'] ) ) {
 
-                $template_title = isset( $_REQUEST['title'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['title'] ) ) : 'Template' . $template_id;
+				$template_title = isset( $_REQUEST['title'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['title'] ) ) : 'Template' . $template_id;
 
 				wp_insert_post(
 					array(

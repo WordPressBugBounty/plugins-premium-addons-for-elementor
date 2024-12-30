@@ -194,7 +194,7 @@ class Module {
                 'href' => esc_url( $href ),
             );
 
-            if ( $link_settings && ( ! empty( $link_settings['link']['url'] ) || ! empty( $link_settings['existingPage'] ) ) ) {
+            if ( ! empty( $href ) ) {
                 $element->add_render_attribute(
                     '_wrapper',
                     array(

@@ -122,9 +122,10 @@ if ( ! class_exists( 'Premium_Templates_Assets' ) ) {
 						'PremiumTemplatesBtn' => $button,
 						'modalRegions'        => $this->get_modal_region(),
 						'license'             => array(
-							'status'       => Templates\premium_templates()->config->get( 'status' ),
-							'activateLink' => Templates\premium_templates()->config->get( 'license_page' ),
-							'proMessage'   => Templates\premium_templates()->config->get( 'pro_message' ),
+							'status'           => Templates\premium_templates()->config->get( 'status' ),
+							'activateLink'     => Templates\premium_templates()->config->get( 'license_page' ),
+							'proMessage'       => Templates\premium_templates()->config->get( 'pro_message' ),
+							'headerProMessage' => Templates\premium_templates()->config->get( 'header_pro_message' ),
 						),
 					)
 				)
