@@ -290,7 +290,7 @@ class Admin_Notices {
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<?php echo __( 'Spread holiday cheer with a festive upgrade to your Elementor website! <strong>SAVE UP TO 25% OFF Premium Addons PRO</strong>!', 'premium-addons-for-elementor' ); ?>
+					<?php echo __( 'No More Sales Until Summer 2025! <strong>SAVE UP TO 25% OFF Premium Addons PRO</strong>!', 'premium-addons-for-elementor' ); ?>
 					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
 						<span><?php echo __( 'Catch The Deal', 'premium-addons-for-elementor' ); ?></span>
 					</a>
@@ -508,23 +508,31 @@ class Admin_Notices {
             return;
         }
 
-        wp_add_dashboard_widget( 'pa-stories', __( 'Premium Addons News', 'premium-addons-for-elementor' ), array( $this, 'show' ) );
+        wp_add_dashboard_widget(
+            'pa-stories',
+            __( 'Premium Addons News', 'premium-addons-for-elementor' ),
+            array( $this, 'show' ),
+            null,
+            null,
+            'column3',
+            'core'
+        );
 
         // Move our widget to top.
-        global $wp_meta_boxes;
+        // global $wp_meta_boxes;
 
-        $core_widgets = $wp_meta_boxes['dashboard']['normal']['core'];
+        // $core_widgets = $wp_meta_boxes['dashboard']['normal']['core'];
 
-        $pa_widgets = [];
-        if( isset( $core_widgets['pa-stories'] ) ) {
+        // $pa_widgets = [];
+        // if( isset( $core_widgets['pa-stories'] ) ) {
 
-            $pa_widgets      = array(
-                'pa-stories' => $core_widgets['pa-stories'],
-            );
+        //     $pa_widgets      = array(
+        //         'pa-stories' => $core_widgets['pa-stories'],
+        //     );
 
-        }
+        // }
 
-        $wp_meta_boxes['dashboard']['normal']['core'] = array_merge( $pa_widgets, $core_widgets );
+        // $wp_meta_boxes['dashboard']['normal']['core'] = array_merge( $pa_widgets, $core_widgets );
     }
 
 

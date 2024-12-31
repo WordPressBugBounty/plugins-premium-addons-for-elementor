@@ -116,11 +116,11 @@ class Addons_Integration {
 			add_action( 'elementor/controls/register', array( $this, 'init_pa_controls' ) );
 			add_action( 'elementor/widgets/register', array( $this, 'widgets_area' ) );
 
+            $this->load_pa_extensions();
+
 		}
 
 		add_action( 'elementor/editor/after_enqueue_scripts', array( $this, 'after_enqueue_scripts' ) );
-
-		$this->load_pa_extensions();
 
 		$cross_enabled = isset( self::$modules['premium-cross-domain'] ) ? self::$modules['premium-cross-domain'] : 1;
 
