@@ -1202,6 +1202,22 @@ class Premium_Blog extends Widget_Base {
 		);
 
 		$this->add_control(
+			'filter_flag',
+			array(
+				'label'       => __( 'URL Flag', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => __( 'This is used to activate specific filter tab using links on other pages. For example: your-domain.com/?cat=2', 'premium-addons-for-elementor' ),
+                'default'     => 'cat',
+				'label_block' => true,
+				'frontend_available' => true,
+				'condition' => array(
+					'premium_blog_cat_tabs'  => 'yes',
+					'premium_blog_carousel!' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
 			'premium_blog_new_tab',
 			array(
 				'label'       => __( 'Links in New Tab', 'premium-addons-for-elementor' ),

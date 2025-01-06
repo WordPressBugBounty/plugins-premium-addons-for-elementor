@@ -316,9 +316,15 @@
 
                                 try {
 
-                                    elementor.previewView.addChildModel(data.content, options);
+                                    $e.run('document/elements/import', {
+                                        model: templateModel,
+                                        data: data,
+                                        options: options
+                                    });
 
-                                    elementor.channels.data.trigger('template:after:insert', templateModel);
+                                    // elementor.previewView.addChildModel(data.content, options);
+
+                                    // elementor.channels.data.trigger('template:after:insert', templateModel);
 
                                 } catch (error) {
 
@@ -335,6 +341,7 @@
                                 if (!isError)
                                     PremiumEditor.closeModal();
 
+                                window.elementor.$previewContents.find('.elementor-add-section .elementor-add-section-close').click();
                                 jQuery("#elementor-panel-saver-button-save-options, #elementor-panel-saver-button-publish").removeClass("elementor-disabled");
 
                                 PremiumEditor.atIndex = null;

@@ -102,7 +102,7 @@ class Woo_Products extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'pa-slick',
-            'font-awesome-5-all',
+			'font-awesome-5-all',
 			'woocommerce-general',
 			'premium-addons',
 			'premium-pro',
@@ -215,7 +215,7 @@ class Woo_Products extends Widget_Base {
 		$this->register_content_carousel_section( $pro_skins );
 		$this->register_content_query_section( $pro_skins );
 		$this->register_content_pagination_section( $pro_skins );
-        $this->register_quick_view_settings( $pro_skins );
+		$this->register_quick_view_settings( $pro_skins );
 		$this->register_content_ribbon_section( $pro_skins );
 
 		// style tab.
@@ -657,10 +657,22 @@ class Woo_Products extends Widget_Base {
 			'woo_upsells_notice',
 			array(
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => __( 'Upsells query can be used only on single product template.', 'premium-addons-for-elementor' ),
+				'raw'             => __( 'Related & Upsells query types can be used only on single product template ( Requires Elementor PRO ).', 'premium-addons-for-elementor' ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info papro-upgrade-notice',
 				'condition'       => array(
-					'query_type' => 'up-sells',
+					'query_type' => array( 'up-sells', 'related' ),
+				),
+			)
+		);
+
+		$this->add_control(
+			'woo_cross_sells_notice',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => __( 'Cross-Sells query fetches your current product or your cart items\' cross-sells.', 'premium-addons-for-elementor' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info papro-upgrade-notice',
+				'condition'       => array(
+					'query_type' => 'cross-sells',
 				),
 			)
 		);
@@ -968,82 +980,82 @@ class Woo_Products extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-    public function register_quick_view_settings( $pro_skins ) {
+	public function register_quick_view_settings( $pro_skins ) {
 
-        $this->start_controls_section(
+		$this->start_controls_section(
 			'section_quick_view_settings',
 			array(
 				'label' => __( 'Quick View Settings', 'premium-addons-for-elementor' ),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_sale',
 			array(
-				'label'   => __( 'Hide Sale Ribbon', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
+				'label'     => __( 'Hide Sale Ribbon', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
 				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .premium-qv-badge' => 'display: none !important',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_rating',
 			array(
-				'label'   => __( 'Hide Product Rating', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
+				'label'     => __( 'Hide Product Rating', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
 				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .star-rating' => 'display: none !important',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_price',
 			array(
-				'label'   => __( 'Hide Product Price', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
-                'selectors' => array(
+				'label'     => __( 'Hide Product Price', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .price' => 'display: none',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_desc',
 			array(
-				'label'   => __( 'Hide Product Description', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
-                'selectors' => array(
+				'label'     => __( 'Hide Product Description', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .premium-woo-qv-desc' => 'display: none',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_atc',
 			array(
-				'label'   => __( 'Hide Call to Action', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
-                'selectors' => array(
+				'label'     => __( 'Hide Call to Action', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .premium-woo-atc-button' => 'display: none',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_meta',
 			array(
-				'label'   => __( 'Hide Product Meta', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
+				'label'     => __( 'Hide Product Meta', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
 				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .premium-woo-qv-meta' => 'display: none !important',
 				),
 			)
 		);
 
-        $this->add_responsive_control(
+		$this->add_responsive_control(
 			'qv_display',
 			array(
 				'label'       => __( 'Image/Content Display', 'premium-addons-for-elementor' ),
@@ -1057,19 +1069,18 @@ class Woo_Products extends Widget_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_hide_responsive',
 			array(
-				'label'   => __( 'Hide On Mobile Devices', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
-                'default'=> 'yes',
-                'prefix_class'=> 'premium-qv-hidden-'
+				'label'        => __( 'Hide On Mobile Devices', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'default'      => 'yes',
+				'prefix_class' => 'premium-qv-hidden-',
 			)
 		);
 
-        $this->end_controls_section();
-
-    }
+		$this->end_controls_section();
+	}
 
 	/**
 	 * Register content ribbons section.
@@ -2721,10 +2732,16 @@ class Woo_Products extends Widget_Base {
 		);
 
 		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-			$query_type['related']     = __( 'Related Products', 'premium-addons-for-elementor' );
-			$query_type['cross-sells'] = __( 'Cross-Sells', 'premium-addons-for-elementor' );
-			$query_type['up-sells']    = __( 'Upsells', 'premium-addons-for-elementor' );
+			$query_type['related']  = __( 'Related Products', 'premium-addons-for-elementor' );
+			$query_type['up-sells'] = __( 'Upsells', 'premium-addons-for-elementor' );
 		}
+
+		/**
+		 * Cross-Sells are fetched based on either the current product or the cart items so we don't need to check for Elementor PRO here.
+		 *
+		 * @see PremiumAddons\Modules\Woocommerce\TemplateBlocks\Skin_Style::get_cross_sells_ids().
+		 */
+		$query_type['cross-sells'] = __( 'Cross-Sells', 'premium-addons-for-elementor' );
 
 		return $query_type;
 	}
@@ -2741,7 +2758,7 @@ class Woo_Products extends Widget_Base {
 		$product_tag = array();
 
 		$tag_args = array(
-            'taxonomy'  => 'product_tag',
+			'taxonomy'   => 'product_tag',
 			'orderby'    => 'name',
 			'order'      => 'asc',
 			'hide_empty' => false,

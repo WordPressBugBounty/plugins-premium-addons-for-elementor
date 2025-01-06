@@ -61,8 +61,8 @@
                     scrollAfter: 'yes' === settings.scroll_to_offset ? true : false,
                     grid: 'yes' === settings.premium_blog_grid ? true : false,
                     total: $blogPost.data('total'),
+                    flag: settings.filter_flag,
                 };
-
 
                 if (layoutSettings.carousel) {
 
@@ -120,6 +120,16 @@
 
                 if (this.settings.filterTabs) {
                     this.filterTabs();
+
+                    var url = new URL(window.location.href),
+                        filterIndex = url.searchParams.get(this.settings.flag);
+
+                    console.log(filterIndex);
+
+                    if (filterIndex) {
+                        this.triggerFilerTabs(filterIndex);
+                    }
+
                 }
 
                 if ("masonry" === this.settings.layout && !this.settings.carousel) {
@@ -308,6 +318,14 @@
                     }
 
                 });
+            },
+
+            triggerFilerTabs: function (filterIndex) {
+
+                var $targetFilter = this.elements.$filterLinks.eq(filterIndex);
+
+                $targetFilter.trigger('click');
+
             },
 
             getPostsByAjax: function (shouldScroll) {

@@ -1587,6 +1587,17 @@ class Helper_Functions {
 
 	}
 
+
+    /**
+     * Get Allowed Icon Tags
+     *
+     * Returns an array of allowed HTML tags.
+     *
+     * @since 4.10.69
+     * @access public
+     *
+     * @return array Array of allowed HTML tags.
+     */
     public static function get_allowed_icon_tags() {
         return [
             'svg'   => [
