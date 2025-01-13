@@ -329,7 +329,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		);
 
 		if ( ! $papro_activated ) {
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'tiktok-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'query_notice',
@@ -382,7 +382,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		);
 
 		if ( ! $papro_activated ) {
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'tiktok-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'profile_header_notice',
@@ -1165,7 +1165,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'tiktok-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,
@@ -1398,7 +1398,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 			Group_Control_Background::get_type(),
 			array(
 				'name'      => 'feed_box_overlay',
-				'label'     => __( 'Overlay' ),
+				'label'     => __( 'Overlay', 'premium-addons-for-elementor' ),
 				'types'     => array( 'classic', 'gradient' ),
 				'selector'  => '{{WRAPPER}} .premium-tiktok-feed__vid-meta-wrapper',
 				'condition' => array(

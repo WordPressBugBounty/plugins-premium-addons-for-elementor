@@ -203,7 +203,7 @@ class Module {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'eq-height-addon', 'wp-editor', 'get-support' );
 
 			$element->add_control(
 				'doc_' . $doc_index,

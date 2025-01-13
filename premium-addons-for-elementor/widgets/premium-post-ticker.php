@@ -288,7 +288,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'ticker-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'ticker_notice',
@@ -2006,7 +2006,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'ticker-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,

@@ -584,7 +584,7 @@ class Premium_Testimonials extends Widget_Base {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'testimonials-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'pro_skins_notice',
@@ -814,7 +814,7 @@ class Premium_Testimonials extends Widget_Base {
 			)
 		);
 
-		$doc_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/why-im-not-able-to-see-elementor-font-awesome-5-icons-in-premium-add-ons', 'editor-page', 'wp-editor', 'get-support' );
+		$doc_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/why-im-not-able-to-see-elementor-font-awesome-5-icons-in-premium-add-ons', 'testimonials-widget', 'wp-editor', 'get-support' );
 		$title   = __( 'I\'m not able to see Font Awesome icons in the widget »', 'premium-addons-for-elementor' );
 
 		$this->add_control(

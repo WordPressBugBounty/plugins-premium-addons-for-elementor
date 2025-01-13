@@ -1,5 +1,110 @@
 == Changelog ==
 
+= 4.10.77 =
+
+- Tweak: Change active menu item on scroll in Mega Menu widget.
+- Tweak: Show a notice when inserting a template fails.
+- Tweak: Woo Products Listing widget improved on RTL sites.
+- Fixed: Get videos from Playlist in Video Box widget not working with YouTube Reels.
+
+= 4.10.76 =
+
+- Tweak: Added the ability to activate filters in Blog widget from other pages.
+- Fixed: SVG Draw widget causes scroll to top on iOS devices.
+
+= 4.10.75 =
+
+- Fixed: PHP warning in Shape Divider container addon.
+
+= 4.10.74 =
+
+- Fixed: Wrapper Link global addon not working in some cases.
+- Fixed: Issues in AJAX Search widget.
+
+= 4.10.73 =
+
+- Tweak: Loading speed improved when Dynamic Assets feature is enabled.
+- Fixed: Compatibility issues with WP-Optimize plugin.
+- Fixed: Go to Search option not working in AJAX Search widget.
+- Fixed: Carousel option not working in Team Members widget.
+
+= 4.10.72 =
+
+- Tweak: Improved loading speed of widgets contain Draw Icon option.
+- Fixed: Cross Domain Copy/Paste All Content not working.
+
+= 4.10.71 =
+
+- Fixed: Elementor Transform effects not working for some widgets.
+- Fixed: Controls for global controls not being added in correct tabs.
+
+= 4.10.70 =
+
+- Tweak: Improved compatibility with Optimize Markup Elementor feature.
+- Tweak: SVG Draw Icon option improved for better loading speed.
+- Fixed: Premium Templates button not showing when adding a new container.
+- Fixed: PHP warnings in Animated Text widget.
+- Fixed: Security issue in Mobile Menu widget.
+
+= 4.10.69 =
+
+- Tweak: SVG Draw Icon option improved in some widgets.
+
+= 4.10.68 =
+
+- Tweak: Added Usage Type option in plugin's dashboard settings page.
+- Tweak: Added VW size unit for some controls.
+- Fixed: Lightbox icon is showing even when option is disabled in Advanced Carousel widget.
+- Fixed: Issues in Dynamic Assets.
+
+= 4.10.67 =
+
+- Tweak: Premium Templates loading speed improved.
+
+= 4.10.66 =
+
+- Tweak: Added options to control Author Image size, border and border radius in Blog widget.
+- Tweak: Added Wave Effect in Dual Heading widget.
+- Tweak: Added On Page Exit Intent trigger in Modal Box widget.
+
+= 4.10.65 =
+
+- Tweak: Added Full Width Custom CSS Selector option in Mega Menu widget.
+- Fixed: Alignment issue in animation #7 in Banner widget.
+
+= 4.10.64 =
+
+- Tweak: Improved Reveal effect in Animated Text widget.
+- Fixed: Wrapper Link feature not working with anchor links.
+- Fixed: PHP Warning due to white labeling options.
+- Fixed: Huge spacing after animation end in vertical direction in Advanced Carousel widget.
+
+= 4.10.63 =
+
+- Tweak: Added List Padding control in Bullet List widget.
+- Tweak: Added option to load boards dynamically in Pinterest Feed widget.
+- Fixed: Premium Templates not being inserted in correct position.
+- Fixed: Console JS error showing on the editor page.
+- Fixed: Alignment option not working correctly on responsive devices in Bullet List widget.
+
+= 4.10.62 =
+
+- Tweak: Load JS code for Wrapper Link only when its used on page.
+- Fixed: Icon Size not working on SVG code icon in News Ticker widget.
+- Fixed: Admin notices appear again after they are dismissed.
+
+= 4.10.61 =
+
+- Tweak: Premium Templates loading speed improved.
+- Tweak: Added Item Name option in Advanced Carousel widget.
+- Fixed: ACF fields are not showing in Display Conditions.
+- Fixed: Typing effect not working in Animated Text widget when used multiple times on page.
+- Fixed: Media Grid widget shows the first image only in the lightbox.
+
+= 4.10.60 =
+
+- Fixed: PHP warning in Recent Posts Notification widget.
+
 = 4.10.59 =
 
 - Fixed: PHP warning Undefined variable $search.

@@ -731,7 +731,7 @@ class Premium_Image_Separator extends Widget_Base {
 
 		$title = __( 'Getting started »', 'premium-addons-for-elementor' );
 
-		$doc_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/image-separator-widget-tutorial/', 'editor-page', 'wp-editor', 'get-support' );
+		$doc_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/image-separator-widget-tutorial/', 'separator-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',

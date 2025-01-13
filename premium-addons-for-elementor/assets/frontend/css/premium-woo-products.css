@@ -900,6 +900,15 @@ html.premium-woo-qv-opened body {
 }
 .premium-woo-lightbox-content form.cart.grouped_form .qty {
   min-width: 100px;
+  padding: 10px;
+}
+.premium-woo-lightbox-content form.cart table.variations th {
+  background-color: #ffffff;
+}
+.premium-woo-lightbox-content form.cart div.woocommerce-variation-add-to-cart {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 .premium-woo-lightbox-content form.cart div.quantity {
   margin-right: 15px;
@@ -912,6 +921,7 @@ html.premium-woo-qv-opened body {
 .premium-woo-lightbox-content form.cart div.quantity a {
   height: 100%;
   border: 1px solid;
+  box-sizing: border-box;
 }
 .premium-woo-lightbox-content form.cart div.quantity .qty:focus {
   outline: none;

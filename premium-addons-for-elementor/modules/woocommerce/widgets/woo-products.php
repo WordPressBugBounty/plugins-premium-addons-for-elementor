@@ -101,6 +101,7 @@ class Woo_Products extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'font-awesome-5-all',
 			'pa-slick',
 			'font-awesome-5-all',
 			'woocommerce-general',
@@ -250,7 +251,7 @@ class Woo_Products extends Widget_Base {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-products/', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-products/', 'products-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'woo_products_notice',
@@ -1343,7 +1344,7 @@ class Woo_Products extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'products-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,

@@ -695,7 +695,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'float_trigger',
 			array(
-				'label'        => __( 'Float', 'premium-addons-pro' ),
+				'label'        => __( 'Float', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'render_type'  => 'template',
 				'separator'    => 'before',
@@ -706,19 +706,19 @@ class Mini_Cart extends Widget_Base {
 		$this->add_responsive_control(
 			'float_hpos',
 			array(
-				'label'        => __( 'Horizontal Position', 'premium-addons-pro' ),
+				'label'        => __( 'Horizontal Position', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::CHOOSE,
 				'options'      => array(
 					'left'   => array(
-						'title' => __( 'Left', 'premium-addons-pro' ),
+						'title' => __( 'Left', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-left',
 					),
 					'right'  => array(
-						'title' => __( 'Right', 'premium-addons-pro' ),
+						'title' => __( 'Right', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-right',
 					),
 					'custom' => array(
-						'title' => __( 'Custom', 'premium-addons-pro' ),
+						'title' => __( 'Custom', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-cog',
 					),
 				),
@@ -733,7 +733,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_responsive_control(
 			'float_custom_hpos',
 			array(
-				'label'     => __( 'Horizontal Offset (%)', 'premium-addons-pro' ),
+				'label'     => __( 'Horizontal Offset (%)', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
 				'selectors' => array(
 					'{{WRAPPER}} .pa-woo-mc__inner-container' => 'left: {{SIZE}}%',
@@ -748,23 +748,23 @@ class Mini_Cart extends Widget_Base {
 		$this->add_responsive_control(
 			'float_vpos',
 			array(
-				'label'        => __( 'Vertical Position', 'premium-addons-pro' ),
+				'label'        => __( 'Vertical Position', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::CHOOSE,
 				'options'      => array(
 					'top'    => array(
-						'title' => __( 'Top', 'premium-addons-pro' ),
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-arrow-up',
 					),
 					'middle' => array(
-						'title' => __( 'Middle', 'premium-addons-pro' ),
+						'title' => __( 'Middle', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-v-align-middle',
 					),
 					'bottom' => array(
-						'title' => __( 'Bottom', 'premium-addons-pro' ),
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-arrow-down',
 					),
 					'custom' => array(
-						'title' => __( 'Custom', 'premium-addons-pro' ),
+						'title' => __( 'Custom', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-cog',
 					),
 				),
@@ -779,7 +779,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_responsive_control(
 			'float_custom_vpos',
 			array(
-				'label'     => __( 'Vertical Offset (%)', 'premium-addons-pro' ),
+				'label'     => __( 'Vertical Offset (%)', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
 				'selectors' => array(
 					'{{WRAPPER}} .pa-woo-mc__inner-container' => 'top: {{SIZE}}%',
@@ -1027,7 +1027,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'slide_overlay',
 			array(
-				'label'      => __( 'Overlay', 'premium-addons-pro' ),
+				'label'      => __( 'Overlay', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SWITCHER,
 				'default'    => 'yes',
 				'conditions' => $slide_connected_conds,
@@ -1037,7 +1037,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'overlay_color',
 			array(
-				'label'      => __( 'Overlay Color', 'premium-addons-pro' ),
+				'label'      => __( 'Overlay Color', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::COLOR,
 				'default'    => 'rgba(0,0,0,0.5)',
 				'selectors'  => array(
@@ -1058,7 +1058,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'close_on_outside',
 			array(
-				'label'      => esc_html__( 'Close On Click Outside Content', 'premium-addons-pro' ),
+				'label'      => esc_html__( 'Close On Click Outside Content', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SWITCHER,
 				'default'    => 'yes',
 				'separator'  => 'before',
@@ -1102,7 +1102,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'cart_header',
 			array(
-				'label'        => __( 'Title', 'premium-addons-pro' ),
+				'label'        => __( 'Title', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'prefix_class' => 'premium-mc-title-',
 				'render_type'  => 'template',
@@ -1315,10 +1315,10 @@ class Mini_Cart extends Widget_Base {
 				'label'     => __( 'Image Fit', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => array(
-					''        => __( 'Default', 'premium-addons-pro' ),
-					'fill'    => __( 'Fill', 'premium-addons-pro' ),
-					'cover'   => __( 'Cover', 'premium-addons-pro' ),
-					'contain' => __( 'Contain', 'premium-addons-pro' ),
+					''        => __( 'Default', 'premium-addons-for-elementor' ),
+					'fill'    => __( 'Fill', 'premium-addons-for-elementor' ),
+					'cover'   => __( 'Cover', 'premium-addons-for-elementor' ),
+					'contain' => __( 'Contain', 'premium-addons-for-elementor' ),
 				),
 				'default'   => '',
 				'selectors' => array(
@@ -1409,7 +1409,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'remove_icon',
 			array(
-				'label'        => __( 'Remove Item', 'premium-addons-pro' ),
+				'label'        => __( 'Remove Item', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'separator'    => 'before',
 				'default'      => 'yes',
@@ -1521,7 +1521,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'qty_controls',
 			array(
-				'label'        => __( 'Quantity Controls', 'premium-addons-pro' ),
+				'label'        => __( 'Quantity Controls', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'separator'    => 'before',
 				'default'      => 'yes',
@@ -1648,7 +1648,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'footer_subtotal',
 			array(
-				'label'   => __( 'Subtotal', 'premium-addons-pro' ),
+				'label'   => __( 'Subtotal', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			)
@@ -1731,7 +1731,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'view_cart',
 			array(
-				'label'     => __( 'View Cart', 'premium-addons-pro' ),
+				'label'     => __( 'View Cart', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'default'   => 'yes',
 				'separator' => 'before',
@@ -1741,7 +1741,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'checkout',
 			array(
-				'label'   => __( 'Checkout', 'premium-addons-pro' ),
+				'label'   => __( 'Checkout', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			)
@@ -1853,7 +1853,7 @@ class Mini_Cart extends Widget_Base {
 			)
 		);
 
-		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-mini-cart-widget-tutorial/', 'editor-page', 'wp-editor', 'get-support' );
+		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-mini-cart-widget-tutorial/', 'cart-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',
@@ -1935,7 +1935,7 @@ class Mini_Cart extends Widget_Base {
 		$this->start_controls_tab(
 			'triggle_style_normal',
 			array(
-				'label' => esc_html__( 'Normal', 'remium-addons-for-elementor' ),
+				'label' => esc_html__( 'Normal', 'premium-addons-for-elementor' ),
 			)
 		);
 
@@ -2102,7 +2102,7 @@ class Mini_Cart extends Widget_Base {
 		$this->start_controls_tab(
 			'triggle_style_hov',
 			array(
-				'label' => esc_html__( 'Hover', 'remium-addons-for-elementor' ),
+				'label' => esc_html__( 'Hover', 'premium-addons-for-elementor' ),
 			)
 		);
 

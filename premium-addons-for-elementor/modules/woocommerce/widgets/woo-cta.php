@@ -296,7 +296,7 @@ class Woo_CTA extends Widget_Base {
 				'label'       => __( 'Product quantity Text', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => ' {{number}} In Stock',
-				'description' => __( 'This helps to control number of product. {{number}} will be repalced with the number of stock quantity of product', 'premium-addons-pro' ),
+				'description' => __( 'This helps to control number of product. {{number}} will be repalced with the number of stock quantity of product', 'premium-addons-for-elementor' ),
 				'condition' => array(
 					'show_available_quantity' => 'yes',
 				),
@@ -833,7 +833,7 @@ class Woo_CTA extends Widget_Base {
 		$this->add_control(
 			'icon_size',
 			array(
-				'label'      => __( 'Icon Size', 'premium-addons-pro' ),
+				'label'      => __( 'Icon Size', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', 'em' ),
 				'default'    => array(
@@ -947,7 +947,7 @@ class Woo_CTA extends Widget_Base {
 			$this->add_control(
 				'svg_color',
 				array(
-					'label'      => __( 'After Draw Fill Color', 'premium-addons-pro' ),
+					'label'      => __( 'After Draw Fill Color', 'premium-addons-for-elementor' ),
 					'type'       => Controls_Manager::COLOR,
 					'global'     => false,
 					'separator'  => 'after',
@@ -1005,7 +1005,7 @@ class Woo_CTA extends Widget_Base {
 			$this->add_control(
 				'button_icon_color',
 				array(
-					'label'      => __( 'Icon Color', 'premium-addons-pro' ),
+					'label'      => __( 'Icon Color', 'premium-addons-for-elementor' ),
 					'type'       => Controls_Manager::COLOR,
 					'global'     => array(
 						'default' => Global_Colors::COLOR_SECONDARY,
@@ -1038,7 +1038,7 @@ class Woo_CTA extends Widget_Base {
 			$this->add_control(
 				'stroke_color',
 				array(
-					'label'      => __( 'Stroke Color', 'premium-addons-pro' ),
+					'label'      => __( 'Stroke Color', 'premium-addons-for-elementor' ),
 					'type'       => Controls_Manager::COLOR,
 					'global'     => array(
 						'default' => Global_Colors::COLOR_ACCENT,
@@ -1170,7 +1170,7 @@ class Woo_CTA extends Widget_Base {
 		$this->add_control(
 			'button_icon_color_hover',
 			array(
-				'label'      => __( 'Icon Color', 'premium-addons-pro' ),
+				'label'      => __( 'Icon Color', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::COLOR,
 				'global'     => array(
 					'default' => Global_Colors::COLOR_PRIMARY,

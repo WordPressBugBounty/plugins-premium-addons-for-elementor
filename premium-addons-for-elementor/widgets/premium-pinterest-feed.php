@@ -311,7 +311,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 		);
 
 		if ( ! $papro_activated ) {
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'pinterest-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'endpoint_notice',
@@ -532,7 +532,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 		);
 
 		if ( ! $papro_activated ) {
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'pinterest-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'profile_header_notice',
@@ -1166,7 +1166,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'pinterest-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,
@@ -1735,7 +1735,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 			Group_Control_Background::get_type(),
 			array(
 				'name'      => 'feed_box_overlay',
-				'label'     => __( 'Image Overlay' ),
+				'label'     => __( 'Image Overlay', 'premium-addons-for-elementor' ),
 				'types'     => array( 'classic', 'gradient' ),
 				'selector'  => '{{WRAPPER}} .premium-pinterest-feed__pin-meta-wrapper',
 				'condition' => array(

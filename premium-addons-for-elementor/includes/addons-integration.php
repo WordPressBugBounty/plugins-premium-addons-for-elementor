@@ -377,7 +377,7 @@ class Addons_Integration {
 
 		if ( $time_limit < 400 ) {
 
-			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'editor-page', 'wp-editor', 'panel-issues' );
+			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'editor-issue', 'wp-editor', 'panel-issues' );
 
             $disable_unused_url = add_query_arg(
                 array(
@@ -1085,6 +1085,7 @@ class Addons_Integration {
 					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
 					'view_cart'       => __( 'View cart', 'woocommerce' ),
 					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
+					'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
 				)
 			);
 
@@ -1096,6 +1097,7 @@ class Addons_Integration {
 					'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
 					'view_cart'       => __( 'View cart', 'woocommerce' ),
 					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
+					'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
 				)
 			);
 

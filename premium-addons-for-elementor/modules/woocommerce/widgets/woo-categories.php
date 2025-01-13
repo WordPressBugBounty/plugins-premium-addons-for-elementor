@@ -309,7 +309,7 @@ class Woo_Categories extends Widget_Base {
 		$this->add_control(
 			'categories_number',
 			array(
-				'label'   => __( 'Number of Categories', 'uael' ),
+				'label'   => __( 'Number of Categories', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::NUMBER,
 				'default' => '3',
 			)

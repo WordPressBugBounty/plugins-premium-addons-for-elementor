@@ -1715,7 +1715,7 @@ class Premium_Videobox extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'video-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,
@@ -2487,7 +2487,7 @@ class Premium_Videobox extends Widget_Base {
 		$this->add_control(
 			'lightbox_color',
 			array(
-				'label'     => __( 'Background Color', 'elementor' ),
+				'label'     => __( 'Background Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'#elementor-lightbox-{{ID}}' => 'background-color: {{VALUE}};',
@@ -2498,7 +2498,7 @@ class Premium_Videobox extends Widget_Base {
 		$this->add_control(
 			'lightbox_ui_color',
 			array(
-				'label'     => __( 'UI Color', 'elementor' ),
+				'label'     => __( 'UI Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'#elementor-lightbox-{{ID}} .dialog-lightbox-close-button' => 'color: {{VALUE}}',
@@ -2509,7 +2509,7 @@ class Premium_Videobox extends Widget_Base {
 		$this->add_control(
 			'lightbox_ui_color_hover',
 			array(
-				'label'     => __( 'UI Hover Color', 'elementor' ),
+				'label'     => __( 'UI Hover Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'#elementor-lightbox-{{ID}} .dialog-lightbox-close-button:hover' => 'color: {{VALUE}}',
@@ -2521,7 +2521,7 @@ class Premium_Videobox extends Widget_Base {
 		$this->add_control(
 			'lightbox_video_width',
 			array(
-				'label'     => __( 'Content Width', 'elementor' ),
+				'label'     => __( 'Content Width', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
 				'default'   => array(
 					'unit' => '%',
@@ -2540,12 +2540,12 @@ class Premium_Videobox extends Widget_Base {
 		$this->add_control(
 			'lightbox_content_position',
 			array(
-				'label'                => __( 'Content Position', 'elementor' ),
+				'label'                => __( 'Content Position', 'premium-addons-for-elementor' ),
 				'type'                 => Controls_Manager::SELECT,
 				'frontend_available'   => true,
 				'options'              => array(
-					''    => __( 'Center', 'elementor' ),
-					'top' => __( 'Top', 'elementor' ),
+					''    => __( 'Center', 'premium-addons-for-elementor' ),
+					'top' => __( 'Top', 'premium-addons-for-elementor' ),
 				),
 				'selectors'            => array(
 					'#elementor-lightbox-{{ID}} .elementor-video-container' => '{{VALUE}}; transform: translateX(-50%);',
@@ -2559,7 +2559,7 @@ class Premium_Videobox extends Widget_Base {
 		$this->add_responsive_control(
 			'lightbox_content_animation',
 			array(
-				'label'              => __( 'Entrance Animation', 'elementor' ),
+				'label'              => __( 'Entrance Animation', 'premium-addons-for-elementor' ),
 				'type'               => Controls_Manager::ANIMATION,
 				'frontend_available' => true,
 			)
@@ -3289,7 +3289,7 @@ class Premium_Videobox extends Widget_Base {
 					$id = $video->id->videoId;
 				}
 
-				if ( 'playlist' === $source && 'public' !== $video->status->privacyStatus ) {
+				if ( 'playlist' === $source && ! in_array( $video->status->privacyStatus, array('public', 'unlisted'), true )  ) {
 					continue;
 				}
 
@@ -3506,7 +3506,7 @@ class Premium_Videobox extends Widget_Base {
 			?>
 			<div class="premium-error-notice">
 				<?php
-					$doc_url  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/how-to-enable-youtube-data-api-for-premium-video-box-widget/', 'editor-page', 'wp-editor', 'get-support' );
+					$doc_url  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/how-to-enable-youtube-data-api-for-premium-video-box-widget/', 'video-widget', 'wp-editor', 'get-support' );
 					$message  = __( 'Please make sure to set your Youtube API key in ', 'premium-addons-for-elementor' );
 					$message .= sprintf( '<a href="%1$s" target="_blank">%2$s</a>', admin_url( 'admin.php?page=premium-addons#tab=integrations' ), __( 'Integrations', 'premium-addons-for-elementor' ) );
 					$message .= __( ' tab. For further information about getting an API key, please check this ', 'premium-addons-for-elementor' );

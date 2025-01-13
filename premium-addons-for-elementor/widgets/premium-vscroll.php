@@ -631,7 +631,7 @@ class Premium_Vscroll extends Widget_Base {
 			)
 		);
 
-		$doc_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/how-to-create-elementor-template-to-be-used-with-premium-addons', 'editor-page', 'wp-editor', 'get-support' );
+		$doc_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/how-to-create-elementor-template-to-be-used-with-premium-addons', 'vscroll-widget', 'wp-editor', 'get-support' );
 		$title   = __( 'How to create an Elementor template to be used in Premium Vertical Scroll »', 'premium-addons-for-elementor' );
 
 		$this->add_control(

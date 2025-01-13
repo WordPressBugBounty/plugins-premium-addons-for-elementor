@@ -237,7 +237,7 @@ class Premium_Nav_Menu extends Widget_Base {
 			)
 		);
 
-		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'menu-widget', 'wp-editor', 'get-pro' );
 
 		$papro_activated = apply_filters( 'papro_activated', false );
 
@@ -1290,7 +1290,7 @@ class Premium_Nav_Menu extends Widget_Base {
 			}
 		} else {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'menu-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'rn_badges_notice',
@@ -1328,7 +1328,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'menu-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,

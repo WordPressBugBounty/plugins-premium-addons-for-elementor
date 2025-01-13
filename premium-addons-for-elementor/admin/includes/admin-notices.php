@@ -550,7 +550,7 @@ class Admin_Notices {
 
             array_unshift( $stories['posts'], array(
                 'link'=> 'https://premiumaddons.com/docs/upgrad-premium-addons-license/',
-                'title'=> __('Upgrade your Premium Addons Pro subscription to Lifetime and get FLAT 25% OFF using the code: <strong style="font-weight: bold">XmasLifetime2024</strong>')
+                'title'=> __('Upgrade your Premium Addons Pro subscription to Lifetime and get FLAT 25% OFF using the code: <strong style="font-weight: bold">XmasLifetime2024</strong>', 'premium-addons-for-elementor')
             ));
 
         }

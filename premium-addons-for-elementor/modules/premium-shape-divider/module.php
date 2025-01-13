@@ -280,7 +280,7 @@ class Module {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'shape-addon', 'wp-editor', 'get-pro' );
 
 			$pro_shapes = array();
 
@@ -659,7 +659,7 @@ class Module {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'shape-addon', 'wp-editor', 'get-pro' );
 
 			$element->add_control(
 				'divider_fill_notice',

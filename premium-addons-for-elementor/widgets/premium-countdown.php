@@ -423,7 +423,7 @@ class Premium_Countdown extends Widget_Base {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'countdown-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'notification_notice',
@@ -909,7 +909,7 @@ class Premium_Countdown extends Widget_Base {
 			)
 		);
 
-		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/countdown-widget-tutorial/', 'editor-page', 'wp-editor', 'get-support' );
+		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/countdown-widget-tutorial/', 'countdown-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',

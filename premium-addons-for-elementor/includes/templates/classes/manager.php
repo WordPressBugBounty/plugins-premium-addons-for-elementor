@@ -224,7 +224,7 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 
 			$demo_link = strstr( $info['demo'], '/?', true );
 
-			$demo_link = Helper_Functions::get_campaign_link( $demo_link, 'editor-page', 'wp-editor', 'template-issues' );
+			$demo_link = Helper_Functions::get_campaign_link( $demo_link, 'template-link', 'wp-editor', 'template-issues' );
 
 			$data = array(
 				'name'      => $info['title'],

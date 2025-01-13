@@ -956,7 +956,7 @@ class Premium_Progressbar extends Widget_Base {
 			)
 		);
 
-		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-progress-bar-widget/', 'editor-page', 'wp-editor', 'get-support' );
+		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-progress-bar-widget/', 'progress-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',

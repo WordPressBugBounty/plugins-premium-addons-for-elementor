@@ -567,18 +567,6 @@ class Premium_Carousel extends Widget_Base {
 		);
 
 		$this->add_control(
-			'premium_carousel_RTL_Mode',
-			array(
-				'label'       => __( 'RTL Mode', 'premium-addons-for-elementor' ),
-				'description' => __( 'Turn on RTL mode if your language starts from right to left', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'condition'   => array(
-					'premium_carousel_slider_type!' => 'vertical',
-				),
-			)
-		);
-
-		$this->add_control(
 			'variable_width',
 			array(
 				'label'       => __( 'Variable Width', 'premium-addons-for-elementor' ),
@@ -609,7 +597,7 @@ class Premium_Carousel extends Widget_Base {
 			'premium_carousel_center_mode',
 			array(
 				'label'       => __( 'Center Mode', 'premium-addons-for-elementor' ),
-				'description' => __( 'Center mode enables a centered view with partial next/previous slides. Animations and all visible scroll type doesn\'t work with this mode', 'premium-addons-for-elementor' ),
+				'description' => __( 'Center mode enables a centered view with partial next/previous slides.', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
 			)
 		);
@@ -620,9 +608,13 @@ class Premium_Carousel extends Widget_Base {
 				'label'       => __( 'Slides\' Spacing', 'premium-addons-for-elementor' ),
 				'description' => __( 'Set a spacing value in pixels (px)', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
+				'render_type'=> 'template',
 				'default'     => '15',
 				'selectors'   => array(
 					'{{WRAPPER}}' => '--pa-carousel-center-padding: {{VALUE}}',
+				),
+				'condition'   => array(
+					'premium_carousel_center_mode' => 'yes',
 				),
 			)
 		);
@@ -676,7 +668,7 @@ class Premium_Carousel extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'carousel-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,
@@ -1372,14 +1364,6 @@ class Premium_Carousel extends Widget_Base {
 
 		$touch_move = 'yes' !== $settings['mscroll'] && 'yes' === $settings['premium_carousel_touch_move'] ? true : false;
 
-		$dir = '';
-		$rtl = false;
-
-		if ( 'yes' === $settings['premium_carousel_RTL_Mode'] ) {
-			$rtl = true;
-			$dir = 'dir="rtl"';
-		}
-
 		$variable_width = ( 'yes' !== $settings['mscroll'] && 'yes' === $settings['variable_width'] ) ? true : false;
 
 		$adaptive_height = 'yes' === $settings['premium_carousel_adaptive_height'] ? true : false;
@@ -1526,7 +1510,6 @@ class Premium_Carousel extends Widget_Base {
 			'autoplaySpeed'      => $autoplay_speed,
 			'draggable'          => $draggable,
 			'touchMove'          => $touch_move,
-			'rtl'                => $rtl,
 			'adaptiveHeight'     => $adaptive_height,
 			'variableWidth'      => $variable_width,
 			'cssEase'            => $linear ? 'linear' : 'ease',
@@ -1554,8 +1537,7 @@ class Premium_Carousel extends Widget_Base {
 				'premium-carousel-wrapper',
 				'premium-carousel-hidden',
 				'carousel-wrapper-' . esc_attr( $this->get_id() ),
-				$extra_class,
-				$dir,
+				$extra_class
 			)
 		);
 

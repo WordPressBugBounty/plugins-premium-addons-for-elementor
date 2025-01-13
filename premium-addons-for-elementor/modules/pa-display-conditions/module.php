@@ -216,7 +216,7 @@ class Module {
 			)
 		);
 
-		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'conditions-addon', 'wp-editor', 'get-pro' );
 
 		$repeater->add_control(
 			'display_conditions_notice',
@@ -344,7 +344,7 @@ class Module {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'conditions-addon', 'wp-editor', 'get-support' );
 
 			$element->add_control(
 				'pa_condition_doc_' . $doc_index,

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use PremiumAddons\Includes\Helper_Functions;
 
-$docs_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/', 'about-page', 'wp-dash', 'dashboard' );
+$docs_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/', 'docs', 'wp-dash', 'dashboard' );
 
 $pa_news = self::get_pa_news();
 
@@ -78,7 +78,7 @@ $pa_news = self::get_pa_news();
 										</div>
 										<p><?php echo wp_kses_post( $post['title']['rendered'] ); ?></p>
 										<p><?php echo wp_kses_post( gmdate( 'j F, Y', strtotime( $post['date'] ) ) ); ?></p>
-										<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $post['link'], 'about-page', 'wp-dash', 'dashboard' ) ); ?>" target="_blank"></a>
+										<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $post['link'], 'news', 'wp-dash', 'dashboard' ) ); ?>" target="_blank"></a>
 									</div>
 								<?php endforeach; ?>
 							</div>

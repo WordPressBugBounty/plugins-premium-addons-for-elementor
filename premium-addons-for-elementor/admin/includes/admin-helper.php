@@ -772,7 +772,7 @@ class Admin_Helper {
 	 */
 	public function render_dashboard_header() {
 
-		$url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/', 'settings-page', 'wp-dash', 'dashboard' );
+		$url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/', 'dashboard-banner', 'wp-dash', 'get-pro' );
 
 		$show_logo = Helper_Functions::is_hide_logo();
 

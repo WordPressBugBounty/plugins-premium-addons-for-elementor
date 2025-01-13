@@ -222,7 +222,7 @@ class Premium_Contactform extends Widget_Base {
 
 		} else {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'form-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'presets_notice',

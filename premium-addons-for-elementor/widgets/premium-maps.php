@@ -199,7 +199,7 @@ class Premium_Maps extends Widget_Base {
 		$this->add_control(
 			'premium_map_notice',
 			array(
-				'label'       => __( 'Find Latitude & Longitude', 'elementor' ),
+				'label'       => __( 'Find Latitude & Longitude', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::RAW_HTML,
 				'raw'         => '<form onsubmit="getAddress(this);" action="javascript:void(0);"><input type="text" id="premium-map-get-address" class="premium-map-get-address" style="margin-top:10px; margin-bottom:10px;"><input type="submit" value="Search" class="elementor-button elementor-button-default" onclick="getAddress(this)"></form>',
 				'label_block' => true,
@@ -265,7 +265,7 @@ class Premium_Maps extends Widget_Base {
 		$repeater->start_controls_tab(
 			'marker_content_tab',
 			array(
-				'label' => esc_html__( 'Content', 'elementor-pro' ),
+				'label' => esc_html__( 'Content', 'premium-addons-for-elementor' ),
 			)
 		);
 
@@ -280,7 +280,7 @@ class Premium_Maps extends Widget_Base {
 		$repeater->add_control(
 			'premium_map_pin_notice',
 			array(
-				'label'       => __( 'Find Location', 'elementor' ),
+				'label'       => __( 'Find Location', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::RAW_HTML,
 				'raw'         => '<form onsubmit="getPinAddress(this);" action="javascript:void(0);"><input type="text" id="premium-map-get-address" class="premium-map-get-address" style="margin-top:10px; margin-bottom:10px;"><input type="submit" value="Search" class="elementor-button elementor-button-default" onclick="getPinAddress(this)"></form>',
 				'label_block' => true,
@@ -341,7 +341,7 @@ class Premium_Maps extends Widget_Base {
 			)
 		);
 
-		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'maps-widget', 'wp-editor', 'get-pro' );
 
 		$papro_activated = apply_filters( 'papro_activated', false );
 
@@ -401,7 +401,7 @@ class Premium_Maps extends Widget_Base {
 		$repeater->start_controls_tab(
 			'marker_style_tab',
 			array(
-				'label' => esc_html__( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'premium-addons-for-elementor' ),
 			)
 		);
 
@@ -671,7 +671,7 @@ class Premium_Maps extends Widget_Base {
 			)
 		);
 
-		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/google-maps-widget-tutorial', 'editor-page', 'wp-editor', 'get-support' );
+		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/google-maps-widget-tutorial', 'maps-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',
@@ -682,7 +682,7 @@ class Premium_Maps extends Widget_Base {
 			)
 		);
 
-		$doc2_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/getting-google-api-key-for-elementor-widgets/', 'editor-page', 'wp-editor', 'get-support' );
+		$doc2_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/getting-google-api-key-for-elementor-widgets/', 'maps-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_2',

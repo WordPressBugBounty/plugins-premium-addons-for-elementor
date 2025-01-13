@@ -5,6 +5,6 @@
 
 ?>
 
-<label for="elementor-template-library-filter-text" class="elementor-screen-only"><?php echo esc_html__( 'Search Templates:', 'elementor' ); ?></label>
-<input id="elementor-template-library-filter-text" placeholder="<?php echo esc_attr__( 'Search By Template ID', 'elementor' ); ?>">
+<label for="elementor-template-library-filter-text" class="elementor-screen-only"><?php echo __( 'Search Templates:', 'premium-addons-for-elementor' ); ?></label>
+<input id="elementor-template-library-filter-text" placeholder="<?php echo esc_attr__( 'Search By Template ID', 'premium-addons-for-elementor' ); ?>">
 <i class="eicon-search"></i>

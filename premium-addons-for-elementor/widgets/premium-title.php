@@ -1880,10 +1880,10 @@ class Premium_Title extends Widget_Base {
 		$this->add_control(
 			'background_text_mix_blend',
 			array(
-				'label'     => __( 'Blend Mode', 'elementor' ),
+				'label'     => __( 'Blend Mode', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => array(
-					''            => __( 'Normal', 'elementor' ),
+					''            => __( 'Normal', 'premium-addons-for-elementor' ),
 					'multiply'    => 'Multiply',
 					'screen'      => 'Screen',
 					'overlay'     => 'Overlay',

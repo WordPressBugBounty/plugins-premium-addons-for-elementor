@@ -750,7 +750,7 @@ class Premium_Counter extends Widget_Base {
 			)
 		);
 
-		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/counter-widget-tutorial/', 'editor-page', 'wp-editor', 'get-support' );
+		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/counter-widget-tutorial/', 'counter-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',

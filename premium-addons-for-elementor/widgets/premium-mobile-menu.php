@@ -633,7 +633,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'mobile-menu-widget', 'wp-editor', 'get-pro' );
 
 			$repeater->add_control(
 				'papro_notice',
@@ -887,11 +887,11 @@ class Premium_Mobile_Menu extends Widget_Base {
 				'type'         => Controls_Manager::CHOOSE,
 				'options'      => array(
 					'row'    => array(
-						'title' => esc_html__( 'Row - horizontal', 'elementor' ),
+						'title' => esc_html__( 'Row - horizontal', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-arrow-right',
 					),
 					'column' => array(
-						'title' => esc_html__( 'Column - vertical', 'elementor' ),
+						'title' => esc_html__( 'Column - vertical', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-arrow-down',
 					),
 				),
@@ -1167,7 +1167,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'mobile-menu-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,

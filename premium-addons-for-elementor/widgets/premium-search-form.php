@@ -210,7 +210,7 @@ class Premium_Search_Form extends Widget_Base {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'search-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'query_notice',
@@ -1201,7 +1201,7 @@ class Premium_Search_Form extends Widget_Base {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'search-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'keyword_remove_notice',

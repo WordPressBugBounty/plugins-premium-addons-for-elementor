@@ -249,7 +249,7 @@ class Premium_World_Clock extends Widget_Base {
 
 		if ( ! $papro_activated ) {
 
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'clock-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
 				'clock_notice',
@@ -1403,9 +1403,9 @@ class Premium_World_Clock extends Widget_Base {
         $this->add_control(
 			'language_prefix',
 			array(
-				'label'       => __( 'Language', 'premium-addons-pro' ),
+				'label'       => __( 'Language', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
-				'description' => __( 'Enter language prefix, eg. en for English, ja for Japanese, if you don\'t know your language prefix, please check <a href="https://developers.google.com/maps/faq#languagesupport" target="_blank">here</a>' ),
+				'description' => __( 'Enter language prefix, eg. en for English, ja for Japanese, if you don\'t know your language prefix, please check <a href="https://developers.google.com/maps/faq#languagesupport" target="_blank">here</a>', 'premium-addons-for-elementor' ),
 			)
 		);
 
@@ -1428,7 +1428,7 @@ class Premium_World_Clock extends Widget_Base {
 		$doc_index = 1;
 		foreach ( $docs as $url => $title ) {
 
-			$doc_url = Helper_Functions::get_campaign_link( $url, 'editor-page', 'wp-editor', 'get-support' );
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'clock-widget', 'wp-editor', 'get-support' );
 
 			$this->add_control(
 				'doc_' . $doc_index,

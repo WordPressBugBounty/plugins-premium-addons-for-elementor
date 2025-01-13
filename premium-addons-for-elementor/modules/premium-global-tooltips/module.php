@@ -362,7 +362,7 @@ class Module {
 		);
 
 		if ( ! $papro_activated ) {
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'tooltips-addon', 'wp-editor', 'get-pro' );
 
 			$element->add_control(
 				'pro_notice',
@@ -910,7 +910,7 @@ class Module {
 			array(
 				'label'       => __( 'Delay', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
-				'title'       => __( 'Set the animation delay in milliseconds, default is 10' ),
+				'title'       => __( 'Set the animation delay in milliseconds, default is 10', 'premium-addons-for-elementor' ),
 				'default'     => 10,
 				'render_type' => 'template',
 				'condition'   => array(
@@ -924,7 +924,7 @@ class Module {
 			array(
 				'label'       => __( 'Z-Index', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => __( 'Set the z-index of the tooltip. Default is 9999999' ),
+				'description' => __( 'Set the z-index of the tooltip. Default is 9999999', 'premium-addons-for-elementor' ),
 				'render_type' => 'template',
 				'condition'   => array(
 					'premium_tooltip_switcher' => 'yes',

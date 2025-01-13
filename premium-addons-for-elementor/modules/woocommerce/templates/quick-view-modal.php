@@ -15,7 +15,7 @@
 		--><div class="premium-woo-content-main">
 				<div class="premium-woo-lightbox-content">
 
-                    <a href="#" class="premium-woo-quick-view-close fa fa-window-close"></a>
+					<a href="#" class="premium-woo-quick-view-close fa fa-window-close"></a>
 
 					<div id="premium-woo-quick-view-content" class="woocommerce single-product"></div>
 				</div>

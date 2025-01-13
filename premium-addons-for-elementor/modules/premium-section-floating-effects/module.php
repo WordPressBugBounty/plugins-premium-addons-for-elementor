@@ -100,7 +100,7 @@ class Module {
 			)
 		);
 
-		$doc_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-floating-effects-tutorial/', 'editor-page', 'wp-editor', 'get-support' );
+		$doc_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-floating-effects-tutorial/', 'feffect-addon', 'wp-editor', 'get-support' );
 
 		$element->add_control(
 			'pa_floating_effects_notice',
@@ -130,7 +130,7 @@ class Module {
 			)
 		);
 
-		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'editor-page', 'wp-editor', 'get-pro' );
+		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'feffect-addon', 'wp-editor', 'get-pro' );
 
 		$papro_activated = apply_filters( 'papro_activated', false );
 

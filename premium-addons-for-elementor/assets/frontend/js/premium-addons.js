@@ -1514,7 +1514,7 @@
 				autoplaySpeed: settings.autoplaySpeed,
 				rows: 0,
 				draggable: settings.draggable,
-				rtl: settings.rtl,
+				rtl: elementorFrontend.config.is_rtl,
 				adaptiveHeight: settings.adaptiveHeight,
 				pauseOnHover: settings.pauseOnHover,
 				centerMode: settings.centerMode,

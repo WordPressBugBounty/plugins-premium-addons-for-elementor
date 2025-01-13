@@ -1,656 +1,680 @@
 (function ($) {
 
-    /**Premium Nav Menu */
-    var PremiumNavMenuHandler = function ($scope, $) {
-
-        // we don't need to wait for content dom load since the script is loaded in the footer.
-        // $scope.find('.premium-nav-widget-container').removeClass('premium-addons-invisible');
-
-        if (!elementorFrontend.isEditMode()) {
-            // $scope.find('.premium-nav-widget-container').css({ visibility: 'visible', opacity: 1 });
-            $scope.find('.premium-nav-widget-container').css({ visibility: 'inherit', opacity: 'inherit' });
-        }
-
-        var settings = $scope.find('.premium-nav-widget-container').data('settings');
-
-        if (!settings) {
-            return;
-        }
-
-        var $menuContainer = $scope.find('.premium-mobile-menu'),
-            $menuToggler = $scope.find('.premium-hamburger-toggle'),
-            $hamMenuCloser = $scope.find('.premium-mobile-menu-close'),
-            $centeredItems = $scope.find('.premium-mega-content-centered'),
-            $fullWidthItems = $scope.find('.premium-nav-menu-container li[data-full-width="true"]'),
-            stickyProps = {},
-            refreshPos = false,
-            stickyIndex = 'stickyPos' + $scope.data('id'),
-            stickyWidthIndex = 'stickyWidth' + $scope.data('id'),
-            disablePageScroll = $scope.hasClass('premium-disable-scroll-yes') ? true : false,
-            delay = getComputedStyle($scope[0]).getPropertyValue('--pa-mega-menu-delay') || 300,
-            hoverTimeout;
-
-        //Get Element On Page Option
-        $scope.find('div[data-mega-content]').each(function (index, elem) {
-            var $currentItem = $(elem),
-                targetElement = $currentItem.data('mega-content');
+	/**Premium Nav Menu */
+	var PremiumNavMenuHandler = function ($scope, $) {
+
+		// we don't need to wait for content dom load since the script is loaded in the footer.
+		// $scope.find('.premium-nav-widget-container').removeClass('premium-addons-invisible');
+
+		if (!elementorFrontend.isEditMode()) {
+			// $scope.find('.premium-nav-widget-container').css({ visibility: 'visible', opacity: 1 });
+			$scope.find('.premium-nav-widget-container').css({ visibility: 'inherit', opacity: 'inherit' });
+		}
+
+		var settings = $scope.find('.premium-nav-widget-container').data('settings');
+
+		if (!settings) {
+			return;
+		}
+
+		var $menuContainer = $scope.find('.premium-mobile-menu'),
+			$menuToggler = $scope.find('.premium-hamburger-toggle'),
+			$hamMenuCloser = $scope.find('.premium-mobile-menu-close'),
+			$centeredItems = $scope.find('.premium-mega-content-centered'),
+			$fullWidthItems = $scope.find('.premium-nav-menu-container li[data-full-width="true"]'),
+			stickyProps = {},
+			refreshPos = false,
+			stickyIndex = 'stickyPos' + $scope.data('id'),
+			stickyWidthIndex = 'stickyWidth' + $scope.data('id'),
+			disablePageScroll = $scope.hasClass('premium-disable-scroll-yes') ? true : false,
+			delay = getComputedStyle($scope[0]).getPropertyValue('--pa-mega-menu-delay') || 300,
+			hoverTimeout;
+
+		//Get Element On Page Option
+		$scope.find('div[data-mega-content]').each(function (index, elem) {
+			var $currentItem = $(elem),
+				targetElement = $currentItem.data('mega-content');
 
-            if ($(targetElement).length > 0) {
+			if ($(targetElement).length > 0) {
 
-                var $targetElement = $(targetElement);
+				var $targetElement = $(targetElement);
 
-                $targetElement.attr('data-menu-id', $scope.data('id'));
+				$targetElement.attr('data-menu-id', $scope.data('id'));
 
-                $currentItem.append($targetElement.clone(true).addClass('pa-cloned-element'));
+				$currentItem.append($targetElement.clone(true).addClass('pa-cloned-element'));
 
-            }
+			}
 
-        });
+		});
 
-        if (!elementorFrontend.isEditMode()) {
-            //Remove Element On Page Option If on Frontend
-            $('div[data-menu-id="' + $scope.data('id') + '"]').not('.pa-cloned-element').remove();
+		if (!elementorFrontend.isEditMode()) {
+			//Remove Element On Page Option If on Frontend
+			$('div[data-menu-id="' + $scope.data('id') + '"]').not('.pa-cloned-element').remove();
 
-            // handle anchor links with IDs => EX : https::somelink.com/home#section.
-            // check if there's an anchorLinks
-            var anchorLinks = $scope.find('.premium-item-anchor');
+			// handle anchor links with IDs => EX : https::somelink.com/home#section.
+			// check if there's an anchorLinks
+			var anchorLinks = $scope.find('.premium-item-anchor');
 
-            if ( anchorLinks.length ) {
-                handleAnchorLinks( anchorLinks );
-            }
+			if (anchorLinks.length) {
+				handleAnchorLinks(anchorLinks);
+			}
 
-        }
+		}
 
-        /**
-         * Save current device to use it later to determine if the device changed on resize.
-         */
-        window.PaCurrStickyDevice = elementorFrontend.getCurrentDeviceMode();
+		/**
+		 * Save current device to use it later to determine if the device changed on resize.
+		 */
+		window.PaCurrStickyDevice = elementorFrontend.getCurrentDeviceMode();
 
-        // make sure it's removed when the option is disabled.
-        if (elementorFrontend.isEditMode() && !disablePageScroll) {
-            $('body').removeClass('premium-scroll-disabled');
-        }
+		// make sure it's removed when the option is disabled.
+		if (elementorFrontend.isEditMode() && !disablePageScroll) {
+			$('body').removeClass('premium-scroll-disabled');
+		}
 
-        $centeredItems.each(function (index, item) {
-            $(item).closest(".premium-nav-menu-item").addClass("premium-mega-item-static");
-        });
+		$centeredItems.each(function (index, item) {
+			$(item).closest(".premium-nav-menu-item").addClass("premium-mega-item-static");
+		});
 
-        if ('slide' === settings.mobileLayout || 'slide' === settings.mainLayout) {
-            $scope.addClass('premium-ver-hamburger-menu');
-        }
+		if ('slide' === settings.mobileLayout || 'slide' === settings.mainLayout) {
+			$scope.addClass('premium-ver-hamburger-menu');
+		}
 
-        if (settings.rn_badges) {
-            addRandBadges(settings.rn_badges);
-        }
+		if (settings.rn_badges) {
+			addRandBadges(settings.rn_badges);
+		}
 
-        // check badges dot/grow effect.
-        if ('dot' === settings.hoverEffect) {
+		// check badges dot/grow effect.
+		if ('dot' === settings.hoverEffect) {
 
-            var $badgedItems = $scope.find('.premium-mega-content-container .premium-badge-dot, .premium-sub-menu .premium-badge-dot');
+			var $badgedItems = $scope.find('.premium-mega-content-container .premium-badge-dot, .premium-sub-menu .premium-badge-dot');
 
-            $badgedItems.each(function (index, $item) {
-                $($item).mouseenter(function () {
-                    $($item).removeClass('premium-badge-dot');
-                }).mouseleave(function () {
-                    $($item).addClass('premium-badge-dot');
-                });
-            });
-        }
+			$badgedItems.each(function (index, $item) {
+				$($item).mouseenter(function () {
+					$($item).removeClass('premium-badge-dot');
+				}).mouseleave(function () {
+					$($item).addClass('premium-badge-dot');
+				});
+			});
+		}
 
-        // close mobile menu after clicking.
-        if (settings.closeAfterClick) {
-            $menuContainer.find('.premium-menu-link').on('click.paAfterClick', function () {
-                // check if it has children
-                var hasChildern = itemHasChildren(this);
+		// close mobile menu after clicking.
+		if (settings.closeAfterClick) {
+			$menuContainer.find('.premium-menu-link').on('click.paAfterClick', function () {
+				// check if it has children
+				var hasChildern = itemHasChildren(this);
 
-                if (!hasChildern) {
-                    // close mobile menu
-                    if ('slide' === settings.mainLayout || 'slide' === settings.mobileLayout) {
-                        // if ($scope.hasClass('premium-nav-slide')) {
-                        $hamMenuCloser.click();
-                    } else {
-                        $menuToggler.click();
-                    }
-                }
-            });
-        }
+				if (!hasChildern) {
+					// close mobile menu
+					if ('slide' === settings.mainLayout || 'slide' === settings.mobileLayout) {
+						// if ($scope.hasClass('premium-nav-slide')) {
+						$hamMenuCloser.click();
+					} else {
+						$menuToggler.click();
+					}
+				}
+			});
+		}
 
-        var isMobileMenu = null,
-            isDesktopMenu = null;
+		var isMobileMenu = null,
+			isDesktopMenu = null;
 
-        checkBreakPoint(settings);
+		checkBreakPoint(settings);
 
-        if ($scope.hasClass('premium-nav-hor')) {
-            $(window).resize();
-            checkMegaContentWidth();
-        }
+		if ($scope.hasClass('premium-nav-hor')) {
+			$(window).resize();
+			checkMegaContentWidth();
+		}
 
-        checkStickyEffect();
+		checkStickyEffect();
 
-        if (['hor', 'ver'].includes(settings.mainLayout)) {
+		if (['hor', 'ver'].includes(settings.mainLayout)) {
 
-            if ('hover' === settings.submenuEvent) {
+			if ('hover' === settings.submenuEvent) {
 
-                $scope.find('.premium-nav-menu-item').on('mouseenter.PaItemHover', function (e) {
+				$scope.find('.premium-nav-menu-item').on('mouseenter.PaItemHover', function (e) {
 
-                    e.stopPropagation();
+					e.stopPropagation();
 
-                    clearTimeout(hoverTimeout);
+					clearTimeout(hoverTimeout);
 
-                    $(this).siblings().removeClass('premium-item-hovered'); // unset hovered items only for this menu.
+					$(this).siblings().removeClass('premium-item-hovered'); // unset hovered items only for this menu.
 
-                    $(this).addClass('premium-item-hovered');
+					$(this).addClass('premium-item-hovered');
 
-                    if ($(this).hasClass('premium-sub-menu-item'))
-                        $(this).parents('.premium-nav-menu-item').addClass('premium-item-hovered');
+					if ($(this).hasClass('premium-sub-menu-item'))
+						$(this).parents('.premium-nav-menu-item').addClass('premium-item-hovered');
 
-                });
+				});
 
-                $scope.on('mouseleave.PaItemHover', function (e) {
+				$scope.on('mouseleave.PaItemHover', function (e) {
 
-                    hoverTimeout = setTimeout(function () {
-                        $scope.find('.premium-item-hovered').removeClass('premium-item-hovered');
-                    }, delay);
-                });
+					hoverTimeout = setTimeout(function () {
+						$scope.find('.premium-item-hovered').removeClass('premium-item-hovered');
+					}, delay);
+				});
 
-                // we need to make sure that premium-item-hover is not removed when hovering over a sub/mega menu.
-                $scope.find('.premium-sub-menu, .premium-mega-content-container').on('mouseenter.PaItemHover', function (e) {
+				// we need to make sure that premium-item-hover is not removed when hovering over a sub/mega menu.
+				$scope.find('.premium-sub-menu, .premium-mega-content-container').on('mouseenter.PaItemHover', function (e) {
 
-                    var $menuItem = $(this).parents('.premium-nav-menu-item').first();
+					var $menuItem = $(this).parents('.premium-nav-menu-item').first();
 
-                    clearTimeout(hoverTimeout);
+					clearTimeout(hoverTimeout);
 
-                    $menuItem.siblings().removeClass('premium-item-hovered'); // remove it from the menu item in the same widget only
+					$menuItem.siblings().removeClass('premium-item-hovered'); // remove it from the menu item in the same widget only
 
-                    $menuItem.addClass('premium-item-hovered');
-                }).on('mouseleave.PaItemHover', function (e) {
+					$menuItem.addClass('premium-item-hovered');
+				}).on('mouseleave.PaItemHover', function (e) {
 
-                    clearTimeout(hoverTimeout);
-                    // $(this).parents('.premium-nav-menu-item').first().removeClass('premium-item-hovered');
-                });
-            } else { // click
+					clearTimeout(hoverTimeout);
+					// $(this).parents('.premium-nav-menu-item').first().removeClass('premium-item-hovered');
+				});
+			} else { // click
 
-                var triggerSelector = 'item' === settings.submenuTrigger ? ' > .premium-menu-link' : ' > .premium-menu-link > .premium-dropdown-icon',
-                    $trigger = $scope.find('.premium-nav-menu-container .premium-nav-menu-item.menu-item-has-children' + triggerSelector);
+				var triggerSelector = 'item' === settings.submenuTrigger ? ' > .premium-menu-link' : ' > .premium-menu-link > .premium-dropdown-icon',
+					$trigger = $scope.find('.premium-nav-menu-container .premium-nav-menu-item.menu-item-has-children' + triggerSelector);
 
-                /**
-                 * To prevent events overlapping if the user switched between hover/click
-                 * while building the menu.
-                 */
-                if (elementorFrontend.isEditMode()) {
-                    $scope.off('mouseleave.PaItemHover');
-                }
+				/**
+				 * To prevent events overlapping if the user switched between hover/click
+				 * while building the menu.
+				 */
+				if (elementorFrontend.isEditMode()) {
+					$scope.off('mouseleave.PaItemHover');
+				}
 
-                $trigger.off('click.PaItemClick'); // to prevent duplications.
-                $trigger.on('click.PaItemClick', function (e) {
+				$trigger.off('click.PaItemClick'); // to prevent duplications.
+				$trigger.on('click.PaItemClick', function (e) {
 
-                    e.preventDefault();
-                    e.stopPropagation();
+					e.preventDefault();
+					e.stopPropagation();
 
-                    var $menuItem = $(this).parents('.premium-nav-menu-item').first();
+					var $menuItem = $(this).parents('.premium-nav-menu-item').first();
 
-                    // remove it from the menu item in the same widget only
-                    $menuItem.siblings().removeClass('premium-item-hovered').find('.premium-item-hovered').removeClass('premium-item-hovered');
+					// remove it from the menu item in the same widget only
+					$menuItem.siblings().removeClass('premium-item-hovered').find('.premium-item-hovered').removeClass('premium-item-hovered');
 
-                    $menuItem.toggleClass('premium-item-hovered');
+					$menuItem.toggleClass('premium-item-hovered');
 
-                });
-            }
-        }
+				});
+			}
+		}
 
-        $hamMenuCloser.on('click', function () {
-            $scope.find('.premium-mobile-menu-outer-container, .premium-nav-slide-overlay').removeClass('premium-vertical-toggle-open');
-            $('body').removeClass('premium-scroll-disabled');
-        });
+		$hamMenuCloser.on('click', function () {
+			$scope.find('.premium-mobile-menu-outer-container, .premium-nav-slide-overlay').removeClass('premium-vertical-toggle-open');
+			$('body').removeClass('premium-scroll-disabled');
+		});
 
-        var canBeClicked = true;
-        $menuToggler.on('click', function () {
+		var canBeClicked = true;
+		$menuToggler.on('click', function () {
 
-            if ('slide' === settings.mobileLayout || 'slide' === settings.mainLayout) {
-                $scope.find('.premium-mobile-menu-outer-container, .premium-nav-slide-overlay').addClass('premium-vertical-toggle-open');
+			if ('slide' === settings.mobileLayout || 'slide' === settings.mainLayout) {
+				$scope.find('.premium-mobile-menu-outer-container, .premium-nav-slide-overlay').addClass('premium-vertical-toggle-open');
 
-                if (disablePageScroll) {
-                    $('body').addClass('premium-scroll-disabled');
-                }
+				if (disablePageScroll) {
+					$('body').addClass('premium-scroll-disabled');
+				}
 
-                $menuToggler.toggleClass('premium-toggle-opened'); // show/hide close icon/text.
-            } else {
+				$menuToggler.toggleClass('premium-toggle-opened'); // show/hide close icon/text.
+			} else {
 
-                if (canBeClicked) {
+				if (canBeClicked) {
 
-                    canBeClicked = false;
-                    if ($($menuContainer).hasClass('premium-active-menu')) {
+					canBeClicked = false;
+					if ($($menuContainer).hasClass('premium-active-menu')) {
 
-                        $scope.find('.premium-mobile-menu-container').slideUp(150, function () {
+						$scope.find('.premium-mobile-menu-container').slideUp(150, function () {
 
-                            $menuContainer.removeClass('premium-active-menu');
-                            $scope.find('.premium-mobile-menu-container').show();
+							$menuContainer.removeClass('premium-active-menu');
+							$scope.find('.premium-mobile-menu-container').show();
 
-                            setTimeout(function () {
-                                canBeClicked = true;
-                                $menuToggler.removeClass('premium-toggle-opened'); // hide close icon/text.
-                            }, 100);
+							setTimeout(function () {
+								canBeClicked = true;
+								$menuToggler.removeClass('premium-toggle-opened'); // hide close icon/text.
+							}, 100);
 
 
-                        });
-                    } else {
+						});
+					} else {
 
-                        $menuContainer.addClass('premium-active-menu');
+						$menuContainer.addClass('premium-active-menu');
 
-                        $menuToggler.addClass('premium-toggle-opened'); // show close icon/text.
+						$menuToggler.addClass('premium-toggle-opened'); // show close icon/text.
 
-                        canBeClicked = true;
+						canBeClicked = true;
 
-                    }
-                }
-            }
+					}
+				}
+			}
 
-            // $menuToggler.toggleClass('premium-toggle-opened'); // show/hide close icon/text.
+			// $menuToggler.toggleClass('premium-toggle-opened'); // show/hide close icon/text.
 
-        });
+		});
 
-        $menuContainer.find('.premium-nav-menu-item.menu-item-has-children a, .premium-mega-nav-item a').on('click', function (e) {
+		$menuContainer.find('.premium-nav-menu-item.menu-item-has-children a, .premium-mega-nav-item a').on('click', function (e) {
 
-            if ($(this).find(".premium-dropdown-icon").length < 1)
-                return;
+			if ($(this).find(".premium-dropdown-icon").length < 1)
+				return;
 
-            var $parent = $(this).parent(".premium-nav-menu-item");
+			var $parent = $(this).parent(".premium-nav-menu-item");
 
-            e.stopPropagation();
-            e.preventDefault();
+			e.stopPropagation();
+			e.preventDefault();
 
-            //If it was opened, then close it.
-            if ($parent.hasClass('premium-active-menu')) {
-                $parent.toggleClass('premium-active-menu');
+			//If it was opened, then close it.
+			if ($parent.hasClass('premium-active-menu')) {
+				$parent.toggleClass('premium-active-menu');
 
-            } else {
-                //Close any other opened items.
-                $menuContainer.find('.premium-active-menu').toggleClass('premium-active-menu');
-                //Then, open this item.
-                $parent.toggleClass('premium-active-menu');
-                // make sure the parent node is always open whenever the child node is opened.
-                $($parent).parents('.premium-nav-menu-item.menu-item-has-children').toggleClass('premium-active-menu');
-            }
-        });
+			} else {
+				//Close any other opened items.
+				$menuContainer.find('.premium-active-menu').toggleClass('premium-active-menu');
+				//Then, open this item.
+				$parent.toggleClass('premium-active-menu');
+				// make sure the parent node is always open whenever the child node is opened.
+				$($parent).parents('.premium-nav-menu-item.menu-item-has-children').toggleClass('premium-active-menu');
+			}
+		});
 
-        $(document).on('click', '.premium-nav-slide-overlay', function () {
-            $scope.find('.premium-mobile-menu-outer-container, .premium-nav-slide-overlay').removeClass('premium-vertical-toggle-open');
-            $('body').removeClass('premium-scroll-disabled');
-        });
+		$(document).on('click', '.premium-nav-slide-overlay', function () {
+			$scope.find('.premium-mobile-menu-outer-container, .premium-nav-slide-overlay').removeClass('premium-vertical-toggle-open');
+			$('body').removeClass('premium-scroll-disabled');
+		});
 
 
-        $(document).on('click.PaCloseMegaMenu', function (event) {
+		$(document).on('click.PaCloseMegaMenu', function (event) {
 
-            var isTabsItem = $(event.target).closest('.premium-tabs-nav-list-item').length,
-                isWidgetContainer = $(event.target).closest('.premium-nav-widget-container').length;
+			var isTabsItem = $(event.target).closest('.premium-tabs-nav-list-item').length,
+				isWidgetContainer = $(event.target).closest('.premium-nav-widget-container').length;
 
-            if (!isWidgetContainer && !isTabsItem) {
-                if ($($menuContainer).hasClass('premium-active-menu')) {
-                    $menuToggler.click();
-                }
+			if (!isWidgetContainer && !isTabsItem) {
+				if ($($menuContainer).hasClass('premium-active-menu')) {
+					$menuToggler.click();
+				}
 
-                if ('click' === settings.submenuEvent) {
-                    $scope.find('.premium-nav-menu-container .premium-item-hovered').removeClass('premium-item-hovered')
-                }
-            }
+				if ('click' === settings.submenuEvent) {
+					$scope.find('.premium-nav-menu-container .premium-item-hovered').removeClass('premium-item-hovered')
+				}
+			}
 
-        });
+		});
 
-        $(window).on('resize', function () {
+		$(window).on('resize', function () {
 
-            if (window.PaCurrStickyDevice !== elementorFrontend.getCurrentDeviceMode()) {
-                refreshPos = true;
-                window.PaCurrStickyDevice = elementorFrontend.getCurrentDeviceMode();
-            }
+			if (window.PaCurrStickyDevice !== elementorFrontend.getCurrentDeviceMode()) {
+				refreshPos = true;
+				window.PaCurrStickyDevice = elementorFrontend.getCurrentDeviceMode();
+			}
 
-            checkBreakPoint(settings);
+			checkBreakPoint(settings);
 
-            if ($scope.hasClass('premium-nav-hor')) {
-                checkMegaContentWidth();
-            }
+			if ($scope.hasClass('premium-nav-hor')) {
+				checkMegaContentWidth();
+			}
 
-            checkStickyEffect();
-        });
+			checkStickyEffect();
+		});
 
-        // vertical toggler.
-        if ($scope.hasClass('premium-ver-toggle-yes') && $scope.hasClass('premium-ver-click')) {
-            $scope.find('.premium-ver-toggler').on('click', function () {
-                $scope.find('.premium-nav-widget-container').toggleClass('premium-ver-collapsed', 500);
-            });
-        }
+		// vertical toggler.
+		if ($scope.hasClass('premium-ver-toggle-yes') && $scope.hasClass('premium-ver-click')) {
+			$scope.find('.premium-ver-toggler').on('click', function () {
+				$scope.find('.premium-nav-widget-container').toggleClass('premium-ver-collapsed', 500);
+			});
+		}
 
-        //************Helper Funcitons************ */
+		//************Helper Functions************ */
 
-        /**
-         * Adds the 'premium-active-item' to anchor links that has the '#'.
-         * @param {object} $anchorLinks
-         */
-        function handleAnchorLinks($anchorLinks) {
+		/**
+		 * Adds the 'premium-active-item' to anchor links that has the '#'.
+		 * @param {object} $anchorLinks
+		 */
+		function handleAnchorLinks($anchorLinks) {
+			var sections = [];
 
-            $anchorLinks.each(function( index, anchorLink){
-                $hashLink = $(anchorLink).find('> .premium-menu-link');
-                // on page load
-                if (location.pathname === $hashLink[0].pathname && '' !== $hashLink[0].hash && location.hash === $hashLink[0].hash) {
-                    addActiveItemClass(anchorLink);
-                }
+			// Map links to sections
+			$anchorLinks.each(function (index, anchorLink) {
+				var $hashLink = $(anchorLink).find('> .premium-menu-link'),
+					targetId = $hashLink[0] ? $hashLink[0].hash : null;
 
-                // on link click.
-                $(anchorLink).on('click.checkPaAnchor', function() {
-                    if (location.pathname === $hashLink[0].pathname && '' !== $hashLink[0].hash) {
-                        addActiveItemClass(anchorLink)
-                    }
-                });
+				if (targetId && targetId.length) {
+					var $section = $(targetId);
+					if ($section.length) {
+						sections.push({ link: anchorLink, section: $section[0] });
+					}
+				}
+			});
 
-            });
-        }
+			if (sections.length === 0) return;
 
-        function addActiveItemClass(item) {
+			var observer = new IntersectionObserver(
+				function (entries) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting) {
 
-            // make sure the class is added to both the desktop and mobile menu item
-            var currentHash = $(item).find('> .premium-menu-link').attr('href');
+							// Find the active link for the visible section.
+							var activeLink = sections.find(function (s) {
+								return s.section === entry.target;
+							}).link;
 
-            $scope.find('.premium-active-item').each(function() {
-                var $link = $(this).find('> .premium-menu-link');
+							addActiveItemClass(activeLink);
+						}
+					});
+				},
+				{
+					threshold: 0.5,
+				}
+			);
 
-                if ($link.attr('href') !== currentHash) {
-                    $(this).removeClass('premium-active-item'); // Remove the class from the parent element
-                }
-            });
+			// Observe each section
+			sections.forEach(function (sec) {
+				observer.observe(sec.section);
+			});
+		}
 
-            $(item).addClass('premium-active-item')
-        }
+		function addActiveItemClass(item) {
 
-        // Set menu items to full width.
-        function checkMegaContentWidth() {
-            $fullWidthItems.each(function (index, item) {
-                fullWidthContent($(item));
-            });
-        }
+			// make sure the class is added to both the desktop and mobile menu item
+			var currentHash = $(item).find('> .premium-menu-link').attr('href');
 
-        /**
-         * Full Width Mega Content.
-         */
-        function fullWidthContent($item) {
-            var customSelector = $($item).data('full-width-selector');
+			$scope.find('.premium-active-item').each(function () {
+				var $link = $(this).find('> .premium-menu-link');
 
-            if (customSelector) {
-                var $parentSec = $(customSelector);
-            } else {
-                var isContainer = elementorFrontend.config.experimentalFeatures.container,
-                    $parentSec = $scope.parents('.e-con').last();
+				if ($link.attr('href') !== currentHash) {
+					$(this).removeClass('premium-active-item'); // Remove the class from the parent element
+				}
+			});
 
-                $parentSec = !isContainer || $parentSec.length < 1 ? $scope.closest('.elementor-top-section') : $parentSec;
-            }
+			$(item).addClass('premium-active-item')
+		}
 
-            var width = $parentSec.outerWidth(),
-                sectionLeft = $parentSec.offset().left - $item.offset().left;
+		// Set menu items to full width.
+		function checkMegaContentWidth() {
+			$fullWidthItems.each(function (index, item) {
+				fullWidthContent($(item));
+			});
+		}
 
-            $($item).removeClass('premium-mega-item-static').find('.premium-mega-content-container, > .premium-sub-menu').css({
-                width: width + 'px',
-                left: sectionLeft + 'px',
-            });
-        }
+		/**
+		 * Full Width Mega Content.
+		 */
+		function fullWidthContent($item) {
+			var customSelector = $($item).data('full-width-selector');
 
-        function checkBreakPoint(settings) {
+			if (customSelector) {
+				var $parentSec = $(customSelector);
+			} else {
+				var isContainer = elementorFrontend.config.experimentalFeatures.container,
+					$parentSec = $scope.parents('.e-con').last();
 
-            //Trigger small screen menu.
-            if (settings.breakpoint >= $(window).outerWidth() && !isMobileMenu) {
-                // remove the vertical toggler.
-                $scope.find('.premium-ver-toggler').css('display', 'none');
-                $scope.addClass('premium-hamburger-menu');
-                $scope.find('.premium-active-menu').removeClass('premium-active-menu');
-                stretchDropdown($scope.find('.premium-stretch-dropdown .premium-mobile-menu-container'));
+				$parentSec = !isContainer || $parentSec.length < 1 ? $scope.closest('.elementor-top-section') : $parentSec;
+			}
 
-                isMobileMenu = true;
-                isDesktopMenu = false;
+			var width = $parentSec.outerWidth(),
+				sectionLeft = $parentSec.offset().left - $item.offset().left;
 
-                //Trigger large screen menu.
-            } else if (settings.breakpoint < $(window).outerWidth() && !isDesktopMenu) {
+			$($item).removeClass('premium-mega-item-static').find('.premium-mega-content-container, > .premium-sub-menu').css({
+				width: width + 'px',
+				left: sectionLeft + 'px',
+			});
+		}
 
-                // show the vertical toggler if enabled.
-                if ($scope.hasClass('premium-ver-toggle-yes')) {
-                    $scope.find('.premium-ver-toggler').css('display', 'flex');
-                }
+		function checkBreakPoint(settings) {
 
-                $menuToggler.removeClass('premium-toggle-opened');
-                $scope.find(".premium-mobile-menu-container .premium-active-menu").removeClass("premium-active-menu");
-                $scope.removeClass('premium-hamburger-menu premium-ham-dropdown');
-                $scope.find('.premium-vertical-toggle-open').removeClass('premium-vertical-toggle-open');
-                $scope.find('.premium-nav-default').removeClass('premium-nav-default');
+			//Trigger small screen menu.
+			if (settings.breakpoint >= $(window).outerWidth() && !isMobileMenu) {
+				// remove the vertical toggler.
+				$scope.find('.premium-ver-toggler').css('display', 'none');
+				$scope.addClass('premium-hamburger-menu');
+				$scope.find('.premium-active-menu').removeClass('premium-active-menu');
+				stretchDropdown($scope.find('.premium-stretch-dropdown .premium-mobile-menu-container'));
 
-                isDesktopMenu = true;
-                isMobileMenu = false;
-            }
+				isMobileMenu = true;
+				isDesktopMenu = false;
 
-        }
+				//Trigger large screen menu.
+			} else if (settings.breakpoint < $(window).outerWidth() && !isDesktopMenu) {
 
-        /**
-         * Full Width Option.
-         * Shows the mobile menu beneath the widget's parent(section).
-         */
-        function stretchDropdown($menu) {
+				// show the vertical toggler if enabled.
+				if ($scope.hasClass('premium-ver-toggle-yes')) {
+					$scope.find('.premium-ver-toggler').css('display', 'flex');
+				}
 
-            if (!$menu.length) return;
+				$menuToggler.removeClass('premium-toggle-opened');
+				$scope.find(".premium-mobile-menu-container .premium-active-menu").removeClass("premium-active-menu");
+				$scope.removeClass('premium-hamburger-menu premium-ham-dropdown');
+				$scope.find('.premium-vertical-toggle-open').removeClass('premium-vertical-toggle-open');
+				$scope.find('.premium-nav-default').removeClass('premium-nav-default');
 
-            var isContainer = elementorFrontend.config.experimentalFeatures.container,
-                $parentSec = $scope.parents('.e-con').last();
+				isDesktopMenu = true;
+				isMobileMenu = false;
+			}
 
-            $parentSec = !isContainer || $parentSec.length < 1 ? $scope.closest('.elementor-top-section') : $parentSec;
+		}
 
-            var width = $($parentSec).outerWidth(),
-                widgetTop = $scope.offset().top,
-                parentBottom = $($parentSec).offset().top + $($parentSec).outerHeight(),
-                stretchTop = parentBottom - widgetTop,
-                stretchLeft = $scope.offset().left - $($parentSec).offset().left;
+		/**
+		 * Full Width Option.
+		 * Shows the mobile menu beneath the widget's parent(section).
+		 */
+		function stretchDropdown($menu) {
 
-            $($menu).css({
-                width: width + 'px',
-                left: '-' + stretchLeft + 'px',
-                top: stretchTop + 'px',
-            });
-        }
+			if (!$menu.length) return;
 
-        /**
-         * Sticky Effect.
-         */
+			var isContainer = elementorFrontend.config.experimentalFeatures.container,
+				$parentSec = $scope.parents('.e-con').last();
 
-        function checkStickyEffect() {
+			$parentSec = !isContainer || $parentSec.length < 1 ? $scope.closest('.elementor-top-section') : $parentSec;
 
-            var isSticky = $scope.hasClass('premium-nav-sticky-yes') &&
-                // settings.stickyOptions &&
-                $('#' + settings.stickyOptions.targetId).length &&
-                !settings.stickyOptions.disableOn.includes(elementorFrontend.getCurrentDeviceMode());
+			var width = $($parentSec).outerWidth(),
+				widgetTop = $scope.offset().top,
+				parentBottom = $($parentSec).offset().top + $($parentSec).outerHeight(),
+				stretchTop = parentBottom - widgetTop,
+				stretchLeft = $scope.offset().left - $($parentSec).offset().left;
 
-            if (isSticky) {
-                stickyProps = settings.stickyOptions;
+			$($menu).css({
+				width: width + 'px',
+				left: '-' + stretchLeft + 'px',
+				top: stretchTop + 'px',
+			});
+		}
 
-                stickyProps.spacerClass = 'premium-sticky-spacer-' + $('#' + stickyProps.targetId).data('id');
+		/**
+		 * Sticky Effect.
+		 */
 
-                $('#' + stickyProps.targetId).addClass('premium-sticky-active');
+		function checkStickyEffect() {
 
-                setStickyWidth(stickyProps);
+			var isSticky = $scope.hasClass('premium-nav-sticky-yes') &&
+				// settings.stickyOptions &&
+				$('#' + settings.stickyOptions.targetId).length &&
+				!settings.stickyOptions.disableOn.includes(elementorFrontend.getCurrentDeviceMode());
 
-                // Add spacer to save the sticky target space in the dom.
-                if (0 === $('.' + stickyProps.spacerClass).length) {
-                    $('<div class="' + stickyProps.spacerClass + '"></div>').insertBefore('#' + stickyProps.targetId);
-                }
+			if (isSticky) {
+				stickyProps = settings.stickyOptions;
 
-                $(window).on('load', applyStickyEffect);
-                $(window).on('scroll.PaStickyNav', applyStickyEffect);
+				stickyProps.spacerClass = 'premium-sticky-spacer-' + $('#' + stickyProps.targetId).data('id');
 
-            } else {
-                $(window).off('scroll.PaStickyNav');
-                $('.' + stickyProps.spacerClass).remove(); // remove spacer
-                $('#' + stickyProps.targetId).removeClass('premium-sticky-parent premium-sticky-active premium-sticky-parent-' + $scope.data('id')).css({ // unset style
-                    top: 'unset',
-                    width: 'inherit',
-                    position: 'relative'
-                });
-            }
-        }
+				$('#' + stickyProps.targetId).addClass('premium-sticky-active');
 
-        /**
-         * we need to get the original width before setting
-         * the position to fixed.
-         */
-        function setStickyWidth(stickyProps) {
-            // TODO: check if we can use the spacer's width directly instead.
-            var currStickyWidth = stickyWidthIndex + elementorFrontend.getCurrentDeviceMode(),
-                isSticky = $('#' + stickyProps.targetId).hasClass('premium-sticky-parent'); // ==> fixed position
+				setStickyWidth(stickyProps);
 
-            if (isSticky) {
-                $('#' + stickyProps.targetId).css({
-                    position: 'relative',
-                    width: 'inherit'
-                });
-            }
+				// Add spacer to save the sticky target space in the dom.
+				if (0 === $('.' + stickyProps.spacerClass).length) {
+					$('<div class="' + stickyProps.spacerClass + '"></div>').insertBefore('#' + stickyProps.targetId);
+				}
 
-            window[currStickyWidth] = $('#' + stickyProps.targetId).outerWidth() + 'px';
+				$(window).on('load', applyStickyEffect);
+				$(window).on('scroll.PaStickyNav', applyStickyEffect);
 
-            if (isSticky) {
+			} else {
+				$(window).off('scroll.PaStickyNav');
+				$('.' + stickyProps.spacerClass).remove(); // remove spacer
+				$('#' + stickyProps.targetId).removeClass('premium-sticky-parent premium-sticky-active premium-sticky-parent-' + $scope.data('id')).css({ // unset style
+					top: 'unset',
+					width: 'inherit',
+					position: 'relative'
+				});
+			}
+		}
 
-                $('#' + stickyProps.targetId).css({
-                    position: 'fixed',
-                    width: window[currStickyWidth]
-                });
-            }
-        }
+		/**
+		 * we need to get the original width before setting
+		 * the position to fixed.
+		 */
+		function setStickyWidth(stickyProps) {
+			// TODO: check if we can use the spacer's width directly instead.
+			var currStickyWidth = stickyWidthIndex + elementorFrontend.getCurrentDeviceMode(),
+				isSticky = $('#' + stickyProps.targetId).hasClass('premium-sticky-parent'); // ==> fixed position
 
-        function applyStickyEffect() {
+			if (isSticky) {
+				$('#' + stickyProps.targetId).css({
+					position: 'relative',
+					width: 'inherit'
+				});
+			}
 
-            var $adminBarHeight = elementorFrontend.elements.$wpAdminBar.height() ? elementorFrontend.elements.$wpAdminBar.height() : 0,
-                scrollTop = $(window).scrollTop() + $adminBarHeight,
-                currStickyWidth = stickyWidthIndex + elementorFrontend.getCurrentDeviceMode();
+			window[currStickyWidth] = $('#' + stickyProps.targetId).outerWidth() + 'px';
 
-            if (!window[stickyIndex] || refreshPos) { // save the offset
-                window[stickyIndex] = $('.' + stickyProps.spacerClass).offset().top;
-                refreshPos = false;
-            }
+			if (isSticky) {
 
-            if (scrollTop >= window[stickyIndex]) {
+				$('#' + stickyProps.targetId).css({
+					position: 'fixed',
+					width: window[currStickyWidth]
+				});
+			}
+		}
 
-                $('.' + stickyProps.spacerClass).css('height', $('#' + stickyProps.targetId).outerHeight() + 'px');
-                $('#' + stickyProps.targetId).addClass('premium-sticky-parent premium-sticky-parent-' + $scope.data('id')).css({
-                    width: window[currStickyWidth],
-                    top: $adminBarHeight,
-                    position: 'fixed'
-                });
+		function applyStickyEffect() {
 
-            } else {
-                $('.' + stickyProps.spacerClass).css('height', '0px');
-                $('#' + stickyProps.targetId).removeClass('premium-sticky-parent premium-sticky-parent-' + $scope.data('id')).css({
-                    top: 'unset',
-                    width: 'inherit',
-                    position: 'relative'
-                });
-            }
+			var $adminBarHeight = elementorFrontend.elements.$wpAdminBar.height() ? elementorFrontend.elements.$wpAdminBar.height() : 0,
+				scrollTop = $(window).scrollTop() + $adminBarHeight,
+				currStickyWidth = stickyWidthIndex + elementorFrontend.getCurrentDeviceMode();
 
-            // sticky on scroll option.
-            if (stickyProps.onScroll) {
-                var $element = document.querySelector('#' + stickyProps.targetId + '.premium-sticky-parent');
+			if (!window[stickyIndex] || refreshPos) { // save the offset
+				window[stickyIndex] = $('.' + stickyProps.spacerClass).offset().top;
+				refreshPos = false;
+			}
 
-                if ($element) {
-                    $('#' + stickyProps.targetId + '.premium-sticky-parent').addClass('premium-sticky-scroll-yes');
-                    var headroom = new Headroom($element,
-                        {
-                            tolerance: 5,
-                            classes: {
-                                initial: "animated",
-                                pinned: "slideDown",
-                                unpinned: "slideUp",
-                                offset: {
-                                    up: $('#' + stickyProps.targetId).outerHeight() + 150, // first time only.
-                                },
-                            }
-                        });
+			if (scrollTop >= window[stickyIndex]) {
 
-                    headroom.init();
-                }
-            } else {
-                $('#' + stickyProps.targetId + '.premium-sticky-parent').removeClass('premium-sticky-scroll-yes');
-            }
-        }
+				$('.' + stickyProps.spacerClass).css('height', $('#' + stickyProps.targetId).outerHeight() + 'px');
+				$('#' + stickyProps.targetId).addClass('premium-sticky-parent premium-sticky-parent-' + $scope.data('id')).css({
+					width: window[currStickyWidth],
+					top: $adminBarHeight,
+					position: 'fixed'
+				});
 
-        /**
-         * Random Badges.
-         */
+			} else {
+				$('.' + stickyProps.spacerClass).css('height', '0px');
+				$('#' + stickyProps.targetId).removeClass('premium-sticky-parent premium-sticky-parent-' + $scope.data('id')).css({
+					top: 'unset',
+					width: 'inherit',
+					position: 'relative'
+				});
+			}
 
-        function addRandBadges(badges) {
+			// sticky on scroll option.
+			if (stickyProps.onScroll) {
+				var $element = document.querySelector('#' + stickyProps.targetId + '.premium-sticky-parent');
 
-            var $menuContainer = ['hor', 'ver'].includes(settings.mainLayout) ? $scope.find('.premium-nav-menu-container') : $scope.find('.premium-mobile-menu-container');
+				if ($element) {
+					$('#' + stickyProps.targetId + '.premium-sticky-parent').addClass('premium-sticky-scroll-yes');
+					var headroom = new Headroom($element,
+						{
+							tolerance: 5,
+							classes: {
+								initial: "animated",
+								pinned: "slideDown",
+								unpinned: "slideUp",
+								offset: {
+									up: $('#' + stickyProps.targetId).outerHeight() + 150, // first time only.
+								},
+							}
+						});
 
-            badges.forEach(function (badge) {
-                var targetCount = $menuContainer.find(badge.selector + ':not(.has-pa-badge)').length;
+					headroom.init();
+				}
+			} else {
+				$('#' + stickyProps.targetId + '.premium-sticky-parent').removeClass('premium-sticky-scroll-yes');
+			}
+		}
 
-                if ('' === badge.selector || !targetCount) return;
+		/**
+		 * Random Badges.
+		 */
 
-                // get no of appearnces & elements.
-                var randTargetsIndex = getRandTargetsIndex(badge.max, targetCount);
+		function addRandBadges(badges) {
 
-                addBadge(badge, randTargetsIndex);
-            });
-        }
+			var $menuContainer = ['hor', 'ver'].includes(settings.mainLayout) ? $scope.find('.premium-nav-menu-container') : $scope.find('.premium-mobile-menu-container');
 
-        function getRandTargetsIndex(max, targetCount) {
-            var showTimes = getRandInt(max),
-                targetIndex = [];
+			badges.forEach(function (badge) {
+				var targetCount = $menuContainer.find(badge.selector + ':not(.has-pa-badge)').length;
 
-            for (var index = 0; index < showTimes; index++) {
+				if ('' === badge.selector || !targetCount) return;
 
-                var target = getRandInt(targetCount);
+				// get no of appearnces & elements.
+				var randTargetsIndex = getRandTargetsIndex(badge.max, targetCount);
 
-                if (!targetIndex.includes(target)) {
-                    targetIndex.push(target);
-                }
-            }
+				addBadge(badge, randTargetsIndex);
+			});
+		}
 
-            return targetIndex;
-        }
+		function getRandTargetsIndex(max, targetCount) {
+			var showTimes = getRandInt(max),
+				targetIndex = [];
 
-        function getRandInt(max) {
-            return Math.floor(Math.random() * max) + 1;
-        }
+			for (var index = 0; index < showTimes; index++) {
 
-        function addBadge(badge, targetsIndex) {
+				var target = getRandInt(targetCount);
 
-            var badgeHtml = getBadgeHtml(badge),
-                targets = $scope.find('.premium-nav-menu-container ' + badge.selector + ':not(.has-pa-badge)'),
-                mobileTargets = $scope.find('.premium-mobile-menu-container ' + badge.selector + ':not(.has-pa-badge)'),
-                hoverEffectClass = '' !== settings.hoverEffect ? 'premium-badge-' + settings.hoverEffect : '';
+				if (!targetIndex.includes(target)) {
+					targetIndex.push(target);
+				}
+			}
 
-            for (var index = 0; index < targetsIndex.length; index++) {
+			return targetIndex;
+		}
 
-                if (['hor', 'ver'].includes(settings.mainLayout)) {
+		function getRandInt(max) {
+			return Math.floor(Math.random() * max) + 1;
+		}
 
-                    $scope.find(targets[targetsIndex[index] - 1])
-                        .css('position', 'relative')
-                        .addClass('has-pa-badge ' + hoverEffectClass)
-                        .append(badgeHtml);
-                }
+		function addBadge(badge, targetsIndex) {
 
-                $scope.find(mobileTargets[targetsIndex[index] - 1])
-                    .css('position', 'relative')
-                    .addClass('has-pa-badge ' + hoverEffectClass)
-                    .append(badgeHtml);
+			var badgeHtml = getBadgeHtml(badge),
+				targets = $scope.find('.premium-nav-menu-container ' + badge.selector + ':not(.has-pa-badge)'),
+				mobileTargets = $scope.find('.premium-mobile-menu-container ' + badge.selector + ':not(.has-pa-badge)'),
+				hoverEffectClass = '' !== settings.hoverEffect ? 'premium-badge-' + settings.hoverEffect : '';
 
-            }
-        }
+			for (var index = 0; index < targetsIndex.length; index++) {
 
-        function getBadgeHtml(badge) {
-            return '<span class="premium-rn-badge elementor-repeater-item-' + badge.id + '">' + badge.text + '</span>';
-        }
+				if (['hor', 'ver'].includes(settings.mainLayout)) {
 
-        /**
-         * @param {link} $item .premium-menu-link
-         * @returns boolean
-         */
-        function itemHasChildren($item) {
-            return $($item).parent('.premium-nav-menu-item').hasClass('menu-item-has-children');
-        }
-    };
+					$scope.find(targets[targetsIndex[index] - 1])
+						.css('position', 'relative')
+						.addClass('has-pa-badge ' + hoverEffectClass)
+						.append(badgeHtml);
+				}
 
-    $(window).on('elementor/frontend/init', function () {
-        elementorFrontend.hooks.addAction('frontend/element_ready/premium-nav-menu.default', PremiumNavMenuHandler);
-    });
+				$scope.find(mobileTargets[targetsIndex[index] - 1])
+					.css('position', 'relative')
+					.addClass('has-pa-badge ' + hoverEffectClass)
+					.append(badgeHtml);
+
+			}
+		}
+
+		function getBadgeHtml(badge) {
+			return '<span class="premium-rn-badge elementor-repeater-item-' + badge.id + '">' + badge.text + '</span>';
+		}
+
+		/**
+		 * @param {link} $item .premium-menu-link
+		 * @returns boolean
+		 */
+		function itemHasChildren($item) {
+			return $($item).parent('.premium-nav-menu-item').hasClass('menu-item-has-children');
+		}
+	};
+
+	$(window).on('elementor/frontend/init', function () {
+		elementorFrontend.hooks.addAction('frontend/element_ready/premium-nav-menu.default', PremiumNavMenuHandler);
+	});
 
 })(jQuery);
