@@ -1189,11 +1189,11 @@ class PA_Mobile_Detect {
 
 		$this->setDetectionType( self::DETECTION_TYPE_MOBILE );
 
-        if( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-            return false;
-        }
+		if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			return false;
+		}
 
-        $device = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+		$device = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 
 		foreach ( self::$tabletDevices as $_regex ) {
 			if ( $this->match( $_regex, $device ) ) {

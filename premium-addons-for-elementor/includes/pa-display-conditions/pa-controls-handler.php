@@ -272,7 +272,7 @@ class PA_Controls_Handler {
 
 		$settings = $element->get_settings_for_display();
 
-		if ( 'yes' === $element->get_settings_for_display('pa_display_conditions_switcher') ) {
+		if ( 'yes' === $element->get_settings_for_display( 'pa_display_conditions_switcher' ) ) {
 
 			$element_id      = $element->get_id();
 			$conditions_list = $settings['pa_condition_repeater'];

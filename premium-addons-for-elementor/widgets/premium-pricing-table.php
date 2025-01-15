@@ -104,7 +104,7 @@ class Premium_Pricing_Table extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
-            'pa-btn',
+			'pa-btn',
 			'premium-addons',
 		);
 	}
@@ -158,9 +158,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		return array( 'pa', 'premium', 'premium pricing table', 'price', 'feature', 'list', 'bullet', 'cta' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -173,9 +173,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Pricing Table controls.
@@ -257,11 +257,11 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array(
 					'icon_type' => array( 'icon', 'svg' ),
 					'premium_pricing_table_icon_selection_updated[library]!' => 'svg',
 				),
@@ -665,11 +665,11 @@ class Premium_Pricing_Table extends Widget_Base {
 		$repeater->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array(
 					'icon_type' => array( 'icon', 'svg' ),
 					'premium_pricing_list_item_icon_updated[library]!' => 'svg',
 				),
@@ -2939,7 +2939,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -3044,7 +3044,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -3180,19 +3180,19 @@ class Premium_Pricing_Table extends Widget_Base {
 				$this->add_render_attribute( 'icon', 'class', 'premium-drawable-icon' );
 
 				// if ( 'icon' === $icon_type ) {
-				// 	if ( ! empty( $settings['premium_pricing_table_icon_selection'] ) ) {
-				// 		$this->add_render_attribute(
-				// 			'icon',
-				// 			array(
-				// 				'class'       => $settings['premium_pricing_table_icon_selection'],
-				// 				'aria-hidden' => 'true',
-				// 			)
-				// 		);
+				// if ( ! empty( $settings['premium_pricing_table_icon_selection'] ) ) {
+				// $this->add_render_attribute(
+				// 'icon',
+				// array(
+				// 'class'       => $settings['premium_pricing_table_icon_selection'],
+				// 'aria-hidden' => 'true',
+				// )
+				// );
 
-				// 	}
+				// }
 
-				// 	$migrated = isset( $settings['__fa4_migrated']['premium_pricing_table_icon_selection_updated'] );
-				// 	$is_new   = empty( $settings['premium_pricing_table_icon_selection'] ) && Icons_Manager::is_migration_allowed();
+				// $migrated = isset( $settings['__fa4_migrated']['premium_pricing_table_icon_selection_updated'] );
+				// $is_new   = empty( $settings['premium_pricing_table_icon_selection'] ) && Icons_Manager::is_migration_allowed();
 
 				// }
 
@@ -3209,7 +3209,7 @@ class Premium_Pricing_Table extends Widget_Base {
 
 					// if ( 'icon' === $icon_type ) {
 
-					// 	$this->add_render_attribute( 'icon', 'class', $settings['premium_pricing_table_icon_selection_updated']['value'] );
+					// $this->add_render_attribute( 'icon', 'class', $settings['premium_pricing_table_icon_selection_updated']['value'] );
 
 					// }
 
@@ -3278,23 +3278,24 @@ class Premium_Pricing_Table extends Widget_Base {
 		if ( 'yes' === $settings['premium_pricing_table_icon_switcher'] ) :
 			?>
 			<div class="premium-pricing-icon-container">
-                <?php if ( 'icon' === $icon_type ) : ?>
-                    <?php
-                        if ( 'yes' !== $settings['draw_svg'] ) :
-                            Icons_Manager::render_icon(
-                                $settings['premium_pricing_table_icon_selection_updated'],
-                                array(
-                                    'class'       => array( 'premium-svg-nodraw', 'premium-drawable-icon' ),
-                                    'aria-hidden' => 'true',
-                                )
-                        );
-                else :
-                    echo Helper_Functions::get_svg_by_icon(
-                        $settings['premium_pricing_table_icon_selection_updated'],
-                        $this->get_render_attribute_string( 'icon' )
-                    );
+				<?php if ( 'icon' === $icon_type ) : ?>
+					<?php
+					if ( 'yes' !== $settings['draw_svg'] ) :
+						Icons_Manager::render_icon(
+							$settings['premium_pricing_table_icon_selection_updated'],
+							array(
+								'class'       => array( 'premium-svg-nodraw', 'premium-drawable-icon' ),
+								'aria-hidden' => 'true',
+							)
+						);
+				else :
+					echo Helper_Functions::get_svg_by_icon(
+						$settings['premium_pricing_table_icon_selection_updated'],
+						$this->get_render_attribute_string( 'icon' )
+					);
 
-                endif; ?>
+				endif;
+				?>
 
 				<?php elseif ( 'svg' === $icon_type ) : ?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
@@ -3416,13 +3417,14 @@ class Premium_Pricing_Table extends Widget_Base {
 									);
 								else :
 									echo Helper_Functions::get_svg_by_icon(
-                                        $item['premium_pricing_list_item_icon_updated'],
-                                        array(
-                                            'class'       => 'premium-pricing-feature-icon',
-                                        )
-                                    );
+										$item['premium_pricing_list_item_icon_updated'],
+										array(
+											'class' => 'premium-pricing-feature-icon',
+										)
+									);
 
-								endif; ?>
+								endif;
+								?>
 							<?php elseif ( 'svg' === $item['icon_type'] ) : ?>
 								<?php echo $this->print_unescaped_setting( 'custom_svg', 'premium_fancy_text_list_items', $index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								<?php

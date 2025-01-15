@@ -162,9 +162,9 @@ class Premium_Icon_List extends Widget_Base {
 		return array( 'pa', 'premium', 'premium bullet list', 'icon', 'feature', 'list' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -177,9 +177,9 @@ class Premium_Icon_List extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Bullet List controls.
@@ -330,11 +330,11 @@ class Premium_Icon_List extends Widget_Base {
 		$repeater_list->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array_merge(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array_merge(
 					$common_conditions,
 					array(
 						'icon_type' => array( 'icon', 'svg' ),
@@ -1149,16 +1149,16 @@ class Premium_Icon_List extends Widget_Base {
 		$this->add_responsive_control(
 			'layout_type',
 			array(
-				'label'       => __( 'Layout Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
+				'label'        => __( 'Layout Type', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'options'      => array(
 					'row'    => __( 'Inline', 'premium-addons-for-elementor' ),
 					'column' => __( 'Block', 'premium-addons-for-elementor' ),
 				),
 				'prefix_class' => 'premium%s-type-',
-				'render_type' => 'ui',
-				'default'     => 'column',
-				'selectors'   => array(
+				'render_type'  => 'ui',
+				'default'      => 'column',
+				'selectors'    => array(
 					'{{WRAPPER}} .premium-bullet-list-box ' => 'flex-direction: {{VALUE}};',
 				),
 			)
@@ -1187,7 +1187,7 @@ class Premium_Icon_List extends Widget_Base {
 				'selectors'   => array(
 					'{{WRAPPER}} .premium-bullet-list-content, {{WRAPPER}} .premium-bullet-list-box' => 'justify-content: {{VALUE}};',
 					'{{WRAPPER}} .premium-bullet-list-divider, {{WRAPPER}} .premium-bullet-list-wrapper-top' => 'align-self: {{VALUE}};',
-                    '{{WRAPPER}}' => '--pa-bullet-align: {{VALUE}}',
+					'{{WRAPPER}}' => '--pa-bullet-align: {{VALUE}}',
 				),
 				'toggle'      => false,
 				'default'     => 'flex-start',
@@ -2448,7 +2448,6 @@ class Premium_Icon_List extends Widget_Base {
 					);
 				}
 
-
 				?>
 
 			<li <?php echo wp_kses_post( $this->get_render_attribute_string( $list_content_key ) ); ?>>
@@ -2495,7 +2494,7 @@ class Premium_Icon_List extends Widget_Base {
 						} else {
 							?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( $animation_key ) ); ?>>
-                                <?php echo Helper_Functions::get_svg_by_icon( $item['premium_icon_list_font_updated'] ); ?>
+								<?php echo Helper_Functions::get_svg_by_icon( $item['premium_icon_list_font_updated'] ); ?>
 							</div>
 							<?php
 						}

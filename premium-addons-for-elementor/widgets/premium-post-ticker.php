@@ -181,9 +181,9 @@ class Premium_Post_Ticker extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Smart Post Listing controls.
@@ -463,11 +463,11 @@ class Premium_Post_Ticker extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array_merge(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array_merge(
 					$common_conditions,
 					array(
 						'icon_type'                => array( 'icon', 'svg' ),
@@ -1369,7 +1369,7 @@ class Premium_Post_Ticker extends Widget_Base {
 				),
 				'condition' => array(
 					'post_type_filter' => 'text',
-				)
+				),
 			)
 		);
 
@@ -1611,11 +1611,11 @@ class Premium_Post_Ticker extends Widget_Base {
 		$text_repeater->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array(
 					'txt_icon_sw'              => 'yes',
 					'icon_type'                => array( 'icon', 'svg' ),
 					'pa_ticker_icon[library]!' => 'svg',
@@ -2162,7 +2162,7 @@ class Premium_Post_Ticker extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -3776,7 +3776,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 							// if ( 'icon' === $icon_type ) {
 
-							// 	$this->add_render_attribute( 'icon' . $index, 'class', $settings['pa_ticker_icon']['value'] );
+							// $this->add_render_attribute( 'icon' . $index, 'class', $settings['pa_ticker_icon']['value'] );
 
 							// }
 
@@ -3804,10 +3804,10 @@ class Premium_Post_Ticker extends Widget_Base {
 
 						if ( 'icon' === $icon_type ) {
 
-                            echo Helper_Functions::get_svg_by_icon(
-                                $settings['pa_ticker_icon'],
-                                $this->get_render_attribute_string( 'icon' . $index )
-                            );
+							echo Helper_Functions::get_svg_by_icon(
+								$settings['pa_ticker_icon'],
+								$this->get_render_attribute_string( 'icon' . $index )
+							);
 
 						}
 					}

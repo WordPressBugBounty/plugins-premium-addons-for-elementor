@@ -132,9 +132,9 @@ class Premium_Search_Form extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Search Form controls.
@@ -180,7 +180,7 @@ class Premium_Search_Form extends Widget_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'fadeout_selector',
 			array(
 				'label'       => __( 'Elements to Fade Out Selector', 'premium-addons-for-elementor' ),
@@ -193,16 +193,16 @@ class Premium_Search_Form extends Widget_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'highlighted_text_color',
 			array(
 				'label'     => __( 'Highlighted Text Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'.pa-highlighted-text-{{ID}}' => 'background-color: {{VALUE}};',
-                    '{{WRAPPER}}' => '--pa-search-hightlight: {{VALUE}}',
+					'{{WRAPPER}}'                 => '--pa-search-hightlight: {{VALUE}}',
 				),
-                'condition'   => array(
+				'condition' => array(
 					'query_type' => 'elements',
 				),
 			)
@@ -326,10 +326,12 @@ class Premium_Search_Form extends Widget_Base {
 				// Get all taxonomy values under the taxonomy.
 				foreach ( $taxonomy as $index => $tax ) {
 
-					$terms = get_terms( array(
-                        'taxonomy'  => $index,
-                        'hide_empty' => false,
-                    ));
+					$terms = get_terms(
+						array(
+							'taxonomy'   => $index,
+							'hide_empty' => false,
+						)
+					);
 
 					$related_tax = array();
 
@@ -902,7 +904,7 @@ class Premium_Search_Form extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-search__btn svg' => 'width: {{SIZE}}px !important; height: {{SIZE}}px !important',
-                    '{{WRAPPER}} .premium-search__btn i' => 'font-size: {{SIZE}}px',
+					'{{WRAPPER}} .premium-search__btn i'   => 'font-size: {{SIZE}}px',
 				),
 			)
 		);
@@ -1117,13 +1119,13 @@ class Premium_Search_Form extends Widget_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'excerpt_length_apply',
 			array(
-				'label'        => __( 'Apply On Posts With Excerpt Set', 'premium-addons-for-elementor' ),
-                'description'        => __( 'Enable this option if you want the excerpt length to be also applied on posts with the Excerpt field set.', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'condition'    => array(
+				'label'       => __( 'Apply On Posts With Excerpt Set', 'premium-addons-for-elementor' ),
+				'description' => __( 'Enable this option if you want the excerpt length to be also applied on posts with the Excerpt field set.', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'condition'   => array(
 					'show_excerpt' => 'yes',
 				),
 			)
@@ -2681,7 +2683,7 @@ class Premium_Search_Form extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -2761,7 +2763,7 @@ class Premium_Search_Form extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -2841,7 +2843,7 @@ class Premium_Search_Form extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -3166,12 +3168,12 @@ class Premium_Search_Form extends Widget_Base {
 		}
 
 		if ( 'elements' === $settings['query_type'] ) {
-			$search_settings['target'] = esc_attr( $settings['selector'] );
-            $search_settings['fadeout_target'] = esc_attr( $settings['fadeout_selector'] );
+			$search_settings['target']         = esc_attr( $settings['selector'] );
+			$search_settings['fadeout_target'] = esc_attr( $settings['fadeout_selector'] );
 		} else {
 
-			$search_settings['hideOnClick'] = 'yes' === $settings['hide_on_click'];
-            $search_settings['results_number']  = 'yes' === $settings['show_results_number'];
+			$search_settings['hideOnClick']    = 'yes' === $settings['hide_on_click'];
+			$search_settings['results_number'] = 'yes' === $settings['show_results_number'];
 			// Add page ID to be used later to get posts by AJAX.
 			$page_id = '';
 			if ( null !== Plugin::$instance->documents->get_current() ) {
@@ -3192,7 +3194,6 @@ class Premium_Search_Form extends Widget_Base {
 				$search_settings['speed']          = '' !== $settings['carousel_speed'] ? $settings['carousel_speed'] : 300;
 
 			}
-
 		}
 
 		$this->add_render_attribute(

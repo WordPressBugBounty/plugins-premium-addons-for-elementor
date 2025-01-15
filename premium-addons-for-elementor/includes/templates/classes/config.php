@@ -59,13 +59,13 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 		public function __construct() {
 
 			$this->config = array(
-				'premium_temps' => __( 'Premium Templates', 'premium-addons-for-elementor' ),
-				'key'           => $this->get_license_key(),
-				'status'        => $this->get_license_status(),
-				'license_page'  => $this->get_license_page(),
-				'pro_message'   => $this->get_pro_message(),
-                'header_pro_message'   => $this->get_header_pro_message(),
-				'api'           => array(
+				'premium_temps'      => __( 'Premium Templates', 'premium-addons-for-elementor' ),
+				'key'                => $this->get_license_key(),
+				'status'             => $this->get_license_status(),
+				'license_page'       => $this->get_license_page(),
+				'pro_message'        => $this->get_pro_message(),
+				'header_pro_message' => $this->get_header_pro_message(),
+				'api'                => array(
 					'enabled'   => true,
 					'base'      => 'https://premiumtemplates.io/',
 					'path'      => 'wp-json/patemp/v2',
@@ -172,7 +172,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 			}
 		}
 
-        /**
+		/**
 		 *
 		 * Get Header Pro Message
 		 *

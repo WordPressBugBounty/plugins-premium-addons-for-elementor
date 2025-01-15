@@ -181,9 +181,9 @@ class Premium_Notifications extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Image Scroll controls.
@@ -329,11 +329,11 @@ class Premium_Notifications extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array(
 					'icon_type'      => array( 'icon', 'svg' ),
 					'icon[library]!' => 'svg',
 				),
@@ -1020,11 +1020,11 @@ class Premium_Notifications extends Widget_Base {
 		$this->add_control(
 			'header_draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array(
 					'header_icon_sw'        => 'yes',
 					'header_icon_type'      => array( 'icon', 'svg' ),
 					'header_icon[library]!' => 'svg',
@@ -1239,10 +1239,12 @@ class Premium_Notifications extends Widget_Base {
 				// Get all taxonomy values under the taxonomy.
 				foreach ( $taxonomy as $index => $tax ) {
 
-                    $terms = get_terms( array(
-                        'taxonomy'  => $index,
-                        'hide_empty' => false,
-                    ));
+					$terms = get_terms(
+						array(
+							'taxonomy'   => $index,
+							'hide_empty' => false,
+						)
+					);
 
 					$related_tax = array();
 
@@ -1607,13 +1609,13 @@ class Premium_Notifications extends Widget_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'excerpt_length_apply',
 			array(
-				'label'        => __( 'Apply On Posts With Excerpt Set', 'premium-addons-for-elementor' ),
-                'description'        => __( 'Enable this option if you want the excerpt length to be also applied on posts with the Excerpt field set.', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'condition'    => array(
+				'label'       => __( 'Apply On Posts With Excerpt Set', 'premium-addons-for-elementor' ),
+				'description' => __( 'Enable this option if you want the excerpt length to be also applied on posts with the Excerpt field set.', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'condition'   => array(
 					'premium_blog_excerpt' => 'yes',
 					'content_source'       => 'excerpt',
 				),
@@ -2054,7 +2056,7 @@ class Premium_Notifications extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -2195,7 +2197,7 @@ class Premium_Notifications extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -2338,7 +2340,7 @@ class Premium_Notifications extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -2453,7 +2455,7 @@ class Premium_Notifications extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -3663,7 +3665,7 @@ class Premium_Notifications extends Widget_Base {
 				$this->add_render_attribute( 'wrap', 'class', 'elementor-invisible' );
 
 				// if ( 'icon' === $icon_type ) {
-				// 	$this->add_render_attribute( 'icon', 'class', $settings['icon']['value'] );
+				// $this->add_render_attribute( 'icon', 'class', $settings['icon']['value'] );
 				// }
 
 				$this->add_render_attribute(
@@ -3712,7 +3714,7 @@ class Premium_Notifications extends Widget_Base {
 				if ( 'yes' === $settings['header_draw_svg'] ) {
 
 					// if ( 'icon' === $header_icon_type ) {
-					// 	$this->add_render_attribute( 'header_icon', 'class', $settings['header_icon']['value'] );
+					// $this->add_render_attribute( 'header_icon', 'class', $settings['header_icon']['value'] );
 					// }
 
 					$this->add_render_attribute(
@@ -3758,12 +3760,13 @@ class Premium_Notifications extends Widget_Base {
 						);
 					else :
 
-                        echo Helper_Functions::get_svg_by_icon(
-                            $settings['icon'],
-                            $this->get_render_attribute_string( 'icon' )
-                        );
+						echo Helper_Functions::get_svg_by_icon(
+							$settings['icon'],
+							$this->get_render_attribute_string( 'icon' )
+						);
 
-                    endif; ?>
+					endif;
+					?>
 
 				<?php elseif ( 'svg' === $icon_type ) : ?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
@@ -3829,12 +3832,13 @@ class Premium_Notifications extends Widget_Base {
 										)
 									);
 								else :
-                                    echo Helper_Functions::get_svg_by_icon(
-                                        $settings['header_icon'],
-                                        $this->get_render_attribute_string( 'header_icon' )
-                                    );
+									echo Helper_Functions::get_svg_by_icon(
+										$settings['header_icon'],
+										$this->get_render_attribute_string( 'header_icon' )
+									);
 
-                                endif; ?>
+								endif;
+								?>
 
 							<?php else : ?>
 								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'header_icon' ) ); ?>>
@@ -3897,7 +3901,7 @@ class Premium_Notifications extends Widget_Base {
 
 		if ( 'yes' !== $settings['cookies'] || is_user_logged_in() ) {
 
-            $queried_posts_ids = '';
+			$queried_posts_ids = '';
 
 			$number = ! empty( $settings['posts_number'] ) ? $settings['posts_number'] : 3;
 		} else {
@@ -3910,7 +3914,7 @@ class Premium_Notifications extends Widget_Base {
 
 			$this->query_posts = $posts;
 
-            $queried_posts_ids = array();
+			$queried_posts_ids = array();
 
 			foreach ( $posts as $post ) {
 				$queried_posts_ids[] = $post->ID;
@@ -3925,7 +3929,6 @@ class Premium_Notifications extends Widget_Base {
 			} else {
 				$queried_posts_ids = '';
 			}
-
 		}
 
 		return array(

@@ -114,7 +114,7 @@ class Premium_Media_Wheel extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'pa-prettyphoto',
-            'pa-image-effects',
+			'pa-image-effects',
 			'pa-flipster',
 			'premium-addons',
 		);
@@ -149,9 +149,9 @@ class Premium_Media_Wheel extends Widget_Base {
 		return array( 'youtube', 'premium advanced carousel', 'vimeo', 'self', 'hosted', 'scroll', 'image scroll', 'carousel', 'flip', 'coverflow', 'media' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -164,9 +164,9 @@ class Premium_Media_Wheel extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Widget preview refresh button.
@@ -211,13 +211,13 @@ class Premium_Media_Wheel extends Widget_Base {
 
 		$repeater = new Repeater();
 
-        $repeater->add_control(
+		$repeater->add_control(
 			'item_name',
 			array(
-				'label'   => __( 'Item Name', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::TEXT,
-				'description' => __('Use this option to give a unique name to this item', 'premium-addons-for-elementor'),
-                'separator' => 'after'
+				'label'       => __( 'Item Name', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => __( 'Use this option to give a unique name to this item', 'premium-addons-for-elementor' ),
+				'separator'   => 'after',
 			)
 		);
 
@@ -1032,7 +1032,7 @@ class Premium_Media_Wheel extends Widget_Base {
 				'default'      => 'horizontal',
 				'options'      => array(
 					'horizontal' => __( 'Horizontal', 'premium-addons-for-elementor' ),
-                    'vertical'   => __( 'Vertical', 'premium-addons-for-elementor' ),
+					'vertical'   => __( 'Vertical', 'premium-addons-for-elementor' ),
 				),
 				'render_type'  => 'template',
 				'condition'    => array(
@@ -2625,9 +2625,9 @@ class Premium_Media_Wheel extends Widget_Base {
 						<?php
 						if ( 'image' === $media_type ) {
 
-                            $image_id = apply_filters( 'wpml_object_id', $item['media_wheel_img']['id'], 'attachment', true );
+							$image_id = apply_filters( 'wpml_object_id', $item['media_wheel_img']['id'], 'attachment', true );
 
-                            $image_url = wp_get_attachment_image_url( $image_id, 'full' );
+							$image_url = wp_get_attachment_image_url( $image_id, 'full' );
 
 							$this->add_render_attribute(
 								'wheel_img' . $index,
@@ -2671,15 +2671,15 @@ class Premium_Media_Wheel extends Widget_Base {
 					</div>
 
 					<?php
-                        if ( 'yes' === $lightbox || 'video' === $media_type ) {
-                            ?>
-                            <div class="pa-media-icons-wrapper">
-                                <div class="pa-media-icons-inner-container">
-                                    <?php $this->render_icons( $item, $index, $alt ); ?>
-                                </div>
-                            </div>
-                            <?php
-                        }
+					if ( 'yes' === $lightbox || 'video' === $media_type ) {
+						?>
+							<div class="pa-media-icons-wrapper">
+								<div class="pa-media-icons-inner-container">
+								<?php $this->render_icons( $item, $index, $alt ); ?>
+								</div>
+							</div>
+							<?php
+					}
 					?>
 
 					<?php
@@ -2869,57 +2869,56 @@ class Premium_Media_Wheel extends Widget_Base {
 				'privacy' => 'yes',
 			);
 
-            if( 'yes' === $lightbox ) {
+			if ( 'yes' === $lightbox ) {
 
-                if ( 'default' !== $lightbox_type ) {
+				if ( 'default' !== $lightbox_type ) {
 
-                    if ( 1 === count( $settings['media_wheel_repeater'] ) || self::$check_self_hosted ) {
+					if ( 1 === count( $settings['media_wheel_repeater'] ) || self::$check_self_hosted ) {
 
-                            $lightbox_options = array(
-                                'type'         => 'video',
-                                'videoType'    => $item['media_wheel_video_type'],
-                                'url'          => $item['video_link'],
-                                'modalOptions' => array(
-                                    'id'               => 'elementor-lightbox-' . $id,
-                                    'videoAspectRatio' => '169',
-                                ),
-                            );
+							$lightbox_options = array(
+								'type'         => 'video',
+								'videoType'    => $item['media_wheel_video_type'],
+								'url'          => $item['video_link'],
+								'modalOptions' => array(
+									'id'               => 'elementor-lightbox-' . $id,
+									'videoAspectRatio' => '169',
+								),
+							);
 
-                            if ( 'hosted' === $type ) {
-                                $lightbox_options['videoParams'] = $this->get_hosted_params( $item );
-                            }
-                    }
+							if ( 'hosted' === $type ) {
+								$lightbox_options['videoParams'] = $this->get_hosted_params( $item );
+							}
+					}
 
-                    $this->add_render_attribute(
-                        $lightbox_key,
-                        array(
-                            'data-elementor-open-lightbox'  => 'yes',
-                            'data-elementor-lightbox'       => wp_json_encode( $lightbox_options ),
-                            'data-elementor-lightbox-video' => $item['video_link'],
-                        )
-                    );
+					$this->add_render_attribute(
+						$lightbox_key,
+						array(
+							'data-elementor-open-lightbox' => 'yes',
+							'data-elementor-lightbox'      => wp_json_encode( $lightbox_options ),
+							'data-elementor-lightbox-video' => $item['video_link'],
+						)
+					);
 
-                    // Make sure videos slideshow is enabled only when there are no self hosted videos
-                    // Self hosted videos causes issue with slideshow
-                    if ( ! self::$check_self_hosted ) {
-                        $this->add_render_attribute( $lightbox_key, 'data-elementor-lightbox-slideshow', count( $settings['media_wheel_repeater'] ) > 1 ? $this->get_id() : false );
-                    }
-                } else {
+					// Make sure videos slideshow is enabled only when there are no self hosted videos
+					// Self hosted videos causes issue with slideshow
+					if ( ! self::$check_self_hosted ) {
+						$this->add_render_attribute( $lightbox_key, 'data-elementor-lightbox-slideshow', count( $settings['media_wheel_repeater'] ) > 1 ? $this->get_id() : false );
+					}
+				} else {
 
-                    $rel = sprintf( 'prettyPhoto[premium-media-%s]', $this->get_id() );
+					$rel = sprintf( 'prettyPhoto[premium-media-%s]', $this->get_id() );
 
-                    $link = ( 'hosted' === $type ) ? $item['video_link'] : $item['video_link'] . '&iframe=true';
+					$link = ( 'hosted' === $type ) ? $item['video_link'] : $item['video_link'] . '&iframe=true';
 
-                    $this->add_render_attribute(
-                        $lightbox_key,
-                        array(
-                            'href'     => $link,
-                            'data-rel' => $rel,
-                        )
-                    );
-                }
-
-            }
+					$this->add_render_attribute(
+						$lightbox_key,
+						array(
+							'href'     => $link,
+							'data-rel' => $rel,
+						)
+					);
+				}
+			}
 
 			if ( $play_icon_enabled ) {
 

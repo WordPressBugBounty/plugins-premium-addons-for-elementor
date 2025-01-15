@@ -137,9 +137,9 @@ class Premium_Progressbar extends Widget_Base {
 		return array( 'pa', 'premium', 'premium progress bar', 'circle', 'chart', 'line', 'graph', 'percent' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -152,9 +152,9 @@ class Premium_Progressbar extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Progress Bar controls.
@@ -415,11 +415,11 @@ class Premium_Progressbar extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array_merge(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array_merge(
 					$common_conditions,
 					array(
 						'icon_type'             => array( 'icon', 'svg' ),
@@ -1865,7 +1865,7 @@ class Premium_Progressbar extends Widget_Base {
 
 				// if ( 'icon' === $icon_type ) {
 
-				// 	$this->add_render_attribute( 'icon', 'class', $settings['icon_select']['value'] );
+				// $this->add_render_attribute( 'icon', 'class', $settings['icon_select']['value'] );
 
 				// }
 
@@ -1918,9 +1918,9 @@ class Premium_Progressbar extends Widget_Base {
 						);
 					else :
 						echo Helper_Functions::get_svg_by_icon(
-                            $settings['icon_select'],
-                            $this->get_render_attribute_string( 'icon' )
-                        );
+							$settings['icon_select'],
+							$this->get_render_attribute_string( 'icon' )
+						);
 					endif;
 
 				elseif ( 'svg' === $icon_type ) :

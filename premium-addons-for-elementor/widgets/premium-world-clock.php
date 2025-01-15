@@ -124,9 +124,9 @@ class Premium_World_Clock extends Widget_Base {
 		return array( 'pa', 'premium', 'premium world clock', 'world', 'clock', 'timezone', 'time' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -139,9 +139,9 @@ class Premium_World_Clock extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register World Clock controls.
@@ -1400,7 +1400,7 @@ class Premium_World_Clock extends Widget_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'language_prefix',
 			array(
 				'label'       => __( 'Language', 'premium-addons-for-elementor' ),
@@ -3021,7 +3021,7 @@ class Premium_World_Clock extends Widget_Base {
 			'gmtOffset'    => $show_timezone,
 			'showClockNum' => $show_clock_numbers,
 			'equalWidth'   => 'yes' === $settings['equal_width'] && in_array( $skin, array( 'skin-2', 'skin-3', 'skin-4' ), true ) ? true : false,
-            'language'     => $settings['language_prefix']
+			'language'     => $settings['language_prefix'],
 		);
 
 		if ( $show_date ) {

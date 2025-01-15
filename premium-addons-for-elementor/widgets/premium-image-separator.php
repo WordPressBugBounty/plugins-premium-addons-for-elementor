@@ -153,9 +153,9 @@ class Premium_Image_Separator extends Widget_Base {
 		return array( 'pa', 'premium', 'premium image separator', 'divider', 'section', 'shape' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -168,9 +168,9 @@ class Premium_Image_Separator extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Image Controls controls.
@@ -368,11 +368,11 @@ class Premium_Image_Separator extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array(
 					'separator_type'           => array( 'icon', 'svg' ),
 					'separator_icon[library]!' => 'svg',
 				),
@@ -900,7 +900,7 @@ class Premium_Image_Separator extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 				'condition'   => array(
 					'separator_type!' => 'animation',
 				),
@@ -982,9 +982,9 @@ class Premium_Image_Separator extends Widget_Base {
 
 		if ( 'image' === $type ) {
 
-            $image_id = apply_filters( 'wpml_object_id', $settings['premium_image_separator_image']['id'], 'attachment', true );
+			$image_id = apply_filters( 'wpml_object_id', $settings['premium_image_separator_image']['id'], 'attachment', true );
 
-            $image_url = wp_get_attachment_image_url( $image_id, 'full' );
+			$image_url = wp_get_attachment_image_url( $image_id, 'full' );
 
 			$alt = esc_attr( Control_Media::get_image_alt( $settings['premium_image_separator_image'] ) );
 		} elseif ( 'animation' === $type ) {
@@ -1048,12 +1048,13 @@ class Premium_Image_Separator extends Widget_Base {
 				);
 			else :
 
-                echo Helper_Functions::get_svg_by_icon(
-                    $settings['separator_icon'],
-                    $this->get_render_attribute_string( 'icon' )
-                );
+				echo Helper_Functions::get_svg_by_icon(
+					$settings['separator_icon'],
+					$this->get_render_attribute_string( 'icon' )
+				);
 
-			endif; ?>
+			endif;
+			?>
 		<?php elseif ( 'svg' === $type ) : ?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 				<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

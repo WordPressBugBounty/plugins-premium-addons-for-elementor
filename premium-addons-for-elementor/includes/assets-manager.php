@@ -273,7 +273,7 @@ class Assets_Manager {
 
 		$document = Plugin::$instance->documents->get( get_the_ID() );
 
-		if( ! $document ) {
+		if ( ! $document ) {
 			return false;
 		}
 
@@ -482,7 +482,7 @@ class Assets_Manager {
 
 			$file_content = self::get_file_content( $path );
 
-			if( 'not_found' === $file_content ) {
+			if ( 'not_found' === $file_content ) {
 				continue;
 			}
 
@@ -545,10 +545,10 @@ class Assets_Manager {
 				'premium-hscroll',
 				'premium-nav-menu',
 				'premium-addon-maps',
-                'premium-woo-products',
+				'premium-woo-products',
 				'premium-woo-products-pro',
-                'premium-mini-cart',
-                'premium-woo-cta',
+				'premium-mini-cart',
+				'premium-woo-cta',
 				// 'premium-addon-testimonials',
 				'premium-smart-post-listing',
 				'premium-addon-pricing-table',
@@ -576,7 +576,7 @@ class Assets_Manager {
 
 		if ( isset( $file_content['code'] ) ) {
 
-			if( 404 === $file_content['code'] ) {
+			if ( 404 === $file_content['code'] ) {
 				return 'not_found';
 			}
 
@@ -603,7 +603,7 @@ class Assets_Manager {
 		}
 
 		// if ( strpos( $content, '<!doctype html>' ) ) {
-		// 	$content = explode( '<!doctype html>', $content )[0];
+		// $content = explode( '<!doctype html>', $content )[0];
 		// }
 
 		return $content;

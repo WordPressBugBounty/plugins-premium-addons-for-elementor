@@ -44,7 +44,7 @@ class Helper_Functions {
 		'span',
 	);
 
-    /**
+	/**
 	 * Theme
 	 *
 	 * @var theme
@@ -100,15 +100,15 @@ class Helper_Functions {
 	 */
 	private static $assets_suffix = null;
 
-    /**
-     * Get Icon SVG Data
-     *
-     * @since 4.10.72
-     * @access private
-     *
-     * @return array icon data.
-     */
-    private static function get_icon_svg_data( $icon ) {
+	/**
+	 * Get Icon SVG Data
+	 *
+	 * @since 4.10.72
+	 * @access private
+	 *
+	 * @return array icon data.
+	 */
+	private static function get_icon_svg_data( $icon ) {
 
 		preg_match( '/fa(.*) fa-/', $icon['value'], $icon_name_matches );
 
@@ -118,19 +118,19 @@ class Helper_Functions {
 
 		$icon_file_name = str_replace( 'fa-', '', $icon['library'] );
 
-        $path = ELEMENTOR_ASSETS_PATH . 'lib/font-awesome/json/' . $icon_file_name . '.json';
+		$path = ELEMENTOR_ASSETS_PATH . 'lib/font-awesome/json/' . $icon_file_name . '.json';
 
-        $data = file_get_contents( $path );
+		$data = file_get_contents( $path );
 
-        $data = json_decode( $data, true );
+		$data = json_decode( $data, true );
 
-        $svg_data = $data['icons'][ $icon_name ];
+		$svg_data = $data['icons'][ $icon_name ];
 
-		return [
-			'width' => $svg_data[0],
+		return array(
+			'width'  => $svg_data[0],
 			'height' => $svg_data[1],
-			'path' => $svg_data[4]
-		];
+			'path'   => $svg_data[4],
+		);
 	}
 
 	/**
@@ -187,7 +187,7 @@ class Helper_Functions {
 	 */
 	public static function is_hide_row_meta() {
 
-        $hide_meta = false;
+		$hide_meta = false;
 
 		if ( self::check_papro_version() ) {
 
@@ -500,25 +500,25 @@ class Helper_Functions {
 	 */
 	public static function get_installed_theme() {
 
-        if ( null === self::$current_theme ) {
+		if ( null === self::$current_theme ) {
 
-            $theme = wp_get_theme();
+			$theme = wp_get_theme();
 
-            if ( $theme->parent() ) {
+			if ( $theme->parent() ) {
 
-                $theme_name = sanitize_key( $theme->parent()->get( 'Name' ) );
+				$theme_name = sanitize_key( $theme->parent()->get( 'Name' ) );
 
-            } else {
+			} else {
 
-                $theme_name = $theme->get( 'Name' );
+				$theme_name = $theme->get( 'Name' );
 
-                $theme_name = sanitize_key( $theme_name );
+				$theme_name = sanitize_key( $theme_name );
 
-            }
+			}
 
-            self::$current_theme = $theme_name;
+			self::$current_theme = $theme_name;
 
-        }
+		}
 
 		return self::$current_theme;
 	}
@@ -664,9 +664,9 @@ class Helper_Functions {
 	 */
 	public static function get_campaign_link( $link, $source, $medium, $campaign = '' ) {
 
-        if ( null === self::$current_theme ) {
-            self::get_installed_theme();
-        }
+		if ( null === self::$current_theme ) {
+			self::get_installed_theme();
+		}
 
 		$url = add_query_arg(
 			array(
@@ -1000,7 +1000,7 @@ class Helper_Functions {
 		$product_cat = array();
 
 		$cat_args = array(
-            'taxonomy'  => 'product_cat',
+			'taxonomy'   => 'product_cat',
 			'orderby'    => 'name',
 			'order'      => 'asc',
 			'hide_empty' => false,
@@ -1133,13 +1133,13 @@ class Helper_Functions {
 	public static function get_draw_svg_notice( $elem, $search, $conditions, $index = 0, $nested = 'condition' ) {
 
 		$url = add_query_arg(
-            array(
-                'page'   => 'premium-addons',
-                'search' => $search,
-                '#tab'   => 'elements',
-            ),
-            esc_url( admin_url( 'admin.php' ) )
-        );
+			array(
+				'page'   => 'premium-addons',
+				'search' => $search,
+				'#tab'   => 'elements',
+			),
+			esc_url( admin_url( 'admin.php' ) )
+		);
 
 		$control_attr = array(
 			'type'            => Controls_Manager::RAW_HTML,
@@ -1546,7 +1546,7 @@ class Helper_Functions {
 	}
 
 
-    /**
+	/**
 	 * Get Empty Query Message
 	 *
 	 * Written in PHP and used to generate the final HTML when the query is empty
@@ -1584,96 +1584,93 @@ class Helper_Functions {
 		$current_user_can = user_can( $post_author_id, $capability );
 
 		return $current_user_can;
-
 	}
 
 
-    /**
-     * Get Allowed Icon Tags
-     *
-     * Returns an array of allowed HTML tags.
-     *
-     * @since 4.10.69
-     * @access public
-     *
-     * @return array Array of allowed HTML tags.
-     */
-    public static function get_allowed_icon_tags() {
-        return [
-            'svg'   => [
-                'id'    => [],
-                'class'           => [],
-                'aria-hidden'     => [],
-                'aria-labelledby' => [],
-                'role'            => [],
-                'xmlns'           => [],
-                'width'           => [],
-                'height'          => [],
-                'viewbox'         => [],
-                'data-*'          => true,
-            ],
-            'g'     => [ 'fill'  => [] ],
-            'title' => [ 'title' => [] ],
-            'path'     => [
-                'd'    => [],
-                'fill' => []
-            ],
-			'i'      => [
-				'class' => [],
-				'id'    => [],
-				'style' => []
-			],
-        ];
-    }
+	/**
+	 * Get Allowed Icon Tags
+	 *
+	 * Returns an array of allowed HTML tags.
+	 *
+	 * @since 4.10.69
+	 * @access public
+	 *
+	 * @return array Array of allowed HTML tags.
+	 */
+	public static function get_allowed_icon_tags() {
+		return array(
+			'svg'   => array(
+				'id'              => array(),
+				'class'           => array(),
+				'aria-hidden'     => array(),
+				'aria-labelledby' => array(),
+				'role'            => array(),
+				'xmlns'           => array(),
+				'width'           => array(),
+				'height'          => array(),
+				'viewbox'         => array(),
+				'data-*'          => true,
+			),
+			'g'     => array( 'fill' => array() ),
+			'title' => array( 'title' => array() ),
+			'path'  => array(
+				'd'    => array(),
+				'fill' => array(),
+			),
+			'i'     => array(
+				'class' => array(),
+				'id'    => array(),
+				'style' => array(),
+			),
+		);
+	}
 
-    /**
-     * Get SVG By Icon
-     *
-     * @since 4.10.69
-     * @access public
-     */
-    public static function get_svg_by_icon( $icon, $attributes = array() ) {
+	/**
+	 * Get SVG By Icon
+	 *
+	 * @since 4.10.69
+	 * @access public
+	 */
+	public static function get_svg_by_icon( $icon, $attributes = array() ) {
 
-        if ( empty( $icon ) || empty( $icon['value'] ) || empty( $icon['library'] ) )
-            return '';
+		if ( empty( $icon ) || empty( $icon['value'] ) || empty( $icon['library'] ) ) {
+			return '';
+		}
 
-        $icon['font_family'] = 'font-awesome';
+		$icon['font_family'] = 'font-awesome';
 
-        $i_class    = str_replace( ' ', '-', $icon['value'] );
+		$i_class = str_replace( ' ', '-', $icon['value'] );
 
-        $svg_html  = '<svg ';
+		$svg_html = '<svg ';
 
-        $icon       = self::get_icon_svg_data( $icon );
+		$icon = self::get_icon_svg_data( $icon );
 
-        $view_box   = '0 0 ' . $icon['width'] . ' ' . $icon['height'];
+		$view_box = '0 0 ' . $icon['width'] . ' ' . $icon['height'];
 
-        if( is_array( $attributes ) ) {
+		if ( is_array( $attributes ) ) {
 
-            foreach ( $attributes as $key => $value ) {
+			foreach ( $attributes as $key => $value ) {
 
-                if( 'class' === $key ) {
+				if ( 'class' === $key ) {
 
-                    $svg_html .= 'class="svg-inline--'. $i_class . ' ' . $value . '" ';
+					$svg_html .= 'class="svg-inline--' . $i_class . ' ' . $value . '" ';
 
-                } else {
-                    $svg_html .= " {$key}='{$value}' ";
-                }
+				} else {
+					$svg_html .= " {$key}='{$value}' ";
+				}
+			}
+		} else {
 
-            }
+			$attributes = str_replace( 'class="', 'class="svg-inline--' . $i_class . ' ', $attributes );
 
-        } else {
+			$svg_html .= $attributes;
+		}
 
-            $attributes = str_replace( 'class="', 'class="svg-inline--'. $i_class . ' ', $attributes );
+		$svg_html .= "aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";
 
-            $svg_html .= $attributes;
-        }
+		$svg_html .= '<path d="' . esc_attr( $icon['path'] ) . '"></path>';
+		$svg_html .= '</svg>';
 
-        $svg_html .= "aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";
-
-        $svg_html  .= '<path d="' . esc_attr( $icon['path'] ). '"></path>';
-        $svg_html  .= "</svg>";
-
-        return wp_kses( $svg_html, self::get_allowed_icon_tags() );
-
-    }
+		return wp_kses( $svg_html, self::get_allowed_icon_tags() );
+	}
 }

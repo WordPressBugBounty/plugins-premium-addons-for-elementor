@@ -126,9 +126,9 @@ class Premium_Counter extends Widget_Base {
 		return array( 'pa', 'premium', 'premium counter', 'time', 'number' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Categories.
@@ -153,9 +153,9 @@ class Premium_Counter extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Counter controls.
@@ -442,11 +442,11 @@ class Premium_Counter extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array_merge(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array_merge(
 					$common_conditions,
 					array(
 						'premium_counter_icon_image' => array( 'icon', 'svg' ),
@@ -663,16 +663,16 @@ class Premium_Counter extends Widget_Base {
 		$this->add_responsive_control(
 			'title_display',
 			array(
-				'label'     => __( 'Title Display', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'options'   => array(
+				'label'       => __( 'Title Display', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => array(
 					'row'    => __( 'Row', 'premium-addons-for-elementor' ),
 					'column' => __( 'Column', 'premium-addons-for-elementor' ),
 				),
-				'default'   => 'column',
-                'render_type'=> 'template',
-				'toggle'    => false,
-				'selectors' => array(
+				'default'     => 'column',
+				'render_type' => 'template',
+				'toggle'      => false,
+				'selectors'   => array(
 					'{{WRAPPER}} .premium-init-wrapper' => 'flex-direction: {{VALUE}}',
 				),
 			)
@@ -1051,7 +1051,7 @@ class Premium_Counter extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 				'condition'   => array(
 					'premium_counter_icon_style' => 'design',
 				),
@@ -1442,19 +1442,19 @@ class Premium_Counter extends Widget_Base {
 
 			// if ( 'icon' === $icon_type ) {
 
-			// 	if ( ! empty( $settings['premium_counter_icon'] ) ) {
-			// 		$this->add_render_attribute(
-			// 			'icon',
-			// 			array(
-			// 				'class'       => $settings['premium_counter_icon'],
-			// 				'aria-hidden' => 'true',
-			// 			)
-			// 		);
+			// if ( ! empty( $settings['premium_counter_icon'] ) ) {
+			// $this->add_render_attribute(
+			// 'icon',
+			// array(
+			// 'class'       => $settings['premium_counter_icon'],
+			// 'aria-hidden' => 'true',
+			// )
+			// );
 
-			// 	}
+			// }
 
-			// 	$migrated = isset( $settings['__fa4_migrated']['premium_counter_icon_updated'] );
-			// 	$is_new   = empty( $settings['premium_counter_icon'] ) && Icons_Manager::is_migration_allowed();
+			// $migrated = isset( $settings['__fa4_migrated']['premium_counter_icon_updated'] );
+			// $is_new   = empty( $settings['premium_counter_icon'] ) && Icons_Manager::is_migration_allowed();
 
 			// }
 
@@ -1462,7 +1462,7 @@ class Premium_Counter extends Widget_Base {
 
 				// if ( 'icon' === $icon_type ) {
 
-				// 	$this->add_render_attribute( 'icon', 'class', $settings['premium_counter_icon_updated']['value'] );
+				// $this->add_render_attribute( 'icon', 'class', $settings['premium_counter_icon_updated']['value'] );
 
 				// }
 
@@ -1482,7 +1482,6 @@ class Premium_Counter extends Widget_Base {
 				);
 
 			}
-
 		} elseif ( 'custom' === $icon_type ) {
 			$alt = esc_attr( Control_Media::get_image_alt( $settings['premium_counter_image_upload'] ) );
 
@@ -1533,12 +1532,13 @@ class Premium_Counter extends Widget_Base {
 						);
 					else :
 
-                        echo Helper_Functions::get_svg_by_icon(
-                            $settings['premium_counter_icon_updated'],
-                            $this->get_render_attribute_string( 'icon' )
-                        );
+						echo Helper_Functions::get_svg_by_icon(
+							$settings['premium_counter_icon_updated'],
+							$this->get_render_attribute_string( 'icon' )
+						);
 
-					endif; ?>
+					endif;
+					?>
 
 				<?php elseif ( 'svg' === $icon_type ) : ?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>

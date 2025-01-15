@@ -285,7 +285,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 		$id = str_replace( $this->id_prefix(), '', $template_id );
 
 		// if ( ! $tab ) {
-		// 	$tab = isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : false;
+		// $tab = isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : false;
 		// }
 
 		$license_key = Templates\premium_templates()->config->get( 'key' );
@@ -327,10 +327,10 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 			);
 		}
 
-		$content = isset( $body['content'] ) ? $body['content'] : '';
-		$type    = isset( $body['type'] ) ? $body['type'] : '';
-		$license = isset( $body['license'] ) ? $body['license'] : '';
-        $invalid_license = isset( $body['invalid_key'] ) ? 'invalid' : '';
+		$content         = isset( $body['content'] ) ? $body['content'] : '';
+		$type            = isset( $body['type'] ) ? $body['type'] : '';
+		$license         = isset( $body['license'] ) ? $body['license'] : '';
+		$invalid_license = isset( $body['invalid_key'] ) ? 'invalid' : '';
 
 		if ( ! empty( $content ) ) {
 			$content = $this->replace_elements_ids( $content );
@@ -342,7 +342,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 			'type'          => $type,
 			'license'       => $license,
 			'content'       => $content,
-            'invalid'       => $invalid_license
+			'invalid'       => $invalid_license,
 		);
 	}
 

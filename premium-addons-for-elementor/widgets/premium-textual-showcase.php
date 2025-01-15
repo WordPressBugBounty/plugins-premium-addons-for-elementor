@@ -107,7 +107,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'font-awesome-5-all',
-            'pa-btn',
+			'pa-btn',
 			'premium-addons',
 		);
 	}
@@ -161,9 +161,9 @@ class Premium_Textual_Showcase extends Widget_Base {
 		return array( 'pa', 'premium', 'premium textual showcase', 'textual', 'showcase', 'image' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Support URL.
@@ -176,9 +176,9 @@ class Premium_Textual_Showcase extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Tiktok Feed controls.
@@ -400,7 +400,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			array(
 				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
 				'description' => __( 'Use this option to draw your Font Awesome/SVG Icons.', 'premium-addons-for-elementor' ),
 				'conditions'  => $svg_draw_conds,
@@ -1029,7 +1029,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			array(
 				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
 				'description' => __( 'Use this option to draw your Font Awesome/SVG Icons.', 'premium-addons-for-elementor' ),
 				'conditions'  => $svg_draw_conds_hov,
@@ -1064,9 +1064,9 @@ class Premium_Textual_Showcase extends Widget_Base {
 			$repeater->add_control(
 				'svg_sync_hov',
 				array(
-					'label'      => __( 'Draw All Paths Together', 'premium-addons-for-elementor' ),
-					'type'       => Controls_Manager::SWITCHER,
-                    'condition' => array(
+					'label'     => __( 'Draw All Paths Together', 'premium-addons-for-elementor' ),
+					'type'      => Controls_Manager::SWITCHER,
+					'condition' => array(
 						'draw_svg_hov'  => 'yes',
 						'item_type_hov' => 'svg',
 					),
@@ -2332,17 +2332,17 @@ class Premium_Textual_Showcase extends Widget_Base {
 			$this->add_render_attribute( 'item-content-' . $item['_id'] . $elem_type, 'class', 'premium-drawable-icon pa-txt-sc__item-' . $type );
 
 			// if ( 'icon' === $type ) {
-			// 	$icon = $item[ 'icon' . $elem_type ];
+			// $icon = $item[ 'icon' . $elem_type ];
 
-			// 	if ( ! empty( $icon ) ) {
-			// 		$this->add_render_attribute(
-			// 			'item-content-icon' . $item['_id'] . $elem_type,
-			// 			array(
-			// 				'class'       => $icon['value'],
-			// 				'aria-hidden' => 'true',
-			// 			)
-			// 		);
-			// 	}
+			// if ( ! empty( $icon ) ) {
+			// $this->add_render_attribute(
+			// 'item-content-icon' . $item['_id'] . $elem_type,
+			// array(
+			// 'class'       => $icon['value'],
+			// 'aria-hidden' => 'true',
+			// )
+			// );
+			// }
 			// }
 
 			if ( $draw_svg ) {
@@ -2408,10 +2408,11 @@ class Premium_Textual_Showcase extends Widget_Base {
 		if ( $svg_draw ) {
 			?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ) ); ?>>
-                <?php echo Helper_Functions::get_svg_by_icon(
-                        $item[ 'icon' . $elem_type ]
-                    );
-                ?>
+				<?php
+				echo Helper_Functions::get_svg_by_icon(
+					$item[ 'icon' . $elem_type ]
+				);
+				?>
 			</div>
 			<?php
 		} else {

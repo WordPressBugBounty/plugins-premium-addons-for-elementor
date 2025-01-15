@@ -32,8 +32,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			// Autoloader.
 			spl_autoload_register( array( $this, 'autoload' ) );
 
-            //Load plugin textdomain.
-            add_action( 'init', array( $this, 'i18n' ) );
+			// Load plugin textdomain.
+			add_action( 'init', array( $this, 'i18n' ) );
 
 			// Run plugin and require the necessary files.
 			add_action( 'plugins_loaded', array( $this, 'premium_addons_elementor_setup' ) );
@@ -46,7 +46,6 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			// Register Activation hooks.
 			register_activation_hook( PREMIUM_ADDONS_FILE, array( $this, 'handle_activation' ) );
-
 		}
 
 		/**
@@ -137,7 +136,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 					)
 				);
 
-                set_transient( 'pa_activation_redirect', true, 30 );
+				set_transient( 'pa_activation_redirect', true, 30 );
 
 			}
 		}
@@ -189,7 +188,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			require_once PREMIUM_ADDONS_PATH . 'includes/class-premium-template-tags.php';
 
-            // Outdated WPML compatibility.
+			// Outdated WPML compatibility.
 			// Compatibility\Premium_Addons_Wpml::get_instance();
 
 			Addons_Integration::get_instance();

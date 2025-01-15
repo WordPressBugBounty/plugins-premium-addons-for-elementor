@@ -213,173 +213,172 @@ function get_tiktok_videos_urls( $settings, $feed, $widget_id ) {
 
 	if ( false === $response ) {
 
-        foreach( $feed as $index => $video ) {
+		foreach ( $feed as $index => $video ) {
 
-            $video_url = get_video_url( $video['share_url'] );
+			$video_url = get_video_url( $video['share_url'] );
 
-            download_tiktok_video( $video_url, $video['id'] );
+			download_tiktok_video( $video_url, $video['id'] );
 
-        }
+		}
 
 		$transient = Helper_Functions::transient_expire( $settings['reload'] );
 
 		set_transient( $transient_name, true, $transient );
 
 	}
-
 }
 
 function get_video_url( $url ) {
 
-    $url = strtok( $url, '?' );
+	$url = strtok( $url, '?' );
 
-    $content = get_video_content( $url );
+	$content = get_video_content( $url );
 
-    $check = explode('"playAddr":"', $content);
+	$check = explode( '"playAddr":"', $content );
 
-    $contentURL = explode("\"", $check[1])[0];
-    $contentURL = escape_sequence_decode($contentURL);
+	$contentURL = explode( '"', $check[1] )[0];
+	$contentURL = escape_sequence_decode( $contentURL );
 
-    return $contentURL;
-
+	return $contentURL;
 }
 
-function escape_sequence_decode($str) {
+function escape_sequence_decode( $str ) {
 
-    // [U+D800 - U+DBFF][U+DC00 - U+DFFF]|[U+0000 - U+FFFF]
-    $regex = '/\\\u([dD][89abAB][\da-fA-F]{2})\\\u([dD][c-fC-F][\da-fA-F]{2})
+	// [U+D800 - U+DBFF][U+DC00 - U+DFFF]|[U+0000 - U+FFFF]
+	$regex = '/\\\u([dD][89abAB][\da-fA-F]{2})\\\u([dD][c-fC-F][\da-fA-F]{2})
               |\\\u([\da-fA-F]{4})/sx';
 
-    return preg_replace_callback($regex, function ($matches) {
+	return preg_replace_callback(
+		$regex,
+		function ( $matches ) {
 
-        if (isset($matches[3])) {
-            $cp = hexdec($matches[3]);
-        } else {
-            $lead = hexdec($matches[1]);
-            $trail = hexdec($matches[2]);
+			if ( isset( $matches[3] ) ) {
+				$cp = hexdec( $matches[3] );
+			} else {
+				$lead  = hexdec( $matches[1] );
+				$trail = hexdec( $matches[2] );
 
-            // http://unicode.org/faq/utf_bom.html#utf16-4
-            $cp = ($lead << 10) + $trail + 0x10000 - (0xD800 << 10) - 0xDC00;
-        }
+				// http://unicode.org/faq/utf_bom.html#utf16-4
+				$cp = ( $lead << 10 ) + $trail + 0x10000 - ( 0xD800 << 10 ) - 0xDC00;
+			}
 
-        // https://tools.ietf.org/html/rfc3629#section-3
-        // Characters between U+D800 and U+DFFF are not allowed in UTF-8
-        if ($cp > 0xD7FF && 0xE000 > $cp) {
-            $cp = 0xFFFD;
-        }
+			// https://tools.ietf.org/html/rfc3629#section-3
+			// Characters between U+D800 and U+DFFF are not allowed in UTF-8
+			if ( $cp > 0xD7FF && 0xE000 > $cp ) {
+				$cp = 0xFFFD;
+			}
 
-        // https://github.com/php/php-src/blob/php-5.6.4/ext/standard/html.c#L471
-        // php_utf32_utf8(unsigned char *buf, unsigned k)
+			// https://github.com/php/php-src/blob/php-5.6.4/ext/standard/html.c#L471
+			// php_utf32_utf8(unsigned char *buf, unsigned k)
 
-        if ($cp < 0x80) {
-            return chr($cp);
-        } else if ($cp < 0xA0) {
-            return chr(0xC0 | $cp >> 6) . chr(0x80 | $cp & 0x3F);
-        }
+			if ( $cp < 0x80 ) {
+				return chr( $cp );
+			} elseif ( $cp < 0xA0 ) {
+				return chr( 0xC0 | $cp >> 6 ) . chr( 0x80 | $cp & 0x3F );
+			}
 
-        return html_entity_decode('&#' . $cp . ';');
-    }, $str);
+			return html_entity_decode( '&#' . $cp . ';' );
+		},
+		$str
+	);
 }
 
-function get_video_content($url, $geturl = false) {
+function get_video_content( $url, $geturl = false ) {
 
-    $ch = curl_init();
+	$ch = curl_init();
 
-    $options = array(
-        CURLOPT_URL            => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HEADER         => false,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-        CURLOPT_ENCODING       => "utf-8",
-        CURLOPT_AUTOREFERER    => false,
-        CURLOPT_COOKIEJAR      => 'cookie.txt',
-        CURLOPT_COOKIEFILE     => 'cookie.txt',
-        CURLOPT_REFERER        => 'https://www.tiktok.com/',
-        CURLOPT_CONNECTTIMEOUT => 30,
-        CURLOPT_SSL_VERIFYHOST => false,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_TIMEOUT        => 30,
-        CURLOPT_MAXREDIRS      => 10,
-    );
+	$options = array(
+		CURLOPT_URL            => $url,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_HEADER         => false,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+		CURLOPT_ENCODING       => 'utf-8',
+		CURLOPT_AUTOREFERER    => false,
+		CURLOPT_COOKIEJAR      => 'cookie.txt',
+		CURLOPT_COOKIEFILE     => 'cookie.txt',
+		CURLOPT_REFERER        => 'https://www.tiktok.com/',
+		CURLOPT_CONNECTTIMEOUT => 30,
+		CURLOPT_SSL_VERIFYHOST => false,
+		CURLOPT_SSL_VERIFYPEER => false,
+		CURLOPT_TIMEOUT        => 30,
+		CURLOPT_MAXREDIRS      => 10,
+	);
 
-    curl_setopt_array($ch, $options);
+	curl_setopt_array( $ch, $options );
 
-    if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
-        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-    }
+	if ( defined( 'CURLOPT_IPRESOLVE' ) && defined( 'CURL_IPRESOLVE_V4' ) ) {
+		curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+	}
 
-    $data = curl_exec($ch);
+	$data = curl_exec( $ch );
 
+	$httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 
-    $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	if ( $geturl === true ) {
+		return curl_getinfo( $ch, CURLINFO_EFFECTIVE_URL );
+	}
 
-    if ($geturl === true) {
-        return curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-    }
+	curl_close( $ch );
 
-    curl_close($ch);
-
-    return strval($data);
-
+	return strval( $data );
 }
 
 function download_tiktok_video( $video_url, $video_id, $geturl = false ) {
 
-    $tiktok_dir = set_url_scheme( wp_upload_dir()['basedir'] . '/tiktok-videos' );
+	$tiktok_dir = set_url_scheme( wp_upload_dir()['basedir'] . '/tiktok-videos' );
 
-    if ( ! file_exists( $tiktok_dir ) ) {
-        wp_mkdir_p( set_url_scheme( wp_upload_dir()['basedir'] . '/tiktok-videos' ) );
-    }
+	if ( ! file_exists( $tiktok_dir ) ) {
+		wp_mkdir_p( set_url_scheme( wp_upload_dir()['basedir'] . '/tiktok-videos' ) );
+	}
 
-    $ch = curl_init();
-    $headers = array(
-        'Range: bytes=0-',
-    );
+	$ch      = curl_init();
+	$headers = array(
+		'Range: bytes=0-',
+	);
 
-    $options = array(
-        CURLOPT_URL            => $video_url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HEADER         => false,
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLINFO_HEADER_OUT    => true,
-        CURLOPT_USERAGENT => 'okhttp',
-        CURLOPT_ENCODING       => "utf-8",
-        CURLOPT_AUTOREFERER    => true,
-        CURLOPT_COOKIEJAR      => 'cookie.txt',
-        CURLOPT_COOKIEFILE     => 'cookie.txt',
-        CURLOPT_REFERER        => 'https://www.tiktok.com/',
-        CURLOPT_CONNECTTIMEOUT => 30,
-        CURLOPT_SSL_VERIFYHOST => false,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_TIMEOUT        => 30,
-        CURLOPT_MAXREDIRS      => 10,
-    );
+	$options = array(
+		CURLOPT_URL            => $video_url,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_HEADER         => false,
+		CURLOPT_HTTPHEADER     => $headers,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLINFO_HEADER_OUT    => true,
+		CURLOPT_USERAGENT      => 'okhttp',
+		CURLOPT_ENCODING       => 'utf-8',
+		CURLOPT_AUTOREFERER    => true,
+		CURLOPT_COOKIEJAR      => 'cookie.txt',
+		CURLOPT_COOKIEFILE     => 'cookie.txt',
+		CURLOPT_REFERER        => 'https://www.tiktok.com/',
+		CURLOPT_CONNECTTIMEOUT => 30,
+		CURLOPT_SSL_VERIFYHOST => false,
+		CURLOPT_SSL_VERIFYPEER => false,
+		CURLOPT_TIMEOUT        => 30,
+		CURLOPT_MAXREDIRS      => 10,
+	);
 
-    curl_setopt_array($ch, $options);
-    if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
-        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-    }
+	curl_setopt_array( $ch, $options );
+	if ( defined( 'CURLOPT_IPRESOLVE' ) && defined( 'CURL_IPRESOLVE_V4' ) ) {
+		curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+	}
 
-    $data = curl_exec($ch);
+	$data = curl_exec( $ch );
 
-    $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	$httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 
-    if ($geturl === true) {
-        return curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-    }
+	if ( $geturl === true ) {
+		return curl_getinfo( $ch, CURLINFO_EFFECTIVE_URL );
+	}
 
-    curl_close($ch);
+	curl_close( $ch );
 
-    $filename = $tiktok_dir . '/' . $video_id . ".mp4";
+	$filename = $tiktok_dir . '/' . $video_id . '.mp4';
 
-    $d = fopen($filename, "w");
+	$d = fopen( $filename, 'w' );
 
-    fwrite($d, $data);
+	fwrite( $d, $data );
 
-    fclose($d);
+	fclose( $d );
 
-    return $filename;
-
+	return $filename;
 }

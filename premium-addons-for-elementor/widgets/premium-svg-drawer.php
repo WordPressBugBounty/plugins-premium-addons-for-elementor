@@ -132,9 +132,9 @@ class Premium_SVG_Drawer extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register SVG Draw controls.
@@ -905,14 +905,14 @@ class Premium_SVG_Drawer extends Widget_Base {
 						)
 					);
 
-                    echo Helper_Functions::get_svg_by_icon(
-                        $settings['font_icon'],
-                        array(
-                            'id'          => 'premium-svg-icon-' . $this->get_id(),
-                            'class'       => 'premium-svg-icon',
-                            'data-start'  => 'manual'
-                        )
-                    );
+					echo Helper_Functions::get_svg_by_icon(
+						$settings['font_icon'],
+						array(
+							'id'         => 'premium-svg-icon-' . $this->get_id(),
+							'class'      => 'premium-svg-icon',
+							'data-start' => 'manual',
+						)
+					);
 
 					?>
 

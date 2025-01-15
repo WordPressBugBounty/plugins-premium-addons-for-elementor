@@ -77,9 +77,9 @@ class Ip_Location extends Condition {
 
 			$location_data = unserialize( rplg_urlopen( 'http://www.geoplugin.net/php.gp?ip=' . $ip_address )['data'] );
 
-            if( ! is_array( $location_data ) ) {
-                return;
-            }
+			if ( ! is_array( $location_data ) ) {
+				return;
+			}
 
 			if ( 404 === $location_data['geoplugin_status'] ) {
 				return; // localhost.

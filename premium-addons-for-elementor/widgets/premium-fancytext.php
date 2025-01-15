@@ -140,9 +140,9 @@ class Premium_Fancytext extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Testimonials controls.
@@ -993,7 +993,7 @@ class Premium_Fancytext extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-atext__text, {{WRAPPER}} .premium-atext__text::after, {{WRAPPER}} .premium-atext__letter, {{WRAPPER}} .text' => 'animation-duration: {{SIZE}}s',
 					'{{WRAPPER}} .premium-atext__shape svg path' => '--pa-animation-duration: {{SIZE}}s',
-                    '{{WRAPPER}}' => '--pa-animation-duration: {{SIZE}}',
+					'{{WRAPPER}}' => '--pa-animation-duration: {{SIZE}}',
 				),
 				'condition' => array(
 					'style'             => 'highlight',
@@ -1013,8 +1013,8 @@ class Premium_Fancytext extends Widget_Base {
 						'max' => 15,
 					),
 				),
-                'selectors' => array(
-                    '{{WRAPPER}}' => '--pa-animation-delay: {{SIZE}}',
+				'selectors' => array(
+					'{{WRAPPER}}' => '--pa-animation-delay: {{SIZE}}',
 				),
 				'condition' => array(
 					'style'            => 'highlight',

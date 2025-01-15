@@ -134,9 +134,9 @@ class Premium_Carousel extends Widget_Base {
 		return array( 'pa', 'premium', 'premium carousel', 'slider', 'advanced', 'testimonial' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Categories.
@@ -161,9 +161,9 @@ class Premium_Carousel extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Carousel controls.
@@ -608,7 +608,7 @@ class Premium_Carousel extends Widget_Base {
 				'label'       => __( 'Slides\' Spacing', 'premium-addons-for-elementor' ),
 				'description' => __( 'Set a spacing value in pixels (px)', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
-				'render_type'=> 'template',
+				'render_type' => 'template',
 				'default'     => '15',
 				'selectors'   => array(
 					'{{WRAPPER}}' => '--pa-carousel-center-padding: {{VALUE}}',
@@ -1537,7 +1537,7 @@ class Premium_Carousel extends Widget_Base {
 				'premium-carousel-wrapper',
 				'premium-carousel-hidden',
 				'carousel-wrapper-' . esc_attr( $this->get_id() ),
-				$extra_class
+				$extra_class,
 			)
 		);
 

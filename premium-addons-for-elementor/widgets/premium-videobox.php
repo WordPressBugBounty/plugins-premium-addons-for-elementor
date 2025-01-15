@@ -133,9 +133,9 @@ class Premium_Videobox extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return true;
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return true;
+	}
 
 	/**
 	 * Register Video Box controls.
@@ -1769,7 +1769,7 @@ class Premium_Videobox extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -2669,7 +2669,6 @@ class Premium_Videobox extends Widget_Base {
 			if ( ! $settings['download_button'] ) {
 				$video_params .= ' controlsList="nodownload"';
 			}
-
 		} else {
 			// youtube - vimeo - dailymotion.
 			$link = $params['link'];
@@ -3289,7 +3288,7 @@ class Premium_Videobox extends Widget_Base {
 					$id = $video->id->videoId;
 				}
 
-				if ( 'playlist' === $source && ! in_array( $video->status->privacyStatus, array('public', 'unlisted'), true )  ) {
+				if ( 'playlist' === $source && ! in_array( $video->status->privacyStatus, array( 'public', 'unlisted' ), true ) ) {
 					continue;
 				}
 

@@ -177,9 +177,9 @@ class Premium_Weather extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Smart Post Listing controls.
@@ -1151,7 +1151,7 @@ class Premium_Weather extends Widget_Base {
 				array(
 					'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 					'type'        => Controls_Manager::SWITCHER,
-                    'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+					'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 					'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
 					'description' => __( 'Use this option to draw your Font Awesome Custom Icons.', 'premium-addons-for-elementor' ),
 					'condition'   => array(
@@ -4449,18 +4449,18 @@ class Premium_Weather extends Widget_Base {
 					);
 			} else {
 
-                    echo Helper_Functions::get_svg_by_icon(
-                        $icon,
-                        array(
-                            'class' => 'premium-drawable-icon premium-svg-drawer',
-                            'data-svg-loop' => 'false',
-                            'data-svg-fill' => $draw_fill,
-                            'data-svg-sync' => 'yes',
-                            'data-svg-frames' => '5',
-                            'data-svg-point' => '0',
-                            'aria-hidden' => 'hidden'
-                        )
-                    );
+					echo Helper_Functions::get_svg_by_icon(
+						$icon,
+						array(
+							'class'           => 'premium-drawable-icon premium-svg-drawer',
+							'data-svg-loop'   => 'false',
+							'data-svg-fill'   => $draw_fill,
+							'data-svg-sync'   => 'yes',
+							'data-svg-frames' => '5',
+							'data-svg-point'  => '0',
+							'aria-hidden'     => 'hidden',
+						)
+					);
 
 			}
 		} elseif ( 'image' === $icon_type ) {

@@ -115,7 +115,7 @@ class Premium_Modalbox extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
-            'pa-btn',
+			'pa-btn',
 			'premium-addons',
 		);
 	}
@@ -158,9 +158,9 @@ class Premium_Modalbox extends Widget_Base {
 		return array( 'pa', 'premium', 'premium modal box', 'popup', 'lightbox', 'advanced', 'embed' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Categories.
@@ -185,9 +185,9 @@ class Premium_Modalbox extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Modal Box controls.
@@ -514,22 +514,22 @@ class Premium_Modalbox extends Widget_Base {
 					'text'      => __( 'Text', 'premium-addons-for-elementor' ),
 					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
 					'pageload'  => __( 'On Page Load', 'premium-addons-for-elementor' ),
-                    'exit' => apply_filters( 'pa_pro_label', __( 'On Page Exit Intent (Pro)', 'premium-addons-for-elementor' ) ),
-                ),
+					'exit'      => apply_filters( 'pa_pro_label', __( 'On Page Exit Intent (Pro)', 'premium-addons-for-elementor' ) ),
+				),
 				'label_block' => true,
 				'default'     => 'button',
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'page_exit_notice',
 			array(
 				'raw'             => __( 'When you are logged in, the modal box will normally show on page load. To try this open, you need to be logged out. This option uses localstorage to show the modal box for the first time only.', 'premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-                'condition'=> [
-                    'premium_modal_box_display_on'=> 'exit'
-                ]
+				'condition'       => array(
+					'premium_modal_box_display_on' => 'exit',
+				),
 			)
 		);
 
@@ -617,11 +617,11 @@ class Premium_Modalbox extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array_merge(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array_merge(
 					$common_conditions,
 					array(
 						'icon_type' => array( 'icon', 'svg' ),
@@ -1169,7 +1169,7 @@ class Premium_Modalbox extends Widget_Base {
 									'operator' => '!=',
 									'value'    => 'pageload',
 								),
-                                array(
+								array(
 									'name'     => 'premium_modal_box_display_on',
 									'operator' => '!=',
 									'value'    => 'exit',
@@ -1195,15 +1195,15 @@ class Premium_Modalbox extends Widget_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'trigger_zindex',
 			array(
-				'label'       => __( 'Trigger Z-Index', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::NUMBER,
-				'condition'   => array(
-					'premium_modal_box_display_on!' => ['pageload', 'exit'],
+				'label'     => __( 'Trigger Z-Index', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::NUMBER,
+				'condition' => array(
+					'premium_modal_box_display_on!' => array( 'pageload', 'exit' ),
 				),
-                'selectors' => array(
+				'selectors' => array(
 					'{{WRAPPER}} .premium-modal-trigger-container' => 'position:relative; z-index: {{VALUE}};',
 				),
 			)
@@ -1250,7 +1250,7 @@ class Premium_Modalbox extends Widget_Base {
 				'label'     => __( 'Trigger', 'premium-addons-for-elementor' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
-					'premium_modal_box_display_on!' => ['pageload', 'exit'],
+					'premium_modal_box_display_on!' => array( 'pageload', 'exit' ),
 				),
 			)
 		);
@@ -2306,9 +2306,9 @@ class Premium_Modalbox extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-        $papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = apply_filters( 'papro_activated', false );
 
-        $trigger = $settings['premium_modal_box_display_on'];
+		$trigger = $settings['premium_modal_box_display_on'];
 
 		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.26', '<' ) ) {
 
@@ -2343,18 +2343,18 @@ class Premium_Modalbox extends Widget_Base {
 
 			// if ( 'icon' === $icon_type ) {
 
-			// 	if ( ! empty( $settings['premium_modal_box_button_icon_selection'] ) ) {
-			// 		$this->add_render_attribute(
-			// 			'icon',
-			// 			array(
-			// 				'class'       => $settings['premium_modal_box_button_icon_selection'],
-			// 				'aria-hidden' => 'true',
-			// 			)
-			// 		);
-			// 	}
+			// if ( ! empty( $settings['premium_modal_box_button_icon_selection'] ) ) {
+			// $this->add_render_attribute(
+			// 'icon',
+			// array(
+			// 'class'       => $settings['premium_modal_box_button_icon_selection'],
+			// 'aria-hidden' => 'true',
+			// )
+			// );
+			// }
 
-			// 	$migrated = isset( $settings['__fa4_migrated']['premium_modal_box_button_icon_selection_updated'] );
-			// 	$is_new   = empty( $settings['premium_modal_box_button_icon_selection'] ) && Icons_Manager::is_migration_allowed();
+			// $migrated = isset( $settings['__fa4_migrated']['premium_modal_box_button_icon_selection_updated'] );
+			// $is_new   = empty( $settings['premium_modal_box_button_icon_selection'] ) && Icons_Manager::is_migration_allowed();
 
 			// }
 
@@ -2371,7 +2371,7 @@ class Premium_Modalbox extends Widget_Base {
 
 				// if ( 'icon' === $icon_type ) {
 
-				// 	$this->add_render_attribute( 'icon', 'class', $settings['premium_modal_box_button_icon_selection_updated']['value'] );
+				// $this->add_render_attribute( 'icon', 'class', $settings['premium_modal_box_button_icon_selection_updated']['value'] );
 
 				// }
 
@@ -2538,10 +2538,10 @@ class Premium_Modalbox extends Widget_Base {
 										)
 									);
 								else :
-                                    echo Helper_Functions::get_svg_by_icon(
-                                        $settings['premium_modal_box_button_icon_selection_updated'],
-                                        $this->get_render_attribute_string( 'icon' )
-                                    );
+									echo Helper_Functions::get_svg_by_icon(
+										$settings['premium_modal_box_button_icon_selection_updated'],
+										$this->get_render_attribute_string( 'icon' )
+									);
 									endif;
 							else :
 								?>
@@ -2570,9 +2570,9 @@ class Premium_Modalbox extends Widget_Base {
 									);
 								else :
 									echo Helper_Functions::get_svg_by_icon(
-                                        $settings['premium_modal_box_button_icon_selection_updated'],
-                                        $this->get_render_attribute_string( 'icon' )
-                                    );
+										$settings['premium_modal_box_button_icon_selection_updated'],
+										$this->get_render_attribute_string( 'icon' )
+									);
 								endif;
 							else :
 								?>

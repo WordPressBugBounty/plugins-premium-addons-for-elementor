@@ -101,7 +101,7 @@ class Premium_Button extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
-            'pa-btn',
+			'pa-btn',
 			'premium-addons',
 		);
 	}
@@ -143,9 +143,9 @@ class Premium_Button extends Widget_Base {
 		return array( 'pa', 'premium', 'premium button', 'cta', 'call', 'link', 'btn', 'pa', 'premium' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Categories.
@@ -170,9 +170,9 @@ class Premium_Button extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Button controls.
@@ -623,11 +623,11 @@ class Premium_Button extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array_merge(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array_merge(
 					$common_conditions,
 					array(
 						'icon_type' => array( 'icon', 'svg' ),
@@ -882,20 +882,20 @@ class Premium_Button extends Widget_Base {
 		$this->add_responsive_control(
 			'premium_button_icon_before_size',
 			array(
-				'label'     => __( 'Icon Size', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SLIDER,
-                'size_units' => array('px', 'em', 'vw'),
-				'range'     => array(
+				'label'      => __( 'Icon Size', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', 'vw' ),
+				'range'      => array(
 					'px' => array(
 						'min' => 0,
 						'max' => 200,
 					),
 				),
-				'condition' => array(
+				'condition'  => array(
 					'premium_button_icon_switcher' => 'yes',
 					'premium_button_hover_effect!' => 'style4',
 				),
-				'selectors' => array(
+				'selectors'  => array(
 					'{{WRAPPER}} .premium-button-text-icon-wrapper i' => 'font-size: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .premium-button-text-icon-wrapper svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
 				),
@@ -905,13 +905,13 @@ class Premium_Button extends Widget_Base {
 		$this->add_responsive_control(
 			'premium_button_icon_style4_size',
 			array(
-				'label'     => __( 'Icon Size', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SLIDER,
-                'size_units' => array('px', 'em', 'vw'),
-				'condition' => array(
+				'label'      => __( 'Icon Size', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', 'vw' ),
+				'condition'  => array(
 					'premium_button_hover_effect' => 'style4',
 				),
-				'selectors' => array(
+				'selectors'  => array(
 					'{{WRAPPER}} .premium-button-style4-icon-wrapper i' => 'font-size: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .premium-button-style4-icon-wrapper svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
 				),
@@ -1304,7 +1304,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -1564,7 +1564,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -1774,7 +1774,7 @@ class Premium_Button extends Widget_Base {
 
 			if ( 'icon' !== $slide_icon_type ) {
 
-                $this->add_render_attribute(
+				$this->add_render_attribute(
 					'slide_lottie',
 					array(
 						'class'               => 'premium-lottie-animation',
@@ -1785,7 +1785,6 @@ class Premium_Button extends Widget_Base {
 				);
 
 			}
-
 		} elseif ( 'style5' === $settings['premium_button_hover_effect'] ) {
 			$style_dir = 'premium-button-style5-' . $settings['premium_button_style5_dir'];
 		} elseif ( 'style6' === $settings['premium_button_hover_effect'] ) {
@@ -1824,10 +1823,9 @@ class Premium_Button extends Widget_Base {
 			$button_event = $settings['premium_button_event_function'];
 			if ( 'yes' === $settings['premium_button_event_switcher'] && ! empty( $button_event ) ) {
 
-                if( Helper_Functions::check_capability( 'unfiltered_html' ) ) {
-                    $this->add_render_attribute( 'button', 'onclick', esc_js( $button_event ) );
-                }
-
+				if ( Helper_Functions::check_capability( 'unfiltered_html' ) ) {
+					$this->add_render_attribute( 'button', 'onclick', esc_js( $button_event ) );
+				}
 			}
 		}
 
@@ -1851,12 +1849,13 @@ class Premium_Button extends Widget_Base {
 								);
 							else :
 
-                                echo Helper_Functions::get_svg_by_icon(
-                                    $settings['premium_button_icon_selection_updated'],
-                                    $this->get_render_attribute_string( 'icon' )
-                                );
+								echo Helper_Functions::get_svg_by_icon(
+									$settings['premium_button_icon_selection_updated'],
+									$this->get_render_attribute_string( 'icon' )
+								);
 
-							endif; ?>
+							endif;
+							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 								<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -1888,11 +1887,12 @@ class Premium_Button extends Widget_Base {
 							else :
 
 								echo Helper_Functions::get_svg_by_icon(
-                                    $settings['premium_button_icon_selection_updated'],
-                                    $this->get_render_attribute_string( 'icon' )
-                                );
+									$settings['premium_button_icon_selection_updated'],
+									$this->get_render_attribute_string( 'icon' )
+								);
 
-                            endif; ?>
+							endif;
+							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 								<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -2081,17 +2081,17 @@ class Premium_Button extends Widget_Base {
 
 		}
 
-        view.addRenderAttribute( 'button', {
-            'class': [
-                'premium-button',
-                buttonSize,
-                styleDir,
-                changeToScope,
-                'premium-button-' + hoverEffect
-            ],
-            'href': buttonUrl,
-            'data-text': buttonText,
-        });
+		view.addRenderAttribute( 'button', {
+			'class': [
+				'premium-button',
+				buttonSize,
+				styleDir,
+				changeToScope,
+				'premium-button-' + hoverEffect
+			],
+			'href': buttonUrl,
+			'data-text': buttonText,
+		});
 
 		#>
 

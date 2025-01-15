@@ -48,10 +48,10 @@ class Premium_Image_Choose extends Base_Data_Control {
 							<input id="<?php echo esc_attr( $control_uid ); ?>" type="radio" name="elementor-choose-{{ data.name }}-{{ data._cid }}" value="{{ value }}">
 							<label class="elementor-image-choices-label" for="<?php echo esc_attr( $control_uid ); ?>">
 								<# if ( 'premium_gdivider_defaults' === data.name ) { #>
-                                    {{{options.imagesmall}}}
-                                <# } else { #>
-                                    <img class="imagesmall" src="{{ options.imagesmall }}" alt="{{ options.title }}" style="height: 50px;" />
-                                <# } #>
+									{{{options.imagesmall}}}
+								<# } else { #>
+									<img class="imagesmall" src="{{ options.imagesmall }}" alt="{{ options.title }}" style="height: 50px;" />
+								<# } #>
 								<span class="elementor-screen-only">{{{ options.title }}}</span>
 							</label>
 						</div>

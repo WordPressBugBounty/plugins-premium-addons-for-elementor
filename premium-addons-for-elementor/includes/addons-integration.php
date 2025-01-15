@@ -116,7 +116,7 @@ class Addons_Integration {
 			add_action( 'elementor/controls/register', array( $this, 'init_pa_controls' ) );
 			add_action( 'elementor/widgets/register', array( $this, 'widgets_area' ) );
 
-            $this->load_pa_extensions();
+			$this->load_pa_extensions();
 
 		}
 
@@ -128,14 +128,14 @@ class Addons_Integration {
 
 			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'enqueue_editor_cp_scripts' ), 99 );
 
-            $this->load_cp_module();
+			$this->load_cp_module();
 
 		}
 
-        //Exclude our dynamic assets from being minified with WP Optimize.
-        if( self::$integrations['premium-wp-optimize-exclude'] ) {
-            add_filter( 'wp-optimize-minify-default-exclusions', array( $this, 'exclude_pa_assets_from_wp_optimize') );
-        }
+		// Exclude our dynamic assets from being minified with WP Optimize.
+		if ( self::$integrations['premium-wp-optimize-exclude'] ) {
+			add_filter( 'wp-optimize-minify-default-exclusions', array( $this, 'exclude_pa_assets_from_wp_optimize' ) );
+		}
 	}
 
 	/**
@@ -366,9 +366,9 @@ class Addons_Integration {
 				'pa-eq-editor',
 				'PremiumSettings',
 				array(
-					'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'nonce'   => wp_create_nonce( 'pa-blog-widget-nonce' ),
-                    'unused_nonce'             => wp_create_nonce( 'pa-disable-unused' ),
+					'ajaxurl'      => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'nonce'        => wp_create_nonce( 'pa-blog-widget-nonce' ),
+					'unused_nonce' => wp_create_nonce( 'pa-disable-unused' ),
 				)
 			);
 		}
@@ -379,21 +379,21 @@ class Addons_Integration {
 
 			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'editor-issue', 'wp-editor', 'panel-issues' );
 
-            $disable_unused_url = add_query_arg(
-                array(
-                    'page'     => 'premium-addons',
-                    'pa-action' => 'unused',
-                    '#tab'     => 'elements',
-                ),
-                esc_url( admin_url( 'admin.php' ) )
-            );
+			$disable_unused_url = add_query_arg(
+				array(
+					'page'      => 'premium-addons',
+					'pa-action' => 'unused',
+					'#tab'      => 'elements',
+				),
+				esc_url( admin_url( 'admin.php' ) )
+			);
 
 			wp_localize_script(
 				'pa-eq-editor',
 				'PremiumEditorLinks',
 				array(
 					$link,
-                    $disable_unused_url
+					$disable_unused_url,
 				)
 			);
 
@@ -514,7 +514,7 @@ class Addons_Integration {
 			'all'
 		);
 
-        wp_register_style(
+		wp_register_style(
 			'pa-btn',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/button-line' . $suffix . '.css',
 			array(),
@@ -522,7 +522,7 @@ class Addons_Integration {
 			'all'
 		);
 
-        wp_register_style(
+		wp_register_style(
 			'pa-load-animations',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/load-animations' . $suffix . '.css',
 			array(),
@@ -530,7 +530,7 @@ class Addons_Integration {
 			'all'
 		);
 
-        wp_register_style(
+		wp_register_style(
 			'pa-share-btn',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/share-button' . $suffix . '.css',
 			array(),
@@ -538,7 +538,7 @@ class Addons_Integration {
 			'all'
 		);
 
-        wp_register_style(
+		wp_register_style(
 			'pa-image-effects',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/image-effects' . $suffix . '.css',
 			array(),
@@ -687,33 +687,30 @@ class Addons_Integration {
 				);
 
 				// if ( class_exists( 'woocommerce' ) ) {
-				// 	wp_localize_script(
-				// 		'pa-frontend',
-				// 		'PremiumWooSettings',
-				// 		array(
-				// 			'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
-				// 			'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
-				// 			'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
-				// 			'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
-				// 			'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
-				// 			'view_cart'       => __( 'View cart', 'woocommerce' ),
-				// 			'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
-				// 		)
-				// 	);
+				// wp_localize_script(
+				// 'pa-frontend',
+				// 'PremiumWooSettings',
+				// array(
+				// 'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+				// 'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
+				// 'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
+				// 'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
+				// 'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
+				// 'view_cart'       => __( 'View cart', 'woocommerce' ),
+				// 'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
+				// )
+				// );
 
 				// }
 			}
 
-            if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) || 'empty' === self::$css_content ) {
+			if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) || 'empty' === self::$css_content ) {
 				// If the assets are not ready, or file does not exist for any reson.
 				$this->register_old_scripts( $dir, $suffix );
 			}
-
 		} else {
 			$this->register_old_scripts( $dir, $suffix );
 		}
-
-
 
 		// if ( !wp_script_is( 'wc-cart-fragments', 'enqueued' ) && wp_script_is( 'wc-cart-fragments', 'registered' ) ) {
 
@@ -982,17 +979,17 @@ class Addons_Integration {
 			true
 		);
 
-        $is_edit_mode = Helper_Functions::is_edit_mode();
+		$is_edit_mode = Helper_Functions::is_edit_mode();
 
-        if( $is_edit_mode ) {
-            wp_register_script(
-                'pa-fontawesome-all',
-                PREMIUM_ADDONS_URL . 'assets/frontend/min-js/fontawesome-all.min.js',
-                array( 'jquery' ),
-                PREMIUM_ADDONS_VERSION,
-                true
-            );
-        }
+		if ( $is_edit_mode ) {
+			wp_register_script(
+				'pa-fontawesome-all',
+				PREMIUM_ADDONS_URL . 'assets/frontend/min-js/fontawesome-all.min.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+		}
 
 		wp_register_script(
 			'pa-scrolltrigger',
@@ -1034,7 +1031,7 @@ class Addons_Integration {
 			true
 		);
 
-        // We need to make sure premium-woocommerce.js will not be loaded twice if assets are generated.
+		// We need to make sure premium-woocommerce.js will not be loaded twice if assets are generated.
 		if ( class_exists( 'woocommerce' ) ) {
 
 			wp_register_script(
@@ -1069,7 +1066,7 @@ class Addons_Integration {
 				true
 			);
 
-            wp_register_script(
+			wp_register_script(
 				'premium-woocommerce',
 				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-woo-products' . $suffix . '.js',
 				array( 'jquery' ),
@@ -1176,7 +1173,6 @@ class Addons_Integration {
 			PREMIUM_ADDONS_VERSION,
 			true
 		);
-
 	}
 
 	/**
@@ -1265,35 +1261,34 @@ class Addons_Integration {
 		}
 	}
 
-    public function load_widget_files( $file, $class ) {
+	public function load_widget_files( $file, $class ) {
 
-        if ( 'PremiumAddons\Widgets\Premium_Contactform' !== $class ) {
-            require $file;
-        } elseif ( function_exists( 'wpcf7' ) ) {
-            require $file;
-        }
+		if ( 'PremiumAddons\Widgets\Premium_Contactform' !== $class ) {
+			require $file;
+		} elseif ( function_exists( 'wpcf7' ) ) {
+			require $file;
+		}
 
-        if ( 'PremiumAddons\Widgets\Premium_Videobox' === $class || 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
-            require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
-        }
+		if ( 'PremiumAddons\Widgets\Premium_Videobox' === $class || 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
+			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
+		}
 
-        if ( 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
-            require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-weather-handler.php';
-        }
+		if ( 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
+			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-weather-handler.php';
+		}
 
-        if ( in_array( $class, array( 'PremiumAddons\Widgets\Premium_Pinterest_Feed', 'PremiumAddons\Widgets\Premium_Tiktok_Feed' ), true ) ) {
-            require_once PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/mobile-detector.php';
+		if ( in_array( $class, array( 'PremiumAddons\Widgets\Premium_Pinterest_Feed', 'PremiumAddons\Widgets\Premium_Tiktok_Feed' ), true ) ) {
+			require_once PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/mobile-detector.php';
 
-            if ( 'PremiumAddons\Widgets\Premium_Pinterest_Feed' == $class ) {
-                require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-pins-handler.php';
-            }
+			if ( 'PremiumAddons\Widgets\Premium_Pinterest_Feed' == $class ) {
+				require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-pins-handler.php';
+			}
 
-            if ( 'PremiumAddons\Widgets\Premium_Tiktok_Feed' == $class ) {
-                require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-tiktok-handler.php';
-            }
-        }
-
-    }
+			if ( 'PremiumAddons\Widgets\Premium_Tiktok_Feed' == $class ) {
+				require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-tiktok-handler.php';
+			}
+		}
+	}
 
 	/**
 	 * Enqueue editor scripts
@@ -1763,31 +1758,29 @@ class Addons_Integration {
 	}
 
 
-    /**
-     * Load Copy Paste Module
-     *
-     * @since 4.10.57
-     * @access public
-     */
-    public function load_cp_module() {
+	/**
+	 * Load Copy Paste Module
+	 *
+	 * @since 4.10.57
+	 * @access public
+	 */
+	public function load_cp_module() {
 
-        Addons_Cross_CP::get_instance();
+		Addons_Cross_CP::get_instance();
+	}
 
-    }
+	/**
+	 * Exclude PA assets from WP Optimize
+	 *
+	 * @since 4.10.73
+	 * @access public
+	 */
+	function exclude_pa_assets_from_wp_optimize( $excluded_handles ) {
 
-    /**
-     * Exclude PA assets from WP Optimize
-     *
-     * @since 4.10.73
-     * @access public
-     */
-    function exclude_pa_assets_from_wp_optimize( $excluded_handles ) {
+		$excluded_handles[] = 'pa-frontend';
 
-        $excluded_handles[] = 'pa-frontend';
-
-        return $excluded_handles;
-
-    }
+		return $excluded_handles;
+	}
 
 
 	/**

@@ -75,9 +75,9 @@ class Premium_Tiktok_Feed extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'font-awesome-5-all',
-            'pa-share-btn',
-            'pa-load-animations',
-            'pa-image-effects',
+			'pa-share-btn',
+			'pa-load-animations',
+			'pa-image-effects',
 			'pa-slick',
 			'elementor-common-css',
 			'premium-addons',
@@ -139,9 +139,9 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Tiktok Feed controls.
@@ -2672,7 +2672,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 	 */
 	private function render_tiktok_videos( $tiktok_feed, $settings, $user_info ) {
 
-        $videos_path = set_url_scheme( wp_upload_dir()['baseurl'] . '/tiktok-videos' );
+		$videos_path = set_url_scheme( wp_upload_dir()['baseurl'] . '/tiktok-videos' );
 
 		$vid_layout      = $settings['vid_layout'];
 		$exclude_arr     = array();

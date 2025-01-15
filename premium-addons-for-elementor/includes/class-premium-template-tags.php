@@ -416,22 +416,22 @@ class Premium_Template_Tags {
 	 */
 	public static function get_default_posts_list( $post_type ) {
 
-        global $wpdb;
+		global $wpdb;
 
 		$list = $wpdb->get_results(
-            $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish'",
-                $post_type
-            )
-        );
+			$wpdb->prepare(
+				"SELECT ID, post_title FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish'",
+				$post_type
+			)
+		);
 
-        $options = array();
+		$options = array();
 
-        if ( ! empty( $list ) ) {
-            foreach ( $list as $post ) {
-                $options[ $post->ID ] = $post->post_title;
-            }
-        }
+		if ( ! empty( $list ) ) {
+			foreach ( $list as $post ) {
+				$options[ $post->ID ] = $post->post_title;
+			}
+		}
 
 		return $options;
 	}
@@ -697,11 +697,11 @@ class Premium_Template_Tags {
 		$post_args = $this->get_query_args();
 
 		$defaults = array(
-			'author'         => '',
-			'category'       => '',
-			'orderby'        => '',
-			'posts_per_page' => 1,
-            'suppress_filters' => false
+			'author'           => '',
+			'category'         => '',
+			'orderby'          => '',
+			'posts_per_page'   => 1,
+			'suppress_filters' => false,
 		);
 
 		$query_args = wp_parse_args( $post_args, $defaults );
@@ -1520,8 +1520,8 @@ class Premium_Template_Tags {
 
 			$widget = $elementor->elements_manager->create_element_instance( $widget_data );
 
-			$post_type = isset( $_POST['post_type'] ) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : '';
-            $results_number = isset( $_POST['results_number'] ) ? sanitize_text_field( wp_unslash( $_POST['results_number'] ) ) : '';
+			$post_type      = isset( $_POST['post_type'] ) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : '';
+			$results_number = isset( $_POST['results_number'] ) ? sanitize_text_field( wp_unslash( $_POST['results_number'] ) ) : '';
 
 			$posts = $this->render_search_results( $widget, $query, $post_type, $results_number );
 
@@ -1543,10 +1543,10 @@ class Premium_Template_Tags {
 	 * @since 4.10.28
 	 * @access public
 	 *
-	 * @param object $widget widget.
-	 * @param string $query query string.
-	 * @param string $post_type post type.
-     * @param boolean $results_number show results number.
+	 * @param object  $widget widget.
+	 * @param string  $query query string.
+	 * @param string  $post_type post type.
+	 * @param boolean $results_number show results number.
 	 */
 	public function render_search_results( $widget, $search_string, $post_type, $results_number ) {
 

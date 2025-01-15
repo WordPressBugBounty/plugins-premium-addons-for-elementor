@@ -90,7 +90,7 @@ class Premium_Image_Button extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
-            'pa-btn',
+			'pa-btn',
 			'premium-addons',
 		);
 	}
@@ -144,9 +144,9 @@ class Premium_Image_Button extends Widget_Base {
 		return array( 'pa', 'premium', 'premium image button', 'cta', 'call', 'link', 'btn' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
 	/**
 	 * Retrieve Widget Categories.
@@ -171,9 +171,9 @@ class Premium_Image_Button extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Register Image  Button controls.
@@ -616,11 +616,11 @@ class Premium_Image_Button extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'     => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'   => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'condition' => array_merge(
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'condition'   => array_merge(
 					$common_conditions,
 					array(
 						'icon_type' => array( 'icon', 'svg' ),
@@ -901,20 +901,20 @@ class Premium_Image_Button extends Widget_Base {
 		$this->add_responsive_control(
 			'premium_image_button_icon_before_size',
 			array(
-				'label'     => __( 'Icon Size', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SLIDER,
-                'size_units' => array('px', 'em', 'vw'),
-				'range'     => array(
+				'label'      => __( 'Icon Size', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', 'vw' ),
+				'range'      => array(
 					'px' => array(
 						'min' => 0,
 						'max' => 200,
 					),
 				),
-				'condition' => array(
+				'condition'  => array(
 					'premium_image_button_icon_switcher' => 'yes',
 					'premium_image_button_hover_effect!' => 'style4',
 				),
-				'selectors' => array(
+				'selectors'  => array(
 					'{{WRAPPER}} .premium-image-button-text-icon-wrapper i' => 'font-size: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .premium-image-button-text-icon-wrapper svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
 				),
@@ -924,13 +924,13 @@ class Premium_Image_Button extends Widget_Base {
 		$this->add_responsive_control(
 			'premium_image_button_icon_style4_size',
 			array(
-				'label'     => __( 'Icon Size', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SLIDER,
-                'size_units' => array('px', 'em', 'vw'),
-				'condition' => array(
+				'label'      => __( 'Icon Size', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', 'vw' ),
+				'condition'  => array(
 					'premium_image_button_hover_effect' => 'style4',
 				),
-				'selectors' => array(
+				'selectors'  => array(
 					'{{WRAPPER}} .premium-image-button-style4-icon-wrapper i' => 'font-size: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .premium-image-button-style4-icon-wrapper svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
 				),
@@ -1255,7 +1255,7 @@ class Premium_Image_Button extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -1544,7 +1544,7 @@ class Premium_Image_Button extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -1676,19 +1676,19 @@ class Premium_Image_Button extends Widget_Base {
 
 				// if ( 'icon' === $icon_type ) {
 
-				// 	if ( ! empty( $settings['premium_image_button_icon_selection'] ) ) {
-				// 		$this->add_render_attribute(
-				// 			'icon',
-				// 			array(
-				// 				'class'       => $settings['premium_image_button_icon_selection'],
-				// 				'aria-hidden' => 'true',
-				// 			)
-				// 		);
+				// if ( ! empty( $settings['premium_image_button_icon_selection'] ) ) {
+				// $this->add_render_attribute(
+				// 'icon',
+				// array(
+				// 'class'       => $settings['premium_image_button_icon_selection'],
+				// 'aria-hidden' => 'true',
+				// )
+				// );
 
-				// 	}
+				// }
 
-				// 	$migrated = isset( $settings['__fa4_migrated']['premium_image_button_icon_selection_updated'] );
-				// 	$is_new   = empty( $settings['premium_image_button_icon_selection'] ) && Icons_Manager::is_migration_allowed();
+				// $migrated = isset( $settings['__fa4_migrated']['premium_image_button_icon_selection_updated'] );
+				// $is_new   = empty( $settings['premium_image_button_icon_selection'] ) && Icons_Manager::is_migration_allowed();
 
 				// }
 
@@ -1705,7 +1705,7 @@ class Premium_Image_Button extends Widget_Base {
 
 					// if ( 'icon' === $icon_type ) {
 
-					// 	$this->add_render_attribute( 'icon', 'class', $settings['premium_image_button_icon_selection_updated']['value'] );
+					// $this->add_render_attribute( 'icon', 'class', $settings['premium_image_button_icon_selection_updated']['value'] );
 
 					// }
 
@@ -1764,7 +1764,6 @@ class Premium_Image_Button extends Widget_Base {
 				);
 
 			}
-
 		} elseif ( 'style5' === $settings['premium_image_button_hover_effect'] ) {
 			$style_dir = 'premium-image-button-overlap-effect-' . $settings['premium_image_button_style5_dir'];
 		} elseif ( 'style6' === $settings['premium_image_button_hover_effect'] ) {
@@ -1806,10 +1805,9 @@ class Premium_Image_Button extends Widget_Base {
 			$image_event = $settings['premium_image_button_event_function'];
 			if ( 'yes' === $settings['premium_image_button_event_switcher'] && ! empty( $image_event ) ) {
 
-                if( Helper_Functions::check_capability( 'unfiltered_html' ) ) {
-                    $this->add_render_attribute( 'button', 'onclick', esc_js( $image_event ) );
-                }
-
+				if ( Helper_Functions::check_capability( 'unfiltered_html' ) ) {
+					$this->add_render_attribute( 'button', 'onclick', esc_js( $image_event ) );
+				}
 			}
 		}
 
@@ -1833,12 +1831,13 @@ class Premium_Image_Button extends Widget_Base {
 
 							else :
 
-                                echo Helper_Functions::get_svg_by_icon(
-                                    $settings['premium_image_button_icon_selection_updated'],
-                                    $this->get_render_attribute_string( 'icon' )
-                                );
+								echo Helper_Functions::get_svg_by_icon(
+									$settings['premium_image_button_icon_selection_updated'],
+									$this->get_render_attribute_string( 'icon' )
+								);
 
-							endif; ?>
+							endif;
+							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 								<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -1871,12 +1870,13 @@ class Premium_Image_Button extends Widget_Base {
 
 							else :
 
-                                echo Helper_Functions::get_svg_by_icon(
-                                    $settings['premium_image_button_icon_selection_updated'],
-                                    $this->get_render_attribute_string( 'icon' )
-                                );
+								echo Helper_Functions::get_svg_by_icon(
+									$settings['premium_image_button_icon_selection_updated'],
+									$this->get_render_attribute_string( 'icon' )
+								);
 
-							endif; ?>
+							endif;
+							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
 								<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -1893,11 +1893,12 @@ class Premium_Image_Button extends Widget_Base {
 					<?php if ( 'icon' === $slide_icon_type ) : ?>
 						<?php
 
-                            Icons_Manager::render_icon( $settings['premium_image_button_style4_icon_selection_updated'], array( 'aria-hidden' => 'true' ) );
+							Icons_Manager::render_icon( $settings['premium_image_button_style4_icon_selection_updated'], array( 'aria-hidden' => 'true' ) );
 
-                        else : ?>
+						else :
+							?>
 
-                            <div <?php echo wp_kses_post( $this->get_render_attribute_string( 'slide_lottie' ) ); ?>></div>
+							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'slide_lottie' ) ); ?>></div>
 
 					<?php endif; ?>
 				</div>
@@ -2058,17 +2059,17 @@ class Premium_Image_Button extends Widget_Base {
 
 		var hoverEffectClass = 'style8' === hoverEffect ? 'premium-button-style8' : 'premium-image-button-' + hoverEffect;
 
-        view.addRenderAttribute( 'button', {
-            'class': [
-                'premium-image-button',
-                buttonSize,
-                styleDir,
-                changeToScope,
-                hoverEffectClass
-            ],
-            'href': buttonUrl,
-            'data-text': buttonText,
-        });
+		view.addRenderAttribute( 'button', {
+			'class': [
+				'premium-image-button',
+				buttonSize,
+				styleDir,
+				changeToScope,
+				hoverEffectClass
+			],
+			'href': buttonUrl,
+			'data-text': buttonText,
+		});
 
 		#>
 

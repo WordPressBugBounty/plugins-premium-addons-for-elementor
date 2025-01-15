@@ -799,11 +799,12 @@ class Admin_Helper {
 								/* translators: %s: html tags */
 								echo wp_kses_post( sprintf( __( 'Supercharge your Elementor with %1$sPRO Widgets & Addons%2$s that you won\'t find anywhere else.', 'premium-addons-for-elementor' ), '<span>', '</span>' ) );
 							?>
+							<span class="papro-sale-notice"><?php echo wp_kses_post( __('save up to 25%!', 'premium-addons-for-elementor') ) ?></span>
 						</p>
 					</div>
 					<div class="papro-admin-notice-cta">
 						<a class="papro-notice-btn" href="<?php echo esc_url( $url ); ?>" target="_blank">
-							<?php echo esc_html( __( 'Get PRO', 'premium-addons-for-elementor' ) ); ?>
+							<?php echo wp_kses_post( __( 'Catch Deal', 'premium-addons-for-elementor' ) ); ?>
 						</a>
 					</div>
 				</div>

@@ -95,13 +95,13 @@ class Premium_Banner extends Widget_Base {
 		return array( 'pa', 'premium', 'premium banner', 'image', 'box', 'info', 'cta' );
 	}
 
-    protected function is_dynamic_content():bool {
-        return false;
-    }
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
 
-    public function has_widget_inner_wrapper(): bool {
-        return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-    }
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	/**
 	 * Retrieve Widget Categories.
@@ -125,7 +125,7 @@ class Premium_Banner extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
-            'pa-btn',
+			'pa-btn',
 			'premium-addons',
 		);
 	}
@@ -787,7 +787,7 @@ class Premium_Banner extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -1045,7 +1045,7 @@ class Premium_Banner extends Widget_Base {
 			array(
 				'label'       => __( 'Advanced Border Radius', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __('. See ', 'premium-addons-for-elementor') . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
+				'description' => __( 'Apply custom radius values. Get the radius value from ', 'premium-addons-for-elementor' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>' . __( '. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=S0BJazLHV-M" target="_blank">tutorial</a>',
 			)
 		);
 
@@ -1432,9 +1432,9 @@ class Premium_Banner extends Widget_Base {
 
 		if ( ! empty( $settings['premium_banner_image']['url'] ) ) {
 
-            $image_id = apply_filters( 'wpml_object_id', $settings['premium_banner_image']['id'], 'attachment', true );
+			$image_id = apply_filters( 'wpml_object_id', $settings['premium_banner_image']['id'], 'attachment', true );
 
-            $settings['premium_banner_image']['id'] = $image_id;
+			$settings['premium_banner_image']['id'] = $image_id;
 
 			$image_html = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'premium_banner_image' );
 
@@ -1649,18 +1649,18 @@ class Premium_Banner extends Widget_Base {
 
 						btnClass = 'premium-button-' + settings.premium_button_hover_effect + ' ' + btnClass;
 
-                        view.addRenderAttribute( 'button', {
-                            'class': [
-                                'premium-banner-link',
-                                btnClass,
-                            ],
-                            'href': bannerUrl,
-                            'data-text': readMore,
-                        });
+						view.addRenderAttribute( 'button', {
+							'class': [
+								'premium-banner-link',
+								btnClass,
+							],
+							'href': bannerUrl,
+							'data-text': readMore,
+						});
 
 					#>
 						<div class="premium-banner-read-more">
-                            <a {{{ view.getRenderAttributeString('button') }}}>
+							<a {{{ view.getRenderAttributeString('button') }}}>
 								<div class="premium-button-text-icon-wrapper">
 									<span>{{{ readMore }}}</span>
 								</div>
@@ -1682,13 +1682,13 @@ class Premium_Banner extends Widget_Base {
 				</div>
 				<# if( 'yes' === settings.premium_banner_link_url_switch  && ( '' !== settings.premium_banner_image_custom_link.url || '' !== settings.premium_banner_image_existing_page_link ) ) {
 
-                        view.addRenderAttribute( 'banner_link', {
-                            'class':  'premium-banner-ib-link',
-                            'href': bannerLink,
-                        });
+						view.addRenderAttribute( 'banner_link', {
+							'class':  'premium-banner-ib-link',
+							'href': bannerLink,
+						});
 
-                #>
-                    <a {{{ view.getRenderAttributeString('banner_link') }}}></a>
+				#>
+					<a {{{ view.getRenderAttributeString('banner_link') }}}></a>
 				<# } #>
 			</div>
 			<# if( 'yes' === settings.premium_banner_responsive_switcher ) { #>

@@ -292,7 +292,7 @@ abstract class Premium_Templates_Source_Base {
 				'tax_product_tag_product_filter',
 				'custom_posts_filter',
 				'featured_post_default',
-				'featured_post'
+				'featured_post',
 			);
 
 			if ( in_array( $control['name'], $query_filter_ctrls, true ) ) {
