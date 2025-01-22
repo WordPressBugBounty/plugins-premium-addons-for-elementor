@@ -250,8 +250,10 @@ class Pa_Nav_Menu_Walker extends \Walker_Nav_Menu {
 			}
 		}
 
-		/** handling active anchor links which redirects to an id in a page */
-		$is_anchor = false !== strpos( $menu_item->url, '#' );
+		/** handling active anchor links which redirects to an id in a page.
+		 *  make sure we exclude URL with the #/ as it's not a valid ID selector.
+		 */
+		$is_anchor = false !== strpos( $menu_item->url, '#' ) && false === strpos( $menu_item->url, '#/' );
 
 		// we can later add other classes here based on the user settings.
 		if ( ! $is_anchor && in_array( 'current-menu-item', $classes, true ) ) {

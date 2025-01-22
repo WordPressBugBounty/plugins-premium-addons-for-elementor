@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.10.78\n"
+"Project-Id-Version: Premium Addons for Elementor 4.10.79\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2025-01-15 12:53:08+00:00\n"
+"POT-Creation-Date: 2025-01-22 15:47:10+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,26 +29,26 @@ msgstr ""
 msgid "0"
 msgstr ""
 
-#: admin/includes/admin-bar.php:118
+#: admin/includes/admin-bar.php:122
 msgid " PA Assets"
 msgstr ""
 
-#: admin/includes/admin-bar.php:121 includes/helper-functions.php:235
+#: admin/includes/admin-bar.php:125 includes/helper-functions.php:235
 #: includes/helper-functions.php:245 widgets/premium-button.php:200
 #: widgets/premium-image-button.php:201 widgets/premium-modalbox.php:540
 #: widgets/premium-modalbox.php:1037
 msgid "Premium Addons"
 msgstr ""
 
-#: admin/includes/admin-bar.php:131
+#: admin/includes/admin-bar.php:135
 msgid "Clear Page Generated Assets"
 msgstr ""
 
-#: admin/includes/admin-bar.php:144
+#: admin/includes/admin-bar.php:148
 msgid "Clear All Generated Assets"
 msgstr ""
 
-#: admin/includes/admin-bar.php:158
+#: admin/includes/admin-bar.php:162
 msgid "Learn More"
 msgstr ""
 

@@ -75,6 +75,10 @@ class Admin_Bar {
 
     public function enqueue_frontend_assets() {
 
+		if( ! is_user_logged_in() ) {
+			return;
+		}
+
 		$suffix = is_rtl() ? '-rtl' : '';
 
         wp_enqueue_style(

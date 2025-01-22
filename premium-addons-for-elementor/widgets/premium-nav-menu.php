@@ -4812,7 +4812,7 @@ class Premium_Nav_Menu extends Widget_Base {
 				$is_active_item = $item['link']['url'] === $current_link;
 
 				/** handling active anchor links which redirects to an id in a page */
-				$is_anchor = false !== strpos( $item['link']['url'], '#' );
+				$is_anchor = false !== strpos( $item['link']['url'], '#' ) && false === strpos( $item['link']['url'], '#/' );
 
 				// we can later add other classes here based on the user settings.
 				if ( ! $is_anchor && $is_active_item ) {

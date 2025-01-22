@@ -564,7 +564,7 @@ class Premium_Image_Scroll extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-image-scroll-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-image-scroll-icon' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				),
 				'condition'  => array(
 					'icon_switcher' => 'yes',
@@ -619,7 +619,7 @@ class Premium_Image_Scroll extends Widget_Base {
 				'label'     => __( 'Icon Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .premium-image-scroll-icon'  => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-image-scroll-icon'  => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'icon_switcher' => 'yes',
@@ -885,6 +885,30 @@ class Premium_Image_Scroll extends Widget_Base {
 	}
 
 	/**
+	 * Get Icon SVG
+	 *
+	 * @access protected
+	 * @since 4.10.79
+	 *
+	 * @param string $dir direction.
+	 */
+	protected function render_icon_svg( $dir ) {
+
+		if( 'vertical' === $dir ) {
+
+			$svg = '<svg class="premium-image-scroll-icon pa-vertical-mouse-scroll" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><style type="text/css">.st0{display:none;}.st1{display:inline;}</style><g><path d="M67.7,42.6c0-9.6-7.8-17.3-17.3-17.3h-0.8c-9.6,0-17.3,7.8-17.3,17.3v14.7c0,9.6,7.8,17.3,17.3,17.3h0.8c9.6,0,17.3-7.8,17.3-17.3V42.6z M64.8,57.4c0,4-1.6,7.6-4.2,10.2c-2.6,2.6-6.2,4.2-10.2,4.2h-0.8c-4,0-7.6-1.6-10.2-4.2c-2.6-2.6-4.2-6.2-4.2-10.2V42.6c0-4,1.6-7.6,4.2-10.2c2.6-2.6,6.2-4.2,10.2-4.2h0.8c4,0,7.6,1.6,10.2,4.2c2.6,2.6,4.2,6.2,4.2,10.2V57.4z"/><path d="M50,39.9c-0.8,0-1.5,0.7-1.5,1.5v4.3c0,0.8,0.7,1.5,1.5,1.5c0.8,0,1.5-0.7,1.5-1.5v-4.3C51.4,40.6,50.8,39.9,50,39.9z"/><g><path d="M49.1,94.7c0.5,0.4,1.3,0.4,1.8,0l7.3-5.8c0.6-0.5,0.7-1.4,0.2-2c-0.5-0.6-1.4-0.7-2-0.2l0,0L50,91.7l-6.4-5.1c-0.6-0.5-1.5-0.4-2,0.2c-0.5,0.6-0.4,1.5,0.2,2L49.1,94.7z"/><path d="M56.4,13.4c0.6,0.5,1.5,0.4,2-0.2s0.4-1.5-0.2-2l-7.3-5.8c-0.5-0.4-1.3-0.4-1.8,0l-7.3,5.8c-0.6,0.5-0.7,1.4-0.2,2s1.4,0.7,2,0.2l0,0L50,8.3L56.4,13.4z"/></g><g class="st0"><path class="st1" d="M5.3,49.1c-0.4,0.5-0.4,1.3,0,1.8l5.8,7.3c0.5,0.6,1.4,0.7,2,0.2c0.6-0.5,0.7-1.4,0.2-2l0,0L8.3,50l5.1-6.4c0.5-0.6,0.4-1.5-0.2-2c-0.6-0.5-1.5-0.4-2,0.2L5.3,49.1z"/><path class="st1" d="M86.6,56.4c-0.5,0.6-0.4,1.5,0.2,2s1.5,0.4,2-0.2l5.8-7.3c0.4-0.5,0.4-1.3,0-1.8l-5.8-7.3c-0.5-0.6-1.4-0.7-2-0.2s-0.7,1.4-0.2,2l0,0l5.1,6.4L86.6,56.4z"/></g></g></svg>';
+
+		} else {
+
+			$svg = '<svg class="premium-image-scroll-icon pa-horizontal-mouse-scroll" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><style type="text/css">.st0{display:none;}.st1{display:inline;}</style><g><path d="M67.7,42.6c0-9.6-7.8-17.3-17.3-17.3h-0.8c-9.6,0-17.3,7.8-17.3,17.3v14.7c0,9.6,7.8,17.3,17.3,17.3h0.8c9.6,0,17.3-7.8,17.3-17.3V42.6z M64.8,57.4c0,4-1.6,7.6-4.2,10.2c-2.6,2.6-6.2,4.2-10.2,4.2h-0.8c-4,0-7.6-1.6-10.2-4.2c-2.6-2.6-4.2-6.2-4.2-10.2V42.6c0-4,1.6-7.6,4.2-10.2c2.6-2.6,6.2-4.2,10.2-4.2h0.8c4,0,7.6,1.6,10.2,4.2c2.6,2.6,4.2,6.2,4.2,10.2V57.4z"/><path d="M50,39.9c-0.8,0-1.5,0.7-1.5,1.5v4.3c0,0.8,0.7,1.5,1.5,1.5c0.8,0,1.5-0.7,1.5-1.5v-4.3C51.4,40.6,50.8,39.9,50,39.9z"/><g class="st0"><path class="st1" d="M49.1,94.7c0.5,0.4,1.3,0.4,1.8,0l7.3-5.8c0.6-0.5,0.7-1.4,0.2-2c-0.5-0.6-1.4-0.7-2-0.2l0,0L50,91.7l-6.4-5.1c-0.6-0.5-1.5-0.4-2,0.2c-0.5,0.6-0.4,1.5,0.2,2L49.1,94.7z"/><path class="st1" d="M56.4,13.4c0.6,0.5,1.5,0.4,2-0.2s0.4-1.5-0.2-2l-7.3-5.8c-0.5-0.4-1.3-0.4-1.8,0l-7.3,5.8c-0.6,0.5-0.7,1.4-0.2,2s1.4,0.7,2,0.2l0,0L50,8.3L56.4,13.4z"/></g><g><path d="M5.3,49.1c-0.4,0.5-0.4,1.3,0,1.8l5.8,7.3c0.5,0.6,1.4,0.7,2,0.2c0.6-0.5,0.7-1.4,0.2-2l0,0L8.3,50l5.1-6.4c0.5-0.6,0.4-1.5-0.2-2c-0.6-0.5-1.5-0.4-2,0.2L5.3,49.1z"/><path d="M86.6,56.4c-0.5,0.6-0.4,1.5,0.2,2s1.5,0.4,2-0.2l5.8-7.3c0.4-0.5,0.4-1.3,0-1.8l-5.8-7.3c-0.5-0.6-1.4-0.7-2-0.2s-0.7,1.4-0.2,2l0,0l5.1,6.4L86.6,56.4z"/></g></g></svg>';
+
+		}
+
+		echo $svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	}
+
+	/**
 	 * Render Image Scroll widget output on the frontend.
 	 *
 	 * Written in PHP and used to generate the final HTML.
@@ -909,10 +933,6 @@ class Premium_Image_Scroll extends Widget_Base {
 			} else {
 				$this->add_render_attribute( 'link', 'href', $link_url );
 			}
-		}
-
-		if ( $settings['icon_switcher'] ) {
-			$icon_type = sprintf( 'pa-%s-mouse-scroll', $settings['direction_type'] );
 		}
 
 		$image_scroll = array(
@@ -954,7 +974,7 @@ class Premium_Image_Scroll extends Widget_Base {
 				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
 					<?php if ( 'yes' === $settings['icon_switcher'] ) : ?>
 						<div class="premium-image-scroll-content">
-							<i class="premium-image-scroll-icon <?php echo esc_attr( $icon_type ); ?>"></i>
+							<?php $this->render_icon_svg( $settings['direction_type'] ) ?>
 						</div>
 					<?php endif; ?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'direction_type' ) ); ?>>
@@ -1003,10 +1023,6 @@ class Premium_Image_Scroll extends Widget_Base {
 			scrollSettings.direction = direction,
 			scrollSettings.reverse  = reverse;
 
-			if ( 'yes' == settings.icon_switcher ) {
-				var iconClass = 'pa-' + direction + '-mouse-scroll';
-			}
-
 			if ( 'yes' == settings.link_switcher ) {
 
 				view.addRenderAttribute( 'link', 'class', 'premium-image-scroll-link' );
@@ -1051,7 +1067,11 @@ class Premium_Image_Scroll extends Widget_Base {
 			<div {{{ view.getRenderAttributeString('container') }}}>
 				<# if (  'yes' == settings.icon_switcher ) { #>
 					<div class="premium-image-scroll-content">
-						<i class="premium-image-scroll-icon {{ iconClass }}"></i>
+						<# if( 'vertical' === direction ) { #>
+							<svg class="premium-image-scroll-icon pa-vertical-mouse-scroll" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><style type="text/css">.st0{display:none;}.st1{display:inline;}</style><g><path d="M67.7,42.6c0-9.6-7.8-17.3-17.3-17.3h-0.8c-9.6,0-17.3,7.8-17.3,17.3v14.7c0,9.6,7.8,17.3,17.3,17.3h0.8c9.6,0,17.3-7.8,17.3-17.3V42.6z M64.8,57.4c0,4-1.6,7.6-4.2,10.2c-2.6,2.6-6.2,4.2-10.2,4.2h-0.8c-4,0-7.6-1.6-10.2-4.2c-2.6-2.6-4.2-6.2-4.2-10.2V42.6c0-4,1.6-7.6,4.2-10.2c2.6-2.6,6.2-4.2,10.2-4.2h0.8c4,0,7.6,1.6,10.2,4.2c2.6,2.6,4.2,6.2,4.2,10.2V57.4z"/><path d="M50,39.9c-0.8,0-1.5,0.7-1.5,1.5v4.3c0,0.8,0.7,1.5,1.5,1.5c0.8,0,1.5-0.7,1.5-1.5v-4.3C51.4,40.6,50.8,39.9,50,39.9z"/><g><path d="M49.1,94.7c0.5,0.4,1.3,0.4,1.8,0l7.3-5.8c0.6-0.5,0.7-1.4,0.2-2c-0.5-0.6-1.4-0.7-2-0.2l0,0L50,91.7l-6.4-5.1c-0.6-0.5-1.5-0.4-2,0.2c-0.5,0.6-0.4,1.5,0.2,2L49.1,94.7z"/><path d="M56.4,13.4c0.6,0.5,1.5,0.4,2-0.2s0.4-1.5-0.2-2l-7.3-5.8c-0.5-0.4-1.3-0.4-1.8,0l-7.3,5.8c-0.6,0.5-0.7,1.4-0.2,2s1.4,0.7,2,0.2l0,0L50,8.3L56.4,13.4z"/></g><g class="st0"><path class="st1" d="M5.3,49.1c-0.4,0.5-0.4,1.3,0,1.8l5.8,7.3c0.5,0.6,1.4,0.7,2,0.2c0.6-0.5,0.7-1.4,0.2-2l0,0L8.3,50l5.1-6.4c0.5-0.6,0.4-1.5-0.2-2c-0.6-0.5-1.5-0.4-2,0.2L5.3,49.1z"/><path class="st1" d="M86.6,56.4c-0.5,0.6-0.4,1.5,0.2,2s1.5,0.4,2-0.2l5.8-7.3c0.4-0.5,0.4-1.3,0-1.8l-5.8-7.3c-0.5-0.6-1.4-0.7-2-0.2s-0.7,1.4-0.2,2l0,0l5.1,6.4L86.6,56.4z"/></g></g></svg>
+						<# } else { #>
+							<svg class="premium-image-scroll-icon pa-horizontal-mouse-scroll" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><style type="text/css">.st0{display:none;}.st1{display:inline;}</style><g><path d="M67.7,42.6c0-9.6-7.8-17.3-17.3-17.3h-0.8c-9.6,0-17.3,7.8-17.3,17.3v14.7c0,9.6,7.8,17.3,17.3,17.3h0.8c9.6,0,17.3-7.8,17.3-17.3V42.6z M64.8,57.4c0,4-1.6,7.6-4.2,10.2c-2.6,2.6-6.2,4.2-10.2,4.2h-0.8c-4,0-7.6-1.6-10.2-4.2c-2.6-2.6-4.2-6.2-4.2-10.2V42.6c0-4,1.6-7.6,4.2-10.2c2.6-2.6,6.2-4.2,10.2-4.2h0.8c4,0,7.6,1.6,10.2,4.2c2.6,2.6,4.2,6.2,4.2,10.2V57.4z"/><path d="M50,39.9c-0.8,0-1.5,0.7-1.5,1.5v4.3c0,0.8,0.7,1.5,1.5,1.5c0.8,0,1.5-0.7,1.5-1.5v-4.3C51.4,40.6,50.8,39.9,50,39.9z"/><g class="st0"><path class="st1" d="M49.1,94.7c0.5,0.4,1.3,0.4,1.8,0l7.3-5.8c0.6-0.5,0.7-1.4,0.2-2c-0.5-0.6-1.4-0.7-2-0.2l0,0L50,91.7l-6.4-5.1c-0.6-0.5-1.5-0.4-2,0.2c-0.5,0.6-0.4,1.5,0.2,2L49.1,94.7z"/><path class="st1" d="M56.4,13.4c0.6,0.5,1.5,0.4,2-0.2s0.4-1.5-0.2-2l-7.3-5.8c-0.5-0.4-1.3-0.4-1.8,0l-7.3,5.8c-0.6,0.5-0.7,1.4-0.2,2s1.4,0.7,2,0.2l0,0L50,8.3L56.4,13.4z"/></g><g><path d="M5.3,49.1c-0.4,0.5-0.4,1.3,0,1.8l5.8,7.3c0.5,0.6,1.4,0.7,2,0.2c0.6-0.5,0.7-1.4,0.2-2l0,0L8.3,50l5.1-6.4c0.5-0.6,0.4-1.5-0.2-2c-0.6-0.5-1.5-0.4-2,0.2L5.3,49.1z"/><path d="M86.6,56.4c-0.5,0.6-0.4,1.5,0.2,2s1.5,0.4,2-0.2l5.8-7.3c0.4-0.5,0.4-1.3,0-1.8l-5.8-7.3c-0.5-0.6-1.4-0.7-2-0.2s-0.7,1.4-0.2,2l0,0l5.1,6.4L86.6,56.4z"/></g></g></svg>
+						<# } #>
 					</div>
 				<# } #>
 				<div {{{ view.getRenderAttributeString('direction_type') }}}>
