@@ -68,7 +68,7 @@
                 //     return false;
                 // }
 
-                // unsing IntersectionObserverAPI.
+                // Using IntersectionObserverAPI.
                 var eleObserver = new IntersectionObserver(function (entries) {
                     entries.forEach(function (entry) {
                         if (entry.isIntersecting) {

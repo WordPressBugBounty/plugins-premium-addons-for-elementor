@@ -165,10 +165,10 @@ if ( ! Helper_Functions::check_papro_version() ) {
 							<span><?php echo esc_html_e( 'This will hide the License tab.', 'premium-addons-for-elementor' ); ?></span>
 
 							<!-- Hide Future Notifications-->
-							<p class="pa-input-label"><?php echo esc_html_e( 'Future Notifications', 'premium-addons-for-elementor' ); ?></p>
+							<p class="pa-input-label"><?php echo esc_html_e( 'Future Notifications & News Box', 'premium-addons-for-elementor' ); ?></p>
 							<input name="premium-wht-lbl-not" id="premium-wht-lbl-not" type="checkbox" <?php checked( 1, $hide_notifications, true ); ?>>
 							<label for="premium-wht-lbl-not"></label>
-							<span><?php echo esc_html_e( 'This will hide the future notifications shown on dashboard when a new feature is released.', 'premium-addons-for-elementor' ); ?></span>
+							<span><?php echo esc_html_e( 'This will hide the future notifications and news box shown on dashboard when a new feature is released.', 'premium-addons-for-elementor' ); ?></span>
 
 							<!-- Hide White Labeling Tab-->
 

@@ -165,15 +165,15 @@
 
 		onReady: function () {
 			var self = this,
-				type = self.options.elementSettingsModel.attributes.post_type_filter;
+				type = self.model.get('source') || self.options.elementSettingsModel.attributes.post_type_filter;
 
-			if ('post' !== type) {
-				var options = (0 === this.model.get('options').length);
+			// if ('post' !== type) {
+			var options = (0 === this.model.get('options').length);
 
-				if (options) {
-					self.fetchData(type);
-				}
+			if (options) {
+				self.fetchData(type);
 			}
+			// }
 
 			elementor.channels.editor.on('change', function (view) {
 				var changed = view.elementSettingsModel.changed;
@@ -186,6 +186,7 @@
 		},
 
 		fetchData: function (type) {
+
 			var self = this;
 			$.ajax({
 				url: PremiumSettings.ajaxurl,
@@ -194,9 +195,10 @@
 				data: {
 					nonce: PremiumSettings.nonce,
 					action: 'premium_update_filter',
-					post_type: type
+					post_type: 'object' === typeof type ? type : [type]
 				},
 				success: function (res) {
+
 					self.updateFilterOptions(JSON.parse(res.data));
 					self.isUpdated = false;
 

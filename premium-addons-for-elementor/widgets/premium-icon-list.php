@@ -27,7 +27,7 @@ use Elementor\Group_Control_Typography;
 // PremiumAddons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -48,23 +48,6 @@ class Premium_Icon_List extends Widget_Base {
 	public function check_icon_draw() {
 		$is_enabled = Admin_Helper::check_svg_draw( 'premium-icon-list' );
 		return $is_enabled;
-	}
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
 	}
 
 	/**
@@ -622,13 +605,14 @@ class Premium_Icon_List extends Widget_Base {
 			'existing_page',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'link_select'    => 'existing_page',
 					'show_list_link' => 'yes',
 				),
-				'label_block' => true,
 			)
 		);
 

@@ -22,7 +22,7 @@ use Elementor\Group_Control_Background;
 // PremiumAddons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -34,13 +34,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Premium_Title extends Widget_Base {
 
 	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
 	 * Check Icon Draw Option.
 	 *
 	 * @since 4.9.26
@@ -49,16 +42,6 @@ class Premium_Title extends Widget_Base {
 	public function check_icon_draw() {
 		$is_enabled = Admin_Helper::check_svg_draw( 'premium-title' );
 		return $is_enabled;
-	}
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
 	}
 
 	/**
@@ -885,14 +868,14 @@ class Premium_Title extends Widget_Base {
 			'existing_link',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'link_switcher'  => 'yes',
 					'link_selection' => 'link',
 				),
-				'multiple'    => false,
-				'label_block' => true,
 			)
 		);
 
@@ -2155,7 +2138,7 @@ class Premium_Title extends Widget_Base {
 					<?php
 				else :
 						$letters_html = '<span class="premium-letters-container"' . $this->get_render_attribute_string( 'premium_title_text' ) . '>';
-						$title_array  = preg_split( '//u', $settings['premium_title_text'], null, PREG_SPLIT_NO_EMPTY );
+						$title_array  = preg_split( '//u', $settings['premium_title_text'], -1, PREG_SPLIT_NO_EMPTY );
 					foreach ( $title_array as $key => $letter ) :
 						$key           = $key++;
 						$letters_html .= '<span class="premium-title-style9-letter" data-letter-index="' . esc_attr( $key + 1 ) . '" data-letter="' . esc_attr( $letter ) . '">' . $letter . '</span>';

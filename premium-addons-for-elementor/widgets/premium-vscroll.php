@@ -18,7 +18,7 @@ use Elementor\Group_Control_Box_Shadow;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // If this file is called directly, abort.
@@ -28,23 +28,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Premium_Vscroll
  */
 class Premium_Vscroll extends Widget_Base {
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
-	}
 
 	/**
 	 * Retrieve Widget Name.
@@ -227,11 +210,11 @@ class Premium_Vscroll extends Widget_Base {
 			'section_template',
 			array(
 				'label'       => __( 'OR Select Existing Template', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
+				'type'        => Premium_Post_Filter::TYPE,
 				'classes'     => 'premium-live-temp-label',
-				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
-				'multiple'    => false,
 				'label_block' => true,
+				'multiple'    => false,
+				'source'      => 'elementor_library',
 			)
 		);
 
@@ -1247,7 +1230,7 @@ class Premium_Vscroll extends Widget_Base {
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'section_' . $index ) ); ?>>
 								<?php
 									$temp_id = empty( $section['section_template'] ) ? $section['live_temp_content'] : $section['section_template'];
-									echo $this->getTemplateInstance()->get_template_content( $temp_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo Helper_Functions::render_elementor_template( $temp_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								?>
 							</div>
 						<?php endforeach; ?>

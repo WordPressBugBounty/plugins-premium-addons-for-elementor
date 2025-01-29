@@ -22,7 +22,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 // Premium Addons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 use PremiumAddons\Modules\Woocommerce\Skins;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -35,29 +35,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Woo_Products extends Widget_Base {
 
 	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
 	 * Query object
 	 *
 	 * @since 1.5.0
 	 * @var object $query
 	 */
 	public static $query;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
-	}
 
 	/**
 	 * Whether the widget has content.
@@ -752,15 +735,14 @@ class Woo_Products extends Widget_Base {
 			)
 		);
 
-		$products = Premium_Template_Tags::get_default_posts_list( 'product' );
-
 		$this->add_control(
 			'products',
 			array(
-				'label'     => __( 'Select Products', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT2,
-				'multiple'  => true,
-				'options'   => $products,
+				'label'         => __( 'Select Products', 'premium-addons-pro' ),
+				'type'          => Premium_Post_Filter::TYPE,
+				'label_block'   => true,
+                'multiple'		=> true,
+                'source'        => 'product',
 				'condition' => array(
 					'query_type' => 'custom',
 				),

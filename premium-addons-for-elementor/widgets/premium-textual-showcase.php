@@ -23,7 +23,7 @@ use Elementor\Group_Control_Text_Shadow;
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Admin\Includes\Admin_Helper;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -35,13 +35,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Premium_Textual_Showcase extends Widget_Base {
 
 	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
 	 * Check Icon Draw Option.
 	 *
 	 * @since 4.9.26
@@ -50,18 +43,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 	public function check_icon_draw() {
 		$is_enabled = Admin_Helper::check_svg_draw( 'premium-textual-showcase' );
 		return $is_enabled;
-	}
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		$this->template_instance = Premium_Template_Tags::getInstance();
-
-		return $this->template_instance;
 	}
 
 	/**
@@ -1592,10 +1573,10 @@ class Premium_Textual_Showcase extends Widget_Base {
 			'link_existing',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
-				'multiple'    => false,
+				'type'        => Premium_Post_Filter::TYPE,
 				'label_block' => true,
+				'multiple'    => false,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'link_type'     => 'link',
 					'link_switcher' => 'yes',

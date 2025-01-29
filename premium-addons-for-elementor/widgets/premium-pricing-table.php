@@ -24,7 +24,7 @@ use Elementor\Group_Control_Background;
 // PremiumAddons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -43,23 +43,6 @@ class Premium_Pricing_Table extends Widget_Base {
 	public function check_icon_draw() {
 		$is_enabled = Admin_Helper::check_svg_draw( 'premium-pricing-table' );
 		return $is_enabled;
-	}
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
 	}
 
 	/**
@@ -1127,13 +1110,13 @@ class Premium_Pricing_Table extends Widget_Base {
 			'premium_pricing_table_button_link_existing_content',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'premium_pricing_table_button_url_type'     => 'link',
 				),
-				'multiple'    => false,
-				'label_block' => true,
 			)
 		);
 

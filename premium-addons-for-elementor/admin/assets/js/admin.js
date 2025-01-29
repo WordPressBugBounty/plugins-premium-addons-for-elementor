@@ -314,10 +314,16 @@
 
 					if ('custom' !== usageType) {
 
-						var elementsToUse = null;
+						var elementsToUse = null,
+							addonsToUse = [
+								'premium-templates',
+								'premium-equal-height',
+								'premium-wrapper-link'
+
+							];
 
 						//First, disable all elements.
-						$('#pa-modules .pa-switcher').find('input').prop('checked', false);
+						$('#pa-modules .pa-switcher, #pa-features .pa-section-info-cta').find('input').prop('checked', false);
 
 						elementsToUse = [
 							'premium-addon-blog',
@@ -349,6 +355,10 @@
 
 						$.each(elementsToUse, function (index, selector) {
 							$('#pa-modules .pa-switcher.' + selector).find('input').prop('checked', true);
+						});
+
+						$.each(addonsToUse, function (index, selector) {
+							$('#pa-features .switch').find('input#' + selector).prop('checked', true);
 						});
 
 						self.saveElementsSettings('elements');

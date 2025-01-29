@@ -13,7 +13,7 @@ use Elementor\Controls_Manager;
 // Premium Addons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -39,13 +39,6 @@ class Module {
 	private static $instance = null;
 
 	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
 	 * Class Constructor Funcion.
 	 */
 	public function __construct() {
@@ -57,11 +50,6 @@ class Module {
 		add_action( 'elementor/element/section/section_layout/after_section_end', array( $this, 'register_controls' ));
 		add_action( 'elementor/element/column/section_advanced/after_section_end', array( $this, 'register_controls' ) );
 		add_action( 'elementor/element/common/_section_style/after_section_end', array( $this, 'register_controls' ) );
-
-		// Frontend Hooks.
-		// add_action( 'elementor/frontend/section/before_render', array( $this, 'before_render' ) );
-		// add_action( 'elementor/frontend/column/before_render', array( $this, 'before_render' ) );
-		// add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ), 10, 1 );
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
@@ -151,15 +139,15 @@ class Module {
 		$element->add_control(
 			'premium_wrapper_existing_link',
 			array(
-				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
+				'label'         => __( 'Existing Page', 'premium-addons-for-elementor' ),
+				'type'          => Premium_Post_Filter::TYPE,
+				'label_block'   => true,
+                'multiple'      => false,
+                'source'        => array( 'post', 'page' ),
 				'condition'   => array(
                     'premium_wrapper_link_switcher'=> 'yes',
 					'premium_wrapper_link_selection' => 'link',
 				),
-				'multiple'    => false,
-				'label_block' => true,
 			)
 		);
 
@@ -245,19 +233,6 @@ class Module {
             remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
         }
-	}
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-
-		$this->template_instance = Premium_Template_Tags::getInstance();
-
-		return $this->template_instance;
 	}
 
 	/**

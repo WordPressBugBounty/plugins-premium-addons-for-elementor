@@ -27,7 +27,7 @@ use Elementor\Group_Control_Image_Size;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -37,13 +37,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Premium_Grid
  */
 class Premium_Grid extends Widget_Base {
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
 
 	/**
 	 * Check for Self Hosted Videos
@@ -60,16 +53,6 @@ class Premium_Grid extends Widget_Base {
 	 */
 	public function get_name() {
 		return 'premium-img-gallery';
-	}
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
 	}
 
 	/**
@@ -898,14 +881,11 @@ class Premium_Grid extends Widget_Base {
 			'premium_gallery_img_existing',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
-				'condition'   => array(
-					'premium_gallery_img_link_type' => 'link',
-				),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
 				'multiple'    => false,
 				'separator'   => 'after',
-				'label_block' => true,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'premium_gallery_img_link_type' => 'link',
 					'premium_gallery_video!'        => 'true',

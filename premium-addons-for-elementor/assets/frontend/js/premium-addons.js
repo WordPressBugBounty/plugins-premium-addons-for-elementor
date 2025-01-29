@@ -152,7 +152,7 @@
 				PremiumProgressBarWidgetHandler($scope, "frontend");
 			}
 
-			// unsing IntersectionObserverAPI.
+			// Using IntersectionObserverAPI.
 			var eleObserver = new IntersectionObserver(function (entries) {
 				entries.forEach(function (entry) {
 					if (entry.isIntersecting) {
@@ -965,7 +965,7 @@
 				iconElement = $counterElement.find(".icon");
 
 			if (!isHScrollWidget.length) {
-				// unsing IntersectionObserverAPI.
+				// Using IntersectionObserverAPI.
 				var eleObserver = new IntersectionObserver(function (entries) {
 					entries.forEach(function (entry) {
 						if (entry.isIntersecting) {
@@ -1806,22 +1806,35 @@
 			var $modalElem = $scope.find(".premium-modal-box-container"),
 				settings = $modalElem.data("settings"),
 				$modal = $modalElem.find(".premium-modal-box-modal-dialog"),
-				id = $scope.data('id');
+				id = $scope.data('id'),
+				isDismissible = $scope.hasClass('premium-modal-dismissible-yes');
 
 			if (!settings) {
 				return;
 			}
 
+			var modalOptions = {
+				backdrop: isDismissible ? true : "static",
+				keyboard: isDismissible
+			};
+
+			// Disable dismiss behavior if not dismissible
+			if (!isDismissible) {
+
+				//Hide upper and lower close buttons
+				$modalElem.find(".premium-modal-box-close-button-container, .premium-modal-box-modal-footer").hide();
+
+			}
+
 			if ("pageload" === settings.trigger) {
 				$(document).ready(function () {
 					setTimeout(function () {
-						$modalElem.find(".premium-modal-box-modal").modal();
+						$modalElem.find(".premium-modal-box-modal").modal(modalOptions);
 					}, settings.delay * 1000);
 				});
 			} else if ("exit" === settings.trigger) {
-
 				if (elementorFrontend.config.user) {
-					$modalElem.find(".premium-modal-box-modal").modal();
+					$modalElem.find(".premium-modal-box-modal").modal(modalOptions);
 				} else {
 					if (!localStorage.getItem('paModal' + id)) {
 
@@ -1831,7 +1844,7 @@
 
 							if (!isTriggered && e.clientY <= 0) {
 								isTriggered = true;
-								$modalElem.find(".premium-modal-box-modal").modal();
+								$modalElem.find(".premium-modal-box-modal").modal(modalOptions);
 								$modalElem.find(".premium-modal-box-modal").on('hidden.bs.modal', function () {
 									localStorage.setItem('paModal' + id, true);
 								});
@@ -1847,7 +1860,7 @@
 
 				var animationDelay = $modal.data('delay-animation');
 
-				// unsing IntersectionObserverAPI.
+				// Using IntersectionObserverAPI.
 				var eleObserver = new IntersectionObserver(function (entries) {
 					entries.forEach(function (entry) {
 						if (entry.isIntersecting) {
@@ -2810,7 +2823,7 @@
 				$(this).text('').append(html);
 			});
 
-			// unsing IntersectionObserverAPI.
+			// Using IntersectionObserverAPI.
 			var eleObserver = new IntersectionObserver(function (entries) {
 				entries.forEach(function (entry) {
 					if (entry.isIntersecting) {
@@ -3009,7 +3022,7 @@
 				setTimeout(function () {
 
 					if ('shape' === widgetSettings.words_order) {
-						// unsing IntersectionObserverAPI.
+						// Using IntersectionObserverAPI.
 						var eleObserver = new IntersectionObserver(function (entries) {
 							entries.forEach(function (entry) {
 								if (entry.isIntersecting) {
@@ -4342,7 +4355,7 @@
 					//     $carouselContainer.focusWithoutScrolling();
 					// });
 
-					// unsing IntersectionObserverAPI.
+					// Using IntersectionObserverAPI.
 					var eleObserver = new IntersectionObserver(function (entries) {
 						entries.forEach(function (entry) {
 							if (entry.isIntersecting) {
@@ -4795,7 +4808,7 @@
 			var trigger = $scope.find('.pa-txt-sc__outer-container').hasClass('pa-trigger-on-viewport') ? 'viewport' : 'hover',
 				hasGrowEffect = $scope.find('.pa-txt-sc__effect-grow').length;
 
-			// unsing IntersectionObserverAPI.
+			// Using IntersectionObserverAPI.
 			$scope.off('.PaTextualHandler');
 
 			var eleObserver = new IntersectionObserver(function (entries) {

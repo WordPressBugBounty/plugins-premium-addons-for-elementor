@@ -26,7 +26,7 @@ use Elementor\Modules\DynamicTags\Module as TagsModule;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -38,28 +38,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Premium_Media_Wheel extends Widget_Base {
 
 	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
 	 * Check for Self Hosted Videos
 	 *
 	 * @var is_self_hosted
 	 */
 	private static $check_self_hosted = false;
-
-	/**
-	 * Retrieve Template Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
-	}
 
 	/**
 	 * Retrieve Widget Name.
@@ -623,10 +606,10 @@ class Premium_Media_Wheel extends Widget_Base {
 			'section_template',
 			array(
 				'label'       => __( 'Elementor Template', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
-				'multiple'    => false,
+				'type'        => Premium_Post_Filter::TYPE,
 				'label_block' => true,
+				'multiple'    => false,
+				'source'      => 'elementor_library',
 				'condition'   => array(
 					'pa_media_type' => 'template',
 				),
@@ -698,15 +681,15 @@ class Premium_Media_Wheel extends Widget_Base {
 			'media_wheel_existing_link',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'media_wheel_link_switcher' => 'yes',
 					'media_wheel_link_type'     => 'link',
 					'pa_media_type!'            => 'video',
 				),
-				'multiple'    => false,
-				'label_block' => true,
 			)
 		);
 
@@ -2648,7 +2631,7 @@ class Premium_Media_Wheel extends Widget_Base {
 							$template_name = empty( $item['section_template'] ) ? $item['live_temp_content'] : $item['section_template'];
 							?>
 								<div class="premium-adv-carousel__template-wrapper">
-									<?php echo ( $this->getTemplateInstance()->get_template_content( $template_name ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+									<?php echo Helper_Functions::render_elementor_template( $template_name ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
 							<?php
 						}

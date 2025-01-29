@@ -24,7 +24,7 @@ use Elementor\Group_Control_Background;
 // PremiumAddons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -44,23 +44,6 @@ class Premium_Modalbox extends Widget_Base {
 	public function check_icon_draw() {
 		$is_enabled = Admin_Helper::check_svg_draw( 'premium-modalbox' );
 		return $is_enabled;
-	}
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
 	}
 
 	/**
@@ -158,6 +141,14 @@ class Premium_Modalbox extends Widget_Base {
 		return array( 'pa', 'premium', 'premium modal box', 'popup', 'lightbox', 'advanced', 'embed' );
 	}
 
+
+	/**
+	 * Dynamic Content.
+	 *
+	 * @since 4.9.26
+	 * @access protected
+	 * @return bool
+	 */
 	protected function is_dynamic_content(): bool {
 		return false;
 	}
@@ -185,6 +176,14 @@ class Premium_Modalbox extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+
+	/**
+	 * Has Widget Inner Wrapper.
+	 *
+	 * @access public
+	 *
+	 * @return bool
+	 */
 	public function has_widget_inner_wrapper(): bool {
 		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
@@ -388,11 +387,12 @@ class Premium_Modalbox extends Widget_Base {
 		$this->add_control(
 			'premium_modal_box_content_temp',
 			array(
-				'label'       => __( 'OR Select Existing Template', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'label_block' => true,
+				'label'       => __( 'Templates', 'premium-addons-for-elementor' ),
+				'type'        => Premium_Post_Filter::TYPE,
 				'classes'     => 'premium-live-temp-label',
-				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => 'elementor_library',
 				'condition'   => array(
 					'premium_modal_box_content_type' => 'template',
 				),
@@ -414,13 +414,24 @@ class Premium_Modalbox extends Widget_Base {
 		);
 
 		$this->add_control(
+			'dismissible',
+			array(
+				'label'        => __( 'Dismissible', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'premium-modal-dismissible-',
+				'default'      => 'yes',
+				'separator'    => 'before',
+			)
+		);
+
+		$this->add_control(
 			'premium_modal_box_upper_close',
 			array(
 				'label'     => __( 'Upper Close Button', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
-				'separator' => 'before',
 				'default'   => 'yes',
 				'condition' => array(
+					'dismissible'                       => 'yes',
 					'premium_modal_box_header_switcher' => 'yes',
 				),
 			)
@@ -429,9 +440,12 @@ class Premium_Modalbox extends Widget_Base {
 		$this->add_control(
 			'premium_modal_box_lower_close',
 			array(
-				'label'   => __( 'Lower Close Button', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'label'     => __( 'Lower Close Button', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'default'   => 'yes',
+				'condition' => array(
+					'dismissible' => 'yes',
+				),
 			)
 		);
 
@@ -444,6 +458,7 @@ class Premium_Modalbox extends Widget_Base {
 				'dynamic'     => array( 'active' => true ),
 				'label_block' => true,
 				'condition'   => array(
+					'dismissible'                   => 'yes',
 					'premium_modal_box_lower_close' => 'yes',
 				),
 			)
@@ -1722,6 +1737,7 @@ class Premium_Modalbox extends Widget_Base {
 				'label'     => __( 'Upper Close Button', 'premium-addons-for-elementor' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
+					'dismissible'                       => 'yes',
 					'premium_modal_box_upper_close'     => 'yes',
 					'premium_modal_box_header_switcher' => 'yes',
 				),
@@ -1868,6 +1884,7 @@ class Premium_Modalbox extends Widget_Base {
 				'label'     => __( 'Lower Close Button', 'premium-addons-for-elementor' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
+					'dismissible'                   => 'yes',
 					'premium_modal_box_lower_close' => 'yes',
 				),
 			)
@@ -2606,7 +2623,10 @@ class Premium_Modalbox extends Widget_Base {
 				<?php endif; ?>
 			</div>
 
-			<div id="premium-modal-<?php echo esc_attr( $this->get_id() ); ?>" class="premium-modal-box-modal" role="dialog" style="display: none">
+			<div id="premium-modal-<?php echo esc_attr( $this->get_id() ); ?>" class="premium-modal-box-modal"
+			role="dialog"
+			style="display: none"
+			>
 				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'dialog' ) ); ?>>
 					<?php if ( 'yes' === $settings['premium_modal_box_header_switcher'] ) : ?>
 						<div class="premium-modal-box-modal-header">
@@ -2630,7 +2650,7 @@ class Premium_Modalbox extends Widget_Base {
 						if ( 'editor' === $settings['premium_modal_box_content_type'] ) :
 							echo $this->parse_text_editor( $settings['premium_modal_box_content'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						else :
-							echo $this->getTemplateInstance()->get_template_content( $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo Helper_Functions::render_elementor_template( $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						endif;
 						?>
 					</div>

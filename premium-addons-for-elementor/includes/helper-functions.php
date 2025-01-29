@@ -823,7 +823,13 @@ class Helper_Functions {
 			str_replace( 'GMT ', 'GMT+', sanitize_text_field( wp_unslash( $_COOKIE['localTimeZone'] ) ) )
 				: self::get_location_time_zone();
 
-		$today = new \DateTime( 'now', new \DateTimeZone( $local_time_zone ) );
+		// $today = new \DateTime( 'now', new \DateTimeZone( $local_time_zone ) );
+
+		try {
+			$today = new \DateTime( 'now', new \DateTimeZone( $local_time_zone ) );
+		} catch (\Exception $e) {
+			$today = new \DateTime('now', new \DateTimeZone('UTC'));
+		}
 
 		return $today->format( $format );
 	}
@@ -1666,11 +1672,89 @@ class Helper_Functions {
 			$svg_html .= $attributes;
 		}
 
-		$svg_html .= "aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";
+		$svg_html .= " aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";
 
 		$svg_html .= '<path d="' . esc_attr( $icon['path'] ) . '"></path>';
 		$svg_html .= '</svg>';
 
 		return wp_kses( $svg_html, self::get_allowed_icon_tags() );
+	}
+
+	/**
+	 * Get Elementor Template ID
+	 *
+	 * @since 4.10.80
+	 * @access public
+	 *
+	 * @param string $title template title.
+	 *
+	 * @return string $template_id template ID.
+	 */
+	public static function get_elementor_template_id( $title ) {
+
+		if ( empty( $title ) ) {
+			return;
+		}
+
+		$args = array(
+			'post_type'        => 'elementor_library',
+			'post_status'      => 'publish',
+			'posts_per_page'   => 1,
+			'title'            => $title,
+			'suppress_filters' => true,
+		);
+
+		$query = new \WP_Query( $args );
+
+		$post_id = '';
+
+		if ( $query->have_posts() ) {
+			$post_id = $query->post->ID;
+
+			wp_reset_postdata();
+		}
+
+		return $post_id;
+	}
+
+	/**
+	 * Render Elementor Template
+	 *
+	 * @since 4.10.80
+	 * @access public
+	 *
+	 * @param string|int $title   Template Title||id.
+	 * @param bool       $id          indicates if $title is the template title or id.
+	 *
+	 * @return $template_content string HTML Markup of the selected template.
+	 */
+	public static function render_elementor_template( $title, $id = false ) {
+
+		$frontend = Plugin::$instance->frontend;
+
+		$custom_temp = apply_filters( 'pa_temp_id', false );
+
+		if ( $custom_temp ) {
+			$id = $title = $custom_temp;
+		}
+
+		if ( ! $id ) {
+			$id = self::get_elementor_template_id( $title );
+
+			if ( ! $id ) {
+				// To replace the &#8211; in templates names with dash.
+				$decoded_title = html_entity_decode( $title );
+				$id            = self::get_elementor_template_id( $decoded_title );
+			}
+
+			$id = apply_filters( 'wpml_object_id', $id, 'elementor_library', true );
+		} else {
+			$id = $title;
+		}
+
+		$template_content = $frontend->get_builder_content( $id, true );
+
+		return $template_content;
+
 	}
 }

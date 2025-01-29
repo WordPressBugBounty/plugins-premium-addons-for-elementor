@@ -1,73 +1,92 @@
 (function ($) {
 
-    var PremiumModalBoxHandler = function ($scope, $) {
+	var PremiumModalBoxHandler = function ($scope, $) {
 
-        var $modalElem = $scope.find(".premium-modal-box-container"),
-            settings = $modalElem.data("settings"),
-            $modal = $modalElem.find(".premium-modal-box-modal-dialog"),
-            id = $scope.data('id');
+		var $modalElem = $scope.find(".premium-modal-box-container"),
+			settings = $modalElem.data("settings"),
+			$modal = $modalElem.find(".premium-modal-box-modal-dialog"),
+			id = $scope.data('id'),
+			isDismissible = $scope.hasClass('premium-modal-dismissible-yes');
 
-        if (!settings) {
-            return;
-        }
+		if (!settings) {
+			return;
+		}
 
-        if ("pageload" === settings.trigger) {
-            $(document).ready(function () {
-                setTimeout(function () {
-                    $modalElem.find(".premium-modal-box-modal").modal();
-                }, settings.delay * 1000);
-            });
-        } else if ("exit" === settings.trigger) {
+		var modalOptions = {
+			backdrop: isDismissible ? true : "static",
+			keyboard: isDismissible
+		};
 
-            if (elementorFrontend.config.user) {
-                $modalElem.find(".premium-modal-box-modal").modal();
-            } else {
-                if (!localStorage.getItem('paModal' + id)) {
+		// Disable dismiss behavior if not dismissible.
+		if (!isDismissible) {
 
-                    var isTriggered = false;
+			//Hide upper and lower close buttons.
+			$modalElem.find(".premium-modal-box-close-button-container, .premium-modal-box-modal-footer").hide();
 
-                    elementorFrontend.elements.$window.on('mouseleave', function (e) {
+		}
 
-                        if (!isTriggered && e.clientY <= 0) {
-                            isTriggered = true;
-                            $modalElem.find(".premium-modal-box-modal").modal();
-                            $modalElem.find(".premium-modal-box-modal").on('hidden.bs.modal', function () {
-                                console.log("tessssssssss");
-                                localStorage.setItem('paModal' + id, true);
-                            });
-                        }
+		if ("pageload" === settings.trigger) {
 
-                    });
-                }
-            }
+			$(document).ready(function () {
+				setTimeout(function () {
+					$modalElem.find(".premium-modal-box-modal").modal(modalOptions);
+				}, settings.delay * 1000);
+			});
 
-        }
+		} else if ("exit" === settings.trigger) {
 
-        if ($modal.data("modal-animation") && " " != $modal.data("modal-animation")) {
+			if (elementorFrontend.config.user) {
 
-            var animationDelay = $modal.data('delay-animation');
+				$modalElem.find(".premium-modal-box-modal").modal(modalOptions);
+			} else {
 
-            // unsing IntersectionObserverAPI.
-            var eleObserver = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        setTimeout(function () {
-                            $modal.css("opacity", "1").addClass("animated " + $modal.data("modal-animation"));
-                        }, animationDelay * 1000);
+				if (!localStorage.getItem('paModal' + id)) {
 
-                        eleObserver.unobserve(entry.target); // to only excecute the callback func once.
-                    }
-                });
-            }, {
-                threshold: 0.25
-            });
+					var isTriggered = false;
 
-            eleObserver.observe($modal[0]);
-        }
-    };
+					elementorFrontend.elements.$window.on('mouseleave', function (e) {
 
-    $(window).on('elementor/frontend/init', function () {
-        elementorFrontend.hooks.addAction('frontend/element_ready/premium-addon-modal-box.default', PremiumModalBoxHandler);
-    });
+						if (!isTriggered && e.clientY <= 0) {
+
+							isTriggered = true;
+							$modalElem.find(".premium-modal-box-modal").modal(modalOptions);
+							$modalElem.find(".premium-modal-box-modal").on('hidden.bs.modal', function () {
+								localStorage.setItem('paModal' + id, true);
+							});
+
+						}
+
+					});
+				}
+			}
+
+		}
+
+		if ($modal.data("modal-animation") && " " != $modal.data("modal-animation")) {
+
+			var animationDelay = $modal.data('delay-animation');
+
+			// Using IntersectionObserverAPI.
+			var eleObserver = new IntersectionObserver(function (entries) {
+				entries.forEach(function (entry) {
+					if (entry.isIntersecting) {
+						setTimeout(function () {
+							$modal.css("opacity", "1").addClass("animated " + $modal.data("modal-animation"));
+						}, animationDelay * 1000);
+
+						eleObserver.unobserve(entry.target); // to only excecute the callback func once.
+					}
+				});
+			}, {
+				threshold: 0.25
+			});
+
+			eleObserver.observe($modal[0]);
+		}
+	};
+
+	$(window).on('elementor/frontend/init', function () {
+		elementorFrontend.hooks.addAction('frontend/element_ready/premium-addon-modal-box.default', PremiumModalBoxHandler);
+	});
 })(jQuery);
 

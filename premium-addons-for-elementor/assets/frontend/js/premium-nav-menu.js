@@ -331,13 +331,21 @@
 			// Map links to sections
 			$anchorLinks.each(function (index, anchorLink) {
 				var $hashLink = $(anchorLink).find('> .premium-menu-link'),
+                    isValidId = /^#[A-Za-z][\w-]*$/,    // IDs should start with '#' and contain only [characters,numbers, -, _ ]
 					targetId = $hashLink[0] ? $hashLink[0].hash : null;
 
-				if (targetId && targetId.length) {
-					var $section = $(targetId);
-					if ($section.length) {
-						sections.push({ link: anchorLink, section: $section[0] });
-					}
+				if (targetId && targetId.length && isValidId.test(targetId)) {
+
+                    try {
+                        var $section = $(targetId);
+
+                        if ($section.length) {
+                            sections.push({ link: anchorLink, section: $section[0] });
+                        }
+
+                    } catch (error) {
+                        console.log(error)
+                    }
 				}
 			});
 

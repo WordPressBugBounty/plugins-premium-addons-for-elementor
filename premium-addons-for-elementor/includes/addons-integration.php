@@ -15,7 +15,6 @@ use PremiumAddons\Modules\PremiumGlobalTooltips\Module as GlobalTooltips;
 use PremiumAddons\Modules\PremiumShapeDivider\Module as Shape_Divider;
 use PremiumAddons\Modules\PremiumWrapperLink\Module as Wrapper_Link;
 use PremiumAddons\Includes\Assets_Manager;
-use PremiumAddons\Includes\Premium_Template_Tags;
 use ElementorPro\Plugin as PluginPro;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -56,13 +55,6 @@ class Addons_Integration {
 	private static $integrations = null;
 
 	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
 	 * Cross-Site CDN URL.
 	 *
 	 * @since  4.0.0
@@ -77,11 +69,11 @@ class Addons_Integration {
 	 */
 	public function __construct() {
 
+		Premium_Template_Tags::getInstance();
+
 		self::$modules = Admin_Helper::get_enabled_elements();
 
 		self::$integrations = Admin_Helper::get_integrations_settings();
-
-		$this->template_instance = Premium_Template_Tags::getInstance();
 
 		add_action( 'elementor/editor/before_enqueue_styles', array( $this, 'enqueue_editor_styles' ) );
 
@@ -120,6 +112,8 @@ class Addons_Integration {
 
 		}
 
+		add_action( 'elementor/elements/categories_registered', array( $this, 'register_widgets_category' ), 9 );
+
 		add_action( 'elementor/editor/after_enqueue_scripts', array( $this, 'after_enqueue_scripts' ) );
 
 		$cross_enabled = isset( self::$modules['premium-cross-domain'] ) ? self::$modules['premium-cross-domain'] : 1;
@@ -136,6 +130,7 @@ class Addons_Integration {
 		if ( self::$integrations['premium-wp-optimize-exclude'] ) {
 			add_filter( 'wp-optimize-minify-default-exclusions', array( $this, 'exclude_pa_assets_from_wp_optimize' ) );
 		}
+
 	}
 
 	/**
@@ -219,7 +214,7 @@ class Addons_Integration {
 			$template_content = PluginPro::elementor()->documents->get( $temp_id );
 
 		} else {
-			$template_content = $this->template_instance->get_template_content( $temp_id, true );
+			$template_content = Helper_Functions::render_elementor_template( $temp_id, true );
 
 		}
 
@@ -349,29 +344,15 @@ class Addons_Integration {
 			true
 		);
 
-		$modules = array(
-			self::$modules['premium-blog'],
-			self::$modules['pa-display-conditions'],
-			self::$modules['premium-smart-post-listing'],
-			self::$modules['premium-post-ticker'],
-			self::$modules['premium-notifications'],
-			self::$modules['premium-tcloud'],
-			self::$modules['premium-pinterest-feed'],
+		wp_localize_script(
+			'pa-eq-editor',
+			'PremiumSettings',
+			array(
+				'ajaxurl'      => esc_url( admin_url( 'admin-ajax.php' ) ),
+				'nonce'        => wp_create_nonce( 'pa-blog-widget-nonce' ),
+				'unused_nonce' => wp_create_nonce( 'pa-disable-unused' ),
+			)
 		);
-
-		$localize_settings = in_array( true, $modules, true );
-
-		if ( $localize_settings ) {
-			wp_localize_script(
-				'pa-eq-editor',
-				'PremiumSettings',
-				array(
-					'ajaxurl'      => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'nonce'        => wp_create_nonce( 'pa-blog-widget-nonce' ),
-					'unused_nonce' => wp_create_nonce( 'pa-disable-unused' ),
-				)
-			);
-		}
 
 		$time_limit = ini_get( 'max_execution_time' );
 
@@ -1132,7 +1113,7 @@ class Addons_Integration {
 				'pa-countdown',
 				'premiumCountDownStrings',
 				array(
-					'singule' => array(
+					'single' => array(
 						__( 'Year', 'premium-addons-for-elementor' ),
 						__( 'Month', 'premium-addons-for-elementor' ),
 						__( 'Week', 'premium-addons-for-elementor' ),
@@ -1259,6 +1240,27 @@ class Addons_Integration {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Register Widgets Category
+	 *
+	 * Register a new category for Premium Addons widgets
+	 *
+	 * @since 4.0.0
+	 * @access public
+	 *
+	 * @param object $elements_manager elements manager.
+	 */
+	public function register_widgets_category( $elements_manager ) {
+
+		$elements_manager->add_category(
+			'premium-elements',
+			array(
+				'title' => Helper_Functions::get_category(),
+			),
+			1
+		);
 	}
 
 	public function load_widget_files( $file, $class ) {
@@ -1619,7 +1621,7 @@ class Addons_Integration {
 			wp_send_json_error( 'Insufficient user permission' );
 		}
 
-		$template_content = $this->template_instance->get_template_content( $template );
+		$template_content = Helper_Functions::render_elementor_template( $template );
 
 		if ( empty( $template_content ) || ! isset( $template_content ) ) {
 			wp_send_json_error( 'Empty Content' );
@@ -1657,23 +1659,14 @@ class Addons_Integration {
 			self::$modules['premium-notifications'],
 			self::$modules['premium-pinterest-feed'],
 			self::$modules['premium-contactform'],
+			self::$modules['premium-global-tooltips']
 		);
 
-		$blog_modules = array(
-			self::$modules['premium-blog'],
-			self::$modules['premium-smart-post-listing'],
-			self::$modules['premium-post-ticker'],
-			self::$modules['premium-notifications'],
-			self::$modules['premium-search-form'],
-		);
-
-		$load_controls = in_array( true, $modules, true );
-
-		$load_blog_controls = in_array( true, $blog_modules, true );
+		// $load_controls = in_array( true, $modules, true );
 
 		$control_manager = \Elementor\Plugin::instance();
 
-		if ( $load_controls ) {
+		// if ( $load_controls ) {
 
 			if ( self::$modules['premium-equal-height'] || self::$modules['premium-pinterest-feed'] ) {
 
@@ -1683,14 +1676,12 @@ class Addons_Integration {
 
 			}
 
-			if ( $load_blog_controls ) {
+			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-post-filter.php';
 
-				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-post-filter.php';
+			$premium_post_filter = __NAMESPACE__ . '\Controls\Premium_Post_Filter';
 
-				$premium_post_filter = __NAMESPACE__ . '\Controls\Premium_Post_Filter';
+			$control_manager->controls_manager->register( new $premium_post_filter() );
 
-				$control_manager->controls_manager->register( new $premium_post_filter() );
-			}
 
 			if ( self::$modules['premium-blog'] || self::$modules['premium-smart-post-listing'] || self::$modules['premium-tcloud'] ) {
 
@@ -1708,7 +1699,7 @@ class Addons_Integration {
 				$control_manager->controls_manager->register( new $premium_acf_selector() );
 
 			}
-		}
+		// }
 
 		if ( self::$modules['premium-contactform'] || self::$modules['premium-shape-divider'] ) {
 

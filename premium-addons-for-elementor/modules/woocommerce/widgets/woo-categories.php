@@ -35,13 +35,6 @@ class Woo_Categories extends Widget_Base {
 	private $category_index = 0;
 
 	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
 	 * Retrieve Widget Name.
 	 *
 	 * @since 1.0.0

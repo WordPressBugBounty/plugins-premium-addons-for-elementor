@@ -829,10 +829,11 @@ class Premium_Notifications extends Widget_Base {
 			'content_temp',
 			array(
 				'label'       => __( 'OR Select Existing Template', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'label_block' => true,
+				'type'        => Premium_Post_Filter::TYPE,
 				'classes'     => 'premium-live-temp-label',
-				'options'     => $this->get_blog_helper()->get_elementor_page_list(),
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => 'elementor_library',
 				'condition'   => array(
 					'cookies'       => 'yes',
 					'shown_content' => 'template',
@@ -1347,10 +1348,10 @@ class Premium_Notifications extends Widget_Base {
 			'premium_blog_posts_exclude',
 			array(
 				'label'       => __( 'Posts', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
+				'type'        => Premium_Post_Filter::TYPE,
 				'label_block' => true,
 				'multiple'    => true,
-				'options'     => Blog_Helper::get_default_posts_list( 'post' ),
+				'source'      => 'post',
 				'condition'   => $options['source_condition'],
 			)
 		);
@@ -3867,7 +3868,7 @@ class Premium_Notifications extends Widget_Base {
 
 				if ( 'yes' === $settings['cookies'] && 0 == $number && 'template' === $settings['shown_content'] ) {
 					$template = empty( $settings['content_temp'] ) ? $settings['live_temp_content'] : $settings['content_temp'];
-					echo $this->get_blog_helper()->get_template_content( $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo Helper_Functions::render_elementor_template( $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				} else {
 					$id = $this->get_id();
 					$blog_helper->render_posts();

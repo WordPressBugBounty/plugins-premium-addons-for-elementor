@@ -9,7 +9,7 @@
             iconElement = $counterElement.find(".icon");
 
         if (!isHScrollWidget.length) {
-            // unsing IntersectionObserverAPI.
+            // Using IntersectionObserverAPI.
             var eleObserver = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     if (entry.isIntersecting) {

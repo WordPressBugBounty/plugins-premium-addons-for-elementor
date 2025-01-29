@@ -15,7 +15,7 @@ use Elementor\Group_Control_Box_Shadow;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -34,23 +34,6 @@ class Premium_Lottie extends Widget_Base {
 	 */
 	public function get_name() {
 		return 'premium-lottie';
-	}
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
 	}
 
 	/**
@@ -438,10 +421,10 @@ class Premium_Lottie extends Widget_Base {
 			'existing_link',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
-				'multiple'    => false,
+				'type'        => Premium_Post_Filter::TYPE,
 				'label_block' => true,
+				'multiple'    => false,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'link_switcher'  => 'yes',
 					'link_selection' => 'link',

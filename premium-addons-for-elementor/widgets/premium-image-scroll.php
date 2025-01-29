@@ -19,7 +19,7 @@ use Elementor\Group_Control_Text_Shadow;
 
 
 // PremiumAddons Classes.
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 use PremiumAddons\Includes\Helper_Functions;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,23 +30,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Premium_Image_Scroll
  */
 class Premium_Image_Scroll extends Widget_Base {
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
-	}
 
 	/**
 	 * Retrieve Widget Name.
@@ -271,13 +254,14 @@ class Premium_Image_Scroll extends Widget_Base {
 			'existing_page',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'link_switcher' => 'yes',
 					'link_type'     => 'link',
 				),
-				'label_block' => true,
 			)
 		);
 
@@ -894,7 +878,7 @@ class Premium_Image_Scroll extends Widget_Base {
 	 */
 	protected function render_icon_svg( $dir ) {
 
-		if( 'vertical' === $dir ) {
+		if ( 'vertical' === $dir ) {
 
 			$svg = '<svg class="premium-image-scroll-icon pa-vertical-mouse-scroll" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><style type="text/css">.st0{display:none;}.st1{display:inline;}</style><g><path d="M67.7,42.6c0-9.6-7.8-17.3-17.3-17.3h-0.8c-9.6,0-17.3,7.8-17.3,17.3v14.7c0,9.6,7.8,17.3,17.3,17.3h0.8c9.6,0,17.3-7.8,17.3-17.3V42.6z M64.8,57.4c0,4-1.6,7.6-4.2,10.2c-2.6,2.6-6.2,4.2-10.2,4.2h-0.8c-4,0-7.6-1.6-10.2-4.2c-2.6-2.6-4.2-6.2-4.2-10.2V42.6c0-4,1.6-7.6,4.2-10.2c2.6-2.6,6.2-4.2,10.2-4.2h0.8c4,0,7.6,1.6,10.2,4.2c2.6,2.6,4.2,6.2,4.2,10.2V57.4z"/><path d="M50,39.9c-0.8,0-1.5,0.7-1.5,1.5v4.3c0,0.8,0.7,1.5,1.5,1.5c0.8,0,1.5-0.7,1.5-1.5v-4.3C51.4,40.6,50.8,39.9,50,39.9z"/><g><path d="M49.1,94.7c0.5,0.4,1.3,0.4,1.8,0l7.3-5.8c0.6-0.5,0.7-1.4,0.2-2c-0.5-0.6-1.4-0.7-2-0.2l0,0L50,91.7l-6.4-5.1c-0.6-0.5-1.5-0.4-2,0.2c-0.5,0.6-0.4,1.5,0.2,2L49.1,94.7z"/><path d="M56.4,13.4c0.6,0.5,1.5,0.4,2-0.2s0.4-1.5-0.2-2l-7.3-5.8c-0.5-0.4-1.3-0.4-1.8,0l-7.3,5.8c-0.6,0.5-0.7,1.4-0.2,2s1.4,0.7,2,0.2l0,0L50,8.3L56.4,13.4z"/></g><g class="st0"><path class="st1" d="M5.3,49.1c-0.4,0.5-0.4,1.3,0,1.8l5.8,7.3c0.5,0.6,1.4,0.7,2,0.2c0.6-0.5,0.7-1.4,0.2-2l0,0L8.3,50l5.1-6.4c0.5-0.6,0.4-1.5-0.2-2c-0.6-0.5-1.5-0.4-2,0.2L5.3,49.1z"/><path class="st1" d="M86.6,56.4c-0.5,0.6-0.4,1.5,0.2,2s1.5,0.4,2-0.2l5.8-7.3c0.4-0.5,0.4-1.3,0-1.8l-5.8-7.3c-0.5-0.6-1.4-0.7-2-0.2s-0.7,1.4-0.2,2l0,0l5.1,6.4L86.6,56.4z"/></g></g></svg>';
 
@@ -905,7 +889,6 @@ class Premium_Image_Scroll extends Widget_Base {
 		}
 
 		echo $svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
 	}
 
 	/**
@@ -974,7 +957,7 @@ class Premium_Image_Scroll extends Widget_Base {
 				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
 					<?php if ( 'yes' === $settings['icon_switcher'] ) : ?>
 						<div class="premium-image-scroll-content">
-							<?php $this->render_icon_svg( $settings['direction_type'] ) ?>
+							<?php $this->render_icon_svg( $settings['direction_type'] ); ?>
 						</div>
 					<?php endif; ?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'direction_type' ) ); ?>>

@@ -18,7 +18,7 @@ use Elementor\Group_Control_Background;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -28,23 +28,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Premium_Dual_Header
  */
 class Premium_Dual_Header extends Widget_Base {
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
-	}
 
 	/**
 	 * Retrieve Widget Name.
@@ -278,15 +261,15 @@ class Premium_Dual_Header extends Widget_Base {
 			'premium_dual_heading_existing_link',
 			array(
 				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_all_posts(),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => false,
+				'separator'   => 'after',
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
 					'premium_dual_header_link_switcher'   => 'yes',
 					'premium_dual_heading_link_selection' => 'link',
 				),
-				'multiple'    => false,
-				'separator'   => 'after',
-				'label_block' => true,
 			)
 		);
 

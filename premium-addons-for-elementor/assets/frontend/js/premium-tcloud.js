@@ -59,9 +59,9 @@
                         // elementorFrontend.waypoint($canvas, function () {
                         //     _this.renderWordCloud();
                         // });
-                        // unsing IntersectionObserverAPI.
-                        var eleObserver = new IntersectionObserver(function(entries) {
-                            entries.forEach(function(entry) {
+                        // Using IntersectionObserverAPI.
+                        var eleObserver = new IntersectionObserver(function (entries) {
+                            entries.forEach(function (entry) {
                                 if (entry.isIntersecting) {
                                     _this.renderWordCloud();
                                     eleObserver.unobserve(entry.target); // to only excecute the callback func once.

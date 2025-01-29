@@ -23,7 +23,7 @@ use Elementor\Group_Control_Text_Shadow;
 
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
@@ -38,13 +38,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Woo_CTA extends Widget_Base {
 
 	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
 	 * Check Icon Draw Option.
 	 *
 	 * @since 2.8.4
@@ -54,17 +47,6 @@ class Woo_CTA extends Widget_Base {
 
 		$is_enabled = Admin_Helper::check_svg_draw( 'woo-cta' );
 		return $is_enabled;
-	}
-
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
 	}
 
 
@@ -232,14 +214,14 @@ class Woo_CTA extends Widget_Base {
 			)
 		);
 
-		$products = Premium_Template_Tags::get_default_posts_list( 'product' );
-
 		$this->add_control(
 			'product_id',
 			array(
-				'label'     => __( 'Select Product', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'options'   => $products,
+				'label'         => __( 'Select Products', 'premium-addons-pro' ),
+				'type'          => Premium_Post_Filter::TYPE,
+				'label_block'   => true,
+                'multiple'		=> false,
+                'source'        => 'product',
 				'condition' => array(
 					'use_current_product!' => 'yes',
 				),

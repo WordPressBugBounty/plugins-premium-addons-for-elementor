@@ -23,7 +23,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Pa_Nav_Menu_Walker;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -33,23 +33,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Premium_Person.
  */
 class Premium_Nav_Menu extends Widget_Base {
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
-	}
 
 	/**
 	 * Retrieve Widget Name.
@@ -432,11 +415,12 @@ class Premium_Nav_Menu extends Widget_Base {
 		$repeater->add_control(
 			'submenu_item',
 			array(
-				'label'       => __( 'Select Existing Template', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
+				'label'       => __( 'OR Select Existing Template', 'premium-addons-for-elementor' ),
+				'type'        => Premium_Post_Filter::TYPE,
 				'classes'     => 'premium-live-temp-label',
 				'label_block' => true,
-				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
+				'multiple'    => false,
+				'source'      => 'elementor_library',
 				'condition'   => array(
 					'item_type'         => 'submenu',
 					'menu_content_type' => 'custom_content',
@@ -4892,7 +4876,7 @@ class Premium_Nav_Menu extends Widget_Base {
 					if ( 'custom_content' === $item['menu_content_type'] ) {
 
 						$temp_id      = empty( $item['submenu_item'] ) ? $item['live_temp_content'] : $item['submenu_item'];
-						$html_output .= $this->getTemplateInstance()->get_template_content( $temp_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						$html_output .= Helper_Functions::render_elementor_template( $temp_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 					}
 

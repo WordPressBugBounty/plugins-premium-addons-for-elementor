@@ -5,7 +5,7 @@
         var trigger = $scope.find('.pa-txt-sc__outer-container').hasClass('pa-trigger-on-viewport') ? 'viewport' : 'hover',
             hasGrowEffect = $scope.find('.pa-txt-sc__effect-grow').length;
 
-        // unsing IntersectionObserverAPI.
+        // Using IntersectionObserverAPI.
         $scope.off('.PaTextualHandler');
 
         var eleObserver = new IntersectionObserver(function (entries) {
@@ -104,7 +104,7 @@
             $(this).text('').append(html);
         });
 
-        // unsing IntersectionObserverAPI.
+        // Using IntersectionObserverAPI.
         var eleObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {

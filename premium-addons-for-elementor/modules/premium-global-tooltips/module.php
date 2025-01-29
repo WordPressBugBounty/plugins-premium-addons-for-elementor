@@ -22,7 +22,6 @@ use Elementor\Group_Control_Text_Shadow;
 // Premium Addons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -76,26 +75,6 @@ class Module {
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
 		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
 		add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
-	}
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-
-		$this->template_instance = Premium_Template_Tags::getInstance();
-
-		return $this->template_instance;
 	}
 
 	/**
@@ -255,7 +234,7 @@ class Module {
 					'text'     => __( 'Text', 'premium-addons-for-elementor' ),
 					'lottie'   => __( 'Lottie', 'premium-addons-for-elementor' ),
 					'gallery'  => apply_filters( 'pa_pro_label', __( 'Gallery (PRO)', 'premium-addons-for-elementor' ) ),
-					'template' => apply_filters( 'pa_pro_label', __( 'Elemenor Template (PRO)', 'premium-addons-for-elementor' ) ),
+					'template' => apply_filters( 'pa_pro_label', __( 'Elementor Template (PRO)', 'premium-addons-for-elementor' ) ),
 				),
 				'default'     => 'text',
 				'condition'   => array(
@@ -1191,7 +1170,7 @@ class Module {
 
 							default:
 								$content = empty( $settings['premium_tooltip_template'] ) ? $settings['live_temp_content'] : $settings['premium_tooltip_template'];
-								echo $this->getTemplateInstance()->get_template_content( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo Helper_Functions::render_elementor_template( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 						?>
 					</div>

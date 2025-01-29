@@ -140,6 +140,7 @@ class Premium_Template_Tags {
 				}
 			}
 		}
+
 		return $options;
 	}
 
@@ -175,12 +176,6 @@ class Premium_Template_Tags {
 
 		if ( $query->have_posts() ) {
 			$post_id = $query->post->ID;
-
-			// while ( $query->have_posts() ) {
-
-				// $query->the_post();
-				// $post_id = get_the_ID();
-			// }
 
 			wp_reset_postdata();
 		}
@@ -221,8 +216,6 @@ class Premium_Template_Tags {
 			foreach ( $pagelist as $post ) {
 				$options[ $post->post_title ] = $post->post_title;
 			}
-
-			update_option( 'temp_count', $options );
 
 			return $options;
 		}
@@ -334,6 +327,7 @@ class Premium_Template_Tags {
 		return $options;
 	}
 
+
 	/**
 	 * Get posts list
 	 *
@@ -346,7 +340,9 @@ class Premium_Template_Tags {
 
 		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
 
-		$post_type = isset( $_POST['post_type'] ) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : '';
+		$post_type = isset( $_POST['post_type'] ) ? wp_unslash( $_POST['post_type'] ) : '';
+
+		$post_type = array_map( 'sanitize_text_field', $post_type );
 
 		if ( empty( $post_type ) ) {
 			wp_send_json_error( __( 'Empty Post Type.', 'premium-addons-for-elementor' ) );
@@ -364,9 +360,12 @@ class Premium_Template_Tags {
 		$options = array();
 
 		if ( ! empty( $list ) && ! is_wp_error( $list ) ) {
+
 			foreach ( $list as $post ) {
-				$options[ $post->ID ] = $post->post_title;
+				$key =  in_array( 'elementor_library', $post_type, true ) ? $post->post_title : $post->ID;
+				$options[ $key ] = $post->post_title;
 			}
+
 		}
 
 		wp_send_json_success( wp_json_encode( $options ) );

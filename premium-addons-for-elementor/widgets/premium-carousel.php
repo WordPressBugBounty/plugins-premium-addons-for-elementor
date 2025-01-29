@@ -20,7 +20,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // No access of directly access.
@@ -31,23 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Premium_Carousel extends Widget_Base {
 
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-		return $this->template_instance = Premium_Template_Tags::getInstance();
-	}
 
 	/**
 	 * Retrieve Widget Name.
@@ -198,11 +181,11 @@ class Premium_Carousel extends Widget_Base {
 			'premium_carousel_slider_content',
 			array(
 				'label'       => __( 'Templates', 'premium-addons-for-elementor' ),
-				'description' => __( 'Slider content is a template which you can choose from Elementor library. Each template will be a slider content', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
-				'multiple'    => true,
+				'type'        => Premium_Post_Filter::TYPE,
+				'classes'     => 'premium-live-temp-label',
 				'label_block' => true,
+				'multiple'    => true,
+				'source'      => 'elementor_library',
 				'condition'   => array(
 					'premium_carousel_content_type' => 'select',
 				),
@@ -236,11 +219,11 @@ class Premium_Carousel extends Widget_Base {
 			'premium_carousel_repeater_item',
 			array(
 				'label'       => __( 'OR Select Existing Template', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
+				'type'        => Premium_Post_Filter::TYPE,
 				'classes'     => 'premium-live-temp-label',
 				'label_block' => true,
-				'separator'   => 'after',
-				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
+				'multiple'    => false,
+				'source'      => 'elementor_library',
 			)
 		);
 
@@ -1604,7 +1587,7 @@ class Premium_Carousel extends Widget_Base {
 			if ( ! empty( $template_title ) ) :
 				?>
 				<div class="premium-carousel-template item-wrapper">
-					<?php echo $this->getTemplateInstance()->get_template_content( $template_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo Helper_Functions::render_elementor_template( $template_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php if ( 'progress' === $settings['premium_carousel_nav_options'] ) { ?>
 						<div class="premium-carousel-nav-progress">
 							<span class="premium-carousel-nav-progress-fill"></span>

@@ -36,12 +36,11 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			add_action( 'init', array( $this, 'i18n' ) );
 
 			// Run plugin and require the necessary files.
-			add_action( 'plugins_loaded', array( $this, 'premium_addons_elementor_setup' ) );
+			add_action( 'plugins_loaded', array( $this, 'pa_init' ) );
 
 			// Load Elementor files.
-			add_action( 'elementor/init', array( $this, 'elementor_init' ) );
+			// add_action( 'elementor/init', array( $this, 'elementor_init' ) );
 
-			add_action( 'elementor/elements/categories_registered', array( $this, 'register_widgets_category' ), 9 );
 			add_action( 'init', array( $this, 'init' ), -999 );
 
 			// Register Activation hooks.
@@ -71,6 +70,10 @@ if ( ! class_exists( 'PA_Core' ) ) {
 					)
 				);
 
+				if( strpos( $filename, 'premium-template-tags' ) ) {
+					$filename = 'includes' . DIRECTORY_SEPARATOR . 'class-premium-template-tags';
+				}
+
 				$filename = PREMIUM_ADDONS_PATH . $filename . '.php';
 
 				if ( is_readable( $filename ) ) {
@@ -87,10 +90,18 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 *
 		 * @return void
 		 */
-		public function premium_addons_elementor_setup() {
+		public function pa_init() {
 
-			// load plugin necessary files.
-			$this->load_files();
+			// Load plugin necessary files.
+			\PremiumAddons\Admin\Includes\Admin_Helper::get_instance();
+
+			$check_dynamic_assets = \PremiumAddons\Admin\Includes\Admin_Helper::check_element_by_key( 'premium-assets-generator' );
+
+			if ( $check_dynamic_assets ) {
+				\PremiumAddons\Includes\Assets_Manager::get_instance();
+			}
+
+			Addons_Integration::get_instance();
 		}
 
 		/**
@@ -152,13 +163,6 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 */
 		public function load_files() {
 
-			\PremiumAddons\Admin\Includes\Admin_Helper::get_instance();
-
-			$check_dynamic_assets = \PremiumAddons\Admin\Includes\Admin_Helper::check_element_by_key( 'premium-assets-generator' );
-
-			if ( $check_dynamic_assets ) {
-				\PremiumAddons\Includes\Assets_Manager::get_instance();
-			}
 		}
 
 		/**
@@ -186,33 +190,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 */
 		public function elementor_init() {
 
-			require_once PREMIUM_ADDONS_PATH . 'includes/class-premium-template-tags.php';
 
-			// Outdated WPML compatibility.
-			// Compatibility\Premium_Addons_Wpml::get_instance();
 
-			Addons_Integration::get_instance();
-		}
-
-		/**
-		 * Register Widgets Category
-		 *
-		 * Register a new category for Premium Addons widgets
-		 *
-		 * @since 4.0.0
-		 * @access public
-		 *
-		 * @param object $elements_manager elements manager.
-		 */
-		public function register_widgets_category( $elements_manager ) {
-
-			$elements_manager->add_category(
-				'premium-elements',
-				array(
-					'title' => Helper_Functions::get_category(),
-				),
-				1
-			);
 		}
 
 		/**

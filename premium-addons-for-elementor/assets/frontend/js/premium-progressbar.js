@@ -155,9 +155,9 @@
         //     }
 
         // });
-        // unsing IntersectionObserverAPI.
-        var eleObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
+        // Using IntersectionObserverAPI.
+        var eleObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
 
                     if ("dots" !== type) {

@@ -10,7 +10,7 @@ use Elementor\Controls_Manager;
 
 // PA Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -30,19 +30,18 @@ class Woo_Purchase_Products extends Condition {
 	 * @return array  controls options.
 	 */
 	public function get_control_options() {
-		$products = Premium_Template_Tags::get_default_posts_list( 'product' );
 
 		return array(
-			'label'       => __( 'Value', 'premium-addons-for-elementor' ),
-			'type'        => Controls_Manager::SELECT2,
-			'default'     => array(),
-			'label_block' => true,
-			'options'     => $products,
-			'multiple'    => true,
+			'label'         => __( 'Value', 'premium-addons-pro' ),
+			'type'          => Premium_Post_Filter::TYPE,
+			'label_block'   => true,
+			'multiple'      => true,
+			'source'        => 'product',
 			'condition'   => array(
 				'pa_condition_key' => 'woo_purchase_products',
 			),
 		);
+
 	}
 
 	/**

@@ -21,7 +21,6 @@ use Elementor\Group_Control_Text_Shadow;
 // Premium Addons Classes.
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Admin\Includes\Admin_Helper;
-use PremiumAddons\Includes\Premium_Template_Tags;
 use PremiumAddons\Includes\Controls\Premium_Image_Choose;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -80,26 +79,6 @@ class Module {
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
 		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
 		add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
-	}
-
-	/**
-	 * Template Instance
-	 *
-	 * @var template_instance
-	 */
-	protected $template_instance;
-
-	/**
-	 * Get Elementor Helper Instance.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function getTemplateInstance() {
-
-		$this->template_instance = Premium_Template_Tags::getInstance();
-
-		return $this->template_instance;
 	}
 
 	/**

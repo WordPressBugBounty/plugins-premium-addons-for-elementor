@@ -447,10 +447,10 @@ class Premium_Search_Form extends Widget_Base {
 			'premium_blog_posts_exclude',
 			array(
 				'label'       => __( 'Posts', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT2,
+				'type'        => Premium_Post_Filter::TYPE,
 				'label_block' => true,
 				'multiple'    => true,
-				'options'     => Blog_Helper::get_default_posts_list( 'post' ),
+				'source'      => 'post',
 				'condition'   => array(
 					'post_type_filter'    => 'post',
 					'query_type'          => 'post',
