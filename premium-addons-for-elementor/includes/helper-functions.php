@@ -9,6 +9,7 @@ namespace PremiumAddons\Includes;
 use PremiumAddonsPro\Includes\White_Label\Helper;
 
 // Elementor Classes.
+use Elementor\Icons_Manager;
 use Elementor\Core\Settings\Manager as SettingsManager;
 use Elementor\Plugin;
 use Elementor\Controls_Manager;
@@ -1641,6 +1642,12 @@ class Helper_Functions {
 
 		if ( empty( $icon ) || empty( $icon['value'] ) || empty( $icon['library'] ) ) {
 			return '';
+		}
+
+		//If icon library is SVG, then go to Elementor. Used for widgets where this widget is called in all cases.
+		if( 'svg' === $icon['library'] ) {
+			Icons_Manager::render_icon( $icon, [ 'aria-hidden' => 'true' ] );
+			return;
 		}
 
 		$icon['font_family'] = 'font-awesome';

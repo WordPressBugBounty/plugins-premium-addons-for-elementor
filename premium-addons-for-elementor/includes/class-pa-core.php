@@ -38,13 +38,11 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			// Run plugin and require the necessary files.
 			add_action( 'plugins_loaded', array( $this, 'pa_init' ) );
 
-			// Load Elementor files.
-			// add_action( 'elementor/init', array( $this, 'elementor_init' ) );
-
 			add_action( 'init', array( $this, 'init' ), -999 );
 
 			// Register Activation hooks.
 			register_activation_hook( PREMIUM_ADDONS_FILE, array( $this, 'handle_activation' ) );
+			register_uninstall_hook( PREMIUM_ADDONS_FILE, array( __CLASS__, 'uninstall' ) );
 		}
 
 		/**
@@ -70,7 +68,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 					)
 				);
 
-				if( strpos( $filename, 'premium-template-tags' ) ) {
+				if ( strpos( $filename, 'premium-template-tags' ) ) {
 					$filename = 'includes' . DIRECTORY_SEPARATOR . 'class-premium-template-tags';
 				}
 
@@ -152,17 +150,28 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			}
 		}
 
+		public static function uninstall() {
 
-		/**
-		 * Require initial necessary files
-		 *
-		 * @since 2.6.8
-		 * @access public
-		 *
-		 * @return void
-		 */
-		public function load_files() {
+			$api_url = 'https://feedbackpa.leap13.com/wp-json/uninstall/v2/add';
 
+			$current_time = gmdate( 'j F, Y', time() );
+
+			$response = wp_safe_remote_request(
+				$api_url,
+				array(
+					'headers'     => array(
+						'Content-Type' => 'application/json',
+					),
+					'body'        => wp_json_encode(
+						array(
+							'time' => $current_time,
+						)
+					),
+					'timeout'     => 20,
+					'method'      => 'POST',
+					'httpversion' => '1.1',
+				)
+			);
 		}
 
 		/**
@@ -176,22 +185,6 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		public function i18n() {
 
 			load_plugin_textdomain( 'premium-addons-for-elementor' );
-		}
-
-		/**
-		 * Elementor Init
-		 *
-		 * Initialize plugin after Elementor is run.
-		 *
-		 * @since 2.6.8
-		 * @access public
-		 *
-		 * @return void
-		 */
-		public function elementor_init() {
-
-
-
 		}
 
 		/**

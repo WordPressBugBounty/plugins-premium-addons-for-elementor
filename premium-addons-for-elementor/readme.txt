@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.7.1
 Requires PHP: 7.0
-Stable Tag: 4.10.80
+Stable Tag: 4.10.81
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -89,6 +89,8 @@ Each widget and addon has been tested on different screen sizes, mobile devices,
 * [**Weather Widget**](https://premiumaddons.com/elementor-weather-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Weather widget is useful for showing weather forecast data by city name or custom coordinates. You can select between three neat layouts with dozens of customization options.
 
 * [**News Ticker Widget**](https://premiumaddons.com/elementor-news-ticker-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Show your posts in an attractive way using this news ticker widget. Select between four different layouts. You can also use the widget to show Gold, Stock and Currencies prices.
+
+* [**Textual Showcase Widget**](https://premiumaddons.com/elementor-textual-showcase-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Elevate your text into stunning visual art with Elementor Textual Showcase. Experiment with Text, Images, Font Awesome Icons, SVG Draw, and Lottie Animations to craft eye-catching designs. Engage your audience by making your words move, fade, and transform dynamically, leaving a lasting impression.
 
 * [**Tags Cloud Widget**](https://premiumaddons.com/elementor-tags-cloud-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Showcase tags and categories as cloud, sphere, labeled.
 
@@ -234,6 +236,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.81 =
+
+- Fixed: Fatal error in Button widget after v4.10.80
 
 = 4.10.80 =
 

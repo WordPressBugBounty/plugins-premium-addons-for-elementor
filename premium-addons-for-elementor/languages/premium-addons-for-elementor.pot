@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.10.80\n"
+"Project-Id-Version: Premium Addons for Elementor 4.10.81\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2025-01-29 12:50:58+00:00\n"
+"POT-Creation-Date: 2025-01-30 11:00:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,8 +33,8 @@ msgstr ""
 msgid " PA Assets"
 msgstr ""
 
-#: admin/includes/admin-bar.php:125 includes/helper-functions.php:235
-#: includes/helper-functions.php:245 widgets/premium-button.php:183
+#: admin/includes/admin-bar.php:125 includes/helper-functions.php:236
+#: includes/helper-functions.php:246 widgets/premium-button.php:183
 #: widgets/premium-image-button.php:184 widgets/premium-modalbox.php:555
 #: widgets/premium-modalbox.php:1052
 msgid "Premium Addons"
@@ -277,30 +277,34 @@ msgstr ""
 msgid "Google Reviews"
 msgstr ""
 
-#: admin/includes/elements.php:91 admin/includes/elements.php:1347
+#: admin/includes/elements.php:91 admin/includes/elements.php:1075
+msgid "Off Canvas"
+msgstr ""
+
+#: admin/includes/elements.php:103 admin/includes/elements.php:1347
 msgid "Table"
 msgstr ""
 
-#: admin/includes/elements.php:101 admin/includes/elements.php:1027
+#: admin/includes/elements.php:113 admin/includes/elements.php:1027
 #: widgets/premium-notifications.php:95
 msgid "Recent Posts Notification"
 msgstr ""
 
-#: admin/includes/elements.php:108 admin/includes/elements.php:1100
+#: admin/includes/elements.php:120 admin/includes/elements.php:1100
 #: modules/woocommerce/widgets/woo-products.php:74
 msgid "Woo Products"
 msgstr ""
 
-#: admin/includes/elements.php:116 admin/includes/elements.php:894
+#: admin/includes/elements.php:128 admin/includes/elements.php:894
 msgid "Site Logo"
 msgstr ""
 
-#: admin/includes/elements.php:127 admin/includes/elements.php:330
+#: admin/includes/elements.php:139 admin/includes/elements.php:342
 #: admin/includes/elements.php:943 widgets/premium-lottie.php:75
 msgid "Lottie Animations"
 msgstr ""
 
-#: admin/includes/elements.php:135 admin/includes/elements.php:713
+#: admin/includes/elements.php:147 admin/includes/elements.php:713
 #: modules/woocommerce/widgets/woo-categories.php:161
 #: modules/woocommerce/widgets/woo-products.php:260
 #: modules/woocommerce/widgets/woo-products.php:2025
@@ -312,140 +316,136 @@ msgstr ""
 msgid "Carousel"
 msgstr ""
 
-#: admin/includes/elements.php:143 admin/includes/elements.php:1042
+#: admin/includes/elements.php:155 admin/includes/elements.php:1042
 msgid "Smart Post Listing"
 msgstr ""
 
-#: admin/includes/elements.php:152 admin/includes/elements.php:744
+#: admin/includes/elements.php:164 admin/includes/elements.php:744
 #: widgets/premium-maps.php:60
 msgid "Google Maps"
 msgstr ""
 
-#: admin/includes/elements.php:160 admin/includes/elements.php:752
+#: admin/includes/elements.php:172 admin/includes/elements.php:752
 #: widgets/premium-person.php:53
 msgid "Team Members"
 msgstr ""
 
-#: admin/includes/elements.php:167 admin/includes/elements.php:1251
+#: admin/includes/elements.php:179 admin/includes/elements.php:1251
 #: widgets/premium-svg-drawer.php:49
 msgid "SVG Draw"
 msgstr ""
 
-#: admin/includes/elements.php:175 admin/includes/elements.php:759
+#: admin/includes/elements.php:187 admin/includes/elements.php:759
 #: widgets/premium-weather.php:3155
 msgid "Tabs"
 msgstr ""
 
-#: admin/includes/elements.php:186 admin/includes/elements.php:768
+#: admin/includes/elements.php:198 admin/includes/elements.php:768
 msgid "Content Switcher"
 msgstr ""
 
-#: admin/includes/elements.php:196 admin/includes/elements.php:776
+#: admin/includes/elements.php:208 admin/includes/elements.php:776
 #: widgets/premium-fancytext.php:49 widgets/premium-fancytext.php:218
 #: widgets/premium-fancytext.php:694
 msgid "Animated Text"
 msgstr ""
 
-#: admin/includes/elements.php:204 admin/includes/elements.php:784
+#: admin/includes/elements.php:216 admin/includes/elements.php:784
 #: widgets/premium-testimonials.php:221 widgets/premium-testimonials.php:311
 #: widgets/premium-testimonials.php:922 widgets/premium-title.php:64
 msgid "Heading"
 msgstr ""
 
-#: admin/includes/elements.php:212 admin/includes/elements.php:792
+#: admin/includes/elements.php:224 admin/includes/elements.php:792
 #: widgets/premium-dual-header.php:49 widgets/premium-dual-header.php:148
 msgid "Dual Heading"
 msgstr ""
 
-#: admin/includes/elements.php:219 admin/includes/elements.php:799
+#: admin/includes/elements.php:231 admin/includes/elements.php:799
 #: widgets/premium-icon-list.php:1286 widgets/premium-icon-list.php:2054
 #: widgets/premium-pricing-table.php:545 widgets/premium-pricing-table.php:1982
 msgid "Divider"
 msgstr ""
 
-#: admin/includes/elements.php:230 admin/includes/elements.php:822
+#: admin/includes/elements.php:242 admin/includes/elements.php:822
 #: widgets/premium-grid.php:65
 msgid "Media Grid"
 msgstr ""
 
-#: admin/includes/elements.php:237 admin/includes/elements.php:1035
+#: admin/includes/elements.php:249 admin/includes/elements.php:1035
 #: widgets/premium-tcloud.php:55
 msgid "Tags Cloud"
 msgstr ""
 
-#: admin/includes/elements.php:244 admin/includes/elements.php:836
+#: admin/includes/elements.php:256 admin/includes/elements.php:836
 #: widgets/premium-image-scroll.php:51
 msgid "Image Scroll"
 msgstr ""
 
-#: admin/includes/elements.php:251 admin/includes/elements.php:843
+#: admin/includes/elements.php:263 admin/includes/elements.php:843
 #: widgets/premium-image-separator.php:62
 msgid "Image Separator"
 msgstr ""
 
-#: admin/includes/elements.php:259 admin/includes/elements.php:851
+#: admin/includes/elements.php:271 admin/includes/elements.php:851
 msgid "Image Comparison"
 msgstr ""
 
-#: admin/includes/elements.php:269 admin/includes/elements.php:859
+#: admin/includes/elements.php:281 admin/includes/elements.php:859
 msgid "Image Hotspots"
 msgstr ""
 
-#: admin/includes/elements.php:280 admin/includes/elements.php:868
+#: admin/includes/elements.php:292 admin/includes/elements.php:868
 msgid "Image Layers"
 msgstr ""
 
-#: admin/includes/elements.php:292 admin/includes/elements.php:878
+#: admin/includes/elements.php:304 admin/includes/elements.php:878
 msgid "Image Accordion"
 msgstr ""
 
-#: admin/includes/elements.php:303 admin/includes/elements.php:887
+#: admin/includes/elements.php:315 admin/includes/elements.php:887
 #: widgets/premium-videobox.php:53 widgets/premium-videobox.php:151
 #: widgets/premium-videobox.php:1738
 msgid "Video Box"
 msgstr ""
 
-#: admin/includes/elements.php:310 admin/includes/elements.php:927
+#: admin/includes/elements.php:322 admin/includes/elements.php:927
 msgid "Background Transition"
 msgstr ""
 
-#: admin/includes/elements.php:320 admin/includes/elements.php:935
+#: admin/includes/elements.php:332 admin/includes/elements.php:935
 msgid "Multi Scroll"
 msgstr ""
 
-#: admin/includes/elements.php:339 admin/includes/elements.php:952
+#: admin/includes/elements.php:351 admin/includes/elements.php:952
 #: widgets/premium-vscroll.php:506
 msgid "Parallax"
 msgstr ""
 
-#: admin/includes/elements.php:349 admin/includes/elements.php:962
+#: admin/includes/elements.php:361 admin/includes/elements.php:962
 msgid "Particles"
 msgstr ""
 
-#: admin/includes/elements.php:358 admin/includes/elements.php:971
+#: admin/includes/elements.php:370 admin/includes/elements.php:971
 #: widgets/premium-progressbar.php:868 widgets/premium-title.php:1447
 msgid "Animated Gradient"
 msgstr ""
 
-#: admin/includes/elements.php:367 admin/includes/elements.php:980
+#: admin/includes/elements.php:379 admin/includes/elements.php:980
 msgid "Animated Ken Burns"
 msgstr ""
 
-#: admin/includes/elements.php:376 admin/includes/elements.php:989
+#: admin/includes/elements.php:388 admin/includes/elements.php:989
 msgid "Blob Generator"
 msgstr ""
 
-#: admin/includes/elements.php:385 admin/includes/elements.php:1056
+#: admin/includes/elements.php:397 admin/includes/elements.php:1056
 #: widgets/premium-modalbox.php:76 widgets/premium-modalbox.php:2063
 msgid "Modal Box"
 msgstr ""
 
-#: admin/includes/elements.php:394 admin/includes/elements.php:1065
+#: admin/includes/elements.php:406 admin/includes/elements.php:1065
 msgid "Alert Box"
-msgstr ""
-
-#: admin/includes/elements.php:406 admin/includes/elements.php:1075
-msgid "Off Canvas"
 msgstr ""
 
 #: admin/includes/elements.php:418 admin/includes/elements.php:1085
@@ -1613,7 +1613,7 @@ msgid "% Comments"
 msgstr ""
 
 #: includes/class-premium-template-tags.php:1304
-#: includes/helper-functions.php:1568
+#: includes/helper-functions.php:1569
 msgid ""
 "The current query has no posts. Please make sure you have published items "
 "matching your query."
@@ -1646,279 +1646,279 @@ msgstr ""
 msgid "Please choose your custom premium grid template."
 msgstr ""
 
-#: includes/helper-functions.php:258 includes/helper-functions.php:268
+#: includes/helper-functions.php:259 includes/helper-functions.php:269
 #: widgets/premium-dual-header.php:159
 msgid "Premium"
 msgstr ""
 
-#: includes/helper-functions.php:326 widgets/premium-countdown.php:364
+#: includes/helper-functions.php:327 widgets/premium-countdown.php:364
 #: widgets/premium-weather.php:369
 msgid "Arabic"
 msgstr ""
 
-#: includes/helper-functions.php:327 widgets/premium-weather.php:378
+#: includes/helper-functions.php:328 widgets/premium-weather.php:378
 msgid "Basque"
 msgstr ""
 
-#: includes/helper-functions.php:328 widgets/premium-weather.php:371
+#: includes/helper-functions.php:329 widgets/premium-weather.php:371
 msgid "Bulgarian"
 msgstr ""
 
-#: includes/helper-functions.php:329
+#: includes/helper-functions.php:330
 msgid "Bengali"
 msgstr ""
 
-#: includes/helper-functions.php:330 widgets/premium-weather.php:372
+#: includes/helper-functions.php:331 widgets/premium-weather.php:372
 msgid "Catalan"
 msgstr ""
 
-#: includes/helper-functions.php:331 widgets/premium-weather.php:373
+#: includes/helper-functions.php:332 widgets/premium-weather.php:373
 msgid "Czech"
 msgstr ""
 
-#: includes/helper-functions.php:332 widgets/premium-countdown.php:365
+#: includes/helper-functions.php:333 widgets/premium-countdown.php:365
 #: widgets/premium-weather.php:374
 msgid "Danish"
 msgstr ""
 
-#: includes/helper-functions.php:333 widgets/premium-countdown.php:366
+#: includes/helper-functions.php:334 widgets/premium-countdown.php:366
 #: widgets/premium-weather.php:375
 msgid "German"
 msgstr ""
 
-#: includes/helper-functions.php:334 widgets/premium-weather.php:376
+#: includes/helper-functions.php:335 widgets/premium-weather.php:376
 msgid "Greek"
 msgstr ""
 
-#: includes/helper-functions.php:335 widgets/premium-countdown.php:367
+#: includes/helper-functions.php:336 widgets/premium-countdown.php:367
 #: widgets/premium-weather.php:377
 msgid "English"
 msgstr ""
 
-#: includes/helper-functions.php:336
+#: includes/helper-functions.php:337
 msgid "English (australian)"
 msgstr ""
 
-#: includes/helper-functions.php:337
+#: includes/helper-functions.php:338
 msgid "English (great britain)"
 msgstr ""
 
-#: includes/helper-functions.php:338 widgets/premium-countdown.php:368
+#: includes/helper-functions.php:339 widgets/premium-countdown.php:368
 #: widgets/premium-weather.php:404
 msgid "Spanish"
 msgstr ""
 
-#: includes/helper-functions.php:339
+#: includes/helper-functions.php:340
 msgid "Farsi"
 msgstr ""
 
-#: includes/helper-functions.php:340 widgets/premium-countdown.php:369
+#: includes/helper-functions.php:341 widgets/premium-countdown.php:369
 #: widgets/premium-weather.php:380
 msgid "Finnish"
 msgstr ""
 
-#: includes/helper-functions.php:341
+#: includes/helper-functions.php:342
 msgid "Filipino"
 msgstr ""
 
-#: includes/helper-functions.php:342 widgets/premium-countdown.php:370
+#: includes/helper-functions.php:343 widgets/premium-countdown.php:370
 #: widgets/premium-weather.php:381
 msgid "French"
 msgstr ""
 
-#: includes/helper-functions.php:343 widgets/premium-weather.php:382
+#: includes/helper-functions.php:344 widgets/premium-weather.php:382
 msgid "Galician"
 msgstr ""
 
-#: includes/helper-functions.php:344
+#: includes/helper-functions.php:345
 msgid "Gujarati"
 msgstr ""
 
-#: includes/helper-functions.php:345 widgets/premium-weather.php:384
+#: includes/helper-functions.php:346 widgets/premium-weather.php:384
 msgid "Hindi"
 msgstr ""
 
-#: includes/helper-functions.php:346 widgets/premium-weather.php:385
+#: includes/helper-functions.php:347 widgets/premium-weather.php:385
 msgid "Croatian"
 msgstr ""
 
-#: includes/helper-functions.php:347 widgets/premium-weather.php:386
+#: includes/helper-functions.php:348 widgets/premium-weather.php:386
 msgid "Hungarian"
 msgstr ""
 
-#: includes/helper-functions.php:348 widgets/premium-weather.php:387
+#: includes/helper-functions.php:349 widgets/premium-weather.php:387
 msgid "Indonesian"
 msgstr ""
 
-#: includes/helper-functions.php:349 widgets/premium-countdown.php:371
+#: includes/helper-functions.php:350 widgets/premium-countdown.php:371
 #: widgets/premium-weather.php:388
 msgid "Italian"
 msgstr ""
 
-#: includes/helper-functions.php:350 widgets/premium-weather.php:383
+#: includes/helper-functions.php:351 widgets/premium-weather.php:383
 msgid "Hebrew"
 msgstr ""
 
-#: includes/helper-functions.php:351 widgets/premium-weather.php:389
+#: includes/helper-functions.php:352 widgets/premium-weather.php:389
 msgid "Japanese"
 msgstr ""
 
-#: includes/helper-functions.php:352
+#: includes/helper-functions.php:353
 msgid "Kannada"
 msgstr ""
 
-#: includes/helper-functions.php:353 widgets/premium-weather.php:390
+#: includes/helper-functions.php:354 widgets/premium-weather.php:390
 msgid "Korean"
 msgstr ""
 
-#: includes/helper-functions.php:354 widgets/premium-weather.php:392
+#: includes/helper-functions.php:355 widgets/premium-weather.php:392
 msgid "Lithuanian"
 msgstr ""
 
-#: includes/helper-functions.php:355 widgets/premium-weather.php:391
+#: includes/helper-functions.php:356 widgets/premium-weather.php:391
 msgid "Latvian"
 msgstr ""
 
-#: includes/helper-functions.php:356
+#: includes/helper-functions.php:357
 msgid "Malayalam"
 msgstr ""
 
-#: includes/helper-functions.php:357
+#: includes/helper-functions.php:358
 msgid "Marathi"
 msgstr ""
 
-#: includes/helper-functions.php:358 widgets/premium-countdown.php:372
+#: includes/helper-functions.php:359 widgets/premium-countdown.php:372
 #: widgets/premium-weather.php:395
 msgid "Dutch"
 msgstr ""
 
-#: includes/helper-functions.php:359 widgets/premium-weather.php:394
+#: includes/helper-functions.php:360 widgets/premium-weather.php:394
 msgid "Norwegian"
 msgstr ""
 
-#: includes/helper-functions.php:360 widgets/premium-weather.php:396
+#: includes/helper-functions.php:361 widgets/premium-weather.php:396
 msgid "Polish"
 msgstr ""
 
-#: includes/helper-functions.php:361 widgets/premium-countdown.php:373
+#: includes/helper-functions.php:362 widgets/premium-countdown.php:373
 #: widgets/premium-weather.php:397
 msgid "Portuguese"
 msgstr ""
 
-#: includes/helper-functions.php:362
+#: includes/helper-functions.php:363
 msgid "Portuguese (brazil)"
 msgstr ""
 
-#: includes/helper-functions.php:363
+#: includes/helper-functions.php:364
 msgid "Portuguese (portugal)"
 msgstr ""
 
-#: includes/helper-functions.php:364 widgets/premium-weather.php:399
+#: includes/helper-functions.php:365 widgets/premium-weather.php:399
 msgid "Romanian"
 msgstr ""
 
-#: includes/helper-functions.php:365 widgets/premium-countdown.php:374
+#: includes/helper-functions.php:366 widgets/premium-countdown.php:374
 #: widgets/premium-weather.php:400
 msgid "Russian"
 msgstr ""
 
-#: includes/helper-functions.php:366 widgets/premium-weather.php:402
+#: includes/helper-functions.php:367 widgets/premium-weather.php:402
 msgid "Slovak"
 msgstr ""
 
-#: includes/helper-functions.php:367 widgets/premium-weather.php:403
+#: includes/helper-functions.php:368 widgets/premium-weather.php:403
 msgid "Slovenian"
 msgstr ""
 
-#: includes/helper-functions.php:368 widgets/premium-weather.php:405
+#: includes/helper-functions.php:369 widgets/premium-weather.php:405
 msgid "Serbian"
 msgstr ""
 
-#: includes/helper-functions.php:369 widgets/premium-countdown.php:375
+#: includes/helper-functions.php:370 widgets/premium-countdown.php:375
 #: widgets/premium-weather.php:401
 msgid "Swedish"
 msgstr ""
 
-#: includes/helper-functions.php:370
+#: includes/helper-functions.php:371
 msgid "Tagalog"
 msgstr ""
 
-#: includes/helper-functions.php:371
+#: includes/helper-functions.php:372
 msgid "Tamil"
 msgstr ""
 
-#: includes/helper-functions.php:372
+#: includes/helper-functions.php:373
 msgid "Telugu"
 msgstr ""
 
-#: includes/helper-functions.php:373 widgets/premium-weather.php:406
+#: includes/helper-functions.php:374 widgets/premium-weather.php:406
 msgid "Thai"
 msgstr ""
 
-#: includes/helper-functions.php:374 widgets/premium-weather.php:407
+#: includes/helper-functions.php:375 widgets/premium-weather.php:407
 msgid "Turkish"
 msgstr ""
 
-#: includes/helper-functions.php:375 widgets/premium-weather.php:408
+#: includes/helper-functions.php:376 widgets/premium-weather.php:408
 msgid "Ukrainian"
 msgstr ""
 
-#: includes/helper-functions.php:376 widgets/premium-weather.php:409
+#: includes/helper-functions.php:377 widgets/premium-weather.php:409
 msgid "Vietnamese"
 msgstr ""
 
-#: includes/helper-functions.php:377
+#: includes/helper-functions.php:378
 msgid "Chinese (simplified)"
 msgstr ""
 
-#: includes/helper-functions.php:378
+#: includes/helper-functions.php:379
 msgid "Chinese (traditional)"
 msgstr ""
 
-#: includes/helper-functions.php:941
+#: includes/helper-functions.php:942
 #: includes/pa-display-conditions/conditions/device.php:39
 #: widgets/premium-videobox.php:786
 msgid "Desktop"
 msgstr ""
 
-#: includes/helper-functions.php:942
+#: includes/helper-functions.php:943
 #: includes/pa-display-conditions/conditions/device.php:40
 #: widgets/premium-videobox.php:787
 msgid "Tablet"
 msgstr ""
 
-#: includes/helper-functions.php:943
+#: includes/helper-functions.php:944
 #: includes/pa-display-conditions/conditions/device.php:41
 #: widgets/premium-videobox.php:788
 msgid "Mobile"
 msgstr ""
 
-#: includes/helper-functions.php:954
+#: includes/helper-functions.php:955
 msgid "Widescreen"
 msgstr ""
 
-#: includes/helper-functions.php:955
+#: includes/helper-functions.php:956
 msgid "Laptop"
 msgstr ""
 
-#: includes/helper-functions.php:956
+#: includes/helper-functions.php:957
 msgid "Tablet Extra"
 msgstr ""
 
-#: includes/helper-functions.php:957
+#: includes/helper-functions.php:958
 msgid "Mobile Extra"
 msgstr ""
 
-#: includes/helper-functions.php:1152
+#: includes/helper-functions.php:1153
 #. translators: %s: Language Name
 msgid "You need first to enable SVG Draw option checkbox from "
 msgstr ""
 
-#: includes/helper-functions.php:1152
+#: includes/helper-functions.php:1153
 msgid "here."
 msgstr ""
 
-#: includes/helper-functions.php:1448 widgets/premium-banner.php:261
+#: includes/helper-functions.php:1449 widgets/premium-banner.php:261
 #: widgets/premium-blog.php:653 widgets/premium-button.php:236
 #: widgets/premium-grid.php:1049 widgets/premium-icon-list.php:1366
 #: widgets/premium-image-button.php:237 widgets/premium-notifications.php:1831
@@ -1927,7 +1927,7 @@ msgstr ""
 msgid "Hover Effect"
 msgstr ""
 
-#: includes/helper-functions.php:1452
+#: includes/helper-functions.php:1453
 #: modules/woocommerce/widgets/woo-categories.php:529
 #: modules/woocommerce/widgets/woo-products.php:798
 #: modules/woocommerce/widgets/woo-products.php:1507
@@ -1954,95 +1954,95 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: includes/helper-functions.php:1453
+#: includes/helper-functions.php:1454
 #: modules/premium-global-tooltips/module.php:861
 #: widgets/premium-button.php:241
 msgid "Slide"
 msgstr ""
 
-#: includes/helper-functions.php:1454 widgets/premium-button.php:242
+#: includes/helper-functions.php:1455 widgets/premium-button.php:242
 msgid "Shutter"
 msgstr ""
 
-#: includes/helper-functions.php:1455
+#: includes/helper-functions.php:1456
 msgid "In & Out (Pro)"
 msgstr ""
 
-#: includes/helper-functions.php:1456 widgets/premium-textual-showcase.php:1599
+#: includes/helper-functions.php:1457 widgets/premium-textual-showcase.php:1599
 msgid "Grow (Pro)"
 msgstr ""
 
-#: includes/helper-functions.php:1457
+#: includes/helper-functions.php:1458
 msgid "Double Layers (Pro)"
 msgstr ""
 
-#: includes/helper-functions.php:1458
+#: includes/helper-functions.php:1459
 msgid "Animated Underline (Pro)"
 msgstr ""
 
-#: includes/helper-functions.php:1471 widgets/premium-button.php:343
+#: includes/helper-functions.php:1472 widgets/premium-button.php:343
 #: widgets/premium-button.php:385 widgets/premium-image-button.php:342
 #: widgets/premium-image-button.php:361 widgets/premium-image-button.php:380
 msgid "Slide Direction"
 msgstr ""
 
-#: includes/helper-functions.php:1475 widgets/premium-button.php:347
+#: includes/helper-functions.php:1476 widgets/premium-button.php:347
 #: widgets/premium-button.php:390 widgets/premium-image-button.php:346
 #: widgets/premium-image-button.php:385
 msgid "Top to Bottom"
 msgstr ""
 
-#: includes/helper-functions.php:1476 widgets/premium-button.php:348
+#: includes/helper-functions.php:1477 widgets/premium-button.php:348
 #: widgets/premium-button.php:389 widgets/premium-image-button.php:347
 #: widgets/premium-image-button.php:384
 msgid "Bottom to Top"
 msgstr ""
 
-#: includes/helper-functions.php:1477 widgets/premium-button.php:349
+#: includes/helper-functions.php:1478 widgets/premium-button.php:349
 #: widgets/premium-button.php:392 widgets/premium-image-button.php:348
 #: widgets/premium-image-button.php:387
 msgid "Right to Left"
 msgstr ""
 
-#: includes/helper-functions.php:1478 widgets/premium-button.php:350
+#: includes/helper-functions.php:1479 widgets/premium-button.php:350
 #: widgets/premium-button.php:391 widgets/premium-image-button.php:349
 #: widgets/premium-image-button.php:386
 msgid "Left to Right"
 msgstr ""
 
-#: includes/helper-functions.php:1493 widgets/premium-button.php:362
+#: includes/helper-functions.php:1494 widgets/premium-button.php:362
 msgid "Shutter Direction"
 msgstr ""
 
-#: includes/helper-functions.php:1497 widgets/premium-button.php:366
+#: includes/helper-functions.php:1498 widgets/premium-button.php:366
 msgid "Shutter in Horizontal"
 msgstr ""
 
-#: includes/helper-functions.php:1498 widgets/premium-button.php:367
+#: includes/helper-functions.php:1499 widgets/premium-button.php:367
 msgid "Shutter in Vertical"
 msgstr ""
 
-#: includes/helper-functions.php:1499 widgets/premium-button.php:368
+#: includes/helper-functions.php:1500 widgets/premium-button.php:368
 msgid "Shutter out Horizontal"
 msgstr ""
 
-#: includes/helper-functions.php:1500 widgets/premium-button.php:369
+#: includes/helper-functions.php:1501 widgets/premium-button.php:369
 msgid "Shutter out Vertical"
 msgstr ""
 
-#: includes/helper-functions.php:1501 widgets/premium-button.php:370
+#: includes/helper-functions.php:1502 widgets/premium-button.php:370
 msgid "Scaled Shutter Vertical"
 msgstr ""
 
-#: includes/helper-functions.php:1502 widgets/premium-button.php:371
+#: includes/helper-functions.php:1503 widgets/premium-button.php:371
 msgid "Scaled Shutter Horizontal"
 msgstr ""
 
-#: includes/helper-functions.php:1503 widgets/premium-button.php:372
+#: includes/helper-functions.php:1504 widgets/premium-button.php:372
 msgid "Tilted Left"
 msgstr ""
 
-#: includes/helper-functions.php:1504 widgets/premium-button.php:373
+#: includes/helper-functions.php:1505 widgets/premium-button.php:373
 msgid "Tilted Right"
 msgstr ""
 
