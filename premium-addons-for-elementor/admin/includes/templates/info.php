@@ -45,6 +45,7 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 			 // echo "kok";
 				$memory_limit = wp_convert_hr_to_bytes( WP_MEMORY_LIMIT );
 			if ( $memory_limit < 67108864 ) {
+				/* translators: %1$s is the memory limit in MB, %2$s is the URL to the documentation. */
 				echo '<mark>' . sprintf( __( '%1$s - We recommend setting wp memory at least 64MB.</mark> See: <a href="%2$s" target="_blank">Increasing WP Memory Limit</a>', 'premium-addons-for-elementor' ), esc_html( size_format( $memory_limit ) ), 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/' );
 			} else {
 				echo esc_html( size_format( $memory_limit ) );
@@ -123,6 +124,7 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 				<?php
 				$time_limit = ini_get( 'max_execution_time' );
 				if ( $time_limit < 120 && $time_limit != 0 ) {
+					/* translators: %1$s is the max execution time in seconds, %2$s is the URL to the documentation. */
 					echo '<mark>' . sprintf( __( '%s - We recommend setting max execution time at least 300.</mark> See: <a href="%2$s" target="_blank">Increasing WP Time Limit</a>', 'premium-addons-for-elementor' ), esc_html( $time_limit ), 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/' );
 				} else {
 					echo esc_html( $time_limit );
@@ -230,7 +232,10 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 				?>
 				<tr>
 					<td><?php echo wp_kses_post( $plugin_name ); ?></td>
-					<td><?php echo sprintf( esc_html_x( 'by %s', 'by author', 'premium-addons-for-elementor' ), wp_kses_post( $plugin_data['Author'] ) ) . ' &ndash; ' . esc_html( $plugin_data['Version'] ) . wp_kses_post( $version_string ) . wp_kses_post( $network_string ); ?></td>
+					<td><?php
+						/* translators: %s is the plugin author name. */
+						echo sprintf( esc_html_x( 'by %s', 'by author', 'premium-addons-for-elementor' ), wp_kses_post( $plugin_data['Author'] ) ) . ' &ndash; ' . esc_html( $plugin_data['Version'] ) . wp_kses_post( $version_string ) . wp_kses_post( $network_string );
+					?></td>
 				</tr>
 				<?php
 			}

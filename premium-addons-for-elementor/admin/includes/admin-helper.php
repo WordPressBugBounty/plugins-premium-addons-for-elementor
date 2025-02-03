@@ -527,17 +527,15 @@ class Admin_Helper {
 
 		$settings_link = sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=' . self::$page_slug . '#tab=elements' ), __( 'Settings', 'premium-addons-for-elementor' ) );
 
-		// $rollback_link = sprintf( '<a href="%1$s">%2$s %3$s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=premium_addons_rollback' ), 'premium_addons_rollback' ), __( 'Rollback to Version ', 'premium-addons-for-elementor' ), PREMIUM_ADDONS_STABLE_VERSION );
+		$rollback_link = sprintf( '<a href="%1$s">%2$s %3$s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=premium_addons_rollback' ), 'premium_addons_rollback' ), __( 'Rollback to Version ', 'premium-addons-for-elementor' ), PREMIUM_ADDONS_STABLE_VERSION );
 
-		// $new_links = array( $settings_link, $rollback_link );
-
-		$new_links = array( $settings_link );
+		$new_links = array( $settings_link, $rollback_link );
 
 		if ( ! $is_papro_active ) {
 
-			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/christmas-sale/', 'plugins-page', 'wp-dash', 'get-pro' );
+			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'plugins-page', 'wp-dash', 'get-pro' );
 
-			$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #FF6000; font-weight: bold;">%s</a>', $link, __( '25% Off on Upgrade!', 'premium-addons-for-elementor' ) );
+			$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #FF6000; font-weight: bold;">%s</a>', $link, __( 'Go Pro', 'premium-addons-for-elementor' ) );
 			array_push( $new_links, $pro_link );
 		}
 
@@ -711,7 +709,7 @@ class Admin_Helper {
 				'<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
 				'<span style="color: #FF6000;" class="pa_pro_upgrade">Upgrade To Pro!</span>',
 				'manage_options',
-				'https://premiumaddons.com/christmas-sale/',
+				'https://premiumaddons.com/pro/',
 				''
 			);
 		}
@@ -799,12 +797,11 @@ class Admin_Helper {
 								/* translators: %s: html tags */
 								echo wp_kses_post( sprintf( __( 'Supercharge your Elementor with %1$sPRO Widgets & Addons%2$s that you won\'t find anywhere else.', 'premium-addons-for-elementor' ), '<span>', '</span>' ) );
 							?>
-							<span class="papro-sale-notice"><?php echo wp_kses_post( __('save up to 25%!', 'premium-addons-for-elementor') ) ?></span>
 						</p>
 					</div>
 					<div class="papro-admin-notice-cta">
 						<a class="papro-notice-btn" href="<?php echo esc_url( $url ); ?>" target="_blank">
-							<?php echo wp_kses_post( __( 'Catch Deal', 'premium-addons-for-elementor' ) ); ?>
+							<?php echo wp_kses_post( __( 'Get Pro', 'premium-addons-for-elementor' ) ); ?>
 						</a>
 					</div>
 				</div>
@@ -1374,7 +1371,7 @@ class Admin_Helper {
 			'no'
 		);
 
-		$wpdb->query( $query );
+		$wpdb->query( $query ); // phpcs:ignore
 	}
 
 	/**

@@ -2367,7 +2367,7 @@ class Woo_CTA extends Widget_Base {
                                 echo Helper_Functions::get_svg_by_icon(
                                     $settings['icon'],
                                     $this->get_render_attribute_string( 'icon' )
-                                );
+                                ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
                             endif;
 

@@ -422,7 +422,7 @@ class Premium_Template_Tags {
 				"SELECT ID, post_title FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish'",
 				$post_type
 			)
-		);
+		); // phpcs:ignore
 
 		$options = array();
 

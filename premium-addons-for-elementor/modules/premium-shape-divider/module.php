@@ -994,7 +994,7 @@ class Module {
 
 			?>
 				<div <?php echo wp_kses_post( $element->get_render_attribute_string( 'shape_divider_cont' . $id ) ); ?>>
-                    <?php echo $shape; ?>
+                    <?php echo $shape; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 			<?php
 		}
@@ -1061,7 +1061,7 @@ class Module {
 		}
 
 		$svg_html .= '</defs></svg>';
-		echo $svg_html;
+		echo $svg_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

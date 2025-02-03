@@ -586,7 +586,7 @@
 					Swal.fire(
 						{
 							title: '<span class="pa-swal-head">Get PRO Widgets & Addons<span>',
-							html: 'Supercharge your Elementor with PRO widgets and addons that you won’t find anywhere else. <span class="papro-sale-notice">save up to 25%!</span>',
+							html: 'Supercharge your Elementor with PRO widgets and addons that you won’t find anywhere else.',
 							type: 'warning',
 							showCloseButton: true,
 							showCancelButton: true,

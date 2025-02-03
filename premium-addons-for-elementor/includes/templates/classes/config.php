@@ -186,7 +186,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 			if ( Helper_Functions::check_papro_version() ) {
 				return __( 'Activate License', 'premium-addons-for-elementor' );
 			} else {
-				return __( 'Catch Xmas Deal', 'premium-addons-for-elementor' );
+				return __( 'Get Pro', 'premium-addons-for-elementor' );
 			}
 		}
 

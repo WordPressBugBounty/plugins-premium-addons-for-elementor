@@ -67,8 +67,7 @@ class Admin_Notices {
 		add_action( 'wp_ajax_pa_dismiss_admin_notice', array( $this, 'dismiss_admin_notice' ) );
 
 		self::$notices = array(
-			'pa-review',
-            'xmas24_hide'
+			'pa-review'
 		);
 
         if ( Helper_Functions::check_hide_notifications() ) {
@@ -130,8 +129,6 @@ class Admin_Notices {
 				$this->show_review_notice();
 			}
 		}
-
-        $this->get_xmas_notice();
 
 	}
 
@@ -256,52 +253,6 @@ class Admin_Notices {
 
 		<?php
 
-	}
-
-    public function get_xmas_notice() {
-
-        $time     = time();
-
-        if ( $time > 1735776000 || get_transient( 'xmas24_hide' ) ) {
-			return;
-		}
-
-        $papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
-
-		$is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
-
-		$license_key = get_option( 'papro_license_key' );
-
-        if ( $is_papro_installed ) {
-			$status = $this->check_status( $license_key );
-
-            if( $status ) {
-                return;
-            }
-		}
-
-		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/christmas-sale/', 'wp-dash', 'xmas24-notification', 'xmas24' );
-
-		?>
-
-		<div class="error pa-notice-wrap pa-new-feature-notice pa-review-notice">
-			<div class="pa-img-wrap">
-				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
-			</div>
-			<div class="pa-text-wrap">
-				<p>
-					<?php echo __( 'No More Sales Until Summer 2025! <strong>SAVE UP TO 25% OFF Premium Addons PRO</strong>!', 'premium-addons-for-elementor' ); ?>
-					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
-						<span><?php echo __( 'Catch The Deal', 'premium-addons-for-elementor' ); ?></span>
-					</a>
-				</p>
-			</div>
-			<div class="pa-notice-close" data-notice="xmas24_hide">
-				<span class="dashicons dashicons-dismiss"></span>
-			</div>
-		</div>
-
-		<?php
 	}
 
 	/**
@@ -518,21 +469,6 @@ class Admin_Notices {
             'core'
         );
 
-        // Move our widget to top.
-        // global $wp_meta_boxes;
-
-        // $core_widgets = $wp_meta_boxes['dashboard']['normal']['core'];
-
-        // $pa_widgets = [];
-        // if( isset( $core_widgets['pa-stories'] ) ) {
-
-        //     $pa_widgets      = array(
-        //         'pa-stories' => $core_widgets['pa-stories'],
-        //     );
-
-        // }
-
-        // $wp_meta_boxes['dashboard']['normal']['core'] = array_merge( $pa_widgets, $core_widgets );
     }
 
 
@@ -545,15 +481,6 @@ class Admin_Notices {
         $papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
 
         $is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
-
-        if( $is_papro_installed ) {
-
-            array_unshift( $stories['posts'], array(
-                'link'=> 'https://premiumaddons.com/docs/upgrad-premium-addons-license/',
-                'title'=> __('Upgrade your Premium Addons Pro subscription to Lifetime and get FLAT 25% OFF using the code: <strong style="font-weight: bold">XmasLifetime2024</strong>', 'premium-addons-for-elementor')
-            ));
-
-        }
 
         ?>
             <style>
@@ -610,26 +537,26 @@ class Admin_Notices {
                 }
             </style>
 
-            <?php if( ! $is_papro_installed ) : ?>
-                <div class="pa-banners-grid">
 
-                    <?php foreach ( $stories['banners'] as $index => $banner ) : ?>
+			<div class="pa-banners-grid">
 
-                        <?php if( $time < $banner['end'] ) : ?>
+				<?php foreach ( $stories['banners'] as $index => $banner ) : ?>
 
-                            <div class="pa-stories-banner">
-                                <div class="pa-story-img-container">
-                                    <img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ) ?>">
-                                </div>
-                                <a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'cm24-dash' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ) ?>"></a>
-                            </div>
+					<?php if( $time < $banner['end'] ) : ?>
 
-                        <?php endif; ?>
+						<div class="pa-stories-banner">
+							<div class="pa-story-img-container">
+								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ) ?>">
+							</div>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'cm24-dash' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ) ?>"></a>
+						</div>
 
-                    <?php endforeach; ?>
+					<?php endif; ?>
 
-                </div>
-            <?php endif; ?>
+				<?php endforeach; ?>
+
+			</div>
+
 
             <div class="pa-posts-grid">
 

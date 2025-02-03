@@ -17,7 +17,7 @@ global $post, $product, $woocommerce;
     <?php if( $product->is_on_sale() ) : ?>
         <div class="premium-qv-badge">
             <div class="corner">
-                <span><?php echo __('Sale!', 'premium-addons-for-elementor'); ?></span>
+                <span><?php echo esc_html( __('Sale!', 'premium-addons-for-elementor') ); ?></span>
             </div>
         </div>
     <?php endif; ?>

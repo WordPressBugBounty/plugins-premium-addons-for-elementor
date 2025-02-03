@@ -52,13 +52,11 @@
 			$('div[data-menu-id="' + $scope.data('id') + '"]').not('.pa-cloned-element').remove();
 
 			// handle anchor links with IDs => EX : https::somelink.com/home#section.
-			// check if there's an anchorLinks
 			var anchorLinks = $scope.find('.premium-item-anchor');
 
 			if (anchorLinks.length) {
 				handleAnchorLinks(anchorLinks);
 			}
-
 		}
 
 		/**
@@ -71,6 +69,7 @@
 			$('body').removeClass('premium-scroll-disabled');
 		}
 
+		// centered elements.
 		$centeredItems.each(function (index, item) {
 			$(item).closest(".premium-nav-menu-item").addClass("premium-mega-item-static");
 		});
@@ -156,6 +155,8 @@
 				// we need to make sure that premium-item-hover is not removed when hovering over a sub/mega menu.
 				$scope.find('.premium-sub-menu, .premium-mega-content-container').on('mouseenter.PaItemHover', function (e) {
 
+					e.stopPropagation();
+
 					var $menuItem = $(this).parents('.premium-nav-menu-item').first();
 
 					clearTimeout(hoverTimeout);
@@ -166,7 +167,7 @@
 				}).on('mouseleave.PaItemHover', function (e) {
 
 					clearTimeout(hoverTimeout);
-					// $(this).parents('.premium-nav-menu-item').first().removeClass('premium-item-hovered');
+					$(this).parents('.premium-nav-menu-item').first().removeClass('premium-item-hovered');
 				});
 			} else { // click
 

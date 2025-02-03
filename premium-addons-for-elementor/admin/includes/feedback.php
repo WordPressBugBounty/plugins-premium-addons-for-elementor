@@ -117,53 +117,53 @@ class Feedback {
 							<div class="pa-img-wrap">
 								<img src="<?php echo esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>">
 							</div>
-							<?php echo __( 'Sorry to see you go', 'premium-addons-for-elementor' ); ?>
+							<?php echo esc_html(__( 'Sorry to see you go', 'premium-addons-for-elementor' )); ?>
 						</section>
 						<section class="messages-wrap">
-							<p><?php echo __( 'Would you quickly give us your reason for doing so?', 'premium-addons-for-elementor' ); ?></p>
+							<p><?php echo esc_html(__( 'Would you quickly give us your reason for doing so?', 'premium-addons-for-elementor' )); ?></p>
 						</section>
 						<section class="options-wrap">
 							<label>
 								<input type="radio" name="feedback" value="temp">
-							<?php echo __( 'Temporary deactivation', 'premium-addons-for-elementor' ); ?>
+								<?php echo esc_html( __( 'Temporary deactivation', 'premium-addons-for-elementor' ) ); ?>
 							</label>
 							<label>
 								<input type="radio" name="feedback" value="setup">
-							<?php echo __( 'Set up is too difficult', 'premium-addons-for-elementor' ); ?>
+								<?php echo esc_html( __( 'Set up is too difficult', 'premium-addons-for-elementor' ) ); ?>
 							</label>
 							<label>
 								<input type="radio" name="feedback" value="e-issues">
-							<?php echo __( 'Causes issues with Elementor', 'premium-addons-for-elementor' ); ?>
+								<?php echo esc_html( __( 'Causes issues with Elementor', 'premium-addons-for-elementor' ) ); ?>
 							</label>
 							<label>
 								<input type="radio" name="feedback" value="documentation">
-							<?php echo __( 'Lack of documentation', 'premium-addons-for-elementor' ); ?>
+								<?php echo esc_html( __( 'Lack of documentation', 'premium-addons-for-elementor' ) ); ?>
 							</label>
 							<label>
 								<input type="radio" name="feedback" value="features">
-							<?php echo __( 'Not the features I wanted', 'premium-addons-for-elementor' ); ?>
+								<?php echo esc_html( __( 'Not the features I wanted', 'premium-addons-for-elementor' ) ); ?>
 							</label>
 							<label>
 								<input type="radio" name="feedback" value="better-plugin">
-							<?php echo __( 'Found a better plugin', 'premium-addons-for-elementor' ); ?>
+								<?php echo esc_html( __( 'Found a better plugin', 'premium-addons-for-elementor' ) ); ?>
 							</label>
 							<label>
 								<input type="radio" name="feedback" value="incompatibility">
-							<?php echo __( 'Incompatible with theme or plugin', 'premium-addons-for-elementor' ); ?>
+								<?php echo esc_html( __( 'Incompatible with theme or plugin', 'premium-addons-for-elementor' ) ); ?>
 							</label>
 							<label>
 								<input type="radio" name="feedback" value="maintenance">
-							<?php echo __( 'Other', 'premium-addons-for-elementor' ); ?>
+								<?php echo esc_html( __( 'Other', 'premium-addons-for-elementor' ) ); ?>
 							</label>
 						</section>
 						<section class="messages-wrap hidden" data-feedback>
-							<p class="hidden" data-feedback="setup"><?php echo __( 'What was the difficult part?', 'premium-addons-for-elementor' ); ?></p>
-							<p class="hidden" data-feedback="e-issues"><?php echo __( 'What was the issue?', 'premium-addons-for-elementor' ); ?></p>
-							<p class="hidden" data-feedback="documentation"><?php echo __( 'What can we describe more?', 'premium-addons-for-elementor' ); ?></p>
-							<p class="hidden" data-feedback="features"><?php echo __( 'How could we improve?', 'premium-addons-for-elementor' ); ?></p>
-							<p class="hidden" data-feedback="better-plugin"><?php echo __( 'Can you mention it?', 'premium-addons-for-elementor' ); ?></p>
-							<p class="hidden" data-feedback="incompatibility"><?php echo __( 'With what plugin or theme is incompatible?', 'premium-addons-for-elementor' ); ?></p>
-							<p class="hidden" data-feedback="maintenance"><?php echo __( 'Please specify:', 'premium-addons-for-elementor' ); ?></p>
+							<p class="hidden" data-feedback="setup"><?php echo esc_html( __( 'What was the difficult part?', 'premium-addons-for-elementor' ) ); ?></p>
+							<p class="hidden" data-feedback="e-issues"><?php echo esc_html( __( 'What was the issue?', 'premium-addons-for-elementor' ) ); ?></p>
+							<p class="hidden" data-feedback="documentation"><?php echo esc_html( __( 'What can we describe more?', 'premium-addons-for-elementor' ) ); ?></p>
+							<p class="hidden" data-feedback="features"><?php echo esc_html( __( 'How could we improve?', 'premium-addons-for-elementor' ) ); ?></p>
+							<p class="hidden" data-feedback="better-plugin"><?php echo esc_html( __( 'Can you mention it?', 'premium-addons-for-elementor' ) ); ?></p>
+							<p class="hidden" data-feedback="incompatibility"><?php echo esc_html( __( 'With what plugin or theme is incompatible?', 'premium-addons-for-elementor' ) ); ?></p>
+							<p class="hidden" data-feedback="maintenance"><?php echo esc_html( __( 'Please specify:', 'premium-addons-for-elementor' ) ); ?></p>
 						</section>
 						<section class="options-wrap hidden" data-feedback>
 							<label>
@@ -179,17 +179,17 @@ class Feedback {
 											sprintf( '<a target="_blank" href="%s">%s</a>', $link, __(' how to increase the PHP limits', 'premium-addons-for-elementor') ); ?>
 								</p>
 							<?php endif; ?>
-							<p><?php echo __( 'Would you like to share your e-mail with us so that we can write you back?', 'premium-addons-for-elementor' ); ?></p>
+							<p><?php echo esc_html(__( 'Would you like to share your e-mail with us so that we can write you back?', 'premium-addons-for-elementor' )); ?></p>
 						</section>
 						<section class="options-wrap hidden" data-feedback>
 							<label>
 								<input type="checkbox" name="anonymous" value="1">
-							<?php echo __( 'No, I\'d like to stay anonymous', 'premium-addons-for-elementor' ); ?>
+							<?php echo esc_html(__( 'No, I\'d like to stay anonymous', 'premium-addons-for-elementor' )); ?>
 							</label>
 						</section>
 
 						<section class="buttons-wrap clearfix">
-							<button class="pa-deactivate-btn" data-action="deactivation"><?php echo __( 'Deactivate', 'premium-addons-for-elementor' ); ?></button>
+							<button class="pa-deactivate-btn" data-action="deactivation"><?php echo esc_html(__( 'Deactivate', 'premium-addons-for-elementor' )); ?></button>
 						</section>
 					</div>
 

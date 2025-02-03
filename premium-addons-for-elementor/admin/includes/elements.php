@@ -108,6 +108,16 @@ $elements = array(
 				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-table-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
+				'key'        => 'premium-color-transition',
+				'name'       => 'premium-color-transition',
+				'title'      => __( 'Background Transition', 'premium-addons-for-elementor' ),
+				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-background-transition-widget/', 'background-transition', 'wp-dash', 'dashboard' ),
+				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/background-transition-widget-tutorial/', 'background-transition', 'wp-dash', 'dashboard' ),
+				'is_pro'     => true,
+				'icon'       => 'pa-pro-color-transition',
+				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-background-transition-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
+			),
+			array(
 				'key'      => 'premium-notifications',
 				'name'     => 'premium-notifications',
 				'title'    => __( 'Recent Posts Notification', 'premium-addons-for-elementor' ),
@@ -315,16 +325,6 @@ $elements = array(
 				'title' => __( 'Video Box', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-video-box-widget/', 'video-box', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/video-box/', 'video-box', 'wp-dash', 'dashboard' ),
-			),
-			array(
-				'key'        => 'premium-color-transition',
-				'name'       => 'premium-color-transition',
-				'title'      => __( 'Background Transition', 'premium-addons-for-elementor' ),
-				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-background-transition-widget/', 'background-transition', 'wp-dash', 'dashboard' ),
-				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/background-transition-widget-tutorial/', 'background-transition', 'wp-dash', 'dashboard' ),
-				'is_pro'     => true,
-				'icon'       => 'pa-pro-color-transition',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-background-transition-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-multi-scroll',
