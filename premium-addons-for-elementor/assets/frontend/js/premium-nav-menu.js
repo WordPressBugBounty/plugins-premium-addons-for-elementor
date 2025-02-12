@@ -2,11 +2,11 @@
 
 	/**Premium Nav Menu */
 	var PremiumNavMenuHandler = function ($scope, $) {
-
+		var isEditMode = elementorFrontend.isEditMode();
 		// we don't need to wait for content dom load since the script is loaded in the footer.
 		// $scope.find('.premium-nav-widget-container').removeClass('premium-addons-invisible');
 
-		if (!elementorFrontend.isEditMode()) {
+		if (!isEditMode) {
 			// $scope.find('.premium-nav-widget-container').css({ visibility: 'visible', opacity: 1 });
 			$scope.find('.premium-nav-widget-container').css({ visibility: 'inherit', opacity: 'inherit' });
 		}
@@ -28,6 +28,7 @@
 			stickyWidthIndex = 'stickyWidth' + $scope.data('id'),
 			disablePageScroll = $scope.hasClass('premium-disable-scroll-yes') ? true : false,
 			delay = getComputedStyle($scope[0]).getPropertyValue('--pa-mega-menu-delay') || 300,
+			renderMobileMenu = settings.renderMobileMenu,
 			hoverTimeout;
 
 		//Get Element On Page Option
@@ -47,7 +48,7 @@
 
 		});
 
-		if (!elementorFrontend.isEditMode()) {
+		if (!isEditMode) {
 			//Remove Element On Page Option If on Frontend
 			$('div[data-menu-id="' + $scope.data('id') + '"]').not('.pa-cloned-element').remove();
 
@@ -65,7 +66,7 @@
 		window.PaCurrStickyDevice = elementorFrontend.getCurrentDeviceMode();
 
 		// make sure it's removed when the option is disabled.
-		if (elementorFrontend.isEditMode() && !disablePageScroll) {
+		if (isEditMode && !disablePageScroll) {
 			$('body').removeClass('premium-scroll-disabled');
 		}
 
@@ -114,13 +115,18 @@
 			});
 		}
 
-		var isMobileMenu = null,
-			isDesktopMenu = null;
+		if (renderMobileMenu) {
+			checkBreakPoint(settings);
+		}
 
-		checkBreakPoint(settings);
+		// not using nested condition => more readable this way.
+		if (isEditMode && !renderMobileMenu) {
+			$scope.find('.premium-nav-default').removeClass('premium-nav-default');
+			$scope.removeClass('premium-hamburger-menu');
+		}
 
 		if ($scope.hasClass('premium-nav-hor')) {
-			$(window).resize();
+			// $(window).resize();
 			checkMegaContentWidth();
 		}
 
@@ -178,7 +184,7 @@
 				 * To prevent events overlapping if the user switched between hover/click
 				 * while building the menu.
 				 */
-				if (elementorFrontend.isEditMode()) {
+				if (isEditMode) {
 					$scope.off('mouseleave.PaItemHover');
 				}
 
@@ -291,7 +297,7 @@
 				}
 
 				if ('click' === settings.submenuEvent) {
-					$scope.find('.premium-nav-menu-container .premium-item-hovered').removeClass('premium-item-hovered')
+					$scope.find('.premium-nav-menu-container .premium-item-hovered').removeClass('premium-item-hovered');
 				}
 			}
 
@@ -304,7 +310,13 @@
 				window.PaCurrStickyDevice = elementorFrontend.getCurrentDeviceMode();
 			}
 
-			checkBreakPoint(settings);
+			if (renderMobileMenu) {
+				checkBreakPoint(settings);
+			}
+
+			if (isEditMode && !renderMobileMenu) {
+				$scope.removeClass('premium-hamburger-menu');
+			}
 
 			if ($scope.hasClass('premium-nav-hor')) {
 				checkMegaContentWidth();
@@ -332,21 +344,21 @@
 			// Map links to sections
 			$anchorLinks.each(function (index, anchorLink) {
 				var $hashLink = $(anchorLink).find('> .premium-menu-link'),
-                    isValidId = /^#[A-Za-z][\w-]*$/,    // IDs should start with '#' and contain only [characters,numbers, -, _ ]
+					isValidId = /^#[A-Za-z][\w-]*$/,    // IDs should start with '#' and contain only [characters,numbers, -, _ ]
 					targetId = $hashLink[0] ? $hashLink[0].hash : null;
 
 				if (targetId && targetId.length && isValidId.test(targetId)) {
 
-                    try {
-                        var $section = $(targetId);
+					try {
+						var $section = $(targetId);
 
-                        if ($section.length) {
-                            sections.push({ link: anchorLink, section: $section[0] });
-                        }
+						if ($section.length) {
+							sections.push({ link: anchorLink, section: $section[0] });
+						}
 
-                    } catch (error) {
-                        console.log(error)
-                    }
+					} catch (error) {
+						console.log(error)
+					}
 				}
 			});
 
@@ -427,19 +439,14 @@
 		function checkBreakPoint(settings) {
 
 			//Trigger small screen menu.
-			if (settings.breakpoint >= $(window).outerWidth() && !isMobileMenu) {
+			if (settings.breakpoint >= $(window).outerWidth()) {
 				// remove the vertical toggler.
 				$scope.find('.premium-ver-toggler').css('display', 'none');
 				$scope.addClass('premium-hamburger-menu');
 				$scope.find('.premium-active-menu').removeClass('premium-active-menu');
 				stretchDropdown($scope.find('.premium-stretch-dropdown .premium-mobile-menu-container'));
-
-				isMobileMenu = true;
-				isDesktopMenu = false;
-
 				//Trigger large screen menu.
-			} else if (settings.breakpoint < $(window).outerWidth() && !isDesktopMenu) {
-
+			} else if (settings.breakpoint < $(window).outerWidth()) {
 				// show the vertical toggler if enabled.
 				if ($scope.hasClass('premium-ver-toggle-yes')) {
 					$scope.find('.premium-ver-toggler').css('display', 'flex');
@@ -450,9 +457,6 @@
 				$scope.removeClass('premium-hamburger-menu premium-ham-dropdown');
 				$scope.find('.premium-vertical-toggle-open').removeClass('premium-vertical-toggle-open');
 				$scope.find('.premium-nav-default').removeClass('premium-nav-default');
-
-				isDesktopMenu = true;
-				isMobileMenu = false;
 			}
 
 		}

@@ -539,7 +539,7 @@ class Premium_Modalbox extends Widget_Base {
 		$this->add_control(
 			'page_exit_notice',
 			array(
-				'raw'             => __( 'When you are logged in, the modal box will normally show on page load. To try this open, you need to be logged out. This option uses localstorage to show the modal box for the first time only.', 'premium-addons-for-elementor' ),
+				'raw'             => __( 'When you are logged in, the modal box will normally show on page load. To try this option, you need to be logged out. This option uses localstorage to show the modal box for the first time only.', 'premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				'condition'       => array(
@@ -1137,7 +1137,7 @@ class Premium_Modalbox extends Widget_Base {
 			array(
 				'label'       => __( 'Delay in Popup Display (Sec)', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => __( 'When should the popup appear during page load? The value are counted in seconds', 'premium-addons-for-elementor' ),
+				'description' => __( 'When should the popup appear during page load? The value is counted in seconds', 'premium-addons-for-elementor' ),
 				'default'     => 1,
 				'condition'   => array(
 					'premium_modal_box_display_on' => 'pageload',

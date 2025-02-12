@@ -113,6 +113,10 @@ class Helper_Functions {
 
 		preg_match( '/fa(.*) fa-/', $icon['value'], $icon_name_matches );
 
+		if( empty( $icon_name_matches ) ) {
+			return;
+		}
+
 		$icon_name = str_replace( $icon_name_matches[0], '', $icon['value'] );
 
 		$icon_key = str_replace( ' fa-', '-', $icon['value'] );
@@ -122,6 +126,10 @@ class Helper_Functions {
 		$path = ELEMENTOR_ASSETS_PATH . 'lib/font-awesome/json/' . $icon_file_name . '.json';
 
 		$data = file_get_contents( $path );
+
+		if( ! $data ) {
+			return;
+		}
 
 		$data = json_decode( $data, true );
 
@@ -1657,6 +1665,11 @@ class Helper_Functions {
 		$svg_html = '<svg ';
 
 		$icon = self::get_icon_svg_data( $icon );
+
+		if( ! $icon ) {
+			Icons_Manager::render_icon( $icon, [ 'aria-hidden' => 'true' ] );
+			return;
+		}
 
 		$view_box = '0 0 ' . $icon['width'] . ' ' . $icon['height'];
 

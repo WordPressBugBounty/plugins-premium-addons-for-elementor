@@ -3,9 +3,9 @@
 Plugin Name: Premium Addons for Elementor
 Description: Premium Addons for Elementor plugin includes widgets and addons like Blog Post Grid, Megamenu, Post Carousel, Advanced Slider, Modal Popup, Google Maps, SVG Draw, Lottie Animations, Countdown, Testimonials.
 Plugin URI: https://premiumaddons.com
-Version: 4.10.82
-Elementor tested up to: 3.27.3
-Elementor Pro tested up to: 3.27.2
+Version: 4.10.83
+Elementor tested up to: 3.27.4
+Elementor Pro tested up to: 3.27.3
 Author: Leap13
 Author URI: https://leap13.com/
 Text Domain: premium-addons-for-elementor
@@ -19,14 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 // Define Constants.
-define( 'PREMIUM_ADDONS_VERSION', '4.10.82' );
+define( 'PREMIUM_ADDONS_VERSION', '4.10.83' );
 define( 'PREMIUM_ADDONS_URL', plugins_url( '/', __FILE__ ) );
 define( 'PREMIUM_ADDONS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PREMIUM_ASSETS_PATH', set_url_scheme( wp_upload_dir()['basedir'] . '/premium-addons-elementor' ) );
 define( 'PREMIUM_ASSETS_URL', set_url_scheme( wp_upload_dir()['baseurl'] . '/premium-addons-elementor' ) );
 define( 'PREMIUM_ADDONS_FILE', __FILE__ );
 define( 'PREMIUM_ADDONS_BASENAME', plugin_basename( PREMIUM_ADDONS_FILE ) );
-define( 'PREMIUM_ADDONS_STABLE_VERSION', '4.10.81' );
+define( 'PREMIUM_ADDONS_STABLE_VERSION', '4.10.82' );
 
 /*
  * Load plugin core file

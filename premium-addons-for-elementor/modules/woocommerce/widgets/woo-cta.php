@@ -94,7 +94,7 @@ class Woo_CTA extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
-            'pa-btn',
+			'pa-btn',
 			'elementor-icons',
 			'woocommerce-general',
 			'premium-addons',
@@ -217,12 +217,12 @@ class Woo_CTA extends Widget_Base {
 		$this->add_control(
 			'product_id',
 			array(
-				'label'         => __( 'Select Products', 'premium-addons-pro' ),
-				'type'          => Premium_Post_Filter::TYPE,
-				'label_block'   => true,
-                'multiple'		=> false,
-                'source'        => 'product',
-				'condition' => array(
+				'label'       => __( 'Select Products', 'premium-addons-pro' ),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => 'product',
+				'condition'   => array(
 					'use_current_product!' => 'yes',
 				),
 			)
@@ -264,8 +264,8 @@ class Woo_CTA extends Widget_Base {
 		$this->add_control(
 			'show_available_quantity',
 			array(
-				'label'       => __( 'Show Available Quantity', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
+				'label'     => __( 'Show Available Quantity', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
 				'condition' => array(
 					'button_action' => array( 'add_to_cart' ),
 				),
@@ -279,13 +279,11 @@ class Woo_CTA extends Widget_Base {
 				'type'        => Controls_Manager::TEXT,
 				'default'     => ' {{number}} In Stock',
 				'description' => __( 'This helps to control number of product. {{number}} will be repalced with the number of stock quantity of product', 'premium-addons-for-elementor' ),
-				'condition' => array(
+				'condition'   => array(
 					'show_available_quantity' => 'yes',
 				),
 			),
-
 		);
-
 
 		$this->add_control(
 			'connect_to_pa_mc',
@@ -462,11 +460,11 @@ class Woo_CTA extends Widget_Base {
 		$this->add_control(
 			'draw_svg',
 			array(
-				'label'      => __( 'Draw Icon', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SWITCHER,
-                'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
-				'classes'    => $draw_icon ? '' : 'editor-pa-control-disabled',
-				'conditions' => $draw_icon_conditions,
+				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
+				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
+				'conditions'  => $draw_icon_conditions,
 			)
 		);
 
@@ -894,7 +892,7 @@ class Woo_CTA extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					//'{{WRAPPER}} .premium-woo-btn-container' => 'justify-content: {{VALUE}}',
+					// '{{WRAPPER}} .premium-woo-btn-container' => 'justify-content: {{VALUE}}',
 					'{{WRAPPER}} .pa-wrapper-container ' => 'justify-content: {{VALUE}}',
 				),
 				'default'   => 'center',
@@ -1512,10 +1510,10 @@ class Woo_CTA extends Widget_Base {
 		$this->start_controls_section(
 			'product_quantity_message',
 			array(
-				'label' => __( 'Available Quantity Text', 'premium-addons-for-elementor' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
+				'label'     => __( 'Available Quantity Text', 'premium-addons-for-elementor' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
-					'button_action' => array( 'add_to_cart' ),
+					'button_action'           => array( 'add_to_cart' ),
 					'show_available_quantity' => 'yes',
 
 				),
@@ -2092,8 +2090,7 @@ class Woo_CTA extends Widget_Base {
 		}
 
 		$product_unavailable_message = $settings['product_unavailable_message'];
-		$product_quantity_message = $settings['pa_available_quantity_text'];
-
+		$product_quantity_message    = $settings['pa_available_quantity_text'];
 
 		$show_quantity = $settings['show_quantity'];
 
@@ -2201,7 +2198,7 @@ class Woo_CTA extends Widget_Base {
 				);
 
 				// if ( 'icon' === $icon_type ) {
-				// 	$this->add_render_attribute( 'icon', 'class', $settings['icon']['value'] );
+				// $this->add_render_attribute( 'icon', 'class', $settings['icon']['value'] );
 				// }
 
 				$this->add_render_attribute(
@@ -2263,23 +2260,25 @@ class Woo_CTA extends Widget_Base {
 							<tr><th>Product</th><th>Price</th><th>Quantity</th></tr>
 							<?php
 							foreach ( $child_products as $child_id ) {
-								$child_product = wc_get_product( $child_id );
+								$child_product  = wc_get_product( $child_id );
 								$stock_quantity = $child_product->get_stock_quantity();
-								$max_stock = $stock_quantity ? $stock_quantity : '';
-								if($max_stock){
-				                $quantity_text = str_replace('{{number}}', $max_stock, $product_quantity_message);?>
-				                <?php }
+								$max_stock      = $stock_quantity ? $stock_quantity : '';
+								if ( $max_stock && ! empty( $product_quantity_message ) ) {
+									$quantity_text = str_replace( '{{number}}', $max_stock, $product_quantity_message );
+									?>
+									<?php
+								}
 								?>
 								<tr>
 									<td><?php echo wp_kses_post( $child_product->get_name() ); ?></td>
 									<td>
 										<?php echo wp_kses_post( wc_price( $child_product->get_price() ) ); ?>
-										<?php if($max_stock){?>
+										<?php if ( $max_stock && ! empty( $product_quantity_message ) ) { ?>
 										<div class='product-quantity-message '>
-								        <?php  echo wp_kses_post($quantity_text) ?>
-							            </div>
-										<?php }?>
-								    </td>
+											<?php echo wp_kses_post( $quantity_text ); ?>
+										</div>
+										<?php } ?>
+									</td>
 									<td>
 									<div class='pa-qty-wrapper'>
 										<div class="quantity-grouped-wrapper">
@@ -2294,7 +2293,7 @@ class Woo_CTA extends Widget_Base {
 								</tr>
 							<?php } ?>
 						</table>
-				    <?php } ?>
+					<?php } ?>
 
 					<?php if ( 'variable' === $product_type ) { ?>
 						<?php if ( ! empty( $attributes ) ) : ?>
@@ -2328,15 +2327,17 @@ class Woo_CTA extends Widget_Base {
 			<div class='pa-wrapper-container'>
 			<div class='premium-woo-btn-container'>
 
-			<?php // show product quantity message
+				<?php
+				// show product quantity message
 				$stock_quantity = $product->get_stock_quantity(); // Get stock quantity
-                $max_stock = $stock_quantity ? $stock_quantity : ''; // Handle unlimited stock
-				if($max_stock){
-				$quantity_text = str_replace('{{number}}', $max_stock, $product_quantity_message);?>
+				$max_stock      = $stock_quantity ? $stock_quantity : ''; // Handle unlimited stock
+				if ( $max_stock && ! empty( $product_quantity_message ) ) {
+					$quantity_text = str_replace( '{{number}}', $max_stock, $product_quantity_message );
+					?>
 					<div class='product-quantity-message '>
-						<?php echo wp_kses_post($quantity_text) ?>
+						<?php echo wp_kses_post( $quantity_text ); ?>
 					</div>
-				<?php }?>
+				<?php } ?>
 
 				<?php if ( $show_quantity ) : ?>
 				<div class="quantity-input-wrapper">
@@ -2362,14 +2363,15 @@ class Woo_CTA extends Widget_Base {
 								)
 							);
 							?>
-							<?php else :
+							<?php
+							else :
 
-                                echo Helper_Functions::get_svg_by_icon(
-                                    $settings['icon'],
-                                    $this->get_render_attribute_string( 'icon' )
-                                ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo Helper_Functions::get_svg_by_icon(
+									$settings['icon'],
+									$this->get_render_attribute_string( 'icon' )
+								); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-                            endif;
+							endif;
 
 					elseif ( 'image' === $icon_type ) :
 

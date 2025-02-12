@@ -76,6 +76,7 @@ class Premium_Nav_Menu extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'dashicons',
 			'font-awesome-5-all',
 			'premium-addons',
 		);
@@ -121,6 +122,14 @@ class Premium_Nav_Menu extends Widget_Base {
 		return array( 'pa', 'premium', 'premium mega menu', 'menu', 'nav', 'navigation', 'mega menu', 'header' );
 	}
 
+	/**
+	 * Dynamic Content.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
+	 * @return bool
+	 */
 	protected function is_dynamic_content(): bool {
 		return false;
 	}
@@ -136,6 +145,14 @@ class Premium_Nav_Menu extends Widget_Base {
 		return 'https://premiumaddons.com/support/';
 	}
 
+	/**
+	 * Ha Widget Inner Wrapper.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return bool
+	 */
 	public function has_widget_inner_wrapper(): bool {
 		return true;
 	}
@@ -258,7 +275,9 @@ class Premium_Nav_Menu extends Widget_Base {
 			$this->add_control(
 				'empty_nav_menu_notice',
 				array(
-					'raw'             => '<strong>' . __( 'There are no menus in your site.', 'premium-addons-for-elementor' ) . '</strong><br>' . sprintf( __( 'Go to the <a href="%s" target="_blank">Menus screen</a> to create one.', 'premium-addons-for-elementor' ), admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
+					'raw'             => '<strong>' . __( 'There are no menus in your site.', 'premium-addons-for-elementor' ) . '</strong><br>' .
+					/* translators: %s is the URL to the Menus screen in the WordPress admin. */
+					sprintf( __( 'Go to the <a href="%s" target="_blank">Menus screen</a> to create one.', 'premium-addons-for-elementor' ), admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
 					'type'            => Controls_Manager::RAW_HTML,
 					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 					'condition'       => array(
@@ -1186,6 +1205,20 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_control(
+			'render_mobile_menu',
+			array(
+				'label'       => __( 'Render Mobile Menu', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'Enable to render the mobile menu. This can be disabled if menu type will not be changed on different devices.', 'premium-addons-for-elementor' ),
+				'default'     => 'yes',
+				'render_type' => 'template',
+				'condition'   => array(
+					'pa_nav_menu_layout' => array( 'hor', 'ver' ),
+				),
+			)
+		);
+
+		$this->add_control(
 			'pa_mobile_menu_layout',
 			array(
 				'label'        => __( 'Layout', 'premium-addons-for-elementor' ),
@@ -1198,6 +1231,7 @@ class Premium_Nav_Menu extends Widget_Base {
 				),
 				'default'      => 'dropdown',
 				'condition'    => array(
+					'render_mobile_menu' => 'yes',
 					'pa_nav_menu_layout' => array( 'hor', 'ver' ),
 				),
 			)
@@ -1215,6 +1249,7 @@ class Premium_Nav_Menu extends Widget_Base {
 				),
 				'default'   => '1024',
 				'condition' => array(
+					'render_mobile_menu' => 'yes',
 					'pa_nav_menu_layout' => array( 'hor', 'ver' ),
 				),
 			)
@@ -1626,8 +1661,32 @@ class Premium_Nav_Menu extends Widget_Base {
 		$this->start_controls_section(
 			'premium_dropdown_section',
 			array(
-				'label' => __( 'Expand/Slide Menu Settings', 'premium-addons-for-elementor' ),
-			)
+				'label'      => __( 'Expand/Slide Menu Settings', 'premium-addons-for-elementor' ),
+				'conditions' => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'     => 'pa_nav_menu_layout',
+							'operator' => 'in',
+							'value'    => array( 'dropdown', 'slide' ),
+						),
+						array(
+							'relation' => 'and',
+							'terms'    => array(
+								array(
+									'name'     => 'pa_nav_menu_layout',
+									'operator' => 'in',
+									'value'    => array( 'hor', 'ver' ),
+								),
+								array(
+									'name'  => 'render_mobile_menu',
+									'value' => 'yes',
+								),
+							),
+						),
+					),
+				),
+			),
 		);
 
 		$this->add_control(
@@ -2379,8 +2438,32 @@ class Premium_Nav_Menu extends Widget_Base {
 		$this->start_controls_section(
 			'premium_toggle_mene_style_section',
 			array(
-				'label' => __( 'Expand/Slide Menu Style', 'premium-addons-for-elementor' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
+				'label'      => __( 'Expand/Slide Menu Style', 'premium-addons-for-elementor' ),
+				'tab'        => Controls_Manager::TAB_STYLE,
+				'conditions' => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'     => 'pa_nav_menu_layout',
+							'operator' => 'in',
+							'value'    => array( 'dropdown', 'slide' ),
+						),
+						array(
+							'relation' => 'and',
+							'terms'    => array(
+								array(
+									'name'     => 'pa_nav_menu_layout',
+									'operator' => 'in',
+									'value'    => array( 'hor', 'ver' ),
+								),
+								array(
+									'name'  => 'render_mobile_menu',
+									'value' => 'yes',
+								),
+							),
+						),
+					),
+				),
 			)
 		);
 
@@ -2680,8 +2763,8 @@ class Premium_Nav_Menu extends Widget_Base {
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
 					'{{WRAPPER}}.premium-ham-dropdown .premium-mobile-menu,
-					 {{WRAPPER}}.premium-nav-dropdown .premium-mobile-menu,
-					  {{WRAPPER}} .premium-mobile-menu-outer-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					{{WRAPPER}}.premium-nav-dropdown .premium-mobile-menu,
+					{{WRAPPER}} .premium-mobile-menu-outer-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -2701,6 +2784,7 @@ class Premium_Nav_Menu extends Widget_Base {
 					'value' => 'slide',
 				),
 			),
+
 		);
 
 		$this->start_controls_section(
@@ -2710,7 +2794,30 @@ class Premium_Nav_Menu extends Widget_Base {
 				'tab'        => Controls_Manager::TAB_STYLE,
 				'conditions' => array_merge(
 					$close_btn_conditions,
-					array()
+					array(
+						'relation' => 'or',
+						'terms'    => array(
+							array(
+								'name'     => 'pa_nav_menu_layout',
+								'operator' => 'in',
+								'value'    => array( 'dropdown', 'slide' ),
+							),
+							array(
+								'relation' => 'and',
+								'terms'    => array(
+									array(
+										'name'     => 'pa_nav_menu_layout',
+										'operator' => 'in',
+										'value'    => array( 'hor', 'ver' ),
+									),
+									array(
+										'name'  => 'render_mobile_menu',
+										'value' => 'yes',
+									),
+								),
+							),
+						),
+					)
 				),
 			)
 		);
@@ -4428,6 +4535,8 @@ class Premium_Nav_Menu extends Widget_Base {
 
 		$menu_id = 'wordpress_menu' === $menu_type ? $settings['pa_nav_menus'] : false;
 
+		$render_mobile_menu = 'yes' === $settings['render_mobile_menu'] || in_array( $settings['pa_nav_menu_layout'], array( 'slide', 'dropdown' ), true );
+
 		$papro_activated = apply_filters( 'papro_activated', false ) && version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.8.9', '>' );
 
 		$rn_badges_enabled = ( $papro_activated && 'yes' === $settings['rn_badge_enabled'] ) ? true : false;
@@ -4471,14 +4580,15 @@ class Premium_Nav_Menu extends Widget_Base {
 		$div_end = '';
 
 		$menu_settings = array(
-			'breakpoint'      => (int) $break_point,
-			'mobileLayout'    => $settings['pa_mobile_menu_layout'],
-			'mainLayout'      => $settings['pa_nav_menu_layout'],
-			'stretchDropdown' => $stretch_dropdown,
-			'hoverEffect'     => $settings['sub_badge_hv_effects'],
-			'submenuEvent'    => $settings['submenu_event'],
-			'submenuTrigger'  => $settings['submenu_trigger'],
-			'closeAfterClick' => $close_after_click,
+			'breakpoint'       => (int) $break_point,
+			'mobileLayout'     => $settings['pa_mobile_menu_layout'],
+			'mainLayout'       => $settings['pa_nav_menu_layout'],
+			'stretchDropdown'  => $stretch_dropdown,
+			'hoverEffect'      => $settings['sub_badge_hv_effects'],
+			'submenuEvent'     => $settings['submenu_event'],
+			'submenuTrigger'   => $settings['submenu_trigger'],
+			'closeAfterClick'  => $close_after_click,
+			'renderMobileMenu' => $render_mobile_menu,
 		);
 
 		if ( 'yes' === $settings['pa_sticky_switcher'] ) {
@@ -4549,6 +4659,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrapper' ) ); ?>>
 				<div class="premium-ver-inner-container">
+				<?php if ( $render_mobile_menu ) { ?>
 					<div class="premium-hamburger-toggle premium-mobile-menu-icon" role="button" aria-label="Toggle Menu">
 						<span class="premium-toggle-text">
 							<?php
@@ -4564,85 +4675,91 @@ class Premium_Nav_Menu extends Widget_Base {
 						</span>
 					</div>
 					<?php
+				}
 
-					if ( 'yes' === $settings['pa_ver_toggle_switcher'] ) {
-						$this->add_vertical_toggler();
-					}
+				if ( 'yes' === $settings['pa_ver_toggle_switcher'] ) {
+					$this->add_vertical_toggler();
+				}
 
-					if ( 'wordpress_menu' === $menu_type ) {
-						$args = array(
-							'container'   => '',
-							'menu'        => $menu_id,
-							'menu_class'  => 'premium-nav-menu premium-main-nav-menu',
-							'echo'        => false,
-							'fallback_cb' => 'wp_page_menu',
-							'walker'      => new Pa_Nav_Menu_Walker( $settings ),
-						);
+				if ( 'wordpress_menu' === $menu_type ) {
+					$args = array(
+						'container'   => '',
+						'menu'        => $menu_id,
+						'menu_class'  => 'premium-nav-menu premium-main-nav-menu',
+						'echo'        => false,
+						'fallback_cb' => 'wp_page_menu',
+						'walker'      => new Pa_Nav_Menu_Walker( $settings ),
+					);
 
-						$menu_html = wp_nav_menu( $args );
+					$menu_html = wp_nav_menu( $args );
 
-						if ( in_array( $settings['pa_nav_menu_layout'], array( 'hor', 'ver' ), true ) ) {
-							?>
-							<div class="premium-nav-menu-container premium-nav-default">
-								<?php echo $menu_html; ?>
-							</div>
-							<?php
-						}
-					} else {
+					if ( in_array( $settings['pa_nav_menu_layout'], array( 'hor', 'ver' ), true ) ) {
 						?>
+							<div class="premium-nav-menu-container premium-nav-default">
+								<?php echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							</div>
+						<?php
+					}
+				} else {
+					?>
 						<div class="premium-nav-menu-container">
 							<ul class="premium-nav-menu premium-main-nav-menu">
 								<?php
 									$menu_html = $this->get_custom_menu();
-									echo $menu_html;
+									echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								?>
 							</ul>
 						</div>
-						<?php
-					}
+					<?php
+				}
 
-					if ( 'slide' === $settings['pa_mobile_menu_layout'] || 'slide' === $settings['pa_nav_menu_layout'] ) {
-						$div_end = '</div>';
-						?>
+				if ( 'slide' === $settings['pa_mobile_menu_layout'] || 'slide' === $settings['pa_nav_menu_layout'] ) {
+					$div_end = '</div>';
+					?>
 						<div class="premium-nav-slide-overlay"></div>
 						<div class="premium-mobile-menu-outer-container">
 							<div class="premium-mobile-menu-close" role="button" aria-label="Close Menu">
-								<?php Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) ); ?>
+							<?php Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) ); ?>
 								<span class="premium-toggle-close"><?php echo esc_html( $settings['pa_mobile_toggle_close'] ); ?></span>
 						</div>
 						<?php
 						/**
+						 *  Menu.
+						 *
 						 * @param int|bool $menu_id WordPress menu id | false if it's a custom menu.
 						 * @param array $settings  menu settings.
 						 */
 						do_action( 'pa_slide_menu_top_template', $menu_id, $settings );
-					}
+				}
 
-					if ( 'wordpress_menu' === $menu_type ) {
-						?>
-							<div class="premium-mobile-menu-container">
-								<?php echo $this->mobile_menu_filter( $menu_html, $menu_id ); ?>
-							</div>
-							<?php
-
-					} else {
-						?>
+				if ( $render_mobile_menu ) {
+					?>
 						<div class="premium-mobile-menu-container">
-							<ul class="premium-mobile-menu premium-main-mobile-menu premium-main-nav-menu">
-								<?php
-									echo $menu_html;
-								?>
-							</ul>
+							<?php
+								if ( 'wordpress_menu' === $menu_type ) {
+									?>
+										<?php echo $this->mobile_menu_filter( $menu_html, $menu_id ) ; ?>
+									<?php
+								} else {
+									?>
+									<ul class="premium-mobile-menu premium-main-mobile-menu premium-main-nav-menu">
+										<?php
+										echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										?>
+									</ul>
+									<?php
+								}
+							?>
 						</div>
-						<?php
-					}
+					<?php
+				}
 
-					if ( 'slide' === $settings['pa_mobile_menu_layout'] || 'slide' === $settings['pa_nav_menu_layout'] ) {
-						do_action( 'pa_slide_menu_bottom_template', $menu_id, $settings );
-					}
+				if ( 'slide' === $settings['pa_mobile_menu_layout'] || 'slide' === $settings['pa_nav_menu_layout'] ) {
+					do_action( 'pa_slide_menu_bottom_template', $menu_id, $settings );
+				}
 
 					echo wp_kses_post( $div_end );
-					?>
+				?>
 				</div>
 			</div>
 		<?php
@@ -4735,7 +4852,7 @@ class Premium_Nav_Menu extends Widget_Base {
 	 *
 	 * @access private
 	 *
-	 * @param string $menu_html desktop menu html.
+	 * @param string $html desktop menu html.
 	 * @param string $slug menu item id.
 	 *
 	 * @return string
@@ -4744,12 +4861,12 @@ class Premium_Nav_Menu extends Widget_Base {
 		$pattern    = '/id="' . $slug . '(\d+)"/';
 		$id_counter = 1;
 
-		// Replace duplicated IDs
+		// Replace duplicated IDs.
 		return preg_replace_callback(
 			$pattern,
 			function ( $matches ) use ( &$id_counter, &$slug ) {
 				$id     = $matches[1];
-				$new_id = $slug . $id . $id_counter++;
+				$new_id = $slug . $id . ( $id_counter++ );
 				return 'id="' . $new_id . '"';
 			},
 			$html

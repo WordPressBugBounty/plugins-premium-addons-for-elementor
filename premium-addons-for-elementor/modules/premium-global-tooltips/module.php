@@ -815,7 +815,7 @@ class Module {
 						'max' => 800,
 					),
 				),
-				'description' => __( 'Set a maximum width for the tooltip in pixels, default: null (no max width)', 'premium-addons-for-elementor' ),
+				'description' => __( 'Set a maximum width for the tooltip in pixels', 'premium-addons-for-elementor' ),
 				'condition'   => array(
 					'premium_tooltip_switcher' => 'yes',
 				),
