@@ -320,6 +320,33 @@ class Premium_Tcloud extends Widget_Base {
 		}
 
 		$this->add_responsive_control(
+			'direction',
+			array(
+				'label'        => __( 'Direction', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::CHOOSE,
+				'options'      => array(
+					'row'    => array(
+						'title' => __( 'Row', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-arrow-right',
+					),
+					'column' => array(
+						'title' => __( 'Column', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-arrow-down',
+					),
+				),
+				'default'      => 'row',
+				'toggle'       => false,
+				'prefix_class' => 'premium-tcloud__',
+				'selectors'    => array(
+					'{{WRAPPER}} .premium-tcloud-canvas-container' => 'flex-direction: {{VALUE}};',
+				),
+				'condition'    => array(
+					'words_order!' => $options['order_condition'],
+				),
+			)
+		);
+
+		$this->add_responsive_control(
 			'align',
 			array(
 				'label'     => __( 'Alignment', 'premium-addons-for-elementor' ),
@@ -341,7 +368,8 @@ class Premium_Tcloud extends Widget_Base {
 				'default'   => 'flex-start',
 				'toggle'    => false,
 				'selectors' => array(
-					'{{WRAPPER}} .premium-tcloud-canvas-container' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}}.premium-tcloud__row .premium-tcloud-canvas-container' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}}.premium-tcloud__column .premium-tcloud-canvas-container' => 'align-items: {{VALUE}};',
 				),
 				'condition' => array(
 					'words_order!' => $options['order_condition'],
@@ -409,6 +437,15 @@ class Premium_Tcloud extends Widget_Base {
 				'type'        => Controls_Manager::SWITCHER,
 				'description' => __( 'Use this to get the terms of the current page. Useful when building a Single Post/Product template.', 'premium-addons-for-elementor' ),
 				'condition'   => $options['source_condition'],
+			)
+		);
+
+		$this->add_control(
+			'show_parents_only',
+			array(
+				'label'     => __( 'Show Parent Terms Only', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'condition' => $options['source_condition'],
 			)
 		);
 
@@ -855,14 +892,16 @@ class Premium_Tcloud extends Widget_Base {
 				$term->count = 1;
 			}
 
+			$child_terms_count = 'yes' === $settings['show_parents_only'] ? $this->get_child_terms_count( $tax, $term_id ) : 0;
+
 			array_push(
 				$words_array,
 				array(
 					$name,
-					$term->count,
+					$term->count + $child_terms_count,
 					get_term_link( $term_id, $tax ),
 					$full_name,
-					$term->count,
+					$term->count + $child_terms_count,
 				)
 			);
 
@@ -962,6 +1001,15 @@ class Premium_Tcloud extends Widget_Base {
 			'order'   => $settings['order'],
 		);
 
+		if ( 'yes' === $settings['show_parents_only'] ) {
+			$args = array_merge(
+				$args,
+				array(
+					'parent' => 0,
+				)
+			);
+		}
+
 		// Get the terms based on filter source.
 		if ( 'yes' === $settings['get_from_current'] ) {
 			$taxs = wp_get_post_terms( get_the_ID(), $term, $args );
@@ -982,5 +1030,45 @@ class Premium_Tcloud extends Widget_Base {
 		}
 
 		return $taxs;
+	}
+
+	/**
+	 * Get Child Terms Count
+	 *
+	 * Used to get child terms count.
+	 *
+	 * @access private
+	 *
+	 * @return int $child_posts_count child terms count.
+	 */
+	private function get_child_terms_count( $tax, $id ) {
+
+		$term_children = get_terms(
+			array(
+				'taxonomy'   => $tax,
+				'parent'     => $id,
+				'hide_empty' => true,
+				'fields'     => 'ids',
+			)
+		);
+
+		if ( empty( $term_children ) ) {
+			return 0;
+		}
+
+		$child_posts_count = 0;
+
+		foreach ( $term_children as $child_id ) {
+
+			$term = get_term( $child_id, $tax );
+
+			if ( $term && ! is_wp_error( $term ) ) {
+
+				$child_posts_count += $term->count;
+
+			}
+		}
+
+		return $child_posts_count;
 	}
 }

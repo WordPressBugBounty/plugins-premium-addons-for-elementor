@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, widgets, elementor elements, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 6.7.1
+Tested Up To: 6.7.2
 Requires PHP: 7.4
-Stable Tag: 4.10.83
+Stable Tag: 4.10.84
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.84 =
+
+- Tweak: Added Show Parent Terms Only option in Tags Cloud.
+- Tweak: Improved Tags Cloud to count posts in child terms.
+- Fixed: Layout breaks in some cases when Dynamic Assets feature is enabled.
 
 = 4.10.83 =
 

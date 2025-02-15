@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.10.83\n"
+"Project-Id-Version: Premium Addons for Elementor 4.10.84\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2025-02-12 11:16:31+00:00\n"
+"POT-Creation-Date: 2025-02-15 11:30:19+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1936,7 +1936,7 @@ msgstr ""
 #: widgets/premium-pinterest-feed.php:877 widgets/premium-post-ticker.php:1299
 #: widgets/premium-progressbar.php:811 widgets/premium-search-form.php:526
 #: widgets/premium-search-form.php:703 widgets/premium-search-form.php:2041
-#: widgets/premium-tcloud.php:432 widgets/premium-textual-showcase.php:888
+#: widgets/premium-tcloud.php:469 widgets/premium-textual-showcase.php:888
 #: widgets/premium-textual-showcase.php:1595
 #: widgets/premium-textual-showcase.php:1619
 #: widgets/premium-tiktok-feed.php:941 widgets/premium-videobox.php:1147
@@ -2428,7 +2428,7 @@ msgstr ""
 #: widgets/premium-blog.php:325 widgets/premium-contactform.php:150
 #: widgets/premium-mobile-menu.php:254 widgets/premium-pinterest-feed.php:298
 #: widgets/premium-post-ticker.php:1095 widgets/premium-search-form.php:307
-#: widgets/premium-tcloud.php:387 widgets/premium-videobox.php:227
+#: widgets/premium-tcloud.php:415 widgets/premium-videobox.php:227
 msgid "Source"
 msgstr ""
 
@@ -2515,7 +2515,7 @@ msgid "Post"
 msgstr ""
 
 #: includes/pa-display-conditions/pa-controls-handler.php:122
-#: widgets/premium-notifications.php:1213 widgets/premium-tcloud.php:376
+#: widgets/premium-notifications.php:1213 widgets/premium-tcloud.php:404
 msgid "Post Type"
 msgstr ""
 
@@ -2856,7 +2856,7 @@ msgstr ""
 #: widgets/premium-notifications.php:1931 widgets/premium-person.php:1090
 #: widgets/premium-pinterest-feed.php:1158 widgets/premium-post-ticker.php:1998
 #: widgets/premium-progressbar.php:955 widgets/premium-svg-drawer.php:625
-#: widgets/premium-tcloud.php:464 widgets/premium-testimonials.php:813
+#: widgets/premium-tcloud.php:501 widgets/premium-testimonials.php:813
 #: widgets/premium-tiktok-feed.php:1157 widgets/premium-videobox.php:1705
 #: widgets/premium-vscroll.php:613 widgets/premium-weather.php:1242
 #: widgets/premium-world-clock.php:1420
@@ -2874,7 +2874,7 @@ msgstr ""
 #: widgets/premium-nav-menu.php:1343 widgets/premium-notifications.php:1936
 #: widgets/premium-person.php:1101 widgets/premium-pinterest-feed.php:1163
 #: widgets/premium-post-ticker.php:2003 widgets/premium-svg-drawer.php:630
-#: widgets/premium-tcloud.php:469 widgets/premium-tiktok-feed.php:1162
+#: widgets/premium-tcloud.php:506 widgets/premium-tiktok-feed.php:1162
 #: widgets/premium-videobox.php:1710 widgets/premium-weather.php:1247
 #: widgets/premium-world-clock.php:1425
 msgid "Getting started »"
@@ -3170,8 +3170,8 @@ msgstr ""
 #: widgets/premium-pinterest-feed.php:1611
 #: widgets/premium-pinterest-feed.php:1631
 #: widgets/premium-pricing-table.php:908 widgets/premium-pricing-table.php:2551
-#: widgets/premium-search-form.php:1657 widgets/premium-tcloud.php:543
-#: widgets/premium-tcloud.php:655 widgets/premium-textual-showcase.php:706
+#: widgets/premium-search-form.php:1657 widgets/premium-tcloud.php:580
+#: widgets/premium-tcloud.php:692 widgets/premium-textual-showcase.php:706
 #: widgets/premium-textual-showcase.php:1335
 #: widgets/premium-textual-showcase.php:2015
 #: widgets/premium-tiktok-feed.php:2250 widgets/premium-tiktok-feed.php:2281
@@ -3458,8 +3458,8 @@ msgstr ""
 #: widgets/premium-search-form.php:2749 widgets/premium-search-form.php:2773
 #: widgets/premium-search-form.php:2829 widgets/premium-search-form.php:2853
 #: widgets/premium-search-form.php:3027 widgets/premium-svg-drawer.php:783
-#: widgets/premium-svg-drawer.php:807 widgets/premium-tcloud.php:591
-#: widgets/premium-tcloud.php:703 widgets/premium-testimonials.php:891
+#: widgets/premium-svg-drawer.php:807 widgets/premium-tcloud.php:628
+#: widgets/premium-tcloud.php:740 widgets/premium-testimonials.php:891
 #: widgets/premium-testimonials.php:1358 widgets/premium-testimonials.php:1440
 #: widgets/premium-testimonials.php:1464
 #: widgets/premium-textual-showcase.php:1856
@@ -3630,7 +3630,7 @@ msgstr ""
 #: widgets/premium-search-form.php:2338 widgets/premium-search-form.php:2389
 #: widgets/premium-search-form.php:2594 widgets/premium-search-form.php:2885
 #: widgets/premium-search-form.php:3039 widgets/premium-svg-drawer.php:854
-#: widgets/premium-tcloud.php:634 widgets/premium-tcloud.php:746
+#: widgets/premium-tcloud.php:671 widgets/premium-tcloud.php:783
 #: widgets/premium-testimonials.php:1370 widgets/premium-testimonials.php:1487
 #: widgets/premium-textual-showcase.php:1880
 #: widgets/premium-textual-showcase.php:2146
@@ -3803,7 +3803,7 @@ msgstr ""
 #: widgets/premium-pricing-table.php:2636
 #: widgets/premium-pricing-table.php:2989 widgets/premium-search-form.php:1876
 #: widgets/premium-search-form.php:2294 widgets/premium-search-form.php:2710
-#: widgets/premium-tcloud.php:648 widgets/premium-tiktok-feed.php:2263
+#: widgets/premium-tcloud.php:685 widgets/premium-tiktok-feed.php:2263
 #: widgets/premium-tiktok-feed.php:2487 widgets/premium-weather.php:2995
 #: widgets/premium-weather.php:3223
 msgid "Hover"
@@ -4132,8 +4132,8 @@ msgstr ""
 #: widgets/premium-search-form.php:1563 widgets/premium-search-form.php:1668
 #: widgets/premium-search-form.php:1716 widgets/premium-search-form.php:2649
 #: widgets/premium-search-form.php:2729 widgets/premium-search-form.php:2809
-#: widgets/premium-search-form.php:3013 widgets/premium-tcloud.php:568
-#: widgets/premium-tcloud.php:680 widgets/premium-testimonials.php:1330
+#: widgets/premium-search-form.php:3013 widgets/premium-tcloud.php:605
+#: widgets/premium-tcloud.php:717 widgets/premium-testimonials.php:1330
 #: widgets/premium-tiktok-feed.php:1273 widgets/premium-tiktok-feed.php:1788
 #: widgets/premium-tiktok-feed.php:2103 widgets/premium-tiktok-feed.php:2193
 #: widgets/premium-title.php:1198 widgets/premium-title.php:1216
@@ -4194,7 +4194,8 @@ msgstr ""
 #: modules/premium-section-floating-effects/module.php:853
 #: modules/woocommerce/widgets/mini-cart.php:936
 #: widgets/premium-dual-header.php:571 widgets/premium-image-scroll.php:457
-#: widgets/premium-textual-showcase.php:1670 widgets/premium-title.php:1032
+#: widgets/premium-tcloud.php:325 widgets/premium-textual-showcase.php:1670
+#: widgets/premium-title.php:1032
 msgid "Direction"
 msgstr ""
 
@@ -4263,7 +4264,7 @@ msgstr ""
 #: widgets/premium-pricing-table.php:2884 widgets/premium-search-form.php:1650
 #: widgets/premium-search-form.php:1786 widgets/premium-search-form.php:2236
 #: widgets/premium-search-form.php:2630 widgets/premium-svg-drawer.php:834
-#: widgets/premium-tcloud.php:536 widgets/premium-tiktok-feed.php:2232
+#: widgets/premium-tcloud.php:573 widgets/premium-tiktok-feed.php:2232
 #: widgets/premium-tiktok-feed.php:2467 widgets/premium-title.php:1169
 #: widgets/premium-title.php:1869 widgets/premium-videobox.php:816
 #: widgets/premium-vscroll.php:480 widgets/premium-vscroll.php:908
@@ -4454,7 +4455,7 @@ msgstr ""
 #: widgets/premium-pricing-table.php:1278
 #: widgets/premium-pricing-table.php:2342 widgets/premium-progressbar.php:829
 #: widgets/premium-search-form.php:876 widgets/premium-search-form.php:1300
-#: widgets/premium-svg-drawer.php:305 widgets/premium-tcloud.php:329
+#: widgets/premium-svg-drawer.php:305 widgets/premium-tcloud.php:356
 #: widgets/premium-testimonials.php:1035 widgets/premium-testimonials.php:1396
 #: widgets/premium-textual-showcase.php:638
 #: widgets/premium-textual-showcase.php:1267 widgets/premium-title.php:571
@@ -4521,7 +4522,7 @@ msgstr ""
 #: widgets/premium-pricing-table.php:1282
 #: widgets/premium-pricing-table.php:2350 widgets/premium-progressbar.php:837
 #: widgets/premium-search-form.php:880 widgets/premium-search-form.php:1308
-#: widgets/premium-svg-drawer.php:313 widgets/premium-tcloud.php:337
+#: widgets/premium-svg-drawer.php:313 widgets/premium-tcloud.php:364
 #: widgets/premium-testimonials.php:1043 widgets/premium-testimonials.php:1404
 #: widgets/premium-textual-showcase.php:646
 #: widgets/premium-textual-showcase.php:1275 widgets/premium-title.php:579
@@ -5081,7 +5082,7 @@ msgstr ""
 #: widgets/premium-notifications.php:563 widgets/premium-notifications.php:1719
 #: widgets/premium-person.php:240 widgets/premium-pricing-table.php:1006
 #: widgets/premium-pricing-table.php:2338 widgets/premium-search-form.php:1296
-#: widgets/premium-svg-drawer.php:301 widgets/premium-tcloud.php:325
+#: widgets/premium-svg-drawer.php:301 widgets/premium-tcloud.php:352
 #: widgets/premium-testimonials.php:1031 widgets/premium-testimonials.php:1392
 #: widgets/premium-textual-showcase.php:1946 widgets/premium-title.php:622
 #: widgets/premium-title.php:652 widgets/premium-videobox.php:2355
@@ -5138,7 +5139,7 @@ msgstr ""
 #: widgets/premium-pricing-table.php:1014
 #: widgets/premium-pricing-table.php:2346 widgets/premium-progressbar.php:833
 #: widgets/premium-search-form.php:1304 widgets/premium-search-form.php:1456
-#: widgets/premium-svg-drawer.php:309 widgets/premium-tcloud.php:333
+#: widgets/premium-svg-drawer.php:309 widgets/premium-tcloud.php:360
 #: widgets/premium-testimonials.php:1039 widgets/premium-testimonials.php:1400
 #: widgets/premium-textual-showcase.php:642
 #: widgets/premium-textual-showcase.php:1271
@@ -5290,8 +5291,8 @@ msgstr ""
 #: widgets/premium-search-form.php:2152 widgets/premium-search-form.php:2208
 #: widgets/premium-search-form.php:2377 widgets/premium-search-form.php:2493
 #: widgets/premium-search-form.php:2582 widgets/premium-search-form.php:2872
-#: widgets/premium-search-form.php:3051 widgets/premium-tcloud.php:622
-#: widgets/premium-tcloud.php:734 widgets/premium-testimonials.php:960
+#: widgets/premium-search-form.php:3051 widgets/premium-tcloud.php:659
+#: widgets/premium-tcloud.php:771 widgets/premium-testimonials.php:960
 #: widgets/premium-testimonials.php:1009 widgets/premium-testimonials.php:1088
 #: widgets/premium-testimonials.php:1140 widgets/premium-testimonials.php:1184
 #: widgets/premium-textual-showcase.php:1868
@@ -6273,7 +6274,7 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-products.php:832
 #: widgets/premium-blog.php:569 widgets/premium-notifications.php:1456
 #: widgets/premium-post-ticker.php:769 widgets/premium-post-ticker.php:1319
-#: widgets/premium-search-form.php:547 widgets/premium-tcloud.php:447
+#: widgets/premium-search-form.php:547 widgets/premium-tcloud.php:484
 msgid "Order"
 msgstr ""
 
@@ -6544,7 +6545,7 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-products.php:623
 #: widgets/premium-blog.php:314 widgets/premium-notifications.php:1197
 #: widgets/premium-pinterest-feed.php:280 widgets/premium-post-ticker.php:1069
-#: widgets/premium-search-form.php:152 widgets/premium-tcloud.php:357
+#: widgets/premium-search-form.php:152 widgets/premium-tcloud.php:385
 #: widgets/premium-tiktok-feed.php:252
 msgid "Query"
 msgstr ""
@@ -6612,7 +6613,7 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-products.php:836
 #: widgets/premium-blog.php:573 widgets/premium-notifications.php:1460
 #: widgets/premium-pinterest-feed.php:451 widgets/premium-post-ticker.php:1323
-#: widgets/premium-search-form.php:551 widgets/premium-tcloud.php:452
+#: widgets/premium-search-form.php:551 widgets/premium-tcloud.php:489
 #: widgets/premium-tiktok-feed.php:288
 msgid "Descending"
 msgstr ""
@@ -6621,7 +6622,7 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-products.php:837
 #: widgets/premium-blog.php:574 widgets/premium-notifications.php:1461
 #: widgets/premium-pinterest-feed.php:452 widgets/premium-post-ticker.php:1324
-#: widgets/premium-search-form.php:552 widgets/premium-tcloud.php:451
+#: widgets/premium-search-form.php:552 widgets/premium-tcloud.php:488
 #: widgets/premium-tiktok-feed.php:289
 msgid "Ascending"
 msgstr ""
@@ -7941,7 +7942,7 @@ msgstr ""
 
 #: widgets/premium-blog.php:529 widgets/premium-notifications.php:1433
 #: widgets/premium-post-ticker.php:1295 widgets/premium-search-form.php:522
-#: widgets/premium-tcloud.php:427
+#: widgets/premium-tcloud.php:464
 msgid "Order By"
 msgstr ""
 
@@ -9395,11 +9396,11 @@ msgstr ""
 msgid "Title Display"
 msgstr ""
 
-#: widgets/premium-counter.php:669
+#: widgets/premium-counter.php:669 widgets/premium-tcloud.php:329
 msgid "Row"
 msgstr ""
 
-#: widgets/premium-counter.php:670
+#: widgets/premium-counter.php:670 widgets/premium-tcloud.php:333
 msgid "Column"
 msgstr ""
 
@@ -11689,7 +11690,7 @@ msgstr ""
 msgid "Add Different Icon with no posts"
 msgstr ""
 
-#: widgets/premium-notifications.php:592 widgets/premium-tcloud.php:437
+#: widgets/premium-notifications.php:592 widgets/premium-tcloud.php:474
 msgid "Posts Number"
 msgstr ""
 
@@ -11765,7 +11766,7 @@ msgid "Close Icon Position"
 msgstr ""
 
 #: widgets/premium-notifications.php:1206 widgets/premium-post-ticker.php:1088
-#: widgets/premium-tcloud.php:369
+#: widgets/premium-tcloud.php:397
 msgid " (Pro)"
 msgstr ""
 
@@ -12984,55 +12985,59 @@ msgstr ""
 msgid " to get colors."
 msgstr ""
 
-#: widgets/premium-tcloud.php:397
+#: widgets/premium-tcloud.php:425
 msgid "This post type has no taxonomies to show."
 msgstr ""
 
-#: widgets/premium-tcloud.php:408
+#: widgets/premium-tcloud.php:436
 msgid "Get from Current Page"
 msgstr ""
 
-#: widgets/premium-tcloud.php:410
+#: widgets/premium-tcloud.php:438
 msgid ""
 "Use this to get the terms of the current page. Useful when building a "
 "Single Post/Product template."
 msgstr ""
 
-#: widgets/premium-tcloud.php:418
+#: widgets/premium-tcloud.php:446
+msgid "Show Parent Terms Only"
+msgstr ""
+
+#: widgets/premium-tcloud.php:455
 msgid "Number of Terms to Show"
 msgstr ""
 
-#: widgets/premium-tcloud.php:433
+#: widgets/premium-tcloud.php:470
 msgid "Name Alphabetically"
 msgstr ""
 
-#: widgets/premium-tcloud.php:434
+#: widgets/premium-tcloud.php:471
 msgid "Slug Alphabetically"
 msgstr ""
 
-#: widgets/premium-tcloud.php:435
+#: widgets/premium-tcloud.php:472
 msgid "Description Alphabetically"
 msgstr ""
 
-#: widgets/premium-tcloud.php:436
+#: widgets/premium-tcloud.php:473
 msgid "Term ID"
 msgstr ""
 
-#: widgets/premium-tcloud.php:495
+#: widgets/premium-tcloud.php:532
 msgid "Term"
 msgstr ""
 
-#: widgets/premium-tcloud.php:514
+#: widgets/premium-tcloud.php:551
 msgid "Font Size Scale (px)"
 msgstr ""
 
-#: widgets/premium-tcloud.php:516
+#: widgets/premium-tcloud.php:553
 msgid ""
 "This option is used to increase the font size of each term based on the "
 "number of posts in it."
 msgstr ""
 
-#: widgets/premium-tcloud.php:554 widgets/premium-tcloud.php:666
+#: widgets/premium-tcloud.php:591 widgets/premium-tcloud.php:703
 msgid "Circle Color"
 msgstr ""
 

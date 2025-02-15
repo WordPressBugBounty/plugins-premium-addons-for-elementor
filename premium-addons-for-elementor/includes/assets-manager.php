@@ -598,7 +598,7 @@ class Assets_Manager {
 	 */
 	public static function clean_content( $content ) {
 
-		if ( strpos( $content, '<!DOCTYPE' ) ) {
+		if ( stripos( $content, '<!DOCTYPE' ) ) {
 			$content = 'empty';
 		}
 
