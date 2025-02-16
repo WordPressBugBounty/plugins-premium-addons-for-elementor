@@ -61,6 +61,10 @@ class Feedback {
 
 		if ( ! $anonymous ) {
 			$wordpress['deactivated_plugin']['uninstall_details'] .= ( empty( $wordpress['deactivated_plugin']['uninstall_details'] ) ? '' : PHP_EOL . PHP_EOL ) . 'Domain: ' . self::get_site_domain();
+
+			$wordpress['used_widgets'] = array(
+                'widgets'      => Admin_Helper::get_used_widgets()
+            );
 		}
 
 		$body = array(
@@ -179,7 +183,7 @@ class Feedback {
 											sprintf( '<a target="_blank" href="%s">%s</a>', $link, __(' how to increase the PHP limits', 'premium-addons-for-elementor') ); ?>
 								</p>
 							<?php endif; ?>
-							<p><?php echo esc_html(__( 'Would you like to share your e-mail with us so that we can write you back?', 'premium-addons-for-elementor' )); ?></p>
+							<p><?php echo esc_html(__( 'Would you like to share your e-mail and elements usage with us so that we can write you back?', 'premium-addons-for-elementor' )); ?></p>
 						</section>
 						<section class="options-wrap hidden" data-feedback>
 							<label>

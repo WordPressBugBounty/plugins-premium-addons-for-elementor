@@ -1,5 +1,50 @@
 == Changelog ==
 
+= 4.10.85 =
+
+- Tweak: Added Show Parent Terms Only option in Tags Cloud.
+
+= 4.10.84 =
+
+- Tweak: Added Show Parent Terms Only option in Tags Cloud.
+- Tweak: Improved Tags Cloud to count posts in child terms.
+- Fixed: Layout breaks in some cases when Dynamic Assets feature is enabled.
+
+= 4.10.83 =
+
+- Tweak: Added option to control if mobile menu should be rendered in Mega Menu widget.
+- Fixed: PHP warning in Woo CTA widget.
+- Fixed: Floating Effects not updating correctly.
+- Fixed: PHP warning when rendering SVG icons.
+
+= 4.10.82 =
+
+- Tweak: Aspect Ratio option in Video Box widget.
+- Tweak: Code formatting for better security.
+- Fixed: Submenus overlapping issue in Mega Menu widget.
+
+= 4.10.81 =
+
+- Fixed: Fatal error in Button widget after v4.10.80
+
+= 4.10.80 =
+
+- Tweak: Core improved to run editor faster.
+- Tweak: Added Dismissible option in Modal Box widget.
+- Fixed: PHP warning in Timezone option in Display Conditions addon.
+- Fixed: PHP warning in Heading widget.
+
+= 4.10.79 =
+
+- Tweak: Load some CSS files only when needed to improve performance.
+- Fixed: PHP warning in Location display condition.
+- Fixed: Brokens CSS links showing in broken link checker.
+
+= 4.10.78 =
+
+- Tweak: Removed unnecessary PHP files to minimize plugin size.
+- Fixed: Navigation arrows not showing when lightbox is set to Elementor in Media Grid widget.
+
 = 4.10.77 =
 
 - Tweak: Change active menu item on scroll in Mega Menu widget.

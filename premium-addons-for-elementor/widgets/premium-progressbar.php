@@ -914,7 +914,7 @@ class Premium_Progressbar extends Widget_Base {
 				'label'     => __( 'Prefix Label', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::TEXT,
 				'dynamic'   => array( 'active' => true ),
-				'default'   => __( '0', 'premium-addons-for-elementor' ),
+				'default'   => '0',
 				'condition' => array(
 					'layout_type' => 'half-circle',
 				),

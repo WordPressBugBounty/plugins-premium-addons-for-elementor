@@ -42,12 +42,28 @@
 								<div class="premium-menu-control-meta">
 									<label for="pa-megamenu-switcher"><?php esc_html_e( 'Enable Mega Menu', 'premium-addons-for-elementor' ); ?></label>
 								</div>
+
+								<div class='pa-menu-control-info'>
 								<div class="premium-menu-control" id="pa-megamenu-switcher">
 									<label class="switch">
 										<input type="checkbox">
 										<span class="slider round pa-control"></span>
 									</label>
 								</div>
+
+								<!-- Notice Message  -->
+								<p class="premium-menu-notice" id="pa-megamenu-notice" style='display: none;'>
+								<?php
+									printf(
+										/* translators: 1: Premium Mega Menu */
+                                        __('Please note that these settings are related to %1$s widget. You need to search for "%1$s" in Elementor editor panel.', 'premium-addons-for-elementor'),
+                                        '<strong>' . __( 'Premium Mega Menu', 'premium-addons-for-elementor' ) . '</strong>'
+									);
+                                ?>
+                                </p>
+                                </div>
+
+
 							</div>
 
 							<div class="premium-megamenu-settings premium-setting-container">

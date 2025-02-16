@@ -8,9 +8,6 @@ use PremiumAddons\Includes\Helper_Functions;
 
 $elements = self::get_elements_list();
 
-// Causes performance issues on large websites. We will get them using AJAX only.
-// $used_widgets = self::get_used_widgets();
-
 // Get elements settings
 $enabled_elements = self::get_enabled_elements();
 

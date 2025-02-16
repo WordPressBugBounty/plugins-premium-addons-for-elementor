@@ -2267,12 +2267,16 @@
 	display: -webkit-flex;
 	display: flex;
 	width: 100%;
-	height: 50px;
+	min-height: 50px;
 	-ms-flex-pack: justify;
 	-webkit-justify-content: space-between;
 	justify-content: space-between;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
 }
 
+.pa-menu-control-info,
 .premium-menu-control-meta,
 .premium-menu-control {
 	-js-display: flex;
@@ -2295,6 +2299,28 @@
 	font-size: 14px;
 	color: #474747;
 	font-family: "Poppins";
+}
+
+.pa-menu-control-info {
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+.premium-menu-notice {
+	display: block;
+	width: 90%;
+	font-family: "Poppins";
+	font-size: 13px;
+	line-height: 1.5;
+	text-align: left;
+	margin: 10px 0;
+	background: #f3f3f3;
+	border: 1px solid #c3c4c7;
+	border-left-color: #dba617;
+	border-left-width: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	padding: 10px 12px;
 }
 
 .premium-menu-dialog-footer {

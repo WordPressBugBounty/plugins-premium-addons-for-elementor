@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.10.84\n"
+"Project-Id-Version: Premium Addons for Elementor 4.10.85\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2025-02-15 11:30:19+00:00\n"
+"POT-Creation-Date: 2025-02-16 14:55:29+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,10 +24,6 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
-
-#: widgets/premium-progressbar.php:917
-msgid "0"
-msgstr ""
 
 #: admin/includes/admin-bar.php:122
 msgid " PA Assets"
@@ -628,94 +624,96 @@ msgstr ""
 msgid "Contact Widgets"
 msgstr ""
 
-#: admin/includes/feedback.php:120
+#: admin/includes/feedback.php:124
 msgid "Sorry to see you go"
 msgstr ""
 
-#: admin/includes/feedback.php:123
+#: admin/includes/feedback.php:127
 msgid "Would you quickly give us your reason for doing so?"
 msgstr ""
 
-#: admin/includes/feedback.php:128
+#: admin/includes/feedback.php:132
 msgid "Temporary deactivation"
 msgstr ""
 
-#: admin/includes/feedback.php:132
+#: admin/includes/feedback.php:136
 msgid "Set up is too difficult"
 msgstr ""
 
-#: admin/includes/feedback.php:136
+#: admin/includes/feedback.php:140
 msgid "Causes issues with Elementor"
 msgstr ""
 
-#: admin/includes/feedback.php:140
+#: admin/includes/feedback.php:144
 msgid "Lack of documentation"
 msgstr ""
 
-#: admin/includes/feedback.php:144
+#: admin/includes/feedback.php:148
 msgid "Not the features I wanted"
 msgstr ""
 
-#: admin/includes/feedback.php:148
+#: admin/includes/feedback.php:152
 msgid "Found a better plugin"
 msgstr ""
 
-#: admin/includes/feedback.php:152
+#: admin/includes/feedback.php:156
 msgid "Incompatible with theme or plugin"
 msgstr ""
 
-#: admin/includes/feedback.php:156
+#: admin/includes/feedback.php:160
 #: includes/pa-display-conditions/pa-controls-handler.php:112
 msgid "Other"
 msgstr ""
 
-#: admin/includes/feedback.php:160
+#: admin/includes/feedback.php:164
 msgid "What was the difficult part?"
 msgstr ""
 
-#: admin/includes/feedback.php:161
+#: admin/includes/feedback.php:165
 msgid "What was the issue?"
 msgstr ""
 
-#: admin/includes/feedback.php:162
+#: admin/includes/feedback.php:166
 msgid "What can we describe more?"
 msgstr ""
 
-#: admin/includes/feedback.php:163
+#: admin/includes/feedback.php:167
 msgid "How could we improve?"
 msgstr ""
 
-#: admin/includes/feedback.php:164
+#: admin/includes/feedback.php:168
 msgid "Can you mention it?"
 msgstr ""
 
-#: admin/includes/feedback.php:165
+#: admin/includes/feedback.php:169
 msgid "With what plugin or theme is incompatible?"
 msgstr ""
 
-#: admin/includes/feedback.php:166
+#: admin/includes/feedback.php:170
 msgid "Please specify:"
 msgstr ""
 
-#: admin/includes/feedback.php:178
+#: admin/includes/feedback.php:182
 msgid ""
 "Having Elementor editor not loading issue? Your website PHP limits might be "
 "the reason. Here's"
 msgstr ""
 
-#: admin/includes/feedback.php:179
+#: admin/includes/feedback.php:183
 msgid " how to increase the PHP limits"
 msgstr ""
 
-#: admin/includes/feedback.php:182
-msgid "Would you like to share your e-mail with us so that we can write you back?"
+#: admin/includes/feedback.php:186
+msgid ""
+"Would you like to share your e-mail and elements usage with us so that we "
+"can write you back?"
 msgstr ""
 
-#: admin/includes/feedback.php:187
+#: admin/includes/feedback.php:191
 msgid "No, I'd like to stay anonymous"
 msgstr ""
 
-#: admin/includes/feedback.php:192
+#: admin/includes/feedback.php:196
 msgid "Deactivate"
 msgstr ""
 
@@ -1094,54 +1092,54 @@ msgstr ""
 msgid "This will exclude the dynamic generated CSS/JS files from being minified."
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:34
+#: admin/includes/templates/modules-settings.php:31
 msgid "Dynamic Assets Generate"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:35
+#: admin/includes/templates/modules-settings.php:32
 msgid ""
 "Generates CSS/JS files dynamically for each page based on the elements in "
 "it. Enable this setting for better performance (recommended)."
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:44
+#: admin/includes/templates/modules-settings.php:41
 msgid "Clear Generated Assets"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:55
+#: admin/includes/templates/modules-settings.php:52
 msgid "Master Switch"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:56
+#: admin/includes/templates/modules-settings.php:53
 msgid "Use this to switch on or off ALL Widgets & Add-ons at once."
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:60
+#: admin/includes/templates/modules-settings.php:57
 msgid "Switch On"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:61
+#: admin/includes/templates/modules-settings.php:58
 msgid "Switch Off"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:64
+#: admin/includes/templates/modules-settings.php:61
 msgid "Disable Unused Widgets"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:76
+#: admin/includes/templates/modules-settings.php:73
 msgid "Select Usage"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:78
+#: admin/includes/templates/modules-settings.php:75
 msgid "Basic"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:79
+#: admin/includes/templates/modules-settings.php:76
 #: modules/woocommerce/widgets/woo-products.php:782
 msgid "Advanced"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:80
+#: admin/includes/templates/modules-settings.php:77
 #: modules/premium-section-floating-effects/module.php:876
 #: modules/woocommerce/widgets/mini-cart.php:212
 #: modules/woocommerce/widgets/mini-cart.php:721
@@ -1157,47 +1155,47 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:85
+#: admin/includes/templates/modules-settings.php:82
 msgid "Filter Widgets"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:86
+#: admin/includes/templates/modules-settings.php:83
 msgid "Search by name..."
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:88
+#: admin/includes/templates/modules-settings.php:85
 msgid "All Widgets"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:89
+#: admin/includes/templates/modules-settings.php:86
 msgid "Free Widgets"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:90
+#: admin/includes/templates/modules-settings.php:87
 msgid "PRO Widgets"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:145
+#: admin/includes/templates/modules-settings.php:142
 msgid "pro"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:154
+#: admin/includes/templates/modules-settings.php:151
 msgid "Live Demo"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:160
+#: admin/includes/templates/modules-settings.php:157
 msgid "Docs"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:168
+#: admin/includes/templates/modules-settings.php:165
 msgid "Video Tutorial"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:181
+#: admin/includes/templates/modules-settings.php:178
 msgid "Enable SVG Draw"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:192
+#: admin/includes/templates/modules-settings.php:189
 msgid "Enable Custom Mini Cart Template"
 msgstr ""
 
@@ -1217,39 +1215,50 @@ msgstr ""
 msgid "Enable Mega Menu"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:55
+#: admin/includes/templates/nav-menu-settings.php:59
+#. translators: 1: Premium Mega Menu
+msgid ""
+"Please note that these settings are related to %1$s widget. You need to "
+"search for \"%1$s\" in Elementor editor panel."
+msgstr ""
+
+#: admin/includes/templates/nav-menu-settings.php:60
+msgid "Premium Mega Menu"
+msgstr ""
+
+#: admin/includes/templates/nav-menu-settings.php:71
 msgid "Create/Edit Mega Menu Content"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:58
+#: admin/includes/templates/nav-menu-settings.php:74
 msgid "Edit Mega Content"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:64
+#: admin/includes/templates/nav-menu-settings.php:80
 msgid "Menu Content Position"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:65
+#: admin/includes/templates/nav-menu-settings.php:81
 msgid "mega content parent position"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:77
+#: admin/includes/templates/nav-menu-settings.php:93
 msgid "Full Width Content"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:78
+#: admin/includes/templates/nav-menu-settings.php:94
 msgid "Works only on horizontal-layout menus"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:90
+#: admin/includes/templates/nav-menu-settings.php:106
 msgid "Menu Content Width (PX)"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:91
+#: admin/includes/templates/nav-menu-settings.php:107
 msgid "Default is 1170 px"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:100
+#: admin/includes/templates/nav-menu-settings.php:116
 #: modules/woocommerce/widgets/mini-cart.php:190
 #: modules/woocommerce/widgets/woo-cta.php:353 widgets/premium-button.php:497
 #: widgets/premium-button.php:800 widgets/premium-counter.php:319
@@ -1263,18 +1272,18 @@ msgstr ""
 msgid "Icon Type"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:112
+#: admin/includes/templates/nav-menu-settings.php:128
 msgid "Lottie URL"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:122
+#: admin/includes/templates/nav-menu-settings.php:138
 #: widgets/premium-carousel.php:693 widgets/premium-carousel.php:781
 #: widgets/premium-carousel.php:1067 widgets/premium-modalbox.php:242
 #: widgets/premium-search-form.php:847 widgets/premium-svg-drawer.php:171
 msgid "Select Icon"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:131
+#: admin/includes/templates/nav-menu-settings.php:147
 #: modules/premium-global-tooltips/module.php:476
 #: modules/woocommerce/skins/skin-base.php:304
 #: modules/woocommerce/widgets/mini-cart.php:1973
@@ -1300,23 +1309,23 @@ msgstr ""
 msgid "Icon Color"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:140
+#: admin/includes/templates/nav-menu-settings.php:156
 msgid "Item Badge Text"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:149
+#: admin/includes/templates/nav-menu-settings.php:165
 msgid "Badge Color"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:158
+#: admin/includes/templates/nav-menu-settings.php:174
 msgid "Badge Background"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:174
+#: admin/includes/templates/nav-menu-settings.php:190
 msgid "Save Settings"
 msgstr ""
 
-#: admin/includes/templates/nav-menu-settings.php:212
+#: admin/includes/templates/nav-menu-settings.php:228
 #: includes/live-editor-modal.php:55
 #: includes/templates/scripts/template-modal-loading.php:14
 msgid "Loading"
