@@ -42,14 +42,10 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 			<td><?php esc_html_e( 'WP Memory Limit', 'premium-addons-for-elementor' ); ?>:</td>
 			<td>
 			<?php
-			 // echo "kok";
+
 				$memory_limit = wp_convert_hr_to_bytes( WP_MEMORY_LIMIT );
-			if ( $memory_limit < 67108864 ) {
-				/* translators: %1$s is the memory limit in MB, %2$s is the URL to the documentation. */
-				echo '<mark>' . sprintf( __( '%1$s - We recommend setting wp memory at least 64MB.</mark> See: <a href="%2$s" target="_blank">Increasing WP Memory Limit</a>', 'premium-addons-for-elementor' ), esc_html( size_format( $memory_limit ) ), 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/' );
-			} else {
+
 				echo esc_html( size_format( $memory_limit ) );
-			}
 			?>
 				</td>
 		</tr>
@@ -112,7 +108,28 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 		<?php if ( function_exists( 'ini_get' ) ) : ?>
 			<tr>
 				<td><?php esc_html_e( 'PHP Memory Limit', 'premium-addons-for-elementor' ); ?>:</td>
-				<td><?php echo esc_html( size_format( wp_convert_hr_to_bytes( ini_get( 'memory_limit' ) ) ) ); ?></td>
+				<td>
+					<?php
+
+					$memory_limit = wp_convert_hr_to_bytes( ini_get( 'memory_limit' ) );
+
+					if( $memory_limit < 314572800 ) {
+
+						$translated_text = sprintf(
+							/* translators: %1$s is the memory limit, %2$s is the URL for increasing memory limit */
+							__( '%1$s - We recommend setting WP memory at least 300MB. See: %2$s', 'premium-addons-for-elementor' ),
+							esc_html( size_format( $memory_limit ) ),
+							'<a href="https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/" target="_blank">' . __( 'Increasing WP Memory Limit', 'premium-addons-for-elementor' ) . '</a>'
+						);
+
+						echo '<mark>' . wp_kses_post( $translated_text ) . '</mark>';
+
+					} else {
+						echo esc_html( size_format( $memory_limit ) );
+					}
+
+					?>
+				</td>
 			</tr>
 			<tr>
 				<td><?php esc_html_e( 'PHP Post Max Size', 'premium-addons-for-elementor' ); ?>:</td>
@@ -124,8 +141,14 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 				<?php
 				$time_limit = ini_get( 'max_execution_time' );
 				if ( $time_limit < 120 && $time_limit != 0 ) {
-					/* translators: %1$s is the max execution time in seconds, %2$s is the URL to the documentation. */
-					echo '<mark>' . sprintf( __( '%s - We recommend setting max execution time at least 300.</mark> See: <a href="%2$s" target="_blank">Increasing WP Time Limit</a>', 'premium-addons-for-elementor' ), esc_html( $time_limit ), 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/' );
+					$translated_text = sprintf(
+						/* translators: %1$s is the max execution time in seconds, %2$s is the URL to the documentation. */
+						__( '%1$s - We recommend setting max execution time at least 300. See: %2$s', 'premium-addons-for-elementor' ),
+						esc_html( $time_limit ),
+						'<a href="https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/" target="_blank">' . __( 'Increasing WP Time Limit', 'premium-addons-for-elementor' ) . '</a>'
+					);
+
+					echo '<mark>' . wp_kses_post( $translated_text ) . '</mark>';
 				} else {
 					echo esc_html( $time_limit );
 				}

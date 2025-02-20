@@ -759,7 +759,7 @@ class Premium_Countdown extends Widget_Base {
 		$this->add_control(
 			'restart_notice',
 			array(
-				'raw'             => __( 'When the action is set to restart, all times will be calculated based on the server timezone.', 'premium-addons-for-elementor' ),
+				'raw'             => __( 'When the action is set to restart, all times will be calculated based on WordPress default timezone.', 'premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
 				'condition'       => array(
@@ -1721,7 +1721,7 @@ class Premium_Countdown extends Widget_Base {
 				$last_target = $target_date;
 			}
 
-			$is_date_passed = strtotime( $last_target ) < time();
+			$is_date_passed = strtotime( $last_target ) < strtotime( current_time( 'mysql' ) );
 
 			if ( $is_date_passed ) {
 

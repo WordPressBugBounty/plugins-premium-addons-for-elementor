@@ -160,7 +160,7 @@ class Admin_Bar {
 				'id'     => 'pa-feature-doc',
 				'parent' => 'premium-addons',
 				'title'  => $doc_icon . __( 'Learn More', 'premium-addons-for-elementor' ),
-				'href'   => 'https://premiumaddons.com/docs/dynamic-assets-generate-loading-for-elementor/',
+				'href'   => 'https://premiumaddons.com/docs/elementor-dynamic-assets-generate-loading/',
 				'meta'   => array(
 					'target' => '_blank',
 				),

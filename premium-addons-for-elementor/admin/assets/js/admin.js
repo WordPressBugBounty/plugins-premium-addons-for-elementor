@@ -318,8 +318,9 @@
 							addonsToUse = [
 								'premium-templates',
 								'premium-equal-height',
-								'premium-wrapper-link'
-
+								'premium-wrapper-link',
+								'pa-display-conditions',
+								'premium-duplicator'
 							];
 
 						//First, disable all elements.
@@ -372,7 +373,42 @@
 
 			if (usageType) {
 
-				$(".pa-usage select").val(usageType).trigger('change');
+				setTimeout(function () {
+
+					var $whiteLabelTab = $('#pa-section-system-info'),
+						shouldShowAlert = $whiteLabelTab.find('mark').length > 0;
+
+					if (shouldShowAlert) {
+
+						$(".pa-usage select").val(usageType).trigger('change');
+
+						var redirectionLink = "https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/?utm_source=dash-alert&utm_medium=wp-dash-pro&utm_campaign=get-pro&utm_term=";
+
+						Swal.fire(
+							{
+								title: '<span class="pa-swal-head">Important!<span>',
+								html: 'The PHP Memory/Time limit detected on your website is low. This can cause issues running Elementor editor and affect your site speed. We have disabled some features to prevent any issues. You can enable features from <u>Widgets & Addons and Global Features</u> tabs, but we strongly recommend following the guide if you need to enable more elements.',
+								type: 'warning',
+								showCloseButton: true,
+								showCancelButton: true,
+								cancelButtonText: "See guide",
+								focusConfirm: true,
+								customClass: 'pa-swal',
+							}
+						).then(
+							function (res) {
+								// Handle More Info button
+								if (res.dismiss === 'cancel') {
+									window.open(redirectionLink + settings.theme, '_blank');
+								}
+
+							}
+						);
+					}
+
+				}, 1000);
+
+
 			}
 
 		}

@@ -152,6 +152,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 		public static function uninstall() {
 
+			delete_option( 'pa_install_time' );
+
 			$api_url = 'https://feedbackpa.leap13.com/wp-json/uninstall/v2/add';
 
 			$current_time = gmdate( 'j F, Y', time() );

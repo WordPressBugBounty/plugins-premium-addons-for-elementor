@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.7.2
 Requires PHP: 7.4
-Stable Tag: 4.10.85
+Stable Tag: 4.10.86
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.10.86 =
+
+- Tweak: Show message when PHP memory/time limit are low to improve usability.
+- Fixed: Restart option in Countdown Timer widget not working correctly.
 
 = 4.10.85 =
 

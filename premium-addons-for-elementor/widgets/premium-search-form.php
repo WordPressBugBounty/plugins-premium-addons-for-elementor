@@ -991,11 +991,23 @@ class Premium_Search_Form extends Widget_Base {
 		$this->add_control(
 			'image_notice',
 			array(
-				'raw'             => __( 'You need to set image width for this skin from style tab -> Thumbnail', 'premium-addons-for-elementor' ),
+				'raw'             => __( 'You need to set the Width control value for this skin from style tab -> Thumbnail', 'premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
 				'condition'       => array(
 					'skin' => 'side',
+				),
+			)
+		);
+
+		$this->add_control(
+			'banner_notice',
+			array(
+				'raw'             => __( 'Please note that Banner skin requires posts to have featured images added for them.', 'premium-addons-for-elementor' ),
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				'condition'       => array(
+					'skin' => 'banner',
 				),
 			)
 		);

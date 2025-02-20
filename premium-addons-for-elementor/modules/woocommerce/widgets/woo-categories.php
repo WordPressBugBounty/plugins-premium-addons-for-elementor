@@ -35,6 +35,13 @@ class Woo_Categories extends Widget_Base {
 	private $category_index = 0;
 
 	/**
+	 * Template Instance
+	 *
+	 * @var template_instance
+	 */
+	protected $template_instance;
+
+	/**
 	 * Retrieve Widget Name.
 	 *
 	 * @since 1.0.0
@@ -1199,14 +1206,19 @@ class Woo_Categories extends Widget_Base {
 				<?php
 
 				if ( 'yes' === $settings['show_count'] && 'line' === $settings['count_position'] && $category->count > 0 ) {
-					$output = sprintf( // WPCS: XSS OK.
+
+					$translated_string = sprintf(
 						/* translators: 1: number of products */
-						_nx( '<p class="premium-woo-cats__count">%1$s %2$s</p>', '<p class="premium-woo-cats__count">%1$s %3$s</p>', $category->count, 'product categories', 'premium-addons-for-elementor' ), // phpcs:ignore WordPress.WP.I18n.MismatchedPlaceholders, WordPress.WP.I18n.NoHtmlWrappedStrings
+						_nx( '%1$s %2$s', '%1$s %3$s', $category->count, 'product categories', 'premium-addons-for-elementor' ),
 						number_format_i18n( $category->count ),
 						$one_product_string,
 						$plural_product_string
 					);
 
+					// Wrap the translated string in HTML
+					$output = sprintf( '<p class="premium-woo-cats__count">%s</p>', $translated_string );
+
+					// Output the result with proper escaping
 					echo wp_kses_post( $output );
 				}
 
