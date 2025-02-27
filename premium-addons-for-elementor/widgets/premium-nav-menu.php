@@ -540,6 +540,7 @@ class Premium_Nav_Menu extends Widget_Base {
 					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
 					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
 					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'icon',
 				'conditions'  => array(
@@ -573,12 +574,11 @@ class Premium_Nav_Menu extends Widget_Base {
 		$repeater->add_control(
 			'item_icon',
 			array(
-				'label'                  => __( 'Select an Icon', 'premium-addons-for-elementor' ),
-				'type'                   => Controls_Manager::ICONS,
-				'label_block'            => false,
-				'skin'                   => 'inline',
-				'exclude_inline_options' => array( 'svg' ),
-				'conditions'             => array(
+				'label'       => __( 'Select an Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::ICONS,
+				'label_block' => false,
+				'skin'        => 'inline',
+				'conditions'  => array(
 					'relation' => 'and',
 					'terms'    => array(
 						array(
@@ -647,6 +647,19 @@ class Premium_Nav_Menu extends Widget_Base {
 
 					),
 				),
+			)
+		);
+
+		$repeater->add_control(
+			'custom_svg',
+			array(
+				'label'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXTAREA,
+				'description' => 'You can use these sites to create SVGs: <a href="https://danmarshall.github.io/google-font-to-svg-path/" target="_blank">Google Fonts</a> and <a href="https://boxy-svg.com/" target="_blank">Boxy SVG</a>',
+				'condition'   =>
+					array(
+						'icon_type' => 'svg',
+					),
 			)
 		);
 
@@ -3065,6 +3078,8 @@ class Premium_Nav_Menu extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > .premium-item-icon' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > .premium-item-icon:not(.premium-lottie-animation) svg * ,
+					 {{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > svg.premium-item-icon *' => 'fill: {{VALUE}}',
 				),
 				'condition' => array(
 					'menu_type' => 'custom',
@@ -3086,8 +3101,8 @@ class Premium_Nav_Menu extends Widget_Base {
 					),
 				),
 				'selectors'   => array(
-					'{{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > .premium-item-icon' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > .premium-item-icon.dashicons, {{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > img.premium-item-icon, {{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > .premium-item-icon.premium-lottie-animation' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > i.premium-item-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > .premium-item-icon.dashicons, {{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > img.premium-item-icon, {{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > .premium-item-icon svg, {{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > svg.premium-item-icon, {{WRAPPER}} .premium-nav-menu-item > .premium-menu-link > .premium-item-icon.premium-lottie-animation' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -4316,7 +4331,9 @@ class Premium_Nav_Menu extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link .premium-sub-item-icon' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link i.premium-sub-item-icon ' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link .premium-sub-item-icon:not(.premium-lottie-animation) svg *,
+					 {{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link svg.premium-sub-item-icon * ' => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'menu_type' => 'custom',
@@ -4338,8 +4355,8 @@ class Premium_Nav_Menu extends Widget_Base {
 					),
 				),
 				'selectors'   => array(
-					'{{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link .premium-sub-item-icon' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link .premium-sub-item-icon.dashicons, {{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link img.premium-sub-item-icon, {{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link .premium-sub-item-icon.premium-lottie-animation' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link i.premium-sub-item-icon ' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link .premium-sub-item-icon.dashicons, {{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link img.premium-sub-item-icon, {{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link .premium-sub-item-icon svg, {{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link svg.premium-sub-item-icon, {{WRAPPER}} .premium-sub-menu-item .premium-sub-menu-link .premium-sub-item-icon.premium-lottie-animation' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -4736,19 +4753,19 @@ class Premium_Nav_Menu extends Widget_Base {
 					?>
 						<div class="premium-mobile-menu-container">
 							<?php
-								if ( 'wordpress_menu' === $menu_type ) {
-									?>
-										<?php echo $this->mobile_menu_filter( $menu_html, $menu_id ) ; ?>
+							if ( 'wordpress_menu' === $menu_type ) {
+								?>
+									<?php echo $this->mobile_menu_filter( $menu_html, $menu_id ); ?>
 									<?php
-								} else {
-									?>
+							} else {
+								?>
 									<ul class="premium-mobile-menu premium-main-mobile-menu premium-main-nav-menu">
-										<?php
-										echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-										?>
+									<?php
+									echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									?>
 									</ul>
 									<?php
-								}
+							}
 							?>
 						</div>
 					<?php
@@ -4912,7 +4929,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 				$is_active_item = $item['link']['url'] === $current_link;
 
-				/** handling active anchor links which redirects to an id in a page */
+				/** Handling active anchor links which redirects to an id in a page */
 				$is_anchor = false !== strpos( $item['link']['url'], '#' ) && false === strpos( $item['link']['url'], '#/' );
 
 				// we can later add other classes here based on the user settings.
@@ -5096,21 +5113,33 @@ class Premium_Nav_Menu extends Widget_Base {
 			return '';
 		}
 
-		$class = 'premium-' . $type . 'item-icon ';
+		$class     = 'premium-' . $type . 'item-icon ';
+		$icon_type = $item['icon_type'];
 
-		if ( 'icon' === $item['icon_type'] ) {
+		if ( in_array( $icon_type, array( 'icon', 'svg' ), true ) ) {
 
-			$icon_class = $class . $item['item_icon']['value'];
-			$html      .= sprintf( '<i class="%1$s"></i>', esc_attr( $icon_class ) );
+			// We should add the icon's class here.
+			$icon_html = 'svg' === $icon_type ? $item['custom_svg'] :
+			Helper_Functions::get_svg_by_icon(
+				$item['item_icon'],
+				array(
+					'aria-hidden' => 'true',
+					'class'       => $class,
+				)
+			);
 
-		} elseif ( 'image' === $item['icon_type'] ) {
+			if ( 'icon' === $icon_type && 'svg' !== $item['item_icon']['library'] ) { // This means it's a fontawesome icon.
+				$html .= $icon_html;
+			} else { // This mean it's an svg icon || svg code. => we want to wrap the svg icon with a span.
+				    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$html .= '<span class="' . esc_attr( $class ) . '">' . $icon_html . '</span>';
+			}
+		} elseif ( 'image' === $icon_type ) {
 
 			$html .= '<img class="' . esc_attr( $class ) . '" src="' . esc_attr( $item['item_image']['url'] ) . '" alt="' . esc_attr( Control_Media::get_image_alt( $item['item_image'] ) ) . '">';
-
 		} else {
 
 			$html .= '<div class="premium-lottie-animation ' . esc_attr( $class ) . '" data-lottie-url="' . esc_attr( $item['lottie_url'] ) . '" data-lottie-loop="true"></div>';
-
 		}
 
 		return $html;

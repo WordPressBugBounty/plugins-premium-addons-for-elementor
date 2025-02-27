@@ -637,7 +637,7 @@ class Skin_8 extends Skin_Base {
 				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .premium-woocommerce.premium-woo-skin-grid-8 .premium-woo-qv-icon:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-woocommerce.premium-woo-skin-grid-8 .premium-woo-qv-btn:hover .premium-woo-qv-icon' => 'color: {{VALUE}}',
 				),
 			)
 		);

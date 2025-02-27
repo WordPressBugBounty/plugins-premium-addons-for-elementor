@@ -97,7 +97,7 @@
 					transform: 'inherit',
 					opacity: 'inherit',
 					filter: 'inherit',
-					background: 'inherit'
+					// background: 'inherit'
 				});
 			},
 

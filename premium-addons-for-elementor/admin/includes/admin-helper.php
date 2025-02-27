@@ -797,6 +797,7 @@ class Admin_Helper {
 								/* translators: %s: html tags */
 								echo wp_kses_post( sprintf( __( 'Supercharge your Elementor with %1$sPRO Widgets & Addons%2$s that you won\'t find anywhere else.', 'premium-addons-for-elementor' ), '<span>', '</span>' ) );
 							?>
+							<span class="papro-sale-notice"><?php echo wp_kses_post( __('save 10% on Lifetime!', 'premium-addons-for-elementor') ) ?></span>
 						</p>
 					</div>
 					<div class="papro-admin-notice-cta">

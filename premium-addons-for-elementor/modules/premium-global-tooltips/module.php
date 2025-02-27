@@ -709,20 +709,6 @@ class Module {
 		);
 
 		$element->add_control(
-			'premium_tooltip_interactive',
-			array(
-				'label'       => __( 'Interactive', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Give users the possibility to interact with the content of the tooltip', 'premium-addons-for-elementor' ),
-				'default'     => 'yes',
-				'render_type' => 'template',
-				'condition'   => array(
-					'premium_tooltip_switcher' => 'yes',
-				),
-			)
-		);
-
-		$element->add_control(
 			'premium_tooltip_arrow',
 			array(
 				'label'       => __( 'Show Arrow', 'premium-addons-for-elementor' ),
@@ -1058,9 +1044,6 @@ class Module {
 					tooltip_settings.follow_mouse = 'yes' === settings.premium_tooltip_mouse_follow;
 				}
 
-				tooltip_settings.interactive = tooltip_settings.follow_mouse ? false : 'yes' === settings.premium_tooltip_interactive;
-
-
 				if ( '' !== settings.pa_tooltip_class ) {
 					tooltip_settings.isTourStarter = 'yes' === settings.is_tour_starter;
 				}
@@ -1126,7 +1109,7 @@ class Module {
 								?>
 									<span class="premium-tootltip-text">
 									<?php
-										echo esc_html( $settings['premium_tooltip_text'] );
+										echo wp_kses_post( $settings['premium_tooltip_text'] );
 
 									if ( 'yes' === $settings['premium_tooltip_icon_switcher'] ) {
 										$icon = $settings['premium_tooltip_icon'];
@@ -1220,7 +1203,6 @@ class Module {
 				$tooltip_settings['follow_mouse'] = 'yes' === $settings['premium_tooltip_mouse_follow'];
 			}
 
-			$tooltip_settings['interactive'] = $tooltip_settings['follow_mouse'] ? false : 'yes' === $settings['premium_tooltip_interactive'];
 
 			$element->add_render_attribute( '_wrapper', 'data-tooltip-id', $id );
 

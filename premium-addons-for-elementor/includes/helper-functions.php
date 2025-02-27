@@ -1654,8 +1654,10 @@ class Helper_Functions {
 
 		//If icon library is SVG, then go to Elementor. Used for widgets where this widget is called in all cases.
 		if( 'svg' === $icon['library'] ) {
-			Icons_Manager::render_icon( $icon, [ 'aria-hidden' => 'true' ] );
-			return;
+
+			$svg_html = Icons_Manager::try_get_icon_html( $icon );
+
+			return $svg_html;
 		}
 
 		$icon['font_family'] = 'font-awesome';

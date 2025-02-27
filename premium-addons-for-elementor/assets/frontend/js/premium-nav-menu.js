@@ -116,6 +116,9 @@
 		}
 
 		if (renderMobileMenu) {
+			var isMobileMenu = null,
+				isDesktopMenu = null;
+
 			checkBreakPoint(settings);
 		}
 
@@ -439,14 +442,18 @@
 		function checkBreakPoint(settings) {
 
 			//Trigger small screen menu.
-			if (settings.breakpoint >= $(window).outerWidth()) {
+			if (settings.breakpoint >= $(window).outerWidth()&& !isMobileMenu) {
 				// remove the vertical toggler.
 				$scope.find('.premium-ver-toggler').css('display', 'none');
 				$scope.addClass('premium-hamburger-menu');
 				$scope.find('.premium-active-menu').removeClass('premium-active-menu');
 				stretchDropdown($scope.find('.premium-stretch-dropdown .premium-mobile-menu-container'));
+
+				isMobileMenu = true;
+				isDesktopMenu = false;
+
 				//Trigger large screen menu.
-			} else if (settings.breakpoint < $(window).outerWidth()) {
+			} else if (settings.breakpoint < $(window).outerWidth() && !isDesktopMenu) {
 				// show the vertical toggler if enabled.
 				if ($scope.hasClass('premium-ver-toggle-yes')) {
 					$scope.find('.premium-ver-toggler').css('display', 'flex');
@@ -457,6 +464,9 @@
 				$scope.removeClass('premium-hamburger-menu premium-ham-dropdown');
 				$scope.find('.premium-vertical-toggle-open').removeClass('premium-vertical-toggle-open');
 				$scope.find('.premium-nav-default').removeClass('premium-nav-default');
+
+				isDesktopMenu = true;
+				isMobileMenu = false;
 			}
 
 		}

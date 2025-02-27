@@ -39,10 +39,11 @@
   padding: 0;
 }
 
-.premium-tooltipster-base {
+.premium-tooltipster-base:not(.has-lottie-animation) {
   width: auto !important;
   height: auto !important;
 }
+
 .premium-tooltipster-base .tooltipster-content {
   padding: 0.3em 0.6em;
   border-radius: 2px;

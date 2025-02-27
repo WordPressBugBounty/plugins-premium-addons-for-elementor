@@ -1945,7 +1945,7 @@ class Woo_CTA extends Widget_Base {
 	private function get_woocommerce_product_attributes_for_add_to_cart( $product_id ) {
 		$product = wc_get_product( $product_id );
 
-		if ( ! $product || ! $product->is_type( 'variable' ) ) {
+		if ( ! $product || ( ! $product->is_type( 'variable' ) && ! $product->is_type( 'variable-subscription' ) )  ) {
 			return array();
 		}
 
@@ -2085,7 +2085,7 @@ class Woo_CTA extends Widget_Base {
 			$external_url = $product->get_product_url();
 			$button_text  = $product->get_button_text();
 
-		} elseif ( 'variable' === $product_type ) {
+		} elseif ( in_array( $product_type, [ 'variable', 'variable-subscription' ], true ) ) {
 			$attributes = $this->get_woocommerce_product_attributes_for_add_to_cart( $product_id );
 		}
 
@@ -2295,7 +2295,7 @@ class Woo_CTA extends Widget_Base {
 						</table>
 					<?php } ?>
 
-					<?php if ( 'variable' === $product_type ) { ?>
+					<?php if (  in_array( $product_type, [ 'variable', 'variable-subscription' ], true ) ) { ?>
 						<?php if ( ! empty( $attributes ) ) : ?>
 					<table class="premium-variations" cellspacing="0" role="presentation">
 						<tbody>
@@ -2434,7 +2434,3 @@ class Woo_CTA extends Widget_Base {
 		<?php
 	}
 }
-
-
-
-
