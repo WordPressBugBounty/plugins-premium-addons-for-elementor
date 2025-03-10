@@ -715,17 +715,10 @@ class Helper_Functions {
 	 * @since 3.21.6
 	 * @access public
 	 *
-	 * @return boolen $is_updated
+	 * @return boolen
 	 */
 	public static function check_papro_version() {
-
-		if ( ! defined( 'PREMIUM_PRO_ADDONS_VERSION' ) ) {
-			return false;
-		}
-
-		$is_updated = get_option( 'papro_updated', true );
-
-		return $is_updated;
+		return defined( 'PREMIUM_PRO_ADDONS_VERSION' );
 	}
 
 	/**

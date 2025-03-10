@@ -243,7 +243,6 @@ class Module {
 		?>
 		<# if( 'yes' === settings.premium_eq_height_switcher ) {
 
-			view.addRenderAttribute( 'eq_height', 'id', 'premium-temp-equal-height-' + view.getID() );
 			var targetType = settings.premium_eq_height_type,
 
 				target = 'custom' === targetType ? settings.premium_eq_height_custom_target.split(',') : settings.premium_eq_height_target,

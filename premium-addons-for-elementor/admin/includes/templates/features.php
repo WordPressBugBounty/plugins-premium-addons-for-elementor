@@ -65,6 +65,24 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
+						<h4><?php echo esc_html( __( 'Display Conditions', 'premium-addons-for-elementor' ) ); ?></h4>
+							<p><?php echo esc_html( __( 'Show/hide content dynamically based on location, browser, operating system, user role, device type, Woocommerce, ACF, etc.', 'premium-addons-for-elementor' ) ); ?></p>
+						</div>
+
+						<div class="pa-section-info-cta">
+							<label class="switch">
+								<input type="checkbox" id="pa-display-conditions" name="pa-display-conditions" <?php echo checked( 1, $enabled_elements['pa-display-conditions'], false ); ?>>
+									<span class="slider round pa-control"></span>
+								</label>
+							</p>
+						</div>
+					</div>
+					<a href="<?php echo esc_url( $features[2]['demo'] ); ?>" target="_blank"></a>
+				</div>
+
+				<div class="pa-section-outer-wrap">
+					<div class="pa-section-info-wrap">
+						<div class="pa-section-info">
 						<h4><?php echo esc_html( __( 'Equal Height', 'premium-addons-for-elementor' ) ); ?></h4>
 							<p><?php echo esc_html( __( 'Make your widgets the same height with just ONE click.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
@@ -164,24 +182,6 @@ $features = $elements['cat-13']['elements'];
 						</div>
 					</div>
 					<a href="<?php echo esc_url( $features[11]['demo'] ); ?>" target="_blank"></a>
-				</div>
-
-				<div class="pa-section-outer-wrap">
-					<div class="pa-section-info-wrap">
-						<div class="pa-section-info">
-						<h4><?php echo esc_html( __( 'Display Conditions', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Show/hide content dynamically based on location, browser, operating system, user role, device type, Woocommerce, ACF, etc.', 'premium-addons-for-elementor' ) ); ?></p>
-						</div>
-
-						<div class="pa-section-info-cta">
-							<label class="switch">
-								<input type="checkbox" id="pa-display-conditions" name="pa-display-conditions" <?php echo checked( 1, $enabled_elements['pa-display-conditions'], false ); ?>>
-									<span class="slider round pa-control"></span>
-								</label>
-							</p>
-						</div>
-					</div>
-					<a href="<?php echo esc_url( $features[2]['demo'] ); ?>" target="_blank"></a>
 				</div>
 
 				<div class="pa-section-outer-wrap">

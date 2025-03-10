@@ -576,6 +576,12 @@ class Addons_Integration {
 			$this->enqueue_old_styles( $dir, $is_rtl, $suffix );
 		} else {
 
+			// If the assets are generated correctly due to server errors.
+			if ( 'empty' === self::$css_content ) {
+				$this->enqueue_old_styles( $dir, $is_rtl, $suffix );
+				return;
+			}
+
 			$css_path = '/pa-frontend' . $is_rtl . '-' . Assets_Manager::$post_id . $suffix . '.css';
 
 			if ( Assets_Manager::$is_updated && file_exists( PREMIUM_ASSETS_PATH . $css_path ) ) {
@@ -592,9 +598,10 @@ class Addons_Integration {
 			$pa_elements = get_option( 'pa_elements_' . Assets_Manager::$post_id, array() );
 
 			// If the assets are not updated, or they are updated but the dynamic CSS file has not been loaded for any reason.
-			if ( 'empty' === self::$css_content || ! Assets_Manager::$is_updated || ( ! empty( $pa_elements ) && ! wp_style_is( 'pa-frontend', 'enqueued' ) ) ) {
+			if( ! Assets_Manager::$is_updated || ( ! empty( $pa_elements ) && ! wp_style_is( 'pa-frontend', 'enqueued' ) ) ) {
 				$this->enqueue_old_styles( $dir, $is_rtl, $suffix );
 			}
+
 		}
 	}
 
@@ -667,22 +674,6 @@ class Addons_Integration {
 					)
 				);
 
-				// if ( class_exists( 'woocommerce' ) ) {
-				// wp_localize_script(
-				// 'pa-frontend',
-				// 'PremiumWooSettings',
-				// array(
-				// 'ajaxurl'         => esc_url( admin_url( 'admin-ajax.php' ) ),
-				// 'products_nonce'  => wp_create_nonce( 'pa-woo-products-nonce' ),
-				// 'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
-				// 'cta_nonce'       => wp_create_nonce( 'pa-woo-cta-nonce' ),
-				// 'woo_cart_url'    => get_permalink( wc_get_page_id( 'cart' ) ),
-				// 'view_cart'       => __( 'View cart', 'woocommerce' ),
-				// 'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
-				// )
-				// );
-
-				// }
 			}
 
 			if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) || 'empty' === self::$css_content ) {
@@ -692,14 +683,6 @@ class Addons_Integration {
 		} else {
 			$this->register_old_scripts( $dir, $suffix );
 		}
-
-		// if ( !wp_script_is( 'wc-cart-fragments', 'enqueued' ) && wp_script_is( 'wc-cart-fragments', 'registered' ) ) {
-
-		// Enqueue the wc-cart-fragments script
-
-		// wp_enqueue_script( 'wc-cart-fragments' );
-
-		// }
 
 		wp_register_script( 'tiktok-embed', 'https://www.tiktok.com/embed.js', array(), false, true );
 
@@ -1208,7 +1191,9 @@ class Addons_Integration {
 
 		$enabled_elements = self::$modules;
 
-		foreach ( glob( PREMIUM_ADDONS_PATH . 'widgets/*.php' ) as $file ) {
+		$widgets_dir = glob( PREMIUM_ADDONS_PATH . 'widgets/*.php' );
+
+		foreach ( $widgets_dir as $file ) {
 
 			$slug = basename( $file, '.php' );
 
@@ -1216,7 +1201,7 @@ class Addons_Integration {
 			if ( 'premium-lottie' === $slug ) {
 
 				// Check if Lottie widget switcher value was saved before.
-				$saved_options = get_option( 'pa_save_settings' );
+				// $saved_options = get_option( 'pa_save_settings' );
 
 				$slug = 'premium-lottie-widget';
 

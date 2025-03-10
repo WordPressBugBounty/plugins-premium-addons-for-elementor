@@ -51,6 +51,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-textual-showcase-widget/', 'showcase', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-textual-showcase-widget/', 'showcase', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'tutorial' => 'https://www.youtube.com/watch?v=xaMVSB3KV4w',
 			),
 			array(
 				'key'   => 'premium-blog',
@@ -809,6 +810,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-textual-showcase-widget/', 'showcase', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-textual-showcase-widget/', 'showcase', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'tutorial' => 'https://www.youtube.com/watch?v=xaMVSB3KV4w',
 			),
 		),
 	),

@@ -103,16 +103,22 @@
 				settings.triggerClick = triggerClick;
 				settings.triggerHover = triggerHover;
 
+                var $tooltipTarget = '' !== settings.target
+                    ? $scope.attr('data-tooltip-content', '#tooltip_content-' + id).find(settings.target)
+                    : $scope.attr('data-tooltip-content', '#tooltip_content-' + id);
 				// init tooltipster.
 				if (elementorFrontend.isEditMode()) {
-					closeTooltips();
+					closeTooltips($tooltipTarget);
 				}
 
-				if ('' !== settings.target) {
-					$scope.attr('data-tooltip-content', '#tooltip_content-' + id).find(settings.target).tooltipster(getTooltipsterSettings(settings));
-				} else {
-					$scope.attr('data-tooltip-content', '#tooltip_content-' + id).tooltipster(getTooltipsterSettings(settings));
-				}
+                $tooltipTarget.tooltipster(getTooltipsterSettings(settings));
+
+
+				// if ('' !== settings.target) {
+				// 	$scope.attr('data-tooltip-content', '#tooltip_content-' + id).find(settings.target).tooltipster(getTooltipsterSettings(settings));
+				// } else {
+				// 	$scope.attr('data-tooltip-content', '#tooltip_content-' + id).tooltipster(getTooltipsterSettings(settings));
+				// }
 
 				if (elementorFrontend.isEditMode()) {
 
@@ -300,7 +306,7 @@
 							return false;
 						}
 
-						closeTooltips();
+						closeTooltips(false);
 					},
 					functionInit: function (instance, helper) {
 
@@ -417,7 +423,7 @@
 								$(trigger).on('click.paTourTrigger', function (e) {
 									e.preventDefault();
 
-									closeTooltips();
+									closeTooltips(false);
 
 									$('.tooltipstered[pa-tooltip-selector=' + classes[i] + ']').tooltipster('open');
 								});
@@ -427,7 +433,7 @@
 						}
 					});
 
-					$('.premium-tooltipster-closer').on('click.paCloseTour', closeTooltips);
+					$('.premium-tooltipster-closer').on('click.paCloseTour', function() { closeTooltips(false) });
 				}
 			}
 
@@ -456,12 +462,18 @@
 				return gallery[index].url;
 			}
 
-			function closeTooltips() {
+			function closeTooltips(target) {
 				var instances = $.tooltipster.instances();
 
-				$.each(instances, function (i, instance) {
-					if (!instance._$origin.hasClass('premium-image-hotspots-main-icons')) {
-						instance.close();
+                $.each(instances, function (i, instance) {
+					if (target) {
+						if (instance._$origin.is(target)) {
+							instance.close();
+						}
+					} else {
+						if (!instance._$origin.hasClass('premium-image-hotspots-main-icons')) {
+							instance.close();
+						}
 					}
 				});
 			}

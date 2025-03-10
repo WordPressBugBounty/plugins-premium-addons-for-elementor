@@ -58,7 +58,7 @@ while ( have_posts() ) :
 		}
 	}
 
-    $classes[] = $settings['qv_display'];
+    // $classes[] = $settings['qv_display'];
 
 	$key = array_search( 'hentry', $classes, true );
 	if ( false !== $key ) {

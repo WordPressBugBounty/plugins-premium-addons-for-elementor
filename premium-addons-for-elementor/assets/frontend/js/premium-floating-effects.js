@@ -35,6 +35,8 @@
 
 			floatingTarget: null,
 
+            targetSelector: null,
+
 			onInit: function () {
 
 				elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, arguments);
@@ -52,10 +54,12 @@
 					this.run();
 
 				} else if (elementorFrontend.isEditMode()) {
-					// Remove the animation if disabled in the editor.
-					this.removeFloatingAnimation();
-
+                    if(anime.running.length) {
+                        // Remove the animation if disabled in the editor.
+                        this.removeFloatingAnimation(true);
+                    }
 				}
+
 			},
 
 			run: function () {
@@ -64,12 +68,11 @@
 
 				var hasEffects = Object.keys(eleSettings.effectSettings).length;
 
-				// Reset effects after applying it.
+				// Reset effects before applying it.
 				// Fix: disabled effects still works in the editor.
 				if (elementorFrontend.isEditMode() || !hasEffects) {
-					this.removeFloatingAnimation();
+					this.removeFloatingAnimation(false);
 				}
-
 
 				// Using IntersectionObserverAPI.
 				var eleObserver = new IntersectionObserver(function (entries) {
@@ -84,13 +87,24 @@
 				eleObserver.observe(_this.$element[0]);
 			},
 
-			removeFloatingAnimation: function () {
-
+			removeFloatingAnimation: function(checkAnimation) {
 				// anime.js doesn't reset the manipulated properties, so we need to reset it manually.
-				anime.remove(this.floatingTarget);
-
-				this.resetTargetProps();
+                var hasRunningAnime = checkAnimation ? this.hasRunningAnime(): true;
+                if ( -1 !== hasRunningAnime ) {
+                    anime.remove(this.floatingTarget);
+                    this.resetTargetProps();
+                }
 			},
+
+            hasRunningAnime: function() {
+                var currentTarget = this.targetSelector;
+
+                var hasRunningAnime = anime.running.findIndex(function (element) {
+                    return $(element.animatables[0].target).is(currentTarget);
+                });
+
+                return hasRunningAnime;
+            },
 
 			resetTargetProps: function () {
 				$(this.floatingTarget).css({
@@ -105,9 +119,12 @@
 
 				var $widgetContainer = this.$element[0];
 
+                this.targetSelector = '.elementor-element-' + this.$element.data('id');
+
 				if (target) {
 					// If the selector does not exists in the current widget, then search in the whole page.
 					$widgetContainer = this.$element.find(target).length > 0 ? '.elementor-element-' + this.$element.data('id') + ' ' + target : target;
+                    this.targetSelector = $widgetContainer;
 				}
 
 				this.floatingTarget = $widgetContainer;

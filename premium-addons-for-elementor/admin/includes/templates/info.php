@@ -210,7 +210,7 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 <table class="widefat" cellspacing="0">
 	<thead>
 		<tr>
-			<th colspan="2"><b><?php esc_html_e( 'Active Plugins', 'premium-addons-for-elementor' ); ?> (<?php echo count( (array) get_option( 'active_plugins' ) ); ?>)</b></th>
+			<th colspan="2"><b><?php esc_html_e( 'Active Plugins', 'premium-addons-for-elementor' ); ?></b></th>
 		</tr>
 	</thead>
 	<tbody>

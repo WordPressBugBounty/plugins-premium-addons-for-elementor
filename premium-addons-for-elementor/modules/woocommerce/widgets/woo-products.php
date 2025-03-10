@@ -1047,6 +1047,9 @@ class Woo_Products extends Widget_Base {
 					'inline' => __( 'Inline', 'premium-addons-for-elementor' ),
 					'block'  => __( 'Block', 'premium-addons-for-elementor' ),
 				),
+				'selectors' => array(
+					'#premium-woo-quick-view-{{ID}}' => '--pa-qv-align: {{VALUE}}',
+				),
 				'default'     => 'inline',
 				'label_block' => true,
 			)

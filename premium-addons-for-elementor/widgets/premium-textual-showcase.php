@@ -171,6 +171,8 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 		$this->add_general_controls();
 
+		$this->add_help_controls();
+
 		$this->add_content_style_controls();
 		$this->add_item_container_style_controls();
 	}
@@ -1983,6 +1985,42 @@ class Premium_Textual_Showcase extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
+
+	private function add_help_controls() {
+
+		$this->start_controls_section(
+			'section_pa_docs',
+			array(
+				'label' => __( 'Help & Docs', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$docs = array(
+			'https://premiumaddons.com/docs/elementor-textual-showcase-widget/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
+			'https://www.youtube.com/watch?v=xaMVSB3KV4w' => __( 'Video tutorial »', 'premium-addons-for-elementor' ),
+		);
+
+		$doc_index = 1;
+		foreach ( $docs as $url => $title ) {
+
+			$doc_url = Helper_Functions::get_campaign_link( $url, 'showcase', 'wp-editor', 'get-support' );
+
+			$this->add_control(
+				'doc_' . $doc_index,
+				array(
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => sprintf( '<a href="%s" target="_blank">%s</a>', $doc_url, $title ),
+					'content_classes' => 'editor-pa-doc',
+				)
+			);
+
+			++$doc_index;
+
+		}
+
+		$this->end_controls_section();
+
 	}
 
 	/**
