@@ -103,10 +103,10 @@ class Addons_Integration {
 
 		add_action( 'wp_ajax_get_elementor_template_content', array( $this, 'get_template_content' ) );
 
-		if ( defined( 'ELEMENTOR_VERSION' ) ) {
+		add_action( 'elementor/controls/register', array( $this, 'init_pa_controls' ) );
+		add_action( 'elementor/widgets/register', array( $this, 'widgets_area' ) );
 
-			add_action( 'elementor/controls/register', array( $this, 'init_pa_controls' ) );
-			add_action( 'elementor/widgets/register', array( $this, 'widgets_area' ) );
+		if ( defined( 'ELEMENTOR_VERSION' ) ) {
 
 			$this->load_pa_extensions();
 
@@ -130,6 +130,8 @@ class Addons_Integration {
 		if ( self::$integrations['premium-wp-optimize-exclude'] ) {
 			add_filter( 'wp-optimize-minify-default-exclusions', array( $this, 'exclude_pa_assets_from_wp_optimize' ) );
 		}
+
+		add_filter('elementor/editor/localize_settings', array( $this, 'add_papro_elements' ) );
 
 	}
 
@@ -385,7 +387,6 @@ class Addons_Integration {
 			'PremiumPanelSettings',
 			array(
 				'papro_installed' => Helper_Functions::check_papro_version(),
-				// 'papro_widgets'   => Admin_Helper::get_pro_elements(),
 			)
 		);
 
@@ -455,7 +456,7 @@ class Addons_Integration {
 
 		$badge_text = Helper_Functions::get_badge();
 
-		$dynamic_css = sprintf( '#elementor-panel [class^="pa-"]::after, #elementor-panel [class*=" pa-"]::after { content: "%s"; }', $badge_text );
+		$dynamic_css = sprintf( '.elementor-element-wrapper:not(.elementor-element--promotion) [class^="pa-"]::after, .elementor-element-wrapper:not(.elementor-element--promotion) [class*="  pa-"]::after { content: "%s"; }', $badge_text );
 
 		wp_add_inline_style( 'pa-editor', $dynamic_css );
 	}
@@ -1756,6 +1757,38 @@ class Addons_Integration {
 		$excluded_handles[] = 'pa-frontend';
 
 		return $excluded_handles;
+	}
+
+	/**
+	 * Add PAPRO Elements
+	 *
+	 * @since 4.10.90
+	 * @access public
+	 *
+	 * @param array $config Elementor Config
+	 */
+	public function add_papro_elements( $config ) {
+
+		$is_papro_active = apply_filters( 'papro_activated', false );
+
+		if( $is_papro_active ) {
+			return $config;
+		}
+
+		$promotion_widgets = [];
+
+		if ( isset( $config['promotionWidgets'] ) ) {
+			$promotion_widgets = $config['promotionWidgets'];
+		}
+
+		$pro_elements = Admin_Helper::get_pro_elements();
+
+		$pro_elements = array_merge( $promotion_widgets, $pro_elements );
+
+		$config['promotionWidgets'] = $pro_elements;
+
+		return $config;
+
 	}
 
 

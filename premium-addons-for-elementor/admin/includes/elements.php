@@ -42,7 +42,6 @@ $elements = array(
 				'tutorial'   => 'https://www.youtube.com/watch?v=4HqT_3s-ZXg',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-horizontal-scroll',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-horizontal-scroll-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'      => 'premium-textual-showcase',
@@ -84,7 +83,6 @@ $elements = array(
 				'tutorial'   => 'https://www.youtube.com/watch?v=IzYnD6oDYXw',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-multi-scroll',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/multi-scroll-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-magic-section',
@@ -96,7 +94,7 @@ $elements = array(
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-magic-section',
                 'tutorial' => 'https://www.youtube.com/watch?v=t-aosch5Xzo',
-				// 'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-off-canvas-widget', 'editor-page', 'wp-editor', 'get-pro' ),
+
 			),
 			array(
 				'key'        => 'premium-tables',
@@ -106,7 +104,6 @@ $elements = array(
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/table-widget-tutorial/', 'table', 'wp-dash', 'dashboard' ),
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-table',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-table-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-color-transition',
@@ -116,7 +113,6 @@ $elements = array(
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/background-transition-widget-tutorial/', 'background-transition', 'wp-dash', 'dashboard' ),
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-color-transition',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-background-transition-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'      => 'premium-notifications',
@@ -142,7 +138,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-site-logo',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-site-logo-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'      => 'premium-lottie-widget',
@@ -167,7 +162,6 @@ $elements = array(
 				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-smart-post-listing-widget/', 'spl', 'wp-dash', 'dashboard' ),
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/smart-post-listing-widget/', 'spl', 'wp-dash', 'dashboard' ),
 				'is_pro'     => true,
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-smart-post-listing-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'      => 'premium-maps',
@@ -201,7 +195,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-tabs',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-tabs-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-content-toggle',
@@ -211,7 +204,6 @@ $elements = array(
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-content-switcher/', 'content-switcher', 'wp-dash', 'dashboard' ),
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-content-switcher',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/content-switcher-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'   => 'premium-fancytext',
@@ -245,7 +237,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-separator',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/divider-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'   => 'premium-grid',
@@ -284,7 +275,6 @@ $elements = array(
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-image-comparison-widget/', 'img-compare', 'wp-dash', 'dashboard' ),
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-image-comparison',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/image-comparison-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-image-hotspots',
@@ -295,7 +285,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-hot-spot',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-image-hotspots-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-img-layers',
@@ -307,7 +296,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-image-layers',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/image-layers-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-image-accordion',
@@ -318,7 +306,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-image-accordion',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-image-accordion-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'   => 'premium-videobox',
@@ -336,7 +323,6 @@ $elements = array(
 				'tutorial'   => 'https://www.youtube.com/watch?v=Z0EeGyD34Zk',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-google-reviews',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-google-reviews-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'       => 'premium-lottie',
@@ -411,7 +397,6 @@ $elements = array(
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-notification-bar',
                 'tutorial' => 'https://www.youtube.com/watch?v=SMYF1JA_4co',
-				// 'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-alert-box-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-prev-img',
@@ -423,7 +408,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-preview-window',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/preview-window-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'   => 'premium-testimonials',
@@ -441,7 +425,6 @@ $elements = array(
 				'tutorial'   => 'https://www.youtube.com/watch?v=zl-OFo3IFd8',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-facebook-reviews',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-facebook-reviews-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-yelp-reviews',
@@ -452,7 +435,6 @@ $elements = array(
 				'tutorial'   => 'https://www.youtube.com/watch?v=5T-MveVFvns',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-yelp-reviews',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-yelp-reviews-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'   => 'premium-countdown',
@@ -494,7 +476,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-flip-box',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/3d-hover-box-flip-box-widget-for-elementor/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-iconbox',
@@ -505,7 +486,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-icon-box',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-icon-box-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-ihover',
@@ -516,7 +496,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-ihover',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/ihover-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-unfold',
@@ -526,7 +505,6 @@ $elements = array(
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-unfold-widget/', 'unfold', 'wp-dash', 'dashboard' ),
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-unfold',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/unfold-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'      => 'premium-icon-list',
@@ -545,7 +523,6 @@ $elements = array(
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/facebook-feed-widget-tutorial/', 'fb-feed', 'wp-dash', 'dashboard' ),
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-facebook-feed',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-facebook-feed-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-twitter-feed',
@@ -556,7 +533,6 @@ $elements = array(
 				'tutorial'   => 'https://www.youtube.com/watch?v=wsurRDuR6pg',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-twitter-feed',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/twitter-feed-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-instagram-feed',
@@ -566,7 +542,6 @@ $elements = array(
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/instagram-feed/', 'instagram', 'wp-dash', 'dashboard' ),
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-instagram-feed',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-instagram-feed-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'   => 'premium-tiktok-feed',
@@ -583,7 +558,6 @@ $elements = array(
 				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-pinterest-feed-widget/', 'pinterest', 'wp-dash', 'dashboard' ),
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-pinterest-feed-widget/', 'pinterest', 'wp-dash', 'dashboard' ),
 				'icon'       => 'pa-pinterest',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-pinterest-feed-widget/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'        => 'premium-behance',
@@ -594,7 +568,6 @@ $elements = array(
 				'tutorial'   => 'https://www.youtube.com/watch?v=AXATK3oIXl0',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-behance-feed',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/behance-feed-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'      => 'premium-progressbar',
@@ -622,7 +595,6 @@ $elements = array(
 				'tutorial'   => 'https://www.youtube.com/watch?v=lZZvslQ2UYU',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-charts',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/charts-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'      => 'premium-counter',
@@ -648,7 +620,6 @@ $elements = array(
 				'is_pro'     => true,
 				'draw_svg'   => true,
 				'icon'       => 'pa-pro-whatsapp',
-				'action_url' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/whatsapp-widget-for-elementor-page-builder/', 'editor-page', 'wp-editor', 'get-pro' ),
 			),
 			array(
 				'key'   => 'woo-categories',

@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.10.88\n"
+"Project-Id-Version: Premium Addons for Elementor 4.10.89\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2025-03-10 11:07:46+00:00\n"
+"POT-Creation-Date: 2025-03-17 11:15:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,7 +48,7 @@ msgstr ""
 msgid "Learn More"
 msgstr ""
 
-#: admin/includes/admin-helper.php:336 admin/includes/admin-helper.php:1257
+#: admin/includes/admin-helper.php:336 admin/includes/admin-helper.php:1286
 #: admin/includes/templates/version-control.php:22
 msgid "Rollback to Previous Version"
 msgstr ""
@@ -131,27 +131,37 @@ msgstr ""
 msgid "System Info"
 msgstr ""
 
-#: admin/includes/admin-helper.php:793
-msgid "Get Premium Addons PRO"
-msgstr ""
-
-#: admin/includes/admin-helper.php:798
-#. translators: %s: html tags
-msgid ""
-"Supercharge your Elementor with %1$sPRO Widgets & Addons%2$s that you won't "
-"find anywhere else."
-msgstr ""
-
-#: admin/includes/admin-helper.php:800
+#: admin/includes/admin-helper.php:799
 msgid "save 10% on Lifetime!"
 msgstr ""
 
-#: admin/includes/admin-helper.php:805
+#: admin/includes/admin-helper.php:818
+msgid "Get Premium Addons PRO"
+msgstr ""
+
+#: admin/includes/admin-helper.php:819
+msgid ""
+"Supercharge your Elementor with PRO Widgets & Addons that you won't find "
+"anywhere else."
+msgstr ""
+
+#: admin/includes/admin-helper.php:820 admin/includes/admin-helper.php:836
 #: includes/templates/classes/config.php:171
 msgid "Get Pro"
 msgstr ""
 
-#: admin/includes/admin-helper.php:1323 admin/includes/admin-helper.php:1348
+#: admin/includes/admin-helper.php:834
+msgid "You're Missing Out on the Official Pro Version!"
+msgstr ""
+
+#: admin/includes/admin-helper.php:835
+msgid ""
+"It looks like you're using Premium Addons Pro, but it was not purchased "
+"from our official website. Get official version to receive updates, support "
+"and use Premium Templates!"
+msgstr ""
+
+#: admin/includes/admin-helper.php:1352 admin/includes/admin-helper.php:1377
 msgid "You are not allowed to do this action"
 msgstr ""
 
@@ -219,80 +229,80 @@ msgstr ""
 msgid "All Elements"
 msgstr ""
 
-#: admin/includes/elements.php:16 admin/includes/elements.php:736
+#: admin/includes/elements.php:16 admin/includes/elements.php:707
 #: widgets/premium-mobile-menu.php:66
 msgid "Mobile Menu"
 msgstr ""
 
-#: admin/includes/elements.php:25 admin/includes/elements.php:831
+#: admin/includes/elements.php:25 admin/includes/elements.php:802
 msgid "Advanced Media Carousel"
 msgstr ""
 
-#: admin/includes/elements.php:32 admin/includes/elements.php:729
+#: admin/includes/elements.php:32 admin/includes/elements.php:700
 msgid "Nav/Mega Menu"
 msgstr ""
 
-#: admin/includes/elements.php:39 admin/includes/elements.php:912
+#: admin/includes/elements.php:39 admin/includes/elements.php:883
 msgid "Horizontal Scroll"
 msgstr ""
 
-#: admin/includes/elements.php:50 admin/includes/elements.php:809
+#: admin/includes/elements.php:49 admin/includes/elements.php:780
 #: widgets/premium-textual-showcase.php:65
 msgid "Textual Showcase"
 msgstr ""
 
-#: admin/includes/elements.php:59 admin/includes/elements.php:722
+#: admin/includes/elements.php:58 admin/includes/elements.php:693
 #: includes/pa-display-conditions/conditions/static-page.php:38
 #: widgets/premium-blog.php:54
 msgid "Blog"
 msgstr ""
 
-#: admin/includes/elements.php:66 admin/includes/elements.php:707
+#: admin/includes/elements.php:65 admin/includes/elements.php:678
 #: widgets/premium-search-form.php:55
 msgid "Search Form"
 msgstr ""
 
-#: admin/includes/elements.php:73 admin/includes/elements.php:921
+#: admin/includes/elements.php:72 admin/includes/elements.php:892
 #: widgets/premium-vscroll.php:49
 msgid "Vertical Scroll"
 msgstr ""
 
-#: admin/includes/elements.php:81 admin/includes/elements.php:937
+#: admin/includes/elements.php:80 admin/includes/elements.php:908
 msgid "Multi Scroll"
 msgstr ""
 
-#: admin/includes/elements.php:92 admin/includes/elements.php:1077
+#: admin/includes/elements.php:90 admin/includes/elements.php:1048
 msgid "Off Canvas"
 msgstr ""
 
-#: admin/includes/elements.php:104 admin/includes/elements.php:1349
+#: admin/includes/elements.php:102 admin/includes/elements.php:1320
 msgid "Table"
 msgstr ""
 
-#: admin/includes/elements.php:114 admin/includes/elements.php:929
+#: admin/includes/elements.php:111 admin/includes/elements.php:900
 msgid "Background Transition"
 msgstr ""
 
-#: admin/includes/elements.php:124 admin/includes/elements.php:1029
+#: admin/includes/elements.php:120 admin/includes/elements.php:1000
 #: widgets/premium-notifications.php:95
 msgid "Recent Posts Notification"
 msgstr ""
 
-#: admin/includes/elements.php:131 admin/includes/elements.php:1102
+#: admin/includes/elements.php:127 admin/includes/elements.php:1073
 #: modules/woocommerce/widgets/woo-products.php:74
 msgid "Woo Products"
 msgstr ""
 
-#: admin/includes/elements.php:139 admin/includes/elements.php:896
+#: admin/includes/elements.php:135 admin/includes/elements.php:867
 msgid "Site Logo"
 msgstr ""
 
-#: admin/includes/elements.php:150 admin/includes/elements.php:343
-#: admin/includes/elements.php:945 widgets/premium-lottie.php:75
+#: admin/includes/elements.php:145 admin/includes/elements.php:329
+#: admin/includes/elements.php:916 widgets/premium-lottie.php:75
 msgid "Lottie Animations"
 msgstr ""
 
-#: admin/includes/elements.php:158 admin/includes/elements.php:714
+#: admin/includes/elements.php:153 admin/includes/elements.php:685
 #: modules/woocommerce/widgets/woo-categories.php:168
 #: modules/woocommerce/widgets/woo-products.php:260
 #: modules/woocommerce/widgets/woo-products.php:2028
@@ -304,163 +314,163 @@ msgstr ""
 msgid "Carousel"
 msgstr ""
 
-#: admin/includes/elements.php:166 admin/includes/elements.php:1044
+#: admin/includes/elements.php:161 admin/includes/elements.php:1015
 msgid "Smart Post Listing"
 msgstr ""
 
-#: admin/includes/elements.php:175 admin/includes/elements.php:745
+#: admin/includes/elements.php:169 admin/includes/elements.php:716
 #: widgets/premium-maps.php:60
 msgid "Google Maps"
 msgstr ""
 
-#: admin/includes/elements.php:183 admin/includes/elements.php:753
+#: admin/includes/elements.php:177 admin/includes/elements.php:724
 #: widgets/premium-person.php:53
 msgid "Team Members"
 msgstr ""
 
-#: admin/includes/elements.php:190 admin/includes/elements.php:1253
+#: admin/includes/elements.php:184 admin/includes/elements.php:1224
 #: widgets/premium-svg-drawer.php:49
 msgid "SVG Draw"
 msgstr ""
 
-#: admin/includes/elements.php:198 admin/includes/elements.php:760
+#: admin/includes/elements.php:192 admin/includes/elements.php:731
 #: widgets/premium-weather.php:3155
 msgid "Tabs"
 msgstr ""
 
-#: admin/includes/elements.php:209 admin/includes/elements.php:769
+#: admin/includes/elements.php:202 admin/includes/elements.php:740
 msgid "Content Switcher"
 msgstr ""
 
-#: admin/includes/elements.php:219 admin/includes/elements.php:777
+#: admin/includes/elements.php:211 admin/includes/elements.php:748
 #: widgets/premium-fancytext.php:49 widgets/premium-fancytext.php:218
 #: widgets/premium-fancytext.php:694
 msgid "Animated Text"
 msgstr ""
 
-#: admin/includes/elements.php:227 admin/includes/elements.php:785
+#: admin/includes/elements.php:219 admin/includes/elements.php:756
 #: widgets/premium-testimonials.php:221 widgets/premium-testimonials.php:311
 #: widgets/premium-testimonials.php:922 widgets/premium-title.php:64
 msgid "Heading"
 msgstr ""
 
-#: admin/includes/elements.php:235 admin/includes/elements.php:793
+#: admin/includes/elements.php:227 admin/includes/elements.php:764
 #: widgets/premium-dual-header.php:49 widgets/premium-dual-header.php:148
 msgid "Dual Heading"
 msgstr ""
 
-#: admin/includes/elements.php:242 admin/includes/elements.php:800
+#: admin/includes/elements.php:234 admin/includes/elements.php:771
 #: widgets/premium-icon-list.php:1286 widgets/premium-icon-list.php:2054
 #: widgets/premium-pricing-table.php:545 widgets/premium-pricing-table.php:1982
 msgid "Divider"
 msgstr ""
 
-#: admin/includes/elements.php:253 admin/includes/elements.php:824
+#: admin/includes/elements.php:244 admin/includes/elements.php:795
 #: widgets/premium-grid.php:65
 msgid "Media Grid"
 msgstr ""
 
-#: admin/includes/elements.php:260 admin/includes/elements.php:1037
+#: admin/includes/elements.php:251 admin/includes/elements.php:1008
 #: widgets/premium-tcloud.php:55
 msgid "Tags Cloud"
 msgstr ""
 
-#: admin/includes/elements.php:267 admin/includes/elements.php:838
+#: admin/includes/elements.php:258 admin/includes/elements.php:809
 #: widgets/premium-image-scroll.php:51
 msgid "Image Scroll"
 msgstr ""
 
-#: admin/includes/elements.php:274 admin/includes/elements.php:845
+#: admin/includes/elements.php:265 admin/includes/elements.php:816
 #: widgets/premium-image-separator.php:62
 msgid "Image Separator"
 msgstr ""
 
-#: admin/includes/elements.php:282 admin/includes/elements.php:853
+#: admin/includes/elements.php:273 admin/includes/elements.php:824
 msgid "Image Comparison"
 msgstr ""
 
-#: admin/includes/elements.php:292 admin/includes/elements.php:861
+#: admin/includes/elements.php:282 admin/includes/elements.php:832
 msgid "Image Hotspots"
 msgstr ""
 
-#: admin/includes/elements.php:303 admin/includes/elements.php:870
+#: admin/includes/elements.php:292 admin/includes/elements.php:841
 msgid "Image Layers"
 msgstr ""
 
-#: admin/includes/elements.php:315 admin/includes/elements.php:880
+#: admin/includes/elements.php:303 admin/includes/elements.php:851
 msgid "Image Accordion"
 msgstr ""
 
-#: admin/includes/elements.php:326 admin/includes/elements.php:889
+#: admin/includes/elements.php:313 admin/includes/elements.php:860
 #: widgets/premium-videobox.php:53 widgets/premium-videobox.php:151
 #: widgets/premium-videobox.php:1738
 msgid "Video Box"
 msgstr ""
 
-#: admin/includes/elements.php:333 admin/includes/elements.php:1154
+#: admin/includes/elements.php:320 admin/includes/elements.php:1125
 msgid "Google Reviews"
 msgstr ""
 
-#: admin/includes/elements.php:352 admin/includes/elements.php:954
+#: admin/includes/elements.php:338 admin/includes/elements.php:925
 #: widgets/premium-vscroll.php:506
 msgid "Parallax"
 msgstr ""
 
-#: admin/includes/elements.php:362 admin/includes/elements.php:964
+#: admin/includes/elements.php:348 admin/includes/elements.php:935
 msgid "Particles"
 msgstr ""
 
-#: admin/includes/elements.php:371 admin/includes/elements.php:973
+#: admin/includes/elements.php:357 admin/includes/elements.php:944
 #: widgets/premium-progressbar.php:868 widgets/premium-title.php:1447
 msgid "Animated Gradient"
 msgstr ""
 
-#: admin/includes/elements.php:380 admin/includes/elements.php:982
+#: admin/includes/elements.php:366 admin/includes/elements.php:953
 msgid "Animated Ken Burns"
 msgstr ""
 
-#: admin/includes/elements.php:389 admin/includes/elements.php:991
+#: admin/includes/elements.php:375 admin/includes/elements.php:962
 msgid "Blob Generator"
 msgstr ""
 
-#: admin/includes/elements.php:398 admin/includes/elements.php:1058
+#: admin/includes/elements.php:384 admin/includes/elements.php:1029
 #: widgets/premium-modalbox.php:76 widgets/premium-modalbox.php:2063
 msgid "Modal Box"
 msgstr ""
 
-#: admin/includes/elements.php:407 admin/includes/elements.php:1067
+#: admin/includes/elements.php:393 admin/includes/elements.php:1038
 msgid "Alert Box"
 msgstr ""
 
-#: admin/includes/elements.php:419 admin/includes/elements.php:1087
+#: admin/includes/elements.php:404 admin/includes/elements.php:1058
 msgid "Preview Window"
 msgstr ""
 
-#: admin/includes/elements.php:431 admin/includes/elements.php:1138
+#: admin/includes/elements.php:415 admin/includes/elements.php:1109
 #: widgets/premium-testimonials.php:391
 msgid "Testimonials"
 msgstr ""
 
-#: admin/includes/elements.php:438 admin/includes/elements.php:1145
+#: admin/includes/elements.php:422 admin/includes/elements.php:1116
 msgid "Facebook Reviews"
 msgstr ""
 
-#: admin/includes/elements.php:449 admin/includes/elements.php:1163
+#: admin/includes/elements.php:432 admin/includes/elements.php:1134
 msgid "Yelp Reviews"
 msgstr ""
 
-#: admin/includes/elements.php:460 admin/includes/elements.php:1178
+#: admin/includes/elements.php:442 admin/includes/elements.php:1149
 #: widgets/premium-countdown.php:53 widgets/premium-countdown.php:175
 msgid "Countdown"
 msgstr ""
 
-#: admin/includes/elements.php:467 admin/includes/elements.php:1185
+#: admin/includes/elements.php:449 admin/includes/elements.php:1156
 #: widgets/premium-banner.php:54 widgets/premium-blog.php:176
 #: widgets/premium-search-form.php:984
 msgid "Banner"
 msgstr ""
 
-#: admin/includes/elements.php:474 admin/includes/elements.php:1192
+#: admin/includes/elements.php:456 admin/includes/elements.php:1163
 #: modules/woocommerce/widgets/woo-cta.php:315
 #: modules/woocommerce/widgets/woo-cta.php:911 widgets/premium-banner.php:454
 #: widgets/premium-banner.php:464 widgets/premium-banner.php:949
@@ -474,156 +484,156 @@ msgstr ""
 msgid "Button"
 msgstr ""
 
-#: admin/includes/elements.php:483 admin/includes/elements.php:1200
+#: admin/includes/elements.php:465 admin/includes/elements.php:1171
 #: widgets/premium-image-button.php:63
 msgid "Image Button"
 msgstr ""
 
-#: admin/includes/elements.php:491 admin/includes/elements.php:1209
+#: admin/includes/elements.php:473 admin/includes/elements.php:1180
 msgid "3D Hover Box"
 msgstr ""
 
-#: admin/includes/elements.php:502 admin/includes/elements.php:1218
+#: admin/includes/elements.php:483 admin/includes/elements.php:1189
 msgid "Icon Box"
 msgstr ""
 
-#: admin/includes/elements.php:513 admin/includes/elements.php:1227
+#: admin/includes/elements.php:493 admin/includes/elements.php:1198
 msgid "iHover"
 msgstr ""
 
-#: admin/includes/elements.php:524 admin/includes/elements.php:1236
+#: admin/includes/elements.php:503 admin/includes/elements.php:1207
 msgid "Unfold"
 msgstr ""
 
-#: admin/includes/elements.php:534 admin/includes/elements.php:1244
+#: admin/includes/elements.php:512 admin/includes/elements.php:1215
 #: widgets/premium-icon-list.php:70
 msgid "Bullet List"
 msgstr ""
 
-#: admin/includes/elements.php:543 admin/includes/elements.php:1267
+#: admin/includes/elements.php:521 admin/includes/elements.php:1238
 msgid "Facebook Feed"
 msgstr ""
 
-#: admin/includes/elements.php:553 admin/includes/elements.php:1275
+#: admin/includes/elements.php:530 admin/includes/elements.php:1246
 msgid "Twitter Feed"
 msgstr ""
 
-#: admin/includes/elements.php:564 admin/includes/elements.php:1284
+#: admin/includes/elements.php:540 admin/includes/elements.php:1255
 msgid "Instagram Feed"
 msgstr ""
 
-#: admin/includes/elements.php:574 admin/includes/elements.php:1292
+#: admin/includes/elements.php:549 admin/includes/elements.php:1263
 msgid "Tiktok Feed"
 msgstr ""
 
-#: admin/includes/elements.php:582 admin/includes/elements.php:1300
+#: admin/includes/elements.php:557 admin/includes/elements.php:1271
 #: widgets/premium-pinterest-feed.php:83
 msgid "Pinterest Feed"
 msgstr ""
 
-#: admin/includes/elements.php:591 admin/includes/elements.php:1308
+#: admin/includes/elements.php:565 admin/includes/elements.php:1279
 msgid "Behance Feed"
 msgstr ""
 
-#: admin/includes/elements.php:602 admin/includes/elements.php:1323
+#: admin/includes/elements.php:575 admin/includes/elements.php:1294
 #: widgets/premium-carousel.php:339 widgets/premium-progressbar.php:62
 #: widgets/premium-progressbar.php:975
 msgid "Progress Bar"
 msgstr ""
 
-#: admin/includes/elements.php:611 admin/includes/elements.php:1332
+#: admin/includes/elements.php:584 admin/includes/elements.php:1303
 #: widgets/premium-pricing-table.php:65 widgets/premium-pricing-table.php:464
 msgid "Pricing Table"
 msgstr ""
 
-#: admin/includes/elements.php:619 admin/includes/elements.php:1340
+#: admin/includes/elements.php:592 admin/includes/elements.php:1311
 msgid "Charts"
 msgstr ""
 
-#: admin/includes/elements.php:630 admin/includes/elements.php:1357
+#: admin/includes/elements.php:602 admin/includes/elements.php:1328
 #: widgets/premium-counter.php:62 widgets/premium-counter.php:173
 msgid "Counter"
 msgstr ""
 
-#: admin/includes/elements.php:638 admin/includes/elements.php:1371
+#: admin/includes/elements.php:610 admin/includes/elements.php:1342
 #: widgets/premium-contactform.php:48
 msgid "Contact Form 7"
 msgstr ""
 
-#: admin/includes/elements.php:645 admin/includes/elements.php:1378
+#: admin/includes/elements.php:617 admin/includes/elements.php:1349
 msgid "WhatsApp Chat"
 msgstr ""
 
-#: admin/includes/elements.php:655 admin/includes/elements.php:1109
+#: admin/includes/elements.php:626 admin/includes/elements.php:1080
 #: modules/woocommerce/widgets/woo-categories.php:61
 msgid "Woo Categories"
 msgstr ""
 
-#: admin/includes/elements.php:662 admin/includes/elements.php:1116
+#: admin/includes/elements.php:633 admin/includes/elements.php:1087
 msgid "Woo Mini Cart"
 msgstr ""
 
-#: admin/includes/elements.php:669 admin/includes/elements.php:1123
+#: admin/includes/elements.php:640 admin/includes/elements.php:1094
 #: modules/woocommerce/widgets/woo-cta.php:71
 msgid "Woo CTA"
 msgstr ""
 
-#: admin/includes/elements.php:678 admin/includes/elements.php:1014
+#: admin/includes/elements.php:649 admin/includes/elements.php:985
 #: widgets/premium-world-clock.php:58
 msgid "World Clock"
 msgstr ""
 
-#: admin/includes/elements.php:685 admin/includes/elements.php:1006
+#: admin/includes/elements.php:656 admin/includes/elements.php:977
 #: widgets/premium-post-ticker.php:79
 msgid "News Ticker"
 msgstr ""
 
-#: admin/includes/elements.php:693 admin/includes/elements.php:1021
+#: admin/includes/elements.php:664 admin/includes/elements.php:992
 #: widgets/premium-weather.php:76
 msgid "Weather"
 msgstr ""
 
-#: admin/includes/elements.php:702
+#: admin/includes/elements.php:673
 msgid "Content Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:819
+#: admin/includes/elements.php:790
 msgid "Image & Video Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:907
+#: admin/includes/elements.php:878
 msgid "Container Addons & Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:1001
+#: admin/includes/elements.php:972
 msgid "Magazine Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:1053
+#: admin/includes/elements.php:1024
 msgid "Off-Grid Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:1098
+#: admin/includes/elements.php:1069
 msgid "WooCommerce Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:1133
+#: admin/includes/elements.php:1104
 msgid "Reviews & Testimonials Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:1173
+#: admin/includes/elements.php:1144
 msgid "Blurbs & CTA Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:1262
+#: admin/includes/elements.php:1233
 msgid "Social Feed Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:1318
+#: admin/includes/elements.php:1289
 msgid "Tables, Charts & Anything Data Widgets"
 msgstr ""
 
-#: admin/includes/elements.php:1366
+#: admin/includes/elements.php:1337
 msgid "Contact Widgets"
 msgstr ""
 
@@ -1511,31 +1521,31 @@ msgstr ""
 msgid "Empty Content."
 msgstr ""
 
-#: includes/addons-integration.php:1071 includes/addons-integration.php:1083
-#: includes/addons-integration.php:1098
+#: includes/addons-integration.php:1048 includes/addons-integration.php:1060
+#: includes/addons-integration.php:1075
 #: modules/woocommerce/widgets/mini-cart.php:4028
 msgid "View cart"
 msgstr ""
 
-#: includes/addons-integration.php:1124 widgets/premium-notifications.php:1424
+#: includes/addons-integration.php:1101 widgets/premium-notifications.php:1424
 #: widgets/premium-pinterest-feed.php:264 widgets/premium-tiktok-feed.php:235
 #: widgets/premium-videobox.php:285
 msgid "Year"
 msgstr ""
 
-#: includes/addons-integration.php:1125 widgets/premium-notifications.php:1423
+#: includes/addons-integration.php:1102 widgets/premium-notifications.php:1423
 #: widgets/premium-pinterest-feed.php:263 widgets/premium-tiktok-feed.php:234
 #: widgets/premium-videobox.php:284
 msgid "Month"
 msgstr ""
 
-#: includes/addons-integration.php:1126 widgets/premium-notifications.php:1422
+#: includes/addons-integration.php:1103 widgets/premium-notifications.php:1422
 #: widgets/premium-pinterest-feed.php:262 widgets/premium-tiktok-feed.php:233
 #: widgets/premium-videobox.php:283
 msgid "Week"
 msgstr ""
 
-#: includes/addons-integration.php:1127
+#: includes/addons-integration.php:1104
 #: includes/pa-display-conditions/pa-controls-handler.php:94
 #: widgets/premium-notifications.php:1421
 #: widgets/premium-pinterest-feed.php:261 widgets/premium-tiktok-feed.php:232
@@ -1543,40 +1553,40 @@ msgstr ""
 msgid "Day"
 msgstr ""
 
-#: includes/addons-integration.php:1128 widgets/premium-pinterest-feed.php:260
+#: includes/addons-integration.php:1105 widgets/premium-pinterest-feed.php:260
 #: widgets/premium-videobox.php:281 widgets/premium-weather.php:425
 msgid "Hour"
 msgstr ""
 
-#: includes/addons-integration.php:1129
+#: includes/addons-integration.php:1106
 msgid "Minute"
 msgstr ""
 
-#: includes/addons-integration.php:1130
+#: includes/addons-integration.php:1107
 msgid "Second"
 msgstr ""
 
-#: includes/addons-integration.php:1133 widgets/premium-countdown.php:323
+#: includes/addons-integration.php:1110 widgets/premium-countdown.php:323
 #: widgets/premium-countdown.php:390
 msgid "Years"
 msgstr ""
 
-#: includes/addons-integration.php:1134 widgets/premium-countdown.php:324
+#: includes/addons-integration.php:1111 widgets/premium-countdown.php:324
 #: widgets/premium-countdown.php:391
 msgid "Months"
 msgstr ""
 
-#: includes/addons-integration.php:1135
+#: includes/addons-integration.php:1112
 msgid "Weeks"
 msgstr ""
 
-#: includes/addons-integration.php:1136 widgets/premium-countdown.php:214
+#: includes/addons-integration.php:1113 widgets/premium-countdown.php:214
 #: widgets/premium-countdown.php:325 widgets/premium-countdown.php:392
 #: widgets/premium-countdown.php:726 widgets/premium-world-clock.php:2645
 msgid "Days"
 msgstr ""
 
-#: includes/addons-integration.php:1137 widgets/premium-countdown.php:229
+#: includes/addons-integration.php:1114 widgets/premium-countdown.php:229
 #: widgets/premium-countdown.php:272 widgets/premium-countdown.php:326
 #: widgets/premium-countdown.php:393 widgets/premium-countdown.php:738
 #: widgets/premium-weather.php:2401 widgets/premium-weather.php:3422
@@ -1584,19 +1594,19 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 
-#: includes/addons-integration.php:1138 widgets/premium-countdown.php:245
+#: includes/addons-integration.php:1115 widgets/premium-countdown.php:245
 #: widgets/premium-countdown.php:288 widgets/premium-countdown.php:327
 #: widgets/premium-countdown.php:394 widgets/premium-countdown.php:750
 #: widgets/premium-world-clock.php:2138
 msgid "Minutes"
 msgstr ""
 
-#: includes/addons-integration.php:1139 widgets/premium-countdown.php:328
+#: includes/addons-integration.php:1116 widgets/premium-countdown.php:328
 #: widgets/premium-countdown.php:395 widgets/premium-world-clock.php:2274
 msgid "Seconds"
 msgstr ""
 
-#: includes/addons-integration.php:1550
+#: includes/addons-integration.php:1527
 msgid "Form | %s"
 msgstr ""
 

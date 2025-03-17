@@ -232,7 +232,7 @@ class Admin_Helper {
 				'premium-youtube-api',
 				'premium-map-disable-api',
 				'premium-map-cluster',
-                'premium-wp-optimize-exclude',
+				'premium-wp-optimize-exclude',
 				'premium-map-locale',
 				'is-beta-tester',
 			);
@@ -770,8 +770,6 @@ class Admin_Helper {
 	 */
 	public function render_dashboard_header() {
 
-		$url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/', 'dashboard-banner', 'wp-dash', 'get-pro' );
-
 		$show_logo = Helper_Functions::is_hide_logo();
 
 		?>
@@ -786,30 +784,60 @@ class Admin_Helper {
 				</div>
 			<?php endif; ?>
 
-			<?php if ( ! Helper_Functions::check_papro_version() ) : ?>
-				<div class="papro-admin-notice-right">
-					<div class="papro-admin-notice-info">
-						<h4>
-							<?php echo esc_html( __( 'Get Premium Addons PRO', 'premium-addons-for-elementor' ) ); ?>
-						</h4>
-						<p>
-							<?php
-								/* translators: %s: html tags */
-								echo wp_kses_post( sprintf( __( 'Supercharge your Elementor with %1$sPRO Widgets & Addons%2$s that you won\'t find anywhere else.', 'premium-addons-for-elementor' ), '<span>', '</span>' ) );
-							?>
-							<span class="papro-sale-notice"><?php echo wp_kses_post( __('save 10% on Lifetime!', 'premium-addons-for-elementor') ) ?></span>
-						</p>
+			<?php
+				$banner_content = $this->get_banner_strings();
+
+			if ( is_array( $banner_content ) ) :
+				?>
+					<div class="papro-admin-notice-right">
+						<div class="papro-admin-notice-info">
+							<h4>
+								<?php echo esc_html( $banner_content['title'] ); ?>
+							</h4>
+							<p>
+								<?php echo esc_html( $banner_content['desc'] ); ?>
+								<span class="papro-sale-notice"><?php echo wp_kses_post( __( 'save 10% on Lifetime!', 'premium-addons-for-elementor' ) ); ?></span>
+							</p>
+						</div>
+						<div class="papro-admin-notice-cta">
+							<a class="papro-notice-btn" href="<?php echo esc_url( $banner_content['cta'] ); ?>" target="_blank">
+								<?php echo esc_html( $banner_content['btn'] ); ?>
+							</a>
+						</div>
 					</div>
-					<div class="papro-admin-notice-cta">
-						<a class="papro-notice-btn" href="<?php echo esc_url( $url ); ?>" target="_blank">
-							<?php echo wp_kses_post( __( 'Get Pro', 'premium-addons-for-elementor' ) ); ?>
-						</a>
-					</div>
-				</div>
-			<?php endif; ?>
+				<?php endif; ?>
 		</div>
 
 		<?php
+	}
+
+	public function get_banner_strings() {
+
+		if ( ! Helper_Functions::check_papro_version() ) {
+			return array(
+				'title' => __( 'Get Premium Addons PRO', 'premium-addons-for-elementor' ),
+				'desc'  => __( 'Supercharge your Elementor with PRO Widgets & Addons that you won\'t find anywhere else.', 'premium-addons-for-elementor' ),
+				'btn'   => __( 'Get Pro', 'premium-addons-for-elementor' ),
+				'cta'=> 'https://premiumaddons.com/get/papro'
+			);
+		}
+
+		$papro_status = get_transient( 'pa_license_check' );
+
+		if ( ! $papro_status ) {
+			return;
+		}
+
+		if ( 'invalid' === $papro_status ) {
+
+			return array(
+				'title' => __( 'You\'re Missing Out on the Official Pro Version!', 'premium-addons-for-elementor' ),
+				'desc'  => __( 'It looks like you\'re using Premium Addons Pro, but it was not purchased from our official website. Get official version to receive updates, support and use Premium Templates!', 'premium-addons-for-elementor' ),
+				'btn'   => __( 'Get Pro', 'premium-addons-for-elementor' ),
+				'cta'=> 'https://premiumaddons.com/validate/papro'
+			);
+
+		}
 	}
 
 	/**
@@ -947,6 +975,7 @@ class Admin_Helper {
 		if ( count( $all_elements['elements'] ) ) {
 			foreach ( $all_elements['elements'] as $elem ) {
 				if ( isset( $elem['is_pro'] ) && ! isset( $elem['is_global'] ) ) {
+					$elem['categories'] = '["premium-elements"]';
 					array_push( $pro_elements, $elem );
 				}
 			}
@@ -1208,11 +1237,11 @@ class Admin_Helper {
 
 		if ( null === self::$integrations_settings ) {
 
-            $defaults = self::get_default_integrations();
+			$defaults = self::get_default_integrations();
 
-            $enabled_keys = get_option( 'pa_maps_save_settings', $defaults );
+			$enabled_keys = get_option( 'pa_maps_save_settings', $defaults );
 
-            foreach ( $defaults as $key => $value ) {
+			foreach ( $defaults as $key => $value ) {
 
 				if ( isset( $enabled_keys[ $key ] ) ) {
 

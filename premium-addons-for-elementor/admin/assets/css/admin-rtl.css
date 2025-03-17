@@ -184,7 +184,6 @@
 	padding-bottom: 50px;
 	background-image: url("../../images/popup-pattern.jpg");
 	background-repeat: no-repeat;
-	-webkit-background-size: cover;
 	background-size: cover;
 	-webkit-border-radius: 0 50px;
 	border-radius: 0 50px;
@@ -1394,7 +1393,6 @@
 	width: 530px;
 	background-image: url("../../images/popup-pattern.jpg");
 	background-repeat: no-repeat;
-	-webkit-background-size: cover;
 	background-size: cover;
 	padding: 32px;
 	padding-bottom: 50px;
@@ -1673,14 +1671,17 @@
 	-moz-box-align: center;
 	align-items: center;
 	background: url("../../images/papro-banner.png");
-	-webkit-background-size: cover;
 	background-size: cover;
-	background-repeat: no-repeat;
 	padding: 18px;
 	-webkit-border-radius: 15px;
 	border-radius: 15px;
 	overflow: hidden;
 	margin-right: 25px;
+	justify-content: space-between;
+}
+
+.papro-admin-notice-info {
+	width: 75%;
 }
 
 .papro-admin-notice-right h4 {

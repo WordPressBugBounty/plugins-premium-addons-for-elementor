@@ -6,25 +6,64 @@
 
 		if ('undefined' !== typeof PremiumEditorLinks)
 			$("<a href='" + PremiumEditorLinks[0] + "' target='_blank' class='premium-editor-link'>Check Solution</a>").insertAfter('#elementor-try-safe-mode .elementor-safe-mode-button');
+
+		if (typeof parent.document === "undefined") {
+			return false;
+		}
+
+		parent.document.addEventListener("mousedown", function (e) {
+			var widgets = parent.document.querySelectorAll(".elementor-element--promotion");
+
+			if (widgets.length > 0) {
+				for (var i = 0; i < widgets.length; i++) {
+					if (widgets[i].contains(e.target)) {
+						var dialog = parent.document.querySelector("#elementor-element--promotion__dialog");
+						var icon = widgets[i].querySelector(".icon > i");
+
+						if (icon.classList.toString().indexOf("pa-pro") >= 0) {
+
+							dialog.querySelector(".dialog-buttons-action").style.display = "none";
+
+							e.stopImmediatePropagation();
+
+							if (dialog.querySelector(".papro-dialog-buttons") === null) {
+
+								var button = document.createElement("a");
+								var buttonText = document.createTextNode("Upgrade Premium Addons");
+
+								button.setAttribute("href", "https://premiumaddons.com/upgrade/papro");
+								button.setAttribute("target", "_blank");
+								button.classList.add(
+									"dialog-button",
+									"dialog-action",
+									"dialog-buttons-action",
+									"elementor-button",
+									"go-pro",
+									"elementor-button-success",
+									"papro-dialog-buttons"
+								);
+								button.appendChild(buttonText);
+
+								dialog.querySelector(".dialog-buttons-action").insertAdjacentHTML("afterend", button.outerHTML);
+							} else {
+								dialog.querySelector(".papro-dialog-buttons").style.display = "";
+							}
+						} else {
+							dialog.querySelector(".dialog-buttons-action").style.display = "";
+
+							if (dialog.querySelector(".papro-dialog-buttons") !== null) {
+								dialog.querySelector(".papro-dialog-buttons").style.display = "none";
+							}
+						}
+
+						break;
+					}
+				}
+			}
+		});
+
+
 	});
-
-	// window.elementor.on('panel:init', function () {
-
-	// 	if ('undefined' !== typeof PremiumEditorLinks) {
-
-	// 		setTimeout(function () {
-
-	// 			$("body.elementor-panel-loading #elementor-panel-state-loading").append("<div class='premium-editor-panel-loader'><p>Still Loading? <br/><a href='" + PremiumEditorLinks[0] + "' target='_blank' class='premium-editor-btn premium-editor-panel-loader-info'>Check Solution</a><a class='premium-editor-btn premium-disable-unused' href='javascript:;'>Disable PA unused widgets</a></div>");
-
-	// 			$('.premium-disable-unused').on('click', function () {
-	// 				window.open(PremiumEditorLinks[1], '_blank');
-	// 			});
-
-	// 		}, 10000);
-
-	// 	}
-
-	// });
 
 	var pinterestToken = null;
 
@@ -346,119 +385,6 @@
 
 	elementor.addControlView("premium-acf-selector", acfOptions);
 
-	// elementor.hooks.addFilter("panel/elements/regionViews", function (panel) {
-
-	//     if (PremiumPanelSettings.papro_installed || PremiumPanelSettings.papro_widgets.length <= 0)
-	//         return panel;
-
-
-	//     var paWidgetsPromoHandler, proCategoryIndex,
-	//         elementsView = panel.elements.view,
-	//         categoriesView = panel.categories.view,
-	//         widgets = panel.elements.options.collection,
-	//         categories = panel.categories.options.collection,
-	//         premiumProCategory = [];
-
-	//     _.each(PremiumPanelSettings.papro_widgets, function (widget, index) {
-	//         widgets.add({
-	//             name: widget.key,
-	//             title: wp.i18n.__('Premium ', 'premium-addons-for-elementor') + widget.title,
-	//             icon: widget.icon,
-	//             categories: ["premium-elements-pro"],
-	//             editable: false
-	//         })
-	//     });
-
-	//     widgets.each(function (widget) {
-	//         "premium-elements-pro" === widget.get("categories")[0] && premiumProCategory.push(widget)
-	//     });
-
-	//     proCategoryIndex = categories.findIndex({
-	//         name: "premium-elements"
-	//     });
-
-	//     proCategoryIndex && categories.add({
-	//         name: "premium-elements-pro",
-	//         title: "Premium Addons Pro",
-	//         defaultActive: !1,
-	//         items: premiumProCategory
-	//     }, {
-	//         at: proCategoryIndex + 1
-	//     });
-
-
-	//     paWidgetsPromoHandler = {
-	//         className: function () {
-
-	//             var className = 'elementor-element-wrapper';
-
-	//             if (!this.isEditable()) {
-	//                 className += ' elementor-element--promotion';
-	//             }
-
-	//             if (this.model.get("name")) {
-	//                 if (0 === this.model.get("name").indexOf("premium-"))
-	//                     className += ' premium-promotion-element';
-	//             }
-
-	//             return className;
-
-	//         },
-
-	//         isPremiumWidget: function () {
-	//             return 0 === this.model.get("name").indexOf("premium-");
-	//         },
-
-	//         getElementObj: function (key) {
-
-	//             var widgetObj = PremiumPanelSettings.papro_widgets.find(function (widget, index) {
-	//                 if (widget.key == key)
-	//                     return true;
-	//             });
-
-	//             return widgetObj;
-
-	//         },
-
-	//         onMouseDown: function () {
-
-	//             if (!this.isPremiumWidget())
-	//                 return;
-
-	//             void this.constructor.__super__.onMouseDown.call(this);
-
-	//             var widgetObject = this.getElementObj(this.model.get("name")),
-	//                 actionURL = widgetObject.action_url;
-
-	//             elementor.promotion.showDialog({
-	//                 title: sprintf(wp.i18n.__('%s', 'elementor'), this.model.get("title")),
-	//                 content: sprintf(wp.i18n.__('Use %s widget and dozens more pro features to extend your toolbox and build sites faster and better.', 'elementor'), this.model.get("title")),
-	//                 top: "-7",
-	//                 targetElement: this.$el,
-	//                 actionButton: {
-	//                     url: actionURL,
-	//                     text: wp.i18n.__('See Demo', 'elementor')
-	//                 }
-	//             })
-	//         }
-	//     }
-
-
-	//     panel.elements.view = elementsView.extend({
-	//         childView: elementsView.prototype.childView.extend(paWidgetsPromoHandler)
-	//     });
-
-	//     panel.categories.view = categoriesView.extend({
-	//         childView: categoriesView.prototype.childView.extend({
-	//             childView: categoriesView.prototype.childView.prototype.childView.extend(paWidgetsPromoHandler)
-	//         })
-	//     });
-
-	//     return panel;
-
-
-	// });
-
 	var onNavigatorInit = function () {
 
 		elementor.navigator.indicators.paDisConditions = {
@@ -525,3 +451,7 @@
 	elementor.addControlView("premium-image-choose", imageChoose)
 
 })(jQuery);
+
+
+
+

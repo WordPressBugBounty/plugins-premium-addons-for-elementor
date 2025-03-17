@@ -1575,6 +1575,11 @@
 	border-radius: 15px;
 	overflow: hidden;
 	margin-left: 25px;
+	justify-content: space-between;
+}
+
+.papro-admin-notice-info {
+	width: 75%;
 }
 
 .papro-admin-notice-right h4 {
