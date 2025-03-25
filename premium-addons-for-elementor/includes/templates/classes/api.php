@@ -100,22 +100,6 @@ if ( ! class_exists( 'Premium_Templates_API' ) ) {
 			return $this->config['base'] . $this->config['path'] . $this->config['endpoints'][ $flag ];
 		}
 
-		/**
-		 * Request Args
-		 *
-		 * Get request arguments for the remote request.
-		 *
-		 * @since 3.6.0
-		 * @access public
-		 *
-		 * @return array
-		 */
-		public function request_args() {
-			return array(
-				'timeout'   => 60,
-				'sslverify' => false,
-			);
-		}
 	}
 
 }

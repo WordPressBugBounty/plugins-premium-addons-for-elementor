@@ -4,9 +4,6 @@
 
 	$(window).on('elementor:init', function () {
 
-		if ('undefined' !== typeof PremiumEditorLinks)
-			$("<a href='" + PremiumEditorLinks[0] + "' target='_blank' class='premium-editor-link'>Check Solution</a>").insertAfter('#elementor-try-safe-mode .elementor-safe-mode-button');
-
 		if (typeof parent.document === "undefined") {
 			return false;
 		}

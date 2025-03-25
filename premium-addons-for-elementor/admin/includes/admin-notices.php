@@ -430,7 +430,7 @@ class Admin_Notices {
 			$response = wp_remote_get(
 				$api_url,
 				array(
-					'timeout'   => 60,
+					'timeout'   => 15,
 					'sslverify' => true,
 				)
 			);

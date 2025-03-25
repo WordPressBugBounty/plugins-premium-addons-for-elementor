@@ -371,14 +371,14 @@ class Addons_Integration {
 				esc_url( admin_url( 'admin.php' ) )
 			);
 
-			wp_localize_script(
-				'pa-eq-editor',
-				'PremiumEditorLinks',
-				array(
-					$link,
-					$disable_unused_url,
-				)
-			);
+			// wp_localize_script(
+			// 	'pa-eq-editor',
+			// 	'PremiumEditorLinks',
+			// 	array(
+			// 		$link,
+			// 		$disable_unused_url,
+			// 	)
+			// );
 
 		}
 
@@ -827,15 +827,15 @@ class Addons_Integration {
 		if ( $maps_settings['premium-map-cluster'] ) {
 			wp_register_script(
 				'pa-maps-cluster',
-				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/markerclusterer' . $suffix . '.js',
+				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/markerclusterer.min.js',
 				array(),
 				'1.0.1',
-				false
+				true
 			);
 		}
 
 		if ( $maps_settings['premium-map-disable-api'] && '1' !== $maps_settings['premium-map-api'] ) {
-			$api = sprintf( 'https://maps.googleapis.com/maps/api/js?key=%1$s&callback=initMap&language=%2$s', $maps_settings['premium-map-api'], $locale );
+			$api = sprintf( 'https://maps.googleapis.com/maps/api/js?key=%1$s&libraries=marker&callback=initMap&language=%2$s&loading=async', $maps_settings['premium-map-api'], $locale );
 			wp_register_script(
 				'pa-maps-api',
 				$api,
@@ -1060,6 +1060,7 @@ class Addons_Integration {
 					'view_cart'       => __( 'View cart', 'woocommerce' ),
 					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
 					'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
+					'stock_msg' => __('*The current stock is only ', 'premium-addons-for-elementor'),
 				)
 			);
 
@@ -1298,7 +1299,7 @@ class Addons_Integration {
 
 			if ( $disable_api && '1' !== $premium_maps_api ) {
 
-				$api = sprintf( 'https://maps.googleapis.com/maps/api/js?key=%1$s&language=%2$s', $premium_maps_api, $locale );
+				$api = sprintf( 'https://maps.googleapis.com/maps/api/js?key=%1$s&libraries=marker&language=%2$s&loading=async', $premium_maps_api, $locale );
 				wp_enqueue_script(
 					'pa-maps-api',
 					$api,
@@ -1337,7 +1338,7 @@ class Addons_Integration {
 		$response = wp_remote_get(
 			$api_url,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 15,
 				'sslverify' => false,
 			)
 		);
@@ -1422,7 +1423,7 @@ class Addons_Integration {
 		$response = wp_remote_get(
 			$api_url,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 15,
 				'sslverify' => false,
 			)
 		);

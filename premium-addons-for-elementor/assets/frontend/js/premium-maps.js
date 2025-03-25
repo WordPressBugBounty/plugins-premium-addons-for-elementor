@@ -30,16 +30,17 @@ jQuery(window).on("elementor/frontend/init", function () {
 
 			eleObserver.observe($closestSection[0]);
 
-			// elementorFrontend.waypoint($closestSection, function () {
-			//     premiumMap = newMap(mapElement, mapSettings, mapStyle);
-			// }, {
-			//     offset: '70%'
-			// });
 
 		} else {
-			premiumMap = newMap(mapElement, mapSettings, mapStyle);
-		}
 
+			var checkGoogleMapsLoaded = setInterval(function () {
+				if (typeof google !== "undefined" && google.maps) {
+					clearInterval(checkGoogleMapsLoaded);
+					premiumMap = newMap(mapElement, mapSettings, mapStyle);
+				}
+			}, 100);
+
+		}
 
 		function newMap(map, settings, mapStyle) {
 
@@ -54,6 +55,7 @@ jQuery(window).on("elementor/frontend/init", function () {
 				hoverOpen = settings.hoverOpen,
 				hoverClose = settings.hoverClose,
 				args = {
+					mapId: settings.mapId || '',
 					zoom: settings["zoom"],
 					mapTypeId: settings["maptype"],
 					center: { lat: centerLat, lng: centerLong },
@@ -77,14 +79,13 @@ jQuery(window).on("elementor/frontend/init", function () {
 			$carouselWidgets = $(".maps-carousel .premium-carousel-wrapper");
 			// add markers
 			markers.each(function (index) {
-				addMarker(jQuery(this), map, autoOpen, hoverOpen, hoverClose, index);
+				addMarker(jQuery(this), map, autoOpen, hoverOpen, hoverClose, index, args.mapId);
 			});
 
 			if ($scope.hasClass('pa-maps-carousel')) {
 				$carouselWidgets.map(function (index, item) {
 
 					$(item).find(".premium-carousel-inner").on("afterChange", function (event, slick, currentSlide) {
-
 
 						premiumMapPopups.map(function (popup, index) {
 
@@ -100,25 +101,57 @@ jQuery(window).on("elementor/frontend/init", function () {
 
 			}
 
-			if (mapSettings.cluster && MarkerClusterer) {
 
-				new MarkerClusterer(map, premiumMapMarkers, {
-					imagePath: '' != mapSettings.cluster_icon ? mapSettings.cluster_icon : "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-					styles: [
-						{
-							url: mapSettings.cluster_icon || "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m1.png", // The URL of your cluster icon
-							width: mapSettings.cluster_icon_size,
-							height: mapSettings.cluster_icon_size
-						}
-					]
+			if (mapSettings.cluster && window.markerClusterer && args.mapId) {
+
+				// Initialize MarkerClusterer
+				new markerClusterer.MarkerClusterer({
+					map: map,
+					markers: premiumMapMarkers,
+					renderer: {
+						render: function (options) {
+							var count = options.count;
+							var position = options.position;
+							var clusterIcon = document.createElement("div");
+							var iconSize = mapSettings.cluster_icon_size || 50;
+							var iconUrl = mapSettings.cluster_icon || "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m1.png";
+
+							// Customize cluster icon appearance
+							clusterIcon.innerHTML =
+								'<img src="' + iconUrl + '" ' +
+								'width="' + iconSize + '" ' +
+								'height="' + iconSize + '" ' +
+								'style="position: absolute; transform: translate(-50%, -50%);">' +
+								'<div style="position: absolute; ' +
+								'top: 50%; ' +
+								'left: 50%; ' +
+								'transform: translate(-50%, -50%); ' +
+								'color: white; ' +
+								'font-weight: bold; ' +
+								'font-size: 11px;">' +
+								count +
+								'</div>';
+
+							var clusterMarker = new google.maps.marker.AdvancedMarkerElement({
+								position: position,
+								content: clusterIcon,
+							});
+
+							return clusterMarker;
+
+						},
+					}
+
 				});
+
+
 			}
 
 			return map;
 		}
 
 		var activeInfoWindow = null;
-		function addMarker(pin, map, autoOpen, hoverOpen, hoverClose, zIndex) {
+		function addMarker(pin, map, autoOpen, hoverOpen, hoverClose, zIndex, mapID) {
 
 			var latlng = new google.maps.LatLng(pin.data("lat"), pin.data("lng")),
 				iconImg = pin.data("icon"),
@@ -127,26 +160,52 @@ jQuery(window).on("elementor/frontend/init", function () {
 				isActive = pin.data("activated"),
 				iconSize = parseInt(pin.data("icon-size"));
 
-			if ('' != iconImg) {
-				var icon = {
-					url: iconImg
-				};
+			if (!mapID) {
 
-				if (iconSize) {
-					icon.scaledSize = new google.maps.Size(iconSize, iconSize);
-					icon.origin = new google.maps.Point(0, 0);
-					icon.anchor = new google.maps.Point(iconSize / 2, iconSize);
+				if (iconImg) {
+					var icon = {
+						url: iconImg
+					};
+
+					if (iconSize) {
+						icon.scaledSize = new google.maps.Size(iconSize, iconSize);
+						icon.origin = new google.maps.Point(0, 0);
+						icon.anchor = new google.maps.Point(iconSize / 2, iconSize);
+					}
 				}
+
+				// Create marker
+				var marker = new google.maps.Marker({
+					position: latlng,
+					map: map,
+					icon: icon,
+					zIndex: zIndex
+				});
+
+			} else {
+
+				if (iconImg) {
+
+					var markerContent = document.createElement("div"),
+						img = document.createElement("img");
+
+					img.src = iconImg;
+					img.width = iconSize || 50;
+					img.height = iconSize || 50;
+					img.style.display = "block";
+					img.alt = "";
+					markerContent.appendChild(img);
+				}
+
+				// Create marker
+				var marker = new google.maps.marker.AdvancedMarkerElement({
+					position: latlng,
+					map: map,
+					zIndex: zIndex,
+					content: markerContent,
+				});
+
 			}
-
-			// create marker
-			var marker = new google.maps.Marker({
-				position: latlng,
-				map: map,
-				icon: icon,
-				zIndex: zIndex
-			});
-
 
 			//Used with Carousel Custom Navigation option
 			if (customID) {

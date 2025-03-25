@@ -1547,7 +1547,7 @@ class Admin_Helper {
 		$response = wp_remote_get(
 			$request,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 15,
 				'sslverify' => true,
 			)
 		);
@@ -1586,7 +1586,7 @@ class Admin_Helper {
 			$response = wp_remote_get(
 				$request,
 				array(
-					'timeout'   => 60,
+					'timeout'   => 15,
 					'sslverify' => true,
 				)
 			);

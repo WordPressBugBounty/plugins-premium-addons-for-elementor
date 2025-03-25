@@ -6657,268 +6657,268 @@ a.premium-image-separator-link:active {
 /**************** Premium Google Maps ******************/
 /*******************************************************/
 .premium-maps-info-container {
-    margin-top: 10px;
-    margin-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .premium-maps-info-container.advanced-pin {
-    margin: -16px;
-    width: 300px;
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    z-index: 100000;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    -js-display: flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-            flex-direction: column;
+	margin: -16px;
+	width: 300px;
+	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+	z-index: 100000;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	-js-display: flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
 }
 
 .premium-maps-info-container.advanced-pin .gm-ui-hover-effect {
-    display: none;
+	display: none;
 }
 
 .premium-maps-info-container.advanced-pin .premium-maps-info-close {
-    position: absolute;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    -js-display: flex;
-    display: flex;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-            align-items: center;
-    border-radius: 50%;
-    height: 24px;
-    width: 24px;
-    cursor: pointer;
-    z-index: 99;
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
-    -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
-    opacity: 0.4;
+	position: absolute;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	-js-display: flex;
+	display: flex;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	border-radius: 50%;
+	height: 24px;
+	width: 24px;
+	cursor: pointer;
+	z-index: 99;
+	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+	opacity: 0.4;
 }
 
 .premium-maps-info-container.advanced-pin .premium-maps-info-close:hover {
-    opacity: 1;
+	opacity: 1;
 }
 
 .premium-maps-info-container.advanced-pin .premium-maps-info-img {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 0;
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 0;
 }
 
 .premium-maps-info-container.advanced-pin .premium-maps-info-img img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    inset: 0;
-    object-fit: cover;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	inset: 0;
+	object-fit: cover;
 }
 
 .premium-maps-info-container.advanced-pin .premium-maps-location-directions {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    background-color: #fff;
-    top: 100%;
-    right: 83%;
-    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.3);
-    -webkit-transform: translateY(-50%) rotateY(180deg);
-    -ms-transform: translateY(-50%) rotateY(180deg);
-    transform: translateY(-50%) rotateY(180deg);
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	background-color: #fff;
+	top: 100%;
+	right: 83%;
+	box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.3);
+	-webkit-transform: translateY(-50%) rotateY(180deg);
+	-ms-transform: translateY(-50%) rotateY(180deg);
+	transform: translateY(-50%) rotateY(180deg);
 }
 
 .premium-maps-info-container.advanced-pin .eicon-share-arrow {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 .premium-maps-info-container.advanced-pin .eicon-headphones {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .premium-maps-info-container.advanced-pin .premium-maps-location-info {
-    color: #222;
-    font-size: 13px;
-    text-align: right;
+	color: #222;
+	font-size: 13px;
+	text-align: right;
 }
 
 .premium-maps-info-container.advanced-pin .maps-info-item {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    -js-display: flex;
-    display: flex;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-            align-items: center;
-    margin-bottom: 8px;
-    -webkit-flex-direction: row-reverse;
-    -ms-flex-direction: row-reverse;
-            flex-direction: row-reverse;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	margin-bottom: 8px;
+	-webkit-flex-direction: row-reverse;
+	-ms-flex-direction: row-reverse;
+	flex-direction: row-reverse;
 }
 
 .premium-maps-info-container.advanced-pin .maps-info-item i {
-    margin-left: 14px;
+	margin-left: 14px;
 }
 
 .premium-maps-info-container.advanced-pin p {
-    margin: 0;
+	margin: 0;
 }
 
 .premium-maps-info-container.maps-skin1 .premium-maps-info-close {
-    top: 12px;
-    left: 12px;
-    background-color: #fff;
+	top: 12px;
+	left: 12px;
+	background-color: #fff;
 }
 
 .premium-maps-info-container.maps-skin1 .premium-maps-title-wrap {
-    position: relative;
-    padding: 16px;
-    background-color: #4285f4;
+	position: relative;
+	padding: 16px;
+	background-color: #4285f4;
 }
 
 .premium-maps-info-container.maps-skin1 .premium-maps-info-img {
-    height: 150px;
+	height: 150px;
 }
 
 .premium-maps-info-container.maps-skin1 .premium-maps-location-info {
-    padding: 28px 16px 16px;
+	padding: 28px 16px 16px;
 }
 
 .premium-maps-info-container.maps-skin1 .premium-maps-info-desc {
-    border-top: 1px solid rgba(230, 230, 230, 0.5);
-    margin-top: 12px;
-    padding-top: 12px;
+	border-top: 1px solid rgba(230, 230, 230, 0.5);
+	margin-top: 12px;
+	padding-top: 12px;
 }
 
 .premium-maps-info-container.maps-skin1 .premium-maps-location-direction {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    -js-display: flex;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-            align-items: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-            justify-content: center;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	-js-display: flex;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
 }
 
 .premium-maps-info-container.maps-skin1 .premium-maps-location-direction span {
-    display: none;
+	display: none;
 }
 
 .premium-maps-info-container.maps-skin2 {
-    padding: 35px 25px 25px;
+	padding: 35px 25px 25px;
 }
 
 .premium-maps-info-container.maps-skin2 .premium-maps-title-wrap {
-    -webkit-order: 1;
-    -ms-flex-order: 1;
-            order: 1;
-    background-color: #fff;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(230, 230, 230, 0.5);
+	-webkit-order: 1;
+	-ms-flex-order: 1;
+	order: 1;
+	background-color: #fff;
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgba(230, 230, 230, 0.5);
 }
 
 .premium-maps-info-container.maps-skin2 .premium-maps-info-title {
-    font-weight: bold;
-    font-size: 18px;
+	font-weight: bold;
+	font-size: 18px;
 }
 
 .premium-maps-info-container.maps-skin2 .premium-maps-info-img {
-    -webkit-order: 2;
-    -ms-flex-order: 2;
-            order: 2;
-    height: 80px;
-    margin-top: 10px;
+	-webkit-order: 2;
+	-ms-flex-order: 2;
+	order: 2;
+	height: 80px;
+	margin-top: 10px;
 }
 
 .premium-maps-info-container.maps-skin2 .premium-maps-location-info {
-    padding-top: 14px;
-    -webkit-order: 3;
-    -ms-flex-order: 3;
-            order: 3;
+	padding-top: 14px;
+	-webkit-order: 3;
+	-ms-flex-order: 3;
+	order: 3;
 }
 
 .premium-maps-info-container.maps-skin2 .premium-maps-info-desc {
-    margin: 15px 0 10px;
+	margin: 15px 0 10px;
 }
 
 .premium-maps-info-container.maps-skin3 {
-    padding: 25px;
+	padding: 25px;
 }
 
 .premium-maps-info-container.maps-skin3 .premium-maps-skin3-wrap {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    -js-display: flex;
-    display: flex;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-            align-items: center;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(230, 230, 230, 0.5);
-    -webkit-flex-direction: row-reverse;
-    -ms-flex-direction: row-reverse;
-            flex-direction: row-reverse;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgba(230, 230, 230, 0.5);
+	-webkit-flex-direction: row-reverse;
+	-ms-flex-direction: row-reverse;
+	flex-direction: row-reverse;
 }
 
 .premium-maps-info-container.maps-skin3 .premium-maps-title-wrap {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-            flex-direction: column;
-    text-align: left;
-    margin-right: 12px;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	text-align: left;
+	margin-right: 12px;
 }
 
 .premium-maps-info-container.maps-skin3 .premium-maps-title-wrap .eicon-share-arrow {
-    display: none;
+	display: none;
 }
 
 .premium-maps-info-container.maps-skin3 .premium-maps-info-title {
-    margin-bottom: 5px;
+	margin-bottom: 5px;
 }
 
 .premium-maps-info-container.maps-skin3 .premium-maps-info-img {
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
+	width: 80px;
+	height: 80px;
+	border-radius: 100%;
 }
 
 .premium-maps-info-container.maps-skin3 .premium-maps-location-info {
-    padding-top: 14px;
+	padding-top: 14px;
 }
 
 .premium-maps-info-container.maps-skin2 .premium-maps-info-close,
 .premium-maps-info-container.maps-skin3 .premium-maps-info-close {
-    top: 12px;
-    left: 12px;
-    background-color: #bbb;
+	top: 12px;
+	left: 12px;
+	background-color: #bbb;
 }
 
 .premium-maps-info-title,
 .premium-maps-info-desc {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .premium-maps-container .gm-style-iw {
-    text-align: center;
-    direction: ltr;
+	text-align: center;
+	direction: ltr;
 }
 
 .premium-maps-container .gm-style img {
-    max-width: none !important;
+	max-width: none !important;
 }
 
 /* .premium-maps-container .gm-style-iw-tc {
@@ -6927,13 +6927,14 @@ a.premium-image-separator-link:active {
 
 .premium-maps-container .gm-style-iw-c,
 .premium-maps-container .gm-style-iw-d {
-    overflow: visible !important;
-    max-height: initial !important;
+	overflow: visible !important;
+	max-height: initial !important;
 }
 
-.premium-maps-container .gm-style-iw-c {
+/* .premium-maps-container .gm-style-iw-c {
     padding: 12px !important;
-}
+} */
+
 .premium-adv-carousel__item-link {
     position: absolute;
     top: 0;
@@ -12765,170 +12766,174 @@ ul.premium-person-social-list {
 /**************** Premium Progress Bar ****************/
 /******************************************************/
 .premium-progressbar-container {
-    position: relative;
+	position: relative;
 }
 
 .premium-progressbar-bar-wrap {
-    position: relative;
-    text-align: right;
-    overflow: hidden;
-    height: 25px;
-    margin-bottom: 50px;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+	position: relative;
+	text-align: right;
+	overflow: hidden;
+	height: 25px;
+	margin-bottom: 50px;
+	background-color: #f5f5f5;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .premium-progressbar-bar-wrap.premium-progressbar-dots {
-    background-color: transparent;
-    width: 100%;
-    -js-display: flex;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    height: auto;
-    box-shadow: none;
+	background-color: transparent;
+	width: 100%;
+	-js-display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	height: auto;
+	box-shadow: none;
 }
 
 .premium-progressbar-bar-wrap .progress-segment {
-    position: relative;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #f5f5f5;
+	position: relative;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	overflow: hidden;
+	background-color: #f5f5f5;
 }
 
 .premium-progressbar-bar-wrap .progress-segment.filled {
-    background: #6ec1e4;
+	background: #6ec1e4;
 }
 
 .premium-progressbar-bar-wrap .progress-segment:not(:first-child):not(:last-child) {
-    margin: 0 4px;
+	margin: 0 4px;
 }
 
 .premium-progressbar-bar-wrap .progress-segment:first-child {
-    margin-left: 4px;
+	margin-left: 4px;
 }
 
 .premium-progressbar-bar-wrap .progress-segment:last-child {
-    margin-right: 4px;
+	margin-right: 4px;
 }
 
 .premium-progressbar-bar-wrap .progress-segment .segment-inner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    background-color: #6ec1e4;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	background-color: #6ec1e4;
 }
 
 .premium-progressbar-bar {
-    float: right;
-    width: 0%;
-    height: 100%;
-    font-size: 12px;
-    line-height: 20px;
-    background: #6ec1e4;
-    text-align: center;
-    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+	float: right;
+	width: 0%;
+	height: 100%;
+	font-size: 12px;
+	line-height: 20px;
+	background: #6ec1e4;
+	text-align: center;
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 
 .premium-progressbar-striped .premium-progressbar-bar {
-    background-image: -webkit-linear-gradient(45deg,
-            rgba(255, 255, 255, 0.15) 25%,
-            transparent 25%,
-            transparent 50%,
-            rgba(255, 255, 255, 0.15) 50%,
-            rgba(255, 255, 255, 0.15) 75%,
-            transparent 75%,
-            transparent);
-    background-image: linear-gradient(45deg,
-            rgba(255, 255, 255, 0.15) 25%,
-            transparent 25%,
-            transparent 50%,
-            rgba(255, 255, 255, 0.15) 50%,
-            rgba(255, 255, 255, 0.15) 75%,
-            transparent 75%,
-            transparent);
-    background-size: 40px 40px;
+	background-image: -webkit-linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.15) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(255, 255, 255, 0.15) 50%,
+		rgba(255, 255, 255, 0.15) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-image: linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.15) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(255, 255, 255, 0.15) 50%,
+		rgba(255, 255, 255, 0.15) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-size: 40px 40px;
 }
 
 .premium-progressbar-active .premium-progressbar-bar {
-    -webkit-animation: progress-bar-stripes 2s linear infinite;
-            animation: progress-bar-stripes 2s linear infinite;
+	-webkit-animation: progress-bar-stripes 2s linear infinite;
+	animation: progress-bar-stripes 2s linear infinite;
 }
 
 .premium-progressbar-gradient .premium-progressbar-bar {
-    background-size: 400% 400% !important;
-    -webkit-animation: progress-bar-gradient 10s ease-in-out infinite;
-            animation: progress-bar-gradient 10s ease-in-out infinite;
+	background-size: 400% 400% !important;
+	-webkit-animation: progress-bar-gradient 10s ease-in-out infinite;
+	animation: progress-bar-gradient 10s ease-in-out infinite;
 }
 
 .premium-progressbar-bar {
-    position: absolute;
-    overflow: hidden;
-    line-height: 20px;
+	position: absolute;
+	overflow: hidden;
+	line-height: 20px;
 }
 
 .premium-progressbar-container .clearfix {
-    clear: both;
+	clear: both;
 }
 
 .premium-progressbar-bar {
-    -webkit-transition: width 0s ease-in-out !important;
-    transition: width 0s ease-in-out !important;
+	-webkit-transition: width 0s ease-in-out !important;
+	transition: width 0s ease-in-out !important;
 }
 
 .premium-progressbar-container p:first-of-type {
-    margin: 0;
-    float: left;
+	margin: 0;
+	float: left;
 }
 
 .premium-progressbar-container p:nth-of-type(2) {
-    margin: 0;
-    float: right;
+	margin: 0;
+	float: right;
 }
 
 .premium-progressbar-name {
-    right: 50%;
-    top: 0;
-    left: 0;
-    -ms-transform: translateX(12.5px);
-        -webkit-transform: translateX(12.5px);
-            transform: translateX(12.5px);
-    z-index: 1;
+	right: 50%;
+	top: 0;
+	left: 0;
+	-ms-transform: translateX(12.5px);
+	-webkit-transform: translateX(12.5px);
+	transform: translateX(12.5px);
+	z-index: 1;
 }
 
 .premium-progressbar-multiple-label {
-    position: relative;
-    float: right;
-    width: 0;
-    right: 50%;
+	position: relative;
+	float: right;
+	width: 0;
+	right: 50%;
 }
 
 .premium-progressbar-center-label {
-    position: relative;
-    white-space: nowrap;
+	position: relative;
+	white-space: nowrap;
 }
 
 .premium-progressbar-arrow {
-    height: 15px;
-    right: 50%;
-    display: inline-block;
-    border-right: 7px solid transparent;
-    border-left: 7px solid transparent;
-    border-top: 11px solid;
-    -ms-transform: translateX(50%);
-        -webkit-transform: translateX(50%);
-            transform: translateX(50%);
+	height: 15px;
+	right: 50%;
+	display: inline-block;
+	border-right: 7px solid transparent;
+	border-left: 7px solid transparent;
+	border-top: 11px solid;
+	-ms-transform: translateX(50%);
+	-webkit-transform: translateX(50%);
+	transform: translateX(50%);
 }
 
 .premium-progressbar-pin {
-    border-right: 1px solid;
-    height: 12px;
-    right: 50%;
-    display: inline-block;
+	border-right: 1px solid;
+	height: 12px;
+	right: 50%;
+	display: inline-block;
 }
 
 /**
@@ -12936,215 +12941,219 @@ ul.premium-person-social-list {
 */
 .premium-progressbar-circle-wrap,
 .premium-progressbar-hf-circle-wrap {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    margin: 0 auto;
+	width: 200px;
+	height: 200px;
+	position: relative;
+	margin: 0 auto;
 }
 
 .premium-progressbar-circle-wrap .premium-progressbar-circle-content,
 .premium-progressbar-hf-circle-wrap .premium-progressbar-circle-content {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    -js-display: flex;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -ms-flex-direction: column;
-         -webkit-flex-direction: column;
-            flex-direction: column;
-    -ms-flex-pack: center;
-         -webkit-justify-content: center;
-            justify-content: center;
-    -ms-flex-align: center;
-         -webkit-align-items: center;
-            align-items: center;
-    text-align: center;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	-js-display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	text-align: center;
 }
 
 .premium-progressbar-circle-wrap .premium-lottie-animation,
 .premium-progressbar-hf-circle-wrap .premium-lottie-animation {
-    line-height: 1;
+	line-height: 1;
 }
 
 .premium-progressbar-circle-wrap .premium-progressbar-circle {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-clip-path: inset(0 0 0 50%);
-            clip-path: inset(0 0 0 50%);
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-clip-path: inset(0 0 0 50%);
+	clip-path: inset(0 0 0 50%);
 }
 
 .premium-progressbar-circle-wrap .premium-progressbar-circle div {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    border-width: 6px;
-    border-style: solid;
-    border-color: #54595f;
-    border-radius: 50%;
-    -webkit-clip-path: inset(0 50% 0 0);
-            clip-path: inset(0 50% 0 0);
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	border-width: 6px;
+	border-style: solid;
+	border-color: #54595f;
+	border-radius: 50%;
+	-webkit-clip-path: inset(0 50% 0 0);
+	clip-path: inset(0 50% 0 0);
 }
 
 .premium-progressbar-circle-wrap .premium-progressbar-circle .premium-progressbar-circle-left {
-    -ms-transform: rotate(0);
-        -webkit-transform: rotate(0);
-            transform: rotate(0);
+	-ms-transform: rotate(0);
+	-webkit-transform: rotate(0);
+	transform: rotate(0);
 }
 
 .premium-progressbar-circle-wrap .premium-progressbar-circle .premium-progressbar-circle-right {
-    -ms-transform: rotate(-180deg);
-        -webkit-transform: rotate(-180deg);
-            transform: rotate(-180deg);
-    visibility: hidden;
+	-ms-transform: rotate(-180deg);
+	-webkit-transform: rotate(-180deg);
+	transform: rotate(-180deg);
+	visibility: hidden;
 }
 
 .premium-progressbar-circle-wrap .premium-progressbar-circle-base {
-    width: 100%;
-    height: 100%;
-    border: 6px solid #eee;
-    border-radius: 50%;
+	width: 100%;
+	height: 100%;
+	border: 6px solid #eee;
+	border-radius: 50%;
 }
 
 .premium-progressbar-circle-wrap .premium-lottie-animation {
-    line-height: 1;
+	line-height: 1;
 }
 
 /**
 * Half Circle Progress Bar
 */
 .premium-progressbar-hf-container {
-    position: relative;
-    width: 200px;
-    height: 200px;
+	position: relative;
+	width: 200px;
+	height: 200px;
 }
 
 .premium-progressbar-hf-circle-wrap {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .premium-progressbar-hf-circle-wrap .premium-progressbar-left-label {
-    -ms-flex-order: 1;
-         -webkit-order: 1;
-            order: 1;
+	-ms-flex-order: 1;
+	-webkit-order: 1;
+	order: 1;
 }
 
 .premium-progressbar-hf-circle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-clip-path: inset(0 0 50% 0);
-            clip-path: inset(0 0 50% 0);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-clip-path: inset(0 0 50% 0);
+	clip-path: inset(0 0 50% 0);
 }
 
 .premium-progressbar-hf-circle-progress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    border: 12px solid #000;
-    border-radius: 50%;
-    -webkit-clip-path: inset(50% 0 0 0);
-            clip-path: inset(50% 0 0 0);
-    -ms-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    -webkit-transition: -webkit-transform 1500ms linear;
-    transition: -webkit-transform 1500ms linear;
-    transition: transform 1500ms linear;
-    transition: transform 1500ms linear, -webkit-transform 1500ms linear;
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	border: 12px solid #000;
+	border-radius: 50%;
+	-webkit-clip-path: inset(50% 0 0 0);
+	clip-path: inset(50% 0 0 0);
+	-ms-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+	-webkit-transition: -webkit-transform 1500ms linear;
+	transition: -webkit-transform 1500ms linear;
+	transition: transform 1500ms linear;
+	transition:
+		transform 1500ms linear,
+		-webkit-transform 1500ms linear;
 }
 
 .premium-progressbar-circle-inner {
-    height: 100%;
-    width: 100%;
-    border: 12px solid #eee;
-    border-radius: 50%;
+	height: 100%;
+	width: 100%;
+	border: 12px solid #eee;
+	border-radius: 50%;
 }
 
 .premium-progressbar-hf-labels {
-    margin: 0 auto;
-    position: relative;
-    font-size: 12px;
-    font-weight: 400;
-    -js-display: flex;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -ms-flex-pack: justify;
-         -webkit-justify-content: space-between;
-            justify-content: space-between;
+	margin: 0 auto;
+	position: relative;
+	font-size: 12px;
+	font-weight: 400;
+	-js-display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-pack: justify;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
 }
 
 @-webkit-keyframes progress-bar-stripes {
-    from {
-        background-position: 100% 0;
-    }
+	from {
+		background-position: 100% 0;
+	}
 
-    to {
-        background-position: 40px 0;
-    }
+	to {
+		background-position: 40px 0;
+	}
 }
 
 @keyframes progress-bar-stripes {
-    from {
-        background-position: 100% 0;
-    }
+	from {
+		background-position: 100% 0;
+	}
 
-    to {
-        background-position: 40px 0;
-    }
+	to {
+		background-position: 40px 0;
+	}
 }
 
 @-webkit-keyframes progress-bar-gradient {
-    0% {
-        background-position: 100% 50%;
-    }
+	0% {
+		background-position: 100% 50%;
+	}
 
-    50% {
-        background-position: 0% 50%;
-    }
+	50% {
+		background-position: 0% 50%;
+	}
 
-    100% {
-        background-position: 100% 50%;
-    }
+	100% {
+		background-position: 100% 50%;
+	}
 }
 
 @keyframes progress-bar-gradient {
-    0% {
-        background-position: 100% 50%;
-    }
+	0% {
+		background-position: 100% 50%;
+	}
 
-    50% {
-        background-position: 0% 50%;
-    }
+	50% {
+		background-position: 0% 50%;
+	}
 
-    100% {
-        background-position: 100% 50%;
-    }
+	100% {
+		background-position: 100% 50%;
+	}
 }
 
 @media (max-width: 768px) {
-    .premium-progressbar-center-label {
-        -ms-transform: rotate(-90deg) !important;
-            -webkit-transform: rotate(-90deg) !important;
-                transform: rotate(-90deg) !important;
-        -ms-transform-origin: 0;
-            -webkit-transform-origin: 0;
-                transform-origin: 0;
-    }
+	.premium-progressbar-center-label {
+		-ms-transform: rotate(-90deg) !important;
+		-webkit-transform: rotate(-90deg) !important;
+		transform: rotate(-90deg) !important;
+		-ms-transform-origin: 0;
+		-webkit-transform-origin: 0;
+		transform-origin: 0;
+		float: none !important;
+	}
 }
+
 .premium-search {
     /** Loader */
     /* Pagination */
@@ -18629,9 +18638,6 @@ html.premium-woo-qv-opened body {
 	-webkit-flex-direction: column;
 	-ms-flex-direction: column;
 	flex-direction: column;
-}
-#premium-woo-quick-view-modal.block .premium-woo-product > .product .woocommerce-product-gallery__image img {
-	max-height: 300px;
 }
 /**
 * Class used instead of ID because ID will override styling controls.

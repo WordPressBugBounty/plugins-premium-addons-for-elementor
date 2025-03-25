@@ -896,7 +896,7 @@ class Helper_Functions {
 		$location_data = wp_remote_get(
 			'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
 			array(
-				'timeout'   => 60,
+				'timeout'   => 15,
 				'sslverify' => false,
 			)
 		);
@@ -1767,7 +1767,8 @@ class Helper_Functions {
 			$id = $title;
 		}
 
-		$template_content = $frontend->get_builder_content( $id, true );
+		// $template_content = $frontend->get_builder_content( $id, true );
+		$template_content = $frontend->get_builder_content_for_display( $id, true );
 
 		return $template_content;
 

@@ -836,9 +836,6 @@ html.premium-woo-qv-opened body {
 	-ms-flex-direction: column;
 	flex-direction: column;
 }
-#premium-woo-quick-view-modal.block .premium-woo-product > .product .woocommerce-product-gallery__image img {
-	max-height: 300px;
-}
 /**
 * Class used instead of ID because ID will override styling controls.
 */

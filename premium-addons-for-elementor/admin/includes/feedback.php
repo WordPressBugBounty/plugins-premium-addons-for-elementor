@@ -62,9 +62,9 @@ class Feedback {
 		if ( ! $anonymous ) {
 			$wordpress['deactivated_plugin']['uninstall_details'] .= ( empty( $wordpress['deactivated_plugin']['uninstall_details'] ) ? '' : PHP_EOL . PHP_EOL ) . 'Domain: ' . self::get_site_domain();
 
-			$wordpress['used_widgets'] = array(
-                'widgets'      => Admin_Helper::get_used_widgets()
-            );
+			// $wordpress['used_widgets'] = array(
+            //     'widgets'      => Admin_Helper::get_used_widgets()
+            // );
 		}
 
 		$body = array(

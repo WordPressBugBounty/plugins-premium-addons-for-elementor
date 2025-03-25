@@ -183,7 +183,7 @@ function refresh_tiktok_token( $token ) {
 	$response = wp_remote_get(
 		$api_url . $token,
 		array(
-			'timeout'   => 60,
+			'timeout'   => 15,
 			'sslverify' => true,
 		)
 	);

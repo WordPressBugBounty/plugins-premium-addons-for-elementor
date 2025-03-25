@@ -148,7 +148,7 @@
 
                 if ($(this).hasClass('plus')) {
                     if (currentVal >= itemStock) {
-                        $(this).parents('.pa-woo-mc__item-wrapper').find('.pa-woo-mc__item-notice').text('*The current stock is only ' + itemStock);
+                        $(this).parents('.pa-woo-mc__item-wrapper').find('.pa-woo-mc__item-notice').text(PAWooMCartSettings.stock_msg + itemStock);
                     } else {
                         $input.stepUp();
                         $($input).trigger('change');

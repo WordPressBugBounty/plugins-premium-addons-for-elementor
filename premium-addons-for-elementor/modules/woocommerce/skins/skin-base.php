@@ -238,6 +238,19 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			)
 		);
 
+		$this->add_responsive_control(
+			'qv_slider_height',
+			array(
+				'label'       => __( 'Max Height', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SLIDER,
+				'size_units'  => array( 'px', 'vh', 'custom' ),
+				'label_block' => true,
+				'selectors'   => array(
+					'#premium-woo-quick-view-{{ID}} #premium-woo-quick-view-content'  => 'max-height: {{SIZE}}{{UNIT}}; overflow-y: scroll',
+				),
+			)
+		);
+
 		$this->add_control(
 			'lightbox_overlay_color',
 			array(

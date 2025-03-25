@@ -77,7 +77,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 		$response = wp_remote_get(
 			$api_url . $tab,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 20,
 				'sslverify' => false,
 			)
 		);
@@ -119,7 +119,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 		$response = wp_remote_get(
 			$api_url . $tab,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 20,
 				'sslverify' => false,
 			)
 		);
@@ -161,7 +161,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 		$response = wp_remote_get(
 			$api_url . $tab,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 20,
 				'sslverify' => false,
 			)
 		);
@@ -311,7 +311,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 		$response = wp_remote_get(
 			$request,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 20,
 				'sslverify' => false,
 			)
 		);

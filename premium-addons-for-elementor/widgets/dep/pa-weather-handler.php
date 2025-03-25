@@ -85,7 +85,7 @@ class Pa_Weather_Handler {
 		$weather_data = wp_remote_get(
 			$req_url,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 15,
 				'sslverify' => false,
 			)
 		);
@@ -144,7 +144,7 @@ class Pa_Weather_Handler {
 		$city_data = wp_remote_get(
 			$req_url,
 			array(
-				'timeout'   => 60,
+				'timeout'   => 15,
 				'sslverify' => false,
 			)
 		);
