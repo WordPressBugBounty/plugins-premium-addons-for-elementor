@@ -205,6 +205,17 @@ class Premium_Lottie extends Widget_Base {
 		);
 
 		$this->add_control(
+			'lottie_delay',
+			array(
+				'label'   => __( 'Animation Delay (sec)', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::NUMBER,
+				'min'     => 0,
+				'max'     => 5,
+				'step'    => 0.1,
+			)
+		);
+
+		$this->add_control(
 			'trigger',
 			array(
 				'label'              => __( 'Trigger', 'premium-addons-for-elementor' ),
@@ -715,6 +726,7 @@ class Premium_Lottie extends Widget_Base {
 				'data-lottie-hover'   => $settings['lottie_hover'] || 'hover' === $settings['trigger'],
 				'data-lottie-speed'   => $settings['lottie_speed'],
 				'data-lottie-render'  => $settings['lottie_renderer'],
+				'data-lottie-delay'   => $settings['lottie_delay'],
 			)
 		);
 
@@ -817,7 +829,8 @@ class Premium_Lottie extends Widget_Base {
 			'data-lottie-reverse': settings.lottie_reverse,
 			'data-lottie-hover': settings.lottie_hover || 'hover' === settings.trigger,
 			'data-lottie-speed': settings.lottie_speed,
-			'data-lottie-render': settings.lottie_renderer
+			'data-lottie-render': settings.lottie_renderer,
+			'data-lottie-delay': settings.lottie_delay
 		});
 
 		if( 'hover' === settings.trigger && 'true' === settings.hover_leave_reverse ) {

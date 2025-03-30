@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.7.2
 Requires PHP: 7.4
-Stable Tag: 4.10.90
+Stable Tag: 4.11.0
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.0 =
+
+- Tweak: Added Delay control in Lottie animation widget.
+- Tweak: Vertical Scroll widget behavior on Elementor editor.
+- Tweak: Removed `nofollow` link attribute for links in Google Maps widget markers.
+- Tweak: Removed Frontpage option from Static Page in Display Conditions addon.
+- Tweak: Action control changed to show when Query is set to Posts in AJAX Search widget.
 
 = 4.10.90 =
 

@@ -1,8 +1,49 @@
 == Changelog ==
 
+= 4.11.0 =
+
+- Tweak: Added Delay control in Lottie animation widget.
+- Tweak: Vertical Scroll widget behavior on Elementor editor.
+- Tweak: Removed `nofollow` link attribute for links in Google Maps widget markers.
+- Tweak: Removed Frontpage option from Static Page in Display Conditions addon.
+- Tweak: Action control changed to show when Query is set to Posts in AJAX Search widget.
+
+= 4.10.90 =
+
+- Tweak: Compatibility with Google Maps AdvancedMarkers API in Google Maps widget.
+- Tweak: Code improvements for better performance.
+- Tweak: Added Maximum Height option for Quick View in Woo Products widget.
+- Fixed: Elementor templates in Mega Menu widget can't be edited.
+- Fixed: Stock message in Woo Mini Cart widget can't be translated.
+- Fixed: Styling issue in Progress Bar widget on small screens.
+
+= 4.10.89 =
+
+- Tweak: Code improvements for better performance.
+- Fixed: Dynamic Assets Generate not working in some cases.
+
+= 4.10.88 =
+
+- Tweak: Code improvements for better performance.
+- Fixed: Image/Content Display option is not responsive in Woo Products Listing widget.
+- Fixed: Fatal error caused by Dynamic Assets Generate.
+
+= 4.10.87 =
+
+- Tweak: Added option to use SVG icons in Mega Menu widget.
+- Tweak: Improved compatibility between Woo CTA button widget and Woocommerce Subscriptions plugin.
+- Fixed: Some issues related to alignment in Global Tooltips addon.
+- Fixed: Elementor Templates not working on editor in Global Tooltips addon.
+- Fixed: Security issue in Lottie JavaScript file.
+
+= 4.10.86 =
+
+- Tweak: Show message when PHP memory/time limit are low to improve usability.
+- Fixed: Restart option in Countdown Timer widget not working correctly.
+
 = 4.10.85 =
 
-- Tweak: Added Show Parent Terms Only option in Tags Cloud.
+- Tweak: Added notice in Mega Menu Settings popup for better UX and prevent conflicts.
 
 = 4.10.84 =
 

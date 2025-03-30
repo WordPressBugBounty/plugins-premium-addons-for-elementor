@@ -18861,7 +18861,8 @@
 
 				var loop = layer.lottie_loop,
 					reverse = layer.lottie_reverse,
-					trigger = layer.hover_action;
+					trigger = layer.hover_action,
+					delay = layer.lottie_delay * 1000 || 0;
 
 				if ("play" !== trigger) {
 					var scrollStart = layer.start_on_visible;
@@ -18872,7 +18873,7 @@
 					renderer: renderer || 'svg',
 					loop: loop ? true : false,
 					path: layer.lottie_url,
-					autoplay: true
+					autoplay: false
 				});
 
 				if (layer.lottie_speed && 1 !== layer.lottie_speed) {
@@ -18884,6 +18885,10 @@
 				}
 
 				animItem.addEventListener('DOMLoaded', function () {
+
+					setTimeout(function () {
+						animItem.play();
+					}, delay);
 
 					if ("play" === trigger || ("play" !== trigger && scrollStart)) {
 						animItem.pause();
@@ -19017,14 +19022,15 @@
 				scroll = $lottie.data("lottie-scroll"),
 				viewPort = $lottie.data("lottie-viewport"),
 				renderer = $lottie.data("lottie-render"),
-				click = $lottie.data("lottie-click");
+				click = $lottie.data("lottie-click"),
+				delay = $lottie.data("lottie-delay") * 1000 || 0;
 
 			var animItem = lottie.loadAnimation({
 				container: $lottie[0],
 				renderer: renderer || 'svg',
 				loop: loop ? true : false,
 				path: $lottie.data("lottie-url"),
-				autoplay: true,
+				autoplay: false,
 			});
 
 			if (reverse) {
@@ -19036,6 +19042,11 @@
 			}
 
 			animItem.addEventListener('DOMLoaded', function () {
+
+				// Delay animation start
+				setTimeout(function () {
+					animItem.play();
+				}, delay);
 
 				if (scroll || viewPort) {
 

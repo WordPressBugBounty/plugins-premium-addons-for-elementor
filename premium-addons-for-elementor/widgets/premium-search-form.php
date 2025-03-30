@@ -800,19 +800,7 @@ class Premium_Search_Form extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'search_button' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'button_text',
-			array(
-				'label'       => __( 'Text', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => __( 'Find', 'premium-addons-for-elementor' ),
-				'label_block' => true,
-				'condition'   => array(
-					'search_button' => 'yes',
+					'query_type'    => 'post',
 				),
 			)
 		);
@@ -824,8 +812,23 @@ class Premium_Search_Form extends Widget_Base {
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
 				'condition'   => array(
+					'query_type'    => 'post',
 					'search_button' => 'yes',
 					'button_action' => 'redirect',
+				),
+			)
+		);
+
+		$this->add_control(
+			'button_text',
+			array(
+				'label'       => __( 'Text', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => __( 'Find', 'premium-addons-for-elementor' ),
+				'separator'=> 'before',
+				'label_block' => true,
+				'condition'   => array(
+					'search_button' => 'yes',
 				),
 			)
 		);
@@ -936,8 +939,8 @@ class Premium_Search_Form extends Widget_Base {
 				'label_block' => true,
 				'type'        => Controls_Manager::SELECT,
 				'options'     => array(
-					'row-reverse' => __( 'Before', 'premium-addons-for-elementor' ),
-					'row'         => __( 'After', 'premium-addons-for-elementor' ),
+					'row-reverse' => __( 'Before Input Field', 'premium-addons-for-elementor' ),
+					'row'         => __( 'After Input Field', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'row',
 				'selectors'   => array(
@@ -3171,8 +3174,7 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$search_settings = array(
-			'query'        => $settings['query_type'],
-			'buttonAction' => $settings['button_action'],
+			'query'        => $settings['query_type']
 		);
 
 		if ( 'redirect' === $settings['button_action'] ) {
@@ -3186,6 +3188,7 @@ class Premium_Search_Form extends Widget_Base {
 
 			$search_settings['hideOnClick']    = 'yes' === $settings['hide_on_click'];
 			$search_settings['results_number'] = 'yes' === $settings['show_results_number'];
+			$search_settings['buttonAction'] = $settings['button_action'];
 			// Add page ID to be used later to get posts by AJAX.
 			$page_id = '';
 			if ( null !== Plugin::$instance->documents->get_current() ) {

@@ -4864,7 +4864,7 @@
 				$search = $scope.find('.premium-search__input'),
 				$spinnerWrap = $scope.find('.premium-search__spinner'),
 				queryType = settings.query,
-				buttonAction = settings.buttonAction,
+				buttonAction = settings.buttonAction || 'onpage',
 				lastSearchQuery = null,
 				highlightColor = getComputedStyle($scope[0]).getPropertyValue('--pa-search-hightlight');
 

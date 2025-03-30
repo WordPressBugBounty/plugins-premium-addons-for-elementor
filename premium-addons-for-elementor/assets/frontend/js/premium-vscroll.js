@@ -1,1130 +1,1132 @@
 (function ($) {
-    /****** Premium Vertical Scroll Handler ******/
-    var PremiumVerticalScrollHandler = function ($scope, $) {
+	/****** Premium Vertical Scroll Handler ******/
+	var PremiumVerticalScrollHandler = function ($scope, $) {
 
-        var deviceType = elementorFrontend.getCurrentDeviceMode();
+		var deviceType = elementorFrontend.getCurrentDeviceMode();
 
-        var hiddenClass = "elementor-hidden-" + deviceType;
+		var hiddenClass = "elementor-hidden-" + deviceType;
 
-        // if ("mobile" === deviceType)
-        //     hiddenClass = "elementor-hidden-phone";
+		// if ("mobile" === deviceType)
+		//     hiddenClass = "elementor-hidden-phone";
 
-        if ($scope.closest("section.elementor-element, .e-con").hasClass(hiddenClass)) {
-            return
-        }
+		if ($scope.closest("section.elementor-element, .e-con").hasClass(hiddenClass)) {
+			return
+		}
 
-        var $vScrollElem = $scope.find(".premium-vscroll-wrap"),
-            $sectionsWrap = $scope.find(".premium-vscroll-sections-wrap"),
-            instance = null,
-            vScrollSettings = $vScrollElem.data("settings");
+		var $vScrollElem = $scope.find(".premium-vscroll-wrap"),
+			$sectionsWrap = $scope.find(".premium-vscroll-sections-wrap"),
+			instance = null,
+			vScrollSettings = $vScrollElem.data("settings");
 
-        //Change back to default animation on touch devices.
-        if (['mobile', 'mobile_extra', 'tablet', 'tablet_extra'].includes(deviceType)) {
-            $sectionsWrap.removeAttr('data-animation data-hijacking');
-        }
+		//Change back to default animation on touch devices.
+		if (['mobile', 'mobile_extra', 'tablet', 'tablet_extra'].includes(deviceType)) {
+			$sectionsWrap.removeAttr('data-animation data-hijacking');
+		}
 
-        vScrollSettings.deviceType = deviceType;
+		vScrollSettings.deviceType = deviceType;
 
-        instance = new premiumVerticalScroll($vScrollElem, vScrollSettings);
-        instance.init();
+		instance = new premiumVerticalScroll($vScrollElem, vScrollSettings);
+		instance.init();
 
-    };
+	};
 
-    window.premiumVerticalScroll = function ($selector, settings) {
-        var self = this,
-            $window = $(window),
-            currentDevice = elementorFrontend.getCurrentDeviceMode(),
-            isTouch = !['desktop', 'widescreen', 'laptop'].includes(currentDevice),
-            $instance = $selector,
-            checkTemps = $selector.find(".premium-vscroll-sections-wrap").length,
-            $htmlBody = $("html, body"),
-            $itemsList = $(".premium-vscroll-dot-item", $instance),
-            $menuItems = $(".premium-vscroll-nav-item", $instance),
-            defaultSettings = {
-                speed: 700,
-                offset: 0,
-                fullSection: true
-            },
-            settings = $.extend({}, defaultSettings, settings),
-            sections = {},
-            currentSection = null,
-            isScrolling = false,
-            inScope = true,
-            scrollings = [],
-            touchStartY = 0,
-            touchEndY = 0;
+	window.premiumVerticalScroll = function ($selector, settings) {
+		var self = this,
+			$window = $(window),
+			currentDevice = elementorFrontend.getCurrentDeviceMode(),
+			isTouch = !['desktop', 'widescreen', 'laptop'].includes(currentDevice),
+			$instance = $selector,
+			checkTemps = $selector.find(".premium-vscroll-sections-wrap").length,
+			$htmlBody = $("html, body"),
+			$itemsList = $(".premium-vscroll-dot-item", $instance),
+			$menuItems = $(".premium-vscroll-nav-item", $instance),
+			defaultSettings = {
+				speed: 700,
+				offset: 0,
+				fullSection: true
+			},
+			settings = $.extend({}, defaultSettings, settings),
+			sections = {},
+			currentSection = null,
+			isScrolling = false,
+			inScope = true,
+			scrollings = [],
+			touchStartY = 0,
+			touchEndY = 0;
 
-        //Extend jQuery default easing.
-        jQuery.extend(jQuery.easing, {
-            easeInOutCirc: function (x, t, b, c, d) {
-                if ((t /= d / 2) < 1)
-                    return (-c / 2) * (Math.sqrt(1 - t * t) - 1) + b;
-                return (c / 2) * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
-            }
-        });
+		//Extend jQuery default easing.
+		jQuery.extend(jQuery.easing, {
+			easeInOutCirc: function (x, t, b, c, d) {
+				if ((t /= d / 2) < 1)
+					return (-c / 2) * (Math.sqrt(1 - t * t) - 1) + b;
+				return (c / 2) * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
+			}
+		});
 
-        self.init = function () {
+		self.init = function () {
 
-            if (settings.fullTouch || (!isTouch && settings.fullSection)) {
+			if (settings.fullTouch || (!isTouch && settings.fullSection)) {
 
-                if (settings.fullCheckOverflow) {
+				if (settings.fullCheckOverflow) {
 
-                    self.setSectionsOverflow();
-                }
-            }
+					self.setSectionsOverflow();
+				}
+			}
 
-            self.setSectionsData();
+			self.setSectionsData();
 
-            self.vscrollEffects();
+			self.vscrollEffects();
 
-            $itemsList.on("click.premiumVerticalScroll", self.onNavDotChange);
-            $menuItems.on("click.premiumVerticalScroll", self.onNavDotChange);
+			$itemsList.on("click.premiumVerticalScroll", self.onNavDotChange);
+			$menuItems.on("click.premiumVerticalScroll", self.onNavDotChange);
 
-            $itemsList.on("mouseenter.premiumVerticalScroll", self.onNavDotEnter);
+			$itemsList.on("mouseenter.premiumVerticalScroll", self.onNavDotEnter);
 
-            $itemsList.on("mouseleave.premiumVerticalScroll", self.onNavDotLeave);
+			$itemsList.on("mouseleave.premiumVerticalScroll", self.onNavDotLeave);
 
-            if ("desktop" === settings.deviceType) {
-                $window.on("scroll.premiumVerticalScroll", self.onWheel);
-            }
+			if ("desktop" === settings.deviceType) {
+				$window.on("wheel.premiumVerticalScroll", self.onWheel);
+			}
 
-            $window.on("resize.premiumVerticalScroll orientationchange.premiumVerticalScroll", self.debounce(50, self.onResize));
+			$window.on("resize.premiumVerticalScroll orientationchange.premiumVerticalScroll", self.debounce(50, self.onResize));
 
-            $(document).ready(function () {
+			$(document).ready(function () {
 
-                self.setSectionsData();
+				self.setSectionsData();
 
-                //Handle Full Section Scroll.
-                if (settings.fullTouch || (!isTouch && settings.fullSection))
-                    self.sectionsOverflowRefresh();
+				//Handle Full Section Scroll.
+				if (settings.fullTouch || (!isTouch && settings.fullSection))
+					self.sectionsOverflowRefresh();
 
-                self.checkCurrentActive();
+				self.checkCurrentActive();
 
-            });
+			});
 
-            self.keyboardHandler();
+			self.keyboardHandler();
 
-            self.scrollHandler();
+			self.scrollHandler();
 
-            if (settings.fullSection) {
+			if (settings.fullSection) {
 
-                self.fullSectionHandler();
-            }
+				self.fullSectionHandler();
+			}
 
-            if (settings.animation) {
-                $instance.find(".premium-vscroll-dots").removeClass("elementor-invisible").addClass("animated " + settings.animation + " animated-" + settings.duration);
-            }
+			if (settings.animation) {
+				$instance.find(".premium-vscroll-dots").removeClass("elementor-invisible").addClass("animated " + settings.animation + " animated-" + settings.duration);
+			}
 
 
-        };
+		};
 
-        self.checkCurrentActive = function () {
+		self.checkCurrentActive = function () {
 
-            var firstSection = Object.keys(sections)[0];
+			var firstSection = Object.keys(sections)[0];
 
-            //Get first section offset
-            var firstSectionOffset = sections[firstSection].offset;
+			//Get first section offset
+			var firstSectionOffset = sections[firstSection].offset;
 
-            //If page scroll is lower than first section offset, then set current active to 1
-            if (firstSectionOffset >= $window.scrollTop() && firstSectionOffset - $window.scrollTop() < 200) {
-                currentSection = 1;
-                $itemsList.removeClass("active");
-                $($itemsList[0]).addClass("active");
-            }
+			//If page scroll is lower than first section offset, then set current active to 1
+			if (firstSectionOffset >= $window.scrollTop() && firstSectionOffset - $window.scrollTop() < 200) {
+				currentSection = 1;
+				$itemsList.removeClass("active");
+				$($itemsList[0]).addClass("active");
+			}
 
-            //If current active section is defined, then show the dots
-            if (currentSection)
-                $instance.find(".premium-vscroll-dots").removeClass("premium-vscroll-dots-hide");
+			//If current active section is defined, then show the dots
+			if (currentSection)
+				$instance.find(".premium-vscroll-dots").removeClass("premium-vscroll-dots-hide");
 
-        };
+		};
 
-        /**
-         * Sets the section's overflow scroll.
-         * checks if the section's content height is greater
-         * than the window height and init the section scroller.
-         */
-        self.setSectionsOverflow = function () {
+		/**
+		 * Sets the section's overflow scroll.
+		 * checks if the section's content height is greater
+		 * than the window height and init the section scroller.
+		 */
+		self.setSectionsOverflow = function () {
 
-            $itemsList.each(function () {
+			$itemsList.each(function () {
 
-                var $this = $(this),
-                    sectionId = $this.data("menuanchor"),
-                    animeType = $instance.find('.premium-vscroll-sections-wrap').data('animation'),
-                    $section = $("#" + sectionId),
-                    height = animeType ? $section.find('> div').outerHeight() : $section.outerHeight();
+				var $this = $(this),
+					sectionId = $this.data("menuanchor"),
+					animeType = $instance.find('.premium-vscroll-sections-wrap').data('animation'),
+					$section = $("#" + sectionId),
+					height = animeType ? $section.find('> div').outerHeight() : $section.outerHeight();
 
-                if (height > $window.outerHeight() && height - $window.outerHeight() >= 50) {
+				if (height > $window.outerHeight() && height - $window.outerHeight() >= 50) {
 
-                    $section.find(checkTemps ? ".elementor" : ".elementor-container").first().wrapInner("<div id='scroller-" + sectionId + "'></div>");
+					$section.find(checkTemps ? ".elementor" : ".elementor-container").first().wrapInner("<div id='scroller-" + sectionId + "'></div>");
 
-                    var isSafari = 'mobile' === elementorFrontend.getCurrentDeviceMode() && /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
-                        slimHeight = isSafari ? $window.outerHeight() + 100 + 'px' : $window.outerHeight();
+					var isSafari = 'mobile' === elementorFrontend.getCurrentDeviceMode() && /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
+						slimHeight = isSafari ? $window.outerHeight() + 100 + 'px' : $window.outerHeight();
 
-                    $("#scroller-" + sectionId).slimScroll({
-                        height: slimHeight,
-                        railVisible: false,
-                        touchScrollStep: 60
-                    });
+					$("#scroller-" + sectionId).slimScroll({
+						height: slimHeight,
+						railVisible: false,
+						touchScrollStep: 60
+					});
 
-                    var iScrollInstance = new IScroll("#scroller-" + sectionId, {
-                        mouseWheel: true,
-                        scrollbars: true,
-                        hideScrollbars: true,
-                        fadeScrollbars: false,
-                        disableMouse: true,
-                        interactiveScrollbars: false
-                    });
+					var iScrollInstance = new IScroll("#scroller-" + sectionId, {
+						mouseWheel: true,
+						scrollbars: true,
+						hideScrollbars: true,
+						fadeScrollbars: false,
+						disableMouse: true,
+						interactiveScrollbars: false
+					});
 
-                    $("#scroller-" + sectionId).data('iscrollInstance', iScrollInstance);
+					$("#scroller-" + sectionId).data('iscrollInstance', iScrollInstance);
 
-                    setTimeout(function () {
-                        iScrollInstance.refresh();
-                    }, 1500);
-                }
-            });
-        };
+					setTimeout(function () {
+						iScrollInstance.refresh();
+					}, 1500);
+				}
+			});
+		};
 
-        self.sectionsOverflowRefresh = function () {
+		self.sectionsOverflowRefresh = function () {
 
-            $itemsList.each(function () {
-                var $this = $(this),
-                    sectionId = $this.data("menuanchor");
+			$itemsList.each(function () {
+				var $this = $(this),
+					sectionId = $this.data("menuanchor");
 
-                var $section = $("#scroller-" + sectionId);
+				var $section = $("#scroller-" + sectionId);
 
-                var scroller = $section.data('iscrollInstance');
+				var scroller = $section.data('iscrollInstance');
 
-                if (scroller) {
-                    scroller.refresh();
-                }
+				if (scroller) {
+					scroller.refresh();
+				}
 
-            });
+			});
 
-        };
+		};
 
-        self.setSectionsData = function () {
+		self.setSectionsData = function () {
 
-            $itemsList.each(function () {
-                var $this = $(this),
-                    sectionId = $this.data("menuanchor"),
-                    $section = $("#" + sectionId),
-                    height = $section.outerHeight();
+			$itemsList.each(function () {
+				var $this = $(this),
+					sectionId = $this.data("menuanchor"),
+					$section = $("#" + sectionId),
+					height = $section.outerHeight();
 
-                //Make sure that section exists in the DOM
-                if ($section[0]) {
+				//Make sure that section exists in the DOM
+				if ($section[0]) {
 
-                    sections[sectionId] = {
-                        selector: $section,
-                        offset: Math.round($section.offset().top),
-                        height: height
-                    };
-                }
-            });
-        };
+					sections[sectionId] = {
+						selector: $section,
+						offset: Math.round($section.offset().top),
+						height: height
+					};
+				}
+			});
+		};
 
-        self.fullSectionHandler = function () {
+		self.fullSectionHandler = function () {
 
-            var vSection = document.getElementById($instance.attr("id"));
+			var vSection = document.getElementById($instance.attr("id"));
 
-            if (!isTouch || !settings.fullTouch) {
+			if (!isTouch || !settings.fullTouch) {
 
-                if (checkTemps) {
+				if (checkTemps) {
 
-                    document.addEventListener ?
-                        vSection.addEventListener("wheel", self.onWheel, {
-                            passive: false
-                        }) :
-                        vSection.attachEvent("onmousewheel", self.onWheel);
+					document.addEventListener ?
+						vSection.addEventListener("wheel", self.onWheel, {
+							passive: false
+						}) :
+						vSection.attachEvent("onmousewheel", self.onWheel);
 
-                } else {
+				} else {
 
-                    document.addEventListener ?
-                        document.addEventListener("wheel", self.onWheel, {
-                            passive: false
-                        }) :
-                        document.attachEvent("onmousewheel", self.onWheel);
+					document.addEventListener ?
+						document.addEventListener("wheel", self.onWheel, {
+							passive: false
+						}) :
+						document.attachEvent("onmousewheel", self.onWheel);
 
-                }
+				}
 
-            } else {
-                document.addEventListener("touchstart", self.onTouchStart);
-                document.addEventListener("touchmove", self.onTouchMove, {
-                    passive: false
-                });
+			} else {
+				document.addEventListener("touchstart", self.onTouchStart);
+				document.addEventListener("touchmove", self.onTouchMove, {
+					passive: false
+				});
 
-            }
+			}
 
-        };
+		};
 
-        self.scrollHandler = function () {
+		self.scrollHandler = function () {
 
-            var index = 0;
+			var index = 0;
 
-            for (var section in sections) {
+			for (var section in sections) {
 
-                var $section = sections[section].selector;
+				var $section = sections[section].selector;
 
-                new IntersectionObserver(function (entries, observer) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
+				new IntersectionObserver(function (entries, observer) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting) {
 
-                            var $this = $(entry.target),
-                                sectionId = $this.attr("id");
+							var $this = $(entry.target),
+								sectionId = $this.attr("id");
 
-                            if (!isScrolling) {
+							if (!isScrolling) {
 
-                                currentSection = sectionId;
+								currentSection = sectionId;
 
-                                $itemsList.removeClass("active");
-                                $menuItems.removeClass("active");
+								$itemsList.removeClass("active");
+								$menuItems.removeClass("active");
 
-                                $("[data-menuanchor=" + sectionId + "]", $instance).addClass("active");
-                            }
+								$("[data-menuanchor=" + sectionId + "]", $instance).addClass("active");
+							}
 
-                            observer.unobserve(entry.target); // to only excecute the callback func once.
-                        }
-                    });
-                }, {
-                    rootMargin: 0 !== index ? "0%" : "-1% 0px 0px 0px"
-                }).observe($section[0]);
+							observer.unobserve(entry.target); // to only excecute the callback func once.
+						}
+					});
+				}, {
+					rootMargin: 0 !== index ? "0%" : "-1% 0px 0px 0px"
+				}).observe($section[0]);
 
-                // elementorFrontend.waypoint(
-                //     $section,
-                //     function () {
+				// elementorFrontend.waypoint(
+				//     $section,
+				//     function () {
 
-                //         var $this = $(this),
-                //             sectionId = $this.attr("id");
+				//         var $this = $(this),
+				//             sectionId = $this.attr("id");
 
-                //         if (!isScrolling) {
+				//         if (!isScrolling) {
 
-                //             currentSection = sectionId;
+				//             currentSection = sectionId;
 
-                //             $itemsList.removeClass("active");
-                //             $menuItems.removeClass("active");
+				//             $itemsList.removeClass("active");
+				//             $menuItems.removeClass("active");
 
-                //             $("[data-menuanchor=" + sectionId + "]", $instance).addClass("active");
-                //         }
-                //     }, {
-                //         offset: 0 !== index ? "0%" : "-1%",
-                //         triggerOnce: false
-                //     }
-                // );
+				//             $("[data-menuanchor=" + sectionId + "]", $instance).addClass("active");
+				//         }
+				//     }, {
+				//         offset: 0 !== index ? "0%" : "-1%",
+				//         triggerOnce: false
+				//     }
+				// );
 
-                index++;
-            }
+				index++;
+			}
 
-        };
+		};
 
-        self.keyboardHandler = function () {
-            $(document).keydown(function (event) {
-                if (38 == event.keyCode) {
-                    self.onKeyUp(event, "up");
-                }
+		self.keyboardHandler = function () {
+			$(document).keydown(function (event) {
+				if (38 == event.keyCode) {
+					self.onKeyUp(event, "up");
+				}
 
-                if (40 == event.keyCode) {
-                    self.onKeyUp(event, "down");
-                }
-            });
-        };
+				if (40 == event.keyCode) {
+					self.onKeyUp(event, "down");
+				}
+			});
+		};
 
-        self.isScrolled = function (sectionID, direction) {
+		self.isScrolled = function (sectionID, direction) {
 
-            var $section = $("#scroller-" + sectionID);
+			var $section = $("#scroller-" + sectionID);
 
-            var scroller = $section.data('iscrollInstance');
+			var scroller = $section.data('iscrollInstance');
 
-            if (scroller) {
-                if ('down' === direction) {
-                    return (0 - scroller.y) + $section.scrollTop() + 1 + $section.innerHeight() >= $section[0].scrollHeight;
-                } else if ('up' === direction) {
-                    return scroller.y >= 0 && !$section.scrollTop();
-                }
+			if (scroller) {
+				if ('down' === direction) {
+					return (0 - scroller.y) + $section.scrollTop() + 1 + $section.innerHeight() >= $section[0].scrollHeight;
+				} else if ('up' === direction) {
+					return scroller.y >= 0 && !$section.scrollTop();
+				}
 
-            } else {
-                return true;
-            }
+			} else {
+				return true;
+			}
 
-        };
+		};
 
-        self.getEventsPage = function (e) {
+		self.getEventsPage = function (e) {
 
-            var events = [];
+			var events = [];
 
-            events.y = (typeof e.pageY !== 'undefined' && (e.pageY || e.pageX) ? e.pageY : e.touches[0].pageY);
-            events.x = (typeof e.pageX !== 'undefined' && (e.pageY || e.pageX) ? e.pageX : e.touches[0].pageX);
+			events.y = (typeof e.pageY !== 'undefined' && (e.pageY || e.pageX) ? e.pageY : e.touches[0].pageY);
+			events.x = (typeof e.pageX !== 'undefined' && (e.pageY || e.pageX) ? e.pageX : e.touches[0].pageX);
 
-            if (isTouch && typeof e.touches !== 'undefined') {
-                events.y = e.touches[0].pageY;
-                events.x = e.touches[0].pageX;
-            }
+			if (isTouch && typeof e.touches !== 'undefined') {
+				events.y = e.touches[0].pageY;
+				events.x = e.touches[0].pageX;
+			}
 
-            return events;
+			return events;
 
-        };
+		};
 
-        self.onTouchStart = function (e) {
+		self.onTouchStart = function (e) {
 
-            //Prevent page scroll if scrolled down below the last of our sections.
-            inScope = true;
+			//Prevent page scroll if scrolled down below the last of our sections.
+			inScope = true;
 
-            var touchEvents = self.getEventsPage(e);
-            touchStartY = touchEvents.y;
+			var touchEvents = self.getEventsPage(e);
+			touchStartY = touchEvents.y;
 
-        };
+		};
 
-        self.onTouchMove = function (e) {
+		self.onTouchMove = function (e) {
 
-            if (inScope) {
-                self.preventDefault(e);
-            }
+			if (inScope) {
+				self.preventDefault(e);
+			}
 
-            if (isScrolling) {
-                self.preventDefault(e);
-                return false;
-            }
+			if (isScrolling) {
+				self.preventDefault(e);
+				return false;
+			}
 
-            var touchEvents = self.getEventsPage(e);
+			var touchEvents = self.getEventsPage(e);
 
-            touchEndY = touchEvents.y;
+			touchEndY = touchEvents.y;
 
-            var $target = $(e.target),
-                sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
-                $section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
-                sectionId = $section.attr("id"),
-                newSectionId = false,
-                prevSectionId = false,
-                nextSectionId = false,
-                direction = false,
-                windowScrollTop = $window.scrollTop();
+			var $target = $(e.target),
+				sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
+				$section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
+				sectionId = $section.attr("id"),
+				newSectionId = false,
+				prevSectionId = false,
+				nextSectionId = false,
+				direction = false,
+				windowScrollTop = $window.scrollTop();
 
-            $(".premium-vscroll-tooltip").hide();
+			$(".premium-vscroll-tooltip").hide();
 
-            if (self.beforeCheck()) {
-                sectionId = self.getFirstSection(sections);
-            }
+			if (self.beforeCheck()) {
+				sectionId = self.getFirstSection(sections);
+			}
 
-            if (self.afterCheck()) {
-                sectionId = self.getLastSection(sections);
-            }
+			if (self.afterCheck()) {
+				sectionId = self.getLastSection(sections);
+			}
 
-            if ($target.closest('.premium_maps_map_height').length > 0) {
+			if ($target.closest('.premium_maps_map_height').length > 0) {
 
-                var $closestMapSettings = $target.closest('.premium_maps_map_height').data('settings');
+				var $closestMapSettings = $target.closest('.premium_maps_map_height').data('settings');
 
-                if ($closestMapSettings.scrollwheel)
-                    return;
-            }
+				if ($closestMapSettings.scrollwheel)
+					return;
+			}
 
-            //Swiper is added here to prevent scrolling on swipe left/right on touch devices.
-            if ($('.premium-modal-open').length > 0 || $target.closest('.e-widget-swiper').length > 0) {
-                return;
-            }
+			//Swiper is added here to prevent scrolling on swipe left/right on touch devices.
+			if ($('.premium-modal-open').length > 0 || $target.closest('.e-widget-swiper').length > 0) {
+				return;
+			}
 
-            var curTime = new Date().getTime();
+			var curTime = new Date().getTime();
 
-            if (scrollings.length > 149) {
-                scrollings.shift();
-            }
+			if (scrollings.length > 149) {
+				scrollings.shift();
+			}
 
-            //keeping record of the previous scrollings
-            scrollings.push(Math.abs(touchEndY));
+			//keeping record of the previous scrollings
+			scrollings.push(Math.abs(touchEndY));
 
-            //time difference between the last scroll and the current one
-            var timeDiff = curTime - prevTime;
-            prevTime = curTime;
+			//time difference between the last scroll and the current one
+			var timeDiff = curTime - prevTime;
+			prevTime = curTime;
 
-            //haven't they scrolled in a while?
-            //(enough to be consider a different scrolling action to scroll another section)
-            if (timeDiff > 200) {
-                //emptying the array, we dont care about old scrollings for our averages
-                scrollings = [];
-            }
+			//haven't they scrolled in a while?
+			//(enough to be consider a different scrolling action to scroll another section)
+			if (timeDiff > 200) {
+				//emptying the array, we dont care about old scrollings for our averages
+				scrollings = [];
+			}
 
-            if (touchStartY > touchEndY) {
-                direction = 'down';
-            } else if (touchEndY > touchStartY) {
-                direction = 'up';
-            }
+			if (touchStartY > touchEndY) {
+				direction = 'down';
+			} else if (touchEndY > touchStartY) {
+				direction = 'up';
+			}
 
-            if (sectionId && sections.hasOwnProperty(sectionId)) {
+			if (sectionId && sections.hasOwnProperty(sectionId)) {
 
-                prevSectionId = self.checkPrevSection(sections, sectionId);
-                nextSectionId = self.checkNextSection(sections, sectionId);
+				prevSectionId = self.checkPrevSection(sections, sectionId);
+				nextSectionId = self.checkNextSection(sections, sectionId);
 
-                if ("up" === direction) {
+				if ("up" === direction) {
 
-                    if (!nextSectionId && sections[sectionId].offset < windowScrollTop) {
-                        newSectionId = sectionId;
-                    } else {
-                        newSectionId = prevSectionId;
-                    }
-                }
+					if (!nextSectionId && sections[sectionId].offset < windowScrollTop) {
+						newSectionId = sectionId;
+					} else {
+						newSectionId = prevSectionId;
+					}
+				}
 
-                if ("down" === direction) {
+				if ("down" === direction) {
 
-                    if (!prevSectionId && sections[sectionId].offset - settings.offset > windowScrollTop + 5) {
-                        newSectionId = sectionId;
-                    } else {
-                        newSectionId = nextSectionId;
-                    }
-                }
+					if (!prevSectionId && sections[sectionId].offset - settings.offset > windowScrollTop + 5) {
+						newSectionId = sectionId;
+					} else {
+						newSectionId = nextSectionId;
+					}
+				}
 
-                var averageEnd = self.getAverage(scrollings, 10);
-                var averageMiddle = self.getAverage(scrollings, 70);
-                var isAccelerating = averageEnd >= averageMiddle;
+				var averageEnd = self.getAverage(scrollings, 10);
+				var averageMiddle = self.getAverage(scrollings, 70);
+				var isAccelerating = averageEnd >= averageMiddle;
 
-                if (newSectionId) {
-                    inScope = true;
-                    $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
+				if (newSectionId) {
+					inScope = true;
+					$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
 
-                    if (!self.isScrolled(sectionId, direction)) {
-                        return;
-                    }
+					if (!self.isScrolled(sectionId, direction)) {
+						return;
+					}
 
-                    if (isAccelerating && !isScrolling) {
-                        self.onAnchorChange(newSectionId);
-                    }
+					if (isAccelerating && !isScrolling) {
+						self.onAnchorChange(newSectionId);
+					}
 
-                } else {
+				} else {
 
-                    //Make sure the scroll is done.
-                    if (averageEnd <= 5) {
-                        inScope = false;
-                    }
+					//Make sure the scroll is done.
+					if (averageEnd <= 5) {
+						inScope = false;
+					}
 
-                    var $lastselector = checkTemps ? $instance : $("#" + sectionId);
+					var $lastselector = checkTemps ? $instance : $("#" + sectionId);
 
-                    if ("down" === direction) {
+					if ("down" === direction) {
 
-                        if ($lastselector.offset().top + $lastselector.innerHeight() - $(document).scrollTop() > 600) {
+						if ($lastselector.offset().top + $lastselector.innerHeight() - $(document).scrollTop() > 600) {
 
-                            $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+							$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
 
-                        }
+						}
 
-                    } else if ("up" === direction) {
+					} else if ("up" === direction) {
 
-                        if ($lastselector.offset().top - $(document).scrollTop() > 200) {
+						if ($lastselector.offset().top - $(document).scrollTop() > 200) {
 
-                            $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+							$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
 
-                        }
+						}
 
-                    }
-                }
+					}
+				}
 
-            } else {
-                inScope = false;
-            }
+			} else {
+				inScope = false;
+			}
 
-        };
+		};
 
-        self.scrollStop = function () {
-            $htmlBody.stop(true);
-        };
+		self.scrollStop = function () {
+			$htmlBody.stop(true);
+		};
 
-        self.checkNextSection = function (object, key) {
-            var keys = Object.keys(object),
-                idIndex = keys.indexOf(key),
-                nextIndex = (idIndex += 1);
+		self.checkNextSection = function (object, key) {
+			var keys = Object.keys(object),
+				idIndex = keys.indexOf(key),
+				nextIndex = (idIndex += 1);
 
-            if (nextIndex >= keys.length) {
-                return false;
-            }
+			if (nextIndex >= keys.length) {
+				return false;
+			}
 
-            var nextKey = keys[nextIndex];
+			var nextKey = keys[nextIndex];
 
-            return nextKey;
-        };
+			return nextKey;
+		};
 
-        self.checkPrevSection = function (object, key) {
-            var keys = Object.keys(object),
-                idIndex = keys.indexOf(key),
-                prevIndex = (idIndex -= 1);
+		self.checkPrevSection = function (object, key) {
+			var keys = Object.keys(object),
+				idIndex = keys.indexOf(key),
+				prevIndex = (idIndex -= 1);
 
-            if (0 > idIndex) {
-                return false;
-            }
+			if (0 > idIndex) {
+				return false;
+			}
 
-            var prevKey = keys[prevIndex];
+			var prevKey = keys[prevIndex];
 
-            return prevKey;
-        };
+			return prevKey;
+		};
 
-        self.debounce = function (threshold, callback) {
-            var timeout;
+		self.debounce = function (threshold, callback) {
+			var timeout;
 
-            return function debounced($event) {
-                function delayed() {
-                    callback.call(this, $event);
-                    timeout = null;
-                }
+			return function debounced($event) {
+				function delayed() {
+					callback.call(this, $event);
+					timeout = null;
+				}
 
-                if (timeout) {
-                    clearTimeout(timeout);
-                }
+				if (timeout) {
+					clearTimeout(timeout);
+				}
 
-                timeout = setTimeout(delayed, threshold);
-            };
-        };
+				timeout = setTimeout(delayed, threshold);
+			};
+		};
 
-        self.visible = function (selector, partial, hidden) {
-            var s = selector.get(0),
-                vpHeight = $window.outerHeight(),
-                clientSize =
-                    hidden === true ? s.offsetWidth * s.offsetHeight : true;
-            if (typeof s.getBoundingClientRect === "function") {
-                var rec = s.getBoundingClientRect();
-                var tViz = rec.top >= 0 && rec.top < vpHeight,
-                    bViz = rec.bottom > 0 && rec.bottom <= vpHeight,
-                    vVisible = partial ? tViz || bViz : tViz && bViz,
-                    vVisible =
-                        rec.top < 0 && rec.bottom > vpHeight ? true : vVisible;
-                return clientSize && vVisible;
-            } else {
-                var viewTop = 0,
-                    viewBottom = viewTop + vpHeight,
-                    position = $window.position(),
-                    _top = position.top,
-                    _bottom = _top + $window.height(),
-                    compareTop = partial === true ? _bottom : _top,
-                    compareBottom = partial === true ? _top : _bottom;
-                return (
-                    !!clientSize &&
-                    (compareBottom <= viewBottom && compareTop >= viewTop)
-                );
-            }
-        };
+		self.visible = function (selector, partial, hidden) {
+			var s = selector.get(0),
+				vpHeight = $window.outerHeight(),
+				clientSize =
+					hidden === true ? s.offsetWidth * s.offsetHeight : true;
+			if (typeof s.getBoundingClientRect === "function") {
+				var rec = s.getBoundingClientRect();
+				var tViz = rec.top >= 0 && rec.top < vpHeight,
+					bViz = rec.bottom > 0 && rec.bottom <= vpHeight,
+					vVisible = partial ? tViz || bViz : tViz && bViz,
+					vVisible =
+						rec.top < 0 && rec.bottom > vpHeight ? true : vVisible;
+				return clientSize && vVisible;
+			} else {
+				var viewTop = 0,
+					viewBottom = viewTop + vpHeight,
+					position = $window.position(),
+					_top = position.top,
+					_bottom = _top + $window.height(),
+					compareTop = partial === true ? _bottom : _top,
+					compareBottom = partial === true ? _top : _bottom;
+				return (
+					!!clientSize &&
+					(compareBottom <= viewBottom && compareTop >= viewTop)
+				);
+			}
+		};
 
-        self.onNavDotEnter = function () {
-            var $this = $(this),
-                index = $this.data("index");
+		self.onNavDotEnter = function () {
+			var $this = $(this),
+				index = $this.data("index");
 
-            if (settings.tooltips) {
-                // make sure only one tool tip is showing.
-                $(".premium-vscroll-tooltip").remove();
+			if (settings.tooltips) {
+				// make sure only one tool tip is showing.
+				$(".premium-vscroll-tooltip").remove();
 
-                $(
-                    '<div class="premium-vscroll-tooltip"><span>' +
-                    settings.dotsText[index] +
-                    "</span></div>"
-                )
-                    .hide()
-                    .appendTo($this)
-                    .fadeIn(200);
-            }
-        };
+				$(
+					'<div class="premium-vscroll-tooltip"><span>' +
+					settings.dotsText[index] +
+					"</span></div>"
+				)
+					.hide()
+					.appendTo($this)
+					.fadeIn(200);
+			}
+		};
 
-        self.onNavDotLeave = function () {
-            $(".premium-vscroll-tooltip").fadeOut(200, function () {
-                $(this).remove();
-            });
-        };
+		self.onNavDotLeave = function () {
+			$(".premium-vscroll-tooltip").fadeOut(200, function () {
+				$(this).remove();
+			});
+		};
 
-        self.onNavDotChange = function (event) {
-            var $this = $(this),
-                index = $this.index(),
-                sectionId = $this.data("menuanchor"),
-                offset = null;
+		self.onNavDotChange = function (event) {
+			var $this = $(this),
+				index = $this.index(),
+				sectionId = $this.data("menuanchor"),
+				offset = null;
 
-            if (!sections.hasOwnProperty(sectionId)) {
-                return false;
-            }
+			if (!sections.hasOwnProperty(sectionId)) {
+				return false;
+			}
 
-            offset = sections[sectionId].offset - settings.offset;
+			offset = sections[sectionId].offset - settings.offset;
 
-            if (offset < 0)
-                offset = sections[sectionId].offset;
+			if (offset < 0)
+				offset = sections[sectionId].offset;
 
-            if (!isScrolling) {
-                isScrolling = true;
+			if (!isScrolling) {
+				isScrolling = true;
 
-                currentSection = sectionId;
-                $menuItems.removeClass("active");
-                $itemsList.removeClass("active");
+				currentSection = sectionId;
+				$menuItems.removeClass("active");
+				$itemsList.removeClass("active");
 
-                if ($this.hasClass("premium-vscroll-nav-item")) {
-                    $($itemsList[index]).addClass("active");
-                } else {
-                    $($menuItems[index]).addClass("active");
-                }
+				if ($this.hasClass("premium-vscroll-nav-item")) {
+					$($itemsList[index]).addClass("active");
+				} else {
+					$($menuItems[index]).addClass("active");
+				}
 
-                $this.addClass("active");
+				$this.addClass("active");
 
-                $htmlBody
-                    .stop()
-                    .clearQueue()
-                    .animate({
-                        scrollTop: offset
-                    },
-                        settings.speed,
-                        "easeInOutCirc",
-                        function () {
-                            isScrolling = false;
-                        }
-                    );
-            }
-        };
+				$htmlBody
+					.stop()
+					.clearQueue()
+					.animate({
+						scrollTop: offset
+					},
+						settings.speed,
+						"easeInOutCirc",
+						function () {
+							isScrolling = false;
+						}
+					);
+			}
+		};
 
-        self.preventDefault = function (event) {
+		self.preventDefault = function (event) {
 
-            if (event.preventDefault) {
+			if (event.preventDefault) {
 
-                event.preventDefault();
+				event.preventDefault();
 
-            } else {
+			} else {
 
-                event.returnValue = false;
+				event.returnValue = false;
 
-            }
-        };
+			}
+		};
 
-        self.onAnchorChange = function (sectionId) {
+		self.onAnchorChange = function (sectionId) {
 
-            var $this = $("[data-menuanchor=" + sectionId + "]", $instance),
-                offset = null;
+			var $this = $("[data-menuanchor=" + sectionId + "]", $instance),
+				offset = null;
 
-            if (!sections.hasOwnProperty(sectionId)) {
-                return false;
-            }
+			if (!sections.hasOwnProperty(sectionId)) {
+				return false;
+			}
 
-            offset = sections[sectionId].offset - settings.offset;
+			offset = sections[sectionId].offset - settings.offset;
 
-            if (offset < 0)
-                offset = sections[sectionId].offset;
+			if (offset < 0)
+				offset = sections[sectionId].offset;
 
-            if (!isScrolling) {
-                isScrolling = true;
+			if (!isScrolling) {
+				isScrolling = true;
 
-                if (settings.addToHistory) {
-                    window.history.pushState(null, null, "#" + sectionId);
-                }
+				if (settings.addToHistory) {
+					window.history.pushState(null, null, "#" + sectionId);
+				}
 
-                currentSection = sectionId;
+				currentSection = sectionId;
 
-                $itemsList.removeClass("active");
-                $menuItems.removeClass("active");
+				$itemsList.removeClass("active");
+				$menuItems.removeClass("active");
 
-                $this.addClass("active");
+				$this.addClass("active");
 
-                $htmlBody.animate({ scrollTop: offset }, settings.speed, "easeInOutCirc");
+				$htmlBody.animate({ scrollTop: offset }, settings.speed, "easeInOutCirc");
 
-                setTimeout(function () {
-                    isScrolling = false;
-                }, settings.speed < 700 ? 700 : settings.speed);
-            }
-        };
+				setTimeout(function () {
+					isScrolling = false;
+				}, settings.speed < 700 ? 700 : settings.speed);
+			}
+		};
 
-        self.onKeyUp = function (event, direction) {
+		self.onKeyUp = function (event, direction) {
 
-            //If keyboard is triggered before scroll
-            if (currentSection === 1) {
-                currentSection = $itemsList.eq(0).data("menuanchor");
-            }
+			//If keyboard is triggered before scroll
+			if (currentSection === 1) {
+				currentSection = $itemsList.eq(0).data("menuanchor");
+			}
 
-            var direction = direction || "up",
-                nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).next(),
-                prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).prev();
+			var direction = direction || "up",
+				nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).next(),
+				prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).prev();
 
-            event.preventDefault();
+			event.preventDefault();
 
-            if (isScrolling) {
-                return false;
-            }
+			if (isScrolling) {
+				return false;
+			}
 
-            var $vTarget = self.visible($instance, true, false),
-                dotIndex = $(".premium-vscroll-dot-item.active").index(),
-                animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
+			var $vTarget = self.visible($instance, true, false),
+				dotIndex = $(".premium-vscroll-dot-item.active").index(),
+				animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
 
-            if ("up" === direction) {
-                if (prevItem[0]) {
-                    prevItem.trigger("click.premiumVerticalScroll");
-                    if (dotIndex === $itemsList.length - 1 && !$vTarget) {
-                        prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
-                    } else if (dotIndex === $itemsList.length - 1 && ($instance.offset().top + $instance.innerHeight() - $(document).scrollTop() < 600)) {
-                        prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
-                    } else {
-                        $instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type>div').removeClass("premium-vscroll-parallax-last");
-                        $instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp>div').removeClass("premium-vscroll-parallax-position");
-                        // prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).prev(),
-                    }
+			if ("up" === direction) {
+				if (prevItem[0]) {
+					prevItem.trigger("click.premiumVerticalScroll");
+					if (dotIndex === $itemsList.length - 1 && !$vTarget) {
+						prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
+					} else if (dotIndex === $itemsList.length - 1 && ($instance.offset().top + $instance.innerHeight() - $(document).scrollTop() < 600)) {
+						prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
+					} else {
+						$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type>div').removeClass("premium-vscroll-parallax-last");
+						$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp>div').removeClass("premium-vscroll-parallax-position");
+						// prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).prev(),
+					}
 
-                }
-            } else {
-                if (nextItem[0]) {
-                    nextItem.trigger("click.premiumVerticalScroll");
-                    if ($instance.offset().top - $(document).scrollTop() > 200) {
-                        nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
-                    }
-                    // else {
-                    //     // nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).next(),
-                    // }
-                }
-            }
-        };
+				}
+			} else {
+				if (nextItem[0]) {
+					nextItem.trigger("click.premiumVerticalScroll");
+					if ($instance.offset().top - $(document).scrollTop() > 200) {
+						nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
+					}
+					// else {
+					//     // nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).next(),
+					// }
+				}
+			}
+		};
 
-        self.getFirstSection = function (object) {
-            return Object.keys(object)[0];
-        }
+		self.getFirstSection = function (object) {
+			return Object.keys(object)[0];
+		}
 
-        self.getLastSection = function (object) {
-            return Object.keys(object)[Object.keys(object).length - 1];
-        }
+		self.getLastSection = function (object) {
+			return Object.keys(object)[Object.keys(object).length - 1];
+		}
 
-        function getScrollData(e) {
-            e = e || window.event;
+		function getScrollData(e) {
+			e = e || window.event;
 
-            var t = e.wheelDelta || -e.deltaY || -e.detail;
+			var t = e.wheelDelta || -e.deltaY || -e.detail;
 
-            return t;
-        }
+			return t;
+		}
 
-        var prevTime = new Date().getTime();
+		var prevTime = new Date().getTime();
 
-        //Used to unset position CSS property for vertical scroll sections becuase it causes position issue for the content below the widget.
-        function parallaxLastSection() {
-            var $target = $(event.target),
-                sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
-                $section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
-                sectionId = $section.attr("id"),
-                $lastselector = checkTemps ? $instance : $("#" + sectionId),
-                animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
+		//Used to unset position CSS property for vertical scroll sections becuase it causes position issue for the content below the widget.
+		function parallaxLastSection() {
+			var $target = $(event.target),
+				sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
+				$section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
+				sectionId = $section.attr("id"),
+				$lastselector = checkTemps ? $instance : $("#" + sectionId),
+				animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
 
-            if (animationType) {
+			if (animationType) {
 
-                if ($lastselector.offset().top + $lastselector.innerHeight() - $(document).scrollTop() + settings.offset < $window.outerHeight()) {
-                    $instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type > div').addClass("premium-vscroll-parallax-last");
-                    $instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp>div').addClass("premium-vscroll-parallax-position");
+				if ($lastselector.offset().top + $lastselector.innerHeight() - $(document).scrollTop() + settings.offset < $window.outerHeight()) {
+					$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type > div').addClass("premium-vscroll-parallax-last");
+					$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp>div').addClass("premium-vscroll-parallax-position");
 
-                } else {
-                    $instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type > div').removeClass("premium-vscroll-parallax-last");
-                    $instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp > div').removeClass("premium-vscroll-parallax-position");
-                }
-            }
-        }
+				} else {
+					$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type > div').removeClass("premium-vscroll-parallax-last");
+					$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp > div').removeClass("premium-vscroll-parallax-position");
+				}
+			}
+		}
 
-        self.onWheel = function (event) {
+		self.onWheel = function (event) {
 
-            if (inScope && !isTouch) {
-                self.preventDefault(event);
-            }
+			if (inScope && !isTouch) {
+				self.preventDefault(event);
+			}
 
-            var $target = $(event.target),
-                sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
-                $section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
-                sectionId = $section.attr("id"),
-                $vTarget = self.visible($instance, true, false),
-                newSectionId = false,
-                prevSectionId = false,
-                nextSectionId = false,
-                scrollData = getScrollData(event),
-                delta = Math.max(-1, Math.min(1, scrollData)),
-                direction = 0 > delta ? "down" : "up",
-                windowScrollTop = $window.scrollTop(),
-                dotIndex = $(".premium-vscroll-dot-item.active").index();
+			var $target = $(event.target),
+				sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
+				$section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
+				sectionId = $section.attr("id"),
+				$vTarget = self.visible($instance, true, false),
+				newSectionId = false,
+				prevSectionId = false,
+				nextSectionId = false,
+				e = event.originalEvent || event,
+				scrollData = e.deltaY !== undefined ? e.deltaY : (e.wheelDelta !== undefined ? -e.wheelDelta : e.detail),
+				delta = Math.sign(scrollData) || 0,
+				direction = delta < 0 ? "up" : "down",
 
-            if ($target.closest('.premium_maps_map_height').length > 0) {
+				windowScrollTop = $window.scrollTop(),
+				dotIndex = $(".premium-vscroll-dot-item.active").index();
 
-                var $closestMapSettings = $target.closest('.premium_maps_map_height').data('settings');
+			if ($target.closest('.premium_maps_map_height').length > 0) {
 
-                if ($closestMapSettings.scrollwheel)
-                    return;
-            }
+				var $closestMapSettings = $target.closest('.premium_maps_map_height').data('settings');
 
-            //We don't want to return if swiper on desktops.
-            if ($('.premium-modal-open').length > 0) {
-                return;
-            }
+				if ($closestMapSettings.scrollwheel)
+					return;
+			}
 
-            var curTime = new Date().getTime();
+			//We don't want to return if swiper on desktops.
+			if ($('.premium-modal-open').length > 0) {
+				return;
+			}
 
-            if (scrollings.length > 149) {
-                scrollings.shift();
-            }
+			var curTime = new Date().getTime();
 
-            //keeping record of the previous scrollings
-            scrollings.push(Math.abs(scrollData));
+			if (scrollings.length > 149) {
+				scrollings.shift();
+			}
 
-            //time difference between the last scroll and the current one
-            var timeDiff = curTime - prevTime;
-            prevTime = curTime;
+			//keeping record of the previous scrollings
+			scrollings.push(Math.abs(scrollData));
 
-            //haven't they scrolled in a while?
-            //(enough to be consider a different scrolling action to scroll another section)
-            if (timeDiff > 200) {
-                //emptying the array, we dont care about old scrollings for our averages
-                scrollings = [];
-            }
+			//time difference between the last scroll and the current one
+			var timeDiff = curTime - prevTime;
+			prevTime = curTime;
 
-            parallaxLastSection();
+			//haven't they scrolled in a while?
+			//(enough to be consider a different scrolling action to scroll another section)
+			if (timeDiff > 200) {
+				//emptying the array, we dont care about old scrollings for our averages
+				scrollings = [];
+			}
 
-            if (isTouch) {
+			parallaxLastSection();
 
-                $(".premium-vscroll-tooltip").hide();
+			if (isTouch) {
 
-                if (dotIndex === $itemsList.length - 1 && !$vTarget) {
-                    $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
-                } else if (dotIndex === 0 && !$vTarget) {
-                    if ($instance.offset().top - $(document).scrollTop() > 200) {
-                        $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
-                    }
-                } else {
-                    $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
-                }
-            }
+				$(".premium-vscroll-tooltip").hide();
 
-            if (self.beforeCheck()) {
-                sectionId = self.getFirstSection(sections);
-            }
+				if (dotIndex === $itemsList.length - 1 && !$vTarget) {
+					$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+				} else if (dotIndex === 0 && !$vTarget) {
+					if ($instance.offset().top - $(document).scrollTop() > 200) {
+						$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+					}
+				} else {
+					$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
+				}
+			}
 
-            if (self.afterCheck()) {
-                sectionId = self.getLastSection(sections);
-            }
+			if (self.beforeCheck()) {
+				sectionId = self.getFirstSection(sections);
+			}
 
-            if (sectionId && sections.hasOwnProperty(sectionId)) {
+			if (self.afterCheck()) {
+				sectionId = self.getLastSection(sections);
+			}
 
-                prevSectionId = self.checkPrevSection(sections, sectionId);
-                nextSectionId = self.checkNextSection(sections, sectionId);
+			if (sectionId && sections.hasOwnProperty(sectionId)) {
 
-                if ("up" === direction) {
-                    if (!nextSectionId && sections[sectionId].offset < windowScrollTop) {
-                        newSectionId = sectionId;
-                    } else {
-                        newSectionId = prevSectionId;
-                    }
-                } else {
-                    if (!prevSectionId && sections[sectionId].offset - settings.offset > windowScrollTop + 5) {
-                        newSectionId = sectionId;
-                    } else {
-                        newSectionId = nextSectionId;
-                    }
-                }
+				prevSectionId = self.checkPrevSection(sections, sectionId);
+				nextSectionId = self.checkNextSection(sections, sectionId);
 
-                var averageEnd = self.getAverage(scrollings, 10);
-                var averageMiddle = self.getAverage(scrollings, 70);
-                var isAccelerating = averageEnd >= averageMiddle;
+				if ("up" === direction) {
+					if (!nextSectionId && sections[sectionId].offset < windowScrollTop) {
+						newSectionId = sectionId;
+					} else {
+						newSectionId = prevSectionId;
+					}
+				} else {
+					if (!prevSectionId && sections[sectionId].offset - settings.offset > windowScrollTop + 5) {
+						newSectionId = sectionId;
+					} else {
+						newSectionId = nextSectionId;
+					}
+				}
 
-                if (newSectionId) {
-                    inScope = true;
-                    if (!self.isScrolled(sectionId, direction) && !isTouch) {
-                        return;
-                    }
+				var averageEnd = self.getAverage(scrollings, 10);
+				var averageMiddle = self.getAverage(scrollings, 70);
+				var isAccelerating = averageEnd >= averageMiddle;
 
-                    $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
+				if (newSectionId) {
+					inScope = true;
+					if (!self.isScrolled(sectionId, direction) && !isTouch) {
+						return;
+					}
 
-                    var iScrollInstance = $("#scroller-" + newSectionId).data('iscrollInstance');
+					$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
 
-                    if (isAccelerating && !isScrolling) {
-                        self.onAnchorChange(newSectionId);
-                        //Prevent overflow sections from scrolling.
-                        // if (iScrollInstance)
-                        // iScrollInstance.disable();
-                    } else {
-                        //Enable overflow sections scroll after 2s.
-                        // if (iScrollInstance) {
-                        //     setTimeout(function () {
-                        //         iScrollInstance.enable();
-                        //     }, settings.speed);
-                        // }
-                    }
+					var iScrollInstance = $("#scroller-" + newSectionId).data('iscrollInstance');
 
-                } else {
-                    //Make sure the scroll is done.
-                    if (averageEnd <= 5) {
-                        inScope = false;
-                    }
+					if (isAccelerating && !isScrolling) {
+						self.onAnchorChange(newSectionId);
+						//Prevent overflow sections from scrolling.
+						// if (iScrollInstance)
+						// iScrollInstance.disable();
+					} else {
+						//Enable overflow sections scroll after 2s.
+						// if (iScrollInstance) {
+						//     setTimeout(function () {
+						//         iScrollInstance.enable();
+						//     }, settings.speed);
+						// }
+					}
 
-                    var $lastselector = checkTemps ? $instance : $("#" + sectionId);
+				} else {
+					//Make sure the scroll is done.
+					if (averageEnd <= 5) {
+						inScope = false;
+					}
 
-                    if ("down" === direction) {
-                        if (
-                            $lastselector.offset().top +
-                            $lastselector.innerHeight() -
-                            $(document).scrollTop() >
-                            600
-                        ) {
-                            $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
-                        }
-                    } else if ("up" === direction) {
-                        $instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
-                    }
-                }
-            }
-        };
+					var $lastselector = checkTemps ? $instance : $("#" + sectionId);
 
-        self.beforeCheck = function () {
-            var windowScrollTop = $window.scrollTop(),
-                firstSectionId = self.getFirstSection(sections),
-                offset = sections[firstSectionId].offset,
-                topBorder = windowScrollTop + $window.outerHeight(),
-                visible = self.visible($instance, true, false);
+					if ("down" === direction) {
+						if (
+							$lastselector.offset().top +
+							$lastselector.innerHeight() -
+							$(document).scrollTop() >
+							600
+						) {
+							$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+						}
+					} else if ("up" === direction) {
+						$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+					}
+				}
+			}
+		};
 
-            if (topBorder > offset) {
-                return false;
-            } else if (visible) {
-                return true;
-            }
-            return false;
-        }
+		self.beforeCheck = function () {
+			var windowScrollTop = $window.scrollTop(),
+				firstSectionId = self.getFirstSection(sections),
+				offset = sections[firstSectionId].offset,
+				topBorder = windowScrollTop + $window.outerHeight(),
+				visible = self.visible($instance, true, false);
 
-        self.afterCheck = function () {
-            var windowScrollTop = $window.scrollTop(),
-                lastSectionId = self.getLastSection(sections),
-                bottomBorder =
-                    sections[lastSectionId].offset +
-                    sections[lastSectionId].height,
-                visible = self.visible($instance, true, false);
+			if (topBorder > offset) {
+				return false;
+			} else if (visible) {
+				return true;
+			}
+			return false;
+		}
 
-            if (windowScrollTop < bottomBorder) {
-                return false;
-            } else if (visible) {
-                return true;
-            }
+		self.afterCheck = function () {
+			var windowScrollTop = $window.scrollTop(),
+				lastSectionId = self.getLastSection(sections),
+				bottomBorder =
+					sections[lastSectionId].offset +
+					sections[lastSectionId].height,
+				visible = self.visible($instance, true, false);
 
-            return false;
-        }
+			if (windowScrollTop < bottomBorder) {
+				return false;
+			} else if (visible) {
+				return true;
+			}
 
-        self.onResize = function () {
-            self.setSectionsData();
-            self.sectionsOverflowRefresh();
-        };
+			return false;
+		}
 
-        self.getAverage = function (elements, number) {
-            var sum = 0;
+		self.onResize = function () {
+			self.setSectionsData();
+			self.sectionsOverflowRefresh();
+		};
 
-            //taking `number` elements from the end to make the average, if there are not enought, 1
-            var lastElements = elements.slice(Math.max(elements.length - number, 1));
+		self.getAverage = function (elements, number) {
+			var sum = 0;
 
-            for (var i = 0; i < lastElements.length; i++) {
-                sum = sum + lastElements[i];
-            }
+			//taking `number` elements from the end to make the average, if there are not enought, 1
+			var lastElements = elements.slice(Math.max(elements.length - number, 1));
 
-            return Math.ceil(sum / number);
-        };
+			for (var i = 0; i < lastElements.length; i++) {
+				sum = sum + lastElements[i];
+			}
 
-        self.vscrollEffects = function () {
+			return Math.ceil(sum / number);
+		};
 
-            var animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
+		self.vscrollEffects = function () {
 
-            if (animationType) {
+			var animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
 
-                var sectionsAvailable = $instance.find('.premium-vscroll-temp');
+			if (animationType) {
 
-                //bind the animation to the window scroll event, arrows click and keyboard.
-                scrollAnimation();
+				var sectionsAvailable = $instance.find('.premium-vscroll-temp');
 
-                $(window).on('scroll', scrollAnimation);
+				//bind the animation to the window scroll event, arrows click and keyboard.
+				scrollAnimation();
 
-                function scrollAnimation() {
+				$(window).on('scroll', scrollAnimation);
 
-                    //We don't want scroll functions to be triggered if behance project lightbox is opened.
-                    if ($(".eb-project-overlay").length > 0)
-                        return;
+				function scrollAnimation() {
 
-                    //normal scroll - use requestAnimationFrame (if defined) to optimize performance.
-                    (!window.requestAnimationFrame) ? animateSection() : window.requestAnimationFrame(animateSection);
-                }
+					//We don't want scroll functions to be triggered if behance project lightbox is opened.
+					if ($(".eb-project-overlay").length > 0)
+						return;
 
-                function animateSection() {
+					//normal scroll - use requestAnimationFrame (if defined) to optimize performance.
+					(!window.requestAnimationFrame) ? animateSection() : window.requestAnimationFrame(animateSection);
+				}
 
-                    var scrollTop = $(window).scrollTop(),
-                        windowHeight = $(window).height();
+				function animateSection() {
 
-                    sectionsAvailable.each(function () {
-                        var actualBlock = $(this),
-                            offset = scrollTop - actualBlock.offset().top;
+					var scrollTop = $(window).scrollTop(),
+						windowHeight = $(window).height();
 
-                        // according to animation type and window scroll, define animation parameters.
-                        var animationValues = setSectionAnimation(offset, windowHeight, animationType);
+					sectionsAvailable.each(function () {
+						var actualBlock = $(this),
+							offset = scrollTop - actualBlock.offset().top;
 
-                        transformSection(actualBlock.children('div'), animationValues[0], animationValues[1], animationValues[2], animationValues[3]);
+						// according to animation type and window scroll, define animation parameters.
+						var animationValues = setSectionAnimation(offset, windowHeight, animationType);
 
-                        (offset >= 0 && offset < windowHeight) ? actualBlock.addClass('visible') : actualBlock.removeClass('visible');
-                    });
-                }
+						transformSection(actualBlock.children('div'), animationValues[0], animationValues[1], animationValues[2], animationValues[3]);
 
-                function transformSection(element, translateY, rotateXValue, opacityValue, scaleValue) {
+						(offset >= 0 && offset < windowHeight) ? actualBlock.addClass('visible') : actualBlock.removeClass('visible');
+					});
+				}
 
-                    element.css({
-                        transform: 'translateY(' + translateY + 'vh) rotateX(' + rotateXValue + ') scale(' + scaleValue + ')',
-                        // rotateX: rotateXValue,
-                        opacity: opacityValue
-                    });
-                }
+				function transformSection(element, translateY, rotateXValue, opacityValue, scaleValue) {
 
-                function setSectionAnimation(sectionOffset, windowHeight, animationName) {
+					element.css({
+						transform: 'translateY(' + translateY + 'vh) rotateX(' + rotateXValue + ') scale(' + scaleValue + ')',
+						// rotateX: rotateXValue,
+						opacity: opacityValue
+					});
+				}
 
-                    // select section animation - normal scroll
-                    var translateY = 100,
-                        rotateX = '0deg',
-                        opacity = 1,
-                        scale = 1,
-                        boxShadowBlur = 0;
+				function setSectionAnimation(sectionOffset, windowHeight, animationName) {
 
-                    if (sectionOffset >= -windowHeight && sectionOffset <= 0) {
-                        // section entering the viewport.
-                        translateY = (-sectionOffset) * 100 / windowHeight;
+					// select section animation - normal scroll
+					var translateY = 100,
+						rotateX = '0deg',
+						opacity = 1,
+						scale = 1,
+						boxShadowBlur = 0;
 
-                        if ('rotate' === animationName) {
-                            translateY = 0;
-                            rotateX = '0deg';
-                        } else if ('scaleDown' === animationName) {
-                            scale = 1;
-                            opacity = 1;
-                        }
+					if (sectionOffset >= -windowHeight && sectionOffset <= 0) {
+						// section entering the viewport.
+						translateY = (-sectionOffset) * 100 / windowHeight;
 
-                    } else if (sectionOffset > 0 && sectionOffset <= windowHeight) {
-                        //section leaving the viewport - still has the '.visible' class.
-                        if ('rotate' === animationName) {
-                            opacity = (1 - (sectionOffset / windowHeight)).toFixed(5);
-                            rotateX = sectionOffset * 100 / windowHeight + 'deg';
-                            translateY = 0;
-                        } else if ('scaleDown' === animationName) {
-                            scale = (1 - (sectionOffset * 0.3 / windowHeight)).toFixed(5);
-                            opacity = (1 - (sectionOffset / windowHeight)).toFixed(5);
-                            translateY = 0;
-                            boxShadowBlur = 40 * (sectionOffset / windowHeight);
+						if ('rotate' === animationName) {
+							translateY = 0;
+							rotateX = '0deg';
+						} else if ('scaleDown' === animationName) {
+							scale = 1;
+							opacity = 1;
+						}
 
-                        } else { //parallax
-                            translateY = (-sectionOffset) * 50 / windowHeight;
-                        }
+					} else if (sectionOffset > 0 && sectionOffset <= windowHeight) {
+						//section leaving the viewport - still has the '.visible' class.
+						if ('rotate' === animationName) {
+							opacity = (1 - (sectionOffset / windowHeight)).toFixed(5);
+							rotateX = sectionOffset * 100 / windowHeight + 'deg';
+							translateY = 0;
+						} else if ('scaleDown' === animationName) {
+							scale = (1 - (sectionOffset * 0.3 / windowHeight)).toFixed(5);
+							opacity = (1 - (sectionOffset / windowHeight)).toFixed(5);
+							translateY = 0;
+							boxShadowBlur = 40 * (sectionOffset / windowHeight);
 
-                    } else if (sectionOffset < -windowHeight) {
-                        //section not yet visible.
-                        translateY = 100;
+						} else { //parallax
+							translateY = (-sectionOffset) * 50 / windowHeight;
+						}
 
-                        if ('scaleDown' === animationName) {
-                            scale = 1;
-                            opacity = 1;
-                        }
+					} else if (sectionOffset < -windowHeight) {
+						//section not yet visible.
+						translateY = 100;
 
-                    } else {
-                        //section not visible anymore.
-                        if ('rotate' === animationName) {
-                            translateY = 0;
-                            rotateX = '90deg';
+						if ('scaleDown' === animationName) {
+							scale = 1;
+							opacity = 1;
+						}
 
-                        } else if ('scaleDown' === animationName) {
-                            scale = 0;
-                            opacity = 0.7;
-                            translateY = 0;
+					} else {
+						//section not visible anymore.
+						if ('rotate' === animationName) {
+							translateY = 0;
+							rotateX = '90deg';
 
-                        } else {
-                            translateY = -50;
-                        }
-                    }
+						} else if ('scaleDown' === animationName) {
+							scale = 0;
+							opacity = 0.7;
+							translateY = 0;
 
-                    return [translateY, rotateX, opacity, scale];
-                }
+						} else {
+							translateY = -50;
+						}
+					}
 
-            }
-        }
-    };
+					return [translateY, rotateX, opacity, scale];
+				}
 
-    $(window).on("elementor/frontend/init", function () {
-        elementorFrontend.hooks.addAction(
-            "frontend/element_ready/premium-vscroll.default",
-            PremiumVerticalScrollHandler
-        );
-    });
+			}
+		}
+	};
+
+	$(window).on("elementor/frontend/init", function () {
+		elementorFrontend.hooks.addAction(
+			"frontend/element_ready/premium-vscroll.default",
+			PremiumVerticalScrollHandler
+		);
+	});
 })(jQuery);

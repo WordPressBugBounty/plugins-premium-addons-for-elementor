@@ -33,8 +33,7 @@ class Static_Page extends Condition {
 		return array(
 			'type'        => Controls_Manager::SELECT,
 			'options'     => array(
-				'home'   => __( 'Homepage', 'premium-addons-for-elementor' ),
-				'static' => __( 'Front Page', 'premium-addons-for-elementor' ),
+				'home' => __( 'Homepage', 'premium-addons-for-elementor' ),
 				'blog'   => __( 'Blog', 'premium-addons-for-elementor' ),
 				'404'    => __( '404 Page', 'premium-addons-for-elementor' ),
 			),
@@ -64,14 +63,14 @@ class Static_Page extends Condition {
 
 		switch ( $value ) {
 			case 'home':
-				$condition_result = is_front_page() && is_home();
+				$condition_result = is_front_page();
 				break;
 
 			case 'static':
 				$condition_result = is_front_page() && ! is_home();
 				break;
 
-			case 'static':
+			case 'blog':
 				$condition_result = ! is_front_page() && is_home();
 				break;
 
