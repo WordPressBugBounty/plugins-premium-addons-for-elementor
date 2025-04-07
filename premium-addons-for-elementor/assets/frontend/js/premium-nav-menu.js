@@ -2,14 +2,11 @@
 
 	/**Premium Nav Menu */
 	var PremiumNavMenuHandler = function ($scope, $) {
-		var isEditMode = elementorFrontend.isEditMode();
-		// we don't need to wait for content dom load since the script is loaded in the footer.
-		// $scope.find('.premium-nav-widget-container').removeClass('premium-addons-invisible');
-
-		if (!isEditMode) {
-			// $scope.find('.premium-nav-widget-container').css({ visibility: 'visible', opacity: 1 });
-			$scope.find('.premium-nav-widget-container').css({ visibility: 'inherit', opacity: 'inherit' });
-		}
+		/**
+		 * we don't need to wait for content dom load since the script is loaded in the footer.
+		 * we reset the visiblity/opacity in both editor & frontend as elementor templates are treated as frontend pages when rendered in the editor ( of other pages).
+		 */
+		$scope.find('.premium-nav-widget-container').css({ visibility: 'inherit', opacity: 'inherit' });
 
 		var settings = $scope.find('.premium-nav-widget-container').data('settings');
 
@@ -29,6 +26,7 @@
 			disablePageScroll = $scope.hasClass('premium-disable-scroll-yes') ? true : false,
 			delay = getComputedStyle($scope[0]).getPropertyValue('--pa-mega-menu-delay') || 300,
 			renderMobileMenu = settings.renderMobileMenu,
+			isEditMode = elementorFrontend.isEditMode(),
 			hoverTimeout;
 
 		//Get Element On Page Option
@@ -123,7 +121,8 @@
 		}
 
 		// not using nested condition => more readable this way.
-		if (isEditMode && !renderMobileMenu) {
+		// if (isEditMode && !renderMobileMenu) {
+        if (!renderMobileMenu) { // those classes are used in both editor & frontend.
 			$scope.find('.premium-nav-default').removeClass('premium-nav-default');
 			$scope.removeClass('premium-hamburger-menu');
 		}

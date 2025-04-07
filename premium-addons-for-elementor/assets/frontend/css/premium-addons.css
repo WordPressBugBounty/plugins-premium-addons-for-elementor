@@ -12338,7 +12338,7 @@ ul.premium-person-social-list {
   transition: all 0.3s ease-in-out;
 }
 
-.premium-search__btn[type=button] {
+.premium-search__btn[type="button"] {
   width: 100%;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -12355,7 +12355,7 @@ ul.premium-person-social-list {
   cursor: pointer;
 }
 
-.premium-search__btn[type=button] svg {
+.premium-search__btn[type="button"] svg {
   width: 20px;
   height: 20px;
   -webkit-transition: all 0.3s ease-in-out;
@@ -12408,8 +12408,8 @@ ul.premium-person-social-list {
 }
 
 .premium-search__query-wrap .slick-disabled {
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
+  opacity: 0;
+  visibility: hidden;
 }
 
 .premium-search__posts-wrap {

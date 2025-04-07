@@ -85,7 +85,7 @@
 			$itemsList.on("mouseleave.premiumVerticalScroll", self.onNavDotLeave);
 
 			if ("desktop" === settings.deviceType) {
-				$window.on("wheel.premiumVerticalScroll", self.onWheel);
+				$window.on("scroll.premiumVerticalScroll", self.onWheel);
 			}
 
 			$window.on("resize.premiumVerticalScroll orientationchange.premiumVerticalScroll", self.debounce(50, self.onResize));
@@ -817,11 +817,9 @@
 				newSectionId = false,
 				prevSectionId = false,
 				nextSectionId = false,
-				e = event.originalEvent || event,
-				scrollData = e.deltaY !== undefined ? e.deltaY : (e.wheelDelta !== undefined ? -e.wheelDelta : e.detail),
-				delta = Math.sign(scrollData) || 0,
-				direction = delta < 0 ? "up" : "down",
-
+				scrollData = getScrollData(event),
+				delta = Math.max(-1, Math.min(1, scrollData)),
+				direction = 0 > delta ? "down" : "up",
 				windowScrollTop = $window.scrollTop(),
 				dotIndex = $(".premium-vscroll-dot-item.active").index();
 

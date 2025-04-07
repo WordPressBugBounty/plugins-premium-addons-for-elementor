@@ -1158,7 +1158,7 @@ class Premium_Template_Tags {
 							</div>
 						<?php else : ?>
 							<div class="premium-blog-thumbnail-overlay">
-								<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" aria-hidden="true"><span><?php esc_html( the_title() ); ?></span></a>
+								<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>"><span><?php esc_html( the_title() ); ?></span></a>
 							</div>
 
 							<?php do_action( 'pa_blog_after_thumbnail' ); ?>
@@ -1687,7 +1687,7 @@ class Premium_Template_Tags {
 						</div>
 
 						<div class="premium-search__overlay">
-							<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" aria-hidden="true">
+							<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
 								<span><?php esc_html( the_title() ); ?></span>
 							</a>
 						</div>

@@ -101,6 +101,7 @@ class Premium_Search_Form extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'font-awesome-5-all',
 			'pa-slick',
 			'premium-addons',
 		);
@@ -1516,7 +1517,7 @@ class Premium_Search_Form extends Widget_Base {
 		$this->add_responsive_control(
 			'carousel_next_arrow_pos',
 			array(
-				'label'      => __( 'Previous Arrow Position', 'premium-addons-for-elementor' ),
+				'label'      => __( 'Next Arrow Position', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', 'em', '%' ),
 				'range'      => array(
