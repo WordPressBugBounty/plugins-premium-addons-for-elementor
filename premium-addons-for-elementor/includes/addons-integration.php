@@ -1705,6 +1705,10 @@ class Addons_Integration {
 	 */
 	public function load_pa_extensions() {
 
+		if( ! Helper_Functions::check_papro_version() ) {
+			PAPRO_Promotion::get_instance();
+		}
+
 		if ( self::$modules['premium-equal-height'] ) {
 			Equal_Height::get_instance();
 		}

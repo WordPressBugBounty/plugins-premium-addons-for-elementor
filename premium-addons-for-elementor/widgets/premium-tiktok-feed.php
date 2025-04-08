@@ -3091,8 +3091,10 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				</span>
 			<?php endif; ?>
 
-			<?php if ( $vid_settings['date'] ) : ?>
-				<span class="premium-tiktok-feed__created-at"><?php echo esc_html( gmdate( $settings['date_format'], $feed['create_time'] ) ); ?></span>
+			<?php if ( $vid_settings['date'] ) :
+				$t_date = !empty( $feed['create_time'] ) ? $feed['create_time'] : false;
+			?>
+				<span class="premium-tiktok-feed__created-at"><?php echo esc_html( wp_date( $settings['date_format'], $t_date ) ); ?></span>
 			<?php endif; ?>
 
 		</div>

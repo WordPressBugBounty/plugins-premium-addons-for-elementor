@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.11.1\n"
+"Project-Id-Version: Premium Addons for Elementor 4.11.2\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2025-04-07 10:04:48+00:00\n"
+"POT-Creation-Date: 2025-04-08 16:00:52+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,7 +146,7 @@ msgid ""
 msgstr ""
 
 #: admin/includes/admin-helper.php:820 admin/includes/admin-helper.php:836
-#: includes/templates/classes/config.php:171
+#: includes/papro-promotion.php:95 includes/templates/classes/config.php:171
 msgid "Get Pro"
 msgstr ""
 
@@ -413,16 +413,18 @@ msgid "Google Reviews"
 msgstr ""
 
 #: admin/includes/elements.php:338 admin/includes/elements.php:925
-#: widgets/premium-vscroll.php:506
+#: includes/papro-promotion.php:107 widgets/premium-vscroll.php:506
 msgid "Parallax"
 msgstr ""
 
 #: admin/includes/elements.php:348 admin/includes/elements.php:935
+#: includes/papro-promotion.php:134
 msgid "Particles"
 msgstr ""
 
 #: admin/includes/elements.php:357 admin/includes/elements.php:944
-#: widgets/premium-progressbar.php:868 widgets/premium-title.php:1447
+#: includes/papro-promotion.php:242 widgets/premium-progressbar.php:868
+#: widgets/premium-title.php:1447
 msgid "Animated Gradient"
 msgstr ""
 
@@ -735,7 +737,7 @@ msgstr ""
 msgid "Rolling Back to Version "
 msgstr ""
 
-#: admin/includes/templates/features.php:24
+#: admin/includes/templates/features.php:24 includes/papro-promotion.php:323
 msgid "Magic Scroll"
 msgstr ""
 
@@ -777,7 +779,7 @@ msgstr ""
 msgid "Make your widgets the same height with just ONE click."
 msgstr ""
 
-#: admin/includes/templates/features.php:104
+#: admin/includes/templates/features.php:104 includes/papro-promotion.php:188
 msgid "Custom Mouse Cursor"
 msgstr ""
 
@@ -2577,6 +2579,114 @@ msgstr ""
 
 #: includes/pa-display-conditions/pa-controls-handler.php:139
 msgid "Misc (PRO)"
+msgstr ""
+
+#: includes/papro-promotion.php:92
+msgid "Check Demo"
+msgstr ""
+
+#: includes/papro-promotion.php:118
+msgid "Premium Parallax"
+msgstr ""
+
+#: includes/papro-promotion.php:119
+msgid ""
+"Select between 7 neat parallax effects to be applied on Elementor "
+"containers."
+msgstr ""
+
+#: includes/papro-promotion.php:145
+msgid "Premium Particles"
+msgstr ""
+
+#: includes/papro-promotion.php:146
+msgid "Create eye-catching particles background with many customization options."
+msgstr ""
+
+#: includes/papro-promotion.php:161 widgets/premium-icon-list.php:622
+#: widgets/premium-icon-list.php:1923 widgets/premium-nav-menu.php:708
+#: widgets/premium-nav-menu.php:3162 widgets/premium-nav-menu.php:4416
+msgid "Badge"
+msgstr ""
+
+#: includes/papro-promotion.php:172
+msgid "Premium Badge"
+msgstr ""
+
+#: includes/papro-promotion.php:173
+msgid ""
+"Add an icon, image, Lottie animation, or SVG blob shape badge to Elementor "
+"container."
+msgstr ""
+
+#: includes/papro-promotion.php:199
+msgid "Premium Mouse Cursor"
+msgstr ""
+
+#: includes/papro-promotion.php:200
+msgid ""
+"Add an image, icon or Lottie animation mouse cursor to any container, "
+"widget or the whole page."
+msgstr ""
+
+#: includes/papro-promotion.php:215
+msgid "Animated Blob"
+msgstr ""
+
+#: includes/papro-promotion.php:226
+msgid "Premium Blob Generator"
+msgstr ""
+
+#: includes/papro-promotion.php:227
+msgid ""
+"Add multiple animated blob layers to your containers with a wide range of "
+"smart customization options."
+msgstr ""
+
+#: includes/papro-promotion.php:253
+msgid "Premium Animated Gradient"
+msgstr ""
+
+#: includes/papro-promotion.php:254
+msgid "Subtle animated gradients effect that makes your backgrounds attractive."
+msgstr ""
+
+#: includes/papro-promotion.php:269
+msgid "Ken Burns"
+msgstr ""
+
+#: includes/papro-promotion.php:280
+msgid "Premium Ken Burns"
+msgstr ""
+
+#: includes/papro-promotion.php:281
+msgid ""
+"Add multiple images to your container background and animate them with the "
+"popular Ken Burns effect."
+msgstr ""
+
+#: includes/papro-promotion.php:296
+msgid "Lottie Background"
+msgstr ""
+
+#: includes/papro-promotion.php:307
+msgid "Premium Lottie Background"
+msgstr ""
+
+#: includes/papro-promotion.php:308
+msgid ""
+"Add multiple Lottie Animations easily to container with a lot of "
+"customization and interactivity options."
+msgstr ""
+
+#: includes/papro-promotion.php:334
+msgid "Premium Magic Scroll"
+msgstr ""
+
+#: includes/papro-promotion.php:335
+msgid ""
+"Apply outstanding scroll animations to any column/widget with just few "
+"clicks and control every single detail in the animation scene."
 msgstr ""
 
 #: includes/templates/classes/config.php:62
@@ -10275,12 +10385,6 @@ msgstr ""
 #: widgets/premium-icon-list.php:575 widgets/premium-image-scroll.php:224
 #: widgets/premium-image-separator.php:566 widgets/premium-mobile-menu.php:542
 msgid "Link/URL"
-msgstr ""
-
-#: widgets/premium-icon-list.php:622 widgets/premium-icon-list.php:1923
-#: widgets/premium-nav-menu.php:708 widgets/premium-nav-menu.php:3162
-#: widgets/premium-nav-menu.php:4416
-msgid "Badge"
 msgstr ""
 
 #: widgets/premium-icon-list.php:632 widgets/premium-icon-list.php:1406
