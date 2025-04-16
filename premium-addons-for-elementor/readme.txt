@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, widgets, elementor elements, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 6.7.2
+Tested Up To: 6.8
 Requires PHP: 7.4
-Stable Tag: 4.11.2
+Stable Tag: 4.11.3
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.3 =
+
+- Tweak: Added Fill Color Speed option in SVG Draw widget.
+- Fixed: Fatal error in Pinterest Feed widget when Board ID option is empty.
+- Fixed: HTML markup issue in Heading widget.
+- Fixed: Tooltips addon not working when Position control value has spaces in it.
 
 = 4.11.2 =
 

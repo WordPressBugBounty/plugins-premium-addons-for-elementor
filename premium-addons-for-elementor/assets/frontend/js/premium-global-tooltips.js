@@ -239,7 +239,7 @@
 						maxWidth: settings.maxWidth[getCurrentDevice()],
 						distance: settings.distance,
 						interactive: hasInteractiveElements,
-						side: 'string' === typeof settings.side ? settings.side.split(',') : settings.side[0],
+						side: 'string' === typeof settings.side ? cleanPosition(settings.side) : settings.side[0], // does this return anything except for a string?
 						zindex: settings.zIndex
 					};
 
@@ -397,7 +397,7 @@
 					distance: settings.distance,
 					interactive: hasInteractiveElements && !settings.follow_mouse,
 					minIntersection: 16,
-					side: 'string' === typeof settings.side ? settings.side.split(',') : settings.side[0],
+					side: 'string' === typeof settings.side ? cleanPosition(settings.side) : settings.side[0],
 					zIndex: settings.zindex || 9999999
 				};
 
@@ -490,6 +490,21 @@
 					return 'desktop';
 				}
 			}
+
+			/**
+			 * Cleans the position string.
+			 * separates the array using the ',' and removes empty spaces.
+			 *
+			 * @param {string} pos
+			 * @returns Array
+			 */
+            function cleanPosition(pos) {
+                return pos.split(',').map(function(s) {
+                    return s.trim();
+                  }).filter(function(s) {
+                    return s;
+                  });
+            }
 		};
 
 		elementorFrontend.hooks.addAction("frontend/element_ready/global", premiumGlobalTooltipsHandler);

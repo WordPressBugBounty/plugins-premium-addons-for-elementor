@@ -13299,7 +13299,7 @@ ul.premium-person-social-list {
 .premium-search__query-wrap {
 	position: absolute;
 	left: 0;
-	z-index: 3;
+	z-index: 6;
 	width: 100%;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -13659,6 +13659,21 @@ ul.premium-person-social-list {
 	-webkit-transform: translateX(-50%);
 	-ms-transform: translateX(-50%);
 	transform: translateX(-50%);
+}
+
+.premium-search-anim-label .premium-search__input::-webkit-input-placeholder,
+.premium-search-anim-label-pos-back .premium-search__input::-webkit-input-placeholder {
+	color: transparent !important;
+}
+
+.premium-search-anim-label .premium-search__input:-ms-input-placeholder,
+.premium-search-anim-label-pos-back .premium-search__input:-ms-input-placeholder {
+	color: transparent !important;
+}
+
+.premium-search-anim-label .premium-search__input::-ms-input-placeholder,
+.premium-search-anim-label-pos-back .premium-search__input::-ms-input-placeholder {
+	color: transparent !important;
 }
 
 .premium-search-anim-label .premium-search__input::-webkit-input-placeholder,

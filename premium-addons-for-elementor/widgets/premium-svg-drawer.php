@@ -595,6 +595,27 @@ class Premium_SVG_Drawer extends Widget_Base {
 		);
 
 		$this->add_control(
+			'svg_fill_speed',
+			array(
+				'label'              => __( 'Fill Color Speed', 'premium-addons-for-elementor' ),
+				'type'               => Controls_Manager::SLIDER,
+				'range'=> [
+					'px' => [
+						'min' => 0,
+						'max' => 5,
+						'step' => 0.1,
+					],
+				],
+				'condition'          => array(
+					'animate_icon'   => 'yes',
+					'scroll_action!' => 'viewport',
+					'magic_scroll!'  => 'yes',
+				),
+				'frontend_available' => true,
+			)
+		);
+
+		$this->add_control(
 			'link',
 			array(
 				'label'       => __( 'Link', 'premium-addons-for-elementor' ),

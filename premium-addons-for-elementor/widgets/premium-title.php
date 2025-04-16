@@ -1959,28 +1959,6 @@ class Premium_Title extends Widget_Base {
 
 				$this->add_render_attribute( 'icon', 'class', 'premium-drawable-icon' );
 
-				// if ( 'icon' === $icon_type ) {
-
-				// if ( ! empty( $settings['premium_title_icon'] ) ) {
-
-				// $this->add_render_attribute(
-				// 'icon',
-				// array(
-				// 'class'       => array(
-				// 'premium-title-icon',
-				// $settings['premium_title_icon'],
-				// ),
-				// 'aria-hidden' => 'true',
-				// )
-				// );
-
-				// }
-
-				// $migrated = isset( $settings['__fa4_migrated']['premium_title_icon_updated'] );
-				// $is_new   = empty( $settings['premium_title_icon'] ) && Icons_Manager::is_migration_allowed();
-
-				// }
-
 				if ( ( 'yes' === $settings['draw_svg'] && 'icon' === $icon_type ) || 'svg' === $icon_type ) {
 					$this->add_render_attribute( 'icon', 'class', 'premium-title-icon' );
 				}
@@ -1995,12 +1973,6 @@ class Premium_Title extends Widget_Base {
 							'premium-drawer-hover',
 						)
 					);
-
-					// if ( 'icon' === $icon_type ) {
-
-					// $this->add_render_attribute( 'icon', 'class', $settings['premium_title_icon_updated']['value'] );
-
-					// }
 
 					$this->add_render_attribute(
 						'icon',
@@ -2077,14 +2049,7 @@ class Premium_Title extends Widget_Base {
 
 		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
 			<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( 'title' ) ); ?>>
-				<?php if ( 'style7' === $selected_style ) : ?>
-					<?php if ( 'column' !== $icon_position ) : ?>
-						<span class="premium-title-style7-stripe-wrap">
-							<span class="premium-title-style7-stripe"></span>
-						</span>
-					<?php endif; ?>
-					<div class="premium-title-style7-inner">
-				<?php endif; ?>
+
 
 				<?php if ( 'yes' === $settings['premium_title_icon_switcher'] ) : ?>
 					<?php if ( 'icon' === $icon_type ) : ?>
@@ -2117,7 +2082,7 @@ class Premium_Title extends Widget_Base {
 						<?php if ( 'yes' === $settings['mask_switcher'] ) : ?>
 							<span class="premium-title-img">
 						<?php endif; ?>
-							<img <?php echo wp_kses_post( $this->get_render_attribute_string( 'title_img' ) ); ?>></span>
+							<img <?php echo wp_kses_post( $this->get_render_attribute_string( 'title_img' ) ); ?>>
 						<?php if ( 'yes' === $settings['mask_switcher'] ) : ?>
 							</span>
 						<?php endif; ?>

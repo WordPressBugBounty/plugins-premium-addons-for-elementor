@@ -2925,11 +2925,16 @@
 
 				});
 
+				if ('viewport' !== scrollAction && settings.frames)
+					timeLine.duration(settings.frames);
+
 				if ('yes' === settings.svg_fill) {
 					if (lastPathIndex == 0)
 						lastPathIndex = 1;
 
-					timeLine.to($paths, 1, {
+					var fillSpeed = settings.svg_fill_speed ? settings.svg_fill_speed.size : 1;
+
+					timeLine.to($paths, fillSpeed, {
 						fill: settings.svg_color,
 						stroke: settings.svg_stroke
 					}, lastPathIndex);
@@ -2947,9 +2952,6 @@
 					scene.setTween(timeLine).addTo(controller);
 
 				} else {
-
-					if (settings.frames)
-						timeLine.duration(settings.frames);
 
 					if ('hover' === scrollAction) {
 						timeLine.pause();
