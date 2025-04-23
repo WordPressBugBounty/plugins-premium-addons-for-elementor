@@ -18,6 +18,7 @@ $elements = array(
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-mobile-menu-widget-tutorial/', 'mobile-menu', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
 				'tutorial' => 'https://www.youtube.com/watch?v=OPSlk9YoIGI',
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-media-wheel',
@@ -25,6 +26,7 @@ $elements = array(
 				'title' => __( 'Advanced Media Carousel', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-advanced-carousel-widget/', 'adv-carousel', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-advanced-media-carousel-widget/', 'adv-carousel', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-nav-menu',
@@ -32,6 +34,7 @@ $elements = array(
 				'title' => __( 'Nav/Mega Menu', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mega-menu-widget/', 'menu', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-mega-menu-widget-tutorial', 'menu', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'        => 'premium-hscroll',
@@ -51,6 +54,7 @@ $elements = array(
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-textual-showcase-widget/', 'showcase', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
 				'tutorial' => 'https://www.youtube.com/watch?v=xaMVSB3KV4w',
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-blog',
@@ -65,6 +69,7 @@ $elements = array(
 				'title' => __( 'Search Form', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-ajax-search-widget/', 'search', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-ajax-search-widget-tutorial/', 'search', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-vscroll',
@@ -121,6 +126,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-recent-posts-notification-widget/', 'notification', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-recent-posts-notification-widget/', 'notification', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'woo-products',
@@ -128,6 +134,7 @@ $elements = array(
 				'name'  => 'premium-woo-products',
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-products/', 'products', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'products', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'        => 'premium-site-logo',
@@ -170,6 +177,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/google-maps-widget-for-elementor-page-builder/', 'maps', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/google-maps/', 'maps', 'wp-dash', 'dashboard' ),
 				'tutorial' => 'https://www.youtube.com/watch?v=z4taEeCY77Q',
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-person',
@@ -212,6 +220,7 @@ $elements = array(
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-animated-text-widget/', 'fancy-text', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-animated-text-widget-tutorial/', 'fancy-text', 'wp-dash', 'dashboard' ),
                 'tutorial'   => 'https://www.youtube.com/watch?v=Q5aRlJdXFw0',
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-title',
@@ -251,6 +260,7 @@ $elements = array(
 				'title' => __( 'Tags Cloud', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-tags-cloud-widget/', 'tcloud', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-tags-cloud-widget/', 'tcloud', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-image-scroll',
@@ -442,6 +452,7 @@ $elements = array(
 				'title' => __( 'Countdown', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-countdown-widget-2/', 'countdown', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/countdown-widget-tutorial/', 'countdown', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-banner',
@@ -550,6 +561,7 @@ $elements = array(
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-tiktok-feed-widget/', 'tiktok', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/tiktok-feed/', 'tiktok', 'wp-dash', 'dashboard' ),
 				'icon'  => 'pa-tiktok',
+				'is_freemium' => true
 			),
 			array(
 				'key'        => 'premium-pinterest-feed',
@@ -558,6 +570,7 @@ $elements = array(
 				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-pinterest-feed-widget/', 'pinterest', 'wp-dash', 'dashboard' ),
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-pinterest-feed-widget/', 'pinterest', 'wp-dash', 'dashboard' ),
 				'icon'       => 'pa-pinterest',
+				'is_freemium' => true
 			),
 			array(
 				'key'        => 'premium-behance',
@@ -610,6 +623,7 @@ $elements = array(
 				'title' => __( 'Contact Form 7', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/contact-form-7-widget-for-elementor-page-builder/', 'form', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/contact-form-7-widget-tutorial/', 'form', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'        => 'premium-whatsapp-chat',
@@ -627,6 +641,7 @@ $elements = array(
 				'name'  => 'premium-woo-categories',
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-categories-widget/', 'cats', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'cats', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'mini-cart',
@@ -634,6 +649,7 @@ $elements = array(
 				'name'  => 'premium-mini-cart',
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-mini-cart-widget/', 'mini-cart', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-mini-cart-widget-tutorial/', 'mini-cart', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'woo-cta',
@@ -642,6 +658,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-cta-widget/', 'woo-cta', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woo-cta-widget-tutorial/', 'woo-cta', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-world-clock',
@@ -649,6 +666,7 @@ $elements = array(
 				'title' => __( 'World Clock', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-world-clock-widget/', 'clock', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-world-clock-widget/', 'clock', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-post-ticker',
@@ -657,6 +675,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-news-ticker-widget/', 'ticker', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-news-ticker-widget/', 'ticker', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-weather',
@@ -665,6 +684,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-weather-widget/', 'weather', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-weather-widget/', 'weather', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'is_freemium' => true
 			),
 		),
 	),
@@ -678,6 +698,7 @@ $elements = array(
 				'title' => __( 'Search Form', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-ajax-search-widget/', 'search', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-ajax-search-widget-tutorial/', 'search', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-carousel',
@@ -700,6 +721,7 @@ $elements = array(
 				'title' => __( 'Nav/Mega Menu', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mega-menu-widget/', 'menu', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-mega-menu-widget-tutorial', 'menu', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-mobile-menu',
@@ -709,6 +731,7 @@ $elements = array(
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-mobile-menu-widget-tutorial/', 'mobile-menu', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
 				'tutorial' => 'https://www.youtube.com/watch?v=OPSlk9YoIGI',
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-maps',
@@ -717,6 +740,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/google-maps-widget-for-elementor-page-builder/', 'maps', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/google-maps/', 'maps', 'wp-dash', 'dashboard' ),
 				'tutorial' => 'https://www.youtube.com/watch?v=z4taEeCY77Q',
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-person',
@@ -749,6 +773,7 @@ $elements = array(
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-animated-text-widget/', 'fancy-text', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-animated-text-widget-tutorial/', 'fancy-text', 'wp-dash', 'dashboard' ),
                 'tutorial'   => 'https://www.youtube.com/watch?v=Q5aRlJdXFw0',
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-title',
@@ -782,6 +807,7 @@ $elements = array(
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-textual-showcase-widget/', 'showcase', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
 				'tutorial' => 'https://www.youtube.com/watch?v=xaMVSB3KV4w',
+				'is_freemium' => true
 			),
 		),
 	),
@@ -802,6 +828,7 @@ $elements = array(
 				'title' => __( 'Advanced Media Carousel', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-advanced-carousel-widget/', 'adv-carousel', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-advanced-media-carousel-widget/', 'adv-carousel', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-image-scroll',
@@ -978,6 +1005,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-news-ticker-widget/', 'ticker', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-news-ticker-widget/', 'ticker', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-world-clock',
@@ -985,6 +1013,7 @@ $elements = array(
 				'title' => __( 'World Clock', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-world-clock-widget/', 'clock', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-world-clock-widget/', 'clock', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-weather',
@@ -993,6 +1022,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-weather-widget/', 'weather', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-weather-widget/', 'weather', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'is_freemium' => true
 			),
             array(
 				'key'      => 'premium-notifications',
@@ -1001,6 +1031,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-recent-posts-notification-widget/', 'notification', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-recent-posts-notification-widget/', 'notification', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-tcloud',
@@ -1008,6 +1039,7 @@ $elements = array(
 				'title' => __( 'Tags Cloud', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-tags-cloud-widget/', 'tcloud', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-tags-cloud-widget/', 'tcloud', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
             array(
 				'key'        => 'premium-smart-post-listing',
@@ -1074,6 +1106,7 @@ $elements = array(
 				'name'  => 'premium-woo-products',
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-products/', 'products', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'products', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'woo-categories',
@@ -1081,6 +1114,7 @@ $elements = array(
 				'name'  => 'premium-woo-categories',
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-categories-widget/', 'cats', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'cats', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'mini-cart',
@@ -1088,6 +1122,7 @@ $elements = array(
 				'name'  => 'premium-mini-cart',
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-mini-cart-widget/', 'mini-cart', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-mini-cart-widget-tutorial/', 'mini-cart', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'woo-cta',
@@ -1096,6 +1131,7 @@ $elements = array(
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-cta-widget/', 'woo-cta', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woo-cta-widget-tutorial/', 'woo-cta', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
+				'is_freemium' => true
 			),
 		),
 	),
@@ -1149,6 +1185,7 @@ $elements = array(
 				'title' => __( 'Countdown', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-countdown-widget-2/', 'countdown', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/countdown-widget-tutorial/', 'countdown', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-banner',
@@ -1264,6 +1301,7 @@ $elements = array(
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-tiktok-feed-widget/', 'tiktok', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/tiktok-feed/', 'tiktok', 'wp-dash', 'dashboard' ),
 				'icon'  => 'pa-tiktok',
+				'is_freemium' => true
 			),
 			array(
 				'key'   => 'premium-pinterest-feed',
@@ -1272,6 +1310,7 @@ $elements = array(
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-pinterest-feed-widget/', 'pinterest', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-pinterest-feed-widget/', 'pinterest', 'wp-dash', 'dashboard' ),
 				'icon'  => 'pa-pinterest',
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-behance',
@@ -1342,6 +1381,7 @@ $elements = array(
 				'title' => __( 'Contact Form 7', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/contact-form-7-widget-for-elementor-page-builder/', 'form', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/contact-form-7-widget-tutorial/', 'form', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'      => 'premium-whatsapp-chat',

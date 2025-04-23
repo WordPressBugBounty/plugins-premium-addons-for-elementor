@@ -145,8 +145,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 					)
 				);
 
-				set_transient( 'pa_activation_redirect', true, 30 );
-
+                set_transient( 'pa_activation_redirect', true, 30 );
 			}
 		}
 

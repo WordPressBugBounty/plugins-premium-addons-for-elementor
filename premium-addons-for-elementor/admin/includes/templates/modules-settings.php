@@ -57,10 +57,10 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 						<button type="button" class="pa-btn pa-btn-enable <?php echo esc_attr( $enable_btn ); ?>"><?php echo esc_html_e( 'Switch On', 'premium-addons-for-elementor' ); ?></button>
 						<button type="button" class="pa-btn pa-btn-disable <?php echo esc_attr( $disable_btn ); ?>"><?php echo esc_html_e( 'Switch Off', 'premium-addons-for-elementor' ); ?></button>
 
-                        <button type="button" class="pa-btn-unused dimmed">
-                            <span><?php echo esc_html_e( 'Disable Unused Widgets', 'premium-addons-for-elementor' ); ?></span>
-                            <i class="dashicons dashicons-image-rotate"></i>
-                        </button>
+						<button type="button" class="pa-btn-unused dimmed">
+							<span><?php echo esc_html_e( 'Disable Unused Widgets', 'premium-addons-for-elementor' ); ?></span>
+							<i class="dashicons dashicons-image-rotate"></i>
+						</button>
 
 					</div>
 				</div>
@@ -69,24 +69,24 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 
 					<div class="pa-elements-filter">
 
-                        <div class="pa-usage">
-                            <label for="pa-usage-select"><?php esc_html_e( 'Select Usage', 'premium-addons-for-elementor' ); ?></label>
-                            <select name="pa-usage-select" id="pa-usage-select" class="placeholder placeholder-active">
-                                <option value="basic"><?php esc_html_e( 'Basic', 'premium-addons-for-elementor' ); ?></option>
-                                <option value="advanced"><?php esc_html_e( 'Advanced', 'premium-addons-for-elementor' ); ?></option>
-                                <option value="custom"><?php esc_html_e( 'Custom', 'premium-addons-for-elementor' ); ?></option>
-                            </select>
-                        </div>
+						<div class="pa-usage">
+							<label for="pa-usage-select"><?php esc_html_e( 'Select Usage', 'premium-addons-for-elementor' ); ?></label>
+							<select name="pa-usage-select" id="pa-usage-select" class="placeholder placeholder-active">
+								<option value="basic"><?php esc_html_e( 'Basic', 'premium-addons-for-elementor' ); ?></option>
+								<option value="advanced"><?php esc_html_e( 'Advanced', 'premium-addons-for-elementor' ); ?></option>
+								<option value="custom"><?php esc_html_e( 'Custom', 'premium-addons-for-elementor' ); ?></option>
+							</select>
+						</div>
 
-                        <div class="pa-typed-search">
-                            <label for="premium-elements-filter"><?php esc_html_e( 'Filter Widgets', 'premium-addons-for-elementor' ); ?></label>
-                            <input type="text" placeholder="<?php esc_html_e( 'Search by name...', 'premium-addons-for-elementor' ); ?>">
-                            <select name="premium-elements-filter" id="premium-elements-filter" class="placeholder placeholder-active">
-                                <option value=""><?php esc_html_e( 'All Widgets', 'premium-addons-for-elementor' ); ?></option>
-                                <option value="free"><?php esc_html_e( 'Free Widgets', 'premium-addons-for-elementor' ); ?></option>
-                                <option value="pro"><?php esc_html_e( 'PRO Widgets', 'premium-addons-for-elementor' ); ?></option>
-                            </select>
-                        </div>
+						<div class="pa-typed-search">
+							<label for="premium-elements-filter"><?php esc_html_e( 'Filter Widgets', 'premium-addons-for-elementor' ); ?></label>
+							<input type="text" placeholder="<?php esc_html_e( 'Search by name...', 'premium-addons-for-elementor' ); ?>">
+							<select name="premium-elements-filter" id="premium-elements-filter" class="placeholder placeholder-active">
+								<option value=""><?php esc_html_e( 'All Widgets', 'premium-addons-for-elementor' ); ?></option>
+								<option value="free"><?php esc_html_e( 'Free Widgets', 'premium-addons-for-elementor' ); ?></option>
+								<option value="pro"><?php esc_html_e( 'PRO Widgets', 'premium-addons-for-elementor' ); ?></option>
+							</select>
+						</div>
 					</div>
 
 					<div class="pa-elements-tabs">
@@ -110,96 +110,96 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 					foreach ( $elements as $index => $cat ) :
 						if ( 'cat-13' !== $index ) :
 							?>
-						<div id="pa-elements-tab-<?php echo esc_attr( $index ); ?>" class="pa-switchers-container hidden">
-						<h3 class="pa-elements-tab-title"><?php echo esc_attr( $cat['title'] ); ?></h3>
-						<div class="pa-switchers">
-							<?php
-							foreach ( $cat['elements'] as $index => $elem ) :
-								$status         = ( isset( $elem['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'disabled' : checked( 1, $enabled_elements[ $elem['key'] ], false );
-								$class          = ( isset( $elem['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'pro-' : '';
-								$switcher_class = $class . 'slider round pa-control';
-								?>
-								<div class="pa-switcher
-								<?php
-								echo isset( $elem['is_pro'] ) ? 'pro-element' : '';
-								echo isset( $elem['name'] ) ? ' ' . esc_html( $elem['name'] ) : '';
-								?>
-								">
-									<div class="pa-element-info">
-										<div class="pa-element-icon-wrap">
-											<i class="pa-dash-<?php echo esc_attr( $elem['key'] ); ?> pa-element-icon"></i>
-										</div>
-										<div class="pa-element-meta-wrap">
-											<p class="pa-element-name">
-												<?php echo esc_html( $elem['title'] ); ?>
-											<span class="pa-total-use" title="Total Use">
-											<?php
-											// if ( ! isset( $elem['is_global'] ) && is_array( $used_widgets ) ) {
-											// 	echo esc_html__( in_array( $elem['name'], array_keys( $used_widgets ) ) ? '(' . $used_widgets[ $elem['name'] ] . ')' : '(0)' );}
-											?>
-											</span>
-												<?php if ( isset( $elem['is_pro'] ) ) : ?>
-													<span><?php echo esc_html_e( 'pro', 'premium-addons-for-elementor' ); ?></span>
-												<?php endif; ?>
-											</p>
+							<div id="pa-elements-tab-<?php echo esc_attr( $index ); ?>" class="pa-switchers-container hidden">
+								<h3 class="pa-elements-tab-title"><?php echo esc_attr( $cat['title'] ); ?></h3>
+								<div class="pa-switchers">
+									<?php
+									foreach ( $cat['elements'] as $index => $elem ) :
+										$status         = ( isset( $elem['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'disabled' : checked( 1, $enabled_elements[ $elem['key'] ], false );
+										$class          = ( isset( $elem['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'pro-' : '';
+										$switcher_class = $class . 'slider round pa-control';
+										?>
+										<div class="pa-switcher
+										<?php
+										echo isset( $elem['is_pro'] ) ? 'pro-element' : '';
+										echo isset( $elem['name'] ) ? ' ' . esc_html( $elem['name'] ) : '';
+										?>
+										">
+											<div class="pa-element-info">
+												<div class="pa-element-icon-wrap">
+													<i class="pa-dash-<?php echo esc_attr( $elem['key'] ); ?> pa-element-icon"></i>
+												</div>
+												<div class="pa-element-meta-wrap">
+													<p class="pa-element-name <?php echo isset( $elem['is_freemium'] ) ? esc_attr( 'freemium' ): ''; ?>">
+														<?php echo esc_html( $elem['title'] ); ?>
+														<span class="pa-total-use" title="Total Use">
+															<?php
+															// if ( ! isset( $elem['is_global'] ) && is_array( $used_widgets ) ) {
+															// echo esc_html__( in_array( $elem['name'], array_keys( $used_widgets ) ) ? '(' . $used_widgets[ $elem['name'] ] . ')' : '(0)' );}
+															?>
+														</span>
+														<?php if ( isset( $elem['is_pro'] ) || isset( $elem['is_freemium'] ) ) : ?>
+															<span><?php echo isset( $elem['is_pro'] ) ? esc_html_e( 'pro', 'premium-addons-for-elementor' ) : esc_html_e( 'freemium', 'premium-addons-for-elementor' ); ?></span>
+														<?php endif; ?>
+													</p>
 
-                                            <div class="pa-element-meta">
-                                                <?php if ( ! $row_meta ) : ?>
-                                                    <div>
-                                                        <?php if ( isset( $elem['demo'] ) ) : ?>
-                                                            <a class="pa-element-link" href="<?php echo esc_url( $elem['demo'] ); ?>" target="_blank">
-                                                                <?php echo esc_html_e( 'Live Demo', 'premium-addons-for-elementor' ); ?>
-                                                                <span class="pa-element-link-separator"></span>
-                                                            </a>
-                                                        <?php endif; ?>
-                                                        <?php if ( isset( $elem['doc'] ) ) : ?>
-                                                            <a class="pa-element-link" href="<?php echo esc_url( $elem['doc'] ); ?>" target="_blank">
-                                                                <?php echo esc_html_e( 'Docs', 'premium-addons-for-elementor' ); ?>
-                                                                <?php if ( isset( $elem['tutorial'] ) ) : ?>
-                                                                    <span class="pa-element-link-separator"></span>
-                                                                <?php endif; ?>
-                                                            </a>
-                                                        <?php endif; ?>
-                                                        <?php if ( isset( $elem['tutorial'] ) ) : ?>
-                                                            <a class="pa-element-link" href="<?php echo esc_url( $elem['tutorial'] ); ?>" target="_blank">
-                                                                <?php echo esc_html_e( 'Video Tutorial', 'premium-addons-for-elementor' ); ?>
-                                                            </a>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                <?php endif; ?>
+													<div class="pa-element-meta">
+														<?php if ( ! $row_meta ) : ?>
+															<div>
+																<?php if ( isset( $elem['demo'] ) ) : ?>
+																	<a class="pa-element-link pa-demo-link" href="<?php echo esc_url( $elem['demo'] ); ?>" target="_blank">
+																		<?php echo esc_html_e( 'Live Demo', 'premium-addons-for-elementor' ); ?>
+																		<span class="pa-element-link-separator"></span>
+																	</a>
+																<?php endif; ?>
+																<?php if ( isset( $elem['doc'] ) ) : ?>
+																	<a class="pa-element-link" href="<?php echo esc_url( $elem['doc'] ); ?>" target="_blank">
+																		<?php echo esc_html_e( 'Docs', 'premium-addons-for-elementor' ); ?>
+																		<?php if ( isset( $elem['tutorial'] ) ) : ?>
+																			<span class="pa-element-link-separator"></span>
+																		<?php endif; ?>
+																	</a>
+																<?php endif; ?>
+																<?php if ( isset( $elem['tutorial'] ) ) : ?>
+																	<a class="pa-element-link" href="<?php echo esc_url( $elem['tutorial'] ); ?>" target="_blank">
+																		<?php echo esc_html_e( 'Video Tutorial', 'premium-addons-for-elementor' ); ?>
+																	</a>
+																<?php endif; ?>
+															</div>
+														<?php endif; ?>
 
-                                                <div>
-                                                    <?php
-                                                    if ( isset( $elem['draw_svg'] ) ) :
-                                                        $svg_key = 'svg_' . $elem['key'];
-                                                        ?>
-                                                        <input type="checkbox" id="<?php echo esc_attr( $svg_key ); ?>" name="<?php echo esc_attr( $svg_key ); ?>" <?php echo checked( 1, $enabled_elements[ $svg_key ], false ); ?>>
-                                                        <label for="<?php echo esc_attr( $svg_key ); ?>"></label>
-                                                        <span><?php esc_html_e( 'Enable SVG Draw', 'premium-addons-for-elementor' ); ?></span>
-                                                    <?php endif; ?>
-                                                </div>
+														<div>
+															<?php
+															if ( isset( $elem['draw_svg'] ) ) :
+																$svg_key = 'svg_' . $elem['key'];
+																?>
+																<input type="checkbox" id="<?php echo esc_attr( $svg_key ); ?>" name="<?php echo esc_attr( $svg_key ); ?>" <?php echo checked( 1, $enabled_elements[ $svg_key ], false ); ?>>
+																<label for="<?php echo esc_attr( $svg_key ); ?>"></label>
+																<span><?php esc_html_e( 'Enable SVG Draw', 'premium-addons-for-elementor' ); ?></span>
+															<?php endif; ?>
+														</div>
 
-												<?php if ('mini-cart' === $elem['key'] ) : ?>
-													<div>
-                                                    <?php
-														$mc_temp_key = 'pa_mc_temp';
-														?>
-														<input type="checkbox" id="<?php echo esc_attr( $mc_temp_key ); ?>" name="<?php echo esc_attr( $mc_temp_key ); ?>" <?php echo checked( 1, $enabled_elements[ $mc_temp_key ], false ); ?>>
-														<label for="<?php echo esc_attr( $mc_temp_key ); ?>"></label>
-														<span><?php esc_html_e( 'Enable Custom Mini Cart Template', 'premium-addons-for-elementor' ); ?></span>
+														<?php if ( 'mini-cart' === $elem['key'] ) : ?>
+															<div>
+															<?php
+																$mc_temp_key = 'pa_mc_temp';
+															?>
+																<input type="checkbox" id="<?php echo esc_attr( $mc_temp_key ); ?>" name="<?php echo esc_attr( $mc_temp_key ); ?>" <?php echo checked( 1, $enabled_elements[ $mc_temp_key ], false ); ?>>
+																<label for="<?php echo esc_attr( $mc_temp_key ); ?>"></label>
+																<span><?php esc_html_e( 'Enable Custom Mini Cart Template', 'premium-addons-for-elementor' ); ?></span>
+															</div>
+														<?php endif; ?>
 													</div>
-												<?php endif; ?>
-                                            </div>
+												</div>
+											</div>
+											<label class="switch">
+												<input type="checkbox" id="<?php echo esc_attr( $elem['key'] ); ?>" name="<?php echo esc_attr( $elem['key'] ); ?>" title="<?php echo esc_attr( $elem['title'] ); ?>"  <?php echo esc_attr( $status ); ?>>
+												<span class="<?php echo esc_attr( $switcher_class ); ?>"></span>
+											</label>
 										</div>
-									</div>
-									<label class="switch">
-										<input type="checkbox" id="<?php echo esc_attr( $elem['key'] ); ?>" name="<?php echo esc_attr( $elem['key'] ); ?>" <?php echo esc_attr( $status ); ?>>
-										<span class="<?php echo esc_attr( $switcher_class ); ?>"></span>
-									</label>
+									<?php endforeach; ?>
 								</div>
-							<?php endforeach; ?>
-						</div>
-						</div>
+							</div>
 						<?php endif; ?>
 					<?php endforeach; ?>
 				</div>

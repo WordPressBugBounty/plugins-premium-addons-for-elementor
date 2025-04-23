@@ -83,6 +83,8 @@ class Admin_Notices {
 	 *
 	 * Init required functions
 	 *
+	 * The redirection happens on the first admin page after activation ( the plugins page ).
+	 *
 	 * @since 1.0.0
 	 * @access public
 	 */
@@ -90,27 +92,25 @@ class Admin_Notices {
 
 		$this->handle_review_notice();
 
-        if ( get_transient( 'pa_activation_redirect' ) ) {
+		if ( get_transient( 'pa_activation_redirect') ) {
 
-            delete_transient( 'pa_activation_redirect' );
+			delete_transient( 'pa_activation_redirect' );
 
-            // Perform the redirection.
-            $redirect = add_query_arg(
-                array(
-                    'page'     => Admin_Helper::$page_slug . '&usage=basic#tab=elements',
-                ),
-                admin_url( 'admin.php' )
-            );
+			$redirect = add_query_arg(
+				array(
+					'page'     => 'pa-setup-wizard', // this mean it should've been added first.
+				),
+				admin_url( 'admin.php' )
+			);
 
-            wp_safe_redirect( $redirect );
+			wp_safe_redirect( $redirect );
 
-            exit;
-        }
-
+			exit;
+		}
 	}
 
 	/**
-	 * init notices check functions
+	 * Init notices check functions.
 	 */
 	public function admin_notices() {
 

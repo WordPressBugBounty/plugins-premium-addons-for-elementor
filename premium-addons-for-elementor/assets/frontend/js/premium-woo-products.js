@@ -74,6 +74,10 @@
 				self.handleTitlePos();
 			}
 
+			$(document).on('berocket_ajax_products_loaded', function () {
+				self.handleGalleryCarousel();
+			});
+
 		};
 
 		self.getIsoTopeSettings = function () {

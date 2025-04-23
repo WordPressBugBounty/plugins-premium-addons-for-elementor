@@ -42,7 +42,6 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 			<td><?php esc_html_e( 'WP Memory Limit', 'premium-addons-for-elementor' ); ?>:</td>
 			<td>
 			<?php
-
 				$memory_limit = wp_convert_hr_to_bytes( WP_MEMORY_LIMIT );
 
 				echo esc_html( size_format( $memory_limit ) );

@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8
 Requires PHP: 7.4
-Stable Tag: 4.11.3
+Stable Tag: 4.11.4
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.4 =
+
+- New: Introducing Setup Wizard for easier plugin settings customization.
+- Tweak: Compatibility between Woo Products widget and BeRocket filtering plugin.
+- Fixed: Console error in Mobile Menu widget.
+- Fixed: Layout broken with Style 7 in Heading widget.
 
 = 4.11.3 =
 

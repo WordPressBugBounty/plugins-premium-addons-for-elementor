@@ -57,7 +57,7 @@ if ( ! Helper_Functions::check_papro_version() ) {
 			<div class="pa-white-label-notice-logo">
 				<img src="<?php echo esc_url( PREMIUM_ADDONS_URL ) . 'admin/images/pa-logo-symbol.png'; ?>" alt="Premium Addons White Labeling Notice">
 			</div>
-			<h2><?php esc_html_e( 'Get Premium Addons <span>Pro</span> to Enable White Labeling Options', 'premium-addons-for-elementor' ); ?></h2>
+			<h2><?php echo wp_kses_post( 'Get Premium Addons <span>Pro</span> to Enable White Labeling Options', 'premium-addons-for-elementor' ); ?></h2>
 			<p><?php esc_html_e( 'Premium Addons can be completely re-branded with your own brand name and author details. Your clients will never know what tools you are using to build their website and will think that this is your own tool set. White-labeling works as long as your license is active.', 'premium-addons-for-elementor' ); ?></p>
 			<a class="pa-btn pa-get-pro" href="<?php echo esc_attr( $campaign ); ?>" target="_blank"><?php esc_html_e( 'Get PRO', 'premium-addons-for-elementor' ); ?></a>
 		</div>

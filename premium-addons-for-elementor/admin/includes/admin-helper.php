@@ -7,6 +7,7 @@ namespace PremiumAddons\Admin\Includes;
 
 use PremiumAddons\Includes\Helper_Functions;
 use Elementor\Modules\Usage\Module;
+use Elementor\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -146,6 +147,7 @@ class Admin_Helper {
 			}
 
 			if ( self::check_user_can( 'install_plugins' ) ) {
+				// close the feedback till we finish developing the wizard.
 				Feedback::get_instance();
 			}
 		}
@@ -329,6 +331,10 @@ class Admin_Helper {
 					'generate_nonce'    => wp_create_nonce( 'pa-generate-nonce' ),
 					'site_cursor_nonce' => wp_create_nonce( 'pa-site-cursor-nonce' ),
 					'theme'             => $theme_slug,
+					'i18n'              => array(
+						'successMsg' => __( 'Your submission was successful.', 'premium-addons-for-elementor' ),
+						'failMsg'    => __( 'Your submission failed because of an error', 'premium-addons-for-elementor' ),
+					),
 				),
 				'premiumRollBackConfirm' => array(
 					'home_url' => home_url(),
@@ -349,6 +355,36 @@ class Admin_Helper {
 			}
 
 			wp_localize_script( 'pa-admin', 'premiumAddonsSettings', $localized_data );
+
+		}
+
+		if ( false !== strpos( $action, 'page=pa-setup-wizard' ) ) {
+			wp_enqueue_style(
+				'pa-wizard',
+				PREMIUM_ADDONS_URL . 'admin/assets/css/setup-wizard.css',
+				array(),
+				PREMIUM_ADDONS_VERSION,
+				'all'
+			);
+
+			wp_enqueue_script(
+				'pa-wizard',
+				PREMIUM_ADDONS_URL . 'admin/assets/js/setup-wizard.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_localize_script(
+				'pa-wizard',
+				'paWizardSettings',
+				array(
+					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
+					'exitWizardURL' => admin_URL( 'plugins.php' ),
+					'dashboardURL'  => admin_URL( 'admin.php' ) . '?page=premium-addons#tab=elements',
+					'newPageURL'    => Plugin::$instance->documents->get_create_new_post_url(),
+				)
+			);
 
 		}
 
@@ -700,6 +736,16 @@ class Admin_Helper {
 			);
 		}
 
+		call_user_func(
+			'add_submenu_page',
+			self::$page_slug,
+			__( 'PA Setup Wizard', 'premium-addons-for-elementor' ),
+			__( 'Run Setup Wizard', 'premium-addons-for-elementor' ),
+			'manage_options',
+			'pa-setup-wizard',
+			array( $this, 'pa_init_setup_wizard' )
+		);
+
 		$is_papro_active = apply_filters( 'papro_activated', false );
 
 		if ( ! $is_papro_active ) {
@@ -714,7 +760,15 @@ class Admin_Helper {
 			);
 		}
 
+		// To remove the main page link from the tabs.
 		remove_submenu_page( self::$page_slug, self::$page_slug );
+	}
+
+	public function pa_init_setup_wizard() {
+
+		include_once PREMIUM_ADDONS_PATH . 'admin/includes/setup-wizard/main-view.php';
+		// Add the PRO popup template
+		include_once PREMIUM_ADDONS_PATH . 'admin/includes/templates/pro-popup.php';
 	}
 
 	/**
@@ -726,6 +780,9 @@ class Admin_Helper {
 	 * @since 3.20.8
 	 */
 	public function render_setting_tabs() {
+
+		// add the PRO popup template
+		include_once PREMIUM_ADDONS_PATH . 'admin/includes/templates/pro-popup.php';
 
 		?>
 		<div class="pa-settings-wrap">
@@ -818,7 +875,7 @@ class Admin_Helper {
 				'title' => __( 'Get Premium Addons PRO', 'premium-addons-for-elementor' ),
 				'desc'  => __( 'Supercharge your Elementor with PRO Widgets & Addons that you won\'t find anywhere else.', 'premium-addons-for-elementor' ),
 				'btn'   => __( 'Get Pro', 'premium-addons-for-elementor' ),
-				'cta'=> 'https://premiumaddons.com/get/papro'
+				'cta'   => 'https://premiumaddons.com/get/papro',
 			);
 		}
 
@@ -834,7 +891,7 @@ class Admin_Helper {
 				'title' => __( 'You\'re Missing Out on the Official Pro Version!', 'premium-addons-for-elementor' ),
 				'desc'  => __( 'It looks like you\'re using Premium Addons Pro, but it was not purchased from our official website. Get official version to receive updates, support and use Premium Templates!', 'premium-addons-for-elementor' ),
 				'btn'   => __( 'Get Pro', 'premium-addons-for-elementor' ),
-				'cta'=> 'https://premiumaddons.com/validate/papro'
+				'cta'   => 'https://premiumaddons.com/validate/papro',
 			);
 
 		}
@@ -1590,6 +1647,11 @@ class Admin_Helper {
 					'sslverify' => true,
 				)
 			);
+
+			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+				set_transient( 'pa_news', true, WEEK_IN_SECONDS );
+				return;
+        	}
 
 			$body  = wp_remote_retrieve_body( $response );
 			$posts = json_decode( $body, true );

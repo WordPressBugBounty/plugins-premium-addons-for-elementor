@@ -2049,7 +2049,14 @@ class Premium_Title extends Widget_Base {
 
 		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
 			<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( 'title' ) ); ?>>
-
+				<?php if ( 'style7' === $selected_style ) : ?>
+					<?php if ( 'column' !== $icon_position ) : ?>
+						<span class="premium-title-style7-stripe-wrap">
+							<span class="premium-title-style7-stripe"></span>
+						</span>
+					<?php endif; ?>
+					<div class="premium-title-style7-inner">
+				<?php endif; ?>
 
 				<?php if ( 'yes' === $settings['premium_title_icon_switcher'] ) : ?>
 					<?php if ( 'icon' === $icon_type ) : ?>

@@ -5423,7 +5423,7 @@
 				//Observe sections dynamically based on menu items' data-target attributes
 				this.elements.$items.each(function () {
 					var targetId = $(this).data('target');
-					if (targetId) {
+					if (targetId && targetId.includes('#')) {
 						var targetElement = document.querySelector(targetId);
 						if (targetElement) {
 							self.observer.observe(targetElement);

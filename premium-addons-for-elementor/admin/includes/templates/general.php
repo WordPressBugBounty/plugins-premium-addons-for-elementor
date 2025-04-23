@@ -90,7 +90,7 @@ $pa_news = self::get_pa_news();
 
 			<div class="pa-dash-block col-3">
 				<div class="pa-section-info-wrap">
-				<div class="pa-section-info pa-support-section">
+					<div class="pa-section-info pa-support-section">
 						<h4>
 							<i class="pa-element-icon dashicons dashicons-sos icon-inline"></i>
 							<?php esc_html_e( 'Docs and Support', 'premium-addons-for-elementor' ); ?>

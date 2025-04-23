@@ -14,6 +14,12 @@
 	poppinsfontLink.type = 'text/css';
 	document.head.appendChild(poppinsfontLink);
 
+	var pluaJakartaFontLInk = document.createElement('link');
+	pluaJakartaFontLInk.rel = 'stylesheet';
+	pluaJakartaFontLInk.href = 'https://fonts.googleapis.com/css?family=Plus Jakarta Sans:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic';
+	pluaJakartaFontLInk.type = 'text/css';
+	document.head.appendChild(pluaJakartaFontLInk);
+
 	var settings = premiumAddonsSettings.settings;
 
 	window.PremiumAddonsNavigation = function () {
@@ -55,6 +61,8 @@
 			self.handleNewsLetterForm();
 
 			self.handlePaproActions();
+
+			self.handleWhiteLabelingAction()
 
 		};
 
@@ -561,12 +569,12 @@
 
 		};
 
-		self.saveElementsSettings = function (action) { //save elements settings changes
+		self.saveElementsSettings = function (action, redirectURL = null) { //save elements settings changes
 
 			var $form = null;
 
 			if ('elements' === action) {
-				$form = $('form#pa-settings, form#pa-features');
+				$form = $('form#pa-settings, form#pa-features, form#pa-wz-settings');
 				action = 'pa_elements_settings';
 			} else {
 				$form = $('form#pa-ver-control, form#pa-integrations');
@@ -589,6 +597,11 @@
 					},
 					error: function (err) {
 						console.log(err);
+					},
+					complete: function () {
+						if (redirectURL) {
+							$(location).attr('href', redirectURL);
+						}
 					}
 				}
 			);
@@ -608,40 +621,58 @@
 
 		self.handlePaproActions = function () {
 
-			// Trigger SWAL for PRO elements
 			$(".pro-slider").on(
 				'click',
 				function () {
-
 					var elementName = $(this).prev().attr('name');
 
 					elementName = elementName.replace('premium-', '');
 
-					var redirectionLink = " https://premiumaddons.com/pro/?utm_source=" + elementName + "&utm_medium=wp-dash-pro&utm_campaign=get-pro&utm_term=";
+					var colorArr = ['#FF7800', '#6C9800', '#00BCF1', '#F7C230', '#006CE7'],
+						redirectionLink = " https://premiumaddons.com/pro/?utm_source=" + elementName + "&utm_medium=wp-dash-pro&utm_campaign=get-pro&utm_term=" + settings.theme,
+						iconClass = $(this).parent().prev().find('.pa-element-icon').attr('class'),
+						iconColor = colorArr[Math.floor(Math.random() * colorArr.length)],
+						demoLink = $(this).parents('.pa-switcher').find('.pa-demo-link').attr('href'),
+						eleTitle = $(this).prev().attr('title');
 
-					Swal.fire(
-						{
-							title: '<span class="pa-swal-head">Get PRO Widgets & Addons<span>',
-							html: 'Supercharge your Elementor with PRO widgets and addons that you won’t find anywhere else.',
-							type: 'warning',
-							showCloseButton: true,
-							showCancelButton: true,
-							cancelButtonText: "Get PRO",
-							focusConfirm: true,
-							customClass: 'pa-swal',
-						}
-					).then(
-						function (res) {
-							// Handle More Info button
-							if (res.dismiss === 'cancel') {
-								window.open(redirectionLink + settings.theme, '_blank');
-							}
+					// update icon.
+					$('#pa-dash-pro-popup-cta .pa-popup-widget-icon i').attr('class', iconClass).css('color', iconColor);
 
-						}
-					);
+					// update widget name.
+					$('#pa-dash-pro-popup-cta .primary-des .pa-widget-name').text(eleTitle);
+
+					// update CTA links.
+					$('#pa-dash-pro-popup-cta .pa-popup-cta:first-child').attr('href', demoLink);
+					$('#pa-dash-pro-popup-cta .pa-popup-cta:last-child').attr('href', redirectionLink);
+
+					$('#pa-dash-pro-popup-cta').show().find('.popup-body').css('animation-name', 'swal2-show');
 				}
 			);
 
+			$('.pa-popup-close').on('click', function () { self.closeProPopup(); });
+
+			//Close popup when escape keyboard button is tapped.
+			jQuery(document).on('keydown', function (e) {
+				if (e.key === "Escape" || e.keyCode === 27) {
+					self.closeProPopup();
+				}
+			});
+
+			$(document).on('click', '#pa-dash-pro-popup-cta', function (e) {
+				if ($(e.target).closest(".popup-body").length < 1) { self.closeProPopup(); }
+			});
+
+		};
+
+		self.closeProPopup = function () {
+			$('#pa-dash-pro-popup-cta .popup-body').css('animation-name', 'swal2-hide');
+
+			setTimeout(() => {
+				$('#pa-dash-pro-popup-cta').hide();
+			}, 302);
+		};
+
+		self.handleWhiteLabelingAction = function () {
 			// Trigger SWAL for White Labeling
 			$(".premium-white-label-form.pro-inactive").on(
 				'submit',
@@ -672,7 +703,6 @@
 					);
 				}
 			);
-
 		};
 
 		self.handleNewsLetterForm = function () {
@@ -680,7 +710,9 @@
 			$('.pa-newsletter-form').on('submit', function (e) {
 				e.preventDefault();
 
-				var email = $("#pa_news_email").val();
+				var email = $("#pa_news_email").val(),
+					_this = this,
+					isWizardForm = $(this).hasClass('pa-wizard-form');
 
 				if (checkEmail(email)) {
 					$.ajax(
@@ -694,25 +726,55 @@
 							},
 							beforeSend: function () {
 								console.log("Adding user to subscribers list");
+
+								if (isWizardForm) {
+
+									$(_this).find('.pa-wz-msg').remove();
+
+									$(_this).animate({
+										opacity: '0.45'
+									}, 500);
+
+									$(_this).find('.pa-btn').attr('disabled', 'disabled').find('.pa-wz-news-svg').hide();
+									$(_this).find('.pa-btn .pa-wz-spinner').show();
+								}
 							},
 							success: function (response) {
 								if (response.data) {
 									var status = response.data.status;
+
 									if (status) {
 										console.log("User added to subscribers list");
-										swal.fire({
-											title: 'Thanks for subscribing!',
-											text: 'Click OK to continue',
-											type: 'success',
-											timer: 1000
-										});
-									}
 
+										if (isWizardForm) {
+											$(_this).append('<span class="pa-wz-success pa-wz-msg">' + settings.i18n.successMsg + '</span>');
+										} else {
+											swal.fire({
+												title: 'Thanks for subscribing!',
+												text: 'Click OK to continue',
+												type: 'success',
+												timer: 1000
+											});
+										}
+									}
 								}
 
 							},
 							error: function (err) {
 								console.log(err);
+
+								if (isWizardForm) {
+									$(_this).append('<span class="pa-wz-danger pa-wz-msg">' + settings.i18n.failMsg + '</span>');
+								}
+							},
+							complete: function () {
+
+								$(_this).find('.pa-btn').removeAttr('disabled').find('.pa-wz-spinner').hide();
+								$(_this).find('.pa-btn .pa-wz-news-svg').show();
+
+								$(_this).animate({
+									opacity: '1'
+								}, 100);
 							}
 						}
 					);
