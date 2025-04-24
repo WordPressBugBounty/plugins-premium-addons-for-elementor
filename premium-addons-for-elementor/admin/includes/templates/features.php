@@ -21,7 +21,7 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-						<h4><?php echo esc_html( __( 'Magic Scroll', 'premium-addons-for-elementor' ) ); ?></h4>
+							<h4><?php echo esc_html( __( 'Magic Scroll', 'premium-addons-for-elementor' ) ); ?></h4>
 							<p><?php echo esc_html( __( 'Create sophisticated animations with dozens of customization options.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
 
@@ -35,7 +35,7 @@ $features = $elements['cat-13']['elements'];
 
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-mscroll" name="premium-mscroll" <?php echo esc_attr( $status ); ?>>
+								<input type="checkbox" id="premium-mscroll" pa-element="feature" name="premium-mscroll" <?php echo esc_attr( $status ); ?>>
 									<span class="<?php echo esc_attr( $switcher_class ); ?>"></span>
 								</label>
 							</p>
@@ -53,7 +53,7 @@ $features = $elements['cat-13']['elements'];
 
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-templates" name="premium-templates" <?php echo checked( 1, $enabled_elements['premium-templates'], false ); ?>>
+								<input type="checkbox" id="premium-templates" pa-element="feature" name="premium-templates" <?php echo checked( 1, $enabled_elements['premium-templates'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>
@@ -71,7 +71,7 @@ $features = $elements['cat-13']['elements'];
 
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="pa-display-conditions" name="pa-display-conditions" <?php echo checked( 1, $enabled_elements['pa-display-conditions'], false ); ?>>
+								<input type="checkbox" id="pa-display-conditions" pa-element="feature" name="pa-display-conditions" <?php echo checked( 1, $enabled_elements['pa-display-conditions'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>
@@ -89,7 +89,7 @@ $features = $elements['cat-13']['elements'];
 
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-equal-height" name="premium-equal-height" <?php echo checked( 1, $enabled_elements['premium-equal-height'], false ); ?>>
+								<input type="checkbox" id="premium-equal-height" pa-element="feature" name="premium-equal-height" <?php echo checked( 1, $enabled_elements['premium-equal-height'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>
@@ -117,7 +117,7 @@ $features = $elements['cat-13']['elements'];
 						?>
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-global-cursor" name="premium-global-cursor" <?php echo esc_attr( $status ); ?>>
+								<input type="checkbox" id="premium-global-cursor" pa-element="feature" name="premium-global-cursor" <?php echo esc_attr( $status ); ?>>
 									<span class="<?php echo esc_attr( $switcher_class ); ?>"></span>
 								</label>
 							</p>
@@ -141,7 +141,7 @@ $features = $elements['cat-13']['elements'];
 						?>
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-global-badge" name="premium-global-badge" <?php echo esc_attr( $status ); ?>>
+								<input type="checkbox" id="premium-global-badge" pa-element="feature" name="premium-global-badge" <?php echo esc_attr( $status ); ?>>
 									<span class="<?php echo esc_attr( $switcher_class ); ?>"></span>
 								</label>
 							</p>
@@ -158,7 +158,7 @@ $features = $elements['cat-13']['elements'];
 						</div>
 												<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-shape-divider" name="premium-shape-divider" <?php echo checked( 1, $enabled_elements['premium-shape-divider'], false ); ?>>
+								<input type="checkbox" id="premium-shape-divider" pa-element="feature" name="premium-shape-divider" <?php echo checked( 1, $enabled_elements['premium-shape-divider'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>
@@ -175,7 +175,7 @@ $features = $elements['cat-13']['elements'];
 						</div>
 												<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-global-tooltips" name="premium-global-tooltips" <?php echo checked( 1, $enabled_elements['premium-global-tooltips'], false ); ?>>
+								<input type="checkbox" id="premium-global-tooltips" pa-element="feature" name="premium-global-tooltips" <?php echo checked( 1, $enabled_elements['premium-global-tooltips'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>
@@ -193,7 +193,7 @@ $features = $elements['cat-13']['elements'];
 
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-floating-effects" name="premium-floating-effects" <?php echo checked( 1, $enabled_elements['premium-floating-effects'], false ); ?>>
+								<input type="checkbox" id="premium-floating-effects" pa-element="feature" name="premium-floating-effects" <?php echo checked( 1, $enabled_elements['premium-floating-effects'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>
@@ -211,7 +211,7 @@ $features = $elements['cat-13']['elements'];
 
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-cross-domain" name="premium-cross-domain" <?php echo checked( 1, $enabled_elements['premium-cross-domain'], false ); ?>>
+								<input type="checkbox" id="premium-cross-domain" pa-element="feature" name="premium-cross-domain" <?php echo checked( 1, $enabled_elements['premium-cross-domain'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>
@@ -229,7 +229,7 @@ $features = $elements['cat-13']['elements'];
 
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-duplicator" name="premium-duplicator" <?php echo checked( 1, $enabled_elements['premium-duplicator'], false ); ?>>
+								<input type="checkbox" id="premium-duplicator" pa-element="feature" name="premium-duplicator" <?php echo checked( 1, $enabled_elements['premium-duplicator'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>
@@ -246,7 +246,7 @@ $features = $elements['cat-13']['elements'];
 
 						<div class="pa-section-info-cta">
 							<label class="switch">
-								<input type="checkbox" id="premium-wrapper-link" name="premium-wrapper-link" <?php echo checked( 1, $enabled_elements['premium-wrapper-link'], false ); ?>>
+								<input type="checkbox" id="premium-wrapper-link" pa-element="feature" name="premium-wrapper-link" <?php echo checked( 1, $enabled_elements['premium-wrapper-link'], false ); ?>>
 									<span class="slider round pa-control"></span>
 								</label>
 							</p>

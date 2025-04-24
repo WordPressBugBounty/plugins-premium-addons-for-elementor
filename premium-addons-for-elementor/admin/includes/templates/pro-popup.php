@@ -22,11 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <span class="pa-popup-badge">PRO</span>
                 </span>
                 <i class=""></i>
+                <img style="display:none" src="<?php echo esc_attr( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>" alt="Premium Addons">
             </span>
             <span class="pa-popup-desc">
                 <span class="primary-des">
                     <span class="pa-widget-name"></span>
-                    <?php esc_html_e( 'Widget requires', 'premium-addons-for-elementor' ); ?>
+                    <?php esc_html_e( ' requires', 'premium-addons-for-elementor' ); ?>
                 </span>
                 <span class="secondary-des"><?php esc_html_e( 'Premium Addons PRO', 'premium-addons-for-elementor' ); ?></span>
             </span>

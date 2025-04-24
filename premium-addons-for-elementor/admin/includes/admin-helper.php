@@ -147,7 +147,6 @@ class Admin_Helper {
 			}
 
 			if ( self::check_user_can( 'install_plugins' ) ) {
-				// close the feedback till we finish developing the wizard.
 				Feedback::get_instance();
 			}
 		}

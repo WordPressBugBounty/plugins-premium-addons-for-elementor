@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.11.4\n"
+"Project-Id-Version: Premium Addons for Elementor 4.11.5\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2025-04-23 15:11:19+00:00\n"
+"POT-Creation-Date: 2025-04-24 15:25:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,62 +48,62 @@ msgstr ""
 msgid "Learn More"
 msgstr ""
 
-#: admin/includes/admin-helper.php:335
+#: admin/includes/admin-helper.php:334
 msgid "Your submission was successful."
 msgstr ""
 
-#: admin/includes/admin-helper.php:336
+#: admin/includes/admin-helper.php:335
 msgid "Your submission failed because of an error"
 msgstr ""
 
-#: admin/includes/admin-helper.php:342 admin/includes/admin-helper.php:1343
+#: admin/includes/admin-helper.php:341 admin/includes/admin-helper.php:1342
 #: admin/includes/templates/version-control.php:22
 msgid "Rollback to Previous Version"
 msgstr ""
 
-#: admin/includes/admin-helper.php:344 admin/includes/admin-helper.php:354
+#: admin/includes/admin-helper.php:343 admin/includes/admin-helper.php:353
 #. translators: %s: PA stable version
 msgid "Are you sure you want to reinstall version %s?"
 msgstr ""
 
-#: admin/includes/admin-helper.php:345
+#: admin/includes/admin-helper.php:344
 msgid "Continue"
 msgstr ""
 
-#: admin/includes/admin-helper.php:346
+#: admin/includes/admin-helper.php:345
 msgid "Cancel"
 msgstr ""
 
-#: admin/includes/admin-helper.php:564
+#: admin/includes/admin-helper.php:563
 #: modules/premium-global-tooltips/module.php:692
 msgid "Settings"
 msgstr ""
 
-#: admin/includes/admin-helper.php:566
+#: admin/includes/admin-helper.php:565
 msgid "Rollback to Version "
 msgstr ""
 
-#: admin/includes/admin-helper.php:574
+#: admin/includes/admin-helper.php:573
 msgid "Go Pro"
 msgstr ""
 
-#: admin/includes/admin-helper.php:609
+#: admin/includes/admin-helper.php:608
 msgid "View Premium Addons for Elementor Documentation"
 msgstr ""
 
-#: admin/includes/admin-helper.php:609
+#: admin/includes/admin-helper.php:608
 msgid "Docs & FAQs"
 msgstr ""
 
-#: admin/includes/admin-helper.php:610
+#: admin/includes/admin-helper.php:609
 msgid "View Premium Addons Video Tutorials"
 msgstr ""
 
-#: admin/includes/admin-helper.php:610
+#: admin/includes/admin-helper.php:609
 msgid "Video Tutorials"
 msgstr ""
 
-#: admin/includes/admin-helper.php:648
+#: admin/includes/admin-helper.php:647
 #: modules/woocommerce/widgets/woo-categories.php:155
 #: modules/woocommerce/widgets/woo-cta.php:176
 #: modules/woocommerce/widgets/woo-products.php:230
@@ -115,62 +115,62 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: admin/includes/admin-helper.php:655
+#: admin/includes/admin-helper.php:654
 msgid "Widgets & Add-ons"
 msgstr ""
 
-#: admin/includes/admin-helper.php:662
+#: admin/includes/admin-helper.php:661
 msgid "Global Features"
 msgstr ""
 
-#: admin/includes/admin-helper.php:669 widgets/premium-videobox.php:3510
+#: admin/includes/admin-helper.php:668 widgets/premium-videobox.php:3510
 msgid "Integrations"
 msgstr ""
 
-#: admin/includes/admin-helper.php:676
+#: admin/includes/admin-helper.php:675
 msgid "Version Control"
 msgstr ""
 
-#: admin/includes/admin-helper.php:683
+#: admin/includes/admin-helper.php:682
 msgid "White Labeling"
 msgstr ""
 
-#: admin/includes/admin-helper.php:690
+#: admin/includes/admin-helper.php:689
 msgid "System Info"
 msgstr ""
 
-#: admin/includes/admin-helper.php:742
+#: admin/includes/admin-helper.php:741
 msgid "PA Setup Wizard"
 msgstr ""
 
-#: admin/includes/admin-helper.php:743
+#: admin/includes/admin-helper.php:742
 msgid "Run Setup Wizard"
 msgstr ""
 
-#: admin/includes/admin-helper.php:856
+#: admin/includes/admin-helper.php:855
 msgid "save 10% on Lifetime!"
 msgstr ""
 
-#: admin/includes/admin-helper.php:875
+#: admin/includes/admin-helper.php:874
 msgid "Get Premium Addons PRO"
 msgstr ""
 
-#: admin/includes/admin-helper.php:876
+#: admin/includes/admin-helper.php:875
 msgid ""
 "Supercharge your Elementor with PRO Widgets & Addons that you won't find "
 "anywhere else."
 msgstr ""
 
-#: admin/includes/admin-helper.php:877 admin/includes/admin-helper.php:893
+#: admin/includes/admin-helper.php:876 admin/includes/admin-helper.php:892
 #: includes/papro-promotion.php:95 includes/templates/classes/config.php:171
 msgid "Get Pro"
 msgstr ""
 
-#: admin/includes/admin-helper.php:891
+#: admin/includes/admin-helper.php:890
 msgid "You're Missing Out on the Official Pro Version!"
 msgstr ""
 
-#: admin/includes/admin-helper.php:892
+#: admin/includes/admin-helper.php:891
 #: includes/templates/scripts/template-invalid-license-error.php:12
 msgid ""
 "It looks like you're using Premium Addons Pro, but it was not purchased "
@@ -178,7 +178,7 @@ msgid ""
 "and use Premium Templates!"
 msgstr ""
 
-#: admin/includes/admin-helper.php:1409 admin/includes/admin-helper.php:1434
+#: admin/includes/admin-helper.php:1408 admin/includes/admin-helper.php:1433
 msgid "You are not allowed to do this action"
 msgstr ""
 
@@ -839,47 +839,47 @@ msgstr ""
 msgid "Rolling Back to Version "
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:15
+#: admin/includes/setup-wizard/content-views/community.php:16
 msgid "Be Part of Premium Addons Community!"
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:16
+#: admin/includes/setup-wizard/content-views/community.php:17
 msgid ""
 "Stay connected, get exclusive tips, and be the first to know about new "
 "features."
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:25
+#: admin/includes/setup-wizard/content-views/community.php:26
 msgid "Join Our Newsletter"
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:26
+#: admin/includes/setup-wizard/content-views/community.php:27
 msgid "Learn about our latest updates and special offers!"
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:31
+#: admin/includes/setup-wizard/content-views/community.php:32
 msgid "Enter Your Email"
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:33
-#: admin/includes/setup-wizard/content-views/community.php:60
+#: admin/includes/setup-wizard/content-views/community.php:34
+#: admin/includes/setup-wizard/content-views/community.php:61
 #: admin/includes/templates/general.php:40
 msgid "Subscribe"
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:41
+#: admin/includes/setup-wizard/content-views/community.php:42
 msgid "newsletter"
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:48
+#: admin/includes/setup-wizard/content-views/community.php:49
 msgid "Meet Like-Minded Creators"
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:50
+#: admin/includes/setup-wizard/content-views/community.php:51
 msgid "Join Facebook Group"
 msgstr ""
 
-#: admin/includes/setup-wizard/content-views/community.php:58
+#: admin/includes/setup-wizard/content-views/community.php:59
 msgid "Watch & Learn"
 msgstr ""
 
@@ -1693,27 +1693,27 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
-#: admin/includes/templates/pro-popup.php:29
-msgid "Widget requires"
+#: admin/includes/templates/pro-popup.php:30
+msgid " requires"
 msgstr ""
 
-#: admin/includes/templates/pro-popup.php:31
+#: admin/includes/templates/pro-popup.php:32
 msgid "Premium Addons PRO"
 msgstr ""
 
-#: admin/includes/templates/pro-popup.php:34
+#: admin/includes/templates/pro-popup.php:35
 msgid "check features"
 msgstr ""
 
-#: admin/includes/templates/pro-popup.php:34
+#: admin/includes/templates/pro-popup.php:35
 msgid "CHECK FEATURES"
 msgstr ""
 
-#: admin/includes/templates/pro-popup.php:36
+#: admin/includes/templates/pro-popup.php:37
 msgid "upgrade now"
 msgstr ""
 
-#: admin/includes/templates/pro-popup.php:36
+#: admin/includes/templates/pro-popup.php:37
 msgid "UPGRADE NOW"
 msgstr ""
 

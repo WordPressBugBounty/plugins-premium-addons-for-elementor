@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8
 Requires PHP: 7.4
-Stable Tag: 4.11.4
+Stable Tag: 4.11.5
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.5 =
+
+- Fixed: All global features are disabled when setup wizard is completed.
+- Tweak: Pro global feature name is not showing in setup wizard.
 
 = 4.11.4 =
 

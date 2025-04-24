@@ -72,20 +72,20 @@
 			$("#pa-features .pa-section-info-cta input, #pa-modules .pa-switcher input, #pa-modules .pa-section-info-cta input").on(
 				'change',
 				function () {
-					self.saveElementsSettings('elements');
+					self.saveElementsSettings('elements', 'default');
 				}
 			)
 
 			$("#pa-ver-control input, #pa-integrations input, #pa-ver-control input, #pa-integrations select").change(
 				function () {
-					self.saveElementsSettings('additional');
+					self.saveElementsSettings('additional', 'default');
 				}
 			);
 
 			$("#pa-integrations input[type=text]").on(
 				'keyup',
 				function () {
-					self.saveElementsSettings('additional');
+					self.saveElementsSettings('additional', 'default');
 				}
 			)
 
@@ -215,7 +215,7 @@
 
 					$("#pa-modules .pa-switcher input").not('#pa_mc_temp').prop("checked", isChecked);
 
-					self.saveElementsSettings('elements');
+					self.saveElementsSettings('elements', 'default');
 
 				}
 			);
@@ -233,7 +233,7 @@
 					if (!shouldDisableUnused)
 						$(this).addClass('dimmed');
 
-					self.saveElementsSettings('elements');
+					self.saveElementsSettings('elements', 'default');
 				}
 			);
 
@@ -370,7 +370,7 @@
 							$('#pa-features .switch').find('input#' + selector).prop('checked', true);
 						});
 
-						self.saveElementsSettings('elements');
+						self.saveElementsSettings('elements', 'default');
 
 					}
 
@@ -569,9 +569,10 @@
 
 		};
 
-		self.saveElementsSettings = function (action, redirectURL = null) { //save elements settings changes
+		self.saveElementsSettings = function (action, source, redirectURL = null) { //save elements settings changes
 
-			var $form = null;
+			var $form = null,
+				defaultAddons = 'wizard' === source ? '&premium-templates=on&premium-equal-height=on&premium-wrapper-link=on&pa-display-conditions=on&premium-duplicator' : '';
 
 			if ('elements' === action) {
 				$form = $('form#pa-settings, form#pa-features, form#pa-wz-settings');
@@ -588,7 +589,7 @@
 					data: {
 						action: action,
 						security: settings.nonce,
-						fields: $form.serialize(),
+						fields: $form.serialize() + defaultAddons,
 					},
 					success: function (response) {
 						console.log('settings saved');
@@ -624,19 +625,24 @@
 			$(".pro-slider").on(
 				'click',
 				function () {
-					var elementName = $(this).prev().attr('name');
-
-					elementName = elementName.replace('premium-', '');
+					var isFeature = 'feature' === $(this).prev().attr('pa-element'),
+						elementName = $(this).prev().attr('name').replace('premium-', '');
 
 					var colorArr = ['#FF7800', '#6C9800', '#00BCF1', '#F7C230', '#006CE7'],
 						redirectionLink = " https://premiumaddons.com/pro/?utm_source=" + elementName + "&utm_medium=wp-dash-pro&utm_campaign=get-pro&utm_term=" + settings.theme,
 						iconClass = $(this).parent().prev().find('.pa-element-icon').attr('class'),
 						iconColor = colorArr[Math.floor(Math.random() * colorArr.length)],
-						demoLink = $(this).parents('.pa-switcher').find('.pa-demo-link').attr('href'),
-						eleTitle = $(this).prev().attr('title');
+						demoLink = isFeature? $(this).parents('.pa-section-outer-wrap').find('> a').attr('href') : $(this).parents('.pa-switcher').find('.pa-demo-link').attr('href'),
+						eleTitle = isFeature ? $(this).parents('.pa-section-info-wrap').find('.pa-section-info > h4').text() : $(this).prev().attr('title') + ' Widget';
 
 					// update icon.
-					$('#pa-dash-pro-popup-cta .pa-popup-widget-icon i').attr('class', iconClass).css('color', iconColor);
+					if ( isFeature ) {
+						$('#pa-dash-pro-popup-cta').addClass('pa-feature-element');;
+
+					} else {
+						$('#pa-dash-pro-popup-cta').removeClass('pa-feature-element');
+						$('#pa-dash-pro-popup-cta .pa-popup-widget-icon i').attr('class', iconClass).css('color', iconColor);
+					}
 
 					// update widget name.
 					$('#pa-dash-pro-popup-cta .primary-des .pa-widget-name').text(eleTitle);

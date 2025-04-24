@@ -85,7 +85,7 @@
                 } else {
                     var redirectURL = $(this).hasClass('pa-new-page') ? paWizardSettings.newPageURL : paWizardSettings.dashboardURL;
 
-                    _this.paNavInstance.saveElementsSettings('elements', redirectURL);
+                    _this.paNavInstance.saveElementsSettings('elements', 'wizard', redirectURL);
                 }
             });
         };

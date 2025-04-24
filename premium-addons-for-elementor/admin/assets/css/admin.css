@@ -140,7 +140,8 @@
 	border-radius: 50%;
 }
 
-#pa-settings .switch input:disabled + .pro-slider::after {
+#pa-settings .switch input:disabled + .pro-slider::after,
+#pa-features-settings .switch input:disabled + .pro-slider::after {
 	position: absolute;
 	font-family: "Dashicons";
 	content: "\f160";
@@ -2653,6 +2654,19 @@
 	background-color: #ffffffe6;
 }
 
+#pa-dash-pro-popup-cta.pa-feature-element img {
+	display: -webkit-flex !important;
+	display: -ms-flexbox !important;
+	display: flex !important;
+	width: 60px;
+	height: 60px;
+}
+
+#pa-dash-pro-popup-cta.pa-feature-element i,
+#pa-dash-pro-popup-cta.pa-feature-element .pa-popup-badge-wrapper {
+	display: none;
+}
+
 .pa-popup-outer-body {
 	width: 100%;
 	height: 100%;
@@ -2861,6 +2875,7 @@
     box-shadow: none;
     outline: none;
 }
+
 
 /* End of PRO Popup - CTA*/
 
