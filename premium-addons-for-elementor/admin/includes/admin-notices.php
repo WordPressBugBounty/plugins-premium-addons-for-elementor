@@ -116,12 +116,11 @@ class Admin_Notices {
 
 		$this->required_plugins_check();
 
-		$show_review = get_option( 'pa_review_notice' );
-
 		// Make sure "Already did" was not clicked before.
+		$show_review = get_option( 'pa_review_notice' );
 		if ( '1' !== $show_review ) {
 
-            $cache_key = 'premium_notice_' . PREMIUM_ADDONS_VERSION;
+            $cache_key = 'pa_review_notice';
 
             $response = get_transient( $cache_key );
 
@@ -324,7 +323,7 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			$cache_key = 'premium_notice_' . PREMIUM_ADDONS_VERSION;
+			$cache_key = 'pa_review_notice';
 
 			set_transient( $cache_key, true, WEEK_IN_SECONDS );
 
@@ -436,6 +435,7 @@ class Admin_Notices {
 			);
 
             if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+				set_transient( 'pa_stories', true, WEEK_IN_SECONDS );
                 return false;
             }
 
@@ -455,7 +455,7 @@ class Admin_Notices {
 
         $stories = $this->get_pa_stories();
 
-        if ( empty( $stories ) ) {
+        if ( ! is_array( $stories ) || empty( $stories ) ) {
             return;
         }
 

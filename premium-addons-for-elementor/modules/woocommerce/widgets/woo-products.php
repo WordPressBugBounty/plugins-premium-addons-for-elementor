@@ -332,7 +332,6 @@ class Woo_Products extends Widget_Base {
 				'label'       => __( 'Products Per Page', 'premium-addons-for-elementor' ),
 				'description' => __( 'Choose how many products do you want to be displayed per page', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
-				'min'         => 1,
 				'default'     => 6,
 			)
 		);

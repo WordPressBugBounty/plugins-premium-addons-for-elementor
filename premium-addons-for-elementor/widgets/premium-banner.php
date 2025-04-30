@@ -584,7 +584,7 @@ class Premium_Banner extends Widget_Base {
 			)
 		);
 
-		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-banner-widget/', 'banner-widget', 'wp-editor', 'get-support' );
+		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-banner-widget-tutorial/', 'banner-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',

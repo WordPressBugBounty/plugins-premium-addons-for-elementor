@@ -570,6 +570,27 @@ input[type="radio"].pa-wz-option {
     gap: 10px;
 }
 
+#pa-step-2-content .pa-wz-list-title-wrapper * {
+    transition: color 0.3s ease-in-out, fill 0.3s ease-in-out, background-color 0.3s ease-in-out, stroke 0.3s ease-in-out;
+}
+
+#pa-step-2-content .pa-wz-list-title-wrapper:hover .pa-wz-list-title {
+    color: #007aff;
+}
+
+#pa-step-2-content .pa-wz-list-title-wrapper:hover .pa-wz-toggle-icon *,
+#pa-step-2-content .pa-wz-list-title-wrapper:hover .pa-wz-bulltet-icon * {
+    stroke: #007aff;
+}
+
+#pa-step-2-content .pa-wz-list-title-wrapper:hover .pa-wz-bulltet-icon * {
+    fill: #007aff;
+}
+
+#pa-step-2-content .pa-wz-list-title-wrapper:hover .pa-wz-bulltet-icon {
+    background-color: #007aff;
+}
+
 #pa-step-2-content .pa-wz-bulltet-icon {
     width: 7px;
     height: 7px;
@@ -734,7 +755,7 @@ input[type="radio"].pa-wz-option {
     box-shadow: none;
     outline: none;
     text-decoration: underline;
-    transition: color 0.3s ease-in-out
+    transition: color 0.3s ease-in-out;
 }
 
 .extra-notice-txt a:hover {

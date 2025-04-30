@@ -909,7 +909,7 @@ class Premium_Countdown extends Widget_Base {
 			)
 		);
 
-		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/countdown-widget-tutorial/', 'countdown-widget', 'wp-editor', 'get-support' );
+		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-countdown-widget-tutorial/', 'countdown-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',

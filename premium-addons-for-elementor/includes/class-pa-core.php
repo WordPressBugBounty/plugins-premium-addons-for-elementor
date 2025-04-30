@@ -112,7 +112,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 */
 		public function handle_activation() {
 
-			$cache_key = 'premium_notice_' . PREMIUM_ADDONS_VERSION;
+			$cache_key = 'pa_review_notice';
 
 			$expiration = DAY_IN_SECONDS * 7;
 
@@ -152,6 +152,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		public static function uninstall() {
 
 			delete_option( 'pa_install_time' );
+			delete_option( 'pa_review_notice' );
 
 			$api_url = 'https://feedbackpa.leap13.com/wp-json/uninstall/v2/add';
 

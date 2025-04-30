@@ -1146,6 +1146,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 		$docs = array(
 			'https://premiumaddons.com/docs/elementor-mobile-menu-widget-tutorial/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
 			'https://www.youtube.com/watch?v=OPSlk9YoIGI' => __( 'Check the video tutorial »', 'premium-addons-for-elementor' ),
+			'https://premiumaddons.com/docs/how-to-open-off-canvas-content-using-elementor-menu-widget/' => __( 'Open Off Canvas menu using menu item »', 'premium-addons-for-elementor' ),
 		);
 
 		$doc_index = 1;

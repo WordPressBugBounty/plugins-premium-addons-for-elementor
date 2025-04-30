@@ -35,8 +35,8 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  -webkit-transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   width: auto;
   position: relative;
 }
@@ -46,8 +46,10 @@
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+}
+.premium-bullet-list-content .premium-bullet-list-text span {
+  -webkit-transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
 }
 .premium-bullet-list-content .premium-bullet-list-text span {
   margin: 0 5px;
@@ -66,8 +68,8 @@
 .premium-bullet-list-content .premium-bullet-list-wrapper img,
 .premium-bullet-list-content .premium-bullet-list-wrapper svg,
 .premium-bullet-list-content .premium-bullet-list-wrapper i {
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  -webkit-transition: color 0.3s ease-in-out, fill 0.3s ease-in-out, text-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out, stroke 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, fill 0.3s ease-in-out, text-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out, stroke 0.3s ease-in-out;
 }
 .premium-bullet-list-content .premium-bullet-list-wrapper {
   position: relative;

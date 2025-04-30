@@ -607,6 +607,7 @@ class Admin_Helper {
 			$row_meta = array(
 				'docs'   => '<a href="' . esc_attr( $link ) . '" aria-label="' . esc_attr( __( 'View Premium Addons for Elementor Documentation', 'premium-addons-for-elementor' ) ) . '" target="_blank">' . __( 'Docs & FAQs', 'premium-addons-for-elementor' ) . '</a>',
 				'videos' => '<a href="https://www.youtube.com/leap13" aria-label="' . esc_attr( __( 'View Premium Addons Video Tutorials', 'premium-addons-for-elementor' ) ) . '" target="_blank">' . __( 'Video Tutorials', 'premium-addons-for-elementor' ) . '</a>',
+				'rate'   => '<a href="https://wordpress.org/support/plugin/premium-addons-for-elementor/reviews/#new-post" aria-label="' . esc_attr( __( 'Rate plugin', 'premium-addons-for-elementor' ) ) . '" target="_blank">' . __( 'Rate the plugin ★★★★★', 'premium-addons-for-elementor' ) . '</a>',
 			);
 
 			$meta = array_merge( $meta, $row_meta );

@@ -1997,7 +1997,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		);
 
 		$docs = array(
-			'https://premiumaddons.com/docs/elementor-textual-showcase-widget/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
+			'https://premiumaddons.com/docs/elementor-textual-showcase-widget-tutorial/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
 			'https://www.youtube.com/watch?v=xaMVSB3KV4w' => __( 'Video tutorial »', 'premium-addons-for-elementor' ),
 		);
 
