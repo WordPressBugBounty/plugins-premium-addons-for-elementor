@@ -140,6 +140,8 @@
 .premium-person-name {
   margin: 0 0 5px;
   font-weight: 700;
+  -webkit-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
 }
 
 .premium-person-title {

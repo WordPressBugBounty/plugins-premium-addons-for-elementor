@@ -4829,6 +4829,10 @@ class Premium_Nav_Menu extends Widget_Base {
 	 */
 	private function is_valid_menu( $id ) {
 
+		if ( ! $id ) {
+			return false;
+		}
+
 		$is_valid = false;
 
 		$item_count = wp_get_nav_menu_object( $id )->count;

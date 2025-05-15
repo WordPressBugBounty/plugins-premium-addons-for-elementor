@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, widgets, elementor elements, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 6.8
+Tested Up To: 6.8.1
 Requires PHP: 7.4
-Stable Tag: 4.11.6
+Stable Tag: 4.11.7
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -54,7 +54,7 @@ Now, you can make your columns, widgets or any selector you want the same height
 NEW: Ever-growing [Container/Page Templates Library](https://premiumaddons.com/premium-elementor-templates-library/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) Available on both Premium Addons Free and PRO versions. Browse, preview, and insert the template you like in your page/post with just ONE click. You can also select to insert the templates without media files (images, videos, etc.) to prevent overloading your WordPress Media Library with large files.
 
 ### Lottie Animations Integration
-You can now use [Lottie Animations in ALL our widgets](https://premiumaddons.com/elementor-lottie-animations-section-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme). Whatever widget that have an image or icon option now have also the option to add a Lottie animation. Lottie animations are open source, lightweight and available for free, Use them now to make your Elementor pages more eye-catching.
+You can now use [Lottie Animations in ALL our widgets](https://premiumaddons.com/elementor-lottie-animations-container-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme). Whatever widget that have an image or icon option now have also the option to add a Lottie animation. Lottie animations are open source, lightweight and available for free, Use them now to make your Elementor pages more eye-catching.
 
 ### Cross-Domain Copy N’ Paste
 Now, you will have the ability to copy and paste any content from a website to another with just 2 clicks, copy from here and paste there, woohoo that’s it!. Check the documentation article from [here](https://premiumaddons.com/docs/how-to-copy-elementor-content-from-site-to-another-using-pa-copy-paste-feature/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
@@ -126,11 +126,11 @@ Each widget and addon has been tested on different screen sizes, mobile devices,
 * [**Tooltips Global Addon**](https://premiumaddons.com/elementor-tooltip-global-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Add icon, image, Lottie animation or Elementor template as a tooltip for any Elementor container element.
 * [**Badge Global Addon**](https://premiumaddons.com/elementor-badge-global-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add an icon, image, Lottie animation, or SVG blob shape badge to any container.
 * [**Animated Blob Generator**](https://premiumaddons.com/elementor-animated-blob-generator/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple animated blob layers to your containers with a wide range of smart customization options.
-* [**Lottie Animations Container Addon**](https://premiumaddons.com/elementor-lottie-animations-section-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple Lottie Animations easily to any container with a lot of customization and interactivity options.
+* [**Lottie Animations Container Addon**](https://premiumaddons.com/elementor-lottie-animations-container-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple Lottie Animations easily to any container with a lot of customization and interactivity options.
 * [**Parallax Container Addon**](https://premiumaddons.com/elementor-parallax-container-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: The only Parallax Container Addon that can be enabled for columns with freehand design experience and many styles to choose from.
 * [**Particles Container Addon**](https://premiumaddons.com/particles-section-addon-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Create eye-catching particles background with many customization options.
 * [**Animated Gradient/Column Addon**](https://premiumaddons.com/animated-section-gradients-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Subtle animated gradients effect that makes your backgrounds attractive.
-* [**Ken Burns Container Addon**](https://premiumaddons.com/ken-burns-section-addon-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple images to your container background and animate them with the popular Ken Burns effect.
+* [**Ken Burns Container Addon**](https://premiumaddons.com/ken-burns-container-addon-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple images to your container background and animate them with the popular Ken Burns effect.
 
 ### Off-Grid Widgets
  * [**Modal Box Widget**](https://premiumaddons.com/modal-box-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: All purpose modal box widget with the ability to use Elementor Templates and many other options.
@@ -166,7 +166,7 @@ Each widget and addon has been tested on different screen sizes, mobile devices,
 ### Tables, Charts & Anything Data Widgets
 * [**Progress Bar Widget**](https://premiumaddons.com/progress-bar-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: The most advanced Progress Bar Widget comes with multiple labels option.
 * [**Pricing Table Widget**](https://premiumaddons.com/elementor-pricing-table-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Highly customizable Pricing Table Widget with tons of styling options.
-* [**Charts Widget**](https://premiumaddons.com/charts-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)  *(PRO)*: The only advanced Charts Widget is available in Premium Addons. Create Line Chart, Bar Chart, Doughnut Chart, Radar Chart, and more.
+* [**Charts Widget**](https://premiumaddons.com/elementor-charts-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)  *(PRO)*: The only advanced Charts Widget is available in Premium Addons. Create Line Chart, Bar Chart, Doughnut Chart, Radar Chart, and more.
 * [**Tables Widget**](https://premiumaddons.com/elementor-table-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Create sophisticated tables with unique styling and interactivity options.
 * [**Counter Widget**](https://premiumaddons.com/counter-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Show your facts & figures with Counter Widget.
 
@@ -236,6 +236,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.7 =
+
+- Tweak: New layouts added to Woo Mini Cart widget.
+- Tweak: Cross-sells carousel option added to Woo Mini Cart widget.
+- Tweak: Added Language option for units in Countdown widget.
+- Tweak: Added Profile Link option for member image/name in Team Members widget.
+- Fixed: Layout broken in Woo Mini Cart widget in some cases.
+- Fixed: Display conditions 'Page' doesn't detect the shop page ID.
 
 = 4.11.6 =
 

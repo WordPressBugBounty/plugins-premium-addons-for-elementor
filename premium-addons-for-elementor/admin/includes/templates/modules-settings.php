@@ -69,15 +69,6 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 
 					<div class="pa-elements-filter">
 
-						<div class="pa-usage">
-							<label for="pa-usage-select"><?php esc_html_e( 'Select Usage', 'premium-addons-for-elementor' ); ?></label>
-							<select name="pa-usage-select" id="pa-usage-select" class="placeholder placeholder-active">
-								<option value="basic"><?php esc_html_e( 'Basic', 'premium-addons-for-elementor' ); ?></option>
-								<option value="advanced"><?php esc_html_e( 'Advanced', 'premium-addons-for-elementor' ); ?></option>
-								<option value="custom"><?php esc_html_e( 'Custom', 'premium-addons-for-elementor' ); ?></option>
-							</select>
-						</div>
-
 						<div class="pa-typed-search">
 							<label for="premium-elements-filter"><?php esc_html_e( 'Filter Widgets', 'premium-addons-for-elementor' ); ?></label>
 							<input type="text" placeholder="<?php esc_html_e( 'Search by name...', 'premium-addons-for-elementor' ); ?>">

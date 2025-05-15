@@ -496,6 +496,19 @@ class Premium_Person extends Widget_Base {
 		);
 
 		$this->add_control(
+			'premium_person_profile',
+			array(
+				'label'       => __( 'Profile Link', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::URL,
+				'dynamic'     => array( 'active' => true ),
+				'default'     => array(
+					'url' => '',
+				),
+				'label_block' => true,
+			)
+		);
+
+		$this->add_control(
 			'premium_person_social_enable',
 			array(
 				'label'     => __( 'Enable Social Icons', 'premium-addons-for-elementor' ),
@@ -773,6 +786,19 @@ class Premium_Person extends Widget_Base {
 				'type'    => Controls_Manager::WYSIWYG,
 				'dynamic' => array( 'active' => true ),
 				'default' => __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$repeater->add_control(
+			'multiple_profile',
+			array(
+				'label'       => __( 'Profile Link', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::URL,
+				'dynamic'     => array( 'active' => true ),
+				'default'     => array(
+					'url' => '',
+				),
+				'label_block' => true,
 			)
 		);
 
@@ -1237,6 +1263,20 @@ class Premium_Person extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-person-name' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_person_name_color_hover',
+			array(
+				'label'     => __( 'Hover Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_SECONDARY,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-person-link:hover .premium-person-name' => 'color: {{VALUE}} ;',
 				),
 			)
 		);
@@ -1780,6 +1820,9 @@ class Premium_Person extends Widget_Base {
 			$persons = $settings['multiple_persons'];
 			$this->add_render_attribute( 'persons_container', 'class', 'multiple-persons' );
 			$this->add_render_attribute( 'persons_container', 'data-persons-equal', $settings['multiple_equal_height'] );
+		} else {
+			$this->add_render_attribute( 'premium_person_profile', 'class', 'premium-person-link' );
+			$this->add_link_attributes( 'premium_person_profile', $settings['premium_person_profile'] );
 		}
 
 		$carousel = 'yes' === $settings['carousel'] ? true : false;
@@ -1801,8 +1844,16 @@ class Premium_Person extends Widget_Base {
 		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'persons_container' ) ); ?>>
 			<?php if ( 'yes' !== $settings['multiple'] ) : ?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'person_container' ) ); ?>>
+
 				<div class="premium-person-image-container">
-					<?php echo wp_kses_post( $image_html ); ?>
+					<?php if ( 'style3' !== $settings['premium_person_style'] && ! empty( $settings['premium_person_profile']['url'] ) ) { ?>
+						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_profile' ) ); ?>>
+							<?php echo wp_kses_post( $image_html ); ?>
+						</a>
+					<?php } else {
+						echo wp_kses_post( $image_html );
+					} ?>
+
 					<?php if ( 'style2' === $settings['premium_person_style'] && 'yes' === $settings['premium_person_social_enable'] ) : ?>
 						<div class="premium-person-social">
 							<?php $this->get_social_icons(); ?>
@@ -1818,6 +1869,13 @@ class Premium_Person extends Widget_Base {
 				foreach ( $persons as $index => $person ) {
 
 					$person_image_html = '';
+
+					// Add profile link for each person
+					if ( ! empty( $person['multiple_profile']['url'] ) ) {
+						$this->add_render_attribute( 'premium_multiple_profile_' . $index, 'class', 'premium-person-link' );
+						$this->add_link_attributes( 'premium_multiple_profile_' . $index, $person['multiple_profile'] );
+					}
+
 					if ( ! empty( $person['multiple_image']['url'] ) ) {
 
 						$image_src = $person['multiple_image']['url'];
@@ -1825,11 +1883,16 @@ class Premium_Person extends Widget_Base {
 
 						$settings['image_data'] = Helper_Functions::get_image_data( $image_id, $person['multiple_image']['url'], $settings['thumbnail_size'] );
 						$person_image_html      = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image_data' );
+
+						if ( 'style3' !== $settings['premium_person_style'] && ! empty( $person['multiple_profile']['url'] ) ) {
+							$person_image_html = '<a ' . wp_kses_post( $this->get_render_attribute_string( 'premium_multiple_profile_' . $index ) ) . '>' . $person_image_html . '</a>';
+						}
 					}
+
 					?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'person_container' ) ); ?>>
 						<div class="premium-person-image-container">
-							<?php echo wp_kses_post( $person_image_html ); ?>
+						<?php echo wp_kses_post( $person_image_html ); ?>
 							<?php if ( 'style2' === $settings['premium_person_style'] && 'yes' === $person['multiple_social_enable'] ) : ?>
 								<div class="premium-person-social">
 									<?php $this->get_social_icons( $person ); ?>
@@ -1942,12 +2005,21 @@ class Premium_Person extends Widget_Base {
 		if ( empty( $person ) ) :
 			?>
 			<div class="premium-person-info-container">
-				<?php if ( 'style3' !== $skin && ! empty( $settings['premium_person_name'] ) ) : ?>
-					<<?php echo wp_kses_post( $name_heading . ' ' . $this->get_render_attribute_string( 'premium_person_name' ) ); ?>>
-						<?php echo wp_kses_post( $settings['premium_person_name'] ); ?>
-					</<?php echo wp_kses_post( $name_heading ); ?>>
-					<?php
-				endif;
+				<?php
+				if ( 'style3' !== $skin && ! empty( $settings['premium_person_name'] ) ) :
+					$name_tag_open  = '<' . wp_kses_post( $name_heading ) . ' ' . $this->get_render_attribute_string( 'premium_person_name' ) . '>';
+					$name_tag_close = '</' . wp_kses_post( $name_heading ) . '>';
+					$name_content   = wp_kses_post( $settings['premium_person_name'] );
+					$name_html      = $name_tag_open . $name_content . $name_tag_close;
+				?>
+					<?php if ( ! empty( $settings['premium_person_profile']['url'] ) ) { ?>
+						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_profile' ) ); ?>>
+							<?php echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						</a>
+					<?php } else {
+						echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					} ?>
+				<?php endif;
 
 				if ( 'style3' === $skin ) :
 					?>
@@ -1969,17 +2041,32 @@ class Premium_Person extends Widget_Base {
 						</div>
 					<?php
 					endif;
-				if ( 'style3' === $skin ) :
-					?>
+				if ( 'style3' === $skin ) : ?>
 					</div>
-					<?php
-				endif;
+				<?php endif;
 
 				if ( 'style3' === $skin ) :
 					?>
 					<div class="premium-person-name-icons-wrap">
-						<?php if ( ! empty( $settings['premium_person_name'] ) ) : ?>
-							<<?php echo wp_kses_post( $name_heading ); ?> class="premium-person-name"><span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_name' ) ); ?>><?php echo wp_kses_post( $settings['premium_person_name'] ); ?></span></<?php echo wp_kses_post( $name_heading ); ?>>
+						<?php
+						if ( ! empty( $settings['premium_person_name'] ) ) :
+								$name_heading_tag = esc_html( $name_heading );
+								$name_tag_open    = '<' . $name_heading_tag . ' class="premium-person-name">';
+								$name_tag_close   = '</' . $name_heading_tag . '>';
+								$name_span        = '<span ' . $this->get_render_attribute_string( 'premium_person_name' ) . '>' .
+													wp_kses_post( $settings['premium_person_name'] ) .
+													'</span>';
+								$name_html        = $name_tag_open . $name_span . $name_tag_close;
+							?>
+							<?php if ( ! empty( $settings['premium_person_profile']['url'] ) ) { ?>
+								<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_profile' ) ); ?>>
+									<?php echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								</a>
+								<?php
+							} else {
+								echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							} ?>
+
 							<?php
 						endif;
 						if ( 'yes' === $settings['premium_person_social_enable'] ) :
@@ -2013,10 +2100,22 @@ class Premium_Person extends Widget_Base {
 
 			?>
 			<div class="premium-person-info-container">
-				<?php if ( 'style3' !== $skin && ! empty( $person['multiple_name'] ) ) : ?>
-					<<?php echo wp_kses_post( $name_heading . ' ' . $this->get_render_attribute_string( $name_setting_key ) ); ?>>
-						<?php echo wp_kses_post( $person['multiple_name'] ); ?>
-					</<?php echo wp_kses_post( $name_heading ); ?>>
+				<?php
+				if ( 'style3' !== $skin && ! empty( $person['multiple_name'] ) ) :
+					$name_tag_open      = '<' . esc_html( $name_heading ) . ' ' . $this->get_render_attribute_string( $name_setting_key ) . '>';
+					$name_tag_close     = '</' . esc_html( $name_heading ) . '>';
+					$name_content       = wp_kses_post( $person['multiple_name'] );
+					$name_html_multiple = $name_tag_open . $name_content . $name_tag_close;
+					?>
+					<?php if ( ! empty( $person['multiple_profile']['url'] ) ) { ?>
+						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_multiple_profile_' . $index ) ); ?>>
+							<?php echo $name_html_multiple; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						</a>
+						<?php
+					} else {
+						echo $name_html_multiple; } // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+
 					<?php
 				endif;
 
@@ -2047,14 +2146,25 @@ class Premium_Person extends Widget_Base {
 				endif;
 
 				if ( 'style3' === $skin ) :
+
 					?>
 					<div class="premium-person-name-icons-wrap">
-						<?php if ( ! empty( $person['multiple_name'] ) ) : ?>
-							<<?php echo wp_kses_post( $name_heading ); ?> class="premium-person-name">
-								<span <?php echo wp_kses_post( $this->get_render_attribute_string( $name_setting_key ) ); ?>>
-									<?php echo wp_kses_post( $person['multiple_name'] ); ?>
-								</span>
-							</<?php echo wp_kses_post( $name_heading ); ?>>
+						<?php
+						if ( ! empty( $person['multiple_name'] ) ) :
+							$name_tag_open      = '<' . esc_html( $name_heading ) . ' class="premium-person-name">';
+							$name_tag_close     = '</' . esc_html( $name_heading ) . '>';
+							$name_content       = '<span ' . $this->get_render_attribute_string( $name_setting_key ) . '>' . wp_kses_post( $person['multiple_name'] ) . '</span>';
+							$name_html_multiple = $name_tag_open . $name_content . $name_tag_close;
+							?>
+							<?php if ( ! empty( $person['multiple_profile']['url'] ) ) { ?>
+								<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_multiple_profile_' . $index ) ); ?>>
+									<?php echo $name_html_multiple; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								</a>
+								<?php
+							} else {
+								echo $name_html_multiple; } // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+
 							<?php
 						endif;
 						if ( 'yes' === $person['multiple_social_enable'] ) :
@@ -2106,7 +2216,10 @@ class Premium_Person extends Widget_Base {
 
 		view.addRenderAttribute( 'persons_container', 'class', [ 'premium-persons-container', 'premium-person-' + skin ] );
 
-		view.addRenderAttribute('person_container', 'class', [ 'premium-person-container', imageEffect ] );
+		view.addRenderAttribute( 'person_container', 'class', [ 'premium-person-container', imageEffect ] );
+
+		view.addRenderAttribute( 'premium_person_profile', 'href', settings.premium_person_profile.url );
+
 
 		var imageHtml = '';
 		if ( settings.premium_person_image.url ) {
@@ -2254,7 +2367,13 @@ class Premium_Person extends Widget_Base {
 			<# if( 'yes' !== settings.multiple ) { #>
 			<div {{{ view.getRenderAttributeString('person_container') }}}>
 				<div class="premium-person-image-container">
-					<img src="{{ image_url }}"/>
+					<# if ( '' !== settings.premium_person_profile.url ) { #>
+						<a {{{ view.getRenderAttributeString('premium_person_profile') }}}>
+							<img src="{{ image_url }}"/>
+						</a>
+					<# } else { #>
+						<img src="{{ image_url }}"/>
+					<# } #>
 					<# if ( 'style2' === settings.premium_person_style && 'yes' === settings.premium_person_social_enable ) { #>
 						<div class="premium-person-social">
 							<# getSocialIcons(); #>
@@ -2264,9 +2383,17 @@ class Premium_Person extends Widget_Base {
 				<div class="premium-person-info">
 					<div class="premium-person-info-container">
 						<# if( 'style3' !== skin && '' != settings.premium_person_name ) { #>
-							<{{{nameHeading}}} {{{ view.getRenderAttributeString('premium_person_name') }}}>
+							<# if ( '' !== settings.premium_person_profile.url ) { #>
+								<a {{{ view.getRenderAttributeString('premium_person_profile') }}}>
+									<{{{nameHeading}}} {{{ view.getRenderAttributeString('premium_person_name') }}}>
+										{{{ settings.premium_person_name }}}
+									</{{{nameHeading}}}>
+								</a>
+							<# } else { #>
+								<{{{nameHeading}}} {{{ view.getRenderAttributeString('premium_person_name') }}}>
 									{{{ settings.premium_person_name }}}
-							</{{{nameHeading}}}>
+								</{{{nameHeading}}}>
+							<# } #>
 						<# }
 
 						if( 'style3' === skin ) { #>
@@ -2274,7 +2401,7 @@ class Premium_Person extends Widget_Base {
 						<# }
 							if( '' != settings.premium_person_title ) { #>
 								<{{{titleHeading}}} {{{ view.getRenderAttributeString('premium_person_title') }}}>
-										<span>{{{ settings.premium_person_title }}}</span>
+									<span>{{{ settings.premium_person_title }}}</span>
 								</{{{titleHeading}}}>
 							<# }
 							if( '' != settings.premium_person_content ) { #>
@@ -2289,9 +2416,17 @@ class Premium_Person extends Widget_Base {
 						if( 'style3' === skin ) { #>
 							<div class="premium-person-name-icons-wrap">
 							<# if( '' != settings.premium_person_name ) { #>
-								<{{{nameHeading}}} {{{ view.getRenderAttributeString('premium_person_name') }}}>
+								<# if ( '' !== settings.premium_person_profile.url ) { #>
+								<a {{{ view.getRenderAttributeString('premium_person_profile') }}}>
+									<{{{nameHeading}}} {{{ view.getRenderAttributeString('premium_person_name') }}}>
+										{{{ settings.premium_person_name }}}
+									</{{{nameHeading}}}>
+								</a>
+								<# } else { #>
+									<{{{nameHeading}}} {{{ view.getRenderAttributeString('premium_person_name') }}}>
 									{{{ settings.premium_person_name }}}
-								</{{{nameHeading}}}>
+									</{{{nameHeading}}}>
+									<# } #>
 							<# }
 							if( 'yes' === settings.premium_person_social_enable ) {
 								getSocialIcons();
@@ -2321,6 +2456,10 @@ class Premium_Person extends Widget_Base {
 					view.addInlineEditingAttributes( descSettingKey, 'advanced' );
 					view.addRenderAttribute( descSettingKey, 'class', 'premium-person-content' );
 
+					if ( person.multiple_profile && person.multiple_profile.url ) {
+					profileKey = 'premium_multiple_profile_' + index;
+					view.addRenderAttribute( profileKey, 'href', person.multiple_profile.url );
+					}
 					var personImageHtml = '';
 					if ( person.multiple_image.url ) {
 						var personImage = {
@@ -2337,7 +2476,13 @@ class Premium_Person extends Widget_Base {
 				#>
 					<div {{{ view.getRenderAttributeString('person_container') }}}>
 						<div class="premium-person-image-container">
+						<# if ( '' !== person.multiple_profile.url) { #>
+							<a {{{ view.getRenderAttributeString('premium_multiple_profile_' + index) }}}>
 							<img src="{{ personImageUrl }}"/>
+							</a>
+							<# } else { #>
+								<img src="{{ personImageUrl }}"/>
+							<# } #>
 							<# if ( 'style2' === settings.premium_person_style && 'yes' === person.multiple_social_enable ) { #>
 							<div class="premium-person-social">
 								<# getSocialIcons( person ); #>
@@ -2347,9 +2492,17 @@ class Premium_Person extends Widget_Base {
 						<div class="premium-person-info">
 							<div class="premium-person-info-container">
 								<# if( 'style3' !== skin && '' != person.multiple_name ) { #>
+									<# if ( '' !== person.multiple_profile.url ) { #>
+									<a {{{ view.getRenderAttributeString('premium_multiple_profile_' + index) }}}>
 									<{{{nameHeading}}} {{{ view.getRenderAttributeString( nameSettingKey ) }}}>
 										{{{ person.multiple_name }}}
 									</{{{nameHeading}}}>
+									</a>
+									<# } else { #>
+									<{{{nameHeading}}} {{{ view.getRenderAttributeString( nameSettingKey ) }}}>
+										{{{ person.multiple_name }}}
+									</{{{nameHeading}}}>
+									<# } #>
 								<# }
 
 								if( 'style3' === skin ) { #>
@@ -2372,9 +2525,17 @@ class Premium_Person extends Widget_Base {
 								if( 'style3' === skin ) { #>
 									<div class="premium-person-name-icons-wrap">
 									<# if( '' != settings.premium_person_name ) { #>
+										<# if ('' !== person.multiple_profile.url ) { #>
+											<a {{{ view.getRenderAttributeString('premium_multiple_profile_' + index) }}}>
 										<{{{nameHeading}}} {{{ view.getRenderAttributeString( nameSettingKey ) }}}>
 											{{{ person.multiple_name }}}
 										</{{{nameHeading}}}>
+										</a>
+										<# } else { #>
+										<{{{nameHeading}}} {{{ view.getRenderAttributeString( nameSettingKey ) }}}>
+											{{{ person.multiple_name }}}
+										</{{{nameHeading}}}>
+										<# } #>
 									<# }
 									if( 'yes' === person.multiple_social_enable ) {
 										getSocialIcons( person );

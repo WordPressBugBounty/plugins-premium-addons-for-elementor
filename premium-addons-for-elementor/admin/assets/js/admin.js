@@ -26,8 +26,7 @@
 
 		var self = this,
 			$tabs = $(".pa-settings-tab"),
-			$elementsTabs = $(".pa-elements-tab"),
-			shouldDisableUnused = false;
+			$elementsTabs = $(".pa-elements-tab");
 
 		var urlString = window.location.href,
 			url = new URL(urlString);
@@ -46,11 +45,7 @@
 
 			self.getUnusedWidget();
 
-			self.handleActionField();
-
 			self.handleElementsActions();
-
-			self.handleUsageActions();
 
 			self.handleSearchField();
 
@@ -72,7 +67,16 @@
 			$("#pa-features .pa-section-info-cta input, #pa-modules .pa-switcher input, #pa-modules .pa-section-info-cta input").on(
 				'change',
 				function () {
-					self.saveElementsSettings('elements', 'default');
+
+					if ('mini-cart' === $(this).attr('id')) {
+						if ($(this).prop('checked')) {
+
+							$("#pa_mc_temp").prop("checked", true);
+							self.saveElementsSettings('elements', 'default', true);
+						}
+					} else {
+						self.saveElementsSettings('elements', 'default');
+					}
 				}
 			)
 
@@ -94,11 +98,6 @@
 		//get unused widgets.
 		self.getUnusedWidget = function () {
 
-			// No need, we will remove dimmed class always after unused widgets are loaded.
-			// if ($(".pa-btn-group .pa-btn-disable").hasClass("active")) {
-			//     $(".pa-btn-unused").addClass("dimmed");
-			// }
-
 			$.ajax(
 				{
 					url: settings.ajaxurl,
@@ -117,23 +116,6 @@
 
 						$(".pa-btn-unused").removeClass("dimmed pa-fade").find("i").remove();
 
-						if (shouldDisableUnused) {
-							$('.pa-btn-unused').trigger('click');
-
-							if (window.opener) {
-
-								$(".pa-btn-unused").find('span').text('Redirecting to Elementor!');
-
-								setTimeout(function () {
-
-									window.close();
-									window.opener.location.reload();
-								}, 3000);
-
-							}
-
-						}
-
 					},
 					error: function (err) {
 						console.log(err);
@@ -141,6 +123,23 @@
 				}
 			);
 		};
+
+		self.disableElementorCustomTemplate = function () {
+			$.ajax({
+				url: settings.ajaxurl,
+				type: "POST",
+				data: {
+					action: "pa_disable_elementor_mc_template",
+					security: settings.nonce,
+				},
+				success: function (response) {
+					console.log(response.data);
+				},
+				error: function (err) {
+					console.log(err);
+				},
+			});
+		}
 
 		// Handle global enable/disable buttons
 		self.handleElementsActions = function () {
@@ -187,8 +186,10 @@
 				function () {
 
 					var $btn = $(this),
-						isChecked = $btn.hasClass("pa-btn-enable");
+						isChecked = $btn.hasClass("pa-btn-enable"),
+						customTemp = false;
 
+					//If button is not already activated.
 					if (!$btn.hasClass("active")) {
 						$(".pa-btn-group .pa-btn").removeClass("active");
 						$btn.addClass("active");
@@ -207,15 +208,17 @@
 
 					}
 
+					//If it's enable all button.
 					if (isChecked) {
 						$(".pa-btn-group .pa-btn-unused").removeClass("dimmed");
+						customTemp = true;
 					} else {
 						$(".pa-btn-group .pa-btn-unused").addClass("dimmed");
 					}
 
-					$("#pa-modules .pa-switcher input").not('#pa_mc_temp').prop("checked", isChecked);
+					$("#pa-modules .pa-switcher input").prop("checked", isChecked);
 
-					self.saveElementsSettings('elements', 'default');
+					self.saveElementsSettings('elements', 'default', customTemp);
 
 				}
 			);
@@ -229,9 +232,6 @@
 					$.each(self.unusedElements, function (index, selector) {
 						$('#pa-modules .pa-switcher.' + selector).find('input').prop('checked', false);
 					});
-
-					if (!shouldDisableUnused)
-						$(this).addClass('dimmed');
 
 					self.saveElementsSettings('elements', 'default');
 				}
@@ -312,115 +312,6 @@
 			});
 		};
 
-		self.handleUsageActions = function () {
-
-			$(".pa-usage select").on(
-				'change',
-				function () {
-
-					var usageType = $(this).val();
-
-					if ('custom' !== usageType) {
-
-						var elementsToUse = null,
-							addonsToUse = [
-								'premium-templates',
-								'premium-equal-height',
-								'premium-wrapper-link',
-								'pa-display-conditions',
-								'premium-duplicator'
-							];
-
-						//First, disable all elements.
-						$('#pa-modules .pa-switcher, #pa-features .pa-section-info-cta').find('input').prop('checked', false);
-
-						elementsToUse = [
-							'premium-addon-blog',
-							'premium-addon-maps',
-							'premium-addon-dual-header',
-							'premium-lottie',
-							'premium-carousel-widget',
-							'premium-addon-person',
-							'premium-addon-fancy-text',
-							'premium-addon-title',
-							'premium-img-gallery',
-							'premium-addon-image-separator',
-							'premium-addon-video-box',
-							'premium-addon-testimonials',
-							'premium-addon-button',
-							'premium-addon-progressbar',
-							'premium-counter',
-							'premium-addon-pricing-table'
-						];
-
-						if ('advanced' === usageType) {
-							elementsToUse.push(
-								'premium-search-form',
-								'premium-nav-menu',
-								'premium-media-wheel',
-								'premium-addon-modal-box'
-							);
-						}
-
-						$.each(elementsToUse, function (index, selector) {
-							$('#pa-modules .pa-switcher.' + selector).find('input').prop('checked', true);
-						});
-
-						$.each(addonsToUse, function (index, selector) {
-							$('#pa-features .switch').find('input#' + selector).prop('checked', true);
-						});
-
-						self.saveElementsSettings('elements', 'default');
-
-					}
-
-				}
-			);
-
-			var usageType = url.searchParams.get("usage");
-
-			if (usageType) {
-
-				setTimeout(function () {
-
-					var $whiteLabelTab = $('#pa-section-system-info'),
-						shouldShowAlert = $whiteLabelTab.find('mark').length > 0;
-
-					if (shouldShowAlert) {
-
-						$(".pa-usage select").val(usageType).trigger('change');
-
-						var redirectionLink = "https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/?utm_source=dash-alert&utm_medium=wp-dash-pro&utm_campaign=get-pro&utm_term=";
-
-						Swal.fire(
-							{
-								title: '<span class="pa-swal-head">Important!<span>',
-								html: 'The PHP Memory/Time limit detected on your website is low. This can cause issues running Elementor editor and affect your site speed. We have disabled some features to prevent any issues. You can enable features from <u>Widgets & Addons and Global Features</u> tabs, but we strongly recommend following the guide if you need to enable more elements.',
-								type: 'warning',
-								showCloseButton: true,
-								showCancelButton: true,
-								cancelButtonText: "See guide",
-								focusConfirm: true,
-								customClass: 'pa-swal',
-							}
-						).then(
-							function (res) {
-								// Handle More Info button
-								if (res.dismiss === 'cancel') {
-									window.open(redirectionLink + settings.theme, '_blank');
-								}
-
-							}
-						);
-					}
-
-				}, 1000);
-
-
-			}
-
-		}
-
 		self.handleSearchField = function () {
 
 			var searchInput = url.searchParams.get("search");
@@ -432,23 +323,6 @@
 
 
 		}
-
-		self.handleActionField = function () {
-
-			var action = url.searchParams.get("pa-action");
-
-			if (!action)
-				return;
-
-			shouldDisableUnused = true;
-
-			$('body,html').animate({
-				scrollTop: $(".pa-btn-unused").offset().top - 100
-			}, 700);
-
-			$(".pa-btn-unused").toggleClass('dimmed pa-fade').find('span').text('Disabling Unused Widgets');
-
-		};
 
 		// Handle Tabs Elements
 		self.initElementsTabs = function ($elem) {
@@ -569,10 +443,23 @@
 
 		};
 
-		self.saveElementsSettings = function (action, source, redirectURL = null) { //save elements settings changes
+		/**
+		 * Save elements settings.
+		 * @param {String} action request action param.
+		 * @param {String} source elements source, wizard|default (dashboard).
+		 * @param {Boolean} updateCustomTemplate true if we need to update the Mini Cart custom template option.
+		 * @param {String|null} redirectURL wizard redirection URL.
+		 */
+		self.saveElementsSettings = function (action, source, updateCustomTemplate = false, redirectURL) {
 
 			var $form = null,
 				defaultAddons = 'wizard' === source ? '&premium-templates=on&premium-equal-height=on&premium-wrapper-link=on&pa-display-conditions=on&premium-duplicator' : '';
+
+			// We don't need to check the source as it'll always be 'wizard or default', so the 2nd part of the condition is always true.
+			if (updateCustomTemplate) {
+				defaultAddons += '&pa_mc_temp=on';
+				self.disableElementorCustomTemplate();
+			}
 
 			if ('elements' === action) {
 				$form = $('form#pa-settings, form#pa-features, form#pa-wz-settings');
@@ -591,7 +478,7 @@
 						security: settings.nonce,
 						fields: $form.serialize() + defaultAddons,
 					},
-					success: function (response) {
+					success: function () {
 						console.log('settings saved');
 
 						self.genButtonDisplay();
@@ -604,6 +491,7 @@
 							$(location).attr('href', redirectURL);
 						}
 					}
+
 				}
 			);
 		}
@@ -632,11 +520,11 @@
 						redirectionLink = " https://premiumaddons.com/pro/?utm_source=" + elementName + "&utm_medium=wp-dash-pro&utm_campaign=get-pro&utm_term=" + settings.theme,
 						iconClass = $(this).parent().prev().find('.pa-element-icon').attr('class'),
 						iconColor = colorArr[Math.floor(Math.random() * colorArr.length)],
-						demoLink = isFeature? $(this).parents('.pa-section-outer-wrap').find('> a').attr('href') : $(this).parents('.pa-switcher').find('.pa-demo-link').attr('href'),
+						demoLink = isFeature ? $(this).parents('.pa-section-outer-wrap').find('> a').attr('href') : $(this).parents('.pa-switcher').find('.pa-demo-link').attr('href'),
 						eleTitle = isFeature ? $(this).parents('.pa-section-info-wrap').find('.pa-section-info > h4').text() : $(this).prev().attr('title') + ' Widget';
 
 					// update icon.
-					if ( isFeature ) {
+					if (isFeature) {
 						$('#pa-dash-pro-popup-cta').addClass('pa-feature-element');;
 
 					} else {

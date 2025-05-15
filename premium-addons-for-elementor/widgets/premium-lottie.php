@@ -501,7 +501,7 @@ class Premium_Lottie extends Widget_Base {
 
 		$docs = array(
 			'https://www.youtube.com/watch?v=0QWzUpF57dw' => __( 'Check the video tutorial »', 'premium-addons-for-elementor' ),
-			'https://premiumaddons.com/docs/lottie-animations-widget-tutorial' => __( 'Check the documentation article »', 'premium-addons-for-elementor' ),
+			'https://premiumaddons.com/docs/elementor-lottie-animations-widget-tutorial/' => __( 'Check the documentation article »', 'premium-addons-for-elementor' ),
 			'https://premiumaddons.com/docs/how-to-speed-up-elementor-pages-with-many-lottie-animations' => __( 'How to speed up Elementor pages with many Lottie animations »', 'premium-addons-for-elementor' ),
 			'https://premiumaddons.com/docs/customize-elementor-lottie-widget/' => __( 'How to Customize Lottie Animations »', 'premium-addons-for-elementor' ),
 		);
@@ -743,7 +743,7 @@ class Premium_Lottie extends Widget_Base {
 					'data-lottie-scroll' => 'true',
 					'data-scroll-start'  => isset( $settings['animate_view']['sizes']['start'] ) ? $settings['animate_view']['sizes']['start'] : '0',
 					'data-scroll-end'    => isset( $settings['animate_view']['sizes']['end'] ) ? $settings['animate_view']['sizes']['end'] : '100',
-					'data-scroll-speed'  => $settings['animate_speed']['size'],
+					'data-scroll-speed'  => isset( $settings['animate_speed']['size'] ) ? $settings['animate_speed']['size'] : 4,
 				)
 			);
 

@@ -346,6 +346,10 @@
                 <field type="Mini Cart: Cart Header" editor_type="LINE">cart_header</field>
                 <field type="Mini Cart: Cart Header" editor_type="LINE">subtotal_txt</field>
                 <field type="Mini Cart: Remove Text" editor_type="LINE">remove_txt</field>
+                <field type="Mini Cart: Remove Text" editor_type="LINE">remove_txt</field>
+                <field type="Mini Cart: Cross-Sells Text" editor_type="LINE">cross_sells_txt</field>
+                <field type="Mini Cart: Free Shipping Text" editor_type="LINE">progressbar_txt</field>
+                <field type="Mini Cart: Free Shipping Complete Text" editor_type="LINE">complete_txt</field>
             </fields>
         </widget>
     </elementor-widgets>

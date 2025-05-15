@@ -568,6 +568,14 @@ class Addons_Integration {
 			'all'
 		);
 
+		wp_register_style(
+			'pa-odometer',
+			PREMIUM_ADDONS_URL . 'assets/frontend/min-css/odometer.min.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
 		$assets_gen_enabled = isset( self::$modules['premium-assets-generator'] ) && self::$modules['premium-assets-generator'] ? true : false;
 
 		$type = get_post_type();
@@ -728,6 +736,14 @@ class Addons_Integration {
 		);
 
 		wp_register_script(
+			'countdown-translator',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/countdown-translator' . $suffix . '.js',
+			array( 'jquery' ),
+			PREMIUM_ADDONS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'pa-countdown',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/jquery-countdown' . $suffix . '.js',
 			array( 'jquery' ),
@@ -797,6 +813,14 @@ class Addons_Integration {
 			array(
 				'jquery',
 			),
+			PREMIUM_ADDONS_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'pa-odometer',
+			PREMIUM_ADDONS_URL . 'assets/frontend/min-js/odometer.min.js',
+			array( 'jquery' ),
 			PREMIUM_ADDONS_VERSION,
 			true
 		);

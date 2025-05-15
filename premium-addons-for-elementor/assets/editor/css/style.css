@@ -576,6 +576,11 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 	height: 100%;
 }
 
+#elementor-template-pa-live-editor-modal-container .dialog-message {
+	height: calc(100vh - 60px);
+	max-height: calc(100vh - 60px);
+}
+
 /* .premium-live-editor-iframe-modal .dialog-widget-content {
     margin-top: 10px;
 } */

@@ -233,7 +233,7 @@ class Admin_Notices {
 	 */
 	public function show_review_notice() {
 
-		$review_url = 'https://wordpress.org/support/plugin/premium-addons-for-elementor/reviews/?filter=5';
+		$review_url = 'https://wordpress.org/support/plugin/premium-addons-for-elementor/reviews/#new-post';
 
 		$optout_url = wp_nonce_url( add_query_arg( 'pa_review', 'opt_out' ), 'opt_out' );
 		?>

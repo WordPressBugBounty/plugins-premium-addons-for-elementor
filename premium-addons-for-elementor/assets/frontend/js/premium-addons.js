@@ -1273,7 +1273,7 @@
 		};
 
 		/****** Premium Countdown Handler ******/
-		var PremiumCountDownHandler = function ($scope, $) {
+		var PremiumCountDownHandler = function ($scope) {
 
 			var $countDownElement = $scope.find(".premium-countdown"),
 				$countDown = $countDownElement.find('.countdown'),
@@ -1307,7 +1307,11 @@
 			}
 
 			// Calculate the difference in seconds between the future and current date
-			var diff = Math.round(untilDate / 1000 - currentDate / 1000);
+			var diff = Math.round(untilDate / 1000 - currentDate / 1000),
+				rawLabels = LanguageObject.localize(settings.lang),
+				translatedLabels = rawLabels.slice();
+
+			translatedLabels.splice(2, 0, '');
 
 			if ('flipping' === settings.style) {
 
@@ -1329,18 +1333,16 @@
 
 			} else {
 
-				// var single = settings.single.split(","),
-				//     plural = settings.plural.split(",");
 
 				$countDownElement.find('.countdown').countdown({
 					$countDown: $countDown,
 					layout: layout,
-					// labels: single,
-					// labels1: plural,
+					labels: translatedLabels,
+					labels1: translatedLabels,
 					until: diff,
 					format: settings.format,
 					style: settings.style,
-					timeSeparator: settings.separator || '',
+					timeSeparator: settings.separator || "",
 					unitsPos: settings.unitsPos,
 					id: $scope.data('id'),
 					circleStrokeWidth: computedStyle.getPropertyValue('--pa-countdown-stroke-width'),
@@ -1398,7 +1400,6 @@
 					$countDown.remove();
 					$scope.find(".premium-addons__v-hidden").removeClass('premium-addons__v-hidden');
 				} else if ('url' === settings.event && !elementorFrontend.isEditMode()) {
-
 					if ('' !== settings.text) {
 						var urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.-]{2,})([\/\w \u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF%.-]*)*\/?$/i;
 

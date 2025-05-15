@@ -113,7 +113,7 @@ class Helper_Functions {
 
 		preg_match( '/fa(.*) fa-/', $icon['value'], $icon_name_matches );
 
-		if( empty( $icon_name_matches ) ) {
+		if ( empty( $icon_name_matches ) ) {
 			return;
 		}
 
@@ -127,7 +127,7 @@ class Helper_Functions {
 
 		$data = file_get_contents( $path );
 
-		if( ! $data ) {
+		if ( ! $data ) {
 			return;
 		}
 
@@ -792,6 +792,42 @@ class Helper_Functions {
 	}
 
 	/**
+	 * Returns the current page id.
+	 * get_the_ID returns the first product ID in the loop if it's the shop page.
+	 * and it sometimes returns a wrong ID in the other cases.
+	 *
+	 * @access public
+	 * @since 4.11.8
+	 * @return int
+	 */
+	public static function pa_get_current_page_id() {
+
+		switch (true) {
+			case is_shop():
+				$page_id = wc_get_page_id('shop');
+				break;
+
+			case is_cart():
+				$page_id = wc_get_page_id('cart');
+				break;
+
+			case is_checkout():
+				$page_id = wc_get_page_id('checkout');
+				break;
+
+			case is_account_page():
+				$page_id = wc_get_page_id('myaccount');
+				break;
+
+			default:
+				$page_id = get_the_ID();
+				break;
+		}
+
+		return $page_id;
+	}
+
+	/**
 	 * Get Final Result.
 	 *
 	 * @access public
@@ -829,8 +865,8 @@ class Helper_Functions {
 
 		try {
 			$today = new \DateTime( 'now', new \DateTimeZone( $local_time_zone ) );
-		} catch (\Exception $e) {
-			$today = new \DateTime('now', new \DateTimeZone('UTC'));
+		} catch ( \Exception $e ) {
+			$today = new \DateTime( 'now', new \DateTimeZone( 'UTC' ) );
 		}
 
 		return $today->format( $format );
@@ -1645,8 +1681,8 @@ class Helper_Functions {
 			return '';
 		}
 
-		//If icon library is SVG, then go to Elementor. Used for widgets where this widget is called in all cases.
-		if( 'svg' === $icon['library'] ) {
+		// If icon library is SVG, then go to Elementor. Used for widgets where this widget is called in all cases.
+		if ( 'svg' === $icon['library'] ) {
 
 			$svg_html = Icons_Manager::try_get_icon_html( $icon );
 
@@ -1661,8 +1697,8 @@ class Helper_Functions {
 
 		$icon = self::get_icon_svg_data( $icon );
 
-		if( ! $icon ) {
-			Icons_Manager::render_icon( $icon, [ 'aria-hidden' => 'true' ] );
+		if ( ! $icon ) {
+			Icons_Manager::render_icon( $icon, array( 'aria-hidden' => 'true' ) );
 			return;
 		}
 
@@ -1771,6 +1807,5 @@ class Helper_Functions {
 		$template_content = $frontend->get_builder_content_for_display( $id, true );
 
 		return $template_content;
-
 	}
 }

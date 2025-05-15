@@ -773,10 +773,6 @@
 	margin-top: 16px;
 }
 
-.pa-usage {
-	margin-right: 15px;
-}
-
 .pa-typed-search {
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -818,11 +814,6 @@
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 	border-left-width: 0px;
-}
-
-#pa-usage-select {
-	border-width: 1px !important;
-	border-radius: 10px !important;
 }
 
 .pa-elements-filter input {
@@ -2691,11 +2682,11 @@
 	-ms-flex-direction: column;
 	flex-direction: column;
 	border-radius: 25px;
-	-webkit-filter: drop-shadow(0 0 20px rgba(0,0,0,0.1));
-	filter: drop-shadow(0 0 20px rgba(0,0,0,0.1));
+	-webkit-filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.1));
+	filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.1));
 	background-color: #f9f9f9;
 	border: 1px solid #dddddd;
-	animation-duration:  0.3s;
+	animation-duration: 0.3s;
 	-webkit-animation-duration: 0.3s;
 }
 
@@ -2716,12 +2707,12 @@
 }
 
 .pa-popup-close svg * {
-	-webkit-transition: all .3s ease-in-out;
-	transition: all .3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 
 .pa-popup-close:hover svg * {
-	fill: #0C7DEE;
+	fill: #0c7dee;
 }
 
 .pa-popup-widget-icon {
@@ -2736,8 +2727,8 @@
 	align-items: center;
 	border-radius: 15px;
 	padding: 12px;
-	-webkit-filter: drop-shadow(-1.414px 1.414px 2.5px rgba(0,0,0,0.1));
-	filter: drop-shadow(-1.414px 1.414px 2.5px rgba(0,0,0,0.1));
+	-webkit-filter: drop-shadow(-1.414px 1.414px 2.5px rgba(0, 0, 0, 0.1));
+	filter: drop-shadow(-1.414px 1.414px 2.5px rgba(0, 0, 0, 0.1));
 	background-color: #ffffff;
 	margin-top: 10px;
 	-webkit-align-self: center;
@@ -2847,10 +2838,10 @@
 	padding: 0;
 	margin: 0;
 	outline: 0;
-	width: -webkit-calc(50% - 30px );
-	width: calc(50% - 30px );
-	-webkit-transition: all .3s ease-in-out;
-	transition: all .3s ease-in-out;
+	width: -webkit-calc(50% - 30px);
+	width: calc(50% - 30px);
+	-webkit-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 
 .pa-popup-cta:first-child,
@@ -2862,7 +2853,7 @@
 
 .pa-popup-cta:last-child,
 .pa-popup-cta:last-child:focus {
-	color: #FF7800;
+	color: #ff7800;
 	-webkit-margin-end: auto;
 	margin-inline-end: auto;
 }
@@ -2872,10 +2863,9 @@
 }
 
 .pa-popup-cta:focus {
-    box-shadow: none;
-    outline: none;
+	box-shadow: none;
+	outline: none;
 }
-
 
 /* End of PRO Popup - CTA*/
 
@@ -2901,73 +2891,72 @@
 
 @-webkit-keyframes swal2-show {
 	0% {
-		-webkit-transform:scale(.7);
-		transform:scale(.7)
+		-webkit-transform: scale(0.7);
+		transform: scale(0.7);
 	}
 
 	45% {
-		-webkit-transform:scale(1.05);
-		transform:scale(1.05)
+		-webkit-transform: scale(1.05);
+		transform: scale(1.05);
 	}
 
 	80% {
-		-webkit-transform:scale(.95);
-		transform:scale(.95)
+		-webkit-transform: scale(0.95);
+		transform: scale(0.95);
 	}
 
 	100% {
-		-webkit-transform:scale(1);
-		transform:scale(1)
+		-webkit-transform: scale(1);
+		transform: scale(1);
 	}
 }
 
 @keyframes swal2-show {
 	0% {
-		-webkit-transform:scale(.7);
-		transform:scale(.7)
+		-webkit-transform: scale(0.7);
+		transform: scale(0.7);
 	}
 
 	45% {
-		-webkit-transform:scale(1.05);
-		transform:scale(1.05)
+		-webkit-transform: scale(1.05);
+		transform: scale(1.05);
 	}
 
 	80% {
-		-webkit-transform:scale(.95);
-		transform:scale(.95)
+		-webkit-transform: scale(0.95);
+		transform: scale(0.95);
 	}
 
 	100% {
-		-webkit-transform:scale(1);
-		transform:scale(1)
-
+		-webkit-transform: scale(1);
+		transform: scale(1);
 	}
 }
 
 @-webkit-keyframes swal2-hide {
 	0% {
-		-webkit-transform:scale(1);
-		transform:scale(1);
-		opacity:1
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: 1;
 	}
 
 	100% {
-		-webkit-transform:scale(.5);
-		transform:scale(.5);
-		opacity:0
+		-webkit-transform: scale(0.5);
+		transform: scale(0.5);
+		opacity: 0;
 	}
 }
 
 @keyframes swal2-hide {
 	0% {
-		-webkit-transform:scale(1);
-		transform:scale(1);
-		  opacity:1
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: 1;
 	}
 
 	100% {
-		-webkit-transform:scale(.5);
-		transform:scale(.5);
-		opacity:0
+		-webkit-transform: scale(0.5);
+		transform: scale(0.5);
+		opacity: 0;
 	}
 }

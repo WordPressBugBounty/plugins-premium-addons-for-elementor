@@ -109,6 +109,7 @@ class Admin_Helper {
 		// Register AJAX HOOKS.
 		add_action( 'wp_ajax_pa_save_global_btn', array( $this, 'save_global_btn_value' ) );
 		add_action( 'wp_ajax_pa_elements_settings', array( $this, 'save_settings' ) );
+		add_action( 'wp_ajax_pa_disable_elementor_mc_template', array( $this, 'disable_elementor_mc_template' ) );
 		add_action( 'wp_ajax_pa_additional_settings', array( $this, 'save_additional_settings' ) );
 		add_action( 'wp_ajax_pa_get_unused_widgets', array( $this, 'get_unused_widgets' ) );
 		add_action( 'wp_ajax_get_pa_menu_item_settings', array( $this, 'get_pa_menu_item_settings' ) );
@@ -382,7 +383,7 @@ class Admin_Helper {
 					'exitWizardURL' => admin_URL( 'plugins.php' ),
 					'dashboardURL'  => admin_URL( 'admin.php' ) . '?page=premium-addons#tab=elements',
 					'newPageURL'    => Plugin::$instance->documents->get_create_new_post_url(),
-				)
+				),
 			);
 
 		}
@@ -1371,6 +1372,22 @@ class Admin_Helper {
 	}
 
 	/**
+	 * Disables Elementor Custom Mini Cart Template.
+	 *
+	 * @access public
+	 * @since 4.11.6
+	 * @see ElementorPro\Modules\Woocommerce\Module [elementor-pro\modules\woocommerce\module.php].
+	 */
+	public function disable_elementor_mc_template() {
+
+		check_ajax_referer( 'pa-settings-tab', 'security' );
+
+		update_option( 'elementor_use_mini_cart_template', 'no' );
+
+		wp_send_json_success( 'Elementor Mini Cart Template Disabled.' );
+	}
+
+	/**
 	 * Clear Cached Assets.
 	 *
 	 * Deletes assets options from DB And
@@ -1651,7 +1668,7 @@ class Admin_Helper {
 			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 				set_transient( 'pa_news', true, WEEK_IN_SECONDS );
 				return;
-        	}
+			}
 
 			$body  = wp_remote_retrieve_body( $response );
 			$posts = json_decode( $body, true );

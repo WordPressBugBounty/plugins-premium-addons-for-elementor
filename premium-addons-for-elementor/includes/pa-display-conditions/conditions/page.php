@@ -32,16 +32,15 @@ class Page extends Condition {
 	public function get_control_options() {
 
 		return array(
-			'label'         => __( 'Value', 'premium-addons-pro' ),
-			'type'          => Premium_Post_Filter::TYPE,
-			'label_block'   => true,
-			'multiple'      => true,
-			'source'        => 'page',
+			'label'       => __( 'Value', 'premium-addons-pro' ),
+			'type'        => Premium_Post_Filter::TYPE,
+			'label_block' => true,
+			'multiple'    => true,
+			'source'      => 'page',
 			'condition'   => array(
 				'pa_condition_key' => 'page',
 			),
 		);
-
 	}
 
 	/**
@@ -60,7 +59,7 @@ class Page extends Condition {
 	 */
 	public function compare_value( $settings, $operator, $value, $compare_val, $tz ) {
 
-		$current_id = get_the_ID();
+		$current_id = Helper_Functions::pa_get_current_page_id();
 
 		if ( is_array( $value ) && ! empty( $value ) ) {
 			foreach ( $value as $index => $page_id ) {

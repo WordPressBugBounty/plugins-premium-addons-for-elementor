@@ -100,6 +100,7 @@ class Premium_Countdown extends Widget_Base {
 	 */
 	public function get_script_depends() {
 		return array(
+			'countdown-translator',
 			'pa-countdown',
 			'pa-flipclock',
 			'premium-addons',
@@ -361,23 +362,33 @@ class Premium_Countdown extends Widget_Base {
 				'label'     => __( 'Language', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => array(
-					'ar' => __( 'Arabic', 'premium-addons-for-elementor' ),
-					'da' => __( 'Danish', 'premium-addons-for-elementor' ),
-					'de' => __( 'German', 'premium-addons-for-elementor' ),
-					'en' => __( 'English', 'premium-addons-for-elementor' ),
-					'es' => __( 'Spanish', 'premium-addons-for-elementor' ),
-					'fi' => __( 'Finnish', 'premium-addons-for-elementor' ),
-					'fr' => __( 'French', 'premium-addons-for-elementor' ),
-					'it' => __( 'Italian', 'premium-addons-for-elementor' ),
-					'nl' => __( 'Dutch', 'premium-addons-for-elementor' ),
-					'pt' => __( 'Portuguese', 'premium-addons-for-elementor' ),
-					'ru' => __( 'Russian', 'premium-addons-for-elementor' ),
-					'sv' => __( 'Swedish', 'premium-addons-for-elementor' ),
+					'english' => __( 'English', 'premium-addons-for-elementor' ),
+					'danish' => __( 'Danish', 'premium-addons-for-elementor' ),
+					'german' => __( 'German', 'premium-addons-for-elementor' ),
+					'spanish' => __( 'Spanish', 'premium-addons-for-elementor' ),
+					'finnish' => __( 'Finnish', 'premium-addons-for-elementor' ),
+					'french' => __( 'French', 'premium-addons-for-elementor' ),
+					'italian' => __( 'Italian', 'premium-addons-for-elementor' ),
+					'hebrew' => __( 'Hebrew', 'premium-addons-for-elementor' ),
+					'dutch' => __( 'Dutch', 'premium-addons-for-elementor' ),
+					'portuguese' => __( 'Portuguese', 'premium-addons-for-elementor' ),
+					'russian' => __( 'Russian', 'premium-addons-for-elementor' ),
+					'swedish' => __( 'Swedish', 'premium-addons-for-elementor' ),
+					'korean' => __( 'Korean', 'premium-addons-for-elementor' ),
+					'czech' => __( 'Czech', 'premium-addons-for-elementor' ),
+					'arabic' => __( 'Arabic', 'premium-addons-for-elementor' ),
+					'persian' => __( 'Persian', 'premium-addons-for-elementor' ),
+					'japanese' => __( 'Japanese', 'premium-addons-for-elementor' ),
+					'polish' => __( 'Polish', 'premium-addons-for-elementor' ),
+					'romanian' => __( 'Romanian', 'premium-addons-for-elementor' ),
+					'turkish' => __( 'Turkish', 'premium-addons-for-elementor' ),
+					'slovak' => __( 'Slovak', 'premium-addons-for-elementor' ),
+					'thai' => __( 'Thai', 'premium-addons-for-elementor' ),
+					'chinese' => __( 'Chinese', 'premium-addons-for-elementor' ),
+					'norwegian' => __( 'Norwegian', 'premium-addons-for-elementor' ),
+					'latvian' => __( 'Latvian', 'premium-addons-for-elementor' ),
 				),
-				'default'   => 'en',
-				'condition' => array(
-					'style' => 'flipping',
-				),
+				'default'   => 'english',
 			)
 		);
 
@@ -1785,6 +1796,7 @@ class Premium_Countdown extends Widget_Base {
 				'unitsPos'   => $settings['unit_position'],
 				'reset'      => $reset,
 				'style'      => $settings['style'],
+				'lang'       => $settings['flip_language'],
 			);
 
 			if ( 'featured' === $settings['style'] ) {

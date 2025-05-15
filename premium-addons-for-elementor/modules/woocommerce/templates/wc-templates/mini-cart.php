@@ -20,24 +20,21 @@ if ( ! function_exists( 'pa_render_cart_item' ) ) {
 		$product_price     = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
 		$product_name      = apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key );
 
-        $rendered_layout = get_option('pa_mc_layout', 'layout-1');
+		$mc_layout          = get_option( 'pa_mc_layout', 'layout-1' );
+		$layout_render_func = 'pa_render_' . str_replace( '-', '_', $mc_layout );
 
-        if( 'layout-1' === $rendered_layout ) {
-
-            pa_render_first_layout( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price );
-        } else {
-            pa_render_second_layout( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price );
-        }
-
+		if ( function_exists( $layout_render_func ) ) {
+			$layout_render_func( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price );
+		}
 	}
 }
 
-if ( ! function_exists( 'pa_render_first_layout' ) ) {
-	function pa_render_first_layout( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price ) {
+if ( ! function_exists( 'pa_render_layout_1' ) ) {
+	function pa_render_layout_1( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price ) {
 
 		$disabled_cls = '1' === $cart_item['quantity'] ? 'disabled' : '';
 		?>
-		<div class="pa-woo-mc__item-wrapper pa-woo-mc__layout-1 <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" style="display: none">
+		<div class="pa-woo-mc__item-wrapper <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 			<div class="pa-woo-mc__product-thumbnail">
 				<?php
 					$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
@@ -92,13 +89,13 @@ if ( ! function_exists( 'pa_render_first_layout' ) ) {
 }
 
 
-if ( ! function_exists( 'pa_render_second_layout' ) ) {
+if ( ! function_exists( 'pa_render_layout_2' ) ) {
 
-	function pa_render_second_layout( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price ) {
+	function pa_render_layout_2( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price ) {
 		$disabled_cls = '1' === $cart_item['quantity'] ? 'disabled' : '';
 
 		?>
-		<div class="pa-woo-mc__item-wrapper pa-woo-mc__layout-2 <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" style="display: none">
+		<div class="pa-woo-mc__item-wrapper <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 			<div class="pa-woo-mc__product-thumbnail">
 				<?php
 					$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
@@ -154,6 +151,174 @@ if ( ! function_exists( 'pa_render_second_layout' ) ) {
 	}
 }
 
+if ( ! function_exists( 'pa_render_layout_3' ) ) {
+
+	function pa_render_layout_3( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price ) {
+		$disabled_cls = '1' === $cart_item['quantity'] ? 'disabled' : '';
+
+		?>
+		<div class="pa-woo-mc__item-wrapper pa-show-trash-icon <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+			<div class="pa-woo-mc__product-thumbnail">
+				<?php
+					$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+
+				if ( ! $product_permalink ) {
+					echo wp_kses_post( $thumbnail );
+
+				} else {
+					?>
+						<a href="<?php echo esc_url( $product_permalink ); ?>"> <?php echo wp_kses_post( $thumbnail ); ?></a>
+						<?php
+				}
+				?>
+				<span class="pa-woo-mc__remove-item" data-pa-item-key="cart-<?php echo esc_attr( $cart_item_key ); ?>">
+					<i class="fas fa-times" aria-hidden="true"></i>
+				</span>
+			</div>
+			<div class="pa-woo-mc__product-data">
+
+				<a class="pa-woo-mc__title" href="<?php echo esc_url( $product_permalink ); ?>">
+					<?php
+
+						$words = explode( ' ', $product_name, 11 );
+
+					if ( count( $words ) > 10 ) {
+						array_pop( $words );
+						array_push( $words, '…' );
+					}
+
+						$product_name = implode( ' ', $words );
+
+						echo wp_kses_post( $product_name ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+				</a>
+
+				<span class="pa-woo-mc__item-price"><?php echo wp_kses_post( $cart_item['quantity'] . ' x ' . $product_price ); ?></span>
+			</div>
+
+			<span class="pa-woo-mc__item-notice"></span>
+		</div>
+
+		<?php
+	}
+}
+
+if ( ! function_exists( 'pa_render_layout_4' ) ) {
+
+	function pa_render_layout_4( $_product, $cart_item_key, $cart_item, $thumbnail, $product_permalink, $product_name, $product_price ) {
+		$disabled_cls = '1' === $cart_item['quantity'] ? 'disabled' : '';
+
+		?>
+		<div class="pa-woo-mc__item-wrapper pa-show-trash-icon <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+			<span class="pa-woo-mc__remove-item" data-pa-item-key="cart-<?php echo esc_attr( $cart_item_key ); ?>">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15.99" viewBox="0 0 16 15.99"><path d="M15.85,15.14l-7.15-7.15L15.85.85c.19-.19.19-.5,0-.69-.19-.2-.51-.2-.71-.01l-7.15,7.15L.85.14C.66-.05.35-.05.16.14c-.2.19-.2.51-.01.71l7.15,7.15L.15,15.14C.05,15.23,0,15.36,0,15.49c0,.28.22.5.5.5.13,0,.26-.05.35-.15l7.15-7.15,7.15,7.15c.09.09.22.15.35.15.13,0,.26-.05.35-.15.2-.2.2-.51,0-.71Z"/></svg>
+			</span>
+
+			<div class="pa-woo-mc__product-thumbnail">
+				<?php
+					$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+
+				if ( ! $product_permalink ) {
+					echo wp_kses_post( $thumbnail );
+
+				} else {
+					?>
+						<a href="<?php echo esc_url( $product_permalink ); ?>"> <?php echo wp_kses_post( $thumbnail ); ?></a>
+					<?php
+				}
+				?>
+			</div>
+			<div class="pa-woo-mc__product-data">
+
+				<a class="pa-woo-mc__title" href="<?php echo esc_url( $product_permalink ); ?>">
+					<?php
+
+						$words = explode( ' ', $product_name, 11 );
+
+					if ( count( $words ) > 10 ) {
+						array_pop( $words );
+						array_push( $words, '…' );
+					}
+
+						$product_name = implode( ' ', $words );
+
+						echo wp_kses_post( $product_name ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+				</a>
+
+				<span class="pa-woo-mc__item-price"><?php echo wp_kses_post( $cart_item['quantity'] . ' x ' . $product_price ); ?></span>
+			</div>
+
+			<span class="pa-woo-mc__item-notice"></span>
+		</div>
+
+		<?php
+	}
+}
+
+if ( ! function_exists( 'pa_render_cross_sells' ) ) {
+	function pa_render_cross_sells( $products_ids ) {
+		?>
+			<div class="pa-woo-mc__cross-sells-wrapper"  style="display: none;">
+				<div class="pa-woo-mc__cross-sells-heading-wrapper">
+					<span class="pa-woo-mc__cross-sells-heading"></span>
+					<span class="pa-woo-mc__cross-sells-arrows">
+						<a class="prev-arrow" type="button" role="button" aria-label="Previous">
+							<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12.99" viewBox="0 0 7 12.99"><path d="M.15,6.85l6,6c.19.19.5.19.69,0,.2-.19.2-.51.01-.71L1.21,6.5,6.85.85c.09-.09.15-.22.15-.35C7,.22,6.78,0,6.5,0c-.13,0-.26.05-.35.15L.15,6.15s0,0,0,0c-.2.2-.2.51,0,.71Z"/></svg>
+						</a>
+						<a class="next-arrow" type="button" role="button" aria-label="Next">
+							<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12.99" viewBox="0 0 7 12.99"><path d="M6.85,6.14L.85.14C.66-.05.35-.05.16.14c-.2.19-.2.51-.01.71l5.65,5.65L.15,12.14C.05,12.23,0,12.36,0,12.49c0,.28.22.5.5.5.13,0,.26-.05.35-.15l6-6s0,0,0,0c.2-.2.2-.51,0-.71Z"/></svg>
+						</a>
+					</span>
+				</div>
+				<div class="pa-woo-mc__cross-sells">
+					<?php
+					foreach ( $products_ids as $product_id ) {
+						$product      = wc_get_product( $product_id );
+						$thumbnail    = $product->get_image();
+						$permalink    = get_permalink( $product_id );
+						$product_name = $product->get_name();
+
+						?>
+								<div class="pa-woo-mc__cross-sell-product">
+									<div class="pa-woo-mc__cross-sell-thumbnail">
+									<?php
+									if ( ! $permalink ) {
+										echo wp_kses_post( $thumbnail );
+
+									} else {
+										?>
+												<a href="<?php echo esc_url( $permalink ); ?>"> <?php echo wp_kses_post( $thumbnail ); ?></a>
+											<?php
+									}
+									?>
+									</div>
+									<a class="pa-woo-mc__cross-sell-title" href="<?php echo esc_url( $permalink ); ?>">
+										<?php
+
+										$words = explode( ' ', $product_name, 11 );
+
+										if ( count( $words ) > 10 ) {
+											array_pop( $words );
+											array_push( $words, '…' );
+										}
+
+										$product_name = implode( ' ', $words );
+
+										echo wp_kses_post( $product_name ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										?>
+									</a>
+								</div>
+							<?php
+					}
+					?>
+				</div>
+			</div>
+
+		<?php
+	}
+}
+
 $has_cart = is_a( WC()->cart, 'WC_Cart' );
 if ( ! $has_cart ) {
 	return; }
@@ -162,8 +327,14 @@ $cart_items = WC()->cart->get_cart();
 
 ?>
 	<div class="pa-woo-mc__items-wrapper">
-		<?php if ( empty( $cart_items ) ) { ?>
-		<div class="pa-woo-mc__empty-msg"><?php echo __('Your cart is currently empty!', 'woocommerce'); ?></div>
+		<?php if ( empty( $cart_items ) ) {
+			$image_url = PREMIUM_ADDONS_URL . 'modules/woocommerce/icons/empty-cart-icon.png';
+			?>
+		<div class="pa-woo-mc__empty-msg-wrapper">
+			<img src="<?php echo esc_url( $image_url ); ?>" alt="empty cart" class="pa-woo-mc__empty-msg-img">
+			<span class="pa-woo-mc__empty-msg"><?php echo __( 'Your cart is currently empty!', 'woocommerce' ); ?></span>
+			<a class="pa-woo-mc__empty-msg-btn" href="<?php echo esc_url(get_permalink( wc_get_page_id( 'shop' ) )); ?>" aria-label="Return to Shop"><?php echo __( 'Return to Shop', 'woocommerce' ); ?></a>
+		</div>
 			<?php
 		} else {
 
@@ -181,6 +352,13 @@ $cart_items = WC()->cart->get_cart();
 				}
 
 				++$counter;
+			}
+
+			// render cross-sells.
+			$cross_sell_ids = WC()->cart->get_cross_sells();
+
+			if ( ! empty( $cross_sell_ids ) ) {
+				pa_render_cross_sells( $cross_sell_ids );
 			}
 
 			do_action( 'woocommerce_mini_cart_contents' );

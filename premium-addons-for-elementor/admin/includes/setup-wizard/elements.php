@@ -422,7 +422,7 @@
 					'key'   => 'premium-lottie-widget',
 					'name'  => 'premium-lottie',
 					'title' => __( 'Lottie Animations', 'premium-addons-for-elementor' ),
-					'demo'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-lottie-animations-section-addon/', 'lottie-addon', 'wp-dash', 'wizard' )
+					'demo'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-lottie-animations-container-addon/', 'lottie-addon', 'wp-dash', 'wizard' )
 				),
 				array(
 					'key'   => 'premium-grid',
@@ -465,7 +465,7 @@
 					'key'    => 'premium-charts',
 					'name'   => 'premium-chart',
 					'title'  => __( 'Charts', 'premium-addons-for-elementor' ),
-					'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/charts-widget-for-elementor-page-builder/', 'charts', 'wp-dash', 'wizard' ),
+					'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-charts-widget/', 'charts', 'wp-dash', 'wizard' ),
 					'is_pro' => true,
 					'icon'   => 'pa-pro-charts',
 				),
