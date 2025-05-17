@@ -802,26 +802,32 @@ class Helper_Functions {
 	 */
 	public static function pa_get_current_page_id() {
 
-		switch (true) {
-			case is_shop():
-				$page_id = wc_get_page_id('shop');
-				break;
+		if ( class_exists( 'woocommerce' ) ) {
 
-			case is_cart():
-				$page_id = wc_get_page_id('cart');
-				break;
+			switch (true) {
+				case is_shop():
+					$page_id = wc_get_page_id('shop');
+					break;
 
-			case is_checkout():
-				$page_id = wc_get_page_id('checkout');
-				break;
+				case is_cart():
+					$page_id = wc_get_page_id('cart');
+					break;
 
-			case is_account_page():
-				$page_id = wc_get_page_id('myaccount');
-				break;
+				case is_checkout():
+					$page_id = wc_get_page_id('checkout');
+					break;
 
-			default:
-				$page_id = get_the_ID();
-				break;
+				case is_account_page():
+					$page_id = wc_get_page_id('myaccount');
+					break;
+
+				default:
+					$page_id = get_the_ID();
+					break;
+			}
+
+		} else {
+			$page_id = get_the_ID();
 		}
 
 		return $page_id;

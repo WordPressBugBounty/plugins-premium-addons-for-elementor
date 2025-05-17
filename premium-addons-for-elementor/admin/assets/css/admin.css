@@ -1549,6 +1549,10 @@
 	align-items: center;
 }
 
+.papro-admin-notice-logo img {
+	width: auto;
+}
+
 .papro-admin-notice-logo label {
 	display: block;
 	font-weight: 600;
