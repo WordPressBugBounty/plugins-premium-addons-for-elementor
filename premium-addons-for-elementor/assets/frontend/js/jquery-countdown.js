@@ -100,7 +100,15 @@
                     return n && n.length % 2 != 0 ? e + ":" : '"' + e + '":'
                 }), f = $.parseJSON("{" + f + "}"), f) {
                     var h = f[g];
-                    "string" == typeof h && h.match(/^new Date\((.*)\)$/) && (f[g] = eval(h))
+                    // "string" == typeof h && h.match(/^new Date\((.*)\)$/) && (f[g] = eval(h))
+                    if (typeof h === "string") {
+                        var m = h.match(/^new Date\((['"]?)([^'")]+)\1\)$/);
+                        if (m) {
+                            var dateStr = m[2],
+                                parsedDate = new Date(dateStr);
+                            f[g] = !isNaN(parsedDate.getTime()) ? parsedDate : null;
+                        }
+                    }
                 }
                 return f
             } catch (t) {

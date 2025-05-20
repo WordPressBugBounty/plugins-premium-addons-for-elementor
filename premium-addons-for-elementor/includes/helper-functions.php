@@ -1687,8 +1687,9 @@ class Helper_Functions {
 			return '';
 		}
 
-		// If icon library is SVG, then go to Elementor. Used for widgets where this widget is called in all cases.
-		if ( 'svg' === $icon['library'] ) {
+		// If icon library is SVG, then go to Elementor. Used for widgets where this function is called in all cases.
+
+		if ( ! strpos( $icon['library'],'fa-' ) ) {
 
 			$svg_html = Icons_Manager::try_get_icon_html( $icon );
 

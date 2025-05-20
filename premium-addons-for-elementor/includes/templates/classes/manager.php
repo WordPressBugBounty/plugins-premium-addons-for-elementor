@@ -323,7 +323,7 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 
 			$source = $data['data']['source'];
 
-			if ( ! isset( $this->sources[ $source ] ) ) {
+			if( 'premium-api' !== $source ) {
 				return;
 			}
 

@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.1
 Requires PHP: 7.4
-Stable Tag: 4.11.8
+Stable Tag: 4.11.9
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.9 =
+
+- Tweak: Added Slide Menu direction option in Mega Menu widget.
+- Tweak: Submenu Trigger option in Mega Menu widget.
+- Fixed: Error while saving Elementor templates after Elementor v3.29.
+- Fixed: Icons from custom icons are not showing in some widgets.
+- Fixed: Security issue in Coutdown widget.
 
 = 4.11.8 =
 

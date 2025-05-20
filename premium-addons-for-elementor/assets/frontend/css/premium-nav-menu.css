@@ -1,4 +1,7 @@
 /************ Premium Nav Menu ************/
+.premium-nav-widget-container {
+  --pa-menu-width: 300px;
+}
 .premium-nav-widget-container ul {
   list-style: none;
   margin: 0;
@@ -218,14 +221,10 @@
 
 .premium-ver-hamburger-menu .premium-mobile-menu-outer-container {
   background-color: #f7f7f7;
-  width: 300px;
-  -webkit-transform: translateX(-300px);
-  -ms-transform: translateX(-300px);
-  transform: translateX(-300px);
+  width: var(--pa-menu-width);
   height: 100%;
   position: fixed;
   top: 0;
-  left: 0;
   overflow-x: hidden;
   z-index: 10002;
   -webkit-transition: 0.5s;
@@ -282,6 +281,22 @@
   transform: translateX(0) !important;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+}
+
+.premium-slide-left .premium-mobile-menu-outer-container,
+body:not(.rtl) .premium-slide-auto .premium-mobile-menu-outer-container {
+  left: 0;
+  -webkit-transform: translateX(-webkit-calc(-1 * var(--pa-menu-width)));
+  -ms-transform: translateX(calc(-1 * var(--pa-menu-width)));
+  transform: translateX(calc(-1 * var(--pa-menu-width)));
+}
+
+.premium-slide-right .premium-mobile-menu-outer-container,
+body.rtl .premium-slide-auto .premium-mobile-menu-outer-container {
+  right: 0;
+  -webkit-transform: translateX(var(--pa-menu-width));
+  -ms-transform: translateX(var(--pa-menu-width));
+  transform: translateX(var(--pa-menu-width));
 }
 
 /** Vertical Toggler*/

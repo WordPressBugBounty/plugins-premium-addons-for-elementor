@@ -2718,7 +2718,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 					$play_icon = 'yes' === $settings['vid_play_icon'] ? 'premium-tiktok-feed__play-icon ' : '';
 					if ( 'yes' === $settings['autoplay_all'] || ( 0 == $index && 'yes' === $settings['autoplay_first'] ) ) {
 
-						$video_html .= ' preload="auto"';
+						// $video_html .= ' preload="auto"';
 
 						$video_html .= ' autoplay';
 
@@ -2736,7 +2736,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 					}
 
 					if ( 'yes' === $settings['autoplay_hover'] ) {
-						$video_html .= ' preload="auto"';
+						// $video_html .= ' preload="auto"';
 					}
 
 					if ( 'yes' === $settings['loop_videos'] ) {

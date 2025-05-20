@@ -122,7 +122,7 @@
 
 		// not using nested condition => more readable this way.
 		// if (isEditMode && !renderMobileMenu) {
-        if (!renderMobileMenu) { // those classes are used in both editor & frontend.
+		if (!renderMobileMenu) { // those classes are used in both editor & frontend.
 			$scope.find('.premium-nav-default').removeClass('premium-nav-default');
 			$scope.removeClass('premium-hamburger-menu');
 		}
@@ -133,6 +133,9 @@
 		}
 
 		checkStickyEffect();
+
+		//Should dropdown be triggered on whole item or icon click.
+		var triggerSelector = 'item' === settings.submenuTrigger ? ' > .premium-menu-link' : ' > .premium-menu-link > .premium-dropdown-icon';
 
 		if (['hor', 'ver'].includes(settings.mainLayout)) {
 
@@ -179,8 +182,7 @@
 				});
 			} else { // click
 
-				var triggerSelector = 'item' === settings.submenuTrigger ? ' > .premium-menu-link' : ' > .premium-menu-link > .premium-dropdown-icon',
-					$trigger = $scope.find('.premium-nav-menu-container .premium-nav-menu-item.menu-item-has-children' + triggerSelector);
+				var $trigger = $scope.find('.premium-nav-menu-container .premium-nav-menu-item.menu-item-has-children' + triggerSelector);
 
 				/**
 				 * To prevent events overlapping if the user switched between hover/click
@@ -258,12 +260,16 @@
 
 		});
 
-		$menuContainer.find('.premium-nav-menu-item.menu-item-has-children a, .premium-mega-nav-item a').on('click', function (e) {
+		// Modify the mobile menu click handler.
+		$menuContainer.find(".premium-nav-menu-item " + triggerSelector).on('click', function (e) {
+			var $this = $(this),
+				$parent = $this.closest(".premium-nav-menu-item"),
+				hasSubmenu = itemHasChildren(this);
 
-			if ($(this).find(".premium-dropdown-icon").length < 1)
-				return;
-
-			var $parent = $(this).parent(".premium-nav-menu-item");
+			// For 'item' trigger: Only prevent default if submenu exists.
+			if ('item' === settings.submenuTrigger) {
+				if (!hasSubmenu) return; // Allow link navigation.
+			}
 
 			e.stopPropagation();
 			e.preventDefault();
@@ -441,7 +447,7 @@
 		function checkBreakPoint(settings) {
 
 			//Trigger small screen menu.
-			if (settings.breakpoint >= $(window).outerWidth()&& !isMobileMenu) {
+			if (settings.breakpoint >= $(window).outerWidth() && !isMobileMenu) {
 				// remove the vertical toggler.
 				$scope.find('.premium-ver-toggler').css('display', 'none');
 				$scope.addClass('premium-hamburger-menu');
