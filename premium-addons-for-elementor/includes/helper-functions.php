@@ -1688,7 +1688,7 @@ class Helper_Functions {
 
 		// If icon library is SVG, then go to Elementor. Used for widgets where this function is called in all cases.
 		if ( false === strpos( $icon['library'], 'fa-' ) ) {
-			$svg_html = Icons_Manager::try_get_icon_html( $icon, array_merge( array( 'aria-hidden' => 'true' ), $attributes ) );
+			$svg_html = Icons_Manager::try_get_icon_html( $icon, wp_parse_args( $attributes, array( 'aria-hidden' => 'true' ) ) );
 
 			return $svg_html;
 		}
@@ -1703,7 +1703,7 @@ class Helper_Functions {
 
 		if ( ! $icon ) {
 			// Icons_Manager::render_icon( $icon, array( 'aria-hidden' => 'true' ) );
-			Icons_Manager::render_icon( $icon, array_merge( array( 'aria-hidden' => 'true' ), $attributes ) );
+			Icons_Manager::render_icon( $icon, wp_parse_args( $attributes, array( 'aria-hidden' => 'true' ) ) );
 			return;
 		}
 
