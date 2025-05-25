@@ -804,28 +804,27 @@ class Helper_Functions {
 
 		if ( class_exists( 'woocommerce' ) ) {
 
-			switch (true) {
+			switch ( true ) {
 				case is_shop():
-					$page_id = wc_get_page_id('shop');
+					$page_id = wc_get_page_id( 'shop' );
 					break;
 
 				case is_cart():
-					$page_id = wc_get_page_id('cart');
+					$page_id = wc_get_page_id( 'cart' );
 					break;
 
 				case is_checkout():
-					$page_id = wc_get_page_id('checkout');
+					$page_id = wc_get_page_id( 'checkout' );
 					break;
 
 				case is_account_page():
-					$page_id = wc_get_page_id('myaccount');
+					$page_id = wc_get_page_id( 'myaccount' );
 					break;
 
 				default:
 					$page_id = get_the_ID();
 					break;
 			}
-
 		} else {
 			$page_id = get_the_ID();
 		}
@@ -1688,10 +1687,8 @@ class Helper_Functions {
 		}
 
 		// If icon library is SVG, then go to Elementor. Used for widgets where this function is called in all cases.
-
-		if ( ! strpos( $icon['library'],'fa-' ) ) {
-
-			$svg_html = Icons_Manager::try_get_icon_html( $icon );
+		if ( false === strpos( $icon['library'], 'fa-' ) ) {
+			$svg_html = Icons_Manager::try_get_icon_html( $icon, array_merge( array( 'aria-hidden' => 'true' ), $attributes ) );
 
 			return $svg_html;
 		}
@@ -1705,7 +1702,8 @@ class Helper_Functions {
 		$icon = self::get_icon_svg_data( $icon );
 
 		if ( ! $icon ) {
-			Icons_Manager::render_icon( $icon, array( 'aria-hidden' => 'true' ) );
+			// Icons_Manager::render_icon( $icon, array( 'aria-hidden' => 'true' ) );
+			Icons_Manager::render_icon( $icon, array_merge( array( 'aria-hidden' => 'true' ), $attributes ) );
 			return;
 		}
 

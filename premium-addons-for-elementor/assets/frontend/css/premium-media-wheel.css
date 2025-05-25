@@ -204,8 +204,7 @@
   -ms-flex-direction: column;
   flex-direction: column;
 }
-.premium-adv-carousel__infinite.premium-adv-carousel__vertical .premium-adv-carousel__item,
-.premium-adv-carousel__infinite.premium-adv-carousel__vertical .premium-adv-carousel__item-outer-wrapper {
+.premium-adv-carousel__infinite.premium-adv-carousel__vertical .premium-adv-carousel__item {
   width: 100%;
 }
 .premium-adv-carousel__coverflow .premium-adv-carousel__media-info-wrap, .premium-adv-carousel__carousel .premium-adv-carousel__media-info-wrap, .premium-adv-carousel__flat .premium-adv-carousel__media-info-wrap {

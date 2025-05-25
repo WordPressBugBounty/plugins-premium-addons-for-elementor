@@ -4473,7 +4473,8 @@
 				var $mediaItem = $scope.find('.premium-adv-carousel__item'),
 					direction = settings.dir,
 					scrollDir = settings.reverse,
-					verAlignWidth = 10,
+					// verAlignWidth = 10,
+					verAlignWidth = 0,
 					containerHeight = $mediaItemsContainer.outerHeight();
 
 				if ('horizontal' === direction) {
@@ -4566,12 +4567,11 @@
 
 							transformVal = accumlativeHeight;
 
-							accumlativeHeight = accumlativeHeight + $scope.find('.premium-adv-carousel__item').eq(i).outerHeight(true);
+							accumlativeHeight = accumlativeHeight + $scope.find('.premium-adv-carousel__item').eq(i).outerHeight(true) + parseFloat(slidesSpacing);
 
 							return (transformVal) * factor
 						}
 					});
-
 
 					var fullHeight = (verAlignWidth + ($scope.find('.premium-adv-carousel__item').length * parseFloat(slidesSpacing)));
 

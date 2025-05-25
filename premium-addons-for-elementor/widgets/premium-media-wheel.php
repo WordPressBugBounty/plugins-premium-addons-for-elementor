@@ -949,26 +949,27 @@ class Premium_Media_Wheel extends Widget_Base {
 		$this->add_responsive_control(
 			'pa_media_spacing',
 			array(
-				'label'      => __( 'Spacing', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px' ),
-				'range'      => array(
+				'label'       => __( 'Spacing', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SLIDER,
+				'size_units'  => array( 'px' ),
+				'render_type' => 'template',
+				'range'       => array(
 					'px' => array(
 						'min'  => 0,
 						'max'  => 500,
 						'step' => 1,
 					),
 				),
-				'default'    => array(
+				'default'     => array(
 					'unit' => 'px',
 					'size' => 5,
 				),
-				'selectors'  => array(
+				'selectors'   => array(
 					'{{WRAPPER}}.premium-adv-carousel__horizontal .premium-adv-carousel__items'       => 'column-gap: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}}.premium-adv-carousel__vertical .premium-adv-carousel__items'       => 'row-gap: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}}.premium-adv-carousel__horizontal'       => '--pa-wheel-spacing: {{SIZE}}',
+					'{{WRAPPER}}.premium-adv-carousel__infinite'       => '--pa-wheel-spacing: {{SIZE}}',
 				),
-				'condition'  => array(
+				'condition'   => array(
 					'media_wheel_animation' => 'infinite',
 				),
 			)
