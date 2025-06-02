@@ -468,11 +468,11 @@ class Premium_Maps extends Widget_Base {
 		$this->add_control(
 			'premium_map_id',
 			array(
-				'label' => __('Map ID', 'premium-addons-for-elementor'),
-				'type' => Controls_Manager::TEXT,
+				'label'       => __( 'Map ID', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
 				'description' => sprintf(
-					esc_html__('Get the Google Map ID from %s. You can leave it empty, but this will use the old Google Maps API.', 'premium-addons-for-elementor'),
-					'<a href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" target="_blank">' . esc_html__('here', 'premium-addons-for-elementor') . '</a>'
+					esc_html__( 'Get the Google Map ID from %s. You can leave it empty, but this will use the old Google Maps API.', 'premium-addons-for-elementor' ),
+					'<a href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" target="_blank">' . esc_html__( 'here', 'premium-addons-for-elementor' ) . '</a>'
 				),
 			)
 		);
@@ -610,8 +610,11 @@ class Premium_Maps extends Widget_Base {
 			$this->add_control(
 				'premium_maps_map_option_cluster',
 				array(
-					'label' => __( 'Marker Clustering', 'premium-addons-for-elementor' ),
-					'type'  => Controls_Manager::SWITCHER,
+					'label'     => __( 'Marker Clustering', 'premium-addons-for-elementor' ),
+					'type'      => Controls_Manager::SWITCHER,
+					'condition' => array(
+						'premium_map_id!' => '',
+					),
 				)
 			);
 
@@ -622,6 +625,7 @@ class Premium_Maps extends Widget_Base {
 					'type'      => Controls_Manager::MEDIA,
 					'condition' => array(
 						'premium_maps_map_option_cluster' => 'yes',
+						'premium_map_id!'                 => '',
 					),
 				)
 			);
@@ -639,6 +643,7 @@ class Premium_Maps extends Widget_Base {
 					),
 					'condition' => array(
 						'premium_maps_map_option_cluster' => 'yes',
+						'premium_map_id!'                 => '',
 					),
 				)
 			);
@@ -1161,7 +1166,7 @@ class Premium_Maps extends Widget_Base {
 
 		$cluster_enabled = Admin_Helper::get_integrations_settings()['premium-map-cluster'];
 
-		if ( $cluster_enabled ) {
+		if ( ! empty( $settings['premium_map_id'] ) && $cluster_enabled ) {
 			$marker_cluster = 'yes' === $settings['premium_maps_map_option_cluster'];
 
 			if ( $marker_cluster ) {

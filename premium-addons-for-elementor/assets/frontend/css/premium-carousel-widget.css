@@ -40,6 +40,10 @@
 }
 .premium-carousel-wrapper a.carousel-arrow {
   top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-decoration: none;
 }
 
 .premium-carousel-wrapper a.ver-carousel-arrow {

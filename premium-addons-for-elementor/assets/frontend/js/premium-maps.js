@@ -13,32 +13,40 @@ jQuery(window).on("elementor/frontend/init", function () {
 			premiumMapMarkers = [],
 			premiumMapPopups = [];
 
-		if (mapSettings.loadScroll) {
+		var checkGoogleMapsLoaded = setInterval(function () {
+			if (typeof google !== "undefined" && google.maps) {
+				clearInterval(checkGoogleMapsLoaded);
+				//Once Google API is loaded, trigger the maps handler.
+				setTimeout(function () {
+					triggerMap();
+				}, 150);
 
-			var $closestSection = $scope.closest('.elementor-top-section, .e-con');
+			}
+		}, 100);
 
-			var eleObserver = new IntersectionObserver(function (entries) {
-				entries.forEach(function (entry) {
-					if (entry.isIntersecting) {
-						premiumMap = newMap(mapElement, mapSettings, mapStyle);
-						eleObserver.unobserve(entry.target); // to only excecute the callback func once.
-					}
+		function triggerMap() {
+
+			if (mapSettings.loadScroll) {
+
+				var $closestSection = $scope.closest('.elementor-top-section, .e-con');
+
+				var eleObserver = new IntersectionObserver(function (entries) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting) {
+							premiumMap = newMap(mapElement, mapSettings, mapStyle);
+							eleObserver.unobserve(entry.target); // to only excecute the callback func once.
+						}
+					});
+				}, {
+					rootMargin: '-70% 0px 0px 0px'
 				});
-			}, {
-				rootMargin: '-70% 0px 0px 0px'
-			});
 
-			eleObserver.observe($closestSection[0]);
+				eleObserver.observe($closestSection[0]);
 
+			} else {
 
-		} else {
-
-			var checkGoogleMapsLoaded = setInterval(function () {
-				if (typeof google !== "undefined" && google.maps) {
-					clearInterval(checkGoogleMapsLoaded);
-					premiumMap = newMap(mapElement, mapSettings, mapStyle);
-				}
-			}, 100);
+				premiumMap = newMap(mapElement, mapSettings, mapStyle);
+			}
 
 		}
 

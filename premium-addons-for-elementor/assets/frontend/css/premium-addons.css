@@ -2465,6 +2465,10 @@
 
 .premium-carousel-wrapper a.carousel-arrow {
   top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-decoration: none;
 }
 
 .premium-carousel-wrapper a.ver-carousel-arrow {
@@ -9117,6 +9121,11 @@ button.premium-modal-box-modal-close {
   -webkit-flex-direction: row-reverse;
   -ms-flex-direction: row-reverse;
   flex-direction: row-reverse;
+}
+
+.premium-nav-ver:not(.premium-hamburger-menu).pa-align-top .premium-main-nav-menu,
+.premium-nav-ver:not(.premium-hamburger-menu).pa-align-top .premium-nav-menu-item.menu-item-has-children {
+  position: static;
 }
 
 /*Horizontal Main Menu**/

@@ -84,6 +84,14 @@
 	flex-direction: row-reverse;
 }
 
+.premium-nav-ver:not(.premium-hamburger-menu).pa-align-top .premium-nav-menu-item.menu-item-has-children {
+	position: static;
+}
+
+.premium-nav-ver:not(.premium-hamburger-menu).pa-align-top .premium-main-nav-menu {
+	position: static;
+}
+
 /*Horizontal Main Menu**/
 .premium-nav-hor
 	> .elementor-widget-container
@@ -527,6 +535,9 @@ body.rtl .premium-slide-auto .premium-mobile-menu-outer-container {
 	transition: -webkit-transform 500ms linear !important;
 	transition: transform 500ms linear !important;
 	transition: transform 500ms linear, -webkit-transform 500ms linear !important;
+	transition:
+		transform 500ms linear,
+		-webkit-transform 500ms linear !important;
 	transition:
 		transform 500ms linear,
 		-webkit-transform 500ms linear !important;
@@ -1579,6 +1590,9 @@ body.rtl .premium-slide-auto .premium-mobile-menu-outer-container {
 	transition:
 		transform 0.5s,
 		-webkit-transform 0.5s;
+	transition:
+		transform 0.5s,
+		-webkit-transform 0.5s;
 }
 
 .premium-mega-content-container .premium-badge-slide-right:hover .premium-sub-item-badge,
@@ -1604,6 +1618,9 @@ body.rtl .premium-slide-auto .premium-mobile-menu-outer-container {
 	transition:
 		transform 0.5s,
 		-webkit-transform 0.5s;
+	transition:
+		transform 0.5s,
+		-webkit-transform 0.5s;
 }
 
 .premium-mega-content-container .premium-badge-slide-left:hover .premium-sub-item-badge,
@@ -1626,6 +1643,9 @@ body.rtl .premium-slide-auto .premium-mobile-menu-outer-container {
 	transition: -webkit-transform 0.25s ease-out;
 	transition: transform 0.25s ease-out;
 	transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
+	transition:
+		transform 0.25s ease-out,
+		-webkit-transform 0.25s ease-out;
 	transition:
 		transform 0.25s ease-out,
 		-webkit-transform 0.25s ease-out;

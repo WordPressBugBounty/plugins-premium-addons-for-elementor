@@ -1161,6 +1161,35 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_control(
+			'pa_submenu_alignment',
+			array(
+				'label'        => __( 'Align Submenu to Top', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'pa-align-',
+				'return_value' => 'top',
+				'condition'    => array(
+					'pa_nav_menu_layout' => 'ver',
+				),
+			),
+		);
+
+		$this->add_control(
+			'submenu_height',
+			array(
+				'label'     => __( 'Full Height Submenu', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'default'   => 'yes',
+				'selectors' => array(
+					'{{WRAPPER}}.pa-align-top .premium-sub-menu, {{WRAPPER}}.pa-align-top .premium-mega-content-container' => 'height: 100%;  overflow-y: hidden;',
+				),
+				'condition' => array(
+					'pa_nav_menu_layout'   => 'ver',
+					'pa_submenu_alignment' => 'top',
+				),
+			),
+		);
+
+		$this->add_control(
 			'submenu_event',
 			array(
 				'label'       => __( 'Open Submenu On', 'premium-addons-for-elementor' ),

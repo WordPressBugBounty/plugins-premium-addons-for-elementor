@@ -737,15 +737,17 @@ class Admin_Helper {
 			);
 		}
 
-		call_user_func(
-			'add_submenu_page',
-			self::$page_slug,
-			__( 'PA Setup Wizard', 'premium-addons-for-elementor' ),
-			__( 'Run Setup Wizard', 'premium-addons-for-elementor' ),
-			'manage_options',
-			'pa-setup-wizard',
-			array( $this, 'pa_init_setup_wizard' )
-		);
+		if ( defined( 'ELEMENTOR_VERSION' ) ) {
+			call_user_func(
+				'add_submenu_page',
+				self::$page_slug,
+				__( 'PA Setup Wizard', 'premium-addons-for-elementor' ),
+				__( 'Run Setup Wizard', 'premium-addons-for-elementor' ),
+				'manage_options',
+				'pa-setup-wizard',
+				array( $this, 'pa_init_setup_wizard' )
+			);
+		}
 
 		$is_papro_active = apply_filters( 'papro_activated', false );
 

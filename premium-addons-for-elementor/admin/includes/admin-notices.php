@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Admin_Notices {
 
-    /**
+	/**
 	 * Premium Addons Stories
 	 *
 	 * @var stories
@@ -67,15 +67,14 @@ class Admin_Notices {
 		add_action( 'wp_ajax_pa_dismiss_admin_notice', array( $this, 'dismiss_admin_notice' ) );
 
 		self::$notices = array(
-			'pa-review'
+			'pa-review',
 		);
 
-        if ( Helper_Functions::check_hide_notifications() ) {
+		if ( Helper_Functions::check_hide_notifications() ) {
 			return;
 		}
 
-        add_action( 'wp_dashboard_setup', array( $this, 'show_story_widget' ), 111 );
-
+		add_action( 'wp_dashboard_setup', array( $this, 'show_story_widget' ), 111 );
 	}
 
 	/**
@@ -92,13 +91,13 @@ class Admin_Notices {
 
 		$this->handle_review_notice();
 
-		if ( get_transient( 'pa_activation_redirect') ) {
+		if ( defined( 'ELEMENTOR_VERSION' ) && get_transient( 'pa_activation_redirect' ) ) {
 
 			delete_transient( 'pa_activation_redirect' );
 
 			$redirect = add_query_arg(
 				array(
-					'page'     => 'pa-setup-wizard', // this mean it should've been added first.
+					'page' => 'pa-setup-wizard', // this mean it should've been added first.
 				),
 				admin_url( 'admin.php' )
 			);
@@ -120,15 +119,14 @@ class Admin_Notices {
 		$show_review = get_option( 'pa_review_notice' );
 		if ( '1' !== $show_review ) {
 
-            $cache_key = 'pa_review_notice';
+			$cache_key = 'pa_review_notice';
 
-            $response = get_transient( $cache_key );
+			$response = get_transient( $cache_key );
 
 			if ( false == $response ) {
 				$this->show_review_notice();
 			}
 		}
-
 	}
 
 	/**
@@ -181,17 +179,13 @@ class Admin_Notices {
 					$message .= sprintf( '<p><a href="%s" class="button-primary">%s</a></p>', $install_url, __( 'Install Now', 'premium-addons-for-elementor' ) );
 
 				}
-			} else {
-
-				if ( Admin_Helper::check_user_can( 'activate_plugins' ) ) {
+			} elseif ( Admin_Helper::check_user_can( 'activate_plugins' ) ) {
 
 					$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $elementor_path . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $elementor_path );
 
 					$message = '<p>' . __( 'Premium Addons for Elementor is not working because you need to activate Elementor plugin.', 'premium-addons-for-elementor' ) . '</p>';
 
 					$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, __( 'Activate Now', 'premium-addons-for-elementor' ) ) . '</p>';
-
-				}
 			}
 			$this->render_admin_notices( $message );
 		}
@@ -251,7 +245,6 @@ class Admin_Notices {
 		</div>
 
 		<?php
-
 	}
 
 	/**
@@ -300,7 +293,6 @@ class Admin_Notices {
 				'nonce'   => wp_create_nonce( 'pa-notice-nonce' ),
 			)
 		);
-
 	}
 
 	/**
@@ -334,7 +326,6 @@ class Admin_Notices {
 			wp_send_json_error();
 
 		}
-
 	}
 
 	/**
@@ -366,50 +357,49 @@ class Admin_Notices {
 			wp_send_json_error();
 
 		}
-
 	}
 
-    /**
-     * Check Status
-     *
-     * @since 4.10.15
+	/**
+	 * Check Status
+	 *
+	 * @since 4.10.15
 	 * @access public
-     */
-    public function check_status( $key ) {
+	 */
+	public function check_status( $key ) {
 
-        $status = false;
+		$status = false;
 
-        $api_params = array(
-            'edd_action' => 'check_license',
-            'license'    => $key,
-            'item_id'    => 361,
-        );
+		$api_params = array(
+			'edd_action' => 'check_license',
+			'license'    => $key,
+			'item_id'    => 361,
+		);
 
-        $response = wp_remote_get(
-            'http://my.leap13.com',
-            array(
-                'timeout'   => 15,
-                'sslverify' => false,
-                'body'      => $api_params,
-            )
-        );
+		$response = wp_remote_get(
+			'http://my.leap13.com',
+			array(
+				'timeout'   => 15,
+				'sslverify' => false,
+				'body'      => $api_params,
+			)
+		);
 
-        if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-            return false;
-        }
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			return false;
+		}
 
-        $body = wp_remote_retrieve_body( $response );
+		$body = wp_remote_retrieve_body( $response );
 
-        $body = json_decode( $body, true );
+		$body = json_decode( $body, true );
 
-        if ( isset( $body['license'] ) && 'valid' === $body['license'] ) {
-            $status = true;
-        }
+		if ( isset( $body['license'] ) && 'valid' === $body['license'] ) {
+			$status = true;
+		}
 
-        return $status;
-    }
+		return $status;
+	}
 
-    /**
+	/**
 	 * Get PA Stories
 	 *
 	 * Gets a list of the latest three blog posts
@@ -434,121 +424,120 @@ class Admin_Notices {
 				)
 			);
 
-            if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 				set_transient( 'pa_stories', true, WEEK_IN_SECONDS );
-                return false;
-            }
+				return false;
+			}
 
-			$body  = wp_remote_retrieve_body( $response );
+			$body    = wp_remote_retrieve_body( $response );
 			$stories = json_decode( $body, true );
 
 			set_transient( 'pa_stories', $stories, WEEK_IN_SECONDS );
 
 		}
 
-        $this->stories = $stories;
+		$this->stories = $stories;
 
 		return $stories;
 	}
 
-    public function show_story_widget() {
+	public function show_story_widget() {
 
-        $stories = $this->get_pa_stories();
+		$stories = $this->get_pa_stories();
 
-        if ( ! is_array( $stories ) || empty( $stories ) ) {
-            return;
-        }
+		if ( ! is_array( $stories ) || empty( $stories ) ) {
+			return;
+		}
 
-        wp_add_dashboard_widget(
-            'pa-stories',
-            __( 'Premium Addons News', 'premium-addons-for-elementor' ),
-            array( $this, 'show' ),
-            null,
-            null,
-            'column3',
-            'core'
-        );
+		wp_add_dashboard_widget(
+			'pa-stories',
+			__( 'Premium Addons News', 'premium-addons-for-elementor' ),
+			array( $this, 'show' ),
+			null,
+			null,
+			'column3',
+			'core'
+		);
+	}
 
-    }
 
+	public function show() {
 
-    public function show() {
+		$stories = $this->stories;
 
-        $stories = $this->stories;
+		$time = time();
 
-        $time     = time();
+		$papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
 
-        $papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
+		$is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
 
-        $is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
+		?>
+			<style>
+				.pa-banners-grid {
+					margin-bottom: 10px;
+				}
 
-        ?>
-            <style>
-                .pa-banners-grid {
-                    margin-bottom: 10px;
-                }
+				.pa-stories-banner {
+					position: relative;
+				}
 
-                .pa-stories-banner {
-                    position: relative;
-                }
+				.pa-stories-banner a {
+					position: absolute;
+					inset: 0;
+				}
 
-                .pa-stories-banner a {
-                    position: absolute;
-                    inset: 0;
-                }
+				.pa-story-img-container img {
+					width: 100%;
+					display: block;
+				}
 
-                .pa-story-img-container img {
-                    width: 100%;
-                    display: block;
-                }
+				.pa-news-post {
+					margin-bottom: 5px;
+				}
 
-                .pa-news-post {
-                    margin-bottom: 5px;
-                }
+				.pa-news-post a {
+					font-weight: 500;
+					color: #0073aa;
+					text-decoration: none;
+					padding-bottom: 5px;
+					display: inline-block;
+				}
 
-                .pa-news-post a {
-                    font-weight: 500;
-                    color: #0073aa;
-                    text-decoration: none;
-                    padding-bottom: 5px;
-                    display: inline-block;
-                }
+				.pa-dashboard-widget-block {
+					width: 100%;
+				}
 
-                .pa-dashboard-widget-block {
-                    width: 100%;
-                }
+				.pa-footer-bar {
+					border-top: 1px solid #eee;
+					padding-top: 1rem;
+					display: flex;
+					justify-content: space-between;
+				}
 
-                .pa-footer-bar {
-                    border-top: 1px solid #eee;
-                    padding-top: 1rem;
-                    display: flex;
-                    justify-content: space-between;
-                }
+				.pa-dashboard-widget-block a {
+					text-decoration: none;
+					font-size: 13px;
+					color: #007cba;
+				}
 
-                .pa-dashboard-widget-block a {
-                    text-decoration: none;
-                    font-size: 13px;
-                    color: #007cba;
-                }
-
-                .pa-dashboard-widget-block .dashicons {
-                    vertical-align: middle;
-                    font-size: 17px;
-                }
-            </style>
+				.pa-dashboard-widget-block .dashicons {
+					vertical-align: middle;
+					font-size: 17px;
+				}
+			</style>
 
 
 			<div class="pa-banners-grid">
 
 				<?php foreach ( $stories['banners'] as $index => $banner ) : ?>
 
-					<?php if( $time < $banner['end'] ) : ?>
+					<?php if ( $time < $banner['end'] ) : ?>
 
 						<div class="pa-stories-banner">
 							<div class="pa-story-img-container">
-								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ) ?>">
+								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'cm24-dash' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ) ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'cm24-dash' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>
@@ -558,39 +547,39 @@ class Admin_Notices {
 			</div>
 
 
-            <div class="pa-posts-grid">
+			<div class="pa-posts-grid">
 
-                <?php foreach ( $stories['posts'] as $index => $post ) : ?>
+				<?php foreach ( $stories['posts'] as $index => $post ) : ?>
 
-                    <div class="pa-news-post">
-                        <a target="_blank" href="<?php echo esc_url( $post['link'] ) ?>">
-                            <?php echo wp_kses_post( $post['title'] ) ?>
-                        </a>
-                    </div>
+					<div class="pa-news-post">
+						<a target="_blank" href="<?php echo esc_url( $post['link'] ); ?>">
+							<?php echo wp_kses_post( $post['title'] ); ?>
+						</a>
+					</div>
 
-                <?php endforeach; ?>
+				<?php endforeach; ?>
 
-            </div>
+			</div>
 
-            <div class="pa-dashboard-widget-block">
-                <div class="pa-footer-bar">
-                    <a href="https://my.leap13.com/contact-support" target="_blank" style="color: #27ae60">
-                        Need Help?
-                        <span aria-hidden="true" class="dashicons dashicons-external"></span>
-                    </a>
-                    <a href="https://www.youtube.com/leap13" target="_blank" style="color: #e1002d">
-                        YouTube Channel
-                        <span aria-hidden="true" class="dashicons dashicons-youtube"></span>
-                    </a>
-                    <a href="https://www.facebook.com/groups/PremiumAddons" target="_blank" style="color: #1877F2;">
-                        Facebook Community
-                        <span aria-hidden="true" class="dashicons dashicons-facebook-alt"></span>
-                    </a>
-                </div>
-            </div>
+			<div class="pa-dashboard-widget-block">
+				<div class="pa-footer-bar">
+					<a href="https://my.leap13.com/contact-support" target="_blank" style="color: #27ae60">
+						Need Help?
+						<span aria-hidden="true" class="dashicons dashicons-external"></span>
+					</a>
+					<a href="https://www.youtube.com/leap13" target="_blank" style="color: #e1002d">
+						YouTube Channel
+						<span aria-hidden="true" class="dashicons dashicons-youtube"></span>
+					</a>
+					<a href="https://www.facebook.com/groups/PremiumAddons" target="_blank" style="color: #1877F2;">
+						Facebook Community
+						<span aria-hidden="true" class="dashicons dashicons-facebook-alt"></span>
+					</a>
+				</div>
+			</div>
 
-        <?php
-    }
+		<?php
+	}
 
 	/**
 	 * Creates and returns an instance of the class
@@ -610,5 +599,4 @@ class Admin_Notices {
 
 		return self::$instance;
 	}
-
 }

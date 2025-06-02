@@ -1703,7 +1703,7 @@
 			};
 			marginFix.setWidth();
 			marginFix.element = $("a.carousel-arrow");
-			marginFix.setWidth("horizontal");
+			//marginFix.setWidth("horizontal");
 
 			$(document).ready(function () {
 

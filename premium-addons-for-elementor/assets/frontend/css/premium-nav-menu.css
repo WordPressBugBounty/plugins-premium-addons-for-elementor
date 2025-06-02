@@ -65,6 +65,10 @@
   -ms-flex-direction: row-reverse;
   flex-direction: row-reverse;
 }
+.premium-nav-ver:not(.premium-hamburger-menu).pa-align-top .premium-main-nav-menu,
+.premium-nav-ver:not(.premium-hamburger-menu).pa-align-top .premium-nav-menu-item.menu-item-has-children {
+  position: static;
+}
 
 /*Horizontal Main Menu**/
 .premium-nav-hor > .elementor-widget-container > .premium-nav-widget-container > .premium-ver-inner-container > .premium-nav-menu-container {
