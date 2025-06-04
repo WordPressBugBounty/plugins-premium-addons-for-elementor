@@ -213,10 +213,13 @@ class Feedback {
 				'memory'  => 'Memory: ' . size_format( wp_convert_hr_to_bytes( ini_get( 'memory_limit' ) ) ),
 				'time'    => 'Time: ' . ini_get( 'max_execution_time' ),
 				'install' => 'Activation: ' . get_option( 'pa_install_time' ),
-                'license' => 'License: ' . get_option('papro_license_key', false),
 				'deactivate' => 'Deactivation: ' . gmdate( 'j F, Y', time() )
 			),
 		);
+
+		if ( Helper_Functions::check_papro_version() ) {
+			$data['deactivated_plugin']['papro'] =  'PAPRO: ' . PREMIUM_PRO_ADDONS_VERSION . get_option('papro_license_key', false);
+		}
 
 		if ( $detailed ) {
 

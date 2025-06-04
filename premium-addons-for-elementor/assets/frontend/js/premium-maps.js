@@ -82,6 +82,9 @@ jQuery(window).on("elementor/frontend/init", function () {
 
 			var map = new google.maps.Map(map[0], args);
 
+			//Show the maps when it's ready.
+			mapElement.removeClass('premium-addons__v-hidden');
+
 			map.markers = [];
 
 			$carouselWidgets = $(".maps-carousel .premium-carousel-wrapper");

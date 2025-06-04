@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.1
 Requires PHP: 7.4
-Stable Tag: 4.11.12
+Stable Tag: 4.11.13
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -148,7 +148,7 @@ Each widget and addon has been tested on different screen sizes, mobile devices,
 * [**Bullet List Widget**](https://premiumaddons.com/elementor-bullet-list-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Create a bullet list with icons, images, and text tags beside Lottie animations.
 * [**Countdown Widget**](https://premiumaddons.com/elementor-countdown-widget-2/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Create sense of urgency with this widget. It's perfect for under construction pages, events, sale items, etc.
 * [**Banner Widget**](https://premiumaddons.com/banner-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Animated and interactive Banner Widget comes with multiple styles and customization features.
-* [**Button Widget**](https://premiumaddons.com/button-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Advanced Button Widget comes with lots of interactive animation, styling options, and onClick event option.
+* [**Button Widget**](https://premiumaddons.com/elementor-button-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Advanced Button Widget comes with lots of interactive animation, styling options, and onClick event option.
 * [**Image Button Widget**](https://premiumaddons.com/image-button-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Image Button Widget is a unique element that can be used for creative and innovative call to action ideas.
 * [**3D Hover Box Widget**](https://premiumaddons.com/3d-hover-box-flip-box-widget-for-elementor/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Comes with 8 cool 3D interactive effects.
 * [**Icon Box Widget**](https://premiumaddons.com/elementor-icon-box-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: An advanced Icon Box Widgetwith endless customization options.
@@ -236,6 +236,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.13 =
+
+- Tweak: Improved Countdown widget JS code.
+- Tweak: Hide Google Maps until the API JS is loaded.
 
 = 4.11.12 =
 

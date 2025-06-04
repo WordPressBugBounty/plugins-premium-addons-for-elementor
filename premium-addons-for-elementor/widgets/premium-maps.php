@@ -1232,7 +1232,7 @@ class Premium_Maps extends Widget_Base {
 		$this->add_render_attribute(
 			'style_wrapper',
 			array(
-				'class'         => 'premium_maps_map_height',
+				'class'         => array( 'premium_maps_map_height', 'premium-addons__v-hidden' ),
 				'data-settings' => wp_json_encode( $map_settings ),
 				'data-style'    => $settings['premium_maps_custom_styling'],
 			)

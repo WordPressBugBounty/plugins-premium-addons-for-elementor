@@ -284,7 +284,7 @@
 					'key'   => 'premium-button',
 					'name'  => 'premium-addon-button',
 					'title' => __( 'Button', 'premium-addons-for-elementor' ),
-					'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/button-widget-for-elementor-page-builder/', 'button', 'wp-dash', 'wizard' ),
+					'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-button-widget/', 'button', 'wp-dash', 'wizard' ),
 					'type' => 'basic'
 				)
 			),
@@ -622,7 +622,7 @@
 				'key'   => 'premium-button',
 				'name'  => 'premium-addon-button',
 				'title' => __( 'Button', 'premium-addons-for-elementor' ),
-				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/button-widget-for-elementor-page-builder/', 'button', 'wp-dash', 'wizard' )
+				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-button-widget/', 'button', 'wp-dash', 'wizard' )
 			),
 			array(
 				'key'   => 'premium-pricing-table',

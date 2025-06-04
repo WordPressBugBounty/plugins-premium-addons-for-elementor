@@ -2,6 +2,8 @@
 
 	var PremiumCountDownHandler = function ($scope, $) {
 
+		window.initCoundown();
+
 		var $countDownElement = $scope.find(".premium-countdown"),
 			$countDown = $countDownElement.find('.countdown'),
 			settings = $countDownElement.data("settings"),

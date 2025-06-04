@@ -431,7 +431,7 @@
 
 = 4.10.18 =
 
-- New: Added new hover effects to all the buttons all over the plugin - [here](https://premiumaddons.com/button-widget-for-elementor-page-builder/).
+- New: Added new hover effects to all the buttons all over the plugin - [here](https://premiumaddons.com/elementor-button-widget/).
 - Fixed: Hourly Forecast option not working with layout #1 in Weahter widget.
 - Fixed: Floating Effects addon not working with nested flexbox containers.
 - Fixed: Conflict with Global Tooltips addon causing Elementor editor not to work.
