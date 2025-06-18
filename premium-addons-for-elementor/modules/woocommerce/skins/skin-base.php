@@ -265,9 +265,9 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
-				'name'      => 'qv_container_background',
-				'types'     => array( 'classic', 'gradient' ),
-				'selector'  => '#premium-woo-quick-view-{{ID}} #premium-woo-quick-view-modal .premium-woo-lightbox-content',
+				'name'     => 'qv_container_background',
+				'types'    => array( 'classic', 'gradient' ),
+				'selector' => '#premium-woo-quick-view-{{ID}} #premium-woo-quick-view-modal .premium-woo-lightbox-content',
 			)
 		);
 
@@ -404,18 +404,18 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_ribbon_heading',
 			array(
-				'label' => __( 'Sale Ribbon', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
-                'condition' => array(
+				'label'     => __( 'Sale Ribbon', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'condition' => array(
 					'qv_sale!' => 'yes',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_ribbon_color',
 			array(
 				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
@@ -423,27 +423,27 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .premium-qv-badge .corner' => 'color: {{VALUE}};',
 				),
-                'condition' => array(
+				'condition' => array(
 					'qv_sale!' => 'yes',
 				),
 			)
 		);
 
-        $this->add_group_control(
+		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'qv_ribbon_typography',
-				'global'   => array(
+				'name'      => 'qv_ribbon_typography',
+				'global'    => array(
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				),
-				'selector' => '#premium-woo-quick-view-{{ID}} .premium-qv-badge .corner',
-                'condition' => array(
+				'selector'  => '#premium-woo-quick-view-{{ID}} .premium-qv-badge .corner',
+				'condition' => array(
 					'qv_sale!' => 'yes',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_ribbon_backcolor',
 			array(
 				'label'     => __( 'Background Color', 'premium-addons-for-elementor' ),
@@ -451,7 +451,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .premium-qv-badge .corner' => 'background-color: {{VALUE}};',
 				),
-                'condition' => array(
+				'condition' => array(
 					'qv_sale!' => 'yes',
 				),
 			)
@@ -718,7 +718,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			array(
 				'name'      => 'qv_slashed_price_typography',
 				'selector'  => '#premium-woo-quick-view-{{ID}} .price del',
-				'exclude'  => array( 'word_spacing' ),
+				'exclude'   => array( 'word_spacing' ),
 				'condition' => array(
 					'qv_price!' => 'yes',
 				),
@@ -729,13 +729,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$this->end_controls_tabs();
 
-        $this->add_control(
+		$this->add_control(
 			'qv_desc_heading',
 			array(
 				'label'     => __( 'Product Description', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
-                'condition' => array(
+				'condition' => array(
 					'qv_desc!' => 'yes',
 				),
 			)
@@ -755,7 +755,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			)
 		);
 
-        $this->add_group_control(
+		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
 				'name'      => 'qv_desc_typography',
@@ -985,7 +985,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'label'     => __( 'View Cart Text', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
-                'condition' => array(
+				'condition' => array(
 					'qv_atc!' => 'yes',
 				),
 			)
@@ -1034,18 +1034,18 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_meta_heading',
 			array(
-				'label' => __( 'Product Meta', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
-                'condition' => array(
+				'label'     => __( 'Product Meta', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'condition' => array(
 					'qv_meta!' => 'yes',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_meta_name_color',
 			array(
 				'label'     => __( 'Meta Name Color', 'premium-addons-for-elementor' ),
@@ -1053,13 +1053,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .product_meta > span' => 'color: {{VALUE}};',
 				),
-                'condition' => array(
+				'condition' => array(
 					'qv_meta!' => 'yes',
 				),
 			)
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'qv_meta_value_color',
 			array(
 				'label'     => __( 'Meta Value Color', 'premium-addons-for-elementor' ),
@@ -1067,24 +1067,24 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'selectors' => array(
 					'#premium-woo-quick-view-{{ID}} .product_meta > span span, .premium-woo-quick-view-{{ID}} .product_meta a' => 'color: {{VALUE}};',
 				),
-                'condition' => array(
+				'condition' => array(
 					'qv_meta!' => 'yes',
 				),
 			)
 		);
 
-        $this->add_group_control(
+		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'qv_meta_typography',
-				'selector' => '#premium-woo-quick-view-{{ID}} .product_meta > span',
-                'condition' => array(
+				'name'      => 'qv_meta_typography',
+				'selector'  => '#premium-woo-quick-view-{{ID}} .product_meta > span',
+				'condition' => array(
 					'qv_meta!' => 'yes',
 				),
 			)
 		);
 
-        $this->add_responsive_control(
+		$this->add_responsive_control(
 			'qv_meta_spacing',
 			array(
 				'label'      => __( 'Bottom Spacing', 'premium-addons-for-elementor' ),
@@ -1109,9 +1109,9 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_control(
 			'qv_quantity_heading',
 			array(
-				'label' => __( 'Quantity Field', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
-				'separator'=> 'before',
+				'label'     => __( 'Quantity Field', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 			)
 		);
 
@@ -1119,7 +1119,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			Group_Control_Border::get_type(),
 			array(
 				'name'     => 'qv_quantitiy_border',
-				'selector' => '#premium-woo-quick-view-{{ID}} div.quantity .qty'
+				'selector' => '#premium-woo-quick-view-{{ID}} div.quantity .qty',
 			)
 		);
 

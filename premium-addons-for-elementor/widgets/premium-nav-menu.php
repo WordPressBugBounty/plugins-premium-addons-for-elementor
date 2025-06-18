@@ -76,6 +76,7 @@ class Premium_Nav_Menu extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'dashicons',
 			'font-awesome-5-all',
 			'premium-addons',
@@ -92,6 +93,7 @@ class Premium_Nav_Menu extends Widget_Base {
 	 */
 	public function get_script_depends() {
 		return array(
+			'pa-glass',
 			'lottie-js',
 			'pa-headroom',
 			'pa-menu',
@@ -1995,7 +1997,7 @@ class Premium_Nav_Menu extends Widget_Base {
 				'selectors'   => array(
 					'{{WRAPPER}} .premium-nav-widget-container ' => '--pa-menu-width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.premium-ham-dropdown .premium-main-mobile-menu, {{WRAPPER}}.premium-nav-dropdown .premium-main-mobile-menu' => 'width: {{SIZE}}{{UNIT}};',
-					//'{{WRAPPER}}.premium-ham-slide .premium-mobile-menu-outer-container, {{WRAPPER}}.premium-nav-slide .premium-mobile-menu-outer-container' => 'width: {{SIZE}}{{UNIT}}; transform:translateX(' . $transform_sign . '{{SIZE}}{{UNIT}} );',
+					// '{{WRAPPER}}.premium-ham-slide .premium-mobile-menu-outer-container, {{WRAPPER}}.premium-nav-slide .premium-mobile-menu-outer-container' => 'width: {{SIZE}}{{UNIT}}; transform:translateX(' . $transform_sign . '{{SIZE}}{{UNIT}} );',
 				),
 				'condition'   => array(
 					'pa_toggle_full!' => 'yes',
@@ -3506,6 +3508,31 @@ class Premium_Nav_Menu extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'item_lq_effect',
+			array(
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'     => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'     => 'none',
+				'label_block' => true,
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
@@ -3863,6 +3890,31 @@ class Premium_Nav_Menu extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'submenu_lq_effect',
+			array(
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'     => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'     => 'none',
+				'label_block' => true,
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -3959,6 +4011,34 @@ class Premium_Nav_Menu extends Widget_Base {
 				'name'     => 'pa_sub_mega_bg',
 				'types'    => array( 'classic', 'gradient' ),
 				'selector' => '{{WRAPPER}} .premium-nav-menu-container .premium-mega-content-container, {{WRAPPER}} .premium-mobile-menu-container .premium-mega-content-container',
+			)
+		);
+
+		$this->add_control(
+			'mega_lq_effect',
+			array(
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'     => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'     => 'none',
+				'label_block' => true,
+				'condition'   => array(
+					'menu_type' => 'custom',
+				),
 			)
 		);
 
@@ -5082,7 +5162,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 					// If no submenu items was rendered before.
 					if ( false === $is_child ) {
-						$html_output .= "<ul class='premium-sub-menu'>";
+						$html_output .= '<ul class="premium-sub-menu premium-lq__' . $settings['submenu_lq_effect'] . '">';
 						$is_link      = true;
 					}
 
@@ -5113,7 +5193,10 @@ class Premium_Nav_Menu extends Widget_Base {
 					$this->add_render_attribute(
 						'menu-content-item-' . $item['_id'],
 						array(
-							'class' => 'premium-mega-content-container',
+							'class' => array(
+								'premium-mega-content-container',
+								'premium-lq__' . $settings['mega_lq_effect'],
+							),
 						)
 					);
 
@@ -5184,7 +5267,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 				$html_output .= '<li ' . $this->get_render_attribute_string( 'menu-item-' . $index ) . '>';
 
-				$html_output .= '<a ' . $this->get_render_attribute_string( $item_link ) . " class='premium-menu-link premium-menu-link-parent'>";
+				$html_output .= '<a ' . $this->get_render_attribute_string( $item_link ) . ' class="premium-menu-link premium-menu-link-parent premium-lq__' . $settings['item_lq_effect'] . '">';
 
 					$html_output .= $this->get_icon_html( $item );
 

@@ -35,7 +35,7 @@ $out_of_stock    = 'outofstock' === get_post_meta( $product_id, '_stock_status',
 
 ?>
 <li class=" <?php echo esc_attr( $wc_classes ); ?>">
-	<div class="premium-woo-product-wrapper">
+	<div class="premium-woo-product-wrapper <?php echo esc_attr( 'premium-con-lq__' . $this->get_option_value('product_lq_effect') ) ?>">
 		<?php
 
 		echo '<div class="premium-woo-product-thumbnail">';

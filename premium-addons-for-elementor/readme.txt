@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.1
 Requires PHP: 7.4
-Stable Tag: 4.11.13
+Stable Tag: 4.11.14
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -19,6 +19,9 @@ Supercharge your [Elementor Page Builder](https://wordpress.org/plugins/elemento
 
 ### Useful Links
 [Support](https://my.leap13.com/contact-support/) | [Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
+
+### New: Liquid Glass Addon
+Select between 6 attractive liquid glass and glassmorphism effects to be applied on any Elementor widget or container. It has also been added to be applied on specific parts inside our elements. [Check it out now!](https://premiumaddons.com/elementor-liquid-glass-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 ### New: WooCommerce Mini-Cart and Categories Listing Widgets
 This powerful widget allows your customers to view the products in their shopping cart, change the quantity, remove items and check the total amount without leaving the page. We have also released Woo Categories widget to showcase your Woo categories in four neat skins. Check from [here](https://premiumaddons.com/elementor-woocommerce-mini-cart-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) and [here](https://premiumaddons.com/elementor-woocommerce-categories-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
@@ -55,9 +58,6 @@ NEW: Ever-growing [Container/Page Templates Library](https://premiumaddons.com/p
 
 ### Lottie Animations Integration
 You can now use [Lottie Animations in ALL our widgets](https://premiumaddons.com/elementor-lottie-animations-container-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme). Whatever widget that have an image or icon option now have also the option to add a Lottie animation. Lottie animations are open source, lightweight and available for free, Use them now to make your Elementor pages more eye-catching.
-
-### Cross-Domain Copy N’ Paste
-Now, you will have the ability to copy and paste any content from a website to another with just 2 clicks, copy from here and paste there, woohoo that’s it!. Check the documentation article from [here](https://premiumaddons.com/docs/how-to-copy-elementor-content-from-site-to-another-using-pa-copy-paste-feature/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 ### Post and Page Duplicator
 Duplicate any post, page or template on your website with just ONE click. Check the documentation article from [here](https://premiumaddons.com/docs/how-to-use-pa-duplicator/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
@@ -236,6 +236,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.14 =
+
+- New: Introducing Elementor Liquid Glass Addon - [here](https://premiumaddons.com/elementor-liquid-glass-addon/).
+- Tweak: Added Arrows Position option for carousel arrows in Testimonials widget.
+- Fixed: Free shipping progress bar not working on Chrome in Woo Mini Cart widget.
 
 = 4.11.13 =
 

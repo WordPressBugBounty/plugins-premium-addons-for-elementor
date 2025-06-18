@@ -84,6 +84,7 @@ class Woo_Products extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'font-awesome-5-all',
 			'pa-slick',
 			'font-awesome-5-all',
@@ -115,6 +116,7 @@ class Woo_Products extends Widget_Base {
 	 */
 	public function get_script_depends() {
 		return array(
+			'pa-glass',
 			'isotope-js',
 			'flexslider',
 			'pa-slick',

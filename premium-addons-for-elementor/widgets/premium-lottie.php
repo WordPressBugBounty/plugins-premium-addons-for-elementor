@@ -207,11 +207,11 @@ class Premium_Lottie extends Widget_Base {
 		$this->add_control(
 			'lottie_delay',
 			array(
-				'label'   => __( 'Animation Delay (sec)', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::NUMBER,
-				'min'     => 0,
-				'max'     => 5,
-				'step'    => 0.1,
+				'label' => __( 'Animation Delay (sec)', 'premium-addons-for-elementor' ),
+				'type'  => Controls_Manager::NUMBER,
+				'min'   => 0,
+				'max'   => 5,
+				'step'  => 0.1,
 			)
 		);
 

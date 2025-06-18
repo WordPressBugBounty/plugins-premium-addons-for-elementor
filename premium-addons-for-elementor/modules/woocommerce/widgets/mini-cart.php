@@ -4368,8 +4368,10 @@ class Mini_Cart extends Widget_Base {
 				'label'     => __( 'Value Indicator Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .pa-woo-mc__progressbar::-webkit-progress-value, {{WRAPPER}} .pa-woo-mc__progressbar::-moz-progress-bar, progress::-webkit-progress-value' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .pa-woo-mc__progressbar, progress::-webkit-progress-value' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .pa-woo-mc__progressbar-wrapper progress::-webkit-progress-value' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .pa-woo-mc__progressbar-wrapper progress::-moz-progress-bar' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}}' => '@-webkit-keyframes progress-bar-move { 0% { background-position: 0 0; } 100% { background-position: 30px 30px; } } @keyframes progress-bar-move { 0% { background-position: 0 0; } 100% { background-position: 30px 30px; } }',
+					'{{WRAPPER}} .pa-woo-mc__progressbar::-webkit-progress-bar' => 'background-color: #e6e6e6; background-image: -webkit-linear-gradient(315deg, rgba(255, 255, 255, 0.7) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.7) 75%, transparent 75%, transparent); background-size: 30px 30px; animation: progress-bar-move 2s linear infinite reverse;',
 				),
 				'condition' => array(
 					'mc_progressbar' => 'yes',
@@ -4384,7 +4386,7 @@ class Mini_Cart extends Widget_Base {
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .pa-woo-mc__progressbar' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .pa-woo-mc__progressbar' => 'border-radius: {{SIZE}}{{UNIT}}; overflow: hidden;',
 				),
 				'condition'  => array(
 					'mc_progressbar' => 'yes',

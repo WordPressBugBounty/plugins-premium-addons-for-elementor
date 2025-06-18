@@ -98,6 +98,7 @@ class Premium_Modalbox extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'pa-btn',
 			'premium-addons',
 		);
@@ -122,6 +123,7 @@ class Premium_Modalbox extends Widget_Base {
 		return array_merge(
 			$draw_scripts,
 			array(
+				'pa-glass',
 				'pa-modal',
 				'lottie-js',
 				'premium-addons',
@@ -2112,6 +2114,32 @@ class Premium_Modalbox extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'body_lq_effect',
+			array(
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'     => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'     => 'none',
+				'label_block' => true,
+				'render_type' => 'template',
+			)
+		);
+
 		$this->add_responsive_control(
 			'premium_modal_box_modal_size',
 			array(
@@ -2510,6 +2538,10 @@ class Premium_Modalbox extends Widget_Base {
 				),
 			)
 		);
+
+		if ( 'none' !== $settings['body_lq_effect'] ) {
+			$this->add_render_attribute( 'dialog', 'class', 'premium-con-lq__' . $settings['body_lq_effect'] );
+		}
 
 		?>
 

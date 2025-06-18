@@ -87,6 +87,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'font-awesome-5-all',
 			'pa-btn',
 			'premium-addons',
@@ -112,6 +113,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		return array_merge(
 			$draw_scripts,
 			array(
+				'pa-glass',
 				'lottie-js',
 				'premium-addons',
 			)
@@ -1840,7 +1842,35 @@ class Premium_Textual_Showcase extends Widget_Base {
 			array(
 				'name'     => 'item_background',
 				'types'    => array( 'classic', 'gradient' ),
-				'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}.pa-txt-sc__item-container:not(.pa-clipped-bg), {{WRAPPER}} {{CURRENT_ITEM}}.pa-clipped-bg span',
+				'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}.pa-txt-sc__item-container:not(.pa-clipped-bg) ,{{WRAPPER}} {{CURRENT_ITEM}}.pa-clipped-bg span ',
+			)
+		);
+
+		$repeater->add_control(
+			'item_lq_effect',
+			array(
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'     => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'     => 'none',
+				'label_block' => true,
+				'condition'   => array(
+					'clipped_bg!' => 'yes',
+				),
 			)
 		);
 
@@ -2020,7 +2050,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 		}
 
 		$this->end_controls_section();
-
 	}
 
 	/**
@@ -2292,6 +2321,10 @@ class Premium_Textual_Showcase extends Widget_Base {
 						$has_txt,
 					)
 				);
+
+				if ( 'none' !== $item['item_lq_effect'] ) {
+					$this->add_render_attribute( 'item-container' . $item['_id'], 'class', 'premium-lq__' . $item['item_lq_effect'] );
+				}
 
 				?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item-container' . $item['_id'] ) ); ?>>

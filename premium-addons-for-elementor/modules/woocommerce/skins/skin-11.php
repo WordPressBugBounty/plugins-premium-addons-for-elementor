@@ -233,6 +233,32 @@ class Skin_11 extends Skin_Base {
 			)
 		);
 
+		$this->add_control(
+			'product_lq_effect',
+			array(
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'     => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'     => 'none',
+				'label_block' => true,
+				'render_type' => 'template',
+			)
+		);
+
 		$this->add_responsive_control(
 			'content_padding',
 			array(

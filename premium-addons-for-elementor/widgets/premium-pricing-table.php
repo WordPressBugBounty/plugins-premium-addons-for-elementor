@@ -87,6 +87,7 @@ class Premium_Pricing_Table extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'pa-btn',
 			'premium-addons',
 		);
@@ -112,6 +113,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		return array_merge(
 			$draw_scripts,
 			array(
+				'pa-glass',
 				'lottie-js',
 			)
 		);
@@ -2100,6 +2102,31 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'price_lq_effect',
+			array(
+				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'      => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'      => 'none',
+				'label_block'  => true,
+			)
+		);
+
 		/*Price Margin*/
 		$this->add_responsive_control(
 			'premium_pricing_price_container_margin',
@@ -3245,6 +3272,15 @@ class Premium_Pricing_Table extends Widget_Base {
 			$this->add_render_attribute( 'container', 'data-speed', $settings['list_frames'] );
 		}
 
+		if ( 'yes' === $settings['premium_pricing_table_price_switcher'] ) {
+			$this->add_render_attribute( 'price_container', 'class', 'premium-pricing-price-container' );
+
+			if( 'none' !== $settings['price_lq_effect'] ) {
+				$this->add_render_attribute( 'price_container', 'class', 'premium-con-lq__' . $settings['price_lq_effect'] );
+			}
+
+		}
+
 		?>
 
 	<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
@@ -3302,7 +3338,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			</<?php echo wp_kses_post( $title_tag ); ?>>
 		<?php endif; ?>
 		<?php if ( 'yes' === $settings['premium_pricing_table_price_switcher'] ) : ?>
-		<div class="premium-pricing-price-container">
+		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'price_container' ) ); ?>>
 
 			<?php if ( ! empty( $settings['premium_pricing_table_slashed_price_value'] ) ) : ?>
 				<strike class="premium-pricing-slashed-price-value">
@@ -3585,6 +3621,15 @@ class Premium_Pricing_Table extends Widget_Base {
 			view.addRenderAttribute( 'container', 'data-speed', settings.list_frames );
 		}
 
+		if ( 'yes' === settings.premium_pricing_table_price_switcher ) {
+			view.addRenderAttribute( 'price_container', 'class', 'premium-pricing-price-container' );
+
+			if( 'none' !== settings.price_lq_effect ) {
+				view.addRenderAttribute( 'price_container', 'class', 'premium-con-lq__' + settings.price_lq_effect );
+			}
+
+		}
+
 		#>
 
 		<div {{{ view.getRenderAttributeString( 'container' ) }}}>
@@ -3619,7 +3664,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			<# } #>
 
 			<# if('yes' === settings.premium_pricing_table_price_switcher ) { #>
-				<div class="premium-pricing-price-container">
+				<div {{{ view.getRenderAttributeString( 'price_container' ) }}}>
 					<strike class="premium-pricing-slashed-price-value">{{{ settings.premium_pricing_table_slashed_price_value }}}</strike>
 					<span class="premium-pricing-price-currency">{{{ settings.premium_pricing_table_price_currency }}}</span>
 					<span class="premium-pricing-price-value">{{{ settings.premium_pricing_table_price_value }}}</span>

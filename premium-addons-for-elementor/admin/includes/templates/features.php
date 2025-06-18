@@ -255,6 +255,24 @@ $features = $elements['cat-13']['elements'];
 					<a href="<?php echo esc_url( $features[12]['demo'] ); ?>" target="_blank"></a>
 				</div>
 
+				<div class="pa-section-outer-wrap">
+					<div class="pa-section-info-wrap">
+						<div class="pa-section-info">
+						<h4><?php echo esc_html( __( 'Liquid Glass', 'premium-addons-for-elementor' ) ); ?></h4>
+							<p><?php echo esc_html( __( 'Apply glassmorphism and liquid glass effects to Elementor containers and widgets.', 'premium-addons-for-elementor' ) ); ?></p>
+						</div>
+
+						<div class="pa-section-info-cta">
+							<label class="switch">
+								<input type="checkbox" id="premium-glassmorphism" name="premium-glassmorphism" <?php echo checked( 1, $enabled_elements['premium-glassmorphism'], false ); ?>>
+									<span class="slider round pa-control"></span>
+								</label>
+							</p>
+						</div>
+					</div>
+					<a href="<?php echo esc_url( $features[13]['demo'] ); ?>" target="_blank"></a>
+				</div>
+
 			</div>
 			</form> <!-- End Form -->
 		</div>

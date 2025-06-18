@@ -85,6 +85,7 @@ class Premium_Countdown extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'pa-flipclock',
 			'premium-addons',
 		);
@@ -100,6 +101,7 @@ class Premium_Countdown extends Widget_Base {
 	 */
 	public function get_script_depends() {
 		return array(
+			'pa-glass',
 			'countdown-translator',
 			'pa-countdown',
 			'pa-flipclock',
@@ -359,36 +361,36 @@ class Premium_Countdown extends Widget_Base {
 		$this->add_control(
 			'flip_language',
 			array(
-				'label'     => __( 'Language', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'options'   => array(
-					'english' => __( 'English', 'premium-addons-for-elementor' ),
-					'danish' => __( 'Danish', 'premium-addons-for-elementor' ),
-					'german' => __( 'German', 'premium-addons-for-elementor' ),
-					'spanish' => __( 'Spanish', 'premium-addons-for-elementor' ),
-					'finnish' => __( 'Finnish', 'premium-addons-for-elementor' ),
-					'french' => __( 'French', 'premium-addons-for-elementor' ),
-					'italian' => __( 'Italian', 'premium-addons-for-elementor' ),
-					'hebrew' => __( 'Hebrew', 'premium-addons-for-elementor' ),
-					'dutch' => __( 'Dutch', 'premium-addons-for-elementor' ),
+				'label'   => __( 'Language', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::SELECT,
+				'options' => array(
+					'english'    => __( 'English', 'premium-addons-for-elementor' ),
+					'danish'     => __( 'Danish', 'premium-addons-for-elementor' ),
+					'german'     => __( 'German', 'premium-addons-for-elementor' ),
+					'spanish'    => __( 'Spanish', 'premium-addons-for-elementor' ),
+					'finnish'    => __( 'Finnish', 'premium-addons-for-elementor' ),
+					'french'     => __( 'French', 'premium-addons-for-elementor' ),
+					'italian'    => __( 'Italian', 'premium-addons-for-elementor' ),
+					'hebrew'     => __( 'Hebrew', 'premium-addons-for-elementor' ),
+					'dutch'      => __( 'Dutch', 'premium-addons-for-elementor' ),
 					'portuguese' => __( 'Portuguese', 'premium-addons-for-elementor' ),
-					'russian' => __( 'Russian', 'premium-addons-for-elementor' ),
-					'swedish' => __( 'Swedish', 'premium-addons-for-elementor' ),
-					'korean' => __( 'Korean', 'premium-addons-for-elementor' ),
-					'czech' => __( 'Czech', 'premium-addons-for-elementor' ),
-					'arabic' => __( 'Arabic', 'premium-addons-for-elementor' ),
-					'persian' => __( 'Persian', 'premium-addons-for-elementor' ),
-					'japanese' => __( 'Japanese', 'premium-addons-for-elementor' ),
-					'polish' => __( 'Polish', 'premium-addons-for-elementor' ),
-					'romanian' => __( 'Romanian', 'premium-addons-for-elementor' ),
-					'turkish' => __( 'Turkish', 'premium-addons-for-elementor' ),
-					'slovak' => __( 'Slovak', 'premium-addons-for-elementor' ),
-					'thai' => __( 'Thai', 'premium-addons-for-elementor' ),
-					'chinese' => __( 'Chinese', 'premium-addons-for-elementor' ),
-					'norwegian' => __( 'Norwegian', 'premium-addons-for-elementor' ),
-					'latvian' => __( 'Latvian', 'premium-addons-for-elementor' ),
+					'russian'    => __( 'Russian', 'premium-addons-for-elementor' ),
+					'swedish'    => __( 'Swedish', 'premium-addons-for-elementor' ),
+					'korean'     => __( 'Korean', 'premium-addons-for-elementor' ),
+					'czech'      => __( 'Czech', 'premium-addons-for-elementor' ),
+					'arabic'     => __( 'Arabic', 'premium-addons-for-elementor' ),
+					'persian'    => __( 'Persian', 'premium-addons-for-elementor' ),
+					'japanese'   => __( 'Japanese', 'premium-addons-for-elementor' ),
+					'polish'     => __( 'Polish', 'premium-addons-for-elementor' ),
+					'romanian'   => __( 'Romanian', 'premium-addons-for-elementor' ),
+					'turkish'    => __( 'Turkish', 'premium-addons-for-elementor' ),
+					'slovak'     => __( 'Slovak', 'premium-addons-for-elementor' ),
+					'thai'       => __( 'Thai', 'premium-addons-for-elementor' ),
+					'chinese'    => __( 'Chinese', 'premium-addons-for-elementor' ),
+					'norwegian'  => __( 'Norwegian', 'premium-addons-for-elementor' ),
+					'latvian'    => __( 'Latvian', 'premium-addons-for-elementor' ),
 				),
-				'default'   => 'english',
+				'default' => 'english',
 			)
 		);
 
@@ -1021,6 +1023,36 @@ class Premium_Countdown extends Widget_Base {
 		);
 
 		$this->add_control(
+			'digts_lq_effect',
+			array(
+				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'      => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'prefix_class' => 'premium-lq__',
+				'default'      => 'none',
+				'label_block'  => true,
+				'render_type'  => 'template',
+				'condition'    => array(
+					'style!' => 'flipping',
+				),
+			)
+		);
+
+		$this->add_control(
 			'flip_separator_color',
 			array(
 				'label'     => __( 'Separator Color', 'premium-addons-for-elementor' ),
@@ -1178,6 +1210,26 @@ class Premium_Countdown extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .countdown-period span, {{WRAPPER}} .premium-countdown-label, {{WRAPPER}} .flip-unit' => 'background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'premium_countdown_units_border',
+				'selector' => '{{WRAPPER}} .countdown-period span, {{WRAPPER}} .premium-countdown-label, {{WRAPPER}} .flip-unit',
+			)
+		);
+
+		$this->add_control(
+			'premium_countdown_units_border_radius',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', '%', 'em' ),
+				'selectors'  => array(
+					'{WRAPPER}} .countdown-period span, {{WRAPPER}} .premium-countdown-label, {{WRAPPER}} .flip-unit' => 'border-radius: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);

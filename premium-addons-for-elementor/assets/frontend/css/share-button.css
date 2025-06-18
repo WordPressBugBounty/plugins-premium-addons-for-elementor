@@ -132,6 +132,8 @@
   align-items: center;
   line-height: 30px;
   font-weight: 200;
+  position: relative;
+  z-index: 1;
 }
 .premium-instafeed-share-item *,
 .premium-instafeed-share-item ::before,

@@ -14,6 +14,7 @@ use PremiumAddons\Modules\Woocommerce\Module as Woocommerce;
 use PremiumAddons\Modules\PremiumGlobalTooltips\Module as GlobalTooltips;
 use PremiumAddons\Modules\PremiumShapeDivider\Module as Shape_Divider;
 use PremiumAddons\Modules\PremiumWrapperLink\Module as Wrapper_Link;
+use PremiumAddons\Modules\PremiumGlassmorphism\Module as Glassmorphism;
 use PremiumAddons\Includes\Assets_Manager;
 use ElementorPro\Plugin as PluginPro;
 
@@ -576,6 +577,14 @@ class Addons_Integration {
 			'all'
 		);
 
+		wp_register_style(
+			'pa-glass',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/liquid-glass' . $suffix . '.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
 		$assets_gen_enabled = isset( self::$modules['premium-assets-generator'] ) && self::$modules['premium-assets-generator'] ? true : false;
 
 		$type = get_post_type();
@@ -810,9 +819,7 @@ class Addons_Integration {
 		wp_register_script(
 			'lottie-js',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/lottie' . $suffix . '.js',
-			array(
-				'jquery',
-			),
+			array( 'jquery' ),
 			PREMIUM_ADDONS_VERSION,
 			true
 		);
@@ -1670,7 +1677,8 @@ class Addons_Integration {
 			self::$modules['premium-notifications'],
 			self::$modules['premium-pinterest-feed'],
 			self::$modules['premium-contactform'],
-			self::$modules['premium-global-tooltips']
+			self::$modules['premium-global-tooltips'],
+			self::$modules['premium-glassmorphism'],
 		);
 
 		// $load_controls = in_array( true, $modules, true );
@@ -1731,6 +1739,10 @@ class Addons_Integration {
 
 		if ( self::$modules['premium-equal-height'] ) {
 			Equal_Height::get_instance();
+		}
+
+		if ( self::$modules['premium-glassmorphism'] ) {
+			Glassmorphism::get_instance();
 		}
 
 		if ( self::$modules['pa-display-conditions'] ) {

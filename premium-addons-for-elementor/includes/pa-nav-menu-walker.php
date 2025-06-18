@@ -145,6 +145,9 @@ class Pa_Nav_Menu_Walker extends \Walker_Nav_Menu {
 	 * @param stdClass $args   An object of wp_nav_menu() arguments.
 	 */
 	public function start_lvl( &$output, $depth = 0, $args = null ) {
+
+		$settings = $this->settings;
+
 		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
 			$t = '';
 			$n = '';
@@ -155,7 +158,7 @@ class Pa_Nav_Menu_Walker extends \Walker_Nav_Menu {
 
 		$indent = str_repeat( $t, $depth );
 
-		$classes = array( 'premium-sub-menu' );
+		$classes = array( 'premium-sub-menu', 'premium-lq__' . $settings['submenu_lq_effect'] );
 
 		/**
 		 * Filters the CSS class(es) applied to a menu list element.
@@ -375,7 +378,9 @@ class Pa_Nav_Menu_Walker extends \Walker_Nav_Menu {
 		}
 
 		if ( 0 == $depth ) {
+
 			$atts['class'] .= ' premium-menu-link-parent';
+			$atts['class'] .= ' premium-lq__' . $settings['item_lq_effect'];
 		}
 
 		$dropdown_icon = '';

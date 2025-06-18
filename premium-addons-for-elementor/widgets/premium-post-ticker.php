@@ -136,6 +136,7 @@ class Premium_Post_Ticker extends Widget_Base {
 	public function get_style_depends() {
 
 		return array(
+			'pa-glass',
 			'font-awesome-5-all',
 			'pa-slick',
 			'premium-addons',
@@ -161,6 +162,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		return array_merge(
 			$draw_scripts,
 			array(
+				'pa-glass',
 				'imagesloaded',
 				'isotope-js',
 				'pa-slick',
@@ -2679,6 +2681,32 @@ class Premium_Post_Ticker extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'post_lq_effect',
+			array(
+				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'      => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'      => 'none',
+				'label_block'  => true,
+				'render_type'  => 'template',
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -3321,6 +3349,13 @@ class Premium_Post_Ticker extends Widget_Base {
 			$this->add_render_attribute( 'inner-wrapper', 'dir', 'rtl' );
 		}
 
+
+		$this->add_render_attribute( 'ticker_content', 'class', 'premium-post-ticker__content' );
+
+		if( 'none' !== $settings['post_lq_effect'] ) {
+			$this->add_render_attribute( 'ticker_content', 'class', 'premium-con-lq__' . $settings['post_lq_effect'] );
+		}
+
 		?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'outer-wrapper' ) ); ?>>
 				<?php if ( 'layout-1' === $layout ) { ?>
@@ -3330,7 +3365,7 @@ class Premium_Post_Ticker extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<div class="premium-post-ticker__content">
+					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'ticker_content' ) ); ?>>
 						<?php
 						if ( $title ) {
 							$this->render_ticker_title( $settings );
@@ -3363,7 +3398,7 @@ class Premium_Post_Ticker extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<div class="premium-post-ticker__content">
+					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'ticker_content' ) ); ?>>
 						<?php
 						if ( $current_date ) {
 							$this->render_ticker_date( $settings );
@@ -3404,7 +3439,7 @@ class Premium_Post_Ticker extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<div class="premium-post-ticker__content">
+					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'ticker_content' ) ); ?>>
 						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'inner-wrapper' ) ); ?>>
 							<?php
 							if ( in_array( $source, array( 'stock', 'gold' ), true ) ) {
@@ -3442,7 +3477,7 @@ class Premium_Post_Ticker extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<div class="premium-post-ticker__content">
+					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'ticker_content' ) ); ?>>
 						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'inner-wrapper' ) ); ?>>
 							<?php
 							if ( in_array( $source, array( 'stock', 'gold' ), true ) ) {

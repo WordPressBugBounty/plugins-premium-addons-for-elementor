@@ -80,6 +80,7 @@ class Premium_World_Clock extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'pa-world-clock',
 		);
 	}
@@ -95,6 +96,7 @@ class Premium_World_Clock extends Widget_Base {
 	public function get_script_depends() {
 
 		return array(
+			'pa-glass',
 			'pa-luxon',
 			'premium-addons',
 		);
@@ -1497,6 +1499,34 @@ class Premium_World_Clock extends Widget_Base {
                 {{WRAPPER}}.premium-world-clock__skin-5 .premium-world-clock__circle,
                 {{WRAPPER}}.premium-world-clock__skin-6 .premium-world-clock__circle,
                 {{WRAPPER}}.premium-world-clock__skin-7 .premium-world-clock__circle',
+			)
+		);
+
+		$this->add_control(
+			'clock_lq_effect',
+			array(
+				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'      => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'      => 'none',
+				'label_block'  => true,
+				'condition'   => array(
+					'skin!' => 'skin-4',
+				),
 			)
 		);
 
@@ -3051,11 +3081,17 @@ class Premium_World_Clock extends Widget_Base {
 			)
 		);
 
+		$this->add_render_attribute('time_wrapper', 'class', 'premium-world-clock__time-wrapper');
+
+		if( 'none' !== $settings['clock_lq_effect'] && 'skin4' !== $settings['skin'] ) {
+			$this->add_render_attribute( 'time_wrapper', 'class', 'premium-con-lq__' . $settings['clock_lq_effect'] );
+		}
+
 		?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'pa-clock-wrapper' ) ); ?>>
 				<?php if ( in_array( $skin, array( 'skin-1', 'skin-5', 'skin-6', 'skin-7' ), true ) ) { ?>
 					<?php if ( $show_time ) : ?>
-						<div class="premium-world-clock__time-wrapper">
+						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'time_wrapper' ) ); ?>>
 							<div class="premium-world-clock__circle">
 								<?php
 								if ( 'skin-1' !== $skin ) {
@@ -3107,7 +3143,7 @@ class Premium_World_Clock extends Widget_Base {
 
 					<?php if ( $show_time ) : ?>
 
-						<div class="premium-world-clock__time-wrapper">
+						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'time_wrapper' ) ); ?>>
 							<span class="premium-world-clock__hours premium-world-clock__hand"></span>
 							<span class="premium-world-clock__separator">:</span>
 							<span class="premium-world-clock__minutes premium-world-clock__hand"></span>
@@ -3127,7 +3163,7 @@ class Premium_World_Clock extends Widget_Base {
 						<div class='premium-world-clock__days-wrapper'></div>
 					<?php } ?>
 					<?php if ( $show_time ) : ?>
-					<div class='premium-world-clock__time-wrapper'>
+					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'time_wrapper' ) ); ?>>
 						<span class='premium-world-clock__hours premium-world-clock__hand'></span>
 						<span class='premium-world-clock__separator'>:</span>
 						<span class='premium-world-clock__minutes premium-world-clock__hand'></span>
@@ -3155,7 +3191,7 @@ class Premium_World_Clock extends Widget_Base {
 					</div>
 				<?php } elseif ( 'skin-4' === $skin ) { ?>
 					<?php if ( $show_time ) : ?>
-						<div class="premium-world-clock__time-wrapper">
+						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'time_wrapper' ) ); ?>>
 							<span class="premium-world-clock__hours premium-world-clock__hand"></span>
 							<span class="premium-world-clock__separator">:</span>
 							<span class="premium-world-clock__minutes premium-world-clock__hand"></span>

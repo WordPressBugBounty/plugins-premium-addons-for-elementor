@@ -303,6 +303,9 @@ $elements = array(
     array(
         'key'  => 'premium-wrapper-link',
     ),
+	array(
+        'key'    => 'premium-glassmorphism',
+    ),
 );
 
 return $elements;

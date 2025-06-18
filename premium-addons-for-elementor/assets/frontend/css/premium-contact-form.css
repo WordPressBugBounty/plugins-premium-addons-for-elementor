@@ -220,15 +220,15 @@
   width: 100%;
 }
 
-.premium-cf7-button-align-left .premium-cf-submit {
+.premium-cf7-button-align-left p.premium-cf-submit {
   margin: 0;
 }
 
-.premium-cf7-button-align-center .premium-cf-submit {
+.premium-cf7-button-align-center p.premium-cf-submit {
   margin: 0 auto;
 }
 
-.premium-cf7-button-align-right .premium-cf-submit {
+.premium-cf7-button-align-right p.premium-cf-submit {
   margin: 0 0 0 auto;
 }
 

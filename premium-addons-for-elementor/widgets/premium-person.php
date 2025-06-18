@@ -75,6 +75,7 @@ class Premium_Person extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'font-awesome-5-all',
 			'pa-slick',
 			'premium-addons',
@@ -91,6 +92,7 @@ class Premium_Person extends Widget_Base {
 	 */
 	public function get_script_depends() {
 		return array(
+			'pa-glass',
 			'imagesloaded',
 			'pa-slick',
 			'premium-addons',
@@ -1615,6 +1617,34 @@ class Premium_Person extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'body_lq_effect',
+			array(
+				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'      => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'      => 'none',
+				'label_block'  => true,
+				'condition'    => array(
+					'premium_person_style!' => 'style3',
+				),
+			)
+		);
+
 		$this->add_responsive_control(
 			'premium_person_border_bottom_width',
 			array(
@@ -1840,6 +1870,12 @@ class Premium_Person extends Widget_Base {
 
 		}
 
+		$this->add_render_attribute( 'info_container', 'class', 'premium-person-info' );
+
+		if( 'none' !== $settings['body_lq_effect'] && 'style3' !== $settings['premium_person_style'] ) {
+			$this->add_render_attribute( 'info_container', 'class', 'premium-con-lq__' . $settings['body_lq_effect'] );
+		}
+
 		?>
 		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'persons_container' ) ); ?>>
 			<?php if ( 'yes' !== $settings['multiple'] ) : ?>
@@ -1850,9 +1886,11 @@ class Premium_Person extends Widget_Base {
 						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_profile' ) ); ?>>
 							<?php echo wp_kses_post( $image_html ); ?>
 						</a>
-					<?php } else {
+						<?php
+					} else {
 						echo wp_kses_post( $image_html );
-					} ?>
+					}
+					?>
 
 					<?php if ( 'style2' === $settings['premium_person_style'] && 'yes' === $settings['premium_person_social_enable'] ) : ?>
 						<div class="premium-person-social">
@@ -1860,7 +1898,7 @@ class Premium_Person extends Widget_Base {
 						</div>
 					<?php endif; ?>
 				</div>
-				<div class="premium-person-info">
+				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'info_container' ) ); ?>>
 					<?php $this->render_person_info(); ?>
 				</div>
 			</div>
@@ -1899,7 +1937,7 @@ class Premium_Person extends Widget_Base {
 								</div>
 							<?php endif; ?>
 						</div>
-						<div class="premium-person-info">
+						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'info_container' ) ); ?>>
 							<?php $this->render_person_info( $person, $index ); ?>
 						</div>
 					</div>
@@ -2011,15 +2049,18 @@ class Premium_Person extends Widget_Base {
 					$name_tag_close = '</' . wp_kses_post( $name_heading ) . '>';
 					$name_content   = wp_kses_post( $settings['premium_person_name'] );
 					$name_html      = $name_tag_open . $name_content . $name_tag_close;
-				?>
+					?>
 					<?php if ( ! empty( $settings['premium_person_profile']['url'] ) ) { ?>
 						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_profile' ) ); ?>>
 							<?php echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</a>
-					<?php } else {
+						<?php
+					} else {
 						echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					} ?>
-				<?php endif;
+					}
+					?>
+					<?php
+				endif;
 
 				if ( 'style3' === $skin ) :
 					?>
@@ -2041,9 +2082,11 @@ class Premium_Person extends Widget_Base {
 						</div>
 					<?php
 					endif;
-				if ( 'style3' === $skin ) : ?>
+				if ( 'style3' === $skin ) :
+					?>
 					</div>
-				<?php endif;
+					<?php
+				endif;
 
 				if ( 'style3' === $skin ) :
 					?>
@@ -2065,7 +2108,8 @@ class Premium_Person extends Widget_Base {
 								<?php
 							} else {
 								echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							} ?>
+							}
+							?>
 
 							<?php
 						endif;
@@ -2361,6 +2405,12 @@ class Premium_Person extends Widget_Base {
 
 			</ul>
 			<# }
+
+			view.addRenderAttribute( 'info_container', 'class', 'premium-person-info' );
+
+			if( 'none' !== settings.body_lq_effect && 'style3' !== settings.premium_person_style ) {
+				view.addRenderAttribute( 'info_container', 'class', 'premium-con-lq__' + settings.body_lq_effect );
+			}
 		#>
 
 		<div {{{ view.getRenderAttributeString('persons_container') }}}>
@@ -2380,7 +2430,7 @@ class Premium_Person extends Widget_Base {
 						</div>
 					<# } #>
 				</div>
-				<div class="premium-person-info">
+				<div {{{ view.getRenderAttributeString('info_container') }}}>
 					<div class="premium-person-info-container">
 						<# if( 'style3' !== skin && '' != settings.premium_person_name ) { #>
 							<# if ( '' !== settings.premium_person_profile.url ) { #>
@@ -2489,7 +2539,7 @@ class Premium_Person extends Widget_Base {
 							</div>
 						<# } #>
 						</div>
-						<div class="premium-person-info">
+						<div {{{ view.getRenderAttributeString('info_container') }}}>
 							<div class="premium-person-info-container">
 								<# if( 'style3' !== skin && '' != person.multiple_name ) { #>
 									<# if ( '' !== person.multiple_profile.url ) { #>

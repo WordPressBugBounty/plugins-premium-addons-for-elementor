@@ -599,13 +599,13 @@ class Premium_SVG_Drawer extends Widget_Base {
 			array(
 				'label'              => __( 'Fill Color Speed', 'premium-addons-for-elementor' ),
 				'type'               => Controls_Manager::SLIDER,
-				'range'=> [
-					'px' => [
-						'min' => 0,
-						'max' => 5,
+				'range'              => array(
+					'px' => array(
+						'min'  => 0,
+						'max'  => 5,
 						'step' => 0.1,
-					],
-				],
+					),
+				),
 				'condition'          => array(
 					'animate_icon'   => 'yes',
 					'scroll_action!' => 'viewport',

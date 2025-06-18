@@ -112,6 +112,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'font-awesome-5-all',
 			'pa-slick',
 			'premium-addons',
@@ -136,6 +137,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 		return array_merge(
 			$draw_scripts,
 			array(
+				'pa-glass',
 				'lottie-js',
 				'pa-slick',
 				'premium-addons',
@@ -1198,6 +1200,31 @@ class Premium_Mobile_Menu extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'menu_lq_effect',
+			array(
+				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'      => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'      => 'none',
+				'label_block'  => true,
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -1648,6 +1675,12 @@ class Premium_Mobile_Menu extends Widget_Base {
 
 		}
 
+		$this->add_render_attribute( 'item_inner', 'class', 'premium-mobile-menu__item-inner' );
+
+		if( 'none' !== $settings['menu_lq_effect'] ) {
+			$this->add_render_attribute( 'item_inner', 'class', 'premium-con-lq__' . $settings['menu_lq_effect'] );
+		}
+
 		?>
 
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrap' ) ); ?>>
@@ -1767,7 +1800,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 
 							?>
 							<li <?php echo wp_kses_post( $this->get_render_attribute_string( 'menu-item-' . $index ) ); ?> >
-								<div class="premium-mobile-menu__item-inner">
+								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item_inner' ) ); ?>>
 
 									<a <?php echo wp_kses_post( $this->get_render_attribute_string( $item_link ) ); ?>>
 

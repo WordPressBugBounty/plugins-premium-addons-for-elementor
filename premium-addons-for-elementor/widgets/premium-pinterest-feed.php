@@ -3271,9 +3271,10 @@ class Premium_Pinterest_Feed extends Widget_Base {
 				</span>
 			<?php endif; ?>
 
-			<?php if ( $pin_settings['date'] ) :
+			<?php
+			if ( $pin_settings['date'] ) :
 				$p_date = ! empty( $feed['created_at'] ) ? strtotime( $feed['created_at'] ) : false;
-			?>
+				?>
 				<span class="premium-pinterest-feed__created-at"><?php echo esc_html( wp_date( $settings['date_format'], $p_date ) ); ?></span>
 			<?php endif; ?>
 

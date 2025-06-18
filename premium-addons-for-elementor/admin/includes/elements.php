@@ -42,7 +42,7 @@ $elements = array(
 				'title'      => __( 'Horizontal Scroll', 'premium-addons-for-elementor' ),
 				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-horizontal-scroll-widget/', 'hscroll', 'wp-dash', 'dashboard' ),
 				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/horizontal-scroll/', 'hscroll', 'wp-dash', 'dashboard' ),
-				'tutorial'   => 'https://www.youtube.com/watch?v=4HqT_3s-ZXg',
+				'tutorial'   => 'https://www.youtube.com/watch?v=JdMD7-on8gs',
 				'is_pro'     => true,
 				'icon'       => 'pa-pro-horizontal-scroll',
 			),
@@ -910,7 +910,7 @@ $elements = array(
 				'title'    => __( 'Horizontal Scroll', 'premium-addons-for-elementor' ),
 				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-horizontal-scroll-widget/', 'hscroll', 'wp-dash', 'dashboard' ),
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/horizontal-scroll/', 'hscroll', 'wp-dash', 'dashboard' ),
-				'tutorial' => 'https://www.youtube.com/watch?v=4HqT_3s-ZXg',
+				'tutorial' => 'https://www.youtube.com/watch?v=JdMD7-on8gs',
 				'is_pro'   => true,
 			),
 			array(
@@ -1449,6 +1449,10 @@ $elements = array(
 			array(
 				'key'  => 'premium-wrapper-link',
 				'demo' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-global-wrapper-link-addon-tutorial', 'wrapper', 'wp-dash', 'dashboard' ),
+			),
+			array(
+				'key'  => 'premium-glassmorphism',
+				'demo' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-liquid-glass-addon/', 'liquid', 'wp-dash', 'dashboard' ),
 			),
 		),
 	),

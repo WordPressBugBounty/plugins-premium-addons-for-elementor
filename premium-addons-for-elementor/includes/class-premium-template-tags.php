@@ -1674,10 +1674,16 @@ class Premium_Template_Tags {
 
 		$target = 'yes' === $settings['new_tab'] ? '_blank' : '_self';
 
+		$this->add_render_attribute( 'post_inner' . $post_id, 'class', 'premium-search__post-inner' );
+
+		if( 'none' !== $settings['post_lq_effect'] ) {
+			$this->add_render_attribute( 'post_inner' . $post_id, 'class', 'premium-con-lq__' . $settings['post_lq_effect'] );
+		}
+
 		?>
 		<div class="premium-search__post-wrap">
 
-			<div class="premium-search__post-inner">
+			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'post_inner' . $post_id ) ); ?>>
 
 				<?php if ( $render_thumbnail ) : ?>
 					<div class="premium-search__thumbnail-wrap">

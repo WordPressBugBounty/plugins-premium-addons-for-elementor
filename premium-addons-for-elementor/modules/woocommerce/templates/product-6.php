@@ -35,7 +35,7 @@ $image_size      = $settings['featured_image_size'];
 
 ?>
 <li class=" <?php echo esc_attr( $wc_classes ); ?>">
-	<div class="premium-woo-product-wrapper">
+	<div class="premium-woo-product-wrapper <?php echo esc_attr( 'premium-con-lq__' . $this->get_option_value('product_lq_effect') ) ?>">
 		<?php
 
 		echo '<div class="premium-woo-product-thumbnail">';

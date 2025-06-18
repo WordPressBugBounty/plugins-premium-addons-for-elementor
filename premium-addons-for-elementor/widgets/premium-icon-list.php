@@ -80,6 +80,7 @@ class Premium_Icon_List extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-glass',
 			'premium-addons',
 		);
 	}
@@ -103,6 +104,7 @@ class Premium_Icon_List extends Widget_Base {
 		return array_merge(
 			$draw_scripts,
 			array(
+				'pa-glass',
 				'lottie-js',
 				'premium-addons',
 			)
@@ -1550,6 +1552,31 @@ class Premium_Icon_List extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'items_lq_effect',
+			array(
+				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
+					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
+					'</a>'
+				),
+				'options'      => array(
+					'none'   => __( 'None', 'premium-addons-for-elementor' ),
+					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
+					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
+					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass4' => apply_filters( 'pa_pro_label', __( 'Preset 04 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
+					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
+				),
+				'default'      => 'none',
+				'label_block'  => true,
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -1761,7 +1788,7 @@ class Premium_Icon_List extends Widget_Base {
 		$this->add_control(
 			'icon_background_hover_color',
 			array(
-				'label'     => __( ' Hover Background', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Hover Background', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .premium-bullet-list-content:hover .premium-bullet-list-wrapper i,{{WRAPPER}} .premium-bullet-list-content:hover .premium-bullet-list-wrapper svg ,{{WRAPPER}} .premium-bullet-list-content:hover .premium-bullet-list-wrapper img ,  {{WRAPPER}} .premium-bullet-list-content:hover  .premium-bullet-list-icon-text p' => 'background-color: {{VALUE}}',
@@ -2408,6 +2435,10 @@ class Premium_Icon_List extends Widget_Base {
 					)
 				);
 
+				if( 'none' !== $settings['items_lq_effect'] ) {
+					$this->add_render_attribute( $list_content_key, 'class', 'premium-con-lq__' . $settings['items_lq_effect'] );
+				}
+
 				if ( 'yes' === $animation_switch ) {
 
 					$this->add_render_attribute(
@@ -2668,6 +2699,11 @@ class Premium_Icon_List extends Widget_Base {
 						'elementor-repeater-item-' + item._id
 					]
 				);
+
+				if( 'none' !== settings.items_lq_effect ) {
+					view.addRenderAttribute( listContentKey, 'class', 'premium-con-lq__' + settings.items_lq_effect );
+				}
+
 				if( 'yes' == animationSwitch  ) {
 
 					view.addRenderAttribute( listContentKey, 'data-delay',

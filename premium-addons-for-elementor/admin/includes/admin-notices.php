@@ -68,6 +68,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
+			'liquid-not'
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -127,6 +128,12 @@ class Admin_Notices {
 				$this->show_review_notice();
 			}
 		}
+
+		if ( Helper_Functions::check_hide_notifications() ) {
+			return;
+		}
+
+		$this->get_liquid_notice();
 	}
 
 	/**
@@ -248,6 +255,45 @@ class Admin_Notices {
 	}
 
 	/**
+	 *
+	 * Shows admin notice for Animated Text widget.
+	 *
+	 * @since 4.11.14
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function get_liquid_notice() {
+
+		$option = get_option( 'liquid-not' );
+
+		if ( '1' === $option ) {
+			return;
+		}
+
+		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-liquid-glass-addon/', 'liquid-glass-notification', 'wp-dash', 'liquid-glass' );
+
+		?>
+
+		<div class="error pa-notice-wrap pa-new-feature-notice">
+			<div class="pa-img-wrap">
+				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
+			</div>
+			<div class="pa-text-wrap">
+				<p>
+					<strong><?php echo __( 'Elementor Liquid Glass Global Feature', 'premium-addons-for-elementor' ); ?></strong>
+					<?php echo sprintf( __( 'is now available in Premium Addons for Elementor. <a href="%s" target="_blank">Check it out now!</a>', 'premium-addons-for-elementor' ), $link ); ?>
+				</p>
+			</div>
+			<div class="pa-notice-close" data-notice="liquid-not">
+				<span class="dashicons dashicons-dismiss"></span>
+			</div>
+		</div>
+
+		<?php
+	}
+
+	/**
 	 * Renders an admin notice error message
 	 *
 	 * @since 1.0.0
@@ -348,7 +394,13 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			set_transient( $key, true, 20 * DAY_IN_SECONDS );
+			//Make sure new features notices will not appear again.
+			if( false != strpos( $key, 'not' ) ) {
+				update_option( $key, '1' );
+			} else {
+				set_transient( $key, true, 20 * DAY_IN_SECONDS );
+
+			}
 
 			wp_send_json_success();
 
@@ -537,7 +589,7 @@ class Admin_Notices {
 							<div class="pa-story-img-container">
 								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'cm24-dash' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'liquid-glass-dash' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>

@@ -2393,7 +2393,16 @@
 			var $contactForm = $scope.find(".premium-cf7-container"),
 				$input = $contactForm.find(
 					'input[type="text"], input[type="email"], textarea, input[type="password"], input[type="date"], input[type="number"], input[type="tel"], input[type="file"], input[type="url"]'
-				);
+				),
+				settings = $contactForm.data('settings');
+
+			if ('none' !== settings.fields_glass) {
+				$contactForm.find('.wpcf7-text, .wpcf7-textarea').addClass('premium-con-lq__' + settings.fields_glass);
+			}
+
+			if ('none' !== settings.submit_glass) {
+				$contactForm.find('.wpcf7-text, .wpcf7-submit').addClass('premium-con-lq__' + settings.submit_glass);
+			}
 
 			$input.wrap("<span class='wpcf7-span'>");
 
@@ -4703,7 +4712,8 @@
 					autoplaySpeed: settings.speed || 5000,
 					rtl: ('skin4' !== settings.skin && rtl) ? true : false,
 					speed: 500,
-					arrows: 'skin4' !== settings.skin ? true : false,
+					// arrows: 'skin4' !== settings.skin ? true : false,
+					arrows: true,
 					fade: 'skin4' === settings.skin ? true : false
 
 				});
@@ -4793,6 +4803,10 @@
 							$skinCarousel.slick('slickGoTo', slideIndex);
 						});
 
+						$multipleTestimonials.on('afterChange', function (event, slick, currentSlide, nextSlide) {
+							$skinCarousel.slick('slickGoTo', currentSlide);
+						});
+
 						this.$element.hover(function () {
 							$skinCarousel.slick('slickPause');
 							$multipleTestimonials.slick('slickPause');
@@ -4800,6 +4814,10 @@
 							$skinCarousel.slick('slickPlay');
 							$multipleTestimonials.slick('slickPlay');
 						});
+					}
+
+					if ('none' !== settings.arrows_lq_effect) {
+						this.$element.find('a.slick-arrow').addClass('premium-con-lq__' + settings.arrows_lq_effect);
 					}
 
 				}
