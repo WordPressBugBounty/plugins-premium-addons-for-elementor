@@ -265,3 +265,14 @@
 .premium-cf__preset5 .wpcf7-select, .premium-cf__preset6 .wpcf7-select {
   border: 1px solid #e3e3e3;
 }
+
+.rtl .premium-cf7-container .wpcf7-radio .wpcf7-list-item {
+  margin: 0 0 0 15px;
+}
+.rtl .premium-cf__preset5 .wpcf7-text,
+.rtl .premium-cf__preset5 .wpcf7-textarea, .rtl .premium-cf__preset6 .wpcf7-text,
+.rtl .premium-cf__preset6 .wpcf7-textarea {
+  padding: 7px 10px 7px 0;
+  border: 1px solid #e3e3e3;
+  border-radius: 0;
+}

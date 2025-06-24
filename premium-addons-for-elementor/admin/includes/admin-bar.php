@@ -38,15 +38,13 @@ class Admin_Bar {
 
 	public function enqueue_assets() {
 
-		$suffix = is_rtl() ? '-rtl' : '';
-
 		$action = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 
 		if ( false === strpos( $action, 'action=architect' ) ) {
 
 			wp_enqueue_style(
 				'pa-admin',
-				PREMIUM_ADDONS_URL . 'admin/assets/css/admin' . $suffix . '.css',
+				PREMIUM_ADDONS_URL . 'admin/assets/css/admin.css',
 				array(),
 				PREMIUM_ADDONS_VERSION,
 				'all'
@@ -79,11 +77,9 @@ class Admin_Bar {
 			return;
 		}
 
-		$suffix = is_rtl() ? '-rtl' : '';
-
         wp_enqueue_style(
             'pa-admin-bar',
-            PREMIUM_ADDONS_URL . 'admin/assets/css/admin-bar' . $suffix . '.css',
+            PREMIUM_ADDONS_URL . 'admin/assets/css/admin-bar.css',
             array(),
             PREMIUM_ADDONS_VERSION,
             'all'

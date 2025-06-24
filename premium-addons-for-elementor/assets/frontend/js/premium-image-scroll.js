@@ -11,7 +11,7 @@
             transformOffset = null;
 
         function startTransform() {
-            imageScroll.css("transform", (direction === "vertical" ? "translateY" : "translateX") + "( -" +
+            imageScroll.css("transform", (direction === "vertical" ? "translateY" : "translateX") + "( " + (!elementorFrontend.config.is_rtl ? '-' : '') +
                 transformOffset + "px)");
         }
 

@@ -23,10 +23,12 @@
   flex-direction: row-reverse;
 }
 .premium-counter-area.right .premium-counter-icon {
-  padding-left: 20px;
+  -webkit-padding-start: 20px;
+  padding-inline-start: 20px;
 }
 .premium-counter-area.left .premium-counter-icon {
-  padding-right: 20px;
+  -webkit-padding-end: 20px;
+  padding-inline-end: 20px;
 }
 .premium-counter-area .premium-counter-icon .icon i.fa:before {
   vertical-align: text-top;

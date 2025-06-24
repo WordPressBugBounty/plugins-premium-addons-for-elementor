@@ -79,7 +79,7 @@
 .premium-maps-info-container.advanced-pin .premium-maps-location-info {
   color: #222;
   font-size: 13px;
-  text-align: left;
+  text-align: start;
 }
 .premium-maps-info-container.advanced-pin .maps-info-item {
   display: -webkit-flex;
@@ -91,7 +91,8 @@
   margin-bottom: 8px;
 }
 .premium-maps-info-container.advanced-pin .maps-info-item i {
-  margin-right: 14px;
+  -webkit-margin-end: 14px;
+  margin-inline-end: 14px;
 }
 .premium-maps-info-container.advanced-pin p {
   margin: 0;
@@ -182,7 +183,8 @@
   -ms-flex-direction: column;
   flex-direction: column;
   text-align: left;
-  margin-left: 12px;
+  -webkit-margin-start: 12px;
+  margin-inline-start: 12px;
 }
 .premium-maps-info-container.maps-skin3 .premium-maps-title-wrap .eicon-share-arrow {
   display: none;
@@ -200,7 +202,7 @@
 }
 .premium-maps-info-container.maps-skin2 .premium-maps-info-close, .premium-maps-info-container.maps-skin3 .premium-maps-info-close {
   top: 12px;
-  right: 12px;
+  inset-inline-end: 12px;
   background-color: #bbb;
 }
 
@@ -220,4 +222,13 @@
 .premium-maps-container .gm-style-iw-d {
   overflow: visible !important;
   max-height: initial !important;
+}
+
+.rtl .premium-maps-info-container.maps-skin3 .premium-maps-skin3-wrap {
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+.rtl .premium-maps-container .gm-style-iw {
+  direction: ltr;
 }

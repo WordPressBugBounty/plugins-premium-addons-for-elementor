@@ -204,20 +204,20 @@
   position: absolute;
   top: -webkit-calc(100% + 1px);
   top: calc(100% + 1px);
-  left: 0;
+  inset-inline-start: 0;
   visibility: hidden;
   padding: 15px 20px;
   border-radius: 5px;
   min-width: 200px;
   overflow: hidden;
-  text-align: left;
+  text-align: start;
   font-size: 0.8rem;
   color: #fff;
   background-color: #aaa;
 }
 
 .premium-pricing-features-left .premium-pricing-list-span {
-  text-align: left;
+  text-align: start;
 }
 
 .premium-pricing-features-center .premium-pricing-list-span {
@@ -225,7 +225,7 @@
 }
 
 .premium-pricing-features-right .premium-pricing-list-span {
-  text-align: right;
+  text-align: end;
 }
 
 .premium-pricing-list-span:hover .premium-pricing-list-tooltip {
@@ -238,7 +238,8 @@
   display: inline-block;
   font-size: 20px;
   font-weight: 400;
-  margin-right: 5px;
+  -webkit-margin-end: 5px;
+  margin-inline-end: 5px;
 }
 
 .premium-pricing-price-value {
@@ -268,4 +269,13 @@
   background: #6ec1e4;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+}
+
+.rtl .premium-badge-stripe .corner {
+  -webkit-transform: rotate(-45deg) translateY(-50%) translateX(-10px);
+  -ms-transform: rotate(-45deg) translateY(-50%) translateX(-10px);
+  transform: rotate(-45deg) translateY(-50%) translateX(-10px);
+}
+.rtl .premium-badge-left.premium-badge-triangle span {
+  left: 0;
 }

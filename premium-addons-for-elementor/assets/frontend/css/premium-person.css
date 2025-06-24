@@ -92,7 +92,7 @@
 .premium-person-style2 .premium-person-social {
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   z-index: 2;
@@ -388,7 +388,8 @@ ul.premium-person-social-list {
 
 .premium-persons-title-ccw .premium-person-title {
   width: auto;
-  margin-right: 20px;
+  -webkit-margin-end: 20px;
+  margin-inline-end: 20px;
   -webkit-transform: translateX(15px) rotate(-90deg);
   -ms-transform: translateX(15px) rotate(-90deg);
   transform: translateX(15px) rotate(-90deg);
@@ -400,4 +401,41 @@ ul.premium-person-social-list {
   -webkit-transform: translateX(0) rotate(-90deg);
   -ms-transform: translateX(0) rotate(-90deg);
   transform: translateX(0) rotate(-90deg);
+}
+
+.rtl .premium-person-trans-effect .premium-person-image-container img {
+  -webkit-transform: translateX(15px) scale(1.1);
+  -ms-transform: translateX(15px) scale(1.1);
+  transform: translateX(15px) scale(1.1);
+}
+.rtl .premium-person-scale-effect:hover .premium-person-image-container img {
+  -webkit-transform: scale(1.3) rotate(-5deg);
+  -ms-transform: scale(1.3) rotate(-5deg);
+  transform: scale(1.3) rotate(-5deg);
+}
+.rtl .premium-person-style3 .premium-person-list-item a {
+  padding: 5px 0 0 10px;
+}
+.rtl .premium-persons-title-cw .premium-person-container:hover .premium-person-title {
+  -webkit-transform: translateX(0) rotate(-90deg);
+  -ms-transform: translateX(0) rotate(-90deg);
+  transform: translateX(0) rotate(-90deg);
+}
+.rtl .premium-persons-title-cw .premium-person-title {
+  -webkit-transform: translateX(15px) rotate(-90deg);
+  -ms-transform: translateX(15px) rotate(-90deg);
+  transform: translateX(15px) rotate(-90deg);
+}
+.rtl .premium-persons-title-ccw .premium-person-title {
+  -webkit-transform: translateX(-15px) rotate(90deg);
+  -ms-transform: translateX(-15px) rotate(90deg);
+  transform: translateX(-15px) rotate(90deg);
+  -webkit-transform-origin: center left;
+  -ms-transform-origin: center left;
+  transform-origin: center left;
+}
+.rtl .premium-persons-title-ccw .premium-person-container:hover .premium-person-title {
+  -webkit-transform: translateX(0) rotate(90deg);
+  -ms-transform: translateX(0) rotate(90deg);
+  transform: translateX(0) rotate(90deg);
 }

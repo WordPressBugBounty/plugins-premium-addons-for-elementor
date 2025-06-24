@@ -542,3 +542,10 @@
     opacity: 1;
   }
 }
+.rtl .premium-world-clock__skin-2 .premium-world-clock__time-wrapper,
+.rtl .premium-world-clock__skin-3 .premium-world-clock__time-wrapper,
+.rtl .premium-world-clock__skin-4 .premium-world-clock__time-wrapper {
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}

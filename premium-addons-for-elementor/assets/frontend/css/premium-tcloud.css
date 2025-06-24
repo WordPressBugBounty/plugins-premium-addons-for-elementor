@@ -100,3 +100,7 @@
 .premium-tcloud-sphere .premium-tcloud-terms-container {
   display: none;
 }
+
+.rtl .premium-tcloud-ribbon .premium-tcloud-term::before {
+  left: -14px;
+}

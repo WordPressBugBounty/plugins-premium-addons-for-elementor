@@ -85,7 +85,7 @@
   top: 100%;
 }
 .premium-nav-hor:not(.premium-hamburger-menu) .premium-nav-menu-item > .premium-sub-menu .premium-sub-menu {
-  left: 100%;
+  inset-inline-start: 100%;
   top: 0;
 }
 .premium-nav-hor:not(.premium-hamburger-menu) .premium-nav-menu-item.premium-item-hovered > .premium-sub-menu,

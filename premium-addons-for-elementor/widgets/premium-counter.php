@@ -666,8 +666,8 @@ class Premium_Counter extends Widget_Base {
 				'label'       => __( 'Title Display', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => array(
-					'row'    => __( 'Row', 'premium-addons-for-elementor' ),
 					'column' => __( 'Column', 'premium-addons-for-elementor' ),
+					'row'    => __( 'Row', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'column',
 				'render_type' => 'template',

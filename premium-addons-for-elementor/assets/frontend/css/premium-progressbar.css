@@ -6,7 +6,7 @@
 
 .premium-progressbar-bar-wrap {
   position: relative;
-  text-align: left;
+  text-align: start;
   overflow: hidden;
   height: 25px;
   margin-bottom: 50px;
@@ -38,21 +38,23 @@
   margin: 0 4px;
 }
 .premium-progressbar-bar-wrap .progress-segment:first-child {
-  margin-right: 4px;
+  -webkit-margin-end: 4px;
+  margin-inline-end: 4px;
 }
 .premium-progressbar-bar-wrap .progress-segment:last-child {
-  margin-left: 4px;
+  -webkit-margin-start: 4px;
+  margin-inline-start: 4px;
 }
 .premium-progressbar-bar-wrap .progress-segment .segment-inner {
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   height: 100%;
   background-color: #6ec1e4;
 }
 
 .premium-progressbar-bar {
-  float: left;
+  float: inline-start;
   width: 0%;
   height: 100%;
   font-size: 12px;
@@ -104,9 +106,9 @@
 }
 
 .premium-progressbar-name {
-  left: 50%;
+  inset-inline-start: 50%;
   top: 0;
-  right: 0;
+  inset-inline-end: 0;
   -webkit-transform: translateX(-12.5px);
   -ms-transform: translateX(-12.5px);
   transform: translateX(-12.5px);
@@ -115,9 +117,9 @@
 
 .premium-progressbar-multiple-label {
   position: relative;
-  float: left;
+  float: inline-start;
   width: 0;
-  left: 50%;
+  inset-inline-start: 50%;
 }
 
 .premium-progressbar-center-label {
@@ -127,7 +129,7 @@
 
 .premium-progressbar-arrow {
   height: 15px;
-  left: 50%;
+  inset-inline-start: 50%;
   display: inline-block;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
@@ -138,9 +140,10 @@
 }
 
 .premium-progressbar-pin {
-  border-left: 1px solid;
+  -webkit-border-start: 1px solid;
+  border-inline-start: 1px solid;
   height: 12px;
-  left: 50%;
+  inset-inline-start: 50%;
   display: inline-block;
 }
 
@@ -158,7 +161,7 @@
 .premium-progressbar-hf-circle-wrap .premium-progressbar-circle-content {
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   display: -webkit-flex;
@@ -183,7 +186,7 @@
 .premium-progressbar-circle-wrap .premium-progressbar-circle {
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   -webkit-clip-path: inset(0 0 0 50%);
@@ -191,7 +194,7 @@
 }
 .premium-progressbar-circle-wrap .premium-progressbar-circle div {
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 0;
   height: 100%;
   width: 100%;
@@ -287,32 +290,12 @@
   justify-content: space-between;
 }
 
-@-webkit-keyframes progress-bar-stripes {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 40px 0;
-  }
-}
-
 @keyframes progress-bar-stripes {
   from {
     background-position: 0 0;
   }
   to {
     background-position: 40px 0;
-  }
-}
-@-webkit-keyframes progress-bar-gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
   }
 }
 @keyframes progress-bar-gradient {
@@ -335,5 +318,58 @@
     -webkit-transform-origin: 0;
     -ms-transform-origin: 0;
     transform-origin: 0;
+  }
+}
+.rtl .premium-progressbar-striped .premium-progressbar-bar {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: 40px 40px;
+}
+.rtl .premium-progressbar-arrow {
+  -webkit-transform: translateX(50%);
+  -ms-transform: translateX(50%);
+  transform: translateX(50%);
+}
+.rtl .premium-progressbar-circle-wrap .premium-progressbar-circle .premium-progressbar-circle-right {
+  -webkit-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
+}
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
+}
+@-webkit-keyframes progress-bar-gradient {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes progress-bar-gradient {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
   }
 }

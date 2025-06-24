@@ -132,8 +132,7 @@ class Addons_Integration {
 			add_filter( 'wp-optimize-minify-default-exclusions', array( $this, 'exclude_pa_assets_from_wp_optimize' ) );
 		}
 
-		add_filter('elementor/editor/localize_settings', array( $this, 'add_papro_elements' ) );
-
+		add_filter( 'elementor/editor/localize_settings', array( $this, 'add_papro_elements' ) );
 	}
 
 	/**
@@ -373,12 +372,12 @@ class Addons_Integration {
 			);
 
 			// wp_localize_script(
-			// 	'pa-eq-editor',
-			// 	'PremiumEditorLinks',
-			// 	array(
-			// 		$link,
-			// 		$disable_unused_url,
-			// 	)
+			// 'pa-eq-editor',
+			// 'PremiumEditorLinks',
+			// array(
+			// $link,
+			// $disable_unused_url,
+			// )
 			// );
 
 		}
@@ -473,8 +472,6 @@ class Addons_Integration {
 		$dir    = Helper_Functions::get_styles_dir();
 		$suffix = Helper_Functions::get_assets_suffix();
 
-		$is_rtl = is_rtl() ? '-rtl' : '';
-
 		wp_register_style(
 			'font-awesome-5-all',
 			ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all.min.css',
@@ -491,7 +488,7 @@ class Addons_Integration {
 
 		wp_register_style(
 			'pa-prettyphoto',
-			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/prettyphoto' . $is_rtl . $suffix . '.css',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/prettyphoto' . $suffix . '.css',
 			array(),
 			PREMIUM_ADDONS_VERSION,
 			'all'
@@ -531,7 +528,7 @@ class Addons_Integration {
 
 		wp_register_style(
 			'pa-slick',
-			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/slick' . $is_rtl . $suffix . '.css',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/slick' . $suffix . '.css',
 			array(),
 			PREMIUM_ADDONS_VERSION,
 			'all'
@@ -591,16 +588,16 @@ class Addons_Integration {
 
 		// If dynamic assets is disabled.
 		if ( ! $assets_gen_enabled || ( 'page' !== $type && 'post' !== $type ) ) {
-			$this->enqueue_old_styles( $dir, $is_rtl, $suffix );
+			$this->enqueue_old_styles( $dir, $suffix );
 		} else {
 
 			// If the assets are generated correctly due to server errors.
 			if ( 'empty' === self::$css_content ) {
-				$this->enqueue_old_styles( $dir, $is_rtl, $suffix );
+				$this->enqueue_old_styles( $dir, $suffix );
 				return;
 			}
 
-			$css_path = '/pa-frontend' . $is_rtl . '-' . Assets_Manager::$post_id . $suffix . '.css';
+			$css_path = '/pa-frontend' . '-' . Assets_Manager::$post_id . $suffix . '.css';
 
 			if ( Assets_Manager::$is_updated && file_exists( PREMIUM_ASSETS_PATH . $css_path ) ) {
 
@@ -616,10 +613,9 @@ class Addons_Integration {
 			$pa_elements = get_option( 'pa_elements_' . Assets_Manager::$post_id, array() );
 
 			// If the assets are not updated, or they are updated but the dynamic CSS file has not been loaded for any reason.
-			if( ! Assets_Manager::$is_updated || ( ! empty( $pa_elements ) && ! wp_style_is( 'pa-frontend', 'enqueued' ) ) ) {
-				$this->enqueue_old_styles( $dir, $is_rtl, $suffix );
+			if ( ! Assets_Manager::$is_updated || ( ! empty( $pa_elements ) && ! wp_style_is( 'pa-frontend', 'enqueued' ) ) ) {
+				$this->enqueue_old_styles( $dir, $suffix );
 			}
-
 		}
 	}
 
@@ -630,14 +626,13 @@ class Addons_Integration {
 	 * @access public
 	 *
 	 * @param string $directory style directory.
-	 * @param string $is_rtl page direction.
 	 * @param string $suffix file suffix.
 	 */
-	public function enqueue_old_styles( $directory, $is_rtl, $suffix ) {
+	public function enqueue_old_styles( $directory, $suffix ) {
 
 		wp_enqueue_style(
 			'premium-addons',
-			PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-addons' . $is_rtl . $suffix . '.css',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-addons' . $suffix . '.css',
 			array(),
 			PREMIUM_ADDONS_VERSION,
 			'all'
@@ -1091,7 +1086,7 @@ class Addons_Integration {
 					'view_cart'       => __( 'View cart', 'woocommerce' ),
 					'mini_cart_nonce' => wp_create_nonce( 'pa-mini-cart-nonce' ),
 					'qv_nonce'        => wp_create_nonce( 'pa-woo-qv-nonce' ),
-					'stock_msg' => __('*The current stock is only ', 'premium-addons-for-elementor'),
+					'stock_msg'       => __( '*The current stock is only ', 'premium-addons-for-elementor' ),
 				)
 			);
 
@@ -1138,7 +1133,7 @@ class Addons_Integration {
 						__( 'Minute', 'premium-addons-for-elementor' ),
 						__( 'Second', 'premium-addons-for-elementor' ),
 					),
-					'plural'  => array(
+					'plural' => array(
 						__( 'Years', 'premium-addons-for-elementor' ),
 						__( 'Months', 'premium-addons-for-elementor' ),
 						__( 'Weeks', 'premium-addons-for-elementor' ),
@@ -1687,13 +1682,13 @@ class Addons_Integration {
 
 		// if ( $load_controls ) {
 
-			if ( self::$modules['premium-equal-height'] || self::$modules['premium-pinterest-feed'] ) {
+		if ( self::$modules['premium-equal-height'] || self::$modules['premium-pinterest-feed'] ) {
 
-				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-select.php';
-				$premium_select = __NAMESPACE__ . '\Controls\Premium_Select';
-				$control_manager->controls_manager->register( new $premium_select() );
+			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-select.php';
+			$premium_select = __NAMESPACE__ . '\Controls\Premium_Select';
+			$control_manager->controls_manager->register( new $premium_select() );
 
-			}
+		}
 
 			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-post-filter.php';
 
@@ -1701,23 +1696,22 @@ class Addons_Integration {
 
 			$control_manager->controls_manager->register( new $premium_post_filter() );
 
+		if ( self::$modules['premium-blog'] || self::$modules['premium-smart-post-listing'] || self::$modules['premium-tcloud'] ) {
 
-			if ( self::$modules['premium-blog'] || self::$modules['premium-smart-post-listing'] || self::$modules['premium-tcloud'] ) {
+			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-tax-filter.php';
 
-				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-tax-filter.php';
+			$premium_tax_filter = __NAMESPACE__ . '\Controls\Premium_Tax_Filter';
 
-				$premium_tax_filter = __NAMESPACE__ . '\Controls\Premium_Tax_Filter';
+			$control_manager->controls_manager->register( new $premium_tax_filter() );
+		}
 
-				$control_manager->controls_manager->register( new $premium_tax_filter() );
-			}
+		if ( self::$modules['pa-display-conditions'] ) {
 
-			if ( self::$modules['pa-display-conditions'] ) {
+			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-acf-selector.php';
+			$premium_acf_selector = __NAMESPACE__ . '\Controls\Premium_Acf_Selector';
+			$control_manager->controls_manager->register( new $premium_acf_selector() );
 
-				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-acf-selector.php';
-				$premium_acf_selector = __NAMESPACE__ . '\Controls\Premium_Acf_Selector';
-				$control_manager->controls_manager->register( new $premium_acf_selector() );
-
-			}
+		}
 		// }
 
 		if ( self::$modules['premium-contactform'] || self::$modules['premium-shape-divider'] ) {
@@ -1770,7 +1764,7 @@ class Addons_Integration {
 			Wrapper_Link::get_instance();
 		}
 
-		if( ! Helper_Functions::check_papro_version() ) {
+		if ( ! Helper_Functions::check_papro_version() ) {
 			PAPRO_Promotion::get_instance();
 		}
 	}
@@ -1812,11 +1806,11 @@ class Addons_Integration {
 
 		$is_papro_active = apply_filters( 'papro_activated', false );
 
-		if( $is_papro_active ) {
+		if ( $is_papro_active ) {
 			return $config;
 		}
 
-		$promotion_widgets = [];
+		$promotion_widgets = array();
 
 		if ( isset( $config['promotionWidgets'] ) ) {
 			$promotion_widgets = $config['promotionWidgets'];
@@ -1829,7 +1823,6 @@ class Addons_Integration {
 		$config['promotionWidgets'] = $pro_elements;
 
 		return $config;
-
 	}
 
 

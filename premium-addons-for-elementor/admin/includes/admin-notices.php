@@ -583,7 +583,7 @@ class Admin_Notices {
 
 				<?php foreach ( $stories['banners'] as $index => $banner ) : ?>
 
-					<?php if ( $time < $banner['end'] ) : ?>
+					<?php if ( isset( $banner['end'] ) && $time < $banner['end'] ) : ?>
 
 						<div class="pa-stories-banner">
 							<div class="pa-story-img-container">

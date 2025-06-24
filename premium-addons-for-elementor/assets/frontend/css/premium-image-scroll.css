@@ -161,3 +161,8 @@
     transform: translateX(5px);
   }
 }
+.rtl .premium-image-scroll-content {
+  -webkit-transform: translate(50%, -50%);
+  -ms-transform: translate(50%, -50%);
+  transform: translate(50%, -50%);
+}

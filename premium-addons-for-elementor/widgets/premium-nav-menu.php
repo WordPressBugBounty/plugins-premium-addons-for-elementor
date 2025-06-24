@@ -133,7 +133,7 @@ class Premium_Nav_Menu extends Widget_Base {
 	 * @return bool
 	 */
 	protected function is_dynamic_content(): bool {
-		return false;
+		return true;
 	}
 
 	/**

@@ -458,8 +458,8 @@ class Premium_Image_Scroll extends Widget_Base {
 				'description' => __( 'Select Scroll Direction', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => array(
-					'horizontal' => __( 'Horizontal', 'premium-addons-for-elementor' ),
 					'vertical'   => __( 'Vertical', 'premium-addons-for-elementor' ),
+					'horizontal' => __( 'Horizontal', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'vertical',
 			)

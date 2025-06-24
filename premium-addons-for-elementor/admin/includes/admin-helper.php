@@ -254,7 +254,6 @@ class Admin_Helper {
 	 */
 	public function admin_enqueue_scripts() {
 
-		$suffix           = is_rtl() ? '-rtl' : '';
 		$current_screen   = self::get_current_screen();
 		$enabled_elements = self::get_enabled_elements();
 		$action           = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
@@ -271,7 +270,7 @@ class Admin_Helper {
 
 			wp_enqueue_style(
 				'pa-notice',
-				PREMIUM_ADDONS_URL . 'admin/assets/css/notice' . $suffix . '.css',
+				PREMIUM_ADDONS_URL . 'admin/assets/css/notice.css',
 				array(),
 				PREMIUM_ADDONS_VERSION,
 				'all'
@@ -279,7 +278,7 @@ class Admin_Helper {
 
 			wp_enqueue_style(
 				'pa-admin',
-				PREMIUM_ADDONS_URL . 'admin/assets/css/admin' . $suffix . '.css',
+				PREMIUM_ADDONS_URL . 'admin/assets/css/admin.css',
 				array(),
 				PREMIUM_ADDONS_VERSION,
 				'all'

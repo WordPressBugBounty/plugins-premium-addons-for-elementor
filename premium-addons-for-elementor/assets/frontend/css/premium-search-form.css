@@ -73,11 +73,11 @@
 }
 .premium-search__spinner {
   position: absolute;
-  right: 5px;
+  inset-inline-end: 5px;
 }
 .premium-search__remove-wrap {
   position: absolute;
-  right: 20px;
+  inset-inline-end: 20px;
   cursor: pointer;
 }
 .premium-search__remove-wrap .premium-search__remove-icon {
@@ -211,7 +211,7 @@
 .premium-search__link {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 1;
 }
 .premium-search__post-content .premium-search__post-title {
   font-size: 18px;

@@ -79,11 +79,11 @@
 }
 .premium-woocommerce .premium-woo-ribbon-container {
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
 }
 .premium-woocommerce .pa-out-of-stock {
   top: 7px;
-  left: 9px;
+  inset-inline-start: 9px;
   margin: 0;
 }
 
@@ -327,7 +327,8 @@
 .premium-woo-skin-grid-3 .premium-woo-qv-icon,
 .premium-woo-skin-grid-4 .premium-woo-qv-icon,
 .premium-woo-skin-grid-6 .premium-woo-qv-icon {
-  margin-left: 0.5em;
+  -webkit-margin-start: 0.5em;
+  margin-inline-start: 0.5em;
 }
 
 .premium-woo-product-thumbnail:hover .premium-woo-qv-btn-translate {

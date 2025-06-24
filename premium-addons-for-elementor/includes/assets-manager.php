@@ -348,7 +348,7 @@ class Assets_Manager {
 
 	/**
 	 * Generate Assets files.
-	 * Adds assets into pa-frontend(|-rtl).min.(js|css).
+	 * Adds assets into pa-frontend.min.(js|css).
 	 *
 	 * @access public
 	 * @since 4.6.1
@@ -357,8 +357,7 @@ class Assets_Manager {
 	 */
 	public static function generate_asset_file( $ext ) {
 
-		$direction      = is_rtl() && 'css' === $ext ? 'rtl-' : '';
-		$main_file_name = Helper_Functions::get_safe_path( PREMIUM_ASSETS_PATH . '/pa-frontend-' . $direction . self::$post_id . '.min.' . $ext );
+		$main_file_name = Helper_Functions::get_safe_path( PREMIUM_ASSETS_PATH . '/pa-frontend-' . self::$post_id . '.min.' . $ext );
 
 		// If the file already exists, then there is no need to regenerate a new one.
 		if ( file_exists( $main_file_name ) ) {
@@ -372,33 +371,18 @@ class Assets_Manager {
 			return 'empty';
 		}
 
-		if ( 'css' === $ext && is_rtl() ) {
-			$rtl_file_name = Helper_Functions::get_safe_path( PREMIUM_ASSETS_PATH . '/pa-frontend-rtl-' . self::$post_id . '.min.css' );
-		}
-
 		if ( ! file_exists( PREMIUM_ASSETS_PATH ) ) {
 			wp_mkdir_p( PREMIUM_ASSETS_PATH );
 		}
 
 		if ( 'css' === $ext ) {
 
-			if ( is_rtl() ) {
-
-				if ( empty( $content['rtl'] ) ) {
-					return 'empty';
-				}
-
-				// Make sure to delete the file before creating the new one.
-                file_put_contents( $rtl_file_name, '@charset "UTF-8";' . $content['rtl'] );  // phpcs:ignore
-
-			} else {
-
-				if ( empty( $content['main'] ) ) {
-					return 'empty';
-				}
-
-                file_put_contents( $main_file_name, '@charset "UTF-8";' . $content['main'] ); // phpcs:ignore
+			if ( empty( $content['main'] ) ) {
+				return 'empty';
 			}
+
+			file_put_contents( $main_file_name, '@charset "UTF-8";' . $content['main'] ); // phpcs:ignore
+
 		} else {
 			file_put_contents( $main_file_name, $content );  // phpcs:ignore
 		}
@@ -434,11 +418,6 @@ class Assets_Manager {
 
 			$path = PREMIUM_ASSETS_PATH . '/pa-frontend-' . self::$post_id . '.min.' . $e;
 
-			if ( 'css' === $e ) {
-				$rtl_path = PREMIUM_ASSETS_PATH . '/pa-frontend-rtl-' . self::$post_id . '.min.' . $e;
-				self::clear_cached_file( $rtl_path );
-			}
-
 			self::clear_cached_file( $path );
 		}
 	}
@@ -466,10 +445,6 @@ class Assets_Manager {
 
 		$content = '';
 
-		if ( 'css' === $ext ) {
-			$rtl_content = '';
-		}
-
 		$pa_elements = self::prepare_pa_elements( $pa_elements, $ext );
 
 		foreach ( $pa_elements as $element ) {
@@ -491,18 +466,12 @@ class Assets_Manager {
 			}
 
 			$content .= $file_content;
-
-			if ( 'css' === $ext && is_rtl() ) {
-				$rtl_path     = self::get_file_path( $element, $ext, '-rtl' );
-				$rtl_content .= self::get_file_content( $rtl_path );
-			}
 		}
 
 		if ( 'css' === $ext ) {
 
 			$content = array(
 				'main' => $content,
-				'rtl'  => $rtl_content,
 			);
 
 			// Fix: at-rule or selector expected css error.
@@ -615,11 +584,10 @@ class Assets_Manager {
 	 *
 	 * @param string $element  pa element name.
 	 * @param string $ext      file extension ( js|css).
-	 * @param string $dir      post dir (-rtl|'').
 	 *
 	 * @return string file path.
 	 */
-	public static function get_file_path( $element, $ext, $dir = '' ) {
+	public static function get_file_path( $element, $ext ) {
 
 		$is_pro = self::is_pro_widget( $element );
 
@@ -633,7 +601,7 @@ class Assets_Manager {
 
 		$path = $is_pro ? PREMIUM_PRO_ADDONS_URL : PREMIUM_ADDONS_URL;
 
-		return $path . 'assets/frontend/min-' . $ext . '/' . $element . $dir . '.min.' . $ext;
+		return $path . 'assets/frontend/min-' . $ext . '/' . $element . '.min.' . $ext;
 	}
 
 	/**
