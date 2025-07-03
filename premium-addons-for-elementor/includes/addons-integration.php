@@ -1258,7 +1258,7 @@ class Addons_Integration {
 			'pa-editor-behavior',
 			PREMIUM_ADDONS_URL . 'assets/editor/js/pa-editor-behavior.min.js',
 			array( 'elementor-editor', 'jquery' ),
-			time(),
+			PREMIUM_ADDONS_VERSION,
 			true
 		);
 

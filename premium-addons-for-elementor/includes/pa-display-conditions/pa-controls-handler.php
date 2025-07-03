@@ -394,8 +394,6 @@ class PA_Controls_Handler {
 			return;
 		}
 
-		print_r( $this->conditions_results_holder[ $element_id ] );
-
 		if ( 'all' === $relation ) {
 
 			$result = in_array( false, $this->conditions_results_holder[ $element_id ], true ) ? false : true;
