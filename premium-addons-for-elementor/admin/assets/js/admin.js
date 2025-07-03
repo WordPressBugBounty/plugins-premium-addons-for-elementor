@@ -22,6 +22,7 @@
 
 	var settings = premiumAddonsSettings.settings;
 
+
 	window.PremiumAddonsNavigation = function () {
 
 		var self = this,
@@ -453,7 +454,19 @@
 		self.saveElementsSettings = function (action, source, updateCustomTemplate = false, redirectURL) {
 
 			var $form = null,
-				defaultAddons = 'wizard' === source ? '&premium-templates=on&premium-equal-height=on&premium-wrapper-link=on&pa-display-conditions=on&premium-duplicator' : '';
+				defaultAddons = '';
+
+
+			if (source === 'wizard') {
+				if (settings.isSecondRun && Array.isArray(settings.savedFeatures)) {
+					settings.savedFeatures.forEach(function (feature) {
+						defaultAddons += `&${feature}=on`;
+					});
+				} else {
+					defaultAddons = '&premium-templates=on&premium-equal-height=on&premium-wrapper-link=on&pa-display-conditions=on&premium-duplicator';
+				}
+			}
+			
 
 			// We don't need to check the source as it'll always be 'wizard or default', so the 2nd part of the condition is always true.
 			if (updateCustomTemplate) {

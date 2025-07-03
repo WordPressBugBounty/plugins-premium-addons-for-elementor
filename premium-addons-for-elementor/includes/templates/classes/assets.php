@@ -75,13 +75,7 @@ if ( ! class_exists( 'Premium_Templates_Assets' ) ) {
 		 */
 		public function enqueue_preview_styles() {
 
-			wp_enqueue_style(
-				'pa-preview',
-				PREMIUM_ADDONS_URL . 'assets/editor/templates/css/preview.css',
-				array(),
-				PREMIUM_ADDONS_VERSION,
-				'all'
-			);
+
 		}
 
 		/**

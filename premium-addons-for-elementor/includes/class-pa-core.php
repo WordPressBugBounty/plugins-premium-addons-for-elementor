@@ -124,6 +124,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 				$current_time = gmdate( 'j F, Y', time() );
 
+			    update_option( 'pa_complete_wizard', true );
 				update_option( 'pa_install_time', $current_time );
 
 				$api_url = 'https://feedbackpa.leap13.com/wp-json/install/v2/add';
@@ -151,6 +152,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 		public static function uninstall() {
 
+			delete_option( 'pa_complete_wizard' );
 			delete_option( 'pa_install_time' );
 			delete_option( 'pa_review_notice' );
 

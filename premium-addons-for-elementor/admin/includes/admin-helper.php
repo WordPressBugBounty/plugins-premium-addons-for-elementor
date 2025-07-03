@@ -140,7 +140,7 @@ class Admin_Helper {
 
 			// Beta tester.
 			// Not currently needed.
-			// Beta_Testers::get_instance();
+			// Beta_Testers::get_instance();.
 
 			// PA Duplicator.
 			if ( self::check_duplicator() ) {
@@ -322,6 +322,8 @@ class Admin_Helper {
 
 			$theme_slug = Helper_Functions::get_installed_theme();
 
+			$is_second_run = get_option( 'pa_complete_wizard' ) ? false : true;
+
 			$localized_data = array(
 				'settings'               => array(
 					'ajaxurl'           => admin_url( 'admin-ajax.php' ),
@@ -329,6 +331,7 @@ class Admin_Helper {
 					'unused_nonce'      => wp_create_nonce( 'pa-disable-unused' ),
 					'generate_nonce'    => wp_create_nonce( 'pa-generate-nonce' ),
 					'site_cursor_nonce' => wp_create_nonce( 'pa-site-cursor-nonce' ),
+					'isSecondRun'       => $is_second_run,
 					'theme'             => $theme_slug,
 					'i18n'              => array(
 						'successMsg' => __( 'Your submission was successful.', 'premium-addons-for-elementor' ),
@@ -346,6 +349,11 @@ class Admin_Helper {
 					),
 				),
 			);
+
+			// Only add savedFeatures if it's the second run.
+			if ( $is_second_run ) {
+				$localized_data['settings']['savedFeatures'] = get_option( 'pa_saved_features', array() );
+			}
 
 			// Add PAPRO Rollback Confirm message if PAPRO installed.
 			if ( Helper_Functions::check_papro_version() ) {
@@ -379,7 +387,9 @@ class Admin_Helper {
 				'paWizardSettings',
 				array(
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
+					'nonce'         => wp_create_nonce( 'pa-wizard-nonce' ),
 					'exitWizardURL' => admin_URL( 'plugins.php' ),
+					'isSecondRun'   => get_option( 'pa_complete_wizard' ) ? false : true,
 					'dashboardURL'  => admin_URL( 'admin.php' ) . '?page=premium-addons#tab=elements',
 					'newPageURL'    => Plugin::$instance->documents->get_create_new_post_url(),
 				),
@@ -766,24 +776,30 @@ class Admin_Helper {
 		remove_submenu_page( self::$page_slug, self::$page_slug );
 	}
 
+	/**
+	 * Initializes the setup wizard Add the PRO popup template.
+	 *
+	 * @access public
+	 * @since 3.20.8
+	 */
 	public function pa_init_setup_wizard() {
 
 		include_once PREMIUM_ADDONS_PATH . 'admin/includes/setup-wizard/main-view.php';
-		// Add the PRO popup template
+		// Add the PRO popup template.
 		include_once PREMIUM_ADDONS_PATH . 'admin/includes/templates/pro-popup.php';
 	}
 
 	/**
-	 * Render Setting Tabs
+	 * Render Setting Tabs.
 	 *
-	 * Render the final HTML content for admin setting tabs
+	 * Render the final HTML content for admin setting tabs.
 	 *
 	 * @access public
 	 * @since 3.20.8
 	 */
 	public function render_setting_tabs() {
 
-		// add the PRO popup template
+		// add the PRO popup template.
 		include_once PREMIUM_ADDONS_PATH . 'admin/includes/templates/pro-popup.php';
 
 		?>
@@ -870,6 +886,12 @@ class Admin_Helper {
 		<?php
 	}
 
+	/**
+	 * Retrieves banner strings.
+	 *
+	 * @access public
+	 * @return array|null
+	 */
 	public function get_banner_strings() {
 
 		if ( ! Helper_Functions::check_papro_version() ) {
@@ -900,9 +922,9 @@ class Admin_Helper {
 	}
 
 	/**
-	 * Save Settings
+	 * Save Settings.
 	 *
-	 * Save elements settings using AJAX
+	 * Save elements settings using AJAX.
 	 *
 	 * @access public
 	 * @since 3.20.8
@@ -923,7 +945,44 @@ class Admin_Helper {
 
 		update_option( 'pa_save_settings', $elements );
 
+		// Save the global features only if it's the second run.
+		$is_second_run = get_option( 'pa_complete_wizard' ) ? false : true;
+		if ( $is_second_run ) {
+			self::update_global_features_option($settings);
+		}
+
+		if ( true === get_option( 'pa_complete_wizard' ) ) {
+			update_option( 'pa_complete_wizard', false );
+		}
+
 		wp_send_json_success();
+	}
+
+	private static function update_global_features_option($settings) {
+
+		$global_features = array(
+			'premium-mscroll',
+			'premium-templates',
+			'pa-display-conditions',
+			'premium-equal-height',
+			'premium-global-cursor',
+			'premium-global-badge',
+			'premium-shape-divider',
+			'premium-global-tooltips',
+			'premium-floating-effects',
+			'premium-cross-domain',
+			'premium-duplicator',
+			'premium-wrapper-link',
+		);
+
+		$features = array();
+		foreach ( $global_features as $feature ) {
+			if ( isset( $settings[ $feature ] ) && 'on' === $settings[ $feature ] ) {
+				$features[] = $feature;
+			}
+		}
+
+		update_option( 'pa_saved_features', $features );
 	}
 
 	/**
@@ -1070,12 +1129,14 @@ class Admin_Helper {
 	}
 
 	/**
-	 * Get Info By Key
+	 * Get Info By Key.
 	 *
-	 * Returns elements by its key
+	 * Returns elements by its key.
 	 *
 	 * @since 4.10.49
 	 * @access public
+	 *
+	 * @param string $key element key.
 	 *
 	 * @return array
 	 */
@@ -1200,7 +1261,7 @@ class Admin_Helper {
 	}
 
 	/**
-	 * Check SVG Draw
+	 * Check SVG Draw.
 	 *
 	 * @since 4.9.26
 	 * @access public
@@ -1283,14 +1344,14 @@ class Admin_Helper {
 	}
 
 	/**
-	 * Get Integrations Settings
+	 * Get Integrations Settings.
 	 *
-	 * Get plugin integrations settings
+	 * Get plugin integrations settings.
 	 *
 	 * @since 3.20.9
 	 * @access public
 	 *
-	 * @return array $settings integrations settings
+	 * @return array $settings integrations settings.
 	 */
 	public static function get_integrations_settings() {
 

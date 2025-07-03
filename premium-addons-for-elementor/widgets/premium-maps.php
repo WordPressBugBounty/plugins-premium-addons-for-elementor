@@ -660,6 +660,17 @@ class Premium_Maps extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'linked_carousel_id',
+			array(
+				'label'       => __( 'Connected Carousel Widget ID', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => __( 'Add the CSS ID given to Premium Carousel to link carousel slides with the maps marker. ', 'premium-addons-for-elementor' ) .
+					'<a href="https://premiumaddons.com/docs/how-to-link-google-maps-markers-carousel/" target="_blank">' . __( 'Learn more', 'premium-addons-for-elementor' ) . '</a>',
+				'label_block' => true,
+			)
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1227,6 +1238,7 @@ class Premium_Maps extends Widget_Base {
 			'cluster_icon_size' => $cluster_icon_size,
 			'drag'              => $settings['disable_drag'],
 			'loadScroll'        => $settings['load_on_visible'],
+			'linkedCarouselId'  => $settings['linked_carousel_id'],
 		);
 
 		$this->add_render_attribute(

@@ -172,8 +172,8 @@ class Module {
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'any',
 				'options'   => array(
-					'all' => __( 'All Conditions Are Met', 'premium-addons-for-elementor' ),
 					'any' => __( 'Any Condition is Met', 'premium-addons-for-elementor' ),
+					'all' => __( 'All Conditions Are Met', 'premium-addons-for-elementor' ),
 				),
 				'condition' => array(
 					'pa_display_conditions_switcher' => 'yes',
@@ -284,13 +284,7 @@ class Module {
 			)
 		);
 
-		$should_apply = apply_filters( 'pa_display_conditions_values', true );
-
 		$values = $repeater->get_controls();
-
-		if ( $should_apply ) {
-			// $values = array_values( $values );
-		}
 
 		$element->add_control(
 			'pa_condition_repeater',

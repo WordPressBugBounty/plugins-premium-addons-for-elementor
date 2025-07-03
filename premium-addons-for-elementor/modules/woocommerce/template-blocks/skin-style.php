@@ -806,15 +806,18 @@ abstract class Skin_Style {
 
 		$posts_per_page = self::$query_args['posts_per_page'];
 
-		$args    = self::$query_args;
-		$orderby = $args['orderby'];
+		$orderby = self::$query_args['orderby'];
+
 
 		if ( 'main' === $settings['query_type'] ) {
 
-			$args = array(
+			$args = apply_filters( 'pa_woo_main_query_args', array(
 				'post_type'   => 'product',
 				'product_cat' => $args['product_cat'],
-			);
+			), self::$query_args );
+
+		} else {
+			$args	= self::$query_args;
 
 		}
 

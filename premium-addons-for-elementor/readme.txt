@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.1
 Requires PHP: 7.4
-Stable Tag: 4.11.15
+Stable Tag: 4.11.16
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.16 =
+
+- Tweak: Added "DC" icon when Display Condition is enabled.
+- Tweak: Setup Wizard improved for better user experience.
+- Fixed: Returning Visitor Display Condition causes unnecessary cookies to be stored.
 
 = 4.11.15 =
 

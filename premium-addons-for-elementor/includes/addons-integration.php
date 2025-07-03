@@ -76,33 +76,27 @@ class Addons_Integration {
 
 		self::$integrations = Admin_Helper::get_integrations_settings();
 
+		add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_preview_styles' ) );
 		add_action( 'elementor/editor/before_enqueue_styles', array( $this, 'enqueue_editor_styles' ) );
-
 		add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'load_live_editor_modal' ) );
 
-		add_action( 'elementor/editor/after_enqueue_scripts', array( $this, 'live_editor_enqueue' ) );
+		add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'before_enqueue_scripts' ) );
+		add_action( 'elementor/editor/after_enqueue_scripts', array( $this, 'after_enqueue_scripts' ) );
 
 		add_action( 'wp_ajax_handle_live_editor', array( $this, 'handle_live_editor' ) );
-
 		add_action( 'wp_ajax_check_temp_validity', array( $this, 'check_temp_validity' ) );
-
 		add_action( 'wp_ajax_update_template_title', array( $this, 'update_template_title' ) );
+		add_action( 'wp_ajax_get_elementor_template_content', array( $this, 'get_template_content' ) );
+
+		add_action( 'wp_ajax_insert_cf_form', array( $this, 'insert_cf_form' ) );
 
 		add_action( 'wp_ajax_get_pinterest_token', array( $this, 'get_pinterest_token' ) );
 		add_action( 'wp_ajax_get_pinterest_boards', array( $this, 'get_pinterest_boards' ) );
-		add_action( 'wp_ajax_insert_cf_form', array( $this, 'insert_cf_form' ) );
-
 		add_action( 'wp_ajax_get_tiktok_token', array( $this, 'get_tiktok_token' ) );
 
-		add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'enqueue_editor_scripts' ) );
-
-		add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_preview_styles' ) );
 
 		add_action( 'elementor/frontend/after_register_styles', array( $this, 'register_frontend_styles' ) );
-
 		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_frontend_scripts' ) );
-
-		add_action( 'wp_ajax_get_elementor_template_content', array( $this, 'get_template_content' ) );
 
 		add_action( 'elementor/controls/register', array( $this, 'init_pa_controls' ) );
 		add_action( 'elementor/widgets/register', array( $this, 'widgets_area' ) );
@@ -114,8 +108,6 @@ class Addons_Integration {
 		}
 
 		add_action( 'elementor/elements/categories_registered', array( $this, 'register_widgets_category' ), 9 );
-
-		add_action( 'elementor/editor/after_enqueue_scripts', array( $this, 'after_enqueue_scripts' ) );
 
 		$cross_enabled = isset( self::$modules['premium-cross-domain'] ) ? self::$modules['premium-cross-domain'] : 1;
 
@@ -132,31 +124,8 @@ class Addons_Integration {
 			add_filter( 'wp-optimize-minify-default-exclusions', array( $this, 'exclude_pa_assets_from_wp_optimize' ) );
 		}
 
+		// Promote PAPRO Elements.
 		add_filter( 'elementor/editor/localize_settings', array( $this, 'add_papro_elements' ) );
-	}
-
-	/**
-	 * Live Editor Enqueue.
-	 *
-	 * @access public
-	 * @since 4.8.10
-	 */
-	public function live_editor_enqueue() {
-
-		wp_enqueue_script(
-			'live-editor',
-			PREMIUM_ADDONS_URL . 'assets/editor/js/live-editor.js',
-			array( 'elementor-editor', 'jquery' ),
-			PREMIUM_ADDONS_VERSION,
-			true
-		);
-
-		$live_editor_data = array(
-			'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
-			'nonce'   => wp_create_nonce( 'pa-live-editor' ),
-		);
-
-		wp_localize_script( 'live-editor', 'liveEditor', $live_editor_data );
 	}
 
 	/**
@@ -339,15 +308,30 @@ class Addons_Integration {
 	public function after_enqueue_scripts() {
 
 		wp_enqueue_script(
-			'pa-eq-editor',
-			PREMIUM_ADDONS_URL . 'assets/editor/js/editor.js',
+			'live-editor',
+			PREMIUM_ADDONS_URL . 'assets/editor/js/live-editor.js',
+			array( 'elementor-editor', 'jquery' ),
+			PREMIUM_ADDONS_VERSION,
+			true
+		);
+
+		$live_editor_data = array(
+			'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
+			'nonce'   => wp_create_nonce( 'pa-live-editor' ),
+		);
+
+		wp_localize_script( 'live-editor', 'liveEditor', $live_editor_data );
+
+		wp_enqueue_script(
+			'pa-controls-handlers',
+			PREMIUM_ADDONS_URL . 'assets/editor/js/controls-handlers.js',
 			array( 'elementor-editor', 'jquery' ),
 			PREMIUM_ADDONS_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'pa-eq-editor',
+			'pa-controls-handlers',
 			'PremiumSettings',
 			array(
 				'ajaxurl'      => esc_url( admin_url( 'admin-ajax.php' ) ),
@@ -358,32 +342,8 @@ class Addons_Integration {
 
 		$time_limit = ini_get( 'max_execution_time' );
 
-		if ( $time_limit < 400 ) {
-
-			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'editor-issue', 'wp-editor', 'panel-issues' );
-
-			$disable_unused_url = add_query_arg(
-				array(
-					'page'      => 'premium-addons',
-					'pa-action' => 'unused',
-					'#tab'      => 'elements',
-				),
-				esc_url( admin_url( 'admin.php' ) )
-			);
-
-			// wp_localize_script(
-			// 'pa-eq-editor',
-			// 'PremiumEditorLinks',
-			// array(
-			// $link,
-			// $disable_unused_url,
-			// )
-			// );
-
-		}
-
 		wp_localize_script(
-			'pa-eq-editor',
+			'pa-controls-handlers',
 			'PremiumPanelSettings',
 			array(
 				'papro_installed' => Helper_Functions::check_papro_version(),
@@ -1175,36 +1135,17 @@ class Addons_Integration {
 	 */
 	public function enqueue_preview_styles() {
 
-		$custom_css = '
-		.e-preview--show-hidden-elements[data-elementor-device-mode="mobile"] .elementor-edit-area-active .elementor-hidden-mobile.premium-addons-element {
-			display: none;
-		}
-
-		.e-preview--show-hidden-elements[data-elementor-device-mode="tablet"] .elementor-edit-area-active .elementor-hidden-tablet.premium-addons-element {
-			display: none;
-		}
-
-		.e-preview--show-hidden-elements[data-elementor-device-mode="mobile_extra"] .elementor-edit-area-active .elementor-hidden-mobile_extra.premium-addons-element {
-			display: none;
-		}
-
-		.e-preview--show-hidden-elements[data-elementor-device-mode="tablet_extra"] .elementor-edit-area-active .elementor-hidden-tablet_extra.premium-addons-element {
-			display: none;
-		}
-
-		.e-preview--show-hidden-elements[data-elementor-device-mode="widescreen"] .elementor-edit-area-active .elementor-hidden-widescreen.premium-addons-element {
-			display: none;
-		}
-
-		.e-preview--show-hidden-elements[data-elementor-device-mode="desktop"] .elementor-edit-area-active .elementor-hidden-desktop.premium-addons-element {
-			display: none;
-		}';
+		wp_enqueue_style(
+			'pa-preview',
+			PREMIUM_ADDONS_URL . 'assets/editor/templates/css/preview.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
 
 		wp_enqueue_style( 'pa-prettyphoto' );
 
 		wp_enqueue_style( 'premium-addons' );
-
-		wp_add_inline_style( 'premium-addons', $custom_css );
 
 		wp_enqueue_style( 'pa-slick' );
 	}
@@ -1311,7 +1252,15 @@ class Addons_Integration {
 	 * @since 3.2.5
 	 * @access public
 	 */
-	public function enqueue_editor_scripts() {
+	public function before_enqueue_scripts() {
+
+		wp_enqueue_script(
+			'pa-editor-behavior',
+			PREMIUM_ADDONS_URL . 'assets/editor/js/pa-editor-behavior.min.js',
+			array( 'elementor-editor', 'jquery' ),
+			time(),
+			true
+		);
 
 		$map_enabled = isset( self::$modules['premium-maps'] ) ? self::$modules['premium-maps'] : 1;
 

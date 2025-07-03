@@ -174,15 +174,15 @@ class Feedback {
 								<textarea name="suggestions" rows="2"></textarea>
 							</label>
 						</section>
-						<section class="messages-wrap hidden" data-feedback>
-							<?php if( ini_get( 'max_execution_time' ) < 300 ) :
+						<section class="messages-wrap" data-feedback>
+
+							<p class="options-wrap pa-info-notice">
+								<?php
 								$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'plugins-page', 'wp-dash', 'deactivate-form' );
-							?>
-								<p class="options-wrap pa-info-notice">
-									<?php echo __( 'Having Elementor editor not loading issue? Your website PHP limits might be the reason. Here\'s', 'premium-addons-for-elementor') .
-											sprintf( '<a target="_blank" href="%s">%s</a>', $link, __(' how to increase the PHP limits', 'premium-addons-for-elementor') ); ?>
-								</p>
-							<?php endif; ?>
+								echo __( 'Having speed issues or Elementor editor not loading? Your website PHP limits might be the reason. Here\'s ', 'premium-addons-for-elementor') .
+										sprintf( '<a target="_blank" href="%s">%s</a>', $link, __('how to increase the PHP limits', 'premium-addons-for-elementor') ); ?>
+							</p>
+
 							<p><?php echo esc_html(__( 'Would you like to share your e-mail and elements usage with us so that we can write you back?', 'premium-addons-for-elementor' )); ?></p>
 						</section>
 						<section class="options-wrap hidden" data-feedback>

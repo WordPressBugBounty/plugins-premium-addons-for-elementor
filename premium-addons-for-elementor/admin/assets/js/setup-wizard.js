@@ -9,6 +9,8 @@
 		_this.siteType = null;
 		_this.paNavInstance = new PremiumAddonsNavigation();
 		_this.debounce = false;
+		_this.isSecondRun = paWizardSettings.isSecondRun;
+
 
 		_this.init = function () {
 			_this.addWizardFonts();
@@ -51,8 +53,8 @@
 				function () {
 					var id = $(this).find('input').attr('id'),
 						isChecked = $(this).find('input').prop('checked');
-
 					$("input[name='" + id + "']").prop('checked', isChecked);
+
 				}
 			)
 
@@ -66,6 +68,7 @@
 				}
 			});
 		};
+
 
 		_this.handleProCTA = function () {
 			_this.paNavInstance.handlePaproActions();
@@ -111,12 +114,12 @@
 
 				$(this).parent().addClass('pa-step-active');
 
-				if (!$('#pa-step-2-content .pa-wz-recs').hasClass('toggled')) {
+				if (!$('#pa-step-widgets-content .pa-wz-recs').hasClass('toggled')) {
 
-					$('#pa-step-2-content .pa-wz-toggler').click();
+					$('#pa-step-widgets-content .pa-wz-toggler').click();
 
 					setTimeout(() => {
-						$('#pa-step-2-content .pa-wz-recs').css('height', 'calc( 100px + 6vh)');
+						$('#pa-step-widgets-content .pa-wz-recs').css('height', 'calc( 100px + 6vh)');
 					}, 400);
 				}
 
@@ -170,22 +173,37 @@
 			});
 		};
 
+		var maxStepReached = 1;
 		_this.navButtonsHandler = function () {
-			$('#premium-addons-setup-wizard .next-arrow, #premium-addons-setup-wizard .prev-arrow').on('click.paWizardNav', function () {
 
+
+			$('#premium-addons-setup-wizard .next-arrow, #premium-addons-setup-wizard .prev-arrow , #premium-addons-setup-wizard  .pa-wz-step').on('click.paWizardNav', function () {
 				if (_this.debounce) return;
 				_this.debounce = true;
 
 				setTimeout(() => { _this.debounce = false; }, 1000); // same duration of content transition
 
 				var currentStep = Number($('#premium-addons-setup-wizard').attr('pa-current-step')),
-					newStep;
+				    newStep;
 
 				if ($(this).hasClass('prev-arrow')) {
 					newStep = currentStep - 1;
 
 				} else if ($(this).hasClass('next-arrow')) {
 					newStep = currentStep + 1;
+					maxStepReached = newStep;
+
+					if(currentStep === 2){
+						_this.paNavInstance.saveElementsSettings('elements', 'wizard', false);
+					}
+
+				} else if ($(this).hasClass('pa-wz-step')) {
+					var clickedStep = Number($(this).data('step'));
+					if (clickedStep <= maxStepReached) {
+						newStep = clickedStep;
+					} else {
+						return;
+					}
 				}
 
 				// update current step flag.
@@ -207,28 +225,36 @@
 				$('#premium-addons-setup-wizard .prev-arrow').attr('pa-step-id', newStep - 1);
 				$('#premium-addons-setup-wizard .next-arrow').attr('pa-step-id', newStep + 1);
 
-				$('#pa-step-' + newStep + '-content').removeClass('pa-hidden-content').addClass('pa-show-content');
+				var stepKey = $('.pa-wz-step[data-step="' + newStep + '"]').data('step-key');
+				$('#pa-step-' + stepKey + '-content').removeClass('pa-hidden-content').addClass('pa-show-content');
 
-				// update the active progressbar.
-				if (newStep > currentStep) {
-					$('#pa-step-' + newStep).addClass('pa-step-active');
-				} else {
+				//update the active step.
+				$('.pa-wz-step').each(function () {
+					var stepIndex = Number($(this).data('step'));
+					$(this).toggleClass('pa-step-active', stepIndex <= newStep);
+				});
 
-					$('#pa-step-' + currentStep).removeClass('pa-step-active');
-				}
+				//update the active progressbar.
+				var visualStep = $('.pa-wz-step.pa-step-active').length;
+				var totalSteps = Number($('.pa-wz-step').length+1);
+				var isLastStep = newStep === totalSteps;
 
-				$('.pa-step-progress').css('height', 'calc( ( ' + (newStep - 1) + ' ) * 9vh + 6.75vh )');
+				var progressHeight = isLastStep
+					? `calc( ( ${visualStep - 1} ) * 9vh )`
+					: `calc( ( ${visualStep - 1} ) * 9vh + 6.75vh )`;
 
+				$('.pa-step-progress').css('height', progressHeight);
 			});
 		};
 
+
 		_this.recommendedListHandler = function () {
 			// unfold effect.
-			var $unfoldContent = $('#pa-step-2-content .pa-wz-recs');
+			var $unfoldContent = $('#pa-step-widgets-content .pa-wz-recs');
 
 			$unfoldContent.css('height', 'calc( 100px + 6vh)');
 
-			$('#pa-step-2-content .pa-wz-toggler').on('click.paWizardToggler', function (e) {
+			$('#pa-step-widgets-content .pa-wz-toggler').on('click.paWizardToggler', function (e) {
 				var _this = this;
 				e.preventDefault();
 
@@ -243,7 +269,7 @@
 				} else {
 
 					$unfoldContent.css("overflow", "hidden");
-					$unfoldContent.animate({ height: $('#pa-step-2-content .pa-wz-recs-row:first-child').outerHeight() * 2 + 'px' }, function () {
+					$unfoldContent.animate({ height: $('#pa-step-widgets-content .pa-wz-recs-row:first-child').outerHeight() * 2 + 'px' }, function () {
 						$(_this).text('See More');
 					}).addClass("toggled");
 				}
@@ -255,19 +281,19 @@
 		_this.wizardToggleListHandler = function () {
 
 			// hide the fade effect on scroll as it prevent the list click event.
-			$('#pa-step-2-content .pa-wz-listing-outer-wrapper').on('mouseenter', function () {
+			$('#pa-step-widgets-content .pa-wz-listing-outer-wrapper').on('mouseenter', function () {
 				if (!$(this).hasClass('scrolled')) {
 					$(this).addClass('scrolled');
 					$('#pa-wz-list-gradient').css('z-index', '-1');
 				}
 			});
 
-			$('#pa-step-2-content .pa-wz-listing-outer-wrapper').on('mouseleave', function () {
+			$('#pa-step-widgets-content .pa-wz-listing-outer-wrapper').on('mouseleave', function () {
 				$(this).removeClass('scrolled');
 				$('#pa-wz-list-gradient').css('z-index', '1');
 			});
 
-			$('#pa-step-2-content .pa-wz-listing-wrapper').on('click.paWizardListing', function (e) {
+			$('#pa-step-widgets-content .pa-wz-listing-wrapper').on('click.paWizardListing', function (e) {
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -278,8 +304,8 @@
 					$(this).removeClass('opened');
 				} else {
 
-					$('#pa-step-2-content .pa-wz-listing-wrapper').removeClass('opened');
-					$('#pa-step-2-content .pa-wz-list-content').slideUp('slow');
+					$('#pa-step-widgets-content .pa-wz-listing-wrapper').removeClass('opened');
+					$('#pa-step-widgets-content .pa-wz-list-content').slideUp('slow');
 
 					$(this).addClass('opened');
 					$(this).find('.pa-wz-list-content').slideDown('slow');
@@ -287,7 +313,7 @@
 			});
 
 			// stops the switcher click event from bubbling up.
-			$('#pa-step-2-content .pa-wz-list-content').on("click", function (e) {
+			$('#pa-step-widgets-content .pa-wz-list-content').on("click", function (e) {
 				e.stopPropagation();
 			});
 		};

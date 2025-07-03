@@ -1,10 +1,10 @@
 <?php
-
 	/**
 	 * PA Setup Wizard Main View.
 	 *
 	 * @package Setup Wizard.
 	 */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -22,12 +22,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$memory_limit         = wp_convert_hr_to_bytes( WP_MEMORY_LIMIT );
 	$hide_memory_limit    = $memory_limit < 314572800 ? false : true;
 	$time_limit           = ini_get( 'max_execution_time' );
-	$hide_time_limit      = $time_limit < 120 && $time_limit != 0 ? false : true;
+	$hide_time_limit      = ( $time_limit < 120 && 0 != $time_limit ) ? false : true;
 	$render_memory_notice = ! ( $hide_memory_limit && $hide_time_limit );
 	$divider_border       = $render_memory_notice ? 'pa-bt-border-dim' : '';
+
+	$is_second_run = get_option( 'pa_complete_wizard' ) ? false : true;
+	$current_step  = $is_second_run ? 2 : 1;
+
+	if ( $is_second_run ) {
+		unset( $steps['welcome'] );
+	}
 	?>
 
-	<div id="premium-addons-setup-wizard" class="pa-wz-outer-wrapper pa-wz-flex pa-wz-flex-d-col" pa-current-step="1">
+	<div id="premium-addons-setup-wizard" class="pa-wz-outer-wrapper pa-wz-flex pa-wz-flex-d-col "
+	pa-current-step="<?php echo esc_attr( $current_step ); ?>"
+	data-second-run="<?php echo esc_attr( $is_second_run ); ?>"
+	>
 
 		<!-- Header -->
 		<div class="pa-wz-header pa-wz-flex pa-wz-justify-content-between pa-wz-align-items-center">
@@ -46,22 +56,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php if ( $render_memory_notice ) : ?>
 					<div class="pa-wz-extra-notice-wrapper pa-wz-flex pa-wz-flex-d-col" style="display:none">
 						<span class="extra-notice-txt">
-							<?php echo __( '<b>Heads up!</b> Too many widgets may slowdown Elementor or cause loading issues. Consider disabling unused widgets or <a href="' . Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'premium-addons-for-elementor', 'wp-dash', 'wizard' ) . '" target="_blank">upgrading your PHP memory.</a>', 'premium-addons-for-elementor' ); ?>
+							<?php
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo __( '<b>Heads up!</b> Too many widgets may slowdown Elementor or cause loading issues. Consider disabling unused widgets or <a href="' . Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'premium-addons-for-elementor', 'wp-dash', 'wizard' ) . '" target="_blank">upgrading your PHP memory.</a>', 'premium-addons-for-elementor' );
+							?>
 						</span>
 					</div>
 				<?php endif; ?>
 
 				<?php
-					$index = 1;
-				foreach ( $steps as $step ) {
-					$step_cls = 1 === $index ? 'pa-wz-step pa-step-active' : 'pa-wz-step';
+					$index    = $current_step;
+					$step_num = 1;
+				foreach ( $steps as $key => $step ) {
+					$step_cls = $current_step === $index ? 'pa-wz-step pa-step-active' : 'pa-wz-step';
 					?>
-							<div id ="pa-step-<?php echo esc_attr( $index ); ?>" class="<?php echo esc_attr( $step_cls ); ?>">
-								<span class="pa-wz-step-index pa-wz-align-items-center pa-wz-justify-content-center"><?php printf( __( '%1$s', 'premium-addons-for-elementor' ), esc_html( $index ) ); ?></span>
-								<span class="pa-wz-step-title pa-wz-align-items-center"><?php printf( __( '%1$s', 'premium-addons-for-elementor' ), esc_html( $step ) ); ?></span>
+							<div id ="pa-step-<?php echo esc_attr( $key ); ?>" class="<?php echo esc_attr( $step_cls ); ?>" data-step="<?php echo esc_attr( $index ); ?>" data-step-key="<?php echo esc_attr( $key ); ?>">
+								<span class="pa-wz-step-index pa-wz-align-items-center pa-wz-justify-content-center">
+								<?php
+								// translators: %s is the step number.
+								printf( esc_html__( '%1$s', 'premium-addons-for-elementor' ), esc_html( $step_num ) );
+								?>
+								</span>
+								<span class="pa-wz-step-title pa-wz-align-items-center">
+								<?php
+								// translators: %s is the step key.
+								printf( esc_html__( '%1$s', 'premium-addons-for-elementor' ), esc_html( $step ) );
+								?>
+								</span>
 						</div>
 						<?php
 						++$index;
+						++$step_num;
 				}
 				?>
 			</div>
@@ -69,15 +94,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<!-- Step Content -->
 			<div class="pa-wz-content-wrappers">
 				<?php
-					$content_index = 0;
+					$content_index = $current_step;
 				foreach ( array_keys( $steps ) as $index => $key ) {
-					++$content_index;
-					$content_cls = 1 === $content_index ? 'pa-wz-step-content' : 'pa-wz-step-content pa-hidden-content';
+					$content_cls = $current_step === $content_index ? 'pa-wz-step-content' : 'pa-wz-step-content pa-hidden-content';
 					?>
-							<div id ="pa-step-<?php echo esc_attr( $content_index ); ?>-content" class="<?php echo esc_attr( $content_cls ); ?>">
+							<div id ="pa-step-<?php echo esc_attr( $key ); ?>-content" class="<?php echo esc_attr( $content_cls ); ?>">
 							<?php include_once PREMIUM_ADDONS_PATH . 'admin/includes/setup-wizard/content-views/' . $key . '.php'; ?>
 							</div>
 						<?php
+						++$content_index;
 				}
 				?>
 			</div>
@@ -87,7 +112,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php if ( $render_memory_notice ) : ?>
 			<div class="pa-wz-notice-wrapper pa-wz-flex">
 				<span class="pa-wz-notice-inner-wrapper pa-wz-flex">
-					<?php echo __( '⚠️ <b>RECOMMENDED SETUP</b> Your website needs a higher WP Memeory Limit and PHP Time Limit. <a href="https://premiumaddons.com/upgrade/limits" target="_blank">Learn How to Fix</a>', 'premium-addons-for-elementor' ); ?>
+					<?php echo __( '⚠️ <b>RECOMMENDED SETUP</b> Your website needs a higher WP Memeory Limit and PHP Time Limit. <a href="https://premiumaddons.com/upgrade/limits" target="_blank">Learn How to Fix</a>', 'premium-addons-for-elementor' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</span>
 			</div>
 		<?php endif; ?>
@@ -102,6 +127,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</a>
 				<a class="next-arrow pa-wz-nav pa-wz-flex pa-wz-align-items-center" type="button" role="button" aria-label="Next" pa-step-id="1">
 					<?php echo esc_html_e( 'Next', 'premium-addons-for-elementor' ); ?>
+					<svg xmlns="http://www.w3.org/2000/svg" width="14" height="11.99" viewBox="0 0 14 11.99"><defs><style>.pa-next-1{fill:#231f20;}</style></defs><path class="pa-next-1" d="M14,5.99c0-.53-.22-1.03-.59-1.4L9.12.29c-.19-.19-.44-.29-.7-.29s-.52.1-.7.29c-.09.09-.17.2-.22.33-.05.12-.08.25-.08.38s.03.26.08.38c.05.12.13.23.22.33l3.29,3.28H1c-.27,0-.52.11-.71.29-.19.19-.29.44-.29.71s.11.52.29.71c.19.19.44.29.71.29h10l-3.29,3.29c-.19.19-.29.44-.3.71,0,.27.1.52.29.71.19.19.44.29.71.3.27,0,.52-.1.71-.29l4.29-4.3c.38-.37.59-.88.59-1.41Z"/></svg>
+				</a>
+				<a class="next-arrow pa-wz-nav pa-wz-flex pa-wz-align-items-center save-btn" type="button" role="button" aria-label="Save" pa-step-id="1">
+					<?php echo esc_html_e( 'Save & Continue', 'premium-addons-for-elementor' ); ?>
 					<svg xmlns="http://www.w3.org/2000/svg" width="14" height="11.99" viewBox="0 0 14 11.99"><defs><style>.pa-next-1{fill:#231f20;}</style></defs><path class="pa-next-1" d="M14,5.99c0-.53-.22-1.03-.59-1.4L9.12.29c-.19-.19-.44-.29-.7-.29s-.52.1-.7.29c-.09.09-.17.2-.22.33-.05.12-.08.25-.08.38s.03.26.08.38c.05.12.13.23.22.33l3.29,3.28H1c-.27,0-.52.11-.71.29-.19.19-.29.44-.29.71s.11.52.29.71c.19.19.44.29.71.29h10l-3.29,3.29c-.19.19-.29.44-.3.71,0,.27.1.52.29.71.19.19.44.29.71.3.27,0,.52-.1.71-.29l4.29-4.3c.38-.37.59-.88.59-1.41Z"/></svg>
 				</a>
 				<a class="pa-wz-nav pa-wz-flex pa-wz-align-items-center finish-btn" type="button" role="button" aria-label="Next" pa-step-id="1">

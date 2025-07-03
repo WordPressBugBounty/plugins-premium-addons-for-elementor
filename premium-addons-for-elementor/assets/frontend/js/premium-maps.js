@@ -6,7 +6,7 @@ jQuery(window).on("elementor/frontend/init", function () {
 
 	var PremiumMapsHandler = function ($scope, $) {
 
-		var $carouselWidgets = null,
+		var $linkedCarouselWidget = null,
 			mapElement = $scope.find(".premium_maps_map_height"),
 			mapSettings = mapElement.data("settings"),
 			mapStyle = mapElement.data("style"),
@@ -16,7 +16,7 @@ jQuery(window).on("elementor/frontend/init", function () {
 		var checkGoogleMapsLoaded = setInterval(function () {
 			if (typeof google !== "undefined" && google.maps) {
 				clearInterval(checkGoogleMapsLoaded);
-				//Once Google API is loaded, trigger the maps handler.
+				// Once Google API is loaded, trigger the maps handler.
 				setTimeout(function () {
 					triggerMap();
 				}, 150);
@@ -87,31 +87,28 @@ jQuery(window).on("elementor/frontend/init", function () {
 
 			map.markers = [];
 
-			$carouselWidgets = $(".maps-carousel .premium-carousel-wrapper");
+			$linkedCarouselWidget = $("#" + settings.linkedCarouselId + " .premium-carousel-wrapper");
+
 			// add markers
 			markers.each(function (index) {
 				addMarker(jQuery(this), map, autoOpen, hoverOpen, hoverClose, index, args.mapId);
 			});
 
-			if ($scope.hasClass('pa-maps-carousel')) {
-				$carouselWidgets.map(function (index, item) {
+			if ($linkedCarouselWidget.length > 0) {
 
-					$(item).find(".premium-carousel-inner").on("afterChange", function (event, slick, currentSlide) {
+				$linkedCarouselWidget.find(".premium-carousel-inner").on("afterChange", function (event, slick, currentSlide) {
 
-						premiumMapPopups.map(function (popup, index) {
+					premiumMapPopups.map(function (popup, index) {
 
-							popup.close();
-						});
-
-						if (premiumMapPopups[currentSlide])
-							premiumMapPopups[currentSlide].open(map, map.markers[currentSlide]);
-
+						popup.close();
 					});
+
+					if (premiumMapPopups[currentSlide])
+						premiumMapPopups[currentSlide].open(map, map.markers[currentSlide]);
 
 				});
 
 			}
-
 
 			if (mapSettings.cluster && window.markerClusterer && args.mapId) {
 
@@ -223,18 +220,18 @@ jQuery(window).on("elementor/frontend/init", function () {
 
 				google.maps.event.addListener(marker, "click", function () {
 
-					if ($carouselWidgets.length > 0) {
-						$carouselWidgets.map(function (index, item) {
-							var carouselSettings = $(item).data("settings");
+					if ($linkedCarouselWidget.length > 0) {
 
-							if (carouselSettings.navigation) {
+						var carouselSettings = $linkedCarouselWidget.data("settings");
 
-								if (-1 != carouselSettings.navigation.indexOf("#" + customID)) {
-									var slideIndex = carouselSettings.navigation.indexOf("#" + customID);
-									$(item).find(".premium-carousel-inner").slick("slickGoTo", slideIndex);
-								}
+						if (carouselSettings.navigation) {
+
+							if (-1 != carouselSettings.navigation.indexOf("#" + customID)) {
+								var slideIndex = carouselSettings.navigation.indexOf("#" + customID);
+								$linkedCarouselWidget.find(".premium-carousel-inner").slick("slickGoTo", slideIndex);
 							}
-						})
+						}
+
 
 					}
 
@@ -289,17 +286,17 @@ jQuery(window).on("elementor/frontend/init", function () {
 					//Used with Carousel Custom Navigation option
 					if (customID) {
 
-						if ($carouselWidgets.length) {
-							$carouselWidgets.map(function (index, item) {
-								var carouselSettings = $(item).data("settings");
+						if ($linkedCarouselWidget.length) {
 
-								if (carouselSettings.navigation) {
-									if (-1 != carouselSettings.navigation.indexOf("#" + customID)) {
-										var slideIndex = carouselSettings.navigation.indexOf("#" + customID);
-										$carouselWidgets.find(".premium-carousel-inner").slick("slickGoTo", slideIndex);
-									}
+							var carouselSettings = $linkedCarouselWidget.data("settings");
+
+							if (carouselSettings.navigation) {
+								if (-1 != carouselSettings.navigation.indexOf("#" + customID)) {
+									var slideIndex = carouselSettings.navigation.indexOf("#" + customID);
+									$linkedCarouselWidget.find(".premium-carousel-inner").slick("slickGoTo", slideIndex);
 								}
-							})
+							}
+
 
 						}
 
@@ -322,7 +319,7 @@ jQuery(window).on("elementor/frontend/init", function () {
 				})
 
 
-				if ($scope.hasClass('pa-maps-carousel'))
+				if ($linkedCarouselWidget.length > 0)
 					premiumMapPopups.push(infowindow);
 
 
