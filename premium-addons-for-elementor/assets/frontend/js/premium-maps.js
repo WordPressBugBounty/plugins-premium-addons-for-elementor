@@ -14,7 +14,9 @@ jQuery(window).on("elementor/frontend/init", function () {
 			premiumMapPopups = [];
 
 		var checkGoogleMapsLoaded = setInterval(function () {
-			if (typeof google !== "undefined" && google.maps) {
+			if (typeof google !== "undefined" &&
+				typeof google.maps !== "undefined" &&
+				typeof google.maps.Map === "function") {
 				clearInterval(checkGoogleMapsLoaded);
 				// Once Google API is loaded, trigger the maps handler.
 				setTimeout(function () {
@@ -87,7 +89,7 @@ jQuery(window).on("elementor/frontend/init", function () {
 
 			map.markers = [];
 
-			$linkedCarouselWidget = $("#" + settings.linkedCarouselId + " .premium-carousel-wrapper");
+			$linkedCarouselWidget = settings.linkedCarouselId ? $("#" + settings.linkedCarouselId + " .premium-carousel-wrapper") : [];
 
 			// add markers
 			markers.each(function (index) {

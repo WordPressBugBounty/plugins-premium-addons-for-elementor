@@ -501,6 +501,7 @@ class Assets_Manager {
 			$elements       = array_merge( $elements, $common_assets );
 			$indep_elements = array(
 				'premium-world-clock',
+				'premium-svg-drawer'
 			);
 
 		} else {

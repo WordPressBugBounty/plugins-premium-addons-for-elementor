@@ -45,7 +45,7 @@
 }
 
 .premium-menu-control select {
-	border-end-end-radius: 0px
+	border-end-end-radius: 0px;
 }
 
 .premium-menu-control input {
@@ -114,15 +114,15 @@
 	/* box-shadow: 0 2.5px 5px #b8b8b9; */
 }
 
-.switch input:checked+.slider {
+.switch input:checked + .slider {
 	background: #8dc900;
 }
 
-.switch input:focus+.slider {
+.switch input:focus + .slider {
 	box-shadow: 0 0 1px #18a4fd;
 }
 
-.switch input:checked+.slider:before {
+.switch input:checked + .slider:before {
 	-webkit-transform: translate3d(20px, -50%, 0);
 	transform: translate3d(20px, -50%, 0);
 }
@@ -140,8 +140,8 @@
 	border-radius: 50%;
 }
 
-#pa-settings .switch input:disabled+.pro-slider::after,
-#pa-features-settings .switch input:disabled+.pro-slider::after {
+#pa-settings .switch input:disabled + .pro-slider::after,
+#pa-features-settings .switch input:disabled + .pro-slider::after {
 	position: absolute;
 	font-family: "Dashicons";
 	content: "\f160";
@@ -917,8 +917,10 @@
 
 .pa-elements-tab .pa-elements-tab-link:hover,
 .pa-elements-tab .pa-elements-tab-link.active {
-	-webkit-filter: drop-shadow(-4.243px -4.243px 3px rgba(255, 255, 255, 0.5)) drop-shadow(4.243px 4.243px 3px rgba(191, 201, 210, 0.6));
-	filter: drop-shadow(-4.243px -4.243px 3px rgba(255, 255, 255, 0.5)) drop-shadow(4.243px 4.243px 3px rgba(191, 201, 210, 0.6));
+	-webkit-filter: drop-shadow(-4.243px -4.243px 3px rgba(255, 255, 255, 0.5))
+		drop-shadow(4.243px 4.243px 3px rgba(191, 201, 210, 0.6));
+	filter: drop-shadow(-4.243px -4.243px 3px rgba(255, 255, 255, 0.5))
+		drop-shadow(4.243px 4.243px 3px rgba(191, 201, 210, 0.6));
 	background-color: #ffffff;
 	color: #00a5e5;
 	outline: none;
@@ -927,7 +929,7 @@
 	box-shadow: none;
 }
 
-.pa-elements-tab .pa-elements-tab-link:hover+span {
+.pa-elements-tab .pa-elements-tab-link:hover + span {
 	opacity: 1;
 	-ms-transform: translate(20px, -50%);
 	-webkit-transform: translate(20px, -50%);
@@ -1160,7 +1162,7 @@
 	display: none;
 }
 
-.pa-section input[type="checkbox"]+label {
+.pa-section input[type="checkbox"] + label {
 	position: relative;
 	background: #ebebeb;
 	height: 16px;
@@ -1172,7 +1174,7 @@
 	border-radius: 4px;
 }
 
-.pa-section input[type="checkbox"]:checked+label {
+.pa-section input[type="checkbox"]:checked + label {
 	background: #00a5e5;
 	height: 16px;
 	width: 16px;
@@ -1180,7 +1182,7 @@
 	padding: 0;
 }
 
-.pa-section input[type="checkbox"]:checked+label:before {
+.pa-section input[type="checkbox"]:checked + label:before {
 	position: absolute;
 	content: "✔";
 	color: #fff;
@@ -1268,7 +1270,7 @@
 	margin-left: 0.3em;
 } */
 
-.pa-wht-lbl-settings label+span {
+.pa-wht-lbl-settings label + span {
 	font-family: "Poppins";
 	vertical-align: middle;
 }
@@ -1483,7 +1485,7 @@
 	border-radius: 10px 0 0 10px;
 }
 
-.pa-license-form input+span {
+.pa-license-form input + span {
 	-webkit-margin-start: 10px;
 	margin-inline-start: 10px;
 	font-weight: 600;
@@ -1521,7 +1523,7 @@
 	margin-bottom: 24px;
 }
 
-.papro-admin-notice>div {
+.papro-admin-notice > div {
 	-ms-flex-positive: 1;
 	-webkit-flex-grow: 1;
 	flex-grow: 1;
@@ -1645,7 +1647,7 @@
 	inset-inline-start: -2px;
 }
 
-#wp-admin-bar-premium-addons>.ab-item>i {
+#wp-admin-bar-premium-addons > .ab-item > i {
 	font-size: 18px !important;
 }
 
@@ -2463,7 +2465,7 @@
 	justify-content: space-between;
 }
 
-.premium-menu-control .wp-picker-open+.wp-picker-input-wrap {
+.premium-menu-control .wp-picker-open + .wp-picker-input-wrap {
 	width: 68%;
 	-js-display: flex;
 	display: -ms-flexbox;
@@ -2555,7 +2557,7 @@
 	-ms-flex-align: center;
 	align-items: center;
 	top: 6px;
-	right: 6px;
+	inset-inline-end: 6px;
 	width: 30px;
 	height: 30px;
 	color: #252c59;
@@ -2586,7 +2588,8 @@
 }
 
 .pa-deactivation-popup .pa-img-wrap {
-	margin-right: 10px;
+	-webkit-margin-end: 10px;
+	margin-inline-end: 10px;
 }
 
 .pa-deactivation-popup img {
@@ -2639,7 +2642,7 @@
 }
 
 .pa-deactivation-popup .buttons-wrap {
-	text-align: right;
+	text-align: end;
 }
 
 .pa-deactivation-popup .pa-deactivate-btn:hover {
@@ -2986,7 +2989,7 @@
 	}
 }
 
-.rtl .switch input:checked+.slider:before {
+.rtl .switch input:checked + .slider:before {
 	-webkit-transform: translate3d(-20px, -50%, 0);
 	transform: translate3d(-20px, -50%, 0);
 }
@@ -3025,7 +3028,7 @@
 	transform: translate(-30px, -50%);
 }
 
-.rtl .pa-elements-tab .pa-elements-tab-link:hover+span {
+.rtl .pa-elements-tab .pa-elements-tab-link:hover + span {
 	-webkit-transform: translate(-20px, -50%);
 	-ms-transform: translate(-20px, -50%);
 	transform: translate(-20px, -50%);
