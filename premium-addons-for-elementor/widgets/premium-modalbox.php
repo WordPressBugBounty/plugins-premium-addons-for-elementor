@@ -200,324 +200,12 @@ class Premium_Modalbox extends Widget_Base {
 
 		$draw_icon = $this->check_icon_draw();
 
-		$this->start_controls_section(
-			'premium_modal_box_selector_content_section',
-			array(
-				'label' => __( 'Content', 'premium-addons-for-elementor' ),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_header_switcher',
-			array(
-				'label'       => __( 'Header', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'label_on'    => 'show',
-				'label_off'   => 'hide',
-				'default'     => 'yes',
-				'description' => __( 'Enable or disable modal header', 'premium-addons-for-elementor' ),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_icon_selection',
-			array(
-				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
-					'noicon'    => __( 'None', 'premium-addons-for-elementor' ),
-					'fonticon'  => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Custom Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-				),
-				'default'     => 'noicon',
-				'condition'   => array(
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-				'label_block' => true,
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_font_icon_updated',
-			array(
-				'label'            => __( 'Select Icon', 'premium-addons-for-elementor' ),
-				'type'             => Controls_Manager::ICONS,
-				'fa4compatibility' => 'premium_modal_box_font_icon',
-				'condition'        => array(
-					'premium_modal_box_icon_selection'  => 'fonticon',
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-				'label_block'      => true,
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_image_icon',
-			array(
-				'label'       => __( 'Upload Image', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::MEDIA,
-				'dynamic'     => array( 'active' => true ),
-				'default'     => array(
-					'url' => Utils::get_placeholder_image_src(),
-				),
-				'condition'   => array(
-					'premium_modal_box_icon_selection'  => 'image',
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-				'label_block' => true,
-			)
-		);
-
-		$this->add_control(
-			'header_lottie_url',
-			array(
-				'label'       => __( 'Animation JSON URL', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::TEXT,
-				'dynamic'     => array( 'active' => true ),
-				'description' => 'Get JSON code URL from <a href="https://lottiefiles.com/" target="_blank">here</a>',
-				'label_block' => true,
-				'condition'   => array(
-					'premium_modal_box_icon_selection'  => 'animation',
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'header_lottie_loop',
-			array(
-				'label'        => __( 'Loop', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'return_value' => 'true',
-				'default'      => 'true',
-				'condition'    => array(
-					'premium_modal_box_icon_selection'  => 'animation',
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'header_lottie_reverse',
-			array(
-				'label'        => __( 'Reverse', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'return_value' => 'true',
-				'condition'    => array(
-					'premium_modal_box_icon_selection'  => 'animation',
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
-			'premium_modal_box_font_icon_size',
-			array(
-				'label'      => __( 'Icon Size', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-modal-box-modal-title i' => 'font-size: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .premium-modal-box-modal-title img' => 'width: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .premium-modal-box-modal-title svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
-				),
-				'condition'  => array(
-					'premium_modal_box_icon_selection!' => 'noicon',
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_title',
-			array(
-				'label'       => __( 'Title', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::TEXT,
-				'dynamic'     => array( 'active' => true ),
-				'description' => __( 'Add a title for the modal box', 'premium-addons-for-elementor' ),
-				'default'     => 'Modal Box Title',
-				'condition'   => array(
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-				'label_block' => true,
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_content_type',
-			array(
-				'label'       => __( 'Content to Show', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
-					'editor'   => __( 'Text Editor', 'premium-addons-for-elementor' ),
-					'template' => __( 'Elementor Template', 'premium-addons-for-elementor' ),
-				),
-				'default'     => 'editor',
-				'separator'   => 'before',
-				'label_block' => true,
-			)
-		);
-
-		$this->add_control(
-			'live_temp_content',
-			array(
-				'label'       => __( 'Template Title', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::TEXT,
-				'classes'     => 'premium-live-temp-title control-hidden',
-				'label_block' => true,
-				'condition'   => array(
-					'premium_modal_box_content_type' => 'template',
-				),
-			)
-		);
-
-		$this->add_control(
-			'modal_temp_live_btn',
-			array(
-				'type'        => Controls_Manager::BUTTON,
-				'label_block' => true,
-				'button_type' => 'default papro-btn-block',
-				'text'        => __( 'Create / Edit Template', 'premium-addons-for-elementor' ),
-				'event'       => 'createLiveTemp',
-				'condition'   => array(
-					'premium_modal_box_content_type' => 'template',
-				),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_content_temp',
-			array(
-				'label'       => __( 'Templates', 'premium-addons-for-elementor' ),
-				'type'        => Premium_Post_Filter::TYPE,
-				'classes'     => 'premium-live-temp-label',
-				'label_block' => true,
-				'multiple'    => false,
-				'source'      => 'elementor_library',
-				'condition'   => array(
-					'premium_modal_box_content_type' => 'template',
-				),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_content',
-			array(
-				'type'       => Controls_Manager::WYSIWYG,
-				'default'    => 'Modal Box Content',
-				'selector'   => '{{WRAPPER}} .premium-modal-box-modal-body',
-				'dynamic'    => array( 'active' => true ),
-				'condition'  => array(
-					'premium_modal_box_content_type' => 'editor',
-				),
-				'show_label' => false,
-			)
-		);
-
-		$this->add_control(
-			'dismissible',
-			array(
-				'label'        => __( 'Dismissible', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'prefix_class' => 'premium-modal-dismissible-',
-				'default'      => 'yes',
-				'separator'    => 'before',
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_upper_close',
-			array(
-				'label'     => __( 'Upper Close Button', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'yes',
-				'condition' => array(
-					'dismissible'                       => 'yes',
-					'premium_modal_box_header_switcher' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_lower_close',
-			array(
-				'label'     => __( 'Lower Close Button', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'yes',
-				'condition' => array(
-					'dismissible' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_close_text',
-			array(
-				'label'       => __( 'Text', 'premium-addons-for-elementor' ),
-				'default'     => __( 'Close', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::TEXT,
-				'dynamic'     => array( 'active' => true ),
-				'label_block' => true,
-				'condition'   => array(
-					'dismissible'                   => 'yes',
-					'premium_modal_box_lower_close' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_animation',
-			array(
-				'label'              => __( 'Entrance Animation', 'premium-addons-for-elementor' ),
-				'type'               => Controls_Manager::ANIMATION,
-				'default'            => 'fadeInDown',
-				'label_block'        => true,
-				'frontend_available' => true,
-				'render_type'        => 'template',
-
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_animation_duration',
-			array(
-				'label'     => __( 'Animation Duration', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'fast',
-				'options'   => array(
-					'slow' => __( 'Slow', 'premium-addons-for-elementor' ),
-					''     => __( 'Normal', 'premium-addons-for-elementor' ),
-					'fast' => __( 'Fast', 'premium-addons-for-elementor' ),
-				),
-				'condition' => array(
-					'premium_modal_box_animation!' => '',
-				),
-			)
-		);
-
-		$this->add_control(
-			'premium_modal_box_animation_delay',
-			array(
-				'label'              => __( 'Animation Delay', 'premium-addons-for-elementor' ) . ' (s)',
-				'type'               => Controls_Manager::NUMBER,
-				'default'            => '',
-				'step'               => 0.1,
-				'condition'          => array(
-					'premium_modal_box_animation!' => '',
-				),
-				'frontend_available' => true,
-			)
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'premium_modal_box_content_section',
-			array(
-				'label' => __( 'Trigger Options', 'premium-addons-for-elementor' ),
-			)
-		);
+				$this->start_controls_section(
+					'premium_modal_box_content_section',
+					array(
+						'label' => __( 'Trigger', 'premium-addons-for-elementor' ),
+					)
+				);
 
 		$this->add_control(
 			'premium_modal_box_display_on',
@@ -1223,6 +911,318 @@ class Premium_Modalbox extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-modal-trigger-container' => 'position:relative; z-index: {{VALUE}};',
 				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'premium_modal_box_selector_content_section',
+			array(
+				'label' => __( 'Content', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_header_switcher',
+			array(
+				'label'       => __( 'Header', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => 'show',
+				'label_off'   => 'hide',
+				'default'     => 'yes',
+				'description' => __( 'Enable or disable modal header', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_icon_selection',
+			array(
+				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => array(
+					'noicon'    => __( 'None', 'premium-addons-for-elementor' ),
+					'fonticon'  => __( 'Icon', 'premium-addons-for-elementor' ),
+					'image'     => __( 'Custom Image', 'premium-addons-for-elementor' ),
+					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+				),
+				'default'     => 'noicon',
+				'condition'   => array(
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+				'label_block' => true,
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_font_icon_updated',
+			array(
+				'label'            => __( 'Select Icon', 'premium-addons-for-elementor' ),
+				'type'             => Controls_Manager::ICONS,
+				'fa4compatibility' => 'premium_modal_box_font_icon',
+				'condition'        => array(
+					'premium_modal_box_icon_selection'  => 'fonticon',
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+				'label_block'      => true,
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_image_icon',
+			array(
+				'label'       => __( 'Upload Image', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::MEDIA,
+				'dynamic'     => array( 'active' => true ),
+				'default'     => array(
+					'url' => Utils::get_placeholder_image_src(),
+				),
+				'condition'   => array(
+					'premium_modal_box_icon_selection'  => 'image',
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+				'label_block' => true,
+			)
+		);
+
+		$this->add_control(
+			'header_lottie_url',
+			array(
+				'label'       => __( 'Animation JSON URL', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
+				'description' => 'Get JSON code URL from <a href="https://lottiefiles.com/" target="_blank">here</a>',
+				'label_block' => true,
+				'condition'   => array(
+					'premium_modal_box_icon_selection'  => 'animation',
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'header_lottie_loop',
+			array(
+				'label'        => __( 'Loop', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+				'condition'    => array(
+					'premium_modal_box_icon_selection'  => 'animation',
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'header_lottie_reverse',
+			array(
+				'label'        => __( 'Reverse', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'condition'    => array(
+					'premium_modal_box_icon_selection'  => 'animation',
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'premium_modal_box_font_icon_size',
+			array(
+				'label'      => __( 'Icon Size', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-modal-box-modal-title i' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .premium-modal-box-modal-title img' => 'width: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .premium-modal-box-modal-title svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
+				),
+				'condition'  => array(
+					'premium_modal_box_icon_selection!' => 'noicon',
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_title',
+			array(
+				'label'       => __( 'Title', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
+				'description' => __( 'Add a title for the modal box', 'premium-addons-for-elementor' ),
+				'default'     => 'Modal Box Title',
+				'condition'   => array(
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+				'label_block' => true,
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_content_type',
+			array(
+				'label'       => __( 'Content to Show', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => array(
+					'editor'   => __( 'Text Editor', 'premium-addons-for-elementor' ),
+					'template' => __( 'Elementor Template', 'premium-addons-for-elementor' ),
+				),
+				'default'     => 'editor',
+				'separator'   => 'before',
+				'label_block' => true,
+			)
+		);
+
+		$this->add_control(
+			'live_temp_content',
+			array(
+				'label'       => __( 'Template Title', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'classes'     => 'premium-live-temp-title control-hidden',
+				'label_block' => true,
+				'condition'   => array(
+					'premium_modal_box_content_type' => 'template',
+				),
+			)
+		);
+
+		$this->add_control(
+			'modal_temp_live_btn',
+			array(
+				'type'        => Controls_Manager::BUTTON,
+				'label_block' => true,
+				'button_type' => 'default papro-btn-block',
+				'text'        => __( 'Create / Edit Template', 'premium-addons-for-elementor' ),
+				'event'       => 'createLiveTemp',
+				'condition'   => array(
+					'premium_modal_box_content_type' => 'template',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_content_temp',
+			array(
+				'label'       => __( 'Templates', 'premium-addons-for-elementor' ),
+				'type'        => Premium_Post_Filter::TYPE,
+				'classes'     => 'premium-live-temp-label',
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => 'elementor_library',
+				'condition'   => array(
+					'premium_modal_box_content_type' => 'template',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_content',
+			array(
+				'type'       => Controls_Manager::WYSIWYG,
+				'default'    => 'Modal Box Content',
+				'selector'   => '{{WRAPPER}} .premium-modal-box-modal-body',
+				'dynamic'    => array( 'active' => true ),
+				'condition'  => array(
+					'premium_modal_box_content_type' => 'editor',
+				),
+				'show_label' => false,
+			)
+		);
+
+		$this->add_control(
+			'dismissible',
+			array(
+				'label'        => __( 'Dismissible', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'premium-modal-dismissible-',
+				'default'      => 'yes',
+				'separator'    => 'before',
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_upper_close',
+			array(
+				'label'     => __( 'Upper Close Button', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'default'   => 'yes',
+				'condition' => array(
+					'dismissible'                       => 'yes',
+					'premium_modal_box_header_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_lower_close',
+			array(
+				'label'     => __( 'Lower Close Button', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'default'   => 'yes',
+				'condition' => array(
+					'dismissible' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_close_text',
+			array(
+				'label'       => __( 'Text', 'premium-addons-for-elementor' ),
+				'default'     => __( 'Close', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
+				'label_block' => true,
+				'condition'   => array(
+					'dismissible'                   => 'yes',
+					'premium_modal_box_lower_close' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_animation',
+			array(
+				'label'              => __( 'Entrance Animation', 'premium-addons-for-elementor' ),
+				'type'               => Controls_Manager::ANIMATION,
+				'default'            => 'fadeInDown',
+				'label_block'        => true,
+				'frontend_available' => true,
+				'render_type'        => 'template',
+
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_animation_duration',
+			array(
+				'label'     => __( 'Animation Duration', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'fast',
+				'options'   => array(
+					'slow' => __( 'Slow', 'premium-addons-for-elementor' ),
+					''     => __( 'Normal', 'premium-addons-for-elementor' ),
+					'fast' => __( 'Fast', 'premium-addons-for-elementor' ),
+				),
+				'condition' => array(
+					'premium_modal_box_animation!' => '',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_modal_box_animation_delay',
+			array(
+				'label'              => __( 'Animation Delay', 'premium-addons-for-elementor' ) . ' (s)',
+				'type'               => Controls_Manager::NUMBER,
+				'default'            => '',
+				'step'               => 0.1,
+				'condition'          => array(
+					'premium_modal_box_animation!' => '',
+				),
+				'frontend_available' => true,
 			)
 		);
 

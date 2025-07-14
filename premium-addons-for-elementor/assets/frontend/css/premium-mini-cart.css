@@ -23,6 +23,10 @@
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+.pa-woo-mc__tax-label {
+  text-transform: none;
+  font-size: 80%;
+}
 .pa-woo-mc__widget-shopping-outer-wrapper {
   position: relative;
   -webkit-flex: 1;
@@ -340,7 +344,7 @@
   transform: translateX(-50%);
   visibility: hidden;
   opacity: 0;
-  border: 1px solid #DCDCDC;
+  border: 1px solid #dcdcdc;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.149);
 }
 .pa-woo-mc__content-wrapper.pa-woo-mc__menu.pa-woo-mc__open {
@@ -352,16 +356,18 @@
 }
 .pa-woo-mc__remove-item svg,
 .pa-woo-mc__remove-item svg * {
-  fill: #A3A3A3;
+  fill: #a3a3a3;
 }
-.pa-woo-mc__remove-item span, .pa-woo-mc__remove-item i {
-  color: #A3A3A3;
+.pa-woo-mc__remove-item span,
+.pa-woo-mc__remove-item i {
+  color: #a3a3a3;
 }
 .pa-woo-mc__remove-item:hover svg,
 .pa-woo-mc__remove-item:hover svg * {
   fill: #303030;
 }
-.pa-woo-mc__remove-item:hover span, .pa-woo-mc__remove-item:hover i {
+.pa-woo-mc__remove-item:hover span,
+.pa-woo-mc__remove-item:hover i {
   color: #303030;
 }
 .pa-woo-mc__item-price {
@@ -485,7 +491,7 @@
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  border-bottom: 1px solid #E2E2E2;
+  border-bottom: 1px solid #e2e2e2;
   padding: 5px;
 }
 .pa-woo-mc__input[type=number] {
@@ -621,7 +627,7 @@
   padding: 10px 20px;
 }
 .pa-woo-mc__layout-4 .pa-woo-mc__item-wrapper:hover {
-  background: #F7F7F7;
+  background: #f7f7f7;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
@@ -759,6 +765,25 @@
 .pa-woo-mc__coupon-notice.pa-error-notice {
   color: #d9534f;
 }
+.pa-woo-mc__coupon-notice-wrapper .pa-woo-mc__remove-coupon {
+  font-size: 12px;
+  font-weight: 600;
+  color: #d63638;
+  text-decoration: underline;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.pa-woo-mc__coupon-notice-wrapper .pa-woo-mc__remove-coupon:hover {
+  color: #d63638;
+  background: transparent;
+}
+.pa-woo-mc__coupon-notice-wrapper .pa-woo-mc__remove-coupon:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
 .pa-woo-mc__coupon-submit {
   position: absolute;
   z-index: 4;
@@ -843,7 +868,7 @@
   width: 100%;
 }
 .pa-woo-mc__qty-ctrls-row .pa-woo-mc__item-qty {
-  border: 1px solid #E2E2E2;
+  border: 1px solid #e2e2e2;
 }
 .pa-woo-mc__empty-mc {
   display: -webkit-flex;
@@ -976,14 +1001,14 @@
   text-decoration: none;
 }
 .pa-woo-mc__view-cart {
-  background: #E7E7E7;
+  background: #e7e7e7;
   color: #000000;
 }
 .pa-woo-mc__view-cart:hover {
-  background: #E0E0E0;
+  background: #e0e0e0;
 }
 .pa-woo-mc__checkout {
-  background: #2D2D2D;
+  background: #2d2d2d;
   color: #ffffff;
 }
 .pa-woo-mc__checkout:hover {

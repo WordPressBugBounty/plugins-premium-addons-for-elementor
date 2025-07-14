@@ -32,7 +32,7 @@
 }
 
 .premium-modal-box-modal-close {
-  float: right;
+  float: inline-end;
   font-size: 21px;
   font-weight: bold;
   line-height: 1;

@@ -319,6 +319,25 @@ class Premium_Search_Form extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'search_in',
+			array(
+				'label'        => __( 'Search In', 'premium-addons-for-elementor' ),
+				'label_block'  => true,
+				'type'         => Controls_Manager::SELECT,
+				'options'      => array(
+					'title'  => __( 'Post Title', 'premium-addons-for-elementor' ),
+					'description' => __( 'Post Description', 'premium-addons-for-elementor' ),
+					'both' => __( 'Title & Description', 'premium-addons-for-elementor' ),
+				),
+				'default'      => 'both',
+				'condition'    => array(
+					'custom_search_query' => 'yes',
+					'query_type'          => 'post',
+				),
+			)
+		);
+
 		foreach ( $post_types as $key => $type ) {
 
 			// Get all the taxanomies associated with the selected post type.

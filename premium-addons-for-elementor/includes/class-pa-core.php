@@ -127,24 +127,24 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			    update_option( 'pa_complete_wizard', true );
 				update_option( 'pa_install_time', $current_time );
 
-				$api_url = 'https://feedbackpa.leap13.com/wp-json/install/v2/add';
+				// $api_url = 'https://feedbackpa.leap13.com/wp-json/install/v2/add';
 
-				$response = wp_safe_remote_request(
-					$api_url,
-					array(
-						'headers'     => array(
-							'Content-Type' => 'application/json',
-						),
-						'body'        => wp_json_encode(
-							array(
-								'time' => $current_time,
-							)
-						),
-						'timeout'     => 20,
-						'method'      => 'POST',
-						'httpversion' => '1.1',
-					)
-				);
+				// $response = wp_safe_remote_request(
+				// 	$api_url,
+				// 	array(
+				// 		'headers'     => array(
+				// 			'Content-Type' => 'application/json',
+				// 		),
+				// 		'body'        => wp_json_encode(
+				// 			array(
+				// 				'time' => $current_time,
+				// 			)
+				// 		),
+				// 		'timeout'     => 20,
+				// 		'method'      => 'POST',
+				// 		'httpversion' => '1.1',
+				// 	)
+				// );
 
                 set_transient( 'pa_activation_redirect', true, 30 );
 			}

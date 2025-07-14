@@ -3967,9 +3967,7 @@
 				window.open(link, 'popup', 'width=600,height=600');
 			});
 
-			if ('lightbox' === settings.onClick) {
-				initFeedPopupEvents($scope);
-			} else if ('play' === settings.onClick) {
+			if ('play' === settings.onClick) {
 
 				if ($scope.hasClass('premium-tiktok-feed__vid-layout-2')) {
 					$scope.find('.premium-tiktok-feed__vid-meta-wrapper').on('click', function () {
@@ -4007,48 +4005,6 @@
 					$(this).find('.premium-tiktok-feed__play-icon').removeClass('premium-addons__v-hidden');
 					$(this).find('video').get(0).pause();
 				})
-			}
-
-
-			function closeModal() {
-				$('.premium-tiktok-feed-modal-iframe-modal').css('display', 'none');
-
-				$(".premium-tiktok-feed-modal-iframe-modal #pa-tiktok-vid-control-iframe").attr({
-					'src': ''
-				});
-			}
-
-			function initFeedPopupEvents($scope) {
-
-				var isBanner = $scope.hasClass('premium-tiktok-feed__vid-layout-2');
-
-				if (isBanner) {
-					$scope.find('.premium-tiktok-feed__vid-meta-wrapper').on('click.paTriggerModal', function () {
-						$scope.find('.premium-tiktok-feed__video-media').trigger('click');
-					});
-				}
-
-				$scope.find('.premium-tiktok-feed__video-media').on('click.paTiktokModal', function () {
-					var embedLink = $(this).data('pa-tiktok-embed'),
-						$modalContainer = $('.premium-tiktok-feed-modal-iframe-modal'),
-						paIframe = $modalContainer.find("#pa-tiktok-vid-control-iframe");
-
-					$modalContainer.css('display', 'flex');
-					paIframe.css("z-index", "-1");
-
-					paIframe.attr("src", 'https://www.tiktok.com/embed/v2/' + embedLink);
-					paIframe.show();
-					paIframe.css("z-index", "1");
-				});
-
-				// close model events.
-				$('.eicon-close').on('click.paClosePopup', closeModal);
-
-				$(document).on('click.paClosePopup', '.premium-tiktok-feed-modal-iframe-modal', function (e) {
-					if ($(e.target).closest(".premium-tiktok-feed__video-content").length < 1) {
-						closeModal();
-					}
-				});
 			}
 
 			function getSlickSettings(settings) {

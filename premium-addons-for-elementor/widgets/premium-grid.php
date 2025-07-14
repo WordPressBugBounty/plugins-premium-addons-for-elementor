@@ -2517,7 +2517,7 @@ class Premium_Grid extends Widget_Base {
 
 		$cat_filtered = trim( $string );
 
-		$cat_filtered = mb_strtolower( $cat_filtered );
+		$cat_filtered = extension_loaded( 'mbstring' ) ? mb_strtolower( $cat_filtered ) : strtolower( $cat_filtered );
 
 		if ( strpos( $cat_filtered, 'class' ) || strpos( $cat_filtered, 'src' ) ) {
 			$cat_filtered = substr( $cat_filtered, strpos( $cat_filtered, '"' ) + 1 );

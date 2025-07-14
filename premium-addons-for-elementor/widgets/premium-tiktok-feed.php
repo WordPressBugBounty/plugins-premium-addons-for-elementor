@@ -97,7 +97,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 
 		return array(
 			'pa-glass',
-			'tiktok-embed',
+			// 'tiktok-embed',
 			'lottie-js',
 			'imagesloaded',
 			'isotope-js',
@@ -177,8 +177,6 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		$this->add_info_style_controls();
 
 		$this->add_feed_box_style_controls();
-
-		$this->add_feed_lightbox_style_controls();
 
 		if ( $papro_activated ) {
 			do_action( 'pa_tiktok_profile_style', $this );
@@ -775,7 +773,6 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				'options'   => array(
 					'default'  => __( 'Redirect To TikTok', 'premium-addons-for-elementor' ),
 					'play'     => __( 'Play Video', 'premium-addons-for-elementor' ),
-					'lightbox' => __( 'Lightbox', 'premium-addons-for-elementor' ),
 				),
 				'default'   => 'play',
 				'separator' => 'before',
@@ -1279,57 +1276,6 @@ class Premium_Tiktok_Feed extends Widget_Base {
 
 		$this->end_controls_section();
 	}
-
-	private function add_feed_lightbox_style_controls() {
-
-		$this->start_controls_section(
-			'pa_lightbox_style_sec',
-			array(
-				'label'     => __( 'Lightbox', 'premium-addons-for-elementor' ),
-				'tab'       => Controls_Manager::TAB_STYLE,
-				'condition' => array(
-					'show_feed' => 'yes',
-					'onclick'   => 'lightbox',
-				),
-			)
-		);
-
-		$this->add_control(
-			'lightbox_color',
-			array(
-				'label'     => __( 'Background Color', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} .premium-tiktok-feed-modal-iframe-modal' => 'background-color: {{VALUE}};',
-				),
-			)
-		);
-
-		$this->add_control(
-			'close_icon_color',
-			array(
-				'label'     => __( 'Close Icon Color', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} .premium-tiktok-temp-close' => 'color: {{VALUE}};',
-				),
-			)
-		);
-
-		$this->add_control(
-			'close_icon_color_hov',
-			array(
-				'label'     => __( 'Close Icon Hover Color', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} .premium-tiktok-temp-close:hover' => 'color: {{VALUE}};',
-				),
-			)
-		);
-
-		$this->end_controls_section();
-	}
-
 
 	private function add_container_style_controls() {
 
@@ -2908,15 +2854,6 @@ class Premium_Tiktok_Feed extends Widget_Base {
 					<?php
 				}
 				?>
-			</div>
-			<div class="premium-tiktok-feed-modal-iframe-modal">
-				<div class="premium-tiktok-temp-close">
-					<i class="eicon-close"></i>
-				</div>
-
-				<div class="premium-tiktok-feed__video-content">
-					<iframe id="pa-tiktok-vid-control-iframe"></iframe>
-				</div>
 			</div>
 		<?php
 	}

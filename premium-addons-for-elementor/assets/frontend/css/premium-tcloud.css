@@ -45,7 +45,7 @@
 }
 .premium-tcloud-default .premium-tcloud-term:hover::before,
 .premium-tcloud-ribbon .premium-tcloud-term:hover::before {
-  border-color: transparent var(--tag-hover-color) transparent transparent;
+  border-inline-end-color: var(--tag-hover-color);
 }
 .premium-tcloud-default .premium-tcloud-term-link,
 .premium-tcloud-ribbon .premium-tcloud-term-link {
@@ -70,13 +70,13 @@
   position: absolute;
   content: "";
   top: 0;
-  right: 100%;
+  inset-inline-end: 100%;
   margin: 0 auto;
   width: 0;
   height: 0;
-  border-style: solid;
-  border-width: var(--tag-ribbon-size) var(--tag-ribbon-size) var(--tag-ribbon-size) 0px;
-  border-color: transparent var(--tag-color) transparent transparent;
+  border: var(--tag-ribbon-size) solid transparent;
+  border-inline-start-width: 0px;
+  border-inline-end-color: var(--tag-color);
   -webkit-transition: all 0.3s ease-in-out, border-width 0s;
   transition: all 0.3s ease-in-out, border-width 0s;
 }
@@ -84,7 +84,7 @@
   position: absolute;
   content: "";
   top: 50%;
-  left: -8px;
+  inset-inline-start: -8px;
   margin: 0 auto;
   width: 5px;
   height: 5px;
@@ -99,8 +99,4 @@
 
 .premium-tcloud-sphere .premium-tcloud-terms-container {
   display: none;
-}
-
-.rtl .premium-tcloud-ribbon .premium-tcloud-term::before {
-  left: -14px;
 }

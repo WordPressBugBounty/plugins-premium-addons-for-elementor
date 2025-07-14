@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.1
 Requires PHP: 7.4
-Stable Tag: 4.11.18
+Stable Tag: 4.11.19
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.19 =
+
+- Tweak: Added Coupon Remove button in Mini Cart widget.
+- Tweak: Added Tax Label option in Mini Cart widget.
+- Tweak: Improved RTL compatibility in Tags Cloud widget.
+- Tweak: Added option to search using Title or Description in AJAX Search widget.
+- Fixed: Fatal error in Media Grid widget when `mb_` PHP extension is not installed.
 
 = 4.11.18 =
 

@@ -657,7 +657,7 @@ class Addons_Integration {
 			$this->register_old_scripts( $dir, $suffix );
 		}
 
-		wp_register_script( 'tiktok-embed', 'https://www.tiktok.com/embed.js', array(), false, true );
+		// wp_register_script( 'tiktok-embed', 'https://www.tiktok.com/embed.js', array(), false, true );
 
 		wp_register_script(
 			'pa-scrolldir',
@@ -1606,30 +1606,7 @@ class Addons_Integration {
 	 */
 	public function init_pa_controls() {
 
-		/**
-		 * List of Modules that need a custom control.
-		 *
-		 * @var array
-		 */
-		$modules = array(
-			self::$modules['premium-blog'],
-			self::$modules['premium-equal-height'],
-			self::$modules['pa-display-conditions'],
-			self::$modules['premium-smart-post-listing'],
-			self::$modules['premium-post-ticker'],
-			self::$modules['premium-tcloud'],
-			self::$modules['premium-notifications'],
-			self::$modules['premium-pinterest-feed'],
-			self::$modules['premium-contactform'],
-			self::$modules['premium-global-tooltips'],
-			self::$modules['premium-glassmorphism'],
-		);
-
-		// $load_controls = in_array( true, $modules, true );
-
 		$control_manager = \Elementor\Plugin::instance();
-
-		// if ( $load_controls ) {
 
 		if ( self::$modules['premium-equal-height'] || self::$modules['premium-pinterest-feed'] ) {
 
@@ -1639,11 +1616,11 @@ class Addons_Integration {
 
 		}
 
-			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-post-filter.php';
+		require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-post-filter.php';
 
-			$premium_post_filter = __NAMESPACE__ . '\Controls\Premium_Post_Filter';
+		$premium_post_filter = __NAMESPACE__ . '\Controls\Premium_Post_Filter';
 
-			$control_manager->controls_manager->register( new $premium_post_filter() );
+		$control_manager->controls_manager->register( new $premium_post_filter() );
 
 		if ( self::$modules['premium-blog'] || self::$modules['premium-smart-post-listing'] || self::$modules['premium-tcloud'] ) {
 
@@ -1661,7 +1638,6 @@ class Addons_Integration {
 			$control_manager->controls_manager->register( new $premium_acf_selector() );
 
 		}
-		// }
 
 		if ( self::$modules['premium-contactform'] || self::$modules['premium-shape-divider'] ) {
 

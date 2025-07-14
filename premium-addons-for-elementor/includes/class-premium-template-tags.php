@@ -106,45 +106,6 @@ class Premium_Template_Tags {
 	}
 
 	/**
-	 * Get All Posts
-	 *
-	 * Returns an array of posts/pages
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return $options array posts/pages query
-	 */
-	public function get_all_posts() {
-
-		$all_posts = get_posts(
-			array(
-				'posts_per_page'         => 100,
-				'post_type'              => array( 'page', 'post' ),
-				'update_post_term_cache' => false,
-				'update_post_meta_cache' => false,
-				'fields'                 => array( 'ids' ),
-			)
-		);
-
-		$is_mbinstalled = extension_loaded( 'mbstring' );
-		$options        = array();
-
-		if ( ! empty( $all_posts ) && ! is_wp_error( $all_posts ) ) {
-			foreach ( $all_posts as $post ) {
-
-				if ( $is_mbinstalled ) {
-					$options[ $post->ID ] = mb_strlen( $post->post_title ) > 30 ? mb_substr( $post->post_title, 0, 30 ) . '...' : $post->post_title;
-				} else {
-					$options[ $post->ID ] = strlen( $post->post_title ) > 30 ? substr( $post->post_title, 0, 30 ) . '...' : $post->post_title;
-				}
-			}
-		}
-
-		return $options;
-	}
-
-	/**
 	 * Get ID By Title
 	 *
 	 * Get Elementor Template ID by title
@@ -181,44 +142,6 @@ class Premium_Template_Tags {
 		}
 
 		return $post_id;
-	}
-
-	/**
-	 * Get Elementor Page List
-	 *
-	 * Returns an array of Elementor templates
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return $options array Elementor Templates
-	 */
-	public function get_elementor_page_list() {
-
-		if ( null === self::$e_temps_list ) {
-
-			self::$e_temps_list = get_posts(
-				array(
-					'post_type'              => 'elementor_library',
-					'posts_per_page'         => -1,
-					'update_post_term_cache' => false,
-					'update_post_meta_cache' => false,
-					'fields'                 => array( 'ids' ),
-				)
-			);
-
-		}
-
-		$pagelist = self::$e_temps_list;
-
-		if ( ! empty( $pagelist ) && ! is_wp_error( $pagelist ) ) {
-
-			foreach ( $pagelist as $post ) {
-				$options[ $post->post_title ] = $post->post_title;
-			}
-
-			return $options;
-		}
 	}
 
 	/**
@@ -1495,6 +1418,8 @@ class Premium_Template_Tags {
 
 		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
 
+		add_filter( 'posts_search', array( $this, 'handle_search_source' ), 10, 2 );
+
 		if ( ! isset( $_POST['page_id'] ) || ! isset( $_POST['widget_id'] ) ) {
 			return;
 		}
@@ -1533,7 +1458,50 @@ class Premium_Template_Tags {
 			$data['ID'] = $widget->get_id();
 		}
 
+		remove_filter( 'posts_search', array( $this, 'handle_search_source' ), 10, 2 );
+
 		wp_send_json_success( $data );
+	}
+
+	/**
+	 * Handle Search Source
+	 *
+	 * Filters the search query to only search in post title or content based on settings.
+	 *
+	 * @since 4.11.19
+	 * @access public
+	 *
+	 * @param string $search search query.
+	 * @param object $wp_query WP_Query object.
+	 *
+	 * @return string modified search query.
+	 */
+	public function handle_search_source( $search, $wp_query ) {
+
+		if( 'both' === self::$settings['search_in'] ) {
+			return $search;
+		}
+
+		global $wpdb;
+
+		if (empty($search)) {
+			return $search; // No search term, do nothing.
+		}
+
+		// Get the search term.
+		$q = $wp_query->query_vars;
+		$search_term = $q['s'];
+
+		// Escape the term safely.
+		$like = '%' . $wpdb->esc_like($search_term) . '%';
+
+		$search_source = 'title' === self::$settings['search_in'] ? 'post_title' : 'post_content';
+
+		// Only search in post_title.
+		$search = $wpdb->prepare(" AND ({$wpdb->posts}.$search_source LIKE %s) ", $like);
+
+		return $search;
+
 	}
 
 	/**

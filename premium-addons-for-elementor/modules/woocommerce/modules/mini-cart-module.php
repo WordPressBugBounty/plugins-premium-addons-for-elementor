@@ -78,6 +78,9 @@ class Mini_Cart_Module extends Module_Base {
 		add_action( 'wp_ajax_pa_apply_coupon', array( $this, 'pa_apply_coupon' ) );
 		add_action( 'wp_ajax_nopriv_pa_apply_coupon', array( $this, 'pa_apply_coupon' ) );
 
+		add_action( 'wp_ajax_pa_remove_coupon', array( $this, 'pa_remove_coupon' ) );
+		add_action( 'wp_ajax_nopriv_pa_remove_coupon', array( $this, 'pa_remove_coupon' ) );
+
 		$enabled_keys = get_option( 'pa_save_settings', array() );
 
 		$mc_custom_temp_enabled = isset( $enabled_keys['pa_mc_temp'] ) ? $enabled_keys['pa_mc_temp'] : false;
@@ -106,6 +109,10 @@ class Mini_Cart_Module extends Module_Base {
 	/**
 	 * Adds our custom mini cart fragments to the woocommerce fragments.
 	 * These fragments will be updated when the cart is updated or the fragments are refreshed.
+	 *
+	 * @param array $fragments The existing fragments passed by WooCommerce.
+	 *
+	 * @return array Modified fragments with custom mini cart content.
 	 */
 	public function pa_add_mini_cart_fragments( $fragments ) {
 
@@ -114,14 +121,22 @@ class Mini_Cart_Module extends Module_Base {
 		$discount_total = WC()->cart->get_discount_total();
 		$raw_subtotal   = WC()->cart->get_subtotal();
 
-		$subtotal  = wc_price( floatVal( $raw_subtotal ) - $discount_total );
-		$count_txt = $product_count === 1 ? ' item' : ' items';
+		$display_incl_tax = 'yes' === get_option( 'woocommerce_calc_taxes' );
+
+		if ( $display_incl_tax ) {
+			$raw_subtotal += WC()->cart->get_taxes_total();
+		}
+
+		$raw_subtotal_amount = number_format( floatval( $raw_subtotal ) - $discount_total, 2, '.', '' );
+		$subtotal            = wc_price( floatVal( $raw_subtotal ) - $discount_total );
+
+		$count_txt = 1 === $product_count ? ' item' : ' items';
 
 		$empty_count_cls = ! $product_count ? 'pa-hide-badge' : '';
 
 		$fragments['.pa-woo-mc__count-placeholder']                                    = '<span class="pa-woo-mc__count-placeholder" style="display:none">' . $product_count . '</span>';
-		$fragments['.pa-woo-mc__text-wrapper .pa-woo-mc__subtotal-placeholder']                                 = '<span class="pa-woo-mc__subtotal-placeholder" style="display:none">' . $raw_subtotal . '</span>';
-		$fragments['.pa-woo-mc__progressbar-wrapper .pa-woo-mc__subtotal-placeholder'] = '<span class="pa-woo-mc__subtotal-placeholder" style="display:none">' . $raw_subtotal . '</span>';
+		$fragments['.pa-woo-mc__text-wrapper .pa-woo-mc__subtotal-placeholder']        = '<span class="pa-woo-mc__subtotal-placeholder" style="display:none">' . $raw_subtotal_amount . '</span>';
+		$fragments['.pa-woo-mc__progressbar-wrapper .pa-woo-mc__subtotal-placeholder'] = '<span class="pa-woo-mc__subtotal-placeholder" style="display:none">' . $raw_subtotal_amount . '</span>';
 
 		$fragments['.pa-woo-mc__outer-container .pa-woo-mc__badge:not(.pa-has-txt, .pa-counting)'] = '<span class="pa-woo-mc__badge ' . $empty_count_cls . '">' . $product_count . '</span>';
 		$fragments['.pa-woo-mc__outer-container .pa-woo-mc__badge.pa-has-txt:not(.pa-counting)']   = '<span class="pa-woo-mc__badge pa-has-txt ' . $empty_count_cls . '">' . $product_count . '<span class="pa-woo-mc__badge-txt">' . $count_txt . '</span></span>';
@@ -147,8 +162,8 @@ class Mini_Cart_Module extends Module_Base {
 			return;
 		}
 
-		$item_key = sanitize_text_field( $_POST['itemKey'] );
-		$quantity = absint( $_POST['quantity'] );
+		$item_key = sanitize_text_field( wp_unslash( $_POST['itemKey'] ) );
+		$quantity = absint( wp_unslash( $_POST['quantity'] ) );
 
 		if ( $quantity > 0 && WC()->cart->get_cart_item( $_POST['itemKey'] ) ) {
 			WC()->cart->set_quantity( $_POST['itemKey'], $_POST['quantity'], true );
@@ -202,7 +217,7 @@ class Mini_Cart_Module extends Module_Base {
 
 		check_ajax_referer( 'pa-mini-cart-nonce', 'nonce' );
 
-		if ( ! isset( $_POST['couponCode'] ) ) {
+		if ( empty( $_POST['couponCode'] ) ) {
 			return;
 		}
 
@@ -216,15 +231,35 @@ class Mini_Cart_Module extends Module_Base {
 
 				WC()->cart->apply_coupon( $coupon_code );
 
-				\WC_AJAX::get_refreshed_fragments();
-
 				wp_send_json_success( 'Coupon was applied successfully.' );
 
+				\WC_AJAX::get_refreshed_fragments();
+
 			} else {
-				wp_send_json_success( 'This code was already applied.' );
+				wp_send_json_error( 'This code was already applied.', 409 );
 			}
 		} else {
-			wp_send_json_error( 'Invalid Coupon!' );
+			wp_send_json_error( 'Invalid Coupon!', 422 );
+		}
+	}
+
+	public function pa_remove_coupon() {
+		check_ajax_referer( 'pa-mini-cart-nonce', 'nonce' );
+
+		if ( ! isset( $_POST['couponCode'] ) ) {
+			wp_send_json_error( 'No coupon code provided.', 400 );
+		}
+
+		$coupon_code = sanitize_text_field( $_POST['couponCode'] );
+
+		if ( WC()->cart->has_discount( $coupon_code ) ) {
+
+			WC()->cart->remove_coupon( $coupon_code );
+
+			\WC_AJAX::get_refreshed_fragments();
+
+		} else {
+			wp_send_json_error( 'Coupon not found or already removed.', 404 );
 		}
 	}
 }

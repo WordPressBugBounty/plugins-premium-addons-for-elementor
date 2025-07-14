@@ -355,16 +355,16 @@ class Premium_Tcloud extends Widget_Base {
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
 					'flex-start' => array(
-						'title' => __( 'Left', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-left',
+						'title' => __( 'Start', 'premium-addons-for-elementor' ),
+						'icon'  => is_rtl() ? 'eicon-text-align-right' : 'eicon-text-align-left',
 					),
 					'center'     => array(
 						'title' => __( 'Center', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-justify',
 					),
 					'flex-end'   => array(
-						'title' => __( 'Right', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-right',
+						'title' => __( 'End', 'premium-addons-for-elementor' ),
+						'icon'  => is_rtl() ? 'eicon-text-align-left' : 'eicon-text-align-right',
 					),
 				),
 				'default'   => 'flex-start',
@@ -616,15 +616,15 @@ class Premium_Tcloud extends Widget_Base {
 		$this->add_control(
 			'term_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -633,9 +633,9 @@ class Premium_Tcloud extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
-				'render_type'  => 'template',
+				'default'     => 'none',
+				'label_block' => true,
+				'render_type' => 'template',
 			)
 		);
 
@@ -968,10 +968,9 @@ class Premium_Tcloud extends Widget_Base {
 		if ( 'shape' !== $settings['words_order'] ) {
 			$this->add_render_attribute( 'term', 'class', 'premium-tcloud-term' );
 
-			if( 'none' !== $settings['term_lq_effect'] ) {
+			if ( 'none' !== $settings['term_lq_effect'] ) {
 				$this->add_render_attribute( 'term', 'class', 'premium-con-lq__' . $settings['term_lq_effect'] );
 			}
-
 		}
 
 		?>

@@ -191,7 +191,14 @@ class Mini_Cart extends Widget_Base {
 		$this->add_empty_cart_style();
 		$this->add_cart_containers_style();
 	}
-
+	/**
+	 * Register Trigger section controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_trigger_ctrls() {
 
 		$this->start_controls_section(
@@ -766,6 +773,23 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'show_tax_label',
+			array(
+				'label'        => __( 'Tax Label', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => __( 'Show', 'premium-addons-for-elementor' ),
+				'label_off'    => __( 'Hide', 'premium-addons-for-elementor' ),
+				'separator'    => 'before',
+				'prefix_class' => 'pa-trigger-label-',
+				'render_type'  => 'template',
+				'description'  => __( 'Displays the tax label next to the subtotal amount when the ', 'premium-addons-for-elementor' ) . sprintf( __( '<a href="%s" target="_blank">Enable Taxes</a>', 'premium-addons-for-elementor' ), esc_url( admin_url( 'admin.php?page=wc-settings&tab=general' ) ) ) . __( ' option is enabled.', 'premium-addons-for-elementor' ),
+				'condition'    => array(
+					'presets!' => array( 'preset-1', 'preset-2' ),
+				),
+			)
+		);
+
+		$this->add_control(
 			'behaviour',
 			array(
 				'label'     => __( 'Icon Click Behaviour', 'premium-addons-for-elementor' ),
@@ -774,7 +798,6 @@ class Mini_Cart extends Widget_Base {
 				'options'   => array(
 					'toggle' => __( 'Opens Mini Cart List', 'premium-addons-for-elementor' ),
 					'url'    => apply_filters( 'pa_pro_label', __( 'Redirect To Cart Page (Pro)', 'premium-addons-for-elementor' ) ),
-
 				),
 				'default'   => 'toggle',
 			)
@@ -810,6 +833,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register Mini Cart controls for the widget settings panel.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_mini_cart_ctrls() {
 
 		$slide_connected_conds = array(
@@ -1054,6 +1085,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register Free Shipping Progress Bar controls.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_mc_progressbar_ctrls() {
 
 		$this->start_controls_section(
@@ -1150,6 +1189,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register Cross-sells controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_mc_cross_sells_ctrls() {
 
 		$this->start_controls_section(
@@ -1308,6 +1355,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register listing controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_mc_listing_ctrls() {
 
 		$this->start_controls_section(
@@ -1713,6 +1768,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register header controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_mc_header_ctrls() {
 
 		$slide_connected_conds = array(
@@ -2005,6 +2068,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register footer controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_mc_footer_ctrls() {
 
 		$this->start_controls_section(
@@ -2063,6 +2134,22 @@ class Mini_Cart extends Widget_Base {
 				'condition'   => array(
 					'footer_subtotal' => 'yes',
 					'content_layout!' => 'layout-3',
+				),
+			)
+		);
+
+		$this->add_control(
+			'show_footer_tax_label',
+			array(
+				'label'        => __( 'Tax Label', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => __( 'Show', 'premium-addons-for-elementor' ),
+				'label_off'    => __( 'Hide', 'premium-addons-for-elementor' ),
+				'prefix_class' => 'pa-footer-label-',
+				'render_type'  => 'template',
+				'description'  => __( 'Displays the tax label next to the subtotal amount when the ', 'premium-addons-for-elementor' ) . sprintf( __( '<a href="%s" target="_blank">Enable Taxes</a>', 'premium-addons-for-elementor' ), esc_url( admin_url( 'admin.php?page=wc-settings&tab=general' ) ) ) . __( ' option is enabled.', 'premium-addons-for-elementor' ),
+				'condition'    => array(
+					'footer_subtotal' => 'yes',
 				),
 			)
 		);
@@ -2250,6 +2337,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register help documnets controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_help_docs_tab() {
 
 		$this->start_controls_section(
@@ -2283,6 +2378,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register trigger style controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_trigger_style() {
 
 		$subtotal_conds = array(
@@ -2814,6 +2917,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register cart containers style controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_cart_containers_style() {
 
 		$this->start_controls_section(
@@ -2926,6 +3037,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register coupon style controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_coupon_style() {
 
 		$this->start_controls_section(
@@ -3144,6 +3263,14 @@ class Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register cross sell style controls for the Mini Cart widget.
+	 *
+	 * @since 4.7.0
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function add_cross_sells_style() {
 
 		$this->start_controls_section(
@@ -5191,6 +5318,10 @@ class Mini_Cart extends Widget_Base {
 				'coupon'       => 'yes' === $settings['coupon'],
 			);
 
+			if ( 'yes' === get_option( 'woocommerce_calc_taxes' ) && in_array( 'yes', array( $settings['show_tax_label'], $settings['show_footer_tax_label'] ), true ) ) {
+				$cart_settings['taxLabel'] = WC()->countries->inc_tax_or_vat();
+			}
+
 			if ( 'yes' === $settings['cross_sells'] ) {
 				$cart_settings['crossSells'] = 'yes' === $settings['cross_sells'];
 				// $cart_settings['crossSellTxt'] =  !empty( $settings['cross_sells_txt'] ) ? $settings['cross_sells_txt'] : '';
@@ -5230,20 +5361,17 @@ class Mini_Cart extends Widget_Base {
 								if ( 'preset-5' === $settings['presets'] ) {
 									?>
 										<span class="pa-woo-mc__icon-sep">/</span>
-										<?php
+									<?php
 								}
 							}
 
-								$discount_total = WC()->cart->get_discount_total();
-								$raw_subtotal   = WC()->cart->get_subtotal();
+							$subtotal_display = $this->get_cart_subtotal_amount( $settings );
 
-								$raw_subtotal_amount = floatval( $raw_subtotal ) - $discount_total;
-								$subtotal_amount     = wc_price( $raw_subtotal_amount );
 							if ( $counting_effect ) {
 								$this->add_render_attribute( 'trigger_subtotal', 'class', 'pa-counting' );
 
 								?>
-									<span class="pa-woo-mc__subtotal-placeholder" style="display:none;"><?php echo esc_html( $raw_subtotal ); ?></span>
+									<span class="pa-woo-mc__subtotal-placeholder" style="display:none;"><?php echo esc_html( $subtotal_display['raw_subtotal_amount'] ); ?></span>
 																													<?php
 							}
 							?>
@@ -5251,14 +5379,19 @@ class Mini_Cart extends Widget_Base {
 									<?php
 									if ( $counting_effect ) {
 										?>
-												<span class="pa-woo-mc__subtotal-val"><?php echo esc_html( $raw_subtotal_amount ); ?></span>
+												<span class="pa-woo-mc__subtotal-val" ><?php echo esc_html( $subtotal_display['raw_subtotal_amount'] ); ?></span>
 												<span class="pa-woo-mc__subtotal-currency"> <?php echo get_woocommerce_currency_symbol(); ?></span>
 											<?php
 									} else {
-										echo wp_kses_data( WC()->cart ? $subtotal_amount : '' );
+										echo wp_kses_data( WC()->cart ? $subtotal_display['subtotal_amount'] : '' );
+									}
+
+									if ( $subtotal_display['includes_tax'] && 'yes' === $settings['show_tax_label'] ) {
+										?>
+										<small class="pa-woo-mc__tax-label"><?php echo wp_kses_data( WC()->countries->inc_tax_or_vat() ); ?></small>
+										<?php
 									}
 									?>
-
 								</span>
 
 						</div>
@@ -5460,7 +5593,8 @@ class Mini_Cart extends Widget_Base {
 		$applied_coupons = WC()->cart->get_applied_coupons();
 
 		$last_applied_coupon = ! empty( $applied_coupons ) ? end( $applied_coupons ) : '';
-		$def_style           = ! $last_applied_coupon ? 'display:none' : ''
+		$def_style           = ! $last_applied_coupon ? 'display:none' : '';
+		$remove_style = ! $last_applied_coupon ? 'display:none' : 'display:inline-block';
 		?>
 			<div class="pa-woo-mc__coupon-sec-wrapper">
 				<a role="button" href="#" class="pa-woo-mc__coupon-toggler">Apply Coupon</a>
@@ -5470,7 +5604,10 @@ class Mini_Cart extends Widget_Base {
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.90002 7.55999C9.21002 3.95999 11.06 2.48999 15.11 2.48999H15.24C19.71 2.48999 21.5 4.27999 21.5 8.74999V15.27C21.5 19.74 19.71 21.53 15.24 21.53H15.11C11.09 21.53 9.24002 20.08 8.91002 16.54" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12H14.88" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.65 8.6499L16 11.9999L12.65 15.3499" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 					</a>
 				</div>
-				<span class="pa-woo-mc__coupon-notice"></span>
+				<div class="pa-woo-mc__coupon-notice-wrapper">
+					<span class="pa-woo-mc__coupon-notice"></span>
+					<a href="#" role="button" aria-label="<?php echo esc_attr__( 'Remove coupon', 'premium-addons-for-elementor' ); ?>" class="pa-woo-mc__remove-coupon" style="<?php echo esc_attr( $remove_style ); ?>"><?php echo esc_html__( 'Remove', 'premium-addons-for-elementor' ); ?></a>
+				</div>
 			</div>
 		<?php
 	}
@@ -5488,6 +5625,46 @@ class Mini_Cart extends Widget_Base {
 		<?php
 	}
 
+	/**
+	 * Get the WooCommerce cart subtotal amount after applying discounts
+	 * and optionally including tax, based on the widget settings.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param array $settings Widget settings.
+	 *
+	 * @return array
+	 */
+	private function get_cart_subtotal_amount( $settings ) {
+
+		$discount_total = WC()->cart->get_discount_total();
+		$raw_subtotal   = floatval( WC()->cart->get_subtotal() );
+
+		$includes_tax = false;
+
+		if ( 'yes' === get_option( 'woocommerce_calc_taxes' ) ) {
+			$raw_subtotal += WC()->cart->get_taxes_total();
+			$includes_tax  = true;
+		}
+
+		$raw_subtotal_amount = number_format( $raw_subtotal - $discount_total, 2, '.', '' );
+		$subtotal_amount     = wc_price( $raw_subtotal - $discount_total );
+
+		return array(
+			'raw_subtotal_amount' => $raw_subtotal_amount,
+			'subtotal_amount'     => $subtotal_amount,
+			'includes_tax'        => $includes_tax,
+		);
+	}
+
+	/**
+	 * Render the cart header section.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param array
+	 */
 	private function render_cart_header( $settings, $cart_type ) {
 		$title      = $settings['cart_title'];
 		$layout     = $settings['content_layout'];
@@ -5541,6 +5718,14 @@ class Mini_Cart extends Widget_Base {
 		<?php
 	}
 
+	/**
+	 * Render the cart footer section.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param array
+	 */
 	private function render_cart_footer( $settings ) {
 
 		$subtotal  = 'yes' === $settings['footer_subtotal'];
@@ -5549,10 +5734,7 @@ class Mini_Cart extends Widget_Base {
 		$layout    = $settings['content_layout'];
 
 		if ( $subtotal ) {
-			$discount_total = WC()->cart->get_discount_total();
-			$raw_subtotal   = floatval( WC()->cart->get_subtotal() );
-
-			$subtotal_amount = wc_price( $raw_subtotal - $discount_total );
+			$subtotal_display = $this->get_cart_subtotal_amount( $settings );
 		}
 
 		if ( ! in_array( true, array( $subtotal, $checkout, $view_cart ), true ) ) {
@@ -5584,7 +5766,16 @@ class Mini_Cart extends Widget_Base {
 					<span class="pa-woo-mc__subtotal-heading"> <?php echo 'layout-3' === $layout ? esc_attr_e( 'Subtotal', 'woocommerce' ) : wp_kses_post( $subtotal_heading ); ?></span>
 				<?php endif; ?>
 
-				<span class="pa-woo-mc__subtotal"><?php echo wp_kses_data( WC()->cart ? $subtotal_amount : '' ); ?></span>
+				<span class="pa-woo-mc__subtotal">
+					<?php echo wp_kses_data( WC()->cart ? $subtotal_display['subtotal_amount'] : '' ); ?>
+					<?php
+					if ( $subtotal_display['includes_tax'] && 'yes' === $settings['show_footer_tax_label'] ) {
+						?>
+							<small class="pa-woo-mc__tax-label"><?php echo wp_kses_data( WC()->countries->inc_tax_or_vat() ); ?></small>
+							<?php
+					}
+					?>
+				</span>
 				</div>
 			<?php endif; ?>
 			<?php if ( $view_cart || $checkout ) : ?>
@@ -5606,6 +5797,14 @@ class Mini_Cart extends Widget_Base {
 		<?php
 	}
 
+	/**
+	 * Check for free shipping method.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @return string|false
+	 */
 	private function check_free_shipping_method() {
 
 		// get the first shipping zone as a default.
@@ -5636,6 +5835,18 @@ class Mini_Cart extends Widget_Base {
 		return $threshold;
 	}
 
+	/**
+	 * Format the free shipping progress bar text.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param array $settings.
+	 * @param float $threshold The minimum amount required for free shipping.
+	 * @param float $subtotal  The current cart subtotal.
+	 *
+	 * @return string The formatted progress bar text.
+	 */
 	private function format_free_shipping_txt( $settings, $threshold, $subtotal ) {
 
 		return str_replace( '{{thershold}}', wc_price( $threshold ), $settings['progressbar_txt'] );
@@ -5655,6 +5866,16 @@ class Mini_Cart extends Widget_Base {
 		return round( ( $cart_total / floatval( $threshold ) ) * 100, 2 );
 	}
 
+	/**
+	 * Retrieve the SVG icon markup based on the icon key.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param string $icon.
+	 *
+	 * @return string|null
+	 */
 	private function getTriggerIcon( $icon ) {
 
 		$icons = array(
