@@ -930,18 +930,6 @@ class Addons_Integration {
 			true
 		);
 
-		$is_edit_mode = Helper_Functions::is_edit_mode();
-
-		if ( $is_edit_mode ) {
-			wp_register_script(
-				'pa-fontawesome-all',
-				PREMIUM_ADDONS_URL . 'assets/frontend/min-js/fontawesome-all.min.js',
-				array( 'jquery' ),
-				PREMIUM_ADDONS_VERSION,
-				true
-			);
-		}
-
 		wp_register_script(
 			'pa-scrolltrigger',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/scrollTrigger' . $suffix . '.js',

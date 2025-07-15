@@ -158,6 +158,8 @@ class Module {
 					'shadow4' 	=> __( 'Shadow 04', 'premium-addons-for-elementor' ),
 					'shadow5' 	=> __( 'Shadow 05', 'premium-addons-for-elementor' ),
 					'shadow6' 	=> __( 'Shadow 06', 'premium-addons-for-elementor' ),
+					'shadow7' 	=> __( 'Shadow 07', 'premium-addons-for-elementor' ),
+					'shadow8' 	=> __( 'Shadow 08', 'premium-addons-for-elementor' ),
 				),
 				'prefix_class' => 'premium-lq__',
 				'default'     => 'shadow1',

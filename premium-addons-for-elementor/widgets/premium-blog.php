@@ -361,15 +361,15 @@ class Premium_Blog extends Widget_Base {
 						$this->add_control(
 							$index . '_' . $key . '_filter_rule',
 							array(
-								/* translators: %s Taxnomy Label */
+								/* translators: %s Taxonomy Label */
 								'label'       => sprintf( __( '%s Filter Rule', 'premium-addons-for-elementor' ), $tax->label ),
 								'type'        => Controls_Manager::SELECT,
 								'default'     => 'IN',
 								'label_block' => true,
 								'options'     => array(
-									/* translators: %s: Taxnomy Label */
+									/* translators: %s: Taxonomy Label */
 									'IN'     => sprintf( __( 'Match %s', 'premium-addons-for-elementor' ), $tax->label ),
-									/* translators: %s: Taxnomy Label */
+									/* translators: %s: Taxonomy Label */
 									'NOT IN' => sprintf( __( 'Exclude %s', 'premium-addons-for-elementor' ), $tax->label ),
 								),
 								'condition'   => array(
@@ -382,7 +382,7 @@ class Premium_Blog extends Widget_Base {
 						$this->add_control(
 							'tax_' . $index . '_' . $key . '_filter',
 							array(
-								/* translators: %s Taxnomy Label */
+								/* translators: %s Taxonomy Label */
 								'label'       => sprintf( __( '%s Filter', 'premium-addons-for-elementor' ), $tax->label ),
 								'type'        => Controls_Manager::SELECT2,
 								'default'     => '',
