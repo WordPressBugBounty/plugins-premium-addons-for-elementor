@@ -1122,7 +1122,7 @@ class Woo_Products extends Widget_Base {
 				'label'       => __( 'String', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '[value]%',
-				'description' => __( 'Use [value] to get the discount in perecentage, or [sale] to get the absolute value of the discount.', 'premium-addons-for-elementor' ),
+				'description' => __( 'Use [value] to get the discount in percentage, or [sale] to get the absolute value of the discount.', 'premium-addons-for-elementor' ),
 				'condition'   => array(
 					'sale'      => 'yes',
 					'sale_type' => 'custom',

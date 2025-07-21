@@ -155,7 +155,7 @@ class Admin_Helper {
 		// PA Dynamic Assets.
 		$row_meta = Helper_Functions::is_hide_row_meta();
 
-		if ( self::check_dynamic_assets() && ! $row_meta ) {
+		if ( ! is_admin() && self::check_dynamic_assets() && ! $row_meta ) {
 			Admin_Bar::get_instance();
 		}
 	}
@@ -572,7 +572,7 @@ class Admin_Helper {
 
 		$settings_link = sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=' . self::$page_slug . '#tab=elements' ), __( 'Settings', 'premium-addons-for-elementor' ) );
 
-		$rollback_link = sprintf( '<a href="%1$s">%2$s %3$s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=premium_addons_rollback' ), 'premium_addons_rollback' ), __( 'Rollback to Version ', 'premium-addons-for-elementor' ), PREMIUM_ADDONS_STABLE_VERSION );
+		$rollback_link = sprintf( '<a href="%1$s">%2$s%3$s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=premium_addons_rollback' ), 'premium_addons_rollback' ), __( 'Rollback to v', 'premium-addons-for-elementor' ), PREMIUM_ADDONS_STABLE_VERSION );
 
 		$new_links = array( $settings_link, $rollback_link );
 
@@ -1186,7 +1186,7 @@ class Admin_Helper {
 	}
 
 	/**
-	 * Get Default Interations
+	 * Get Default Integrations
 	 *
 	 * @since 3.20.9
 	 * @access private
@@ -1272,9 +1272,7 @@ class Admin_Helper {
 	 */
 	public static function check_svg_draw( $key ) {
 
-		$enabled_keys = self::get_enabled_elements();
-
-		$is_enabled = isset( $enabled_keys[ 'svg_' . $key ] ) ? $enabled_keys[ 'svg_' . $key ] : false;
+		$is_enabled = self::check_element_by_key( 'svg_' . $key );
 
 		return $is_enabled;
 	}

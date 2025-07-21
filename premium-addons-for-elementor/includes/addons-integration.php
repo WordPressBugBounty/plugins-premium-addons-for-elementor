@@ -1644,6 +1644,11 @@ class Addons_Integration {
 	 */
 	public function load_pa_extensions() {
 
+		//Load PA Extensions only on Elementor pages.
+		if( Helper_Functions::is_dashboard_page() ) {
+			return;
+		}
+
 		if ( self::$modules['premium-equal-height'] ) {
 			Equal_Height::get_instance();
 		}

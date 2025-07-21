@@ -175,7 +175,7 @@ class Helper_Functions {
 	 */
 	public static function name() {
 
-		$name_free = 'Premium Addons for Elementor';
+		$name_free = 'Premium Addons';
 
 		if ( self::check_papro_version() ) {
 
@@ -185,7 +185,7 @@ class Helper_Functions {
 
 		}
 
-		return '' !== $name_free ? $name_free : 'Premium Addons for Elementor';
+		return '' !== $name_free ? $name_free : 'Premium Addons';
 	}
 
 	/**
@@ -1812,5 +1812,23 @@ class Helper_Functions {
 		$template_content = $frontend->get_builder_content_for_display( $id, true );
 
 		return $template_content;
+	}
+
+	/**
+	 * Check if the current page is Dashboard page.
+	 *
+	 * @since 4.11.21
+	 * @access public
+	 *
+	 * @return bool True if it's the Elementor Dashboard page, false otherwise.
+	 */
+	public static function is_dashboard_page() {
+
+		$url = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+
+		$is_dashboard = is_admin() && false === strpos( $url, 'action=elementor' );
+
+		return $is_dashboard;
+
 	}
 }

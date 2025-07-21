@@ -38,6 +38,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Woo_CTA extends Widget_Base {
 
 	/**
+	 * Check if the icon draw is enabled.
+	 *
+	 * @since 4.9.26
+	 * @access private
+	 *
+	 * @var bool
+	 */
+	private $is_draw_enabled = null;
+
+	/**
 	 * Check Icon Draw Option.
 	 *
 	 * @since 2.8.4
@@ -45,8 +55,12 @@ class Woo_CTA extends Widget_Base {
 	 */
 	public function check_icon_draw() {
 
-		$is_enabled = Admin_Helper::check_svg_draw( 'woo-cta' );
-		return $is_enabled;
+		if ( null === $this->is_draw_enabled ) {
+			$this->is_draw_enabled = Admin_Helper::check_svg_draw( 'woo-cta' );
+		}
+
+		return $this->is_draw_enabled;
+
 	}
 
 

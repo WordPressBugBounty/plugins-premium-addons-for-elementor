@@ -90,12 +90,10 @@ abstract class Module_Base {
 
 		foreach ( $this->get_widgets() as $widget ) {
 
-				$class_name = $this->reflection->getNamespaceName() . '\Widgets\\' . $widget;
+			$class_name = $this->reflection->getNamespaceName() . '\Widgets\\' . $widget;
 
 			if ( $this->is_widget() ) {
-				if ( defined( 'ELEMENTOR_VERSION' ) ) {
-					$widget_manager->register( new $class_name() );
-				}
+				$widget_manager->register( new $class_name() );
 			}
 		}
 	}
