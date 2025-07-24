@@ -25,7 +25,7 @@ class ACF_Helper {
 	 * @param array $posts query objects - available custom fields -.
 	 * @param array $options display options.
 	 *
-	 * @return array $results formated control options.
+	 * @return array $results formatted control options.
 	 */
 	public static function format_acf_query_result( $posts, $options ) {
 
@@ -141,7 +141,7 @@ class ACF_Helper {
 	}
 
 	/**
-	 * Format Acf Values into array ['val : lablel'] || ['val : val']
+	 * Format Acf Values into array ['val : label'] || ['val : val']
 	 *
 	 * @access public
 	 * @since 4.4.8
@@ -155,14 +155,14 @@ class ACF_Helper {
 	 */
 	public static function format_acf_values( $values, $return_format, $is_radio, $single_select = false ) {
 
-		$formated_values = array();
+		$formatted_values = array();
 
 		if ( $is_radio || $single_select ) {
 
 			if ( 'array' === $return_format ) {
-				array_push( $formated_values, $values['value'] . ' : ' . $values['label'] );
+				array_push( $formatted_values, $values['value'] . ' : ' . $values['label'] );
 			} else {
-				array_push( $formated_values, $values . ' : ' . $values );
+				array_push( $formatted_values, $values . ' : ' . $values );
 			}
 		} else {
 
@@ -170,14 +170,14 @@ class ACF_Helper {
 
 			foreach ( $values as $index => $value ) {
 				if ( 'array' === $return_format ) {
-					array_push( $formated_values, $value['value'] . ' : ' . $value['label'] );
+					array_push( $formatted_values, $value['value'] . ' : ' . $value['label'] );
 				} else {
-					array_push( $formated_values, $value . ' : ' . $value );
+					array_push( $formatted_values, $value . ' : ' . $value );
 				}
 			}
 		}
 
-		return $formated_values;
+		return $formatted_values;
 	}
 
 	/**

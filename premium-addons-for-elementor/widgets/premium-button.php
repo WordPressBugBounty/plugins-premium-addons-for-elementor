@@ -1829,7 +1829,7 @@ class Premium_Button extends Widget_Base {
 			if ( 'yes' === $settings['premium_button_event_switcher'] && ! empty( $button_event ) ) {
 
 				if ( Helper_Functions::check_capability( 'unfiltered_html' ) ) {
-					$this->add_render_attribute( 'button', 'onclick', esc_js( $button_event ) );
+					$this->add_render_attribute( 'button', 'onclick', ( $button_event ) );
 				}
 			}
 		}

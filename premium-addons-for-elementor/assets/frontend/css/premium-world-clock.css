@@ -9,7 +9,7 @@
   display: flex;
 }
 .premium-world-clock__clock-wrapper .premium-world-clock__time-wrapper,
-.premium-world-clock__clock-wrapper .premium-world-clock__additonal-info {
+.premium-world-clock__clock-wrapper .premium-world-clock__additional-info {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -17,7 +17,7 @@
 .premium-world-clock__clock-wrapper .premium-world-clock__time-wrapper,
 .premium-world-clock__clock-wrapper .premium-world-clock__days-wrapper,
 .premium-world-clock__clock-wrapper .premium-world-clock__date-wrapper,
-.premium-world-clock__clock-wrapper .premium-world-clock__additonal-info {
+.premium-world-clock__clock-wrapper .premium-world-clock__additional-info {
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
@@ -27,17 +27,17 @@
 }
 
 .premium-world-clock__clock-wrapper,
-.premium-world-clock__additonal-info {
+.premium-world-clock__additional-info {
   gap: 10px;
 }
 
-.premium-world-clock__info-row .premium-world-clock__additonal-info {
+.premium-world-clock__info-row .premium-world-clock__additional-info {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
 }
 
-.premium-world-clock__info-column .premium-world-clock__additonal-info {
+.premium-world-clock__info-column .premium-world-clock__additional-info {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -406,7 +406,8 @@
   -webkit-align-items: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
-  margin-right: 10px;
+  -webkit-margin-end: 10px;
+  margin-inline-end: 10px;
 }
 .premium-world-clock__skin-3 .premium-world-clock__days-wrapper .current-day {
   color: red;
@@ -438,28 +439,38 @@
 .premium-world-clock__skin-3 .premium-world-clock__sec-wrapper {
   position: absolute;
   top: 0;
-  right: 0px;
+  inset-inline-end: 0px;
 }
 .premium-world-clock__skin-3 .premium-world-clock__seconds, .premium-world-clock__skin-3 .premium-world-clock__date-segment {
   font-size: 36px;
 }
 .premium-world-clock__skin-3 .premium-world-clock__symbol {
   position: relative;
-  right: 3px;
+  inset-inline-end: 3px;
   top: 0px;
   font-size: 15px;
 }
 .premium-world-clock__skin-3 .premium-world-clock__meridiem {
   position: absolute;
   top: 40px;
-  right: 101%;
+  inset-inline-end: -101%;
 }
 .premium-world-clock__skin-3 .premium-world-clock__date-wrapper {
-  margin-left: 10px;
+  -webkit-margin-start: 10px;
+  margin-inline-start: 10px;
   min-width: 50px;
 }
-.premium-world-clock__skin-3 .premium-world-clock__additonal-info {
+.premium-world-clock__skin-3 .premium-world-clock__additional-info {
   width: 100%;
+}
+.premium-world-clock__skin-3 .premium-world-clock__month-wrapper, .premium-world-clock__skin-3 .premium-world-clock__day-wrapper, .premium-world-clock__skin-3 .premium-world-clock__sec-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 5px;
 }
 
 .premium-world-clock__skin-4 .premium-world-clock__clock-wrapper {
@@ -499,10 +510,12 @@
   align-items: center;
 }
 .premium-world-clock__skin-4 .premium-world-clock__date-segment:nth-child(2) {
-  border-left: 2px solid currentColor;
+  -webkit-border-start: 2px solid currentColor;
+  border-inline-start: 2px solid currentColor;
 }
 .premium-world-clock__skin-4 .premium-world-clock__date-segment:nth-child(3) {
-  border-left: 2px solid currentColor;
+  -webkit-border-start: 2px solid currentColor;
+  border-inline-start: 2px solid currentColor;
 }
 .premium-world-clock__skin-4 .premium-world-clock__hand {
   text-align: center;
@@ -542,10 +555,12 @@
     opacity: 1;
   }
 }
-.rtl .premium-world-clock__skin-2 .premium-world-clock__time-wrapper,
 .rtl .premium-world-clock__skin-3 .premium-world-clock__time-wrapper,
 .rtl .premium-world-clock__skin-4 .premium-world-clock__time-wrapper {
   -webkit-flex-direction: row-reverse;
   -ms-flex-direction: row-reverse;
   flex-direction: row-reverse;
+}
+.rtl .premium-world-clock__skin-3 .premium-world-clock__meridiem {
+  inset-inline-end: -10%;
 }

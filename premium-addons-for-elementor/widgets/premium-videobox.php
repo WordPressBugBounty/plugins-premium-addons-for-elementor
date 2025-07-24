@@ -201,7 +201,7 @@ class Premium_Videobox extends Widget_Base {
 			'premium_video_box_video_embed',
 			array(
 				'label'       => __( 'Embed URL', 'premium-addons-for-elementor' ),
-				'description' => __( 'Enter your YouTube/Vimeo video link. For example, https://www.youtube.com/embed/z1hQgVpfTKU', 'premium-addons-for-elementor' ),
+				'description' => __( 'Enter your YouTube/Vimeo video link. For example, https://www.youtube.com/watch?v=eRnPSnx8nPY', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::HIDDEN,
 				'condition'   => array(
 					'premium_video_box_video_type!' => 'self',
@@ -371,7 +371,7 @@ class Premium_Videobox extends Widget_Base {
 				'label'       => __( 'Link', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default'     => 'https://www.youtube.com/watch?v=07d2dXHYb94',
+				'default'     => 'https://www.youtube.com/watch?v=eRnPSnx8nPY',
 				'dynamic'     => array(
 					'active'     => true,
 					'categories' => array(
@@ -1445,9 +1445,9 @@ class Premium_Videobox extends Widget_Base {
 				'description' => __( 'Choose an image for the video box', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::MEDIA,
 				'dynamic'     => array( 'active' => true ),
-				'default'     => array(
-					'url' => Utils::get_placeholder_image_src(),
-				),
+				// 'default'     => array(
+				// 	'url' => Utils::get_placeholder_image_src(),
+				// ),
 				'label_block' => true,
 			)
 		);

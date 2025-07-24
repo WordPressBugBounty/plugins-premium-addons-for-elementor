@@ -3323,6 +3323,18 @@
   color: transparent !important;
 }
 
+.premium-cf-anim-label .wpcf7-form-control::-webkit-input-placeholder, .premium-cf-anim-label-pos-back .wpcf7-form-control::-webkit-input-placeholder {
+  color: transparent !important;
+}
+
+.premium-cf-anim-label .wpcf7-form-control:-ms-input-placeholder, .premium-cf-anim-label-pos-back .wpcf7-form-control:-ms-input-placeholder {
+  color: transparent !important;
+}
+
+.premium-cf-anim-label .wpcf7-form-control::-ms-input-placeholder, .premium-cf-anim-label-pos-back .wpcf7-form-control::-ms-input-placeholder {
+  color: transparent !important;
+}
+
 .premium-cf-anim-label .wpcf7-form-control::placeholder,
 .premium-cf-anim-label-pos-back .wpcf7-form-control::placeholder {
   color: transparent !important;
@@ -14336,6 +14348,18 @@ ul.premium-person-social-list {
 
 .premium-search-anim-label .premium-search__input::-ms-input-placeholder,
 .premium-search-anim-label-pos-back .premium-search__input::-ms-input-placeholder {
+  color: transparent !important;
+}
+
+.premium-search-anim-label .premium-search__input::-webkit-input-placeholder, .premium-search-anim-label-pos-back .premium-search__input::-webkit-input-placeholder {
+  color: transparent !important;
+}
+
+.premium-search-anim-label .premium-search__input:-ms-input-placeholder, .premium-search-anim-label-pos-back .premium-search__input:-ms-input-placeholder {
+  color: transparent !important;
+}
+
+.premium-search-anim-label .premium-search__input::-ms-input-placeholder, .premium-search-anim-label-pos-back .premium-search__input::-ms-input-placeholder {
   color: transparent !important;
 }
 

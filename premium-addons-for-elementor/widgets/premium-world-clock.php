@@ -811,6 +811,7 @@ class Premium_World_Clock extends Widget_Base {
 				),
 				'selectors'    => array(
 					'{{WRAPPER}} .premium-world-clock__time-wrapper' => 'flex-direction: {{VALUE}}',
+					'body.rtl {{WRAPPER}}.premium-world-clock__unit-row .premium-world-clock__time-wrapper' => 'flex-direction: row-reverse;',
 				),
 			)
 		);
@@ -887,7 +888,7 @@ class Premium_World_Clock extends Widget_Base {
 					),
 				),
 				'selectors'    => array(
-					'{{WRAPPER}} .premium-world-clock__additonal-info' => 'flex-direction: {{VALUE}}',
+					'{{WRAPPER}} .premium-world-clock__additional-info' => 'flex-direction: {{VALUE}}',
 				),
 			)
 		);
@@ -929,7 +930,7 @@ class Premium_World_Clock extends Widget_Base {
 					),
 				),
 				'selectors'    => array(
-					'{{WRAPPER}} .premium-world-clock__additonal-info' => 'flex-direction: {{VALUE}}',
+					'{{WRAPPER}} .premium-world-clock__additional-info' => 'flex-direction: {{VALUE}}',
 				),
 			)
 		);
@@ -962,7 +963,7 @@ class Premium_World_Clock extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-world-clock__additonal-info' => 'order: {{VALUE}}',
+					'{{WRAPPER}} .premium-world-clock__additional-info' => 'order: {{VALUE}}',
 				),
 			)
 		);
@@ -1179,7 +1180,7 @@ class Premium_World_Clock extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-world-clock__additonal-info' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .premium-world-clock__additional-info' => 'text-align: {{VALUE}};',
 				),
 			)
 		);
@@ -1259,8 +1260,8 @@ class Premium_World_Clock extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}}.premium-world-clock__info-column .premium-world-clock__additonal-info' => 'align-items: {{VALUE}};',
-					'{{WRAPPER}}:not(.premium-world-clock__info-column) .premium-world-clock__additonal-info' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}}.premium-world-clock__info-column .premium-world-clock__additional-info' => 'align-items: {{VALUE}};',
+					'{{WRAPPER}}:not(.premium-world-clock__info-column) .premium-world-clock__additional-info' => 'justify-content: {{VALUE}};',
 				),
 			)
 		);
@@ -1384,7 +1385,7 @@ class Premium_World_Clock extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-world-clock__additonal-info'  => 'gap: {{SIZE}}px;',
+					'{{WRAPPER}} .premium-world-clock__additional-info'  => 'gap: {{SIZE}}px;',
 				),
 			)
 		);
@@ -1505,15 +1506,15 @@ class Premium_World_Clock extends Widget_Base {
 		$this->add_control(
 			'clock_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -1522,8 +1523,8 @@ class Premium_World_Clock extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
+				'default'     => 'none',
+				'label_block' => true,
 				'condition'   => array(
 					'skin!' => 'skin-4',
 				),
@@ -1834,7 +1835,7 @@ class Premium_World_Clock extends Widget_Base {
 			array(
 				'name'     => 'clock_info_bg',
 				'types'    => array( 'classic', 'gradient' ),
-				'selector' => '{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additonal-info',
+				'selector' => '{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additional-info',
 			)
 		);
 
@@ -1842,7 +1843,7 @@ class Premium_World_Clock extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			array(
 				'name'     => 'clock_info_shadow',
-				'selector' => '{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additonal-info',
+				'selector' => '{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additional-info',
 			)
 		);
 
@@ -1850,7 +1851,7 @@ class Premium_World_Clock extends Widget_Base {
 			Group_Control_Border::get_type(),
 			array(
 				'name'     => 'clock_info_border',
-				'selector' => '{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additonal-info',
+				'selector' => '{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additional-info',
 			)
 		);
 
@@ -1861,7 +1862,7 @@ class Premium_World_Clock extends Widget_Base {
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', '%', 'em' ),
 				'selectors'  => array(
-					'{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additonal-info' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additional-info' => 'border-radius: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -1873,7 +1874,7 @@ class Premium_World_Clock extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em' ),
 				'selectors'  => array(
-					'{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additonal-info' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additional-info' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -1885,7 +1886,7 @@ class Premium_World_Clock extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', 'custom' ),
 				'selectors'  => array(
-					'{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additonal-info' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}:not(.premium-world-clock__skin-3):not(.premium-world-clock__skin-4) .premium-world-clock__additional-info' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -3081,9 +3082,9 @@ class Premium_World_Clock extends Widget_Base {
 			)
 		);
 
-		$this->add_render_attribute('time_wrapper', 'class', 'premium-world-clock__time-wrapper');
+		$this->add_render_attribute( 'time_wrapper', 'class', 'premium-world-clock__time-wrapper' );
 
-		if( 'none' !== $settings['clock_lq_effect'] && 'skin4' !== $settings['skin'] ) {
+		if ( 'none' !== $settings['clock_lq_effect'] && 'skin4' !== $settings['skin'] ) {
 			$this->add_render_attribute( 'time_wrapper', 'class', 'premium-con-lq__' . $settings['clock_lq_effect'] );
 		}
 
@@ -3210,7 +3211,7 @@ class Premium_World_Clock extends Widget_Base {
 				<?php } ?>
 
 				<?php if ( ! empty( $clock_title ) || $show_date || $show_timezone ) : ?>
-					<div class='premium-world-clock__additonal-info'>
+					<div class='premium-world-clock__additional-info'>
 
 						<?php if ( ! empty( $clock_title ) ) : ?>
 							<span class='premium-world-clock__clock-title'>

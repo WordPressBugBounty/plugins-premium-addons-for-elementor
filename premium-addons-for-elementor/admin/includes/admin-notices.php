@@ -68,7 +68,6 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'liquid-not'
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {

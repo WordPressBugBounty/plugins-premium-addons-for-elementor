@@ -1,5 +1,129 @@
 == Changelog ==
 
+= 4.11.22 =
+
+- Tweak: Improved RTL compatibility of World Clock widget.
+
+= 4.11.21 =
+
+- Tweak: Dashboard pages loading speed improved by unloading unnecessary PHP files.
+
+= 4.11.20 =
+
+- Tweak: Editor loading speed improved by removing some JS files.
+- Tweak: Added two more shadow presets in Liquid Glass addon.
+
+= 4.11.19 =
+
+- Tweak: Added Coupon Remove button in Mini Cart widget.
+- Tweak: Added Tax Label option in Mini Cart widget.
+- Tweak: Improved RTL compatibility in Tags Cloud widget.
+- Tweak: Added option to search using Title or Description in AJAX Search widget.
+- Fixed: Fatal error in Media Grid widget when `mb_` PHP extension is not installed.
+
+= 4.11.18 =
+
+- Fixed: Google Maps markers not showing after v4.11.17
+- Fixed: PHP warning when SVG Draw widget is used while Dynamic Assets feature is enabled.
+
+= 4.11.17 =
+
+- Fixed: Display Conditions showing code after v4.11.16.
+
+= 4.11.16 =
+
+- Tweak: Added "DC" icon when Display Condition is enabled.
+- Tweak: Setup Wizard improved for better user experience.
+- Fixed: Returning Visitor Display Condition causes unnecessary cookies to be stored.
+
+= 4.11.15 =
+
+- Tweak: Improved compatibility with RTL sites.
+- Tweak: Plugin size decreased by improving Dynamic CSS generating.
+- Fixed: Effect #8 not working on RTL in Banner widget.
+- Fixed: Style #3 not working on RTL in Team Members widget.
+- Fixed: Horizontal Direction not working on RTL in Image Scroll widget.
+
+= 4.11.14 =
+
+- New: Introducing Elementor Liquid Glass Addon - [here](https://premiumaddons.com/elementor-liquid-glass-addon/).
+- Tweak: Added Arrows Position option for carousel arrows in Testimonials widget.
+- Fixed: Free shipping progress bar not working on Chrome in Woo Mini Cart widget.
+
+= 4.11.13 =
+
+- Tweak: Improved Countdown widget JS code.
+- Tweak: Hide Google Maps until the API JS is loaded.
+
+= 4.11.12 =
+
+- Tweak: Added Align Submenu to Top option in Mega Menu widget.
+- Tweak: Markers Clustering controls improved in Google Maps widget.
+- Fixed: Fatal error when plugin is installed before Elementor.
+
+= 4.11.11 =
+
+- Fixed: Fatal error after v4.11.11.
+
+= 4.11.10 =
+
+- Fixed: Icons issue in Mega Menu widget since v4.11.9.
+
+= 4.11.9 =
+
+- Tweak: Added Slide Menu direction option in Mega Menu widget.
+- Tweak: Submenu Trigger option in Mega Menu widget.
+- Fixed: Error while saving Elementor templates after Elementor v3.29.
+- Fixed: Icons from custom icons are not showing in some widgets.
+- Fixed: Security issue in Coutdown widget.
+
+= 4.11.8 =
+
+- Fixed: Fatal error with 'Page' display condition after v4.11.7.
+
+= 4.11.7 =
+
+- Tweak: New layouts added to Woo Mini Cart widget.
+- Tweak: Cross-sells carousel option added to Woo Mini Cart widget.
+- Tweak: Added Language option for units in Countdown widget.
+- Tweak: Added Profile Link option for member image/name in Team Members widget.
+- Fixed: Layout broken in Woo Mini Cart widget in some cases.
+- Fixed: Display conditions 'Page' doesn't detect the shop page ID.
+
+= 4.11.6 =
+
+- Fixed: Prevent plugin rating banner from showing on each update.
+- Fixed: Plugin causes slow dashboard loading in some cases.
+
+= 4.11.5 =
+
+- Fixed: All global features are disabled when setup wizard is completed.
+- Fixed: Pro global feature name is not showing in setup wizard.
+
+= 4.11.4 =
+
+- New: Introducing Setup Wizard for easier plugin settings customization.
+- Tweak: Compatibility between Woo Products widget and BeRocket filtering plugin.
+- Fixed: Console error in Mobile Menu widget.
+- Fixed: Layout broken with Style 7 in Heading widget.
+
+= 4.11.3 =
+
+- Tweak: Added Fill Color Speed option in SVG Draw widget.
+- Fixed: Fatal error in Pinterest Feed widget when Board ID option is empty.
+- Fixed: HTML markup issue in Heading widget.
+- Fixed: Tooltips addon not working when Position control value has spaces in it.
+
+= 4.11.2 =
+
+- Tweak: Translate date based on site's current language in Pinterest and TikTok Feed widgets.
+
+= 4.11.1 =
+
+- Tweak: Premium Blog HTML markup improved for better accessibility.
+- Fixed: Templates not showing in Mega Menu when Hide Mobile Menu option is enabled.
+- Fixed: Carousel arrows not showing in AJAX Search widget.
+
 = 4.11.0 =
 
 - Tweak: Added Delay control in Lottie animation widget.

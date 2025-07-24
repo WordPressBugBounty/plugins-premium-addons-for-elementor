@@ -2,10 +2,7 @@
 /*Glass 4*/
 /*Glass 5*/
 /*Glass 6*/
-.premium-lq__glass1.premium-mega-content-container,
-.premium-lq__glass1.premium-sub-menu,
-.premium-lq__glass1.premium-menu-link,
-.premium-lq__glass1.pa-txt-sc__item-container {
+.premium-lq__glass1.premium-mega-content-container, .premium-lq__glass1.premium-sub-menu, .premium-lq__glass1.premium-menu-link, .premium-lq__glass1.pa-txt-sc__item-container {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -33,10 +30,7 @@
 }
 
 /*Glass 2*/
-.premium-lq__glass2.premium-mega-content-container,
-.premium-lq__glass2.premium-sub-menu,
-.premium-lq__glass2.premium-menu-link,
-.premium-lq__glass2.pa-txt-sc__item-container {
+.premium-lq__glass2.premium-mega-content-container, .premium-lq__glass2.premium-sub-menu, .premium-lq__glass2.premium-menu-link, .premium-lq__glass2.pa-txt-sc__item-container {
   -webkit-backdrop-filter: blur(17px);
   backdrop-filter: blur(17px);
 }
@@ -69,10 +63,7 @@
   * Added to pseudo element for better compatibility with double layered effect.
   */
 }
-.premium-lq__glass3.premium-mega-content-container,
-.premium-lq__glass3.premium-sub-menu,
-.premium-lq__glass3.premium-menu-link,
-.premium-lq__glass3.pa-txt-sc__item-container {
+.premium-lq__glass3.premium-mega-content-container, .premium-lq__glass3.premium-sub-menu, .premium-lq__glass3.premium-menu-link, .premium-lq__glass3.pa-txt-sc__item-container {
   overflow: hidden !important;
   isolation: isolate;
   -webkit-backdrop-filter: blur(8px) url(#glass-distortion1);
@@ -121,10 +112,7 @@
 }
 
 /*Glass 4*/
-.premium-lq__glass4.premium-mega-content-container,
-.premium-lq__glass4.premium-sub-menu,
-.premium-lq__glass4.premium-menu-link,
-.premium-lq__glass4.pa-txt-sc__item-container {
+.premium-lq__glass4.premium-mega-content-container, .premium-lq__glass4.premium-sub-menu, .premium-lq__glass4.premium-menu-link, .premium-lq__glass4.pa-txt-sc__item-container {
   overflow: hidden !important;
   isolation: isolate;
   -webkit-backdrop-filter: blur(10px) url(#glass-distortion2);
@@ -178,10 +166,7 @@
   * Added to pseudo element for better compatibility with double layered effect.
   */
 }
-.premium-lq__glass5.premium-mega-content-container,
-.premium-lq__glass5.premium-sub-menu,
-.premium-lq__glass5.premium-menu-link,
-.premium-lq__glass5.pa-txt-sc__item-container {
+.premium-lq__glass5.premium-mega-content-container, .premium-lq__glass5.premium-sub-menu, .premium-lq__glass5.premium-menu-link, .premium-lq__glass5.pa-txt-sc__item-container {
   overflow: hidden !important;
   isolation: isolate;
   -webkit-backdrop-filter: blur(6px) url(#glass-distortion3);
@@ -235,10 +220,7 @@
   * Added to pseudo element for better compatibility with double layered effect.
   */
 }
-.premium-lq__glass6.premium-mega-content-container,
-.premium-lq__glass6.premium-sub-menu,
-.premium-lq__glass6.premium-menu-link,
-.premium-lq__glass6.pa-txt-sc__item-container {
+.premium-lq__glass6.premium-mega-content-container, .premium-lq__glass6.premium-sub-menu, .premium-lq__glass6.premium-menu-link, .premium-lq__glass6.pa-txt-sc__item-container {
   overflow: hidden !important;
   isolation: isolate;
   -webkit-backdrop-filter: blur(24px) url(#glass-distortion4);
@@ -286,14 +268,14 @@
   backdrop-filter: blur(24px) url(#glass-distortion4);
 }
 
-.premium-world-clock__skin-1 [class*="glass"].premium-world-clock__time-wrapper,
-.premium-world-clock__skin-5 [class*="glass"].premium-world-clock__time-wrapper,
-.premium-world-clock__skin-6 [class*="glass"].premium-world-clock__time-wrapper,
-.premium-world-clock__skin-7 [class*="glass"].premium-world-clock__time-wrapper {
+.premium-world-clock__skin-1 [class*=glass].premium-world-clock__time-wrapper,
+.premium-world-clock__skin-5 [class*=glass].premium-world-clock__time-wrapper,
+.premium-world-clock__skin-6 [class*=glass].premium-world-clock__time-wrapper,
+.premium-world-clock__skin-7 [class*=glass].premium-world-clock__time-wrapper {
   border-radius: 50%;
 }
 
-[class*="glass"].premium-atext__text {
+[class*=glass].premium-atext__text {
   display: inline-block;
 }
 

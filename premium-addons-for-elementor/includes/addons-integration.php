@@ -298,7 +298,7 @@ class Addons_Integration {
 
 
 	/**
-	 * After Enquque Scripts
+	 * After Enqueue Scripts
 	 *
 	 * Loads editor scripts for our controls.
 	 *
@@ -619,7 +619,7 @@ class Addons_Integration {
 
 		if ( $assets_gen_enabled && ( 'page' === $type || 'post' === $type ) ) {
 
-			// If the elemens are cached and ready to generate.
+			// If the elements are cached and ready to generate.
 			if ( Assets_Manager::$is_updated ) {
 				Assets_Manager::generate_asset_file( 'js' );
 				self::$css_content = Assets_Manager::generate_asset_file( 'css' );
@@ -650,7 +650,7 @@ class Addons_Integration {
 			}
 
 			if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) || 'empty' === self::$css_content ) {
-				// If the assets are not ready, or file does not exist for any reson.
+				// If the assets are not ready, or file does not exist for any reason.
 				$this->register_old_scripts( $dir, $suffix );
 			}
 		} else {
@@ -1643,11 +1643,6 @@ class Addons_Integration {
 	 * @access public
 	 */
 	public function load_pa_extensions() {
-
-		//Load PA Extensions only on Elementor pages.
-		if( Helper_Functions::is_dashboard_page() ) {
-			return;
-		}
 
 		if ( self::$modules['premium-equal-height'] ) {
 			Equal_Height::get_instance();
