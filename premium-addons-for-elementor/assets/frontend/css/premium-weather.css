@@ -65,7 +65,7 @@
 .premium-weather__city-name {
   font-size: 30px;
   display: inline-block;
-  color: #54595F;
+  color: #54595f;
 }
 .premium-weather__current-weather .premium-weather__temp-wrapper span {
   font-size: 35px;
@@ -80,7 +80,8 @@
   font-weight: 600;
 }
 .premium-weather__desc-wrapper {
-  margin-left: 50px;
+  -webkit-margin-start: 50px;
+  margin-inline-start: 50px;
 }
 .premium-weather__desc {
   font-size: 20px;
@@ -89,7 +90,7 @@
 }
 .premium-weather__feels-like {
   font-size: 13px;
-  color: #54595F;
+  color: #54595f;
   white-space: nowrap;
 }
 .premium-weather__extra-weather {
@@ -443,14 +444,15 @@
 }
 .premium-daily-forecast__style-4 .premium-weather__forecast .premium-weather__forecast-item-data {
   gap: 50px;
-  margin-left: auto;
+  -webkit-margin-start: auto;
+  margin-inline-start: auto;
 }
 .premium-daily-forecast__style-4 .premium-weather__forecast .premium-weather__forecast-item-data > *:not(.premium-weather__icon-wrapper) {
   min-width: 30px;
   text-align: center;
 }
 .premium-daily-forecast__style-1 .premium-weather__forecast-item, .premium-daily-forecast__style-2 .premium-weather__forecast-item, .premium-daily-forecast__style-3 .premium-weather__forecast-item, .premium-daily-forecast__style-4 .premium-weather__forecast {
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   padding: 15px;
 }
 .premium-daily-forecast__style-3 .premium-weather__forecast-item, .premium-daily-forecast__style-4 .premium-weather__forecast {
@@ -557,7 +559,7 @@
   padding: 0;
 }
 .premium-weather__forecast-tabs-wrapper .premium-weather__tabs-headers li {
-  background: #F0F0F0;
+  background: #f0f0f0;
   border-radius: 10px;
   padding: 10px 0 10px 0;
   margin: 20px 10px 0 10px;
@@ -566,14 +568,14 @@
   transition: 0.3s all ease-in-out;
 }
 .premium-weather__forecast-tabs-wrapper .premium-weather__tabs-headers li:hover {
-  background: #E4E3E3;
+  background: #e4e3e3;
 }
 .premium-weather__forecast-tabs-wrapper .premium-weather__tab-content:not(.current) {
   display: none;
 }
 .premium-weather__forecast-tabs-wrapper .premium-weather__weather-indicators {
   width: 100%;
-  border-bottom: 1px solid #DEDEDE;
+  border-bottom: 1px solid #dedede;
   padding: 20px 0px 20px 0px;
 }
 .premium-weather__forecast-tabs-wrapper .premium-weather__weather-indicators .premium-weather__weather-indicator,
@@ -649,7 +651,7 @@
 .premium-weather__layout-1 .premium-weather__hourly-forecast-wrapper,
 .premium-weather__layout-3 .premium-weather__hourly-forecast-wrapper,
 .premium-weather__layout-2.premium-weather__hourly-yes .premium-weather__extra-outer-wrapper {
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   border-radius: 20px;
   padding: 25px 15px 25px 15px;
   margin: 25px 0 15px 0;
@@ -919,3 +921,13 @@
   }
 }
 /**End of Current Weather Responsive*/
+.rtl .premium-weather__extra-weather > div > span,
+.rtl .premium-hours-vertical .premium-weather__hourly-data > div > span,
+.rtl .premium-weather__tabs-content-wrapper .premium-weather__hourly-item > div > span {
+  direction: ltr;
+}
+.rtl .premium-weather__current-weather .premium-weather__temp-val {
+  -webkit-order: 3;
+  -ms-flex-order: 3;
+  order: 3;
+}

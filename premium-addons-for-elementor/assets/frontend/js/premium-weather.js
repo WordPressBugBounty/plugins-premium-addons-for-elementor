@@ -3,7 +3,8 @@
     var PremiumWeatherHandler = function ($scope, $) {
 
         var id = $scope.data('id'),
-            isInHotspots = $('.elementor-element-' + id).closest('.premium-tooltipster-base').length > 0;
+            isInHotspots = $('.elementor-element-' + id).closest('.premium-tooltipster-base').length > 0,
+            isRTL = $('body').hasClass('rtl');
 
         if (isInHotspots) {
             $scope = $('.elementor-element-' + id);
@@ -43,14 +44,14 @@
 
             $forecastSlider.append(prevArrow + nextArrow);
 
-            $scope.find('a.carousel-arrow').on('click.paWeatherNav', function () {
+            $scope.find('.premium-weather__hourly-forecast-wrapper a.carousel-arrow, .premium-weather__extra-outer-wrapper a.carousel-arrow').on('click.paWeatherNav', function () {
+                var $slider = $(this).closest('.premium-weather__hourly-forecast-wrapper, .premium-weather__extra-outer-wrapper');
 
                 if ($(this).hasClass('carousel-prev')) {
-                    $forecastSlider.slick('slickPrev');
+                    $slider.slick('slickPrev');
                 } else if ($(this).hasClass('carousel-next')) {
-                    $forecastSlider.slick('slickNext');
+                    $slider.slick('slickNext');
                 }
-
             });
         }
 
@@ -92,6 +93,7 @@
                 arrows: true,
                 autoplay: false,
                 draggable: true,
+                rtl: isRTL,
             };
 
             if (!dailyForecast && 'layout-2' !== widgetLayout && 'vertical' === settings.hourlyLayout) {

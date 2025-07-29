@@ -120,7 +120,7 @@ class Products_Module extends Module_Base {
 			// You will have access to settings variable as well as some widget functions.
 			$skin = TemplateBlocks\Skin_Init::get_instance( $style_id );
 
-			// Here you will just need posts based on ajax requst to attache in layout.
+			// Here you will just need posts based on ajax request to attache in layout.
 			$html = $skin->inner_render( $style_id, $widget, true );
 
 			$pagination = $skin->page_render( $style_id, $widget );

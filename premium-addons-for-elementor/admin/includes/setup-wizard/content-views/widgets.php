@@ -15,7 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$rec_widgets   = array_merge( $pa_elements['basic'], $pa_elements['ecommerce'], $pa_elements['blog'] );
 	$rows          = intval( ceil( count( $rec_widgets ) / 4 ) ); // each row should have 4 elements.
 	$is_second_run = get_option( 'pa_complete_wizard' ) ? false : true;
-	$enabled_elements = $is_second_run ? self::get_enabled_elements() : array();
+
+	if ( $is_second_run ) {
+		$enabled_elements = self::get_enabled_elements();
+    }
 
 ?>
 	<span class="pa-welcome-msg-wrapper pa-wz-flex pa-wz-flex-d-col pa-wz-justify-content-center">
@@ -45,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								continue;
 							}
 
-							$is_checked = isset( $enabled_elements[ $elem['key'] ] ) && $enabled_elements[ $elem['key'] ] ? 'checked' : '';
+							$is_checked = ! empty( $enabled_elements[ $elem['key'] ] ?? null ) ? 'checked' : '';
 							$sep_cls    = $j < $row_end && isset( $rec_widgets[ $j + 1 ] ) ? 'pa-wz-sep' : 'pa-wz-sep pa-hidden-sep';
 							?>
 									<div class="pa-switcher <?php echo isset( $elem['name'] ) ? ' ' . esc_html( $elem['name'] ) : ''; ?>">
@@ -120,7 +123,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 												continue;
 											}
 
-											$status         = ( isset( $elem['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'disabled' : checked( 1, $enabled_elements[ $elem['key'] ], false );
+											if ( ! empty( $elem['is_pro'] ) && ! Helper_Functions::check_papro_version() ) {
+												$status = 'disabled';
+											} else {
+												$status = ! empty( $enabled_elements[ $elem['key'] ] ?? null )
+													? checked( 1, $enabled_elements[ $elem['key'] ], false )
+													: '';
+											}
 											$class          = ( isset( $elem['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'pro-' : '';
 											$switcher_class = $class . 'slider round pa-control';
 

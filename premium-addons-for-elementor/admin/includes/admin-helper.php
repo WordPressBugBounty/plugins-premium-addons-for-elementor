@@ -40,13 +40,6 @@ class Admin_Helper {
 	public static $page_slug = 'premium-addons';
 
 	/**
-	 * Current Screen ID
-	 *
-	 * @var current_screen
-	 */
-	public static $current_screen = null;
-
-	/**
 	 * Elements List
 	 *
 	 * @var elements_list
@@ -92,9 +85,6 @@ class Admin_Helper {
 	 * Constructor for the class
 	 */
 	public function __construct() {
-
-		// Get current screen ID.
-		add_action( 'current_screen', array( $this, 'get_current_screen' ) );
 
 		// Insert admin settings submenus.
 		add_action( 'admin_menu', array( $this, 'add_menu_tabs' ), 100 );
@@ -251,42 +241,39 @@ class Admin_Helper {
 	 *
 	 * @since 1.0.0
 	 * @access public
+	 *
+	 * @param string $hook The current admin page hook.
 	 */
-	public function admin_enqueue_scripts() {
+	public function admin_enqueue_scripts( $hook ) {
 
-		$current_screen   = self::get_current_screen();
 		$enabled_elements = self::get_enabled_elements();
 		$action           = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 
-		if ( false === strpos( $action, 'action=architect' ) ) {
+		wp_enqueue_style(
+			'pa_admin_icon',
+			PREMIUM_ADDONS_URL . 'admin/assets/fonts/style.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
 
-			wp_enqueue_style(
-				'pa_admin_icon',
-				PREMIUM_ADDONS_URL . 'admin/assets/fonts/style.css',
-				array(),
-				PREMIUM_ADDONS_VERSION,
-				'all'
-			);
+		wp_enqueue_style(
+			'pa-notice',
+			PREMIUM_ADDONS_URL . 'admin/assets/css/notice.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
 
-			wp_enqueue_style(
-				'pa-notice',
-				PREMIUM_ADDONS_URL . 'admin/assets/css/notice.css',
-				array(),
-				PREMIUM_ADDONS_VERSION,
-				'all'
-			);
+		wp_enqueue_style(
+			'pa-admin',
+			PREMIUM_ADDONS_URL . 'admin/assets/css/admin.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
 
-			wp_enqueue_style(
-				'pa-admin',
-				PREMIUM_ADDONS_URL . 'admin/assets/css/admin.css',
-				array(),
-				PREMIUM_ADDONS_VERSION,
-				'all'
-			);
-
-		}
-
-		if ( strpos( $current_screen, self::$page_slug ) !== false ) {
+		if ( false !== strpos( $hook, 'premium-addons' ) ) {
 
 			wp_enqueue_style(
 				'pa-sweetalert-style',
@@ -397,7 +384,7 @@ class Admin_Helper {
 
 		}
 
-		if ( 'nav-menus' === $current_screen && $enabled_elements['premium-nav-menu'] ) {
+		if ( 'nav-menus.php' === $hook && $enabled_elements['premium-nav-menu'] ) {
 
 			wp_enqueue_style(
 				'pa-font-awesome',
@@ -624,21 +611,6 @@ class Admin_Helper {
 		}
 
 		return $meta;
-	}
-
-	/**
-	 * Gets current screen slug
-	 *
-	 * @since 3.3.8
-	 * @access public
-	 *
-	 * @return string current screen slug
-	 */
-	public static function get_current_screen() {
-
-		self::$current_screen = get_current_screen()->id;
-
-		return isset( self::$current_screen ) ? self::$current_screen : false;
 	}
 
 	/**
@@ -948,17 +920,15 @@ class Admin_Helper {
 		// Save the global features only if it's the second run.
 		$is_second_run = get_option( 'pa_complete_wizard' ) ? false : true;
 		if ( $is_second_run ) {
-			self::update_global_features_option($settings);
-		}
-
-		if ( true === get_option( 'pa_complete_wizard' ) ) {
+			self::update_global_features_option( $settings );
+		} else {
 			update_option( 'pa_complete_wizard', false );
 		}
 
 		wp_send_json_success();
 	}
 
-	private static function update_global_features_option($settings) {
+	private static function update_global_features_option( $settings ) {
 
 		$global_features = array(
 			'premium-mscroll',

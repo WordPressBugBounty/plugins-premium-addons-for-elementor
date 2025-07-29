@@ -1233,7 +1233,7 @@ class Premium_Button extends Widget_Base {
 				),
 				'condition' => array(
 					'premium_button_icon_switcher' => 'yes',
-					'icon_type'                    => 'icon',
+					'icon_type'                    => array( 'icon', 'svg' ),
 					'premium_button_hover_effect!' => array( 'style3', 'style4' ),
 				),
 			)
@@ -1279,7 +1279,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SELECT,
-				'description' => sprintf(
+				'description'  => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
@@ -1447,7 +1447,7 @@ class Premium_Button extends Widget_Base {
 				),
 				'condition' => array(
 					'premium_button_icon_switcher' => 'yes',
-					'icon_type'                    => 'icon',
+					'icon_type'                    => array( 'icon', 'svg' ),
 					'premium_button_hover_effect!' => 'style4',
 				),
 			)
@@ -1848,7 +1848,7 @@ class Premium_Button extends Widget_Base {
 								echo Helper_Functions::get_svg_by_icon(
 									$settings['premium_button_icon_selection_updated'],
 									$this->get_render_attribute_string( 'icon' )
-								);
+								);// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
@@ -1871,12 +1871,10 @@ class Premium_Button extends Widget_Base {
 					<?php if ( 'after' === $settings['premium_button_icon_position'] && 'style4' !== $settings['premium_button_hover_effect'] ) : ?>
 						<?php if ( 'icon' === $icon_type ) : ?>
 							<?php
-
 								echo Helper_Functions::get_svg_by_icon(
 									$settings['premium_button_icon_selection_updated'],
 									$this->get_render_attribute_string( 'icon' )
-								);
-
+								); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
@@ -1925,5 +1923,4 @@ class Premium_Button extends Widget_Base {
 	 * @access protected
 	 */
 	protected function content_template() {}
-
 }

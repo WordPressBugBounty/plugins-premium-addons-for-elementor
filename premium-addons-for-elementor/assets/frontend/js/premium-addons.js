@@ -1488,53 +1488,63 @@
 
 			});
 
-			$carouselElem.find(".premium-carousel-inner").slick({
-				vertical: settings.vertical,
-				slidesToScroll: settings.slidesToScroll,
-				slidesToShow: settings.slidesToShow,
-				responsive: [{
-					breakpoint: settings.tabletBreak,
-					settings: {
-						slidesToShow: settings.slidesTab,
-						slidesToScroll: settings.slidesTab,
-						swipe: settings.touchMove,
+			$carouselElem.find(".premium-carousel-inner").slick(getSlickOptions(settings));
+
+			function getSlickOptions(settings) {
+				var options = {
+					vertical: settings.vertical,
+					slidesToScroll: settings.slidesToScroll,
+					slidesToShow: settings.slidesToShow,
+					responsive: [{
+						breakpoint: settings.tabletBreak,
+						settings: {
+							slidesToShow: settings.slidesTab,
+							slidesToScroll: settings.slidesTab,
+							swipe: settings.touchMove,
+						}
+					},
+					{
+						breakpoint: settings.mobileBreak,
+						settings: {
+							slidesToShow: settings.slidesMob,
+							slidesToScroll: settings.slidesMob,
+							swipe: settings.touchMove,
+						}
 					}
-				},
-				{
-					breakpoint: settings.mobileBreak,
-					settings: {
-						slidesToShow: settings.slidesMob,
-						slidesToScroll: settings.slidesMob,
-						swipe: settings.touchMove,
-					}
+					],
+					useTransform: true,
+					fade: settings.fade,
+					infinite: settings.infinite,
+					speed: settings.speed,
+					autoplay: settings.autoplay,
+					autoplaySpeed: settings.autoplaySpeed,
+					rows: 0,
+					draggable: settings.draggable,
+					rtl: elementorFrontend.config.is_rtl,
+					adaptiveHeight: settings.adaptiveHeight,
+					pauseOnHover: settings.pauseOnHover,
+					centerMode: settings.centerMode,
+					centerPadding: computedStyle.getPropertyValue('--pa-carousel-center-padding') + 'px',
+					arrows: settings.arrows,
+					prevArrow: $carouselElem.find(".premium-carousel-nav-arrow-prev").html(),
+					nextArrow: $carouselElem.find(".premium-carousel-nav-arrow-next").html(),
+					dots: settings.dots,
+					variableWidth: settings.variableWidth,
+					cssEase: settings.cssEase,
+					customPaging: function () {
+						var customDot = $carouselElem.find(".premium-carousel-nav-dot").html();
+						return customDot;
+					},
+					carouselNavigation: settings.carouselNavigation,
+					templatesNumber: settings.templatesNumber,
 				}
-				],
-				useTransform: true,
-				fade: settings.fade,
-				infinite: settings.infinite,
-				speed: settings.speed,
-				autoplay: settings.autoplay,
-				autoplaySpeed: settings.autoplaySpeed,
-				rows: 0,
-				draggable: settings.draggable,
-				rtl: elementorFrontend.config.is_rtl,
-				adaptiveHeight: settings.adaptiveHeight,
-				pauseOnHover: settings.pauseOnHover,
-				centerMode: settings.centerMode,
-				centerPadding: computedStyle.getPropertyValue('--pa-carousel-center-padding') + 'px',
-				arrows: settings.arrows,
-				prevArrow: $carouselElem.find(".premium-carousel-nav-arrow-prev").html(),
-				nextArrow: $carouselElem.find(".premium-carousel-nav-arrow-next").html(),
-				dots: settings.dots,
-				variableWidth: settings.variableWidth,
-				cssEase: settings.cssEase,
-				customPaging: function () {
-					var customDot = $carouselElem.find(".premium-carousel-nav-dot").html();
-					return customDot;
-				},
-				carouselNavigation: settings.carouselNavigation,
-				templatesNumber: settings.templatesNumber,
-			});
+
+				if (settings.arrowCustomPos) {
+					options.appendArrows = $carouselElem.find(".premium-carousel-arrows-wrapper");
+				}
+
+				return options;
+			}
 
 			function runProgress() {
 				$progressbar.animate({ 'width': "+=100%" }, settings.autoplaySpeed, runProgress);
@@ -3737,7 +3747,8 @@
 		var PremiumWeatherHandler = function ($scope, $) {
 
 			var id = $scope.data('id'),
-				isInHotspots = $('.elementor-element-' + id).closest('.premium-tooltipster-base').length > 0;
+				isInHotspots = $('.elementor-element-' + id).closest('.premium-tooltipster-base').length > 0,
+				isRTL = $('body').hasClass('rtl');
 
 			if (isInHotspots) {
 				$scope = $('.elementor-element-' + id);
@@ -3777,14 +3788,14 @@
 
 				$forecastSlider.append(prevArrow + nextArrow);
 
-				$scope.find('a.carousel-arrow').on('click.paWeatherNav', function () {
+				$scope.find('.premium-weather__hourly-forecast-wrapper a.carousel-arrow, .premium-weather__extra-outer-wrapper a.carousel-arrow').on('click.paWeatherNav', function () {
+					var $slider = $(this).closest('.premium-weather__hourly-forecast-wrapper, .premium-weather__extra-outer-wrapper');
 
 					if ($(this).hasClass('carousel-prev')) {
-						$forecastSlider.slick('slickPrev');
+						$slider.slick('slickPrev');
 					} else if ($(this).hasClass('carousel-next')) {
-						$forecastSlider.slick('slickNext');
+						$slider.slick('slickNext');
 					}
-
 				});
 			}
 
@@ -3826,6 +3837,7 @@
 					arrows: true,
 					autoplay: false,
 					draggable: true,
+					rtl: isRTL,
 				};
 
 				if (!dailyForecast && 'layout-2' !== widgetLayout && 'vertical' === settings.hourlyLayout) {

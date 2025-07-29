@@ -375,7 +375,7 @@ class Mini_Cart extends Widget_Base {
 				'options'   => array(
 					'default-sharp'         => __( 'Cart (Sharp)', 'premium-addons-for-elementor' ),
 					'default-round'         => __( 'Cart (Rounded)', 'premium-addons-for-elementor' ),
-					'cart'                  => __( 'Mordern Cart (Filled)', 'premium-addons-for-elementor' ),
+					'cart'                  => __( 'Modern Cart (Filled)', 'premium-addons-for-elementor' ),
 					'cart-outline'          => __( 'Modern Cart (Outlined)', 'premium-addons-for-elementor' ),
 					'basket'                => __( 'Basket (Filled)', 'premium-addons-for-elementor' ),
 					'basket-thin'           => __( 'Basket (Outlined)', 'premium-addons-for-elementor' ),
@@ -823,7 +823,7 @@ class Mini_Cart extends Widget_Base {
 			array(
 				'label'       => __( 'Connect To Premium Woo CTA', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Use this option to open the cart menu everytime a product is added to cart using Premium Woo CTA widget.', 'premium-addons-for-elementor' ),
+				'description' => __( 'Use this option to open the cart menu every time a product is added to cart using Premium Woo CTA widget.', 'premium-addons-for-elementor' ),
 				'condition'   => array(
 					'behaviour' => 'url',
 				),
@@ -2192,7 +2192,7 @@ class Mini_Cart extends Widget_Base {
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
 					'0' => array(
-						'title' => __( 'Defaul', 'premium-addons-for-elementor' ),
+						'title' => __( 'Default', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-order-start',
 					),
 					'2' => array(
@@ -2273,7 +2273,7 @@ class Mini_Cart extends Widget_Base {
 				'type'       => Controls_Manager::CHOOSE,
 				'options'    => array(
 					'0' => array(
-						'title' => __( 'Defaul', 'premium-addons-for-elementor' ),
+						'title' => __( 'Default', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-order-start',
 					),
 					'2' => array(
@@ -2338,7 +2338,7 @@ class Mini_Cart extends Widget_Base {
 	}
 
 	/**
-	 * Register help documnets controls for the Mini Cart widget.
+	 * Register help documents controls for the Mini Cart widget.
 	 *
 	 * @since 4.7.0
 	 * @access private
@@ -2570,7 +2570,7 @@ class Mini_Cart extends Widget_Base {
 			array(
 				'name'       => 'subtotal_typo',
 				'label'      => esc_html__( 'Subtotal Typography', 'premium-addons-for-elementor' ),
-				'selector'   => '{{WRAPPER}} .pa-woo-mc__subtotal',
+				'selector'   => '{{WRAPPER}}  .pa-woo-mc__inner-container .pa-woo-mc__subtotal',
 				'conditions' => $subtotal_conds,
 			)
 		);
@@ -2598,7 +2598,7 @@ class Mini_Cart extends Widget_Base {
 		$this->start_controls_tab(
 			'triggle_style_normal',
 			array(
-				'label' => esc_html__( 'Normal', 'remium-addons-for-elementor' ),
+				'label' => esc_html__( 'Normal', 'premium-addons-for-elementor' ),
 			)
 		);
 
@@ -2608,7 +2608,7 @@ class Mini_Cart extends Widget_Base {
 				'label'      => __( 'Subtotal Color', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::COLOR,
 				'selectors'  => array(
-					'{{WRAPPER}} .pa-woo-mc__subtotal' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .pa-woo-mc__inner-container .pa-woo-mc__subtotal' => 'color: {{VALUE}}',
 				),
 				'conditions' => $subtotal_conds,
 			)
@@ -2746,7 +2746,7 @@ class Mini_Cart extends Widget_Base {
 		$this->start_controls_tab(
 			'triggle_style_hov',
 			array(
-				'label' => esc_html__( 'Hover', 'remium-addons-for-elementor' ),
+				'label' => esc_html__( 'Hover', 'premium-addons-for-elementor' ),
 			)
 		);
 
@@ -2772,7 +2772,7 @@ class Mini_Cart extends Widget_Base {
 				'type'       => Controls_Manager::COLOR,
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__link:hover .pa-woo-mc__subtotal,
-					 {{WRAPPER}} .pa-woo-mc__inner-container:hover .pa-woo-mc__subtotal' => 'color: {{VALUE}}',
+					{{WRAPPER}} .pa-woo-mc__inner-container:hover .pa-woo-mc__subtotal' => 'color: {{VALUE}}',
 				),
 				'conditions' => $subtotal_conds,
 			)
@@ -5561,7 +5561,7 @@ class Mini_Cart extends Widget_Base {
 							<div class="pa-woo-mc__progressbar-wrapper" data-pa-progress-txt="<?php echo wp_kses_data( $this->format_free_shipping_txt( $settings, $free_shipping_threshold, $raw_subtotal ) ); ?>" data-pa-progress-threshold="<?php echo esc_attr( $free_shipping_threshold ); ?>" data-pa-progress-complete="<?php echo esc_attr( $settings['complete_txt'] ); ?>">
 								<span class="pa-woo-mc__subtotal-placeholder" style="display:none"><?php echo esc_html( $raw_subtotal ); ?></span>
 								<span class="pa-woo-mc__progress-heading"></span>
-								<progress class="pa-woo-mc__progressbar" value="<?php echo esc_attr( $this->get_purchace_precentage( $free_shipping_threshold ) ); ?>" max="100"></progress>
+								<progress class="pa-woo-mc__progressbar" value="<?php echo esc_attr( $this->get_purchase_percentage( $free_shipping_threshold ) ); ?>" max="100"></progress>
 							</div>
 						<?php endif; ?>
 				<?php } ?>
@@ -5594,7 +5594,7 @@ class Mini_Cart extends Widget_Base {
 
 		$last_applied_coupon = ! empty( $applied_coupons ) ? end( $applied_coupons ) : '';
 		$def_style           = ! $last_applied_coupon ? 'display:none' : '';
-		$remove_style = ! $last_applied_coupon ? 'display:none' : 'display:inline-block';
+		$remove_style        = ! $last_applied_coupon ? 'display:none' : 'display:inline-block';
 		?>
 			<div class="pa-woo-mc__coupon-sec-wrapper">
 				<a role="button" href="#" class="pa-woo-mc__coupon-toggler">Apply Coupon</a>
@@ -5853,13 +5853,13 @@ class Mini_Cart extends Widget_Base {
 	}
 
 	/**
-	 * Get purchace precentage.
+	 * Get purchase percentage.
 	 *
 	 * @param string $threshold  free shipping threshold.
 	 *
 	 * @return number
 	 */
-	private function get_purchace_precentage( $threshold ) {
+	private function get_purchase_percentage( $threshold ) {
 
 		$cart_total = WC()->cart ? WC()->cart->get_cart_contents_total() : 0;
 

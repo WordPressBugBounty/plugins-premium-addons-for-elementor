@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.2
 Requires PHP: 7.4
-Stable Tag: 4.11.22
+Stable Tag: 4.11.23
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -208,11 +208,11 @@ Yes, it will work with any WordPress theme as long as you are using Elementor as
 
 = Will this plugin slow down my website speed? =
 
-Premium Addonsis light weight and we also gave you the control to enable only the elements you actually use on your website for faster performance.
+Premium Addons is light weight and we also gave you the control to enable only the elements you actually use on your website for faster performance.
 
 = Is this plugin 100% Ads Free? =
 
-Premium Addonsis 100% Ads Free, Ads can only be detected from Youtube videos, that can be added to Premium Widgets ( eg. Modal Box, Video Box, Blog, etc.)
+Premium Addons is 100% Ads Free, Ads can only be detected from Youtube videos, that can be added to Premium Widgets ( eg. Modal Box, Video Box, Blog, etc.)
 
 = How can I report security bugs? =
 
@@ -236,6 +236,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.23 =
+
+- Tweak: Equal Height in Woo Products widget.
+- Tweak: Improved RTL compatibility of Weather Forecast widget.
+- Tweak: Added Margin control for arrows in Carousel widget .
+- Fixed: Carousel arrows conflict in Weather Forecast widget.
+- Fixed: PHP warning when running setup wizard for first time.
 
 = 4.11.22 =
 
