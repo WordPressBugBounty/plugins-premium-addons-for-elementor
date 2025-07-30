@@ -2993,6 +2993,10 @@ class Premium_Grid extends Widget_Base {
 	protected function get_lightbox_title( $attachment ) {
 		$title = '';
 
+		if ( ! $attachment || ! is_a( $attachment, 'WP_Post' ) ) {
+			return $title;
+		}
+
 		$image_data = array(
 			'alt'         => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
 			'caption'     => $attachment->post_excerpt,

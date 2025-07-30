@@ -315,7 +315,7 @@
 
 								var isError = false;
 
-								if (data.invalid) {
+								if (data.invalid || PremiumEditor.isLicenseInvalid) {
 									PremiumEditor.layout.showInvalidLicenseError();
 									return;
 								}
@@ -990,6 +990,7 @@
 		defaultTab: '',
 		channels: {},
 		atIndex: null,
+		isLicenseInvalid: true,
 
 		init: function () {
 
@@ -1196,6 +1197,25 @@
 						};
 
 						self.layout.showTemplatesView(templates, categories, response.data.keywords);
+
+						$.ajax({
+							url: ajaxurl,
+							type: 'get',
+							dataType: 'json',
+							data: {
+								action: 'get_papro_license_status',
+							},
+							success: function (res) {
+
+								PremiumEditor.isLicenseInvalid = false;
+
+								if (res && 'invalid' === res.data) {
+									PremiumEditor.isLicenseInvalid = true;
+								}
+
+							}
+
+						})
 
 					},
 					error: function (err) {

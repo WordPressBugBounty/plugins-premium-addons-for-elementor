@@ -9,7 +9,7 @@ use PremiumAddons\Includes\Templates;
 <div class="elementor-library-error">
 	<div class="elementor-library-error-message">
 	<?php
-		echo wp_kses_post( __( 'Template couldn\'t be loaded. Please activate you license key before.', 'premium-addons-for-elementor' ) );
+		echo wp_kses_post( __( 'Template couldn\'t be loaded. Please activate you license key first.', 'premium-addons-for-elementor' ) );
 	?>
 	</div>
 	<div class="elementor-library-error-link">
