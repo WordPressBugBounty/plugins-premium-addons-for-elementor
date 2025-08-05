@@ -37,8 +37,8 @@ class PAPRO_Promotion {
 
 	public function promote_template( $texts ) {
 
-		$html = '<div class="papro-promote-box">
-            <div class="papro-promote-box-icon">
+		$html = '<div class="premium-promote-box addon-promotion">
+            <div class="premium-promote-box-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" height="56.85" viewBox="0 0 56 56" width="">
 					<defs>
 						<style>
@@ -87,11 +87,11 @@ class PAPRO_Promotion {
             </div>
             <div class="papro-promote-title">' . $texts['title'] . '</div>
             <div class="papro-promote-message">' . $texts['messages'] . '</div>
-			<div class="papro-promote-ctas">' .
-			'<a class="papro-promote-demo elementor-button elementor-button-default" href="'. esc_url( $texts['demo'] ) .'" target="_blank">
+			<div class="premium-promote-ctas">' .
+			'<a class="premium-promote-demo elementor-button elementor-button-default" href="'. esc_url( $texts['demo'] ) .'" target="_blank">
             ' . __( 'Check Demo', 'premium-addons-for-elementor' ) . '
             </a>
-            <a class="papro-promote-upgrade elementor-button elementor-button-default" href="https://premiumaddons.com/upgrade/papro" target="_blank">
+            <a class="premium-promote-upgrade elementor-button elementor-button-default" href="https://premiumaddons.com/upgrade/papro" target="_blank">
             ' . __( 'Get Pro', 'premium-addons-for-elementor' ) . '
             </a>
         </div>';

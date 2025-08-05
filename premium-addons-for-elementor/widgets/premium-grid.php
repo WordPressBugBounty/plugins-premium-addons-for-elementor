@@ -181,6 +181,9 @@ class Premium_Grid extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-grid-widget/', 'grid', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'media-grid', $demo );
+
 		$this->add_control(
 			'premium_gallery_img_size_select',
 			array(

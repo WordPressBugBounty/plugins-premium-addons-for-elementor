@@ -209,6 +209,9 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-textual-showcase-widget/', 'showcase', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'textual-showcase', $demo );
+
 		$draw_icon = $this->check_icon_draw();
 
 		$svg_draw_conds = array(

@@ -8,6 +8,8 @@ namespace PremiumAddons\Includes;
 // Premium Addons Pro Classes.
 use PremiumAddonsPro\Includes\White_Label\Helper;
 
+use PremiumAddons\Admin\Includes\Admin_Helper;
+
 // Elementor Classes.
 use Elementor\Icons_Manager;
 use Elementor\Core\Settings\Manager as SettingsManager;
@@ -1555,6 +1557,40 @@ class Helper_Functions {
 				'label_block' => true,
 			)
 		);
+	}
+
+	/**
+	 * Add Templates Controls
+	 *
+	 * @since 4.11.25
+	 * @access public
+	 *
+	 * @param string $keyword keyword for templates.
+	 * @param string  $demo demo url.
+	 */
+	public static function add_templates_controls( $element, $keyword, $demo ) {
+
+		if( ! Admin_Helper::check_element_by_key( 'premium-templates' ) ) {
+			return;
+		}
+
+		$element->add_control(
+			'premium_templates_links',
+			array(
+				'type' => Controls_Manager::RAW_HTML,
+				'raw'  => '<div class="premium-promote-box widget-box">
+					<div class="premium-promote-ctas">
+						<a class="premium-promote-demo elementor-button elementor-button-default" href="'. esc_url( $demo ) .'" target="_blank"> '.
+							__( 'Widget Demo', 'premium-addons-for-elementor' ) .
+						'</a>
+						<a class="premium-promote-upgrade premium-widget-blocks elementor-button elementor-button-default" href="#" data-keyword="'. esc_attr( $keyword ) .'">' .
+							__( 'Premade Blocks', 'premium-addons-for-elementor' ) .
+						'</a>
+					</div>
+				</div>'
+			)
+		);
+
 	}
 
 	/**

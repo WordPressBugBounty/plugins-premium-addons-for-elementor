@@ -2102,7 +2102,7 @@ class Mini_Cart extends Widget_Base {
 				'label'       => __( 'Text', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'render_type' => 'template',
-				'default'     => 'Remove All Items',
+				'default'     => esc_html__( 'Remove All Items', 'premium-addons-for-elementor' ),
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
 				'condition'   => array(
@@ -2127,7 +2127,7 @@ class Mini_Cart extends Widget_Base {
 				'label'       => __( 'Text', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'render_type' => 'template',
-				'default'     => 'Subtotal {{count}} items',
+				'default'     => esc_html__( 'Subtotal {{count}} items', 'premium-addons-for-elementor' ),
 				'description' => __( 'Use this option to add a text of your choice, and use the {{count}} placeholder to add your items\' count.', 'premium-addons-for-elementor' ),
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
@@ -5616,7 +5616,7 @@ class Mini_Cart extends Widget_Base {
 	private function render_remove_all_btn( $text ) {
 		?>
 			<div class="pa-woo-mc__empty-mc">
-				<a type="button" role="button" class="pa-woo-mc__remove-all-btn"><?php echo esc_html( $text ); ?></a>
+				<a type="button" role="button" class="pa-woo-mc__remove-all-btn"><?php echo esc_html__( $text, 'premium-addons-for-elementor' ); ?></a>
 				<div class="pa-woo-mc__empty-mc-confirm" style="display: none;">
 					<span class="pa-woo-mc__confirm-msg"><?php echo esc_html__( 'Are you sure? ', 'premium-addons-for-elementor' ); ?></span>
 					<a type="button" role="button" class="pa-woo-mc__confirm-btn pa-empty-mc"><?php echo esc_html__( 'Yes', 'premium-addons-for-elementor' ); ?></a> / <a type="button" role="button" class="pa-woo-mc__confirm-btn"><?php echo esc_html__( 'No', 'premium-addons-for-elementor' ); ?></a>
@@ -5683,12 +5683,12 @@ class Mini_Cart extends Widget_Base {
 			if ( 'layout-3' === $layout ) {
 				?>
 					<span class="pa-woo-mc__cart-count"> <?php echo esc_html( $cart_count ); ?></span>
-																	<?php
+				<?php
 			}
 
 			if ( ! empty( $title ) ) {
 				?>
-						<div class="pa-woo-mc__cart-title"> <?php echo esc_html( $title ); ?> </div>
+						<div class="pa-woo-mc__cart-title"> <?php echo esc_html__( $title ); ?> </div>
 					<?php
 			}
 
@@ -5747,14 +5747,14 @@ class Mini_Cart extends Widget_Base {
 			$this->add_render_attribute( 'cart_footer', 'class', 'pa-woo-mc__cart-footer' );
 
 			if ( 'layout-3' !== $layout ) {
-				$this->add_render_attribute( 'cart_footer', 'data-pa-count-txt', $settings['subtotal_txt'] );
+				$this->add_render_attribute( 'cart_footer', 'data-pa-count-txt', __( $settings['subtotal_txt'], 'premium-addons-for-elementor' ) );
 
 				$has_item_count = str_contains( $settings['subtotal_txt'], '{{count}}' );
 
 				if ( $has_item_count ) {
 					$subtotal_heading = ! empty( $settings['subtotal_txt'] ) ? '<span class="pa-woo-mc__cart-count">' . $cart_count . '</span>' : false;
 				} else {
-					$subtotal_heading = ! empty( $settings['subtotal_txt'] ) ? $settings['subtotal_txt'] : false;
+					$subtotal_heading = ! empty( $settings['subtotal_txt'] ) ? __( $settings['subtotal_txt'], 'premium-addons-for-elementor' ) : false;
 				}
 			}
 		}
@@ -5763,7 +5763,7 @@ class Mini_Cart extends Widget_Base {
 			<?php if ( $subtotal ) : ?>
 			<div class="pa-woo-mc__cart-subtotal">
 				<?php if ( 'layout-3' === $layout || $subtotal_heading ) : ?>
-					<span class="pa-woo-mc__subtotal-heading"> <?php echo 'layout-3' === $layout ? esc_attr_e( 'Subtotal', 'woocommerce' ) : wp_kses_post( $subtotal_heading ); ?></span>
+					<span class="pa-woo-mc__subtotal-heading"> <?php echo 'layout-3' === $layout ? esc_html__( 'Subtotal', 'premium-addons-for-elementor' ) : wp_kses_post( $subtotal_heading ); ?></span>
 				<?php endif; ?>
 
 				<span class="pa-woo-mc__subtotal">

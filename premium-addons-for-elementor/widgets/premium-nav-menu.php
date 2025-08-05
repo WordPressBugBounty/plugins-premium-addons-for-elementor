@@ -226,6 +226,9 @@ class Premium_Nav_Menu extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mega-menu-widget/', 'menu', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'nav-mega-menu', $demo );
+
 		$this->add_control(
 			'menu_type',
 			array(

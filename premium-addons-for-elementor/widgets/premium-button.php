@@ -189,6 +189,9 @@ class Premium_Button extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-button-widget/', 'button', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'button', $demo );
+
 		$this->add_control(
 			'premium_button_text',
 			array(

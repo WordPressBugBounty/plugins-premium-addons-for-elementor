@@ -193,6 +193,9 @@ class Premium_Mobile_Menu extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mobile-menu-widget/', 'mobile-menu', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'mobile-menu', $demo );
+
 		$repeater = new Repeater();
 
 		$repeater->start_controls_tabs( 'item_controls_tabs' );

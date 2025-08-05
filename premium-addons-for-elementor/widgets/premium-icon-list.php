@@ -198,6 +198,9 @@ class Premium_Icon_List extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-bullet-list-widget/', 'bullet', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'bullet-list', $demo );
+
 		$repeater_list = new REPEATER();
 
 		$repeater_list->add_control(

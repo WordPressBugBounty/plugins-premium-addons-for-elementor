@@ -12,8 +12,8 @@
 	<select id="elementor-template-library-filter-subtype" class="elementor-template-library-filter-select premium-library-keywords" data-elementor-filter="subtype">
 		<option value=""><?php echo wp_kses_post( __( 'All Widgets/Addons', 'premium-addons-for-elementor' ) ); ?></option>
 		<# _.each( keywords, function( title, slug ) { #>
-		<option value="{{ slug }}">{{ title }}</option>
-		<# } ); #>
+			<option value="{{ slug }}" <# if (slug === activeKeyword) { #>selected<# } #>>{{ title }}</option>
+		<# }); #>
 	</select>
 </div>
 <#

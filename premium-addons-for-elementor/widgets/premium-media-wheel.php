@@ -192,6 +192,9 @@ class Premium_Media_Wheel extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-advanced-carousel-widget/', 'adv-carousel', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'advanced-carousel', $demo );
+
 		$repeater = new Repeater();
 
 		$repeater->add_control(

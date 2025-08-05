@@ -192,6 +192,9 @@ class Premium_Title extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/heading-widget-for-elementor-page-builder/', 'heading', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'heading', $demo );
+
 		$this->add_control(
 			'premium_title_text',
 			array(

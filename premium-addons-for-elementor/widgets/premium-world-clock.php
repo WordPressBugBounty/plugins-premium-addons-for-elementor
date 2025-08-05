@@ -206,6 +206,9 @@ class Premium_World_Clock extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-world-clock-widget/', 'clock', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'world-clock', $demo );
+
 		$this->add_control(
 			'tz_type',
 			array(

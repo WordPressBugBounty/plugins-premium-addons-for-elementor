@@ -151,6 +151,9 @@ class Premium_Dual_Header extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/dual-header-widget-for-elementor-page-builder/', 'dual', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'dual-heading', $demo );
+
 		/*First Header*/
 		$this->add_control(
 			'premium_dual_header_first_header_text',

@@ -279,6 +279,9 @@ class Premium_Weather extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-weather-widget/', 'weather', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'weather', $demo );
+
 		$this->add_control(
 			'api_key',
 			array(

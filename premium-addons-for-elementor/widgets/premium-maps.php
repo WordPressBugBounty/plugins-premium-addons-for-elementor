@@ -162,6 +162,9 @@ class Premium_Maps extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/google-maps-widget-for-elementor-page-builder/', 'maps', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'google-maps', $demo );
+
 		$settings = Admin_Helper::get_integrations_settings();
 
 		if ( empty( $settings['premium-map-api'] ) || '1' == $settings['premium-map-api'] ) { // phpcs:ignore WordPress.PHP.StrictComparisons

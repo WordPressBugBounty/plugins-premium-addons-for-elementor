@@ -157,6 +157,9 @@ class Premium_Person extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-team-members-widget/', 'members', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'team-members', $demo );
+
 		$this->add_control(
 			'multiple',
 			array(

@@ -353,6 +353,6 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 	 * @access public
 	 */
 	public function transient_lifetime() {
-		return DAY_IN_SECONDS;
+		return 3 * DAY_IN_SECONDS;
 	}
 }

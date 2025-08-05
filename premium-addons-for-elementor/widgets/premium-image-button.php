@@ -189,6 +189,9 @@ class Premium_Image_Button extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/image-button-widget-for-elementor-page-builder/', 'img-button', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'image-button', $demo );
+
 		$this->add_control(
 			'premium_image_button_text',
 			array(

@@ -154,6 +154,9 @@ class Premium_Banner extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/banner-widget-for-elementor-page-builder/', 'banner', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'banner', $demo );
+
 		$this->add_control(
 			'premium_banner_image',
 			array(
@@ -331,7 +334,7 @@ class Premium_Banner extends Widget_Base {
 		$this->add_control(
 			'mouse_tilt',
 			array(
-				'label'        => __( 'Enable Mouse Tilt', 'premium-addons-for-elementor' ),
+				'label'        => __( 'Mouse Tilt', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'prefix_class' => 'premium-banner-tilt-',
 			)
@@ -346,15 +349,6 @@ class Premium_Banner extends Widget_Base {
 				'condition'    => array(
 					'mouse_tilt' => 'yes',
 				),
-			)
-		);
-
-		$this->add_control(
-			'premium_banner_extra_class',
-			array(
-				'label'   => __( 'Extra Class', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::TEXT,
-				'dynamic' => array( 'active' => true ),
 			)
 		);
 
@@ -1380,9 +1374,8 @@ class Premium_Banner extends Widget_Base {
 
 		$animation_class = 'premium-banner-' . $settings['premium_banner_image_animation'];
 		$hover_class     = ' ' . $settings['premium_banner_hover_effect'];
-		$extra_class     = ! empty( $settings['premium_banner_extra_class'] ) ? ' ' . $settings['premium_banner_extra_class'] : '';
 		$active          = 'yes' === $settings['premium_banner_active'] ? ' active' : '';
-		$full_class      = $animation_class . $hover_class . $extra_class . $active;
+		$full_class      = $animation_class . $hover_class . $active;
 		$min_size        = $settings['premium_banner_min_range'] . 'px';
 		$max_size        = $settings['premium_banner_max_range'] . 'px';
 
@@ -1521,7 +1514,6 @@ class Premium_Banner extends Widget_Base {
 				'premium-banner-min-height',
 				'premium-banner-' + settings.premium_banner_image_animation,
 				settings.premium_banner_hover_effect,
-				settings.premium_banner_extra_class,
 				active
 			] );
 

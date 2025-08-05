@@ -160,6 +160,9 @@ class Premium_Image_Scroll extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-image-scroll-widget/', 'img-scroll', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'image-scroll', $demo );
+
 		$this->add_control(
 			'image',
 			array(

@@ -161,6 +161,9 @@ class Premium_Fancytext extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-animated-text-widget/', 'fancy-text', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'animated-text', $demo );
+
 		$this->add_control(
 			'style',
 			array(

@@ -187,6 +187,9 @@ class Premium_Counter extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/counter-widget-for-elementor-page-builder/', 'counter', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'counter', $demo );
+
 		$this->add_control(
 			'premium_counter_title',
 			array(

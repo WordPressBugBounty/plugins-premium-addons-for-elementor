@@ -163,6 +163,9 @@ class Premium_Carousel extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-carousel-widget/', 'carousel', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'carousel', $demo );
+
 		$this->add_control(
 			'premium_carousel_slider_content',
 			array(
@@ -1552,10 +1555,10 @@ class Premium_Carousel extends Widget_Base {
 
 		$templates_count = 0;
 
+		$content_type = 'repeater';
+
 		// Use the old select field only if it's value is not empty.
-		if( ! empty ( $settings['premium_carousel_templates_repeater'] ) ) {
-			$content_type = 'repeater';
-		} elseif( ! empty ( $settings['premium_carousel_slider_content'] ) ) {
+		if( ! empty ( $settings['premium_carousel_slider_content'] ) ) {
 			$content_type = 'select';
 		}
 

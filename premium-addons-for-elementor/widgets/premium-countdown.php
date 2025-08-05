@@ -179,6 +179,9 @@ class Premium_Countdown extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-countdown-widget-2/', 'countdown', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'countdown', $demo );
+
 		$this->add_control(
 			'premium_countdown_type',
 			array(

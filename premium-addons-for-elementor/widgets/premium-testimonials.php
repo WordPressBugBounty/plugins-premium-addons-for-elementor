@@ -159,6 +159,9 @@ class Premium_Testimonials extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/testimonials-widget-for-elementor-page-builder/', 'testimonials', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'testimonials', $demo );
+
 		$this->add_control(
 			'multiple',
 			array(

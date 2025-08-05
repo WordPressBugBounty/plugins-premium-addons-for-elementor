@@ -333,7 +333,7 @@ $cart_items = WC()->cart->get_cart();
 		<div class="pa-woo-mc__empty-msg-wrapper">
 			<img src="<?php echo esc_url( $image_url ); ?>" alt="empty cart" class="pa-woo-mc__empty-msg-img">
 			<span class="pa-woo-mc__empty-msg"><?php echo __( 'Your cart is currently empty!', 'woocommerce' ); ?></span>
-			<a class="pa-woo-mc__empty-msg-btn" href="<?php echo esc_url(get_permalink( wc_get_page_id( 'shop' ) )); ?>" aria-label="Return to Shop"><?php echo __( 'Return to Shop', 'woocommerce' ); ?></a>
+			<a class="pa-woo-mc__empty-msg-btn" href="<?php echo esc_url(get_permalink( wc_get_page_id( 'shop' ) )); ?>" aria-label="<?php echo __( 'Return to Shop', 'premium-addons-for-elementor' ); ?>"><?php echo __( 'Return to Shop', 'premium-addons-for-elementor' ); ?></a>
 		</div>
 			<?php
 		} else {

@@ -287,6 +287,9 @@ class Premium_Post_Ticker extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-news-ticker-widget/', 'ticker', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'news-ticker', $demo );
+
 		$this->add_control(
 			'layout',
 			array(

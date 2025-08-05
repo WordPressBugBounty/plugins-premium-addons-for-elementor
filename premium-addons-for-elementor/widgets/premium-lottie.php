@@ -133,6 +133,9 @@ class Premium_Lottie extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-lottie-animations-widget/', 'lottie', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'lottie-animations', $demo );
+
 		$this->add_control(
 			'source',
 			array(

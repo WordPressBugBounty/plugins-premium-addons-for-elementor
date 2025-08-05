@@ -156,6 +156,9 @@ class Premium_Search_Form extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-ajax-search-widget/', 'ajax-search', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'ajax-search', $demo );
+
 		$this->add_control(
 			'query_type',
 			array(

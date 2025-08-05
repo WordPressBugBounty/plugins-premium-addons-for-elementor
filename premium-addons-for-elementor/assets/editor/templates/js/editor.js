@@ -97,7 +97,8 @@
 
 			self.KeywordsModel = Backbone.Model.extend({
 				defaults: {
-					keywords: {}
+					keywords: {},
+					activeKeyword: ''
 				}
 			});
 
@@ -750,7 +751,7 @@
 
 				},
 
-				showTemplatesView: function (templatesCollection, categoriesCollection, keywords) {
+				showTemplatesView: function (templatesCollection, categoriesCollection, keywords, activeKeyword) {
 
 					this.getRegion('modalContent').show(new self.ModalBodyView());
 
@@ -758,7 +759,8 @@
 						tabName = PremiumEditor.getTab(),
 						header = this.getHeaderView(),
 						keywordsModel = new self.KeywordsModel({
-							keywords: keywords
+							keywords: keywords,
+							activeKeyword: activeKeyword
 						});
 
 					header.headerTabs.show(new self.ModalTabsView());
@@ -991,6 +993,7 @@
 		channels: {},
 		atIndex: null,
 		isLicenseInvalid: true,
+		isFilterEventAdded: false,
 
 		init: function () {
 
@@ -1001,6 +1004,8 @@
 			window.elementor.on("preview:loaded", window._.bind(PremiumEditor.initPremTempsButton, PremiumEditor))
 
 			window.elementor.on('document:loaded', window._.bind(PremiumEditor.onPreviewLoaded, PremiumEditor));
+
+			window.elementor.channels.editor.on('section:activated', window._.bind(PremiumEditor.onSectionActivate, PremiumEditor));
 
 			PremiumEditorViews.init();
 			PremiumControlsViews.init();
@@ -1024,6 +1029,33 @@
 
 			this.tabs = PremiumTempsData.tabs;
 			this.defaultTab = PremiumTempsData.defaultTab;
+
+		},
+
+		onSectionActivate: function () {
+
+			var self = this;
+
+			if (!self.isFilterEventAdded) {
+
+				setTimeout(function () {
+
+					self.isFilterEventAdded = true;
+
+					window.elementor.panel.$el.on(
+						'click.filterPremiumTemplate',
+						'.premium-widget-blocks',
+						function () {
+
+							var selectedKeyword = $(this).data('keyword');
+
+							self.showTemplatesModal(self, selectedKeyword);
+						}
+
+					);
+
+				}, 500);
+			}
 
 		},
 
@@ -1130,25 +1162,28 @@
 			return keywords;
 		},
 
-		showTemplatesModal: function (_this) {
+		showTemplatesModal: function (_this, keyword) {
 
-			var $this = $(_this.target),
-				// The section above the add new section box.
-				$addSection = $this.closest('.elementor-add-section'),
-				$prevSections = $addSection.prev(".elementor-top-section, .e-con"),
-				$nextSections = $addSection.next(".elementor-top-section, .e-con"),
-				modelID = $prevSections.data('model-cid');
+			if (!keyword) {
 
-			if (elementor.previewView.collection.length) {
+				var $this = $(_this.target),
+					// The section above the add new section box.
+					$addSection = $this.closest('.elementor-add-section'),
+					$prevSections = $addSection.prev(".elementor-top-section, .e-con"),
+					$nextSections = $addSection.next(".elementor-top-section, .e-con"),
+					modelID = $prevSections.data('model-cid');
 
-				$.each(elementor.previewView.collection.models, function (index, model) {
-					//Trying to insert before at the beginning of the page.
-					if ('undefined' === typeof modelID && $nextSections.length > 0) {
-						PremiumEditor.atIndex = 0;
-					} else if (modelID === model.cid) {
-						PremiumEditor.atIndex = index + 1;
-					}
-				});
+				if (elementor.previewView.collection.length) {
+
+					$.each(elementor.previewView.collection.models, function (index, model) {
+						//Trying to insert before at the beginning of the page.
+						if ('undefined' === typeof modelID && $nextSections.length > 0) {
+							PremiumEditor.atIndex = 0;
+						} else if (modelID === model.cid) {
+							PremiumEditor.atIndex = index + 1;
+						}
+					});
+				}
 			}
 
 			this.getModal().show();
@@ -1159,12 +1194,15 @@
 			}
 
 			this.setTab(this.defaultTab, true);
-			this.requestTemplates(this.defaultTab);
+			this.requestTemplates(this.defaultTab, keyword);
 			this.setPreview('initial');
+
+			this.setFilter('keyword', keyword ? keyword : '');
+
 
 		},
 
-		requestTemplates: function (tabName) {
+		requestTemplates: function (tabName, keyword) {
 
 			var self = this,
 				tab = self.tabs[tabName];
@@ -1172,7 +1210,7 @@
 			self.setFilter('category', false);
 
 			if (tab.data.templates && tab.data.categories) {
-				self.layout.showTemplatesView(tab.data.templates, tab.data.categories, tab.data.keywords);
+				self.layout.showTemplatesView(tab.data.templates, tab.data.categories, tab.data.keywords, keyword);
 			} else {
 
 				$.ajax({
@@ -1196,7 +1234,7 @@
 							keywords: response.data.keywords
 						};
 
-						self.layout.showTemplatesView(templates, categories, response.data.keywords);
+						self.layout.showTemplatesView(templates, categories, response.data.keywords, keyword);
 
 						$.ajax({
 							url: ajaxurl,
@@ -1233,12 +1271,22 @@
 		getModal: function () {
 
 			if (!this.modal) {
-				this.modal = elementor.dialogsManager.createWidget('lightbox', {
+				this.modal = elementorCommon.dialogsManager.createWidget('lightbox', {
 					id: 'premium-template-modal',
 					className: 'elementor-templates-modal',
-					closeButton: false
+					closeButton: false,
+					position: {
+						my: "center",
+						at: "center",
+					},
 				});
 			}
+
+			//Make sure the modal is always centered.
+			setTimeout(function () {
+				window.dispatchEvent(new Event('resize'));
+			}, 500);
+
 
 			return this.modal;
 
