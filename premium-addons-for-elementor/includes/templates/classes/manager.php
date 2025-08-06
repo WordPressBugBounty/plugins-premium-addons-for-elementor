@@ -37,7 +37,7 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 
 			// Register AJAX hooks
 			add_action( 'wp_ajax_premium_get_templates', array( $this, 'get_templates' ) );
-			add_action( 'wp_ajax_get_papro_license_status', array( $this, 'get_papro_license_status' ) );
+			add_action( 'wp_ajax_get_papro_license_status'. 66, array( $this, 'get_papro_license_status' ) );
 			add_action( 'wp_ajax_premium_inner_template', array( $this, 'insert_inner_template' ) );
 
 			add_action( 'wp_ajax_get_pa_element_data', array( $this, 'get_pa_element_data' ) );

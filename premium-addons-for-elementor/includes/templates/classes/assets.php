@@ -96,7 +96,7 @@ if ( ! class_exists( 'Premium_Templates_Assets' ) ) {
 					'underscore',
 					'backbone-marionette',
 				),
-				PREMIUM_ADDONS_VERSION,
+				time(),
 				true
 			);
 

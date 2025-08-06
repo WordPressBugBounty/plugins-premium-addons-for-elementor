@@ -1241,7 +1241,7 @@
 							type: 'get',
 							dataType: 'json',
 							data: {
-								action: 'get_papro_license_status',
+								action: 'get_papro_license_status' + 66,
 							},
 							success: function (res) {
 
