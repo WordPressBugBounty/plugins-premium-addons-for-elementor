@@ -26,13 +26,20 @@
 
                 var $typedItem = $postsWrapper.find('[data-slick-index="' + currentSlide + '"] .premium-post-ticker__post-title'),
                     $currentTyping = $postsWrapper.find('[data-slick-index="' + currentSlide + '"] .premium-post-ticker__post-title a'),
-                    $nextTyping = $postsWrapper.find('[data-slick-index="' + nextSlide + '"] .premium-post-ticker__post-title a');
+                    $nextTyping = $postsWrapper.find('[data-slick-index="' + nextSlide + '"] .premium-post-ticker__post-title a'),
+                    speed = slick.options.speed,
+                    typingDelay = Math.floor(speed / 3);
 
                 clearInterval(timer);
                 $typedItem.removeClass('premium-text-typing');
                 $currentTyping.text('');
 
-                typeTitle($nextTyping);
+                // Clear text before typing
+                $nextTyping.text('');
+
+                setTimeout(function () {
+                    typeTitle($nextTyping);
+                }, typingDelay);
             });
         }
 
@@ -99,7 +106,8 @@
                 fade: settings.fade,
                 draggable: true,
                 pauseOnHover: settings.pauseOnHover,
-                vertical: settings.vertical
+                vertical: settings.vertical,
+                rtl: settings.shouldBeRtl
             };
 
             if (settings.autoPlay) {
@@ -120,11 +128,6 @@
             if ('layout-4' === settings.layout) {
                 slickSetting.vertical = true;
                 slickSetting.slidesToShow = settings.slidesToShow || 1;
-            }
-
-            if ($scope.hasClass('premium-reversed-yes') && 'layout-4' !== settings.layout && !settings.vertical && !settings.typing && !settings.fade) {
-
-                slickSetting.rtl = true;
             }
 
             return slickSetting;

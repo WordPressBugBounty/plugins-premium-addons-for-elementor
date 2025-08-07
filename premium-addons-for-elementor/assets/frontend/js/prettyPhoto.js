@@ -572,7 +572,8 @@
                                     settings.callback(),
                                     (doresize = !0),
                                     (d = !1),
-                                    delete settings;
+                                    // delete settings;
+                                    settings = null;
                             }));
                 }),
                 !pp_alreadyInitialized &&

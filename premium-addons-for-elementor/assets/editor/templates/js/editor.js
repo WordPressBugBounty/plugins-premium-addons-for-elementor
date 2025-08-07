@@ -316,13 +316,13 @@
 
 								var isError = false;
 
-								if (data.invalid || PremiumEditor.isLicenseInvalid) {
-									PremiumEditor.layout.showInvalidLicenseError();
+								if (!data.license) {
+									PremiumEditor.layout.showLicenseError();
 									return;
 								}
 
-								if (!data.license) {
-									PremiumEditor.layout.showLicenseError();
+								if ('invalid' === data.license) {
+									PremiumEditor.layout.showInvalidLicenseError();
 									return;
 								}
 
@@ -335,14 +335,6 @@
 								}
 
 								try {
-
-									// $e.run('document/elements/import', {
-									// 	model: templateModel,
-									// 	data: data,
-									// 	options: options
-									// }).then(function () {
-									// 	console.log("Test");
-									// });
 
 									elementor.previewView.addChildModel(data.content, options);
 
@@ -1236,24 +1228,24 @@
 
 						self.layout.showTemplatesView(templates, categories, response.data.keywords, keyword);
 
-						$.ajax({
-							url: ajaxurl,
-							type: 'get',
-							dataType: 'json',
-							data: {
-								action: 'get_papro_license_status' + 66,
-							},
-							success: function (res) {
+						// $.ajax({
+						// 	url: ajaxurl,
+						// 	type: 'get',
+						// 	dataType: 'json',
+						// 	data: {
+						// 		action: 'get_papro_license_status' /** key **/,
+						// 	},
+						// 	success: function (res) {
 
-								PremiumEditor.isLicenseInvalid = false;
+						// 		PremiumEditor.isLicenseInvalid = false;
 
-								if (res && 'invalid' === res.data) {
-									PremiumEditor.isLicenseInvalid = true;
-								}
+						// 		if (res && 'invalid' === res.data) {
+						// 			PremiumEditor.isLicenseInvalid = true;
+						// 		}
 
-							}
+						// 	}
 
-						})
+						// })
 
 					},
 					error: function (err) {

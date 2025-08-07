@@ -3,6 +3,7 @@
 namespace PremiumAddons\Includes\Templates\Sources;
 
 use PremiumAddons\Includes\Templates;
+use PremiumAddons\Includes\Helper_Functions;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -284,10 +285,6 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 
 		$id = str_replace( $this->id_prefix(), '', $template_id );
 
-		// if ( ! $tab ) {
-		// $tab = isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : false;
-		// }
-
 		$license_key = Templates\premium_templates()->config->get( 'key' );
 
 		$api_url = Templates\premium_templates()->api->api_url( 'template' );
@@ -329,8 +326,6 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 
 		$content         = isset( $body['content'] ) ? $body['content'] : '';
 		$type            = isset( $body['type'] ) ? $body['type'] : '';
-		$license         = isset( $body['license'] ) ? $body['license'] : '';
-		$invalid_license = isset( $body['invalid_key'] ) ? 'invalid' : '';
 
 		if ( ! empty( $content ) ) {
 			$content = $this->replace_elements_ids( $content );
@@ -340,10 +335,52 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 		return array(
 			'page_settings' => array(),
 			'type'          => $type,
-			'license'       => $license,
+			'license'       => $this->get_papro_license_status( $license_key ),
 			'content'       => $content,
-			'invalid'       => $invalid_license,
 		);
+	}
+
+	public function get_papro_license_status( $license_key ) {
+
+		if ( ! Helper_Functions::check_papro_version() ) {
+			return true;
+		}
+
+		if ( ! $license_key ) {
+			return 'false';
+		}
+
+		$ch = curl_init();
+
+		curl_setopt( $ch, CURLOPT_URL, "https://my.leap13.com/?edd_action=check_license&license=$license_key&item_id=361" );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_TIMEOUT, 40 );
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+
+		$response_body = curl_exec( $ch );
+		$response_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+		$curl_error    = curl_error( $ch );
+
+		if ( defined( 'CURLOPT_IPRESOLVE' ) && defined( 'CURL_IPRESOLVE_V4' ) ) {
+			curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+		}
+
+		if ( curl_errno( $ch ) || $response_code !== 200 ) {
+			curl_close( $ch );
+			return;
+		}
+
+		$body = json_decode( $response_body, true );
+
+		// Close cURL session
+		curl_close( $ch );
+
+		if ( isset( $body['license'] ) ) {
+			return $body['license'];
+		} else {
+			return true;
+		}
 	}
 
 	/**

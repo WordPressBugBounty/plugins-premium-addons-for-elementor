@@ -1459,12 +1459,15 @@
 				if (windowWidth > settings.tabletBreak) {
 					slidesToShow = settings.slidesDesk;
 				}
+
 				if (windowWidth <= settings.tabletBreak) {
 					slidesToShow = settings.slidesTab;
 				}
+
 				if (windowWidth <= settings.mobileBreak) {
 					slidesToShow = settings.slidesMob;
 				}
+
 				return slidesToShow;
 
 			}
@@ -1491,15 +1494,18 @@
 			$carouselElem.find(".premium-carousel-inner").slick(getSlickOptions(settings));
 
 			function getSlickOptions(settings) {
+
+				var appearance = settings.appearance;
+
 				var options = {
 					vertical: settings.vertical,
-					slidesToScroll: settings.slidesToScroll,
+					slidesToScroll: 'all' === appearance ? settings.slidesDesk : 1,
 					slidesToShow: settings.slidesToShow,
 					responsive: [{
 						breakpoint: settings.tabletBreak,
 						settings: {
 							slidesToShow: settings.slidesTab,
-							slidesToScroll: settings.slidesTab,
+							slidesToScroll: 'all' === appearance ? settings.slidesTab : 1,
 							swipe: settings.touchMove,
 						}
 					},
@@ -1507,7 +1513,7 @@
 						breakpoint: settings.mobileBreak,
 						settings: {
 							slidesToShow: settings.slidesMob,
-							slidesToScroll: settings.slidesMob,
+							slidesToScroll: 'all' === appearance ? settings.slidesMob : 1,
 							swipe: settings.touchMove,
 						}
 					}
@@ -1625,7 +1631,7 @@
 					centerMode = slick.options.centerMode,
 					slideToAnimate = currentSlide + slidesToShow - 1;
 
-				//Trigger Aniamtions for the current slide
+				//Trigger Animations for the current slide
 				triggerAnimation();
 
 				if (slidesScrolled === 1) {
@@ -1667,7 +1673,7 @@
 
 			$carouselElem.on("beforeChange", function (event, slick, currentSlide) {
 
-				//Reset Aniamtions for the other slides
+				//Reset Animations for the other slides
 				resetAnimations();
 
 				var $inViewPort = $(this).find("[data-slick-index='" + currentSlide + "']");
@@ -2341,25 +2347,32 @@
 				scrollOverlay = scrollElement.find(".premium-image-scroll-overlay"),
 				scrollVertical = scrollElement.find(".premium-image-scroll-vertical"),
 				dataElement = scrollElement.data("settings"),
-				imageScroll = scrollElement.find("img"),
+				$imageScroll = scrollElement.find("img"),
 				direction = dataElement["direction"],
 				reverse = dataElement["reverse"],
 				transformOffset = null;
 
 			function startTransform() {
-				imageScroll.css("transform", (direction === "vertical" ? "translateY" : "translateX") + "( " + (!elementorFrontend.config.is_rtl ? '-' : '') +
+
+				var transformDirection = '-';
+
+				if (elementorFrontend.config.is_rtl && 'horizontal' === direction) {
+					transformDirection = '';
+				}
+
+				$imageScroll.css("transform", (direction === "vertical" ? "translateY" : "translateX") + "( " + transformDirection +
 					transformOffset + "px)");
 			}
 
 			function endTransform() {
-				imageScroll.css("transform", (direction === "vertical" ? "translateY" : "translateX") + "(0px)");
+				$imageScroll.css("transform", (direction === "vertical" ? "translateY" : "translateX") + "(0px)");
 			}
 
 			function setTransform() {
 				if (direction === "vertical") {
-					transformOffset = imageScroll.height() - scrollElement.height();
+					transformOffset = $imageScroll.height() - scrollElement.height();
 				} else {
-					transformOffset = imageScroll.width() - scrollElement.width();
+					transformOffset = $imageScroll.width() - scrollElement.width();
 				}
 			}
 			if (dataElement["trigger"] === "scroll") {
@@ -2369,8 +2382,8 @@
 				} else {
 					scrollElement.imagesLoaded(function () {
 						scrollOverlay.css({
-							width: imageScroll.width(),
-							height: imageScroll.height()
+							width: $imageScroll.width(),
+							height: $imageScroll.height()
 						});
 					});
 				}
@@ -3597,13 +3610,20 @@
 
 					var $typedItem = $postsWrapper.find('[data-slick-index="' + currentSlide + '"] .premium-post-ticker__post-title'),
 						$currentTyping = $postsWrapper.find('[data-slick-index="' + currentSlide + '"] .premium-post-ticker__post-title a'),
-						$nextTyping = $postsWrapper.find('[data-slick-index="' + nextSlide + '"] .premium-post-ticker__post-title a');
+						$nextTyping = $postsWrapper.find('[data-slick-index="' + nextSlide + '"] .premium-post-ticker__post-title a'),
+						speed = slick.options.speed,
+						typingDelay = Math.floor(speed / 3);
 
 					clearInterval(timer);
 					$typedItem.removeClass('premium-text-typing');
 					$currentTyping.text('');
 
-					typeTitle($nextTyping);
+					// Clear text before typing
+					$nextTyping.text('');
+
+					setTimeout(function () {
+						typeTitle($nextTyping);
+					}, typingDelay);
 				});
 			}
 
@@ -3670,7 +3690,8 @@
 					fade: settings.fade,
 					draggable: true,
 					pauseOnHover: settings.pauseOnHover,
-					vertical: settings.vertical
+					vertical: settings.vertical,
+					rtl: settings.shouldBeRtl
 				};
 
 				if (settings.autoPlay) {
@@ -3691,11 +3712,6 @@
 				if ('layout-4' === settings.layout) {
 					slickSetting.vertical = true;
 					slickSetting.slidesToShow = settings.slidesToShow || 1;
-				}
-
-				if ($scope.hasClass('premium-reversed-yes') && 'layout-4' !== settings.layout && !settings.vertical && !settings.typing && !settings.fade) {
-
-					slickSetting.rtl = true;
 				}
 
 				return slickSetting;

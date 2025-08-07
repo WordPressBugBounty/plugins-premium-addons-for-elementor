@@ -1585,11 +1585,6 @@ class Premium_Carousel extends Widget_Base {
 		$vertical = 'vertical' === $settings['premium_carousel_slider_type'];
 
 		$slides_on_desk = $settings['premium_carousel_responsive_desktop'];
-		if ( 'all' === $settings['premium_carousel_slides_to_show'] ) {
-			$slides_scroll = ! empty( $slides_on_desk ) ? $slides_on_desk : 1;
-		} else {
-			$slides_scroll = 1;
-		}
 
 		$slides_show = ! empty( $slides_on_desk ) ? $slides_on_desk : 1;
 
@@ -1761,7 +1756,7 @@ class Premium_Carousel extends Widget_Base {
 
 		$carousel_settings = array(
 			'vertical'           => $vertical,
-			'slidesToScroll'     => $slides_scroll,
+			'appearance'		 => $settings['premium_carousel_slides_to_show'],
 			'slidesToShow'       => $slides_show,
 			'infinite'           => $infinite,
 			'speed'              => $speed,

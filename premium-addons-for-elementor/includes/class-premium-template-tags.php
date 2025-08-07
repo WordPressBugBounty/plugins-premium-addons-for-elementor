@@ -2437,7 +2437,7 @@ class Premium_Template_Tags {
 						Posts_Helper::get_post_categories( $settings, $post_id );
 					}
 					?>
-					<div class="premium-smart-listing__thumbnail-container" style="background-image: url('<?php echo $thumbnail_src[0]; ?>');">
+					<div class="premium-smart-listing__thumbnail-container" style="<?php echo isset( $thumbnail_src[0] ) ? 'background-image: url(' . esc_url( $thumbnail_src[0] ) . ');' : ''; ?>">
 					<?php // $this->get_post_thumbnail( $target, 'magazine' ); ?>
 					</div>
 					<div class="premium-smart-listing__thumbnail-overlay">

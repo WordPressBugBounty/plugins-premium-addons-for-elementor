@@ -37,7 +37,6 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 
 			// Register AJAX hooks
 			add_action( 'wp_ajax_premium_get_templates', array( $this, 'get_templates' ) );
-			add_action( 'wp_ajax_get_papro_license_status'. 66, array( $this, 'get_papro_license_status' ) );
 			add_action( 'wp_ajax_premium_inner_template', array( $this, 'insert_inner_template' ) );
 
 			add_action( 'wp_ajax_get_pa_element_data', array( $this, 'get_pa_element_data' ) );
@@ -47,59 +46,6 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 			$this->register_sources();
 
 			add_filter( 'premium-templates-core/assets/editor/localize', array( $this, 'localize_tabs' ) );
-		}
-
-		/**
-		 * Get PA Pro License Status
-		 *
-		 * Get the license status for Premium Addons Pro.
-		 *
-		 * @since 4.11.24
-		 * @access public
-		 */
-		public function get_papro_license_status() {
-
-			if ( ! Helper_Functions::check_papro_version() ) {
-				return;
-			}
-
-			$key = Templates\premium_templates()->config->get( 'key' );
-
-			if ( ! $key ) {
-				return;
-			}
-
-			$ch = curl_init();
-
-			curl_setopt( $ch, CURLOPT_URL, "https://my.leap13.com/?edd_action=check_license&license=$key&item_id=361" );
-			curl_setopt( $ch, CURLOPT_POST, true );
-			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-			curl_setopt( $ch, CURLOPT_TIMEOUT, 40 );
-			curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-
-			$response_body = curl_exec( $ch );
-			$response_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-			$curl_error    = curl_error( $ch );
-
-			if ( defined( 'CURLOPT_IPRESOLVE' ) && defined( 'CURL_IPRESOLVE_V4' ) ) {
-				curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
-			}
-
-			if ( curl_errno( $ch ) || $response_code !== 200 ) {
-				curl_close( $ch );
-				return;
-			}
-
-			$body = json_decode( $response_body, true );
-
-			// Close cURL session
-			curl_close( $ch );
-
-			if ( isset( $body['license'] ) ) {
-				wp_send_json_success( $body['license'] );
-			} else {
-				return;
-			}
 		}
 
 		/**
