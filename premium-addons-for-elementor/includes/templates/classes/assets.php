@@ -90,7 +90,7 @@ if ( ! class_exists( 'Premium_Templates_Assets' ) ) {
 
 			wp_enqueue_script(
 				'premium-temps-editor',
-				PREMIUM_ADDONS_URL . 'assets/editor/templates/js/editor.js',
+				PREMIUM_ADDONS_URL . 'assets/editor/templates/js/editor.min.js',
 				array(
 					'jquery',
 					'underscore',

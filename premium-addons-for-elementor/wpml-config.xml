@@ -288,6 +288,11 @@
         <widget name="premium-post-ticker">
             <fields>
                 <field type="Post Ticker: Title" editor_type="LINE">ticker_title</field>
+                <field type="Post Ticker: Empty Query Message" editor_type="LINE">empty_query_text</field>
+                <fields-in-item items_of="text_content">
+                    <field type="Item: Text" editor_type="LINE">text</field>
+                    <field type="Item: Link" editor_type="LINK">item_link>url</field>
+                </fields-in-item>
             </fields>
         </widget>
 

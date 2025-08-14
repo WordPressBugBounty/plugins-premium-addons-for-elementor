@@ -1558,7 +1558,7 @@ class Premium_Carousel extends Widget_Base {
 		$content_type = 'repeater';
 
 		// Use the old select field only if it's value is not empty.
-		if( ! empty ( $settings['premium_carousel_slider_content'] ) ) {
+		if( ! empty ( $settings['premium_carousel_slider_content'] ) && empty( $settings['premium_carousel_templates_repeater'] ) ) {
 			$content_type = 'select';
 		}
 

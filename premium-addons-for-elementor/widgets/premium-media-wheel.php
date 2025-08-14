@@ -2063,7 +2063,7 @@ class Premium_Media_Wheel extends Widget_Base {
 			array(
 				'label'      => __( 'Horizontal Position', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px' ),
+				'size_units' => array( 'px', '%', 'custom' ),
 				'range'      => array(
 					'px' => array(
 						'min'  => -500,
@@ -2084,7 +2084,7 @@ class Premium_Media_Wheel extends Widget_Base {
 			array(
 				'label'      => __( 'Vertical Position', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', '%' ),
+				'size_units' => array( 'px', '%', 'custom' ),
 				'range'      => array(
 					'px' => array(
 						'min'  => -500,
