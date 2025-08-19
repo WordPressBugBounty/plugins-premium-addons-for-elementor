@@ -592,6 +592,8 @@ class Premium_Image_Scroll extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'img-scroll' );
+
 		$this->start_controls_section(
 			'image_style',
 			array(

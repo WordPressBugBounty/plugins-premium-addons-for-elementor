@@ -66,7 +66,8 @@
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  margin-right: 7px;
+  -webkit-margin-end: 7px;
+  margin-inline-end: 7px;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
@@ -88,7 +89,8 @@
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  margin-right: 7px;
+  -webkit-margin-end: 7px;
+  margin-inline-end: 7px;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
@@ -208,7 +210,8 @@
 }
 .premium-wrapper-woo-cta .pro-wish {
   display: inline;
-  margin-left: 10px;
+  -webkit-margin-start: 10px;
+  margin-inline-start: 10px;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
@@ -220,7 +223,8 @@
   align-self: center;
 }
 .premium-wrapper-woo-cta .premium-woo-cta__spinner.loader-visible {
-  margin-left: 10px;
+  -webkit-margin-start: 10px;
+  margin-inline-start: 10px;
 }
 .premium-wrapper-woo-cta .premium-woo-cta__spinner .premium-loading-feed {
   display: block !important;

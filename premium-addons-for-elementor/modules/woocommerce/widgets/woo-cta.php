@@ -60,7 +60,6 @@ class Woo_CTA extends Widget_Base {
 		}
 
 		return $this->is_draw_enabled;
-
 	}
 
 
@@ -291,7 +290,7 @@ class Woo_CTA extends Widget_Base {
 				'label'       => __( 'Product quantity Text', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => ' {{number}} In Stock',
-				'description' => __( 'This helps to control number of product. {{number}} will be repalced with the number of stock quantity of product', 'premium-addons-for-elementor' ),
+				'description' => __( 'This helps to control number of product. {{number}} will be replaced with the number of stock quantity of product', 'premium-addons-for-elementor' ),
 				'condition'   => array(
 					'show_available_quantity' => 'yes',
 				),
@@ -805,11 +804,11 @@ class Woo_CTA extends Widget_Base {
 				'options'   => array(
 					'2'  => array(
 						'title' => __( 'Before', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-order-start',
+						'icon'  => is_rtl() ? 'eicon-order-end' : 'eicon-order-start',
 					),
 					'-1' => array(
 						'title' => __( 'After', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-order-end',
+						'icon'  => is_rtl() ? 'eicon-order-start' : 'eicon-order-end',
 					),
 				),
 				'default'   => '2',
@@ -1958,7 +1957,7 @@ class Woo_CTA extends Widget_Base {
 	private function get_woocommerce_product_attributes_for_add_to_cart( $product_id ) {
 		$product = wc_get_product( $product_id );
 
-		if ( ! $product || ( ! $product->is_type( 'variable' ) && ! $product->is_type( 'variable-subscription' ) )  ) {
+		if ( ! $product || ( ! $product->is_type( 'variable' ) && ! $product->is_type( 'variable-subscription' ) ) ) {
 			return array();
 		}
 
@@ -2098,7 +2097,7 @@ class Woo_CTA extends Widget_Base {
 			$external_url = $product->get_product_url();
 			$button_text  = $product->get_button_text();
 
-		} elseif ( in_array( $product_type, [ 'variable', 'variable-subscription' ], true ) ) {
+		} elseif ( in_array( $product_type, array( 'variable', 'variable-subscription' ), true ) ) {
 			$attributes = $this->get_woocommerce_product_attributes_for_add_to_cart( $product_id );
 		}
 
@@ -2308,7 +2307,7 @@ class Woo_CTA extends Widget_Base {
 						</table>
 					<?php } ?>
 
-					<?php if (  in_array( $product_type, [ 'variable', 'variable-subscription' ], true ) ) { ?>
+					<?php if ( in_array( $product_type, array( 'variable', 'variable-subscription' ), true ) ) { ?>
 						<?php if ( ! empty( $attributes ) ) : ?>
 					<table class="premium-variations" cellspacing="0" role="presentation">
 						<tbody>
@@ -2341,9 +2340,9 @@ class Woo_CTA extends Widget_Base {
 			<div class='premium-woo-btn-container'>
 
 				<?php
-				// show product quantity message
-				$stock_quantity = $product->get_stock_quantity(); // Get stock quantity
-				$max_stock      = $stock_quantity ? $stock_quantity : ''; // Handle unlimited stock
+				// show product quantity message.
+				$stock_quantity = $product->get_stock_quantity(); // Get stock quantity.
+				$max_stock      = $stock_quantity ? $stock_quantity : ''; // Handle unlimited stock.
 				if ( $max_stock && ! empty( $product_quantity_message ) ) {
 					$quantity_text = str_replace( '{{number}}', $max_stock, $product_quantity_message );
 					?>

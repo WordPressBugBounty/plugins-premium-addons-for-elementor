@@ -805,6 +805,8 @@ class Premium_Testimonials extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'testimonials' );
+
 		$this->start_controls_section(
 			'premium_testimonial_image_style',
 			array(

@@ -247,6 +247,8 @@ class Premium_Post_Ticker extends Widget_Base {
 		$this->add_slider_section_controls();
 
 		$this->add_helpful_info_section();
+
+		Helper_Functions::register_papro_promotion_controls( $this, 'ticker' );
 	}
 
 	/**

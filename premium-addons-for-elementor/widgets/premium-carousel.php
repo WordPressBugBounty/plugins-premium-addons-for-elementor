@@ -237,8 +237,7 @@ class Premium_Carousel extends Widget_Base {
 		$this->add_control(
 			'premium_carousel_slider_type',
 			array(
-				'label'       => __( 'Type', 'premium-addons-for-elementor' ),
-				'description' => __( 'Set a navigation type', 'premium-addons-for-elementor' ),
+				'label'       => __( 'Direction', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => array(
 					'horizontal' => __( 'Horizontal', 'premium-addons-for-elementor' ),
@@ -839,6 +838,8 @@ class Premium_Carousel extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'carousel' );
+
 		$this->start_controls_section(
 			'premium_carousel_navigation_arrows',
 			array(
@@ -1283,7 +1284,7 @@ class Premium_Carousel extends Widget_Base {
 		$this->start_controls_section(
 			'premium_carousel_navigation',
 			array(
-				'label' => __( 'Navigation', 'premium-addons-for-elementor' ),
+				'label' => __( 'Navigation Dots/Progress Bar', 'premium-addons-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);

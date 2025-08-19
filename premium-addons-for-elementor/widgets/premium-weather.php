@@ -243,6 +243,8 @@ class Premium_Weather extends Widget_Base {
 		$this->add_daily_forecast_section();
 		$this->add_custom_icons_section();
 		$this->add_helpful_info_section();
+
+		Helper_Functions::register_papro_promotion_controls( $this, 'weather' );
 	}
 
 	/**

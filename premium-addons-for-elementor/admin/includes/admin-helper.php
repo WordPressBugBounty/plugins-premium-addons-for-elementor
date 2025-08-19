@@ -638,12 +638,12 @@ class Admin_Helper {
 				'href'     => '#tab=elements',
 				'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/modules-settings',
 			),
-			'features'        => array(
-				'id'       => 'features',
-				'slug'     => $slug . '#tab=features',
-				'title'    => __( 'Global Features', 'premium-addons-for-elementor' ),
-				'href'     => '#tab=features',
-				'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/features',
+			'addons'        => array(
+				'id'       => 'addons',
+				'slug'     => $slug . '#tab=addons',
+				'title'    => __( 'Global Addons', 'premium-addons-for-elementor' ),
+				'href'     => '#tab=addons',
+				'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/addons',
 			),
 			'integrations'    => array(
 				'id'       => 'integrations',
@@ -917,10 +917,10 @@ class Admin_Helper {
 
 		update_option( 'pa_save_settings', $elements );
 
-		// Save the global features only if it's the second run.
+		// Save the global addons only if it's the second run.
 		$is_second_run = get_option( 'pa_complete_wizard' ) ? false : true;
 		if ( $is_second_run ) {
-			self::update_global_features_option( $settings );
+			self::update_global_addons_option( $settings );
 		} else {
 			update_option( 'pa_complete_wizard', false );
 		}
@@ -928,9 +928,9 @@ class Admin_Helper {
 		wp_send_json_success();
 	}
 
-	private static function update_global_features_option( $settings ) {
+	private static function update_global_addons_option( $settings ) {
 
-		$global_features = array(
+		$global_addons = array(
 			'premium-mscroll',
 			'premium-templates',
 			'pa-display-conditions',
@@ -946,7 +946,7 @@ class Admin_Helper {
 		);
 
 		$features = array();
-		foreach ( $global_features as $feature ) {
+		foreach ( $global_addons as $feature ) {
 			if ( isset( $settings[ $feature ] ) && 'on' === $settings[ $feature ] ) {
 				$features[] = $feature;
 			}

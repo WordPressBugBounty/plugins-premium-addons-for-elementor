@@ -198,7 +198,7 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Mouse Cursor', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Add an image, icon or Lottie animation mouse cursor to any container, widget or the whole page.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/elementor-custom-mouse-cursor-global-feature',
+						'demo' => 'https://premiumaddons.com/elementor-custom-mouse-cursor-global-addon',
 					)
 				),
 			)

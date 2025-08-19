@@ -518,7 +518,7 @@ class Skin_10 extends Skin_Base {
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-woocommerce .premium-woo-product-wrapper:hover .premium-woo-qv-btn' => 'right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-woocommerce .premium-woo-product-wrapper:hover .premium-woo-qv-btn' => 'inset-inline-end: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);

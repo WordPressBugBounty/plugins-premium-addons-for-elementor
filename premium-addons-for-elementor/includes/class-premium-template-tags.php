@@ -808,7 +808,7 @@ class Premium_Template_Tags {
 			$skin = $settings['premium_blog_skin'];
 
 			if ( in_array( $skin, array( 'modern', 'cards' ), true ) ) { ?>
-				<a href="<?php esc_url( the_permalink() ); ?>" target="<?php echo esc_attr( $target ); ?>">
+				<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
 				<?php
 			}
 

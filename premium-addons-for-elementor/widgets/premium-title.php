@@ -1101,6 +1101,8 @@ class Premium_Title extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'heading' );
+
 		$this->start_controls_section(
 			'premium_title_style_section',
 			array(

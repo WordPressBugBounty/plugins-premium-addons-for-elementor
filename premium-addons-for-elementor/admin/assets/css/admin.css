@@ -1083,7 +1083,7 @@
 }
 
 /*
-* Global Features
+* Global Addons
 */
 .pa-section-outer-wrap {
 	position: relative;
@@ -1687,7 +1687,7 @@
 	content: "\e940";
 }
 
-.pa-dash-features:before {
+.pa-dash-addons:before {
 	content: "\e952";
 }
 

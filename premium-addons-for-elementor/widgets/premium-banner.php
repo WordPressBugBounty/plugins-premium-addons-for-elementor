@@ -591,6 +591,8 @@ class Premium_Banner extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'banner' );
+
 		$this->start_controls_section(
 			'premium_banner_opacity_style',
 			array(

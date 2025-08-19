@@ -1403,7 +1403,7 @@ $elements = array(
 			),
 			array(
 				'key'  => 'premium-equal-height',
-				'demo' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/premium-addons-global-features-for-elementor/#equal-height-feature', 'eq-height', 'wp-dash', 'dashboard' ),
+				'demo' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/premium-global-addons-for-elementor/#equal-height-feature', 'eq-height', 'wp-dash', 'dashboard' ),
 			),
 			array(
 				'key'  => 'pa-display-conditions',
@@ -1412,7 +1412,7 @@ $elements = array(
 			array(
 				'key'    => 'premium-global-cursor',
 				'is_pro' => true,
-				'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-custom-mouse-cursor-global-feature/', 'cursor', 'wp-dash', 'dashboard' ),
+				'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-custom-mouse-cursor-global-addon/', 'cursor', 'wp-dash', 'dashboard' ),
 			),
 			array(
 				'key'    => 'premium-global-badge',
@@ -1429,7 +1429,7 @@ $elements = array(
 			),
 			array(
 				'key'  => 'premium-cross-domain',
-				'demo' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/premium-addons-global-features-for-elementor/#common-features', 'cross-domain', 'wp-dash', 'dashboard' ),
+				'demo' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/premium-global-addons-for-elementor/#common-features', 'cross-domain', 'wp-dash', 'dashboard' ),
 			),
 			array(
 				'key' => 'premium-duplicator',

@@ -85,7 +85,6 @@ class Woo_Products extends Widget_Base {
 	public function get_style_depends() {
 		return array(
 			'pa-glass',
-			'font-awesome-5-all',
 			'pa-slick',
 			'font-awesome-5-all',
 			'woocommerce-general',
@@ -739,12 +738,12 @@ class Woo_Products extends Widget_Base {
 		$this->add_control(
 			'products',
 			array(
-				'label'         => __( 'Select Products', 'premium-addons-pro' ),
-				'type'          => Premium_Post_Filter::TYPE,
-				'label_block'   => true,
-                'multiple'		=> true,
-                'source'        => 'product',
-				'condition' => array(
+				'label'       => __( 'Select Products', 'premium-addons-pro' ),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => true,
+				'source'      => 'product',
+				'condition'   => array(
 					'query_type' => 'custom',
 				),
 			)
@@ -934,28 +933,28 @@ class Woo_Products extends Widget_Base {
 		$this->add_responsive_control(
 			'pagination_align',
 			array(
-				'label'     => __( 'Alignment', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
+				'label'                => __( 'Alignment', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'options'              => array(
 					'flex-start' => array(
-						'title' => __( 'Left', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-left',
+						'title' => __( 'Start', 'premium-addons-for-elementor' ),
+						'icon'  => is_rtl() ? 'eicon-text-align-right' : 'eicon-text-align-left',
 					),
 					'center'     => array(
 						'title' => __( 'Center', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-center',
 					),
 					'flex-end'   => array(
-						'title' => __( 'Right', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-right',
+						'title' => __( 'End', 'premium-addons-for-elementor' ),
+						'icon'  => is_rtl() ? 'eicon-text-align-left' : 'eicon-text-align-right',
 					),
 				),
-				'default'   => 'center',
-				'selectors' => array(
+				'default'              => 'center',
+				'selectors'            => array(
 					'{{WRAPPER}} .premium-woo-products-pagination .page-numbers'  => 'justify-content: {{VALUE}}',
 				),
-				'toggle'    => false,
-				'condition' => array(
+				'toggle'               => false,
+				'condition'            => array(
 					'pagination' => 'yes',
 				),
 			)
@@ -1048,7 +1047,7 @@ class Woo_Products extends Widget_Base {
 					'inline' => __( 'Inline', 'premium-addons-for-elementor' ),
 					'block'  => __( 'Block', 'premium-addons-for-elementor' ),
 				),
-				'selectors' => array(
+				'selectors'   => array(
 					'#premium-woo-quick-view-{{ID}}' => '--pa-qv-align: {{VALUE}}',
 				),
 				'default'     => 'inline',

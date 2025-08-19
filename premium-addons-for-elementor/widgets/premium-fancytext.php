@@ -693,6 +693,8 @@ class Premium_Fancytext extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'fancy-text' );
+
 		$this->start_controls_section(
 			'animated_text_style_section',
 			array(

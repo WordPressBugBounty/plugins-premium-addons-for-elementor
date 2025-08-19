@@ -1528,6 +1528,8 @@ class Premium_Icon_List extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'bullet' );
+
 		$this->register_style_controls( $draw_icon );
 	}
 

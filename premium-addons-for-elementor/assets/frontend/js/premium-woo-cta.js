@@ -183,7 +183,7 @@
 
                                     $button.siblings('.view-cart-button').remove();
 
-                                    $button.after('<a href="' + response.data.cart_url + '" target="_blank" class="view-cart-button" style="margin-left: 10px;">' + PAWooCTASettings.view_cart + '</a>');
+                                    $button.after('<a href="' + response.data.cart_url + '" target="_blank" class="view-cart-button" style="margin-inline-start: 10px;">' + PAWooCTASettings.view_cart + '</a>');
 
                                 }
                             }

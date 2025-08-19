@@ -172,7 +172,7 @@
             <fields-in-item items_of="multiple_persons">
                 <field type="Multiple Persons: Person Name" editor_type="LINE">multiple_name</field>
                 <field type="Multiple Persons: Person Title" editor_type="LINE">multiple_title</field>
-                <field type="Multiple Persons: Person Desctiption" editor_type="AREA">multiple_description</field>
+                <field type="Multiple Persons: Person Description" editor_type="AREA">multiple_description</field>
             </fields-in-item>
         </widget>
 
@@ -257,6 +257,19 @@
             </fields>
         </widget>
 
+        <widget name="premium-woo-cta">
+            <fields>
+                <field type="Woo Products: Product Unavailable Message" editor_type="LINE">product_unavailable_message</field>
+                <field type="Woo Products: Product Quantity Text" editor_type="LINE">pa_available_quantity_text</field>
+                <field type="Woo Products: Add to Cart Button Text" editor_type="LINE">cart_button_text</field>
+                <field type="Woo Products: Compare Button Text" editor_type="LINE">compare_button_text</field>
+                <field type="Woo Products: Compare Remove Message" editor_type="LINE">compare_remove_text</field>
+                <field type="Woo Products: Wishlist Button Text" editor_type="LINE">wishlist_button_text</field>
+                <field type="Woo Products: Wishlist Add Message" editor_type="LINE">wishlist_message</field>
+                <field type="Woo Products: Wishlist Remove Message" editor_type="LINE">wishlist_remove_text</field>
+            </fields>
+        </widget>
+
         <widget name="premium-nav-menu">
             <fields>
                 <field type="Mega Menu: Toggle Text" editor_type="LINE">pa_mobile_toggle_text</field>
@@ -281,7 +294,7 @@
             <fields>
                 <field type="Trigger Text" editor_type="LINE">text</field>
                 <field type="Header Text" editor_type="LINE">header_text</field>
-                <field type="Readmore Text" editor_type="LINE">premium_blog_excerpt_text</field>
+                <field type="Read More Text" editor_type="LINE">premium_blog_excerpt_text</field>
             </fields>
         </widget>
 
@@ -339,7 +352,7 @@
             <field type="Placeholder Text" editor_type="LINE">placeholder_text</field>
             <field type="Button Text" editor_type="LINE">button_text</field>
             <field type="Search Page Link" editor_type="LINK">search_page_link</field>
-            <field type="Readmore Text" editor_type="LINE">excerpt_text</field>
+            <field type="Read More Text" editor_type="LINE">excerpt_text</field>
             <field type="Previous Page" editor_type="LINE">premium_blog_prev_text</field>
             <field type="Next Page" editor_type="LINE">premium_blog_next_text</field>
         </widget>

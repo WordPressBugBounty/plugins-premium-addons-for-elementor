@@ -22,7 +22,8 @@
   transition: all 0.3s ease-in-out;
 }
 .premium-woo-cats__list-wrap .woocommerce-loop-category__title sup {
-  margin-left: 5px;
+  -webkit-margin-start: 5px;
+  margin-inline-start: 5px;
 }
 .premium-woo-cats__list-wrap ul.slick-dots {
   width: 100%;

@@ -529,6 +529,8 @@ class Premium_Lottie extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'lottie' );
+
 		$this->start_controls_section(
 			'section_animation_style',
 			array(

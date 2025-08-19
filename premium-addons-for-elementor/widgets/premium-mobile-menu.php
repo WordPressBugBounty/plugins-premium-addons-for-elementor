@@ -1188,6 +1188,8 @@ class Premium_Mobile_Menu extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'mobile-menu' );
+
 		$this->start_controls_section(
 			'item_style',
 			array(

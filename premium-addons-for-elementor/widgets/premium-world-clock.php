@@ -187,6 +187,8 @@ class Premium_World_Clock extends Widget_Base {
 
 		$this->add_units_style_controls();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'clock' );
+
 		$this->add_clock_style_controls();
 
 		$this->add_info_style_controls();

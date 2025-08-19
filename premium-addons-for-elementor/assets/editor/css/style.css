@@ -960,6 +960,10 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 	flex-direction: column;
 }
 
+.premium-promote-ctas > a.elementor-button {
+	white-space: nowrap;
+}
+
 .premium-promote-box .elementor-button {
 	color: #fff;
 	padding: 10px;
@@ -983,4 +987,8 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 
 .addon-promotion .elementor-button.premium-promote-upgrade {
 	margin-top: 7px;
+}
+
+.elementor-control-pa_pro_promotion_notice a {
+	color: #2463eb !important;
 }

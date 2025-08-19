@@ -13,8 +13,7 @@
                         listWrap: '.premium-woo-cats__list-wrap',
                         list: 'ul.products'
                     }
-                }
-
+                };
             },
 
             getDefaultElements: function () {
@@ -26,11 +25,9 @@
                     $listWrap: this.$element.find(selectors.listWrap),
                     $list: this.$element.find(selectors.list)
                 }
-
             },
 
             bindEvents: function () {
-
                 this.run();
             },
 
@@ -46,7 +43,6 @@
                 } else if ('carousel' === settings.layout) {
                     this.handleCarousel();
                 }
-
             },
 
             handleGridMasonry: function () {
@@ -83,11 +79,9 @@
                     colsMobile = parseInt(100 / settings.columns_mobile.substr(0, settings.columns_mobile.indexOf('%')));
 
                 $list.on("init", function (event) {
-
                     setTimeout(function () {
                         $container.removeClass("premium-addons__v-hidden");
                     }, 100);
-
                 });
 
                 $list.slick({
@@ -117,15 +111,12 @@
                     nextArrow: nextArrow,
                     prevArrow: prevArrow,
                     dots: 'yes' === settings.dots,
+                    rtl: elementorFrontend.config.is_rtl,
                     customPaging: function () {
                         return '<i class="fas fa-circle"></i>';
                     }
                 });
-
-
-
             }
-
         });
 
         elementorFrontend.elementsHandler.attachHandler('premium-woo-categories', PremiumWooCategoriesHandler);

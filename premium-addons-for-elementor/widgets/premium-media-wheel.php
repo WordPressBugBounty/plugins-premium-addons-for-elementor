@@ -173,6 +173,8 @@ class Premium_Media_Wheel extends Widget_Base {
 		$this->add_advanced_controls();
 		$this->add_light_box_controls();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'adv-carousel' );
+
 		// style controls.
 		$this->add_img_style_controls();
 		$this->add_icon_style_controls();

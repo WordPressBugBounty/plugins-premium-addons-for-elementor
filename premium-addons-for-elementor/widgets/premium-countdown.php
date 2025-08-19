@@ -938,6 +938,8 @@ class Premium_Countdown extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'countdown' );
+
 		$this->start_controls_section(
 			'premium_countdown_typhography',
 			array(

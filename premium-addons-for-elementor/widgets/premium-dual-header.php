@@ -666,6 +666,8 @@ class Premium_Dual_Header extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'dual' );
+
 		$this->start_controls_section(
 			'premium_dual_header_first_style',
 			array(

@@ -1141,6 +1141,8 @@ class Premium_Button extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'button' );
+
 		$this->start_controls_section(
 			'premium_button_style_section',
 			array(

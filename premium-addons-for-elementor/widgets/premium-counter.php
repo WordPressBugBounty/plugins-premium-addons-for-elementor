@@ -779,6 +779,8 @@ class Premium_Counter extends Widget_Base {
 
 		$this->end_controls_section();
 
+		Helper_Functions::register_papro_promotion_controls( $this, 'counter' );
+
 		$this->start_controls_section(
 			'premium_counter_icon_style_tab',
 			array(

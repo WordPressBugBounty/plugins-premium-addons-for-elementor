@@ -76,6 +76,7 @@
 }
 
 .pa-rec-posts-body {
+  height: 90vh;
   max-height: 90vh;
   scrollbar-width: none;
   overflow-y: scroll;
