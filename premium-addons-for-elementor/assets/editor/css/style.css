@@ -723,6 +723,12 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 	background-color: #afafaf;
 }
 
+.elementor-control-presets img {
+	aspect-ratio: 2/2;
+	object-fit: cover;
+	object-position: center;
+}
+
 .image-choose-label-block input {
 	display: none !important;
 }

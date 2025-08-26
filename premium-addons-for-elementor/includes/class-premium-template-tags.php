@@ -2540,26 +2540,4 @@ class Premium_Template_Tags {
 		<?php
 	}
 
-	/**
-	 * Get all categories
-	 *
-	 * Get categories array
-	 *
-	 * @since 4.10.16
-	 * @access public
-	 *
-	 * @return array
-	 */
-	public static function get_all_categories() {
-
-		$args = array(
-			'taxonomy' => 'category',
-			'fields'   => 'id=>name',
-		);
-
-		$categories = get_categories( $args );
-
-		// Return the array of category names with IDs as keys.
-		return $categories;
-	}
 }

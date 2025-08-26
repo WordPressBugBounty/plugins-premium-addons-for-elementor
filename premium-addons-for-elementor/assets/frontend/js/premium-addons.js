@@ -1797,13 +1797,8 @@
 
 				if ($bannerElement.hasClass("premium-banner-tilt-yes")) {
 
-					var reverse = $bannerElement.hasClass("premium-banner-tilt-rev-yes");
-
 					UniversalTilt.init({
 						elements: $bannerElement.closest(".elementor-widget"),
-						settings: {
-							reverse: reverse
-						},
 						callbacks: {
 							onMouseLeave: function (el) {
 								el.style.boxShadow = "0 45px 100px rgba(255, 255, 255, 0)";

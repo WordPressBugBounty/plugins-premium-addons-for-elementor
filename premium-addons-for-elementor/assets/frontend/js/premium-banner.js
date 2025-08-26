@@ -1,92 +1,87 @@
 
 
 (function ($) {
-    $(window).on('elementor/frontend/init', function () {
+	$(window).on('elementor/frontend/init', function () {
 
-        var PremiumBannerHandler = elementorModules.frontend.handlers.Base.extend({
+		var PremiumBannerHandler = elementorModules.frontend.handlers.Base.extend({
 
-            getDefaultSettings: function () {
+			getDefaultSettings: function () {
 
-                return {
-                    selectors: {
-                        bannerImgWrap: '.premium-banner-ib',
-                        bannerImg: 'img',
-                    }
-                }
+				return {
+					selectors: {
+						bannerImgWrap: '.premium-banner-ib',
+						bannerImg: 'img',
+					}
+				}
 
-            },
+			},
 
-            getDefaultElements: function () {
+			getDefaultElements: function () {
 
-                var selectors = this.getSettings('selectors');
+				var selectors = this.getSettings('selectors');
 
-                return {
-                    $bannerImgWrap: this.$element.find(selectors.bannerImgWrap),
-                    $bannerImg: this.$element.find(selectors.bannerImg)
-                }
+				return {
+					$bannerImgWrap: this.$element.find(selectors.bannerImgWrap),
+					$bannerImg: this.$element.find(selectors.bannerImg)
+				}
 
-            },
+			},
 
-            bindEvents: function () {
+			bindEvents: function () {
 
-                var _this = this;
+				var _this = this;
 
-                _this.elements.$bannerImgWrap.hover(function () {
-                    _this.elements.$bannerImg.addClass("active");
-                }, function () {
-                    _this.elements.$bannerImg.removeClass("active");
-                });
+				_this.elements.$bannerImgWrap.hover(function () {
+					_this.elements.$bannerImg.addClass("active");
+				}, function () {
+					_this.elements.$bannerImg.removeClass("active");
+				});
 
-                this.run();
-            },
+				this.run();
+			},
 
-            run: function () {
+			run: function () {
 
-                var $bannerElement = this.$element;
+				var $bannerElement = this.$element;
 
-                //Button grow hover effect.
-                var $btnGrow = $bannerElement.find('.premium-button-style6-bg');
+				//Button grow hover effect.
+				var $btnGrow = $bannerElement.find('.premium-button-style6-bg');
 
-                if ($btnGrow.length !== 0 && $bannerElement.hasClass('premium-mouse-detect-yes')) {
-                    $bannerElement.on('mouseenter mouseleave', '.premium-button-style6', function (e) {
+				if ($btnGrow.length !== 0 && $bannerElement.hasClass('premium-mouse-detect-yes')) {
+					$bannerElement.on('mouseenter mouseleave', '.premium-button-style6', function (e) {
 
-                        var parentOffset = $(this).offset(),
-                            left = e.pageX - parentOffset.left,
-                            top = e.pageY - parentOffset.top;
+						var parentOffset = $(this).offset(),
+							left = e.pageX - parentOffset.left,
+							top = e.pageY - parentOffset.top;
 
-                        $btnGrow.css({
-                            top: top,
-                            left: left,
-                        });
+						$btnGrow.css({
+							top: top,
+							left: left,
+						});
 
-                    });
-                }
+					});
+				}
 
-                if ($bannerElement.hasClass("premium-banner-tilt-yes")) {
+				if ($bannerElement.hasClass("premium-banner-tilt-yes")) {
 
-                    var reverse = $bannerElement.hasClass("premium-banner-tilt-rev-yes");
+					UniversalTilt.init({
+						elements: $bannerElement.closest(".elementor-widget"),
+						callbacks: {
+							onMouseLeave: function (el) {
+								el.style.boxShadow = "0 45px 100px rgba(255, 255, 255, 0)";
+							},
+							onDeviceMove: function (el) {
+								el.style.boxShadow = "0 45px 100px rgba(255, 255, 255, 0.3)";
+							}
+						}
+					});
 
-                    UniversalTilt.init({
-                        elements: $bannerElement.closest(".elementor-widget"),
-                        settings: {
-                            reverse: reverse
-                        },
-                        callbacks: {
-                            onMouseLeave: function (el) {
-                                el.style.boxShadow = "0 45px 100px rgba(255, 255, 255, 0)";
-                            },
-                            onDeviceMove: function (el) {
-                                el.style.boxShadow = "0 45px 100px rgba(255, 255, 255, 0.3)";
-                            }
-                        }
-                    });
+				}
+			}
 
-                }
-            }
+		});
 
-        });
-
-        elementorFrontend.elementsHandler.attachHandler('premium-addon-banner', PremiumBannerHandler);
-    });
+		elementorFrontend.elementsHandler.attachHandler('premium-addon-banner', PremiumBannerHandler);
+	});
 
 })(jQuery);

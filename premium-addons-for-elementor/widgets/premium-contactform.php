@@ -176,39 +176,35 @@ class Premium_Contactform extends Widget_Base {
 			'presets',
 			array(
 				'label'        => __( 'Select From Presets', 'premium-addons-for-elementor' ),
-				'type'         => Premium_Image_Choose::TYPE,
+				'type'         => Controls_Manager::VISUAL_CHOICE,
 				'default'      => 'preset1',
 				'prefix_class' => 'premium-cf__',
+				'columns'      => 2,
+				'label_block'  => true,
 				'options'      => array(
 					'preset1' => array(
 						'title'      => __( 'Preset 1', 'premium-addons-for-elementor' ),
-						'imagesmall' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset1.svg',
-						'width'      => '33%',
+						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset1.svg',
 					),
 					'preset2' => array(
 						'title'      => __( 'Preset 2', 'premium-addons-for-elementor' ),
-						'imagesmall' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset2.svg',
-						'width'      => '33%',
+						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset2.svg',
 					),
 					'preset3' => array(
 						'title'      => __( 'Preset 3', 'premium-addons-for-elementor' ),
-						'imagesmall' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset3.svg',
-						'width'      => '33%',
+						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset3.svg',
 					),
 					'preset4' => array(
 						'title'      => __( 'Preset 4', 'premium-addons-for-elementor' ),
-						'imagesmall' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset4.svg',
-						'width'      => '33%',
+						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset4.svg',
 					),
 					'preset5' => array(
 						'title'      => __( 'Preset 5', 'premium-addons-for-elementor' ),
-						'imagesmall' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset5.svg',
-						'width'      => '33%',
+						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset5.svg',
 					),
 					'preset6' => array(
 						'title'      => __( 'Preset 6', 'premium-addons-for-elementor' ),
-						'imagesmall' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset6.svg',
-						'width'      => '33%',
+						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset6.svg',
 					),
 				),
 				'condition'    => array(

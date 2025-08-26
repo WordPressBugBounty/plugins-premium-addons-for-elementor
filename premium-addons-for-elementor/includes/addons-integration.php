@@ -1627,7 +1627,7 @@ class Addons_Integration {
 
 		}
 
-		if ( self::$modules['premium-contactform'] || self::$modules['premium-shape-divider'] ) {
+		if ( self::$modules['premium-shape-divider'] ) {
 
 			require_once PREMIUM_ADDONS_PATH . 'includes/controls/pa-image-choose.php';
 			$premium_image_choose = __NAMESPACE__ . '\Controls\Premium_Image_Choose';

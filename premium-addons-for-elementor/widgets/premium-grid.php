@@ -187,7 +187,7 @@ class Premium_Grid extends Widget_Base {
 		$this->add_control(
 			'premium_gallery_img_size_select',
 			array(
-				'label'   => __( 'Grid Layout', 'premium-addons-for-elementor' ),
+				'label'   => __( 'Layout', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::SELECT,
 				'options' => array(
 					'fitRows' => __( 'Even', 'premium-addons-for-elementor' ),
@@ -1591,6 +1591,7 @@ class Premium_Grid extends Widget_Base {
 			array(
 				'label' => __( 'Container', 'premium-addons-for-elementor' ),
 				'type'  => Controls_Manager::HEADING,
+				'separator' => 'before',
 			)
 		);
 
@@ -1600,7 +1601,6 @@ class Premium_Grid extends Widget_Base {
 				'name'      => 'premium_gallery_content_background',
 				'types'     => array( 'classic', 'gradient' ),
 				'selector'  => '{{WRAPPER}} .premium-gallery-caption',
-				'separator' => 'before',
 			)
 		);
 

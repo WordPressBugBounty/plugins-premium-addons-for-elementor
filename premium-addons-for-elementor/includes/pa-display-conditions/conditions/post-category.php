@@ -10,7 +10,6 @@ use Elementor\Controls_Manager;
 
 // PA Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -32,7 +31,12 @@ class Post_Category extends Condition {
 	 */
 	public function get_control_options() {
 
-		$categories = Premium_Template_Tags::get_all_categories();
+		$args = array(
+			'taxonomy' => 'category',
+			'fields'   => 'id=>name',
+		);
+
+		$categories = get_categories( $args );
 
 		return array(
 			'label'       => __( 'Value', 'premium-addons-for-elementor' ),

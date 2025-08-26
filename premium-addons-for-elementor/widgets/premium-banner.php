@@ -277,28 +277,12 @@ class Premium_Banner extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
-			'premium_banner_height',
-			array(
-				'label'   => __( 'Height', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SELECT,
-				'options' => array(
-					'default' => __( 'Default', 'premium-addons-for-elementor' ),
-					'custom'  => __( 'Custom', 'premium-addons-for-elementor' ),
-				),
-				'default' => 'default',
-			)
-		);
-
 		$this->add_responsive_control(
 			'premium_banner_custom_height',
 			array(
-				'label'      => __( 'Min Height', 'premium-addons-for-elementor' ),
+				'label'      => __( 'Minimum Height', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', 'em', 'vh', 'custom' ),
-				'condition'  => array(
-					'premium_banner_height' => 'custom',
-				),
 				'range'      => array(
 					'px' => array(
 						'min' => 1,
@@ -326,7 +310,7 @@ class Premium_Banner extends Widget_Base {
 					'{{WRAPPER}} .premium-banner-ib img' => 'object-fit: {{VALUE}}',
 				),
 				'condition' => array(
-					'premium_banner_height' => 'custom',
+					'premium_banner_custom_height[size]!' => '',
 				),
 			)
 		);
@@ -337,18 +321,6 @@ class Premium_Banner extends Widget_Base {
 				'label'        => __( 'Mouse Tilt', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'prefix_class' => 'premium-banner-tilt-',
-			)
-		);
-
-		$this->add_control(
-			'mouse_tilt_rev',
-			array(
-				'label'        => __( 'Reverse', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'prefix_class' => 'premium-banner-tilt-rev-',
-				'condition'    => array(
-					'mouse_tilt' => 'yes',
-				),
 			)
 		);
 
@@ -863,7 +835,6 @@ class Premium_Banner extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
 				'name'     => 'premium_banner_title_shadow',
 				'selector' => '{{WRAPPER}} .premium-banner-ib-desc .premium_banner_title',
 			)
@@ -919,7 +890,6 @@ class Premium_Banner extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
 				'name'     => 'premium_banner_description_shadow',
 				'selector' => '{{WRAPPER}} .premium_banner_content',
 			)

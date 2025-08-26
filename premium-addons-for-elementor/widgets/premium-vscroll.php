@@ -176,7 +176,7 @@ class Premium_Vscroll extends Widget_Base {
 				'description' => __( 'Choose which method you prefer to insert containers.', 'premium-addons-for-elementor' ),
 				'options'     => array(
 					'templates' => __( 'Elementor Templates', 'premium-addons-for-elementor' ),
-					'ids'       => __( 'Section ID', 'premium-addons-for-elementor' ),
+					'ids'       => __( 'Container ID', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'templates',
 				'label_block' => true,
@@ -221,7 +221,7 @@ class Premium_Vscroll extends Widget_Base {
 		$temp_repeater->add_control(
 			'template_id',
 			array(
-				'label'       => __( 'Section ID', 'premium-addons-for-elementor' ),
+				'label'       => __( 'Container ID', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'description' => __( 'Use this option to add unique ID to your template container', 'premium-addons-for-elementor' ),
 				'dynamic'     => array( 'active' => true ),
@@ -246,7 +246,7 @@ class Premium_Vscroll extends Widget_Base {
 		$id_repeater->add_control(
 			'section_id',
 			array(
-				'label'   => __( 'Section ID', 'premium-addons-for-elementor' ),
+				'label'   => __( 'Container ID', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::TEXT,
 				'dynamic' => array( 'active' => true ),
 			)
@@ -255,7 +255,7 @@ class Premium_Vscroll extends Widget_Base {
 		$this->add_control(
 			'id_repeater',
 			array(
-				'label'       => __( 'Sections', 'premium-addons-for-elementor' ),
+				'label'       => __( 'Containers', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $id_repeater->get_controls(),
 				'condition'   => array(

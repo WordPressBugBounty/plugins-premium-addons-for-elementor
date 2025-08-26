@@ -110,7 +110,7 @@ function createInsertCfForm(obj) {
 
 	// console.log(obj);
 
-	var targetPreset = jQuery(obj).parents(".elementor-control-form_insert").prevAll(".elementor-control-presets").find('.checked').attr('value');
+	var targetPreset = jQuery(obj).parents(".elementor-control-form_insert").prevAll(".elementor-control-presets").find('input:checked').attr('value');
 
 	console.log(targetPreset);
 
@@ -139,7 +139,7 @@ function createInsertCfForm(obj) {
 					.val(formID)
 					.trigger("input");
 
-				jQuery(obj).find('.elementor-button').css('background-color', '#D8D8D8');
+				// jQuery(obj).find('.elementor-button').css('background-color', '#D8D8D8');
 
 			}
 		},
