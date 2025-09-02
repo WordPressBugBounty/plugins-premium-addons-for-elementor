@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.2
 Requires PHP: 7.4
-Stable Tag: 4.11.30
+Stable Tag: 4.11.31
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -13,7 +13,7 @@ License URI: https://opensource.org/licenses/GPL-3.0
 
 == Description ==
 
-Supercharge your [Elementor Page Builder](https://wordpress.org/plugins/elementor/) with 90+ highly customizable addons and widgets, 550+ premade templates that will give you the ability to build sophisticated websites in less time with no coding required. Both Elementor and Premium Addons plugins take your WordPress website to the next level.
+Supercharge your [Elementor Page Builder](https://wordpress.org/plugins/elementor/) with 90+ highly customizable addons and widgets, 550+ pre-made templates that will give you the ability to build sophisticated websites in less time with no coding required. Both Elementor and Premium Addons plugins take your WordPress website to the next level.
 
 [**Check The Widgets & Addons Demo Pages**](https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
 
@@ -122,7 +122,7 @@ Each widget and addon has been tested on different screen sizes, mobile devices,
 * [**Multi-Scroll Widget**](https://premiumaddons.com/multi-scroll-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Create attractive multi-scroll effect.
 * [**Custom Mouse Cursor Global Addon**](https://premiumaddons.com/elementor-custom-mouse-cursor-global-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add a custom mouse cursor to any container or widget.
 * [**Magic Scroll Global Addon**](https://premiumaddons.com/elementor-magic-scroll-global-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Create outstanding scroll animations to any column/widget with just few clicks and control every single detail in the animation scene.
-* [**Animated Shape Divier Addon**](https://premiumaddons.com/elementor-animated-shape-divider-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Create animated shape divider on containers. Select between tens of pre-made dividers or use your own.
+* [**Animated Shape Divider Addon**](https://premiumaddons.com/elementor-animated-shape-divider-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Create animated shape divider on containers. Select between tens of pre-made dividers or use your own.
 * [**Tooltips Global Addon**](https://premiumaddons.com/elementor-tooltip-global-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Add icon, image, Lottie animation or Elementor template as a tooltip for any Elementor container element.
 * [**Badge Global Addon**](https://premiumaddons.com/elementor-badge-global-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add an icon, image, Lottie animation, or SVG blob shape badge to any container.
 * [**Animated Blob Generator**](https://premiumaddons.com/elementor-animated-blob-generator/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Add multiple animated blob layers to your containers with a wide range of smart customization options.
@@ -237,6 +237,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 4.11.31 =
+
+- Tweak: Added CSS ID option in Mobile Menu widget.
+- Tweak: Improved RTL compatibility of Woo Mini Cart widget.
+
 = 4.11.30 =
 
 - Tweak: Code improvements for better performance.
@@ -260,11 +265,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 = 4.11.26 =
 
 - Tweak: Compatibility with Elementor v3.31.
-- Tweak: Styling improved for Premade Templates button.
+- Tweak: Styling improved for Pre-made Templates button.
 
 = 4.11.25 =
 
-- Tweak: Added button to filter premade blocks by widget.
+- Tweak: Added button to filter pre-made blocks by widget.
 - Fixed: Mini Cart strings not showing in Loco translation plugin.
 
 = 4.11.24 =
@@ -357,7 +362,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Tweak: Submenu Trigger option in Mega Menu widget.
 - Fixed: Error while saving Elementor templates after Elementor v3.29.
 - Fixed: Icons from custom icons are not showing in some widgets.
-- Fixed: Security issue in Coutdown widget.
+- Fixed: Security issue in Countdown widget.
 
 = 4.11.8 =
 
@@ -411,7 +416,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Tweak: Added Delay control in Lottie animation widget.
 - Tweak: Vertical Scroll widget behavior on Elementor editor.
 - Tweak: Removed `nofollow` link attribute for links in Google Maps widget markers.
-- Tweak: Removed Frontpage option from Static Page in Display Conditions addon.
+- Tweak: Removed Front page option from Static Page in Display Conditions addon.
 - Tweak: Action control changed to show when Query is set to Posts in AJAX Search widget.
 
 = 4.10.90 =
@@ -485,7 +490,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 - Tweak: Load some CSS files only when needed to improve performance.
 - Fixed: PHP warning in Location display condition.
-- Fixed: Brokens CSS links showing in broken link checker.
+- Fixed: Broken CSS links showing in broken link checker.
 
 = 4.10.78 =
 
@@ -610,7 +615,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 = 4.10.57 =
 
 - Deprecated: Enable Full Section Scroll on Touch Devices control in Vertical Scroll widget.
-- Tweak: Global addons code refactored to minimize mmemory usage.
+- Tweak: Global addons code refactored to minimize memory usage.
 - Tweak: Animated Shape Divider addon code refactored to improve editor loading speed.
 - Tweak: Premium Templates code refactored to improve site's frontend loading speed.
 - Fixed: Security issue in Display Conditions addon and Mega Menu widget.

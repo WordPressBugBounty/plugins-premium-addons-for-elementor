@@ -371,7 +371,7 @@ class Premium_Videobox extends Widget_Base {
 				'label'       => __( 'Link', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default'     => 'https://www.youtube.com/watch?v=eRnPSnx8nPY',
+				'default'     => 'https://www.youtube.com/watch?v=ydv343MTf4w',
 				'dynamic'     => array(
 					'active'     => true,
 					'categories' => array(

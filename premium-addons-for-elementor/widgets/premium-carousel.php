@@ -231,6 +231,7 @@ class Premium_Carousel extends Widget_Base {
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $repeater->get_controls(),
 				'title_field' => 'Template: {{{  "" !== premium_carousel_repeater_item ? premium_carousel_repeater_item : "Live Template" }}}',
+				'prevent_empty'      => false,
 			)
 		);
 

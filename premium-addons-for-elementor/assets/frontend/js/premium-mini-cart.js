@@ -114,7 +114,8 @@
 				slidesToScroll: settings.slidesToScroll || 1,
 				speed: settings.speed || 1000,
 				autoplay: settings.autoplay,
-				autoplaySpeed: settings.autoplaySpeed || 5000
+				autoplaySpeed: settings.autoplaySpeed || 5000,
+				rtl: elementorFrontend.config.is_rtl,
 			});
 
 			//cross sells nav.
@@ -251,6 +252,9 @@
 
 				if ($scope.hasClass('pa-woo-mc__layout-3')) {
 					// in layout 3, the count text is inside the cart header.
+					var rawCount = $scope.find('.pa-woo-mc__cart-count').text().match(/\d+/);
+					var itemCount = rawCount ? rawCount[0] : 0;
+
 					$scope.find('.pa-woo-mc__cart-header .pa-woo-mc__cart-count').text(itemCount + ' ' + countTxt);
 				} else {
 					if (countTxt.includes('{{count}}')) { // all layouts but layout 3.

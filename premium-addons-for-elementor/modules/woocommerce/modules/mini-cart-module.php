@@ -128,7 +128,8 @@ class Mini_Cart_Module extends Module_Base {
 		}
 
 		$raw_subtotal_amount = number_format( floatval( $raw_subtotal ) - $discount_total, 2, '.', '' );
-		$subtotal            = wc_price( floatVal( $raw_subtotal ) - $discount_total );
+		// TODO: check if we can show/hide the tax label through the args passed here.
+		$subtotal = wc_price( floatVal( $raw_subtotal ) - $discount_total, array( 'in_span' => false ) );
 
 		$count_txt = 1 === $product_count ? ' item' : ' items';
 

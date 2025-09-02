@@ -664,6 +664,16 @@ class Premium_Mobile_Menu extends Widget_Base {
 			do_action( 'pa_mobile_menu_badge_controls', $repeater );
 		}
 
+		$repeater->add_control(
+			'css_id',
+			array(
+				'label'       => __( 'CSS ID', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => __( 'Add a CSS ID for this item.', 'premium-addons-for-elementor' ),
+				'label_block' => true,
+			)
+		);
+
 		$repeater->end_controls_tab();
 
 		$repeater->start_controls_tab(
@@ -1735,6 +1745,10 @@ class Premium_Mobile_Menu extends Widget_Base {
 									),
 								)
 							);
+
+							if( ! empty( $item['css_id'] ) ) {
+								$this->add_render_attribute( 'menu-item-' . $index, 'id', $item['css_id'] );
+							}
 
 							$animation_key = 'icon_lottie_' . $index;
 

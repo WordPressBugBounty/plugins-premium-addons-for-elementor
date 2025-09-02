@@ -1735,6 +1735,14 @@ class Addons_Integration {
 
 		$config['promotionWidgets'] = $pro_elements;
 
+		// Fix promotion box not showing when Elementor Pro is active.
+		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			$config['promotion']['elements']['action_button'] = array(
+				'text' => 'Connect & Activate',
+				'url' => 'https://go.elementor.com/'
+			);
+		}
+
 		return $config;
 	}
 
