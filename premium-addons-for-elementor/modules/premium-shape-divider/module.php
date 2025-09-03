@@ -79,6 +79,8 @@ class Module {
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
 		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
 		add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
+
+		add_action( 'wp_ajax_get_shape_divider_svg', array( $this, 'get_shape_divider_svg' ) );
 	}
 
 	/**
@@ -144,15 +146,6 @@ class Module {
 
 		$element->start_controls_tabs(
 			'premium_gdivider_tabs'
-		);
-
-		$element->add_control(
-			'premium_shapes_data',
-			array(
-				'label'   => __( 'Shapes Data', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::HIDDEN,
-				'default' => Helper_Functions::get_svg_shapes(),
-			)
 		);
 
 		$this->add_divider_content_controls( $element );
@@ -761,10 +754,9 @@ class Module {
 		<#
 			var isEnabled = 'yes' === settings.premium_global_divider_sw ? true : false;
 
-			if ( isEnabled && settings.premium_shapes_data ) {
+			if ( isEnabled ) {
 
                 var source = settings.premium_gdivider_source,
-                    shapesData = settings.premium_shapes_data,
 					shapeHTML = '',
 					customFill = 'color' !== settings.premium_gdivider_bg_type;
 
@@ -884,7 +876,10 @@ class Module {
                     var isProVersionActive = '<?php echo esc_html( $papro_activated ); ?>' === 'yes'
                         selectedShapeIndex = parseInt(settings.premium_gdivider_defaults.replace(/[^\d]/g, ''), 10);
 
-                    shapeHTML = (selectedShapeIndex <= 25 || isProVersionActive) ? shapesData[ settings.premium_gdivider_defaults ]['imagesmall'] : '';
+                    shapeHTML = (selectedShapeIndex <= 25 || isProVersionActive) ? '' : 'pro';
+
+					view.addRenderAttribute( 'paShapeDivider', 'data-shape', selectedShapeIndex );
+
 				}
 
 				function getContainerClasses() {
@@ -902,7 +897,7 @@ class Module {
 					return classes;
 				}
 
-				if ( '' !== shapeHTML ) {
+				if ( 'pro' !== shapeHTML ) {
 					view.addRenderAttribute( 'paShapeDivider', {
 						'id': 'premium-shape-divider-' + view.getID(),
 						'class': getContainerClasses(),
@@ -1062,6 +1057,32 @@ class Module {
 
 		$svg_html .= '</defs></svg>';
 		echo $svg_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Get Shape Divider SVG
+	 *
+	 * @since 4.11.32
+	 * @access public
+	 */
+	public function get_shape_divider_svg() {
+
+		check_ajax_referer( 'pa-shape-nonce', 'nonce' );
+
+		if ( ! isset( $_POST['shape'] ) ) {
+			wp_send_json_error( 'No shape selected' );
+		}
+
+		$shape   = isset( $_POST['shape'] ) ? sanitize_text_field( wp_unslash( $_POST['shape'] ) ) : '';
+
+		$svg_shape = Helper_Functions::get_svg_shapes( $shape );
+
+		if ( empty( $svg_shape ) ) {
+			wp_send_json_error( 'Invalid shape' );
+		}
+
+		wp_send_json_success( array( 'shape' => $svg_shape ) );
+
 	}
 
 	/**

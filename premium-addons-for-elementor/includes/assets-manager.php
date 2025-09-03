@@ -524,6 +524,7 @@ class Assets_Manager {
 				'premium-addon-pricing-table',
 				'premium-addon-image-separator',
 				'premium-notifications',
+				'premium-site-logo'
 			);
 
 		}

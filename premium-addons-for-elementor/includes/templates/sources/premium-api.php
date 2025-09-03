@@ -350,37 +350,42 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 			return 'false';
 		}
 
-		$ch = curl_init();
+			$url = add_query_arg(
+				array(
+					'edd_action' => 'check_license',
+					'license'    => $license_key,
+					'item_id'    => 361,
+				),
+				'https://my.leap13.com/'
+			);
 
-		curl_setopt( $ch, CURLOPT_URL, "https://my.leap13.com/?edd_action=check_license&license=$license_key&item_id=361" );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_TIMEOUT, 40 );
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+			$response = wp_remote_get(
+				$url,
+				array(
+					'timeout'     => 10,
+					'sslverify'   => false, // Match your cURL setup
+					'redirection' => 5,
+				)
+			);
 
-		$response_body = curl_exec( $ch );
-		$response_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_error    = curl_error( $ch );
+			// Check for errors
+			if ( is_wp_error( $response ) ) {
+				return;
+			}
 
-		if ( defined( 'CURLOPT_IPRESOLVE' ) && defined( 'CURL_IPRESOLVE_V4' ) ) {
-			curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
-		}
+			$response_code = wp_remote_retrieve_response_code( $response );
+			if ( 200 !== $response_code ) {
+				return;
+			}
 
-		if ( curl_errno( $ch ) || $response_code !== 200 ) {
-			curl_close( $ch );
-			return;
-		}
+			$response_body = wp_remote_retrieve_body( $response );
+			$body          = json_decode( $response_body, true );
 
-		$body = json_decode( $response_body, true );
+			if ( isset( $body['license'] ) ) {
+				return $body['license'];
+			}
 
-		// Close cURL session
-		curl_close( $ch );
-
-		if ( isset( $body['license'] ) ) {
-			return $body['license'];
-		} else {
 			return true;
-		}
 	}
 
 	/**

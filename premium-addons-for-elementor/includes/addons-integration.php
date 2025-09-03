@@ -879,6 +879,15 @@ class Addons_Integration {
 		);
 
 		wp_localize_script(
+			'pa-shape-divider',
+			'PaShapeDividerSettings',
+			array(
+				'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
+				'nonce'   => wp_create_nonce( 'pa-shape-nonce' ),
+			)
+		);
+
+		wp_localize_script(
 			'pa-gTooltips',
 			'PremiumSettings',
 			array(
