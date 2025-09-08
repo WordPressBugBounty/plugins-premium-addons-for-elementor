@@ -19,7 +19,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 // PremiumAddons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
@@ -1660,7 +1660,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_pricing_table_icon_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1766,7 +1766,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_pricing_table_title_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2110,7 +2110,7 @@ class Premium_Pricing_Table extends Widget_Base {
 
 		/*Price Background*/
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_pricing_table_price_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2299,7 +2299,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_pricing_list_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2516,7 +2516,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_pricing_table_desc_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2603,7 +2603,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_pricing_table_button_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2748,7 +2748,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_pricing_table_button_background_hover',
 				'types'     => array( 'classic', 'gradient' ),
@@ -2929,7 +2929,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_pricing_table_box_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3034,7 +3034,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_pricing_table_box_background_hover',
 				'types'    => array( 'classic', 'gradient' ),

@@ -20,7 +20,7 @@ use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
@@ -1579,7 +1579,7 @@ class Premium_Testimonials extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_testimonial_background',
 				'types'    => array( 'classic', 'gradient' ),

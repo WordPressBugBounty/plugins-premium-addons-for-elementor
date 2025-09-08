@@ -13,7 +13,7 @@ use Elementor\Icons_Manager;
 use Elementor\Control_Media;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;

@@ -12,7 +12,6 @@ use Elementor\Widget_Base;
 use Elementor\Icons_Manager;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
@@ -21,6 +20,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -1315,7 +1315,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'outer_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1404,7 +1404,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'city_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1791,7 +1791,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'current_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1879,7 +1879,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'extra_weather_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2276,7 +2276,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'forecast_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2346,7 +2346,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'outer_forecast_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2647,7 +2647,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'hourly_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2717,7 +2717,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'outer_hourly_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3206,7 +3206,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_weather_tabs_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3255,7 +3255,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_weather_tabs_bg_hov',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3303,7 +3303,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_weather_tabs_bg_active',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3395,7 +3395,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_weather_tabs_icon_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3492,7 +3492,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_weather_tabs_details_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3668,7 +3668,7 @@ class Premium_Weather extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_weather_tabs_cont_bg',
 				'types'    => array( 'classic', 'gradient' ),

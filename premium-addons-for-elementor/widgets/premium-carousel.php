@@ -14,7 +14,7 @@ use Elementor\Repeater;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
@@ -1473,7 +1473,7 @@ class Premium_Carousel extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_progressbar_progress_color',
 				'types'     => array( 'classic', 'gradient' ),
@@ -1497,7 +1497,7 @@ class Premium_Carousel extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_progressbar_background',
 				'types'     => array( 'classic', 'gradient' ),

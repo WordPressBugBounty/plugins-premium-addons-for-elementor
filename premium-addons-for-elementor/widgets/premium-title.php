@@ -17,7 +17,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 // PremiumAddons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
@@ -1201,7 +1201,7 @@ class Premium_Title extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'title_background',
 				'types'     => array( 'classic', 'gradient' ),
@@ -1533,7 +1533,7 @@ class Premium_Title extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'text_gradient',
 				'types'     => array( 'gradient' ),
@@ -1732,7 +1732,7 @@ class Premium_Title extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_title_icon_background',
 				'types'    => array( 'classic', 'gradient' ),

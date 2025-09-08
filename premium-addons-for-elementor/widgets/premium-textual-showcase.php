@@ -14,7 +14,6 @@ use Elementor\Icons_Manager;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Box_Shadow;
@@ -24,6 +23,7 @@ use Elementor\Group_Control_Text_Shadow;
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -1855,7 +1855,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		);
 
 		$repeater->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'item_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2184,7 +2184,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'cont_background',
 				'types'    => array( 'classic', 'gradient' ),

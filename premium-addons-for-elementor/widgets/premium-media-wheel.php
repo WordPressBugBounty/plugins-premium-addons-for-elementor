@@ -14,7 +14,6 @@ use Elementor\Widget_Base;
 use Elementor\Icons_Manager;
 use Elementor\Control_Media;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Typography;
@@ -27,6 +26,7 @@ use Elementor\Modules\DynamicTags\Module as TagsModule;
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -788,7 +788,7 @@ class Premium_Media_Wheel extends Widget_Base {
 		);
 
 		$repeater->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'media_wheel_card_bg_color',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1618,7 +1618,7 @@ class Premium_Media_Wheel extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'media_info_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1712,7 +1712,7 @@ class Premium_Media_Wheel extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'item_bg',
 				'types'    => array( 'classic', 'gradient' ),

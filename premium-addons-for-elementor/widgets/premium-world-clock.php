@@ -15,12 +15,12 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Background;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -1496,7 +1496,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'clock_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1742,7 +1742,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'date_bg',
 				'types'     => array( 'classic', 'gradient' ),
@@ -1836,7 +1836,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'clock_info_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2057,7 +2057,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'hours_bg',
 				'types'     => array( 'classic', 'gradient' ),
@@ -2193,7 +2193,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'min_bg',
 				'types'     => array( 'classic', 'gradient' ),
@@ -2336,7 +2336,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'sec_bg',
 				'types'     => array( 'classic', 'gradient' ),
@@ -2473,7 +2473,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'       => 'mer_bg',
 				'types'      => array( 'classic', 'gradient' ),
@@ -2716,7 +2716,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'days_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2785,7 +2785,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'days_bg_act',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2850,7 +2850,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'days_cont_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2956,7 +2956,7 @@ class Premium_World_Clock extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'clock_num_bg',
 				'types'    => array( 'classic', 'gradient' ),

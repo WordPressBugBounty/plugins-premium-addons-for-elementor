@@ -14,7 +14,6 @@ use Elementor\Icons_Manager;
 use Elementor\Control_Media;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
@@ -22,6 +21,7 @@ use Elementor\Group_Control_Text_Shadow;
 // Premium Addons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -488,7 +488,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_tooltip_icon_size',
 			array(
 				'label'     => __( 'Icon Size', 'premium-addons-for-elementor' ),
@@ -590,7 +590,7 @@ class Module {
 		);
 
 		$element->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_tooltip_container_bg',
 				'types'     => array( 'classic', 'gradient' ),

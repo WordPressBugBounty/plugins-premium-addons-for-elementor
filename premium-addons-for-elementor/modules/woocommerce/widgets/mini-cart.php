@@ -12,7 +12,7 @@ use Elementor\Icons_Manager;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Box_Shadow;
@@ -2684,7 +2684,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_btn_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2853,7 +2853,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_btn_bg_hover',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2949,7 +2949,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_ele_bg_item_cont',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2987,7 +2987,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_ele_bg_outer_cont',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3093,7 +3093,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_ele_bg_coupon',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3210,7 +3210,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_ele_bg_coupon_cont',
 				'types'    => array( 'classic', 'gradient' ),
@@ -4216,7 +4216,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_btn_bg_header',
 				'types'    => array( 'classic', 'gradient' ),
@@ -4311,7 +4311,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_btn_bg_remove_all',
 				'types'    => array( 'classic', 'gradient' ),
@@ -4380,7 +4380,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_btn_bg_remove_hov',
 				'types'    => array( 'classic', 'gradient' ),
@@ -4583,7 +4583,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'pa_ele_bg',
 				'types'     => array( 'classic', 'gradient' ),
@@ -4709,7 +4709,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'pa_btn_bg_vcart',
 				'types'     => array( 'classic', 'gradient' ),
@@ -4747,7 +4747,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'pa_btn_bg_checkout',
 				'types'     => array( 'classic', 'gradient' ),
@@ -4836,7 +4836,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'pa_btn_bg_vcart_hov',
 				'types'     => array( 'classic', 'gradient' ),
@@ -4874,7 +4874,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'pa_btn_bg_checkout_hov',
 				'types'     => array( 'classic', 'gradient' ),
@@ -4979,7 +4979,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_btn_bg_footer',
 				'types'    => array( 'classic', 'gradient' ),
@@ -5102,7 +5102,7 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_btn_bg_emptybtn',
 				'types'    => array( 'classic', 'gradient' ),

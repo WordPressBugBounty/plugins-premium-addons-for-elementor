@@ -13,7 +13,6 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Repeater;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
@@ -22,6 +21,7 @@ use Elementor\Group_Control_Box_Shadow;
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Premium_Template_Tags as Blog_Helper;
 use PremiumAddons\Includes\Helper_Functions;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 use PremiumAddons\Includes\Controls\Premium_Tax_Filter;
 
@@ -2289,7 +2289,7 @@ class Premium_Blog extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_blog_content_background_color',
 				'types'     => array( 'classic', 'gradient' ),

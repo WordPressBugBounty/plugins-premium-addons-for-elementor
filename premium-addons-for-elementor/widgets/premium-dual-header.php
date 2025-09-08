@@ -14,10 +14,10 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
-use Elementor\Group_Control_Background;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -728,7 +728,7 @@ class Premium_Dual_Header extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_dual_header_first_background',
 				'types'     => array( 'classic', 'gradient' ),
@@ -826,7 +826,7 @@ class Premium_Dual_Header extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_dual_header_first_clipped_background',
 				'types'     => array( 'classic', 'gradient' ),
@@ -1028,7 +1028,7 @@ class Premium_Dual_Header extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_dual_header_second_background',
 				'types'     => array( 'classic', 'gradient' ),
@@ -1126,7 +1126,7 @@ class Premium_Dual_Header extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'premium_dual_header_second_clipped_background',
 				'types'     => array( 'classic', 'gradient' ),

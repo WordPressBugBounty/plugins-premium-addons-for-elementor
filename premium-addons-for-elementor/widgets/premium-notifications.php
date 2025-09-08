@@ -20,7 +20,6 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
-use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Text_Shadow;
 
 
@@ -29,6 +28,7 @@ use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Premium_Template_Tags as Blog_Helper;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 use PremiumAddons\Includes\Helper_Functions;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -3259,7 +3259,7 @@ class Premium_Notifications extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'post_background_color',
 				'types'     => array( 'classic', 'gradient' ),

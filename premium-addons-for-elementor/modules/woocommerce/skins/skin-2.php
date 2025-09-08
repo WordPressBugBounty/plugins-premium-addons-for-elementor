@@ -13,7 +13,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Repeater;
 use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Border;
@@ -225,7 +225,7 @@ class Skin_2 extends Skin_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'content_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -374,7 +374,7 @@ class Skin_2 extends Skin_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'cta_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -431,7 +431,7 @@ class Skin_2 extends Skin_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'cta_background_hover',
 				'types'    => array( 'classic', 'gradient' ),
@@ -586,7 +586,7 @@ class Skin_2 extends Skin_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'qv_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -643,7 +643,7 @@ class Skin_2 extends Skin_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'qv_background_hover',
 				'types'    => array( 'classic', 'gradient' ),

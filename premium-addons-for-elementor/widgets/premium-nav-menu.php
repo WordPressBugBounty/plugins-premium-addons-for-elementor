@@ -14,7 +14,6 @@ use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
@@ -24,6 +23,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Pa_Nav_Menu_Walker;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -1536,7 +1536,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_sticky_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2372,7 +2372,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_ver_toggler_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2398,7 +2398,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_ver_toggler_bg_hov',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2520,7 +2520,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_nav_menu_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2853,7 +2853,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_ham_menu_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3505,7 +3505,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_nav_item_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3628,7 +3628,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_nav_item_bg_hover',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3746,7 +3746,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_nav_item_bg_active',
 				'types'    => array( 'classic', 'gradient' ),
@@ -3887,7 +3887,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_sub_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -4011,7 +4011,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_sub_mega_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -4195,7 +4195,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_sub_item_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -4292,7 +4292,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'           => 'pa_sub_item_bg_hover',
 				'types'          => array( 'classic', 'gradient' ),
@@ -4403,7 +4403,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_sub_item_bg_active',
 				'types'    => array( 'classic', 'gradient' ),

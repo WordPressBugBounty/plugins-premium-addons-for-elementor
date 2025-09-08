@@ -11,7 +11,7 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Box_Shadow;
@@ -873,7 +873,7 @@ class Woo_Categories extends Widget_Base {
 		do_action( 'pa_woo_cats_individual_style', $this );
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'      => 'content_background',
 				'types'     => array( 'classic', 'gradient' ),
@@ -971,7 +971,7 @@ class Woo_Categories extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'list_item_background',
 				'types'    => array( 'classic', 'gradient' ),

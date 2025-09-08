@@ -10,7 +10,7 @@ use Elementor\Widget_Base;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
@@ -1639,7 +1639,7 @@ class Woo_Products extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'           => 'button_background',
 				'types'          => array( 'classic', 'gradient' ),
@@ -1738,7 +1738,7 @@ class Woo_Products extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'button_background_hover',
 				'types'    => array( 'classic', 'gradient' ),

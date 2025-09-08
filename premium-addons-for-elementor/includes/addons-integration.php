@@ -1643,6 +1643,10 @@ class Addons_Integration {
 			$control_manager->controls_manager->register( new $premium_image_choose() );
 
 		}
+
+		$premium_background = __NAMESPACE__ . '\Controls\Premium_Background';
+
+		$control_manager->controls_manager->add_group_control( 'pa-background', new $premium_background() );
 	}
 
 	/**

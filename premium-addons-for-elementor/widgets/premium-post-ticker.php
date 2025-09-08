@@ -14,7 +14,7 @@ use Elementor\Icons_Manager;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Box_Shadow;
@@ -983,7 +983,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'           => 'pointer_bg',
 				'description'    => __( 'Pointer Color', 'premium-addons-for-elementor' ),
@@ -2140,7 +2140,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'           => 'ticker_title_bg',
 				'types'          => array( 'classic', 'gradient' ),
@@ -2265,7 +2265,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'date_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2633,7 +2633,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'pa_post_box_bg',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2699,7 +2699,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'posts_container_background',
 				'types'    => array( 'classic', 'gradient' ),

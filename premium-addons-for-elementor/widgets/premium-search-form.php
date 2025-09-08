@@ -14,7 +14,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Background;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Css_Filter;
@@ -1840,7 +1840,7 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'btn_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1930,7 +1930,7 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'btn_background_hover',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2278,7 +2278,7 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'post_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2361,7 +2361,7 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'post_background_hover',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2428,7 +2428,7 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'content_background_color',
 				'types'    => array( 'classic', 'gradient' ),
@@ -2605,7 +2605,7 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'posts_container_background',
 				'types'    => array( 'classic', 'gradient' ),

@@ -19,12 +19,12 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
-use Elementor\Group_Control_Background;
 
 // PremiumAddons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -774,7 +774,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 		}
 
 		$repeater->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'item_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1221,7 +1221,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'item_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1431,7 +1431,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'active_item_background',
 				'types'    => array( 'classic', 'gradient' ),
@@ -1581,7 +1581,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Background::get_type(),
+			Premium_Background::get_type(),
 			array(
 				'name'     => 'items_container_background',
 				'types'    => array( 'classic', 'gradient' ),
