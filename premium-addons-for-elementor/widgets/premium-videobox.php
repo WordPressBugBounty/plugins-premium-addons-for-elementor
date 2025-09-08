@@ -3537,17 +3537,14 @@ class Premium_Videobox extends Widget_Base {
 
 		$transient_name = sprintf( 'pa_videos_%s_%s', $source, $widget_id );
 
-		$response_json = false;
+		$response_json = get_transient( $transient_name );
 
 		if ( false === $response_json ) {
 
-			sleep( 2 );
+			$api_response = wp_remote_get( $api_url );
 
-			$api_response = rplg_urlopen( $api_url );
-
-			$response_data = $api_response['data'];
-
-			$response_json = rplg_json_decode( $response_data );
+			$response_json = wp_remote_retrieve_body( $api_response );
+			$response_json = json_decode( $response_json );
 
 			$transient = $settings['reload'];
 

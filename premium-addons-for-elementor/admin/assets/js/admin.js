@@ -463,10 +463,10 @@
 						defaultAddons += `&${feature}=on`;
 					});
 				} else {
-					defaultAddons = '&premium-templates=on&premium-equal-height=on&premium-wrapper-link=on&pa-display-conditions=on&premium-duplicator';
+					defaultAddons = '&premium-assets-generator=on&premium-templates=on&premium-equal-height=on&premium-wrapper-link=on&pa-display-conditions=on&premium-duplicator';
 				}
 			}
-			
+
 
 			// We don't need to check the source as it'll always be 'wizard or default', so the 2nd part of the condition is always true.
 			if (updateCustomTemplate) {

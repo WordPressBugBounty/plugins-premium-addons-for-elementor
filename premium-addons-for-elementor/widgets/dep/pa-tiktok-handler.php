@@ -68,8 +68,6 @@ function get_tiktok_data( $id, $settings ) {
 
 		$url = TIKTOK_API_URL . $endpoint . $fields;
 
-		sleep( 2 );
-
 		$response = wp_remote_post(
 			$url,
 			$args
@@ -132,8 +130,6 @@ function get_tiktok_profile_data( $id, $settings ) {
 	if ( false === $response ) {
 
 		$url = TIKTOK_API_URL . 'user/info/?fields=avatar_url,display_name,bio_description,profile_deep_link,is_verified,follower_count,following_count,likes_count';
-
-		sleep( 2 );
 
 		$response = wp_remote_get(
 			$url,

@@ -456,7 +456,7 @@ class Premium_Button extends Widget_Base {
 			)
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'grow_speed',
 			array(
 				'label'     => __( 'Grow Animation Speed (Sec)', 'premium-addons-for-elementor' ),

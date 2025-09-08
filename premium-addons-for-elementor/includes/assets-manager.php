@@ -6,6 +6,7 @@
 namespace PremiumAddons\Includes;
 
 use Elementor\Plugin;
+use Elementor\Utils;
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Admin\Includes\Admin_Helper;
 
@@ -543,20 +544,13 @@ class Assets_Manager {
 	 */
 	public static function get_file_content( $path ) {
 
-		$file_content = rplg_urlopen( $path );
+		$file_content = Utils::file_get_contents( Helper_Functions::get_safe_path( $path ) );
 
-		if ( isset( $file_content['code'] ) ) {
-
-			if ( 404 === $file_content['code'] ) {
-				return 'not_found';
-			}
-
-			if ( in_array( $file_content['code'], array( 0, 401, 403 ), true ) ) {
-				return 'empty';
-			}
+		if( ! $file_content ) {
+			return 'empty';
 		}
 
-		return self::clean_content( $file_content['data'] );
+		return self::clean_content( $file_content );
 	}
 
 	/**
@@ -601,7 +595,7 @@ class Assets_Manager {
 
 		$element = str_replace( '-addon', '', $element );
 
-		$path = $is_pro ? PREMIUM_PRO_ADDONS_URL : PREMIUM_ADDONS_URL;
+		$path = $is_pro ? PREMIUM_PRO_ADDONS_PATH : PREMIUM_ADDONS_PATH;
 
 		return $path . 'assets/frontend/min-' . $ext . '/' . $element . '.min.' . $ext;
 	}

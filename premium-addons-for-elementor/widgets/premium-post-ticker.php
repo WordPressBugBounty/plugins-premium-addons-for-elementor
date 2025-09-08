@@ -3183,8 +3183,6 @@ class Premium_Post_Ticker extends Widget_Base {
 
 			if ( ! $req_data ) {
 
-				sleep( 2 );
-
 				$api_settings = array(
 					'id'          => $id,
 					'api_key'     => $api_key,
@@ -3248,8 +3246,6 @@ class Premium_Post_Ticker extends Widget_Base {
 			$req_data = get_transient( $transient_name );
 
 			if ( ! $req_data ) {
-
-				sleep( 2 );
 
 				$api_settings = array(
 					'id'          => $id,

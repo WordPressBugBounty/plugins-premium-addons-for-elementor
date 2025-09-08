@@ -53,8 +53,6 @@ function get_pinterest_data( $id, $settings, $endpoint ) {
 			$url .= '?page_size=' . $limit;
 		}
 
-		sleep( 2 );
-
 		$response = wp_remote_get(
 			$url,
 			array(
@@ -115,8 +113,6 @@ function get_profile_data( $id, $settings ) {
 
 		$url = PINTEREST_API_URL . 'user_account';
 
-		sleep( 2 );
-
 		$response = wp_remote_get(
 			$url,
 			array(
@@ -163,8 +159,6 @@ function get_board_pins( $widget_id, $settings, $board_id ) {
 		if ( ! empty( $limit ) ) {
 			$url .= '?page_size=' . $limit;
 		}
-
-		sleep( 2 );
 
 		$response = wp_remote_get(
 			$url,

@@ -295,7 +295,7 @@ class Premium_Banner extends Widget_Base {
 			)
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'image_fit',
 			array(
 				'label'     => __( 'Image Fit', 'premium-addons-for-elementor' ),
@@ -718,7 +718,7 @@ class Premium_Banner extends Widget_Base {
 			)
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'premium_banner_image_border_radius',
 			array(
 				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),

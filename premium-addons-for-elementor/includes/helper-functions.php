@@ -546,33 +546,41 @@ class Helper_Functions {
 	 */
 	public static function get_vimeo_video_data( $video_id ) {
 
-		$vimeo_data = wp_remote_get( 'http://www.vimeo.com/api/v2/video/' . intval( $video_id ) . '.php' );
+		$vimeo_data = get_transient( 'premium_vimeo_' . $video_id );
 
-		if ( is_wp_error( $vimeo_data ) ) {
-			return false;
-		}
+		if( $vimeo_data === false ) {
 
-		if ( isset( $vimeo_data['response']['code'] ) ) {
+			$vimeo_data = wp_remote_get( 'http://www.vimeo.com/api/v2/video/' . intval( $video_id ) . '.php' );
 
-			if ( 200 === $vimeo_data['response']['code'] ) {
-
-				$response  = maybe_unserialize( $vimeo_data['body'] );
-				$thumbnail = isset( $response[0]['thumbnail_large'] ) ? $response[0]['thumbnail_large'] : false;
-
-				$data = array(
-					'src'      => $thumbnail,
-					'url'      => $response[0]['user_url'],
-					'portrait' => $response[0]['user_portrait_huge'],
-					'title'    => $response[0]['title'],
-					'user'     => $response[0]['user_name'],
-				);
-
-				return $data;
-
+			if ( is_wp_error( $vimeo_data ) ) {
+				return false;
 			}
+
+			if ( isset( $vimeo_data['response']['code'] ) ) {
+
+				if ( 200 === $vimeo_data['response']['code'] ) {
+
+					$response  = maybe_unserialize( $vimeo_data['body'] );
+					$thumbnail = isset( $response[0]['thumbnail_large'] ) ? $response[0]['thumbnail_large'] : false;
+
+					$data = array(
+						'src'      => $thumbnail,
+						'url'      => $response[0]['user_url'],
+						'portrait' => $response[0]['user_portrait_huge'],
+						'title'    => $response[0]['title'],
+						'user'     => $response[0]['user_name'],
+					);
+
+					set_transient( 'premium_vimeo_' . $video_id, $data, WEEK_IN_SECONDS );
+
+					return $data;
+
+				}
+			}
+
 		}
 
-		return false;
+		return $vimeo_data;
 	}
 
 	/**
@@ -604,15 +612,16 @@ class Helper_Functions {
 			$thumbnail_src = is_array( $vimeo ) ? $vimeo['src'] : '';
 
 		} elseif ( 'dailymotion' === $type ) {
-			$video_data = rplg_urlopen( 'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url' );
+			$video_data = wp_remote_get( 'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url' );
 
-			if ( isset( $video_data['code'] ) ) {
-				if ( 404 === $video_data['code'] ) {
-					return $thumbnail_src;
-				}
+			if ( is_wp_error( $video_data ) || 200 !== wp_remote_retrieve_response_code( $video_data ) ) {
+				return $thumbnail_src;
 			}
 
-			$thumbnail_src = rplg_json_decode( $video_data['data'] )->thumbnail_url;
+			$video_data = wp_remote_retrieve_body( $video_data );
+			$video_data = json_decode( $video_data );
+
+			$thumbnail_src = $video_data->thumbnail_url;
 		}
 
 		return $thumbnail_src;

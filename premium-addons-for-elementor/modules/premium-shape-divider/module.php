@@ -686,7 +686,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_gdivider_opacity',
 			array(
 				'label'     => __( 'Opacity', 'premium-addons-for-elementor' ),

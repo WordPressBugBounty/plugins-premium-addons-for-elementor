@@ -170,7 +170,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Xtranslate',
 			array(
 				'label'              => __( 'Translate X', 'premium-addons-for-elementor' ),
@@ -203,7 +203,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Ytranslate',
 			array(
 				'label'              => __( 'Translate Y', 'premium-addons-for-elementor' ),
@@ -293,7 +293,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Xrotate',
 			array(
 				'label'              => __( 'Rotate X', 'premium-addons-for-elementor' ),
@@ -325,7 +325,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Yrotate',
 			array(
 				'label'              => __( 'Rotate Y', 'premium-addons-for-elementor' ),
@@ -357,7 +357,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Zrotate',
 			array(
 				'label'              => __( 'Rotate Z', 'premium-addons-for-elementor' ),
@@ -446,7 +446,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Xscale',
 			array(
 				'label'              => __( 'Scale X', 'premium-addons-for-elementor' ),
@@ -479,7 +479,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Yscale',
 			array(
 				'label'              => __( 'Scale Y', 'premium-addons-for-elementor' ),
@@ -569,7 +569,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Xskew',
 			array(
 				'label'              => __( 'Skew X', 'premium-addons-for-elementor' ),
@@ -601,7 +601,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_fe_Yskew',
 			array(
 				'label'              => __( 'Skew Y', 'premium-addons-for-elementor' ),

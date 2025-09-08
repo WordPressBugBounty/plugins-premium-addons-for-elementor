@@ -943,6 +943,7 @@ class Admin_Helper {
 			'premium-cross-domain',
 			'premium-duplicator',
 			'premium-wrapper-link',
+			'premium-assets-generator'
 		);
 
 		$features = array();
