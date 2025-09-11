@@ -33,28 +33,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Module {
 
 	/**
-	 * Load Script
+	 * Check whether the scripts should be loaded.
 	 *
-	 * @var $load_script
+	 * @var boolean|null $load_script, initialized as null.
 	 */
 	private static $load_script = null;
 
 	/**
-	 * Class object
+	 * Holds the singleton instance of this class.
 	 *
-	 * @var instance
+	 * @var Module|null
 	 */
 	private static $instance = null;
 
 	/**
-	 * Class object
+	 * Holds the SVG shapes data for the module.
 	 *
-	 * @var instance
+	 * @var mixed|null $svg_shapes Stores SVG shapes, initialized as null.
 	 */
 	private $svg_shapes = null;
 
 	/**
-	 * Class Constructor Funcion.
+	 * Class Constructor Function.
 	 */
 	public function __construct() {
 
@@ -508,7 +508,7 @@ class Module {
 				'label'     => __( 'Animation Direction', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => array(
-					'noraml'    => __( 'Normal', 'premium-addons-for-elementor' ),
+					'normal'    => __( 'Normal', 'premium-addons-for-elementor' ),
 					'reverse'   => __( 'Reverse', 'premium-addons-for-elementor' ),
 					'alternate' => __( 'Alternate', 'premium-addons-for-elementor' ),
 				),
@@ -962,7 +962,6 @@ class Module {
 			}
 
 			$source           = $settings['premium_gdivider_source'];
-			$divider_settings = array();
 			$hidden_style     = 'visibility:hidden; position: absolute; opacity:0;';
 			$shape            = '';
 			$custom_fill      = 'color' !== $settings['premium_gdivider_bg_type'];
@@ -1023,7 +1022,7 @@ class Module {
 
 			$svg_html .= '<pattern id="pa-shape-divider-fill-' . $id . '" patternUnits="userSpaceOnUse" width="100%" height="100%">' .
 
-			'<image href="' . esc_url( $img_src ) . '" x="' . $img_options['xpos'] . '" y="' . $img_options['ypos'] . '" width="' . $img_options['width'] . '" height="' . $img_options['height'] . '" ' . $img_options['aspect'] . '" />' .
+			'<image href="' . esc_url( $img_src ) . '" x="' . $img_options['xpos'] . '" y="' . $img_options['ypos'] . '" width="' . $img_options['width'] . '" height="' . $img_options['height'] . '" ' . $img_options['aspect'] . ' />' .
 
 			'</pattern>';
 		} else {

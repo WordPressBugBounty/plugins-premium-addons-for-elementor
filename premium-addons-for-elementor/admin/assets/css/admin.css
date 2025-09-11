@@ -357,6 +357,10 @@
 	color: #00a5e5;
 }
 
+#pa-tab-link-license:not(.pa-section-active) {
+	color: #ff6000 !important;
+}
+
 .pa-section {
 	display: none;
 	position: relative;

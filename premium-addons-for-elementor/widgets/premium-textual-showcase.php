@@ -353,7 +353,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'item_img_fit',
 			array(
 				'label'     => __( 'Image Fit', 'premium-addons-for-elementor' ),
@@ -804,7 +804,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'opacity',
 			array(
 				'label'     => __( 'Opacity', 'premium-addons-for-elementor' ),
@@ -982,7 +982,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'item_img_fit_hov',
 			array(
 				'label'     => __( 'Image Fit', 'premium-addons-for-elementor' ),
@@ -1433,7 +1433,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'opacity_hov',
 			array(
 				'label'     => __( 'Opacity', 'premium-addons-for-elementor' ),
@@ -1705,7 +1705,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'line_stroke_width',
 			array(
 				'label'       => __( 'Line Thickness', 'premium-addons-for-elementor' ),
@@ -1722,7 +1722,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'anim_speed',
 			array(
 				'label'       => __( 'Animation Speed', 'premium-addons-for-elementor' ),
@@ -1808,7 +1808,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'rotate',
 			array(
 				'label'      => __( 'Rotate (deg)', 'premium-addons-for-elementor' ),

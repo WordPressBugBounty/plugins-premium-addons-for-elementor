@@ -19,32 +19,37 @@
 
 						if (icon.classList.toString().indexOf("pa-pro") >= 0) {
 
-							dialog.querySelector(".dialog-buttons-action").style.display = "none";
+							var proElement = icon.classList[0].replace('pa-pro-', '');
 
 							e.stopImmediatePropagation();
 
-							if (dialog.querySelector(".papro-dialog-buttons") === null) {
-
-								var button = document.createElement("a");
-								var buttonText = document.createTextNode("Upgrade Premium Addons");
-
-								button.setAttribute("href", "https://premiumaddons.com/upgrade/papro");
-								button.setAttribute("target", "_blank");
-								button.classList.add(
-									"dialog-button",
-									"dialog-action",
-									"dialog-buttons-action",
-									"elementor-button",
-									"go-pro",
-									"elementor-button-success",
-									"papro-dialog-buttons"
-								);
-								button.appendChild(buttonText);
-
-								dialog.querySelector(".dialog-buttons-action").insertAdjacentHTML("afterend", button.outerHTML);
-							} else {
-								dialog.querySelector(".papro-dialog-buttons").style.display = "";
+							if (dialog.querySelector(".papro-dialog-buttons")) {
+								dialog.querySelector('.papro-dialog-buttons').remove();
 							}
+
+							dialog.querySelector(".dialog-buttons-action").style.display = "none";
+							// if (dialog.querySelector(".papro-dialog-buttons") === null) {
+
+							var button = document.createElement("a");
+							var buttonText = document.createTextNode("Upgrade Premium Addons");
+
+							button.setAttribute("href", PremiumSettings.upgrade_link + '&utm_source=panel-' + proElement);
+							button.setAttribute("target", "_blank");
+							button.classList.add(
+								"dialog-button",
+								"dialog-action",
+								"dialog-buttons-action",
+								"elementor-button",
+								"go-pro",
+								"elementor-button-success",
+								"papro-dialog-buttons"
+							);
+							button.appendChild(buttonText);
+
+							dialog.querySelector(".dialog-buttons-action").insertAdjacentHTML("afterend", button.outerHTML);
+							// } else {
+							// 	dialog.querySelector(".papro-dialog-buttons").style.display = "";
+							// }
 						} else {
 							dialog.querySelector(".dialog-buttons-action").style.display = "";
 

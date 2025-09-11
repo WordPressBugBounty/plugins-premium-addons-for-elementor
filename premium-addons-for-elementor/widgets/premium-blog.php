@@ -1922,7 +1922,7 @@ class Premium_Blog extends Widget_Base {
 			)
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'author_img_size',
 			array(
 				'label'     => __( 'Author Image Size', 'premium-addons-for-elementor' ),

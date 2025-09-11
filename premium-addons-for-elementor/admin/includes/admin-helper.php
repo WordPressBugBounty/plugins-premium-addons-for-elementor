@@ -675,6 +675,18 @@ class Admin_Helper {
 			),
 		);
 
+		if( ! Helper_Functions::check_papro_version() ) {
+
+			self::$tabs['license'] = array(
+				'id'       => 'license',
+				'slug'     => $slug . '#tab=license',
+				'title'    => __( 'License', 'premium-addons-for-elementor' ),
+				'href'     => '#tab=license',
+				'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/license',
+			);
+
+		}
+
 		self::$tabs = apply_filters( 'pa_admin_register_tabs', self::$tabs );
 	}
 

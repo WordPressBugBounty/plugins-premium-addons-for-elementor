@@ -436,6 +436,17 @@ class Module {
 			array(
 				'name'      => 'premium_tooltip_text_typo',
 				'selector'  => '.tooltipster-box.tooltipster-box-{{ID}} .premium-tooltip-content-wrapper-{{ID}} .premium-tootltip-text',
+				'fields_options' => array(
+					'line_height' => array(
+						'responsive' => false,
+					),
+					'letter_spacing' => array(
+						'responsive' => false,
+					),
+					'word_spacing' => array(
+						'responsive' => false,
+					),
+				),
 				'condition' => array(
 					'premium_tooltip_switcher' => 'yes',
 					'premium_tooltip_type'     => 'text',
@@ -555,7 +566,7 @@ class Module {
 			)
 		);
 
-		$element->add_responsive_control(
+		$element->add_control(
 			'premium_tooltip_img_fit',
 			array(
 				'label'     => __( 'Image Fit', 'premium-addons-for-elementor' ),

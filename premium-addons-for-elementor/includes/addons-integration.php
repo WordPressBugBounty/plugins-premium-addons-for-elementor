@@ -336,7 +336,8 @@ class Addons_Integration {
 			array(
 				'ajaxurl'      => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'nonce'        => wp_create_nonce( 'pa-blog-widget-nonce' ),
-				'unused_nonce' => wp_create_nonce( 'pa-disable-unused' ),
+				'upgrade_link' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/', '', 'wp-editor', 'get-pro' )
+				// 'unused_nonce' => wp_create_nonce( 'pa-disable-unused' ),
 			)
 		);
 

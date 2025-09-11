@@ -1737,7 +1737,7 @@ class Premium_Carousel extends Widget_Base {
 					$dot_icon = 'fas fa-circle';
 				}
 				if ( 'circle_thin' === $settings['premium_carousel_dot_icon'] ) {
-					$dot_icon = 'far fa-circle-thin';
+					$dot_icon = 'fa fa-circle-thin';
 				}
 				$custom_paging = $dot_icon;
 			}
@@ -1845,7 +1845,7 @@ class Premium_Carousel extends Widget_Base {
 				}
 				?>
 				<div class="premium-carousel-nav-arrow-prev">
-					<a type="button" data-role="none" class="<?php echo esc_attr( $vertical_alignment ); ?> carousel-prev" aria-label="Previous" role="button">
+					<a type="button" data-role="none" class="<?php echo esc_attr( $vertical_alignment ); ?> carousel-prev" aria-label="Previous" role="button" href="#">
 						<?php if ( 'yes' !== $settings['custom_left_arrow'] ) { ?>
 							<i class="<?php echo esc_attr( $icon_prev_class ); ?>" aria-hidden="true"></i>
 							<?php
@@ -1853,10 +1853,10 @@ class Premium_Carousel extends Widget_Base {
 							Icons_Manager::render_icon( $settings['custom_left_arrow_select'], array( 'aria-hidden' => 'true' ) );
 						}
 						?>
-						</a>
+					</a>
 					</div>
 					<div class="premium-carousel-nav-arrow-next">
-						<a type="button" data-role="none" class="<?php echo esc_attr( $vertical_alignment ); ?> carousel-next" aria-label="Next" role="button">
+						<a type="button" data-role="none" class="<?php echo esc_attr( $vertical_alignment ); ?> carousel-next" aria-label="Next" role="button" href="#">
 							<?php if ( 'yes' !== $settings['custom_right_arrow'] ) { ?>
 								<i class="<?php echo esc_attr( $icon_next_class ); ?>" aria-hidden="true"></i>
 								<?php

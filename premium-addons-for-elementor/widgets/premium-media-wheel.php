@@ -238,7 +238,7 @@ class Premium_Media_Wheel extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'mw_image_fit',
 			array(
 				'label'     => __( 'Image Fit', 'premium-addons-for-elementor' ),
@@ -258,7 +258,7 @@ class Premium_Media_Wheel extends Widget_Base {
 			)
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'mw_image_obj_pos',
 			array(
 				'label'     => __( 'Image Position', 'premium-addons-for-elementor' ),
@@ -1150,7 +1150,7 @@ class Premium_Media_Wheel extends Widget_Base {
 			)
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'media_wheel_fading_color',
 			array(
 				'label'     => __( 'Fading Color', 'premium-addons-for-elementor' ),
@@ -1490,6 +1490,14 @@ class Premium_Media_Wheel extends Widget_Base {
 			array(
 				'name'     => 'desc_typography',
 				'selector' => '{{WRAPPER}} .premium-adv-carousel__media-desc',
+				'fields_options' => array(
+					'letter_spacing' => array(
+						'responsive' => false,
+					),
+					'word_spacing' => array(
+						'responsive' => false,
+					),
+				),
 			)
 		);
 

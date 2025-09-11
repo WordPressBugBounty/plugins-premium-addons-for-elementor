@@ -32,10 +32,16 @@ class PAPRO_Promotion {
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_lottie_controls' ), 10 );
 
 		add_action( 'elementor/element/common/_section_style/after_section_end', array( $this, 'register_magic_scroll_controls' ), 10 );
-
 	}
 
 	public function promote_template( $texts ) {
+
+		$upgrade_link = Helper_Functions::get_campaign_link(
+			'https://premiumaddons.com/pro/',
+			'panel-' . $texts['addon'],
+			'wp-editor',
+			'get-pro'
+		);
 
 		$html = '<div class="premium-promote-box addon-promotion">
             <div class="premium-promote-box-icon">
@@ -88,10 +94,10 @@ class PAPRO_Promotion {
             <div class="papro-promote-title">' . $texts['title'] . '</div>
             <div class="papro-promote-message">' . $texts['messages'] . '</div>
 			<div class="premium-promote-ctas">' .
-			'<a class="premium-promote-demo elementor-button elementor-button-default" href="'. esc_url( $texts['demo'] ) .'" target="_blank">
+			'<a class="premium-promote-demo elementor-button elementor-button-default" href="' . esc_url( $texts['demo'] ) . '" target="_blank">
             ' . __( 'Check Demo', 'premium-addons-for-elementor' ) . '
             </a>
-            <a class="premium-promote-upgrade elementor-button elementor-button-default" href="https://premiumaddons.com/upgrade/papro" target="_blank">
+            <a class="premium-promote-upgrade elementor-button elementor-button-default" href="' . esc_url( $upgrade_link ) . '" target="_blank">
             ' . __( 'Get Pro', 'premium-addons-for-elementor' ) . '
             </a>
         </div>';
@@ -117,7 +123,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Parallax', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Select between 7 neat parallax effects to be applied on Elementor containers.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/elementor-parallax-container-addon/',
+						'demo'     => 'https://premiumaddons.com/elementor-parallax-container-addon/',
+						'addon'    => 'parallax',
 					)
 				),
 			)
@@ -144,7 +151,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Particles', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Create eye-catching particles background with many customization options.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/particles-container-addon-for-elementor-page-builder/',
+						'demo'     => 'https://premiumaddons.com/particles-container-addon-for-elementor-page-builder/',
+						'addon'    => 'particles',
 					)
 				),
 			)
@@ -171,7 +179,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Badge', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Add an icon, image, Lottie animation, or SVG blob shape badge to Elementor container.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/elementor-badge-global-addon/',
+						'demo'     => 'https://premiumaddons.com/elementor-badge-global-addon/',
+						'addon'    => 'badge',
 					)
 				),
 			)
@@ -198,7 +207,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Mouse Cursor', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Add an image, icon or Lottie animation mouse cursor to any container, widget or the whole page.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/elementor-custom-mouse-cursor-global-addon',
+						'demo'     => 'https://premiumaddons.com/elementor-custom-mouse-cursor-global-addon',
+						'addon'    => 'cursor',
 					)
 				),
 			)
@@ -225,7 +235,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Blob Generator', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Add multiple animated blob layers to your containers with a wide range of smart customization options.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/elementor-animated-blob-generator/',
+						'demo'     => 'https://premiumaddons.com/elementor-animated-blob-generator/',
+						'addon'    => 'blob',
 					)
 				),
 			)
@@ -252,7 +263,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Animated Gradient', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Subtle animated gradients effect that makes your backgrounds attractive.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/elementor-container-animated-gradients-addon/',
+						'demo'     => 'https://premiumaddons.com/elementor-container-animated-gradients-addon/',
+						'addon'    => 'gradient',
 					)
 				),
 			)
@@ -279,7 +291,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Ken Burns', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Add multiple images to your container background and animate them with the popular Ken Burns effect.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/ken-burns-container-addon-for-elementor-page-builder/',
+						'demo'     => 'https://premiumaddons.com/ken-burns-container-addon-for-elementor-page-builder/',
+						'addon'    => 'kenburns',
 					)
 				),
 			)
@@ -306,7 +319,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Lottie Background', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Add multiple Lottie Animations easily to container with a lot of customization and interactivity options.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/elementor-lottie-animations-container-addon/',
+						'demo'     => 'https://premiumaddons.com/elementor-lottie-animations-container-addon/',
+						'addon'    => 'lottie',
 					)
 				),
 			)
@@ -333,7 +347,8 @@ class PAPRO_Promotion {
 					array(
 						'title'    => __( 'Premium Magic Scroll', 'premium-addons-for-elementor' ),
 						'messages' => __( 'Apply outstanding scroll animations to any column/widget with just few clicks and control every single detail in the animation scene.', 'premium-addons-for-elementor' ),
-						'demo' => 'https://premiumaddons.com/elementor-magic-scroll-global-addon/',
+						'demo'     => 'https://premiumaddons.com/elementor-magic-scroll-global-addon/',
+						'addon'    => 'magic',
 					)
 				),
 			)

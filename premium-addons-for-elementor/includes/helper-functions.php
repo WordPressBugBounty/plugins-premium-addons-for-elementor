@@ -688,15 +688,16 @@ class Helper_Functions {
 			self::get_installed_theme();
 		}
 
-		$url = add_query_arg(
-			array(
-				'utm_source'   => $source,
-				'utm_medium'   => $medium,
-				'utm_campaign' => $campaign,
-				'utm_term'     => self::$current_theme,
-			),
-			$link
+		$args = array(
+			'utm_source'   => $source,
+			'utm_medium'   => $medium,
+			'utm_campaign' => $campaign,
+			'utm_term'     => self::$current_theme,
 		);
+
+		$args = array_filter( $args );
+
+		$url = add_query_arg( $args, $link );
 
 		return $url;
 	}

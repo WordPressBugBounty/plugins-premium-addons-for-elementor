@@ -68,7 +68,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 					)
 				);
 
-				if ( strpos( $filename, 'premium-template-tags' ) ) {
+				if ( false !== strpos( $filename, 'premium-template-tags' ) ) {
 					$filename = 'includes' . DIRECTORY_SEPARATOR . 'class-premium-template-tags';
 				}
 
