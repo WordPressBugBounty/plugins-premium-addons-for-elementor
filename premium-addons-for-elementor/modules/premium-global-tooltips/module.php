@@ -47,7 +47,7 @@ class Module {
 	private static $instance = null;
 
 	/**
-	 * Class Constructor Funcion.
+	 * Class Constructor Function.
 	 */
 	public function __construct() {
 

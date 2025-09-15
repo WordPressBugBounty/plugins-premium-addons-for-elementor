@@ -11,6 +11,14 @@ $elements = array(
 		'title'    => __( 'All Elements', 'premium-addons-for-elementor' ),
 		'elements' => array(
 			array(
+				'key'       => 'premium-mscroll',
+				'title'     => __( 'Magic Scroll', 'premium-addons-for-elementor' ),
+				'demo'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-magic-scroll-global-addon/', 'magic', 'wp-dash', 'dashboard' ),
+				'doc'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/?post_type%5B%5D=docs&s=magic+scroll', 'magic', 'wp-dash', 'dashboard' ),
+				'is_pro'    => true,
+				'is_global' => true,
+			),
+			array(
 				'key'      => 'premium-mobile-menu',
 				'name'     => 'premium-mobile-menu',
 				'title'    => __( 'Mobile Menu', 'premium-addons-for-elementor' ),
@@ -47,14 +55,14 @@ $elements = array(
 				'icon'       => 'pa-pro-horizontal-scroll',
 			),
 			array(
-				'key'      => 'premium-textual-showcase',
-				'name'     => 'premium-textual-showcase',
-				'title'    => __( 'Textual Showcase', 'premium-addons-for-elementor' ),
-				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-textual-showcase-widget/', 'showcase', 'wp-dash', 'dashboard' ),
-				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-textual-showcase-widget-tutorial/', 'showcase', 'wp-dash', 'dashboard' ),
-				'draw_svg' => true,
-				'tutorial' => 'https://www.youtube.com/watch?v=xaMVSB3KV4w',
-				'is_freemium' => true
+				'key'        => 'premium-image-hotspots',
+				'name'       => 'premium-addon-image-hotspots',
+				'title'      => __( 'Image Hotspots', 'premium-addons-for-elementor' ),
+				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-image-hotspots-widget/', 'hotspots', 'wp-dash', 'dashboard' ),
+				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/image-hotspots-widget-tutorial/', 'hotspots', 'wp-dash', 'dashboard' ),
+				'is_pro'     => true,
+				'draw_svg'   => true,
+				'icon'       => 'pa-pro-hot-spot',
 			),
 			array(
 				'key'   => 'premium-blog',
@@ -64,12 +72,13 @@ $elements = array(
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/blog/', 'blog', 'wp-dash', 'dashboard' ),
 			),
 			array(
-				'key'   => 'premium-search-form',
-				'name'  => 'premium-search-form',
-				'title' => __( 'Search Form', 'premium-addons-for-elementor' ),
-				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-ajax-search-widget/', 'search', 'wp-dash', 'dashboard' ),
-				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-ajax-search-widget-tutorial/', 'search', 'wp-dash', 'dashboard' ),
-				'is_freemium' => true
+				'key'        => 'premium-image-comparison',
+				'name'       => 'premium-addon-image-comparison',
+				'title'      => __( 'Image Comparison', 'premium-addons-for-elementor' ),
+				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/image-comparison-widget-for-elementor-page-builder/', 'img-compare', 'wp-dash', 'dashboard' ),
+				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-image-comparison-widget/', 'img-compare', 'wp-dash', 'dashboard' ),
+				'is_pro'     => true,
+				'icon'       => 'pa-pro-image-comparison',
 			),
 			array(
 				'key'      => 'premium-vscroll',
@@ -90,27 +99,6 @@ $elements = array(
 				'icon'       => 'pa-pro-multi-scroll',
 			),
 			array(
-				'key'        => 'premium-magic-section',
-				'name'       => 'premium-addon-magic-section',
-				'title'      => __( 'Off Canvas', 'premium-addons-for-elementor' ),
-				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-off-canvas-widget/', 'off-canvas', 'wp-dash', 'dashboard' ),
-				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-off-canvas-widget-tutorial/', 'off-canvas', 'wp-dash', 'dashboard' ),
-				'is_pro'     => true,
-				'draw_svg'   => true,
-				'icon'       => 'pa-pro-magic-section',
-                'tutorial' => 'https://www.youtube.com/watch?v=t-aosch5Xzo',
-
-			),
-			array(
-				'key'        => 'premium-tables',
-				'name'       => 'premium-tables-addon',
-				'title'      => __( 'Table', 'premium-addons-for-elementor' ),
-				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-table-widget/', 'table', 'wp-dash', 'dashboard' ),
-				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/table-widget-tutorial/', 'table', 'wp-dash', 'dashboard' ),
-				'is_pro'     => true,
-				'icon'       => 'pa-pro-table',
-			),
-			array(
 				'key'        => 'premium-color-transition',
 				'name'       => 'premium-color-transition',
 				'title'      => __( 'Background Transition', 'premium-addons-for-elementor' ),
@@ -127,6 +115,26 @@ $elements = array(
 				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-recent-posts-notification-widget/', 'notification', 'wp-dash', 'dashboard' ),
 				'draw_svg' => true,
 				'is_freemium' => true
+			),
+			array(
+				'key'        => 'premium-magic-section',
+				'name'       => 'premium-addon-magic-section',
+				'title'      => __( 'Off Canvas', 'premium-addons-for-elementor' ),
+				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-off-canvas-widget/', 'off-canvas', 'wp-dash', 'dashboard' ),
+				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-off-canvas-widget-tutorial/', 'off-canvas', 'wp-dash', 'dashboard' ),
+				'is_pro'     => true,
+				'draw_svg'   => true,
+				'icon'       => 'pa-pro-magic-section',
+                'tutorial' => 'https://www.youtube.com/watch?v=t-aosch5Xzo',
+			),
+			array(
+				'key'        => 'premium-tables',
+				'name'       => 'premium-tables-addon',
+				'title'      => __( 'Table', 'premium-addons-for-elementor' ),
+				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-table-widget/', 'table', 'wp-dash', 'dashboard' ),
+				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/table-widget-tutorial/', 'table', 'wp-dash', 'dashboard' ),
+				'is_pro'     => true,
+				'icon'       => 'pa-pro-table',
 			),
 			array(
 				'key'   => 'woo-products',
@@ -278,23 +286,22 @@ $elements = array(
 				'draw_svg' => true,
 			),
 			array(
-				'key'        => 'premium-image-comparison',
-				'name'       => 'premium-addon-image-comparison',
-				'title'      => __( 'Image Comparison', 'premium-addons-for-elementor' ),
-				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/image-comparison-widget-for-elementor-page-builder/', 'img-compare', 'wp-dash', 'dashboard' ),
-				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-image-comparison-widget/', 'img-compare', 'wp-dash', 'dashboard' ),
-				'is_pro'     => true,
-				'icon'       => 'pa-pro-image-comparison',
+				'key'      => 'premium-textual-showcase',
+				'name'     => 'premium-textual-showcase',
+				'title'    => __( 'Textual Showcase', 'premium-addons-for-elementor' ),
+				'demo'     => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-textual-showcase-widget/', 'showcase', 'wp-dash', 'dashboard' ),
+				'doc'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-textual-showcase-widget-tutorial/', 'showcase', 'wp-dash', 'dashboard' ),
+				'draw_svg' => true,
+				'tutorial' => 'https://www.youtube.com/watch?v=xaMVSB3KV4w',
+				'is_freemium' => true
 			),
 			array(
-				'key'        => 'premium-image-hotspots',
-				'name'       => 'premium-addon-image-hotspots',
-				'title'      => __( 'Image Hotspots', 'premium-addons-for-elementor' ),
-				'demo'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-image-hotspots-widget/', 'hotspots', 'wp-dash', 'dashboard' ),
-				'doc'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/image-hotspots-widget-tutorial/', 'hotspots', 'wp-dash', 'dashboard' ),
-				'is_pro'     => true,
-				'draw_svg'   => true,
-				'icon'       => 'pa-pro-hot-spot',
+				'key'   => 'premium-search-form',
+				'name'  => 'premium-search-form',
+				'title' => __( 'Search Form', 'premium-addons-for-elementor' ),
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-ajax-search-widget/', 'search', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-ajax-search-widget-tutorial/', 'search', 'wp-dash', 'dashboard' ),
+				'is_freemium' => true
 			),
 			array(
 				'key'        => 'premium-img-layers',
@@ -1437,11 +1444,11 @@ $elements = array(
 			array(
 				'key' => 'premium-assets-generator',
 			),
-			array(
-				'key'    => 'premium-mscroll',
-				'is_pro' => true,
-				'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-magic-scroll-global-addon/', 'magic', 'wp-dash', 'dashboard' ),
-			),
+			// array(
+			// 	'key'    => 'premium-mscroll',
+			// 	'is_pro' => true,
+			// 	'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-magic-scroll-global-addon/', 'magic', 'wp-dash', 'dashboard' ),
+			// ),
 			array(
 				'key'  => 'premium-global-tooltips',
 				'demo' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-tooltip-global-addon/', 'tooltips', 'wp-dash', 'dashboard' ),

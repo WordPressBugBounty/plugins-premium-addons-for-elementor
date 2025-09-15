@@ -21,21 +21,21 @@ abstract class Module_Base {
 	/**
 	 * Reflection
 	 *
-	 * @var reflection
+	 * @var \ReflectionClass
 	 */
 	private $reflection;
 
 	/**
 	 * Modules
 	 *
-	 * @var modules
+	 * @var array|null
 	 */
 	private static $modules = null;
 
 	/**
-	 * Reflection
+	 * Instances
 	 *
-	 * @var instances
+	 * @var array
 	 */
 	protected static $instances = array();
 
@@ -52,7 +52,7 @@ abstract class Module_Base {
 	 * @since 0.0.1
 	 */
 	public static function class_name() {
-		return get_called_class();
+		return static::class;
 	}
 
 	/**

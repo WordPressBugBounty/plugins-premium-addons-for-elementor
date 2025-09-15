@@ -115,7 +115,7 @@ class Admin_Bar {
 		$admin_bar->add_menu(
 			array(
 				'id'    => 'premium-addons',
-				'title' => $icon . __( ' PA Assets', 'premium-addons-for-elementor' ),
+				'title' => $icon . __( ' Clear PA Assets', 'premium-addons-for-elementor' ),
 				'href'  => $this->get_dashboard_widgets_link(),
 				'meta'  => array(
 					'title' => __( 'Premium Addons', 'premium-addons-for-elementor' ),

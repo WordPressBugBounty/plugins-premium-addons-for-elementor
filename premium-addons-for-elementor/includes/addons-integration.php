@@ -1572,16 +1572,17 @@ class Addons_Integration {
 	public function get_template_content() {
 
 		$template = isset( $_GET['templateID'] ) ? sanitize_text_field( wp_unslash( $_GET['templateID'] ) ) : '';
+		$is_ID = isset( $_GET['is_id'] ) ? filter_var( $_GET['is_id'], FILTER_VALIDATE_BOOLEAN ) : false;
 
 		if ( empty( $template ) ) {
 			wp_send_json_error( 'Empty Template ID' );
 		}
 
-		if ( ! current_user_can( 'edit_posts' ) ) {
-			wp_send_json_error( 'Insufficient user permission' );
-		}
+// 		if ( ! current_user_can( 'edit_posts' ) ) {
+// 			wp_send_json_error( 'Insufficient user permission' );
+// 		}
 
-		$template_content = Helper_Functions::render_elementor_template( $template );
+		$template_content = Helper_Functions::render_elementor_template( $template, $is_ID );
 
 		if ( empty( $template_content ) || ! isset( $template_content ) ) {
 			wp_send_json_error( 'Empty Content' );

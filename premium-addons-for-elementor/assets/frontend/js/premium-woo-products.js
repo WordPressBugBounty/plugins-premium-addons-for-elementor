@@ -21,8 +21,9 @@
 		if ("yes" === isQuickView) {
 
 			var widgetID = $scope.data("id"),
-				$modal = $elem.siblings(".premium-woo-quick-view-" + widgetID),
-				$qvModal = $modal.find('#premium-woo-quick-view-modal'),
+				$modal = $elem.siblings(".premium-woo-quick-view-" + widgetID);
+
+			var $qvModal = $modal.find('#premium-woo-quick-view-modal'),
 				$contentWrap = $qvModal.find('#premium-woo-quick-view-content'),
 				$wrapper = $qvModal.find('.premium-woo-content-main-wrapper'),
 				$backWrap = $modal.find('.premium-woo-quick-view-back'),
@@ -197,9 +198,51 @@
 			if (!$backWrap.hasClass('premium-woo-quick-view-active'))
 				$backWrap.addClass('premium-woo-quick-view-active');
 
-			self.getProductByAjax(productID);
+			if ($scope.hasClass('static-products')) {
+				self.getStaticQuickView(productID);
+			} else {
+				self.getProductByAjax(productID);
+			}
 
 			self.addCloseEvents();
+		};
+
+		self.getStaticQuickView = function (itemID) {
+
+			$.ajax({
+				url: PAWooProductsSettings.ajaxurl,
+				data: {
+					action: 'get_elementor_template_content',
+					templateID: itemID,
+					is_id: true
+				},
+				type: 'GET',
+
+				beforeSend: function () {
+
+					$qvLoader.append('<div class="premium-loading-feed"><div class="premium-loader"></div></div>');
+
+				},
+				success: function (response) {
+
+					$qvLoader.find('.premium-loading-feed').remove();
+
+					$elem.trigger('qv_loaded');
+
+					//Insert the product content in the quick view modal.
+
+					$contentWrap.html(response.data.template_content);
+					self.handleQuickViewModal();
+				},
+				error: function (err) {
+					console.log(err);
+				}
+
+			});
+
+			return;
+
+
 		};
 
 		self.getProductByAjax = function (itemID) {
@@ -662,16 +705,26 @@
 
 	//Elementor JS Hooks.
 	$(window).on("elementor/frontend/init", function () {
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-1", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-2", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-3", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-4", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-5", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-6", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-7", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-8", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-9", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-10", PremiumWooProductsHandler);
-		elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-11", PremiumWooProductsHandler);
+
+		if ($('.static-products').length > 0) {
+			$('.elementor-widget-premium-woo-products').map(function (index, elem) {
+				PremiumWooProductsHandler($(elem));
+			})
+		} else {
+
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-1", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-2", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-3", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-4", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-5", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-6", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-7", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-8", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-9", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-10", PremiumWooProductsHandler);
+			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-11", PremiumWooProductsHandler);
+
+		}
+
 	});
 })(jQuery);

@@ -375,9 +375,9 @@ class Admin_Helper {
 				array(
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 					'nonce'         => wp_create_nonce( 'pa-wizard-nonce' ),
-					'exitWizardURL' => admin_URL( 'plugins.php' ),
+					'exitWizardURL' => admin_url( 'plugins.php' ),
 					'isSecondRun'   => get_option( 'pa_complete_wizard' ) ? false : true,
-					'dashboardURL'  => admin_URL( 'admin.php' ) . '?page=premium-addons#tab=elements',
+					'dashboardURL'  => admin_url( 'admin.php' ) . '?page=premium-addons#tab=elements',
 					'newPageURL'    => Plugin::$instance->documents->get_create_new_post_url(),
 				),
 			);
@@ -1473,6 +1473,13 @@ class Admin_Helper {
 			$this->delete_assets_options();
 		}
 
+		if ( defined( 'ELEMENTOR_VERSION' ) ) {
+			Plugin::$instance->files_manager->clear_cache();
+		}
+
+		// Purge All LS Cache
+		do_action( 'litespeed_purge_all', 'Premium Addons for Elementor' );
+
 		$this->delete_assets_files( $id );
 	}
 
@@ -1511,8 +1518,8 @@ class Admin_Helper {
 
 		$query = $wpdb->prepare(
 			"DELETE FROM $wpdb->options
-            WHERE (option_name LIKE %s OR option_name LIKE %s)
-            AND autoload = %s",
+			 WHERE (option_name LIKE %s OR option_name LIKE %s)
+			 AND autoload = %s",
 			'%pa_elements_%',
 			'%pa_edit_%',
 			'no'
@@ -1549,7 +1556,6 @@ class Admin_Helper {
 
 			$id = Helper_Functions::generate_unique_id( 'pa_assets_' . $id );
 
-			$arr = array();
 			foreach ( glob( PREMIUM_ASSETS_PATH . '/*' . $id . '*' ) as $file ) {
 				wp_delete_file( Helper_Functions::get_safe_path( $file ) );
 			}

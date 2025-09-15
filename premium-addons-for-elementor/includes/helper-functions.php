@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Helper_Functions {
 
 	/**
-	 * A list of safe tage for `validate_html_tag` method.
+	 * A list of safe tags for `validate_html_tag` method.
 	 */
 	const ALLOWED_HTML_WRAPPER_TAGS = array(
 		'article',
@@ -90,7 +90,7 @@ class Helper_Functions {
 	private static $js_dir = null;
 
 	/**
-	 * CSS fiels directory
+	 * CSS files directory
 	 *
 	 * @var js_dir
 	 */
@@ -727,7 +727,7 @@ class Helper_Functions {
 	 * @since 3.21.6
 	 * @access public
 	 *
-	 * @return boolen
+	 * @return boolean
 	 */
 	public static function check_papro_version() {
 		return defined( 'PREMIUM_PRO_ADDONS_VERSION' );
@@ -1218,7 +1218,7 @@ class Helper_Functions {
 	}
 
 	/**
-	 * Checks if Elementor PRO 3.8 or higher is activated && if the Loop expirement is activated.
+	 * Checks if Elementor PRO 3.8 or higher is activated && if the Loop experiment is activated.
 	 *
 	 * @since 4.9.45
 	 * @access public

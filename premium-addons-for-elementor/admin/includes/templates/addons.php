@@ -21,32 +21,6 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-							<h4><?php echo esc_html( __( 'Magic Scroll', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Create sophisticated animations with dozens of customization options.', 'premium-addons-for-elementor' ) ); ?></p>
-						</div>
-
-						<?php
-
-							$status         = ( isset( $features[10]['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'disabled' : checked( 1, $enabled_elements['premium-mscroll'], false );
-							$class          = ( isset( $features[10]['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'pro-' : '';
-							$switcher_class = $class . 'slider round pa-control';
-
-						?>
-
-						<div class="pa-section-info-cta">
-							<label class="switch">
-								<input type="checkbox" id="premium-mscroll" pa-element="feature" name="premium-mscroll" <?php echo esc_attr( $status ); ?>>
-									<span class="<?php echo esc_attr( $switcher_class ); ?>"></span>
-								</label>
-							</p>
-						</div>
-					</div>
-					<a href="<?php echo esc_url( $features[10]['demo'] ); ?>" target="_blank"></a>
-				</div>
-
-				<div class="pa-section-outer-wrap">
-					<div class="pa-section-info-wrap">
-						<div class="pa-section-info">
 							<h4><?php echo sprintf( '%1$s %2$s', esc_html( $prefix ), esc_html( __( 'Templates', 'premium-addons-for-elementor' ) ) ); ?></h4>
 							<p><?php echo esc_html( __( 'Build Professional Website in Minutes Using Our Pre-Made Premium Elementor Templates.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
@@ -181,7 +155,7 @@ $features = $elements['cat-13']['elements'];
 							</p>
 						</div>
 					</div>
-					<a href="<?php echo esc_url( $features[11]['demo'] ); ?>" target="_blank"></a>
+					<a href="<?php echo esc_url( $features[10]['demo'] ); ?>" target="_blank"></a>
 				</div>
 
 				<div class="pa-section-outer-wrap">
@@ -252,7 +226,7 @@ $features = $elements['cat-13']['elements'];
 							</p>
 						</div>
 					</div>
-					<a href="<?php echo esc_url( $features[12]['demo'] ); ?>" target="_blank"></a>
+					<a href="<?php echo esc_url( $features[11]['demo'] ); ?>" target="_blank"></a>
 				</div>
 
 				<div class="pa-section-outer-wrap">
@@ -270,7 +244,7 @@ $features = $elements['cat-13']['elements'];
 							</p>
 						</div>
 					</div>
-					<a href="<?php echo esc_url( $features[13]['demo'] ); ?>" target="_blank"></a>
+					<a href="<?php echo esc_url( $features[12]['demo'] ); ?>" target="_blank"></a>
 				</div>
 
 			</div>

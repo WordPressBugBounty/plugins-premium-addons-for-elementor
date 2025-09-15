@@ -29,20 +29,6 @@ class Duplicator {
 	private static $instance = null;
 
 	/**
-	 * Elementor slug
-	 *
-	 * @var elementor
-	 */
-	private static $elementor = 'elementor';
-
-	/**
-	 * PAPRO Slug
-	 *
-	 * @var papro
-	 */
-	private static $papro = 'premium-addons-pro';
-
-	/**
 	 * Constructor for the class
 	 */
 	public function __construct() {

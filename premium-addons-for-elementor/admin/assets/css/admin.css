@@ -1976,7 +1976,8 @@
 	content: "\e935";
 }
 
-.pa-dash-premium-vscroll:before {
+.pa-dash-premium-vscroll:before,
+.pa-dash-premium-mscroll:before {
 	content: "\e938";
 }
 

@@ -41,7 +41,7 @@ class Module {
 	private static $instance = null;
 
 	/**
-	 * Class Constructor Funcion.
+	 * Class Constructor Function.
 	 */
 	public function __construct() {
 
@@ -233,10 +233,6 @@ class Module {
 	 */
 	public function _print_template( $template, $element ) {
 
-		if ( $element->get_name() !== 'section' && $element->get_name() !== 'container' ) {
-			return $template;
-		}
-
 		$old_template = $template;
 		ob_start();
 
@@ -264,11 +260,11 @@ class Module {
 		<# } #>
 		<?php
 
-		$slider_content = ob_get_contents();
+		$element_content = ob_get_contents();
 
 		ob_end_clean();
 
-		$template = $slider_content . $old_template;
+		$template = $element_content . $old_template;
 		return $template;
 	}
 

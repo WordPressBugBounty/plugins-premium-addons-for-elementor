@@ -44,7 +44,7 @@ class Module {
 	/**
 	 * Display conditions.
 	 *
-	 * Class Constructor Funcion.
+	 * Class Constructor Function.
 	 */
 	public function __construct() {
 
