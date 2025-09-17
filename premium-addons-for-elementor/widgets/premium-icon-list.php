@@ -62,7 +62,6 @@ class Premium_Icon_List extends Widget_Base {
 		}
 
 		return $this->is_draw_enabled;
-
 	}
 
 	/**
@@ -190,6 +189,38 @@ class Premium_Icon_List extends Widget_Base {
 
 		$draw_icon = $this->check_icon_draw();
 
+		$this->add_list_items_controls( $draw_icon );
+
+		$this->add_display_options_controls();
+
+		$this->add_random_badge_controls();
+
+		$this->add_help_section_controls();
+
+		Helper_Functions::register_papro_promotion_controls( $this, 'bullet' );
+
+		$this->register_style_controls( $draw_icon );
+	}
+
+	/**
+	 * Register Style Control
+	 *
+	 * @since 4.0.0
+	 * @access private
+	 */
+	private function register_style_controls( $draw_icon ) {
+
+		$this->add_general_style_controls();
+		$this->add_bullet_style_controls( $draw_icon );
+		$this->add_title_style_controls();
+		$this->add_desc_style_controls();
+		$this->add_badge_style_controls();
+		$this->add_divider_style_controls();
+		$this->add_connector_style_controls();
+	}
+
+	private function add_list_items_controls( $draw_icon ) {
+
 		$this->start_controls_section(
 			'list_items_section',
 			array(
@@ -209,6 +240,16 @@ class Premium_Icon_List extends Widget_Base {
 				'label'       => __( 'Title', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => __( 'List Title', 'premium-addons-for-elementor' ),
+				'dynamic'     => array( 'active' => true ),
+				'label_block' => true,
+			)
+		);
+
+		$repeater_list->add_control(
+			'list_desc',
+			array(
+				'label'       => __( 'Description', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXTAREA,
 				'dynamic'     => array( 'active' => true ),
 				'label_block' => true,
 			)
@@ -476,7 +517,7 @@ class Premium_Icon_List extends Widget_Base {
 			$repeater_list->add_control(
 				'svg_notice',
 				array(
-					'raw'             => __( 'Loop and Speed options are overriden when Draw SVGs in Sequence option is enabled.', 'premium-addons-for-elementor' ),
+					'raw'             => __( 'Loop and Speed options are overridden when Draw SVGs in Sequence option is enabled.', 'premium-addons-for-elementor' ),
 					'type'            => Controls_Manager::RAW_HTML,
 					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
 					'condition'       => array_merge(
@@ -713,8 +754,9 @@ class Premium_Icon_List extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-text span, {{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper i, {{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper .premium-bullet-list-icon-text p' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-text, {{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper i, {{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper .premium-bullet-list-icon-text p' => 'font-size: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper svg, {{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper img' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => '--pa-bullet-hv-size: {{SIZE}}{{UNIT}};',
 				),
 				'condition'  => array(
 					'show_global_style' => 'yes',
@@ -749,6 +791,7 @@ class Premium_Icon_List extends Widget_Base {
 				),
 				'selectors'  => array(
 					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper svg' => 'width: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => '--pa-bullet-hv-size: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -758,7 +801,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'      => __( 'Height', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em' ),
+				'size_units' => array( 'px', 'em', 'custom' ),
 				'range'      => array(
 					'px' => array(
 						'min' => 1,
@@ -775,6 +818,7 @@ class Premium_Icon_List extends Widget_Base {
 				),
 				'selectors'  => array(
 					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper svg' => 'height: {{SIZE}}{{UNIT}} !important',
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => '--pa-svg-bullet-h: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -883,11 +927,27 @@ class Premium_Icon_List extends Widget_Base {
 				'label'     => __( 'Title Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-text span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-bullet-list-blur:hover {{CURRENT_ITEM}} .premium-bullet-list-text span' => 'text-shadow: 0 0 3px {{VALUE}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-bullet-list-blur:hover {{CURRENT_ITEM}} .premium-bullet-text' => 'text-shadow: 0 0 3px {{VALUE}};',
 				),
 				'condition' => array(
 					'show_global_style' => 'yes',
+				),
+			)
+		);
+
+		$repeater_list->add_control(
+			'desc_color',
+			array(
+				'label'     => __( 'Description Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-desc' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-bullet-list-blur:hover {{CURRENT_ITEM}} .premium-bullet-list-desc' => 'text-shadow: 0 0 3px {{VALUE}};',
+				),
+				'condition' => array(
+					'show_global_style' => 'yes',
+					'list_desc!'        => '',
 				),
 			)
 		);
@@ -997,11 +1057,27 @@ class Premium_Icon_List extends Widget_Base {
 				'label'     => __( 'Title Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-list-text span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-bullet-list-blur {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-list-text span' => 'text-shadow: none !important; color: {{VALUE}} !important;',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-bullet-list-blur:hover {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-text' => 'text-shadow: none !important; color: {{VALUE}} !important;',
 				),
 				'condition' => array(
 					'show_global_style' => 'yes',
+				),
+			)
+		);
+
+		$repeater_list->add_control(
+			'desc_color_hov',
+			array(
+				'label'     => __( 'Description Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-list-desc' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-bullet-list-blur {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-list-desc' => 'text-shadow: 0 0 3px {{VALUE}}; color: {{VALUE}} !important;',
+				),
+				'condition' => array(
+					'show_global_style' => 'yes',
+					'list_desc!'        => '',
 				),
 			)
 		);
@@ -1114,6 +1190,9 @@ class Premium_Icon_List extends Widget_Base {
 		}
 
 		$this->end_controls_section();
+	}
+
+	private function add_display_options_controls() {
 
 		$this->start_controls_section(
 			'display_options_section',
@@ -1194,6 +1273,36 @@ class Premium_Icon_List extends Widget_Base {
 				),
 				'toggle'      => false,
 				'default'     => 'flex-start',
+				'condition'   => array(
+					'hover_effect_type!' => 'translate-bullet',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'text_align',
+			array(
+				'label'     => __( 'Text Alignment', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'flex-start' => array(
+						'title' => __( 'Left', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-left',
+					),
+					'center'     => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'flex-end'   => array(
+						'title' => __( 'Right', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-right',
+					),
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-bullet-list-content .premium-bullet-list-text-wrapper > span' => 'align-self: {{VALUE}};',
+				),
+				'toggle'    => false,
+				'default'   => 'flex-start',
 			)
 		);
 
@@ -1384,14 +1493,56 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'       => __( 'Hover Effect', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
+				'description' => __( 'Please note that the <b>Translate Bullet</b> effect will not be applied if the bullet position is <b>top</b>.', 'premium-addons-for-elementor' ),
 				'options'     => array(
-					'none'            => __( 'None', 'premium-addons-for-elementor' ),
-					'blur'            => __( 'Blur', 'premium-addons-for-elementor' ),
-					'grow'            => __( 'Grow', 'premium-addons-for-elementor' ),
-					'linear gradient' => __( 'Text Gradient', 'premium-addons-for-elementor' ),
+					'none'             => __( 'None', 'premium-addons-for-elementor' ),
+					'blur'             => __( 'Blur', 'premium-addons-for-elementor' ),
+					'grow'             => __( 'Grow', 'premium-addons-for-elementor' ),
+					'linear gradient'  => __( 'Text Gradient', 'premium-addons-for-elementor' ),
+					'show-bullet'      => __( 'Slide Bullet', 'premium-addons-for-elementor' ),
+					'translate-bullet' => __( 'Translate Bullet', 'premium-addons-for-elementor' ),
 				),
 				'render_type' => 'template',
 				'default'     => 'none',
+			)
+		);
+
+		$this->add_control(
+			'show_bullet_transition',
+			array(
+				'label'     => __( 'Transition (S)', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::NUMBER,
+				'step'      => 0.1,
+				'default'   => 0.7,
+				'condition' => array(
+					'hover_effect_type' => array( 'show-bullet', 'translate-bullet' ),
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .pa-show-bullet, {{WRAPPER}} .pa-translate-bullet' => 'transition-duration: {{VALUE}}s;',
+				),
+			)
+		);
+
+		$this->add_control(
+			'show_bullet_ease',
+			array(
+				'label'     => __( 'Easing', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'cubic-bezier(.135,.9,.15,1)',
+				'options'   => array(
+					'cubic-bezier(.135,.9,.15,1)' => __( 'Default', 'premium-addons-for-elementor' ),
+					'linear'                      => __( 'Linear', 'premium-addons-for-elementor' ),
+					'ease'                        => __( 'Ease', 'premium-addons-for-elementor' ),
+					'ease-in'                     => __( 'Ease In', 'premium-addons-for-elementor' ),
+					'ease-out'                    => __( 'Ease Out', 'premium-addons-for-elementor' ),
+					'ease-in-out'                 => __( 'Ease In Out', 'premium-addons-for-elementor' ),
+				),
+				'condition' => array(
+					'hover_effect_type' => 'show-bullet',
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .pa-show-bullet' => 'transition-timing-function: {{VALUE}};',
+				),
 			)
 		);
 
@@ -1403,11 +1554,14 @@ class Premium_Icon_List extends Widget_Base {
 				'condition' => array(
 					'hover_effect_type' => 'linear gradient',
 				),
-				'selector'  => '{{WRAPPER}} a[data-text]::before ,{{WRAPPER}} .premium-bullet-list-gradient-effect::before',
+				'selector'  => '{{WRAPPER}} a[data-text]::before, {{WRAPPER}} .premium-bullet-list-gradient-effect span::before',
 			)
 		);
 
 		$this->end_controls_section();
+	}
+
+	private function add_random_badge_controls() {
 
 		$this->start_controls_section(
 			'random_badges_section',
@@ -1495,7 +1649,9 @@ class Premium_Icon_List extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_help_section_controls() {
 		$this->start_controls_section(
 			'section_pa_docs',
 			array(
@@ -1527,20 +1683,9 @@ class Premium_Icon_List extends Widget_Base {
 		}
 
 		$this->end_controls_section();
-
-		Helper_Functions::register_papro_promotion_controls( $this, 'bullet' );
-
-		$this->register_style_controls( $draw_icon );
 	}
 
-	/**
-	 * Register Style Control
-	 *
-	 * @since 4.0.0
-	 * @access private
-	 */
-	private function register_style_controls( $draw_icon ) {
-
+	private function add_general_style_controls() {
 		$this->start_controls_section(
 			'list_style_section',
 			array(
@@ -1574,15 +1719,15 @@ class Premium_Icon_List extends Widget_Base {
 		$this->add_control(
 			'items_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -1591,8 +1736,8 @@ class Premium_Icon_List extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
+				'default'     => 'none',
+				'label_block' => true,
 			)
 		);
 
@@ -1627,7 +1772,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%', 'em' ),
+				'size_units' => array( 'px', '%', 'em', 'custom' ),
 				'default'    => array(
 					'top'    => 0,
 					'right'  => 0,
@@ -1677,7 +1822,9 @@ class Premium_Icon_List extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_bullet_style_controls( $draw_icon ) {
 		$this->start_controls_section(
 			'icon_style_section',
 			array(
@@ -1699,7 +1846,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'      => __( 'Size', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em', 'vw' ),
+				'size_units' => array( 'px', 'em', 'vw', 'custom' ),
 				'range'      => array(
 					'px' => array(
 						'min' => 1,
@@ -1711,8 +1858,9 @@ class Premium_Icon_List extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-bullet-list-wrapper i, {{WRAPPER}} .premium-bullet-list-text p, {{WRAPPER}} .premium-bullet-list-text span' => 'font-size: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .premium-bullet-list-wrapper svg, {{WRAPPER}} .premium-bullet-list-wrapper img'    => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
+					'{{WRAPPER}} .premium-bullet-list-wrapper i, {{WRAPPER}} .premium-bullet-list-text p, {{WRAPPER}} .premium-bullet-text' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .premium-bullet-list-wrapper svg, {{WRAPPER}} .premium-bullet-list-wrapper img' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
+					'{{WRAPPER}}' => '--pa-bullet-hv-size: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -1849,7 +1997,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%', 'em' ),
+				'size_units' => array( 'px', '%', 'em', 'custom' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-bullet-list-content .premium-bullet-list-wrapper i ,{{WRAPPER}} .premium-bullet-list-content .premium-bullet-list-wrapper .premium-bullet-list-icon-text p, {{WRAPPER}} .premium-bullet-list-content .premium-bullet-list-wrapper svg , {{WRAPPER}} .premium-bullet-list-content .premium-bullet-list-wrapper img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
@@ -1882,7 +2030,9 @@ class Premium_Icon_List extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_title_style_controls() {
 		$this->start_controls_section(
 			'title_style_section',
 			array(
@@ -1903,7 +2053,7 @@ class Premium_Icon_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'list_title_typography',
-				'selector' => ' {{WRAPPER}} .premium-bullet-list-text span ',
+				'selector' => '{{WRAPPER}} .premium-bullet-text',
 				'global'   => array(
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				),
@@ -1920,8 +2070,8 @@ class Premium_Icon_List extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				),
 				'selectors' => array(
-					' {{WRAPPER}} .premium-bullet-list-text span' => 'color: {{VALUE}}',
-					' {{WRAPPER}} .premium-bullet-list-blur:hover .premium-bullet-list-text span' => 'text-shadow: 0 0 3px {{VALUE}};',
+					' {{WRAPPER}} .premium-bullet-text' => 'color: {{VALUE}}',
+					' {{WRAPPER}} .premium-bullet-list-blur:hover .premium-bullet-text' => 'text-shadow: 0 0 3px {{VALUE}};',
 				),
 			)
 		);
@@ -1935,8 +2085,8 @@ class Premium_Icon_List extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-bullet-list-content:hover .premium-bullet-list-text span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-bullet-list-blur .premium-bullet-list-content:hover .premium-bullet-list-text span' => 'text-shadow: none !important; color: {{VALUE}} !important;',
+					'{{WRAPPER}} .premium-bullet-list-content:hover .premium-bullet-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-bullet-list-blur .premium-bullet-list-content:hover .premium-bullet-text' => 'text-shadow: none !important; color: {{VALUE}} !important;',
 				),
 			)
 		);
@@ -1945,7 +2095,7 @@ class Premium_Icon_List extends Widget_Base {
 			Group_Control_text_Shadow::get_type(),
 			array(
 				'name'     => 'list_title_shadow',
-				'selector' => '{{WRAPPER}} .premium-bullet-list-text span',
+				'selector' => '{{WRAPPER}} .premium-bullet-text',
 			)
 		);
 
@@ -1962,7 +2112,81 @@ class Premium_Icon_List extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_desc_style_controls() {
+
+		$this->start_controls_section(
+			'description_style_section',
+			array(
+				'label' => __( 'Description', 'premium-addons-for-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'desc_render_notice',
+			array(
+				'raw'  => __( 'Options below will be applied on items with no style options set individually from the repeater.', 'premium-addons-for-elementor' ),
+				'type' => Controls_Manager::RAW_HTML,
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'list_desc_typography',
+				'selector' => '{{WRAPPER}} .premium-bullet-list-desc',
+				'global'   => array(
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				),
+
+			)
+		);
+
+		$this->add_control(
+			'desc_color',
+			array(
+				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_TEXT,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-bullet-list-desc' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-bullet-list-blur:hover .premium-bullet-list-desc' => 'text-shadow: 0 0 3px {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'desc_hover_color',
+			array(
+				'label'     => __( 'Hover Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-bullet-list-content:hover .premium-bullet-list-desc' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-bullet-list-blur .premium-bullet-list-content:hover .premium-bullet-list-desc' => 'text-shadow: none !important; color: {{VALUE}} !important;',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'desc_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-bullet-list-desc' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	private function add_badge_style_controls() {
 		$this->start_controls_section(
 			'badge_style_section',
 			array(
@@ -2027,7 +2251,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'      => __( 'Badge Radius', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%', 'em' ),
+				'size_units' => array( 'px', '%', 'em', 'custom' ),
 				'default'    => array(
 					'top'    => 2,
 					'right'  => 2,
@@ -2093,7 +2317,9 @@ class Premium_Icon_List extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_divider_style_controls() {
 		$this->start_controls_section(
 			'divider_style_section',
 			array(
@@ -2133,7 +2359,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'       => __( ' Width', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SLIDER,
-				'size_units'  => array( 'px', 'em', 'vw' ),
+				'size_units'  => array( 'px', 'em', 'vw', 'custom' ),
 				'range'       => array(
 					'px' => array(
 						'min' => 0,
@@ -2160,7 +2386,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'       => __( 'Height', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SLIDER,
-				'size_units'  => array( 'px', 'em' ),
+				'size_units'  => array( 'px', 'em', 'custom' ),
 				'range'       => array(
 					'px' => array(
 						'min' => 0,
@@ -2202,7 +2428,9 @@ class Premium_Icon_List extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_connector_style_controls() {
 		$this->start_controls_section(
 			'connector_style_section',
 			array(
@@ -2245,7 +2473,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'       => __( ' Width', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SLIDER,
-				'size_units'  => array( 'px', 'em' ),
+				'size_units'  => array( 'px', 'em', 'custom' ),
 				'range'       => array(
 					'px' => array(
 						'min' => 0,
@@ -2271,7 +2499,7 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'       => __( 'Height', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SLIDER,
-				'size_units'  => array( 'px', 'em' ),
+				'size_units'  => array( 'px', 'em', 'custom' ),
 				'default'     => array(
 					'unit' => 'px',
 					'size' => 28,
@@ -2329,17 +2557,19 @@ class Premium_Icon_List extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$id = $this->get_id();
+		$id                = $this->get_id();
+		$blur_trans_effect = in_array( $settings['hover_effect_type'], array( 'blur', 'translate-bullet' ), true );
+		$animation_switch  = $settings['premium_icon_list_animation_switcher'];
+		$draw_icon         = $this->check_icon_draw();
+		$delay             = 0;
 
 		$this->add_render_attribute( 'box', 'class', 'premium-bullet-list-box' );
 
-		if ( 'blur' === $settings['hover_effect_type'] ) {
+		$this->add_render_attribute( 'title_wrapper', 'class', 'premium-bullet-list-text-wrapper' );
 
-			$this->add_render_attribute( 'box', 'class', 'premium-bullet-list-blur' );
-
+		if ( $blur_trans_effect ) {
+			$this->add_render_attribute( 'box', 'class', 'premium-bullet-list-' . $settings['hover_effect_type'] );
 		}
-
-		$animation_switch = $settings['premium_icon_list_animation_switcher'];
 
 		if ( 'yes' === $animation_switch ) {
 
@@ -2361,7 +2591,6 @@ class Premium_Icon_List extends Widget_Base {
 			);
 		}
 
-		$draw_icon = $this->check_icon_draw();
 		if ( $draw_icon && 'yes' === $settings['draw_svgs_sequence'] ) {
 			$this->add_render_attribute( 'box', 'data-speed', $settings['frames'] );
 		}
@@ -2369,8 +2598,6 @@ class Premium_Icon_List extends Widget_Base {
 		?>
 			<ul <?php echo wp_kses_post( $this->get_render_attribute_string( 'box' ) ); ?>>
 		<?php
-
-		$delay = 0;
 
 		if ( $settings['list'] ) {
 			foreach ( $settings['list'] as $index => $item ) {
@@ -2454,7 +2681,7 @@ class Premium_Icon_List extends Widget_Base {
 					)
 				);
 
-				if( 'none' !== $settings['items_lq_effect'] ) {
+				if ( 'none' !== $settings['items_lq_effect'] ) {
 					$this->add_render_attribute( $list_content_key, 'class', 'premium-con-lq__' . $settings['items_lq_effect'] );
 				}
 
@@ -2487,6 +2714,7 @@ class Premium_Icon_List extends Widget_Base {
 			<li <?php echo wp_kses_post( $this->get_render_attribute_string( $list_content_key ) ); ?>>
 				<div class="premium-bullet-list-text">
 				<?php
+
 				if ( 'yes' === $item['show_icon'] ) {
 
 					$wrapper_class = 'premium-bullet-list-wrapper';
@@ -2502,7 +2730,15 @@ class Premium_Icon_List extends Widget_Base {
 					}
 
 					if ( 'linear gradient' === $settings['hover_effect_type'] ) {
-						$this->add_render_attribute( 'title', 'class', 'premium-bullet-list-gradient-effect' );
+						$this->add_render_attribute( 'title_wrapper', 'class', 'premium-bullet-list-gradient-effect' );
+					}
+
+					if ( in_array( $settings['hover_effect_type'], array( 'show-bullet', 'translate-bullet' ), true ) ) {
+						$this->add_render_attribute( 'wrapper-' . $index, 'class', 'pa-' . $settings['hover_effect_type'] );
+
+						if ( 'text' === $item['icon_type'] ) {
+							$this->add_render_attribute( 'wrapper-' . $index, 'class', 'pa-has-text-bullet' );
+						}
 					}
 
 					?>
@@ -2557,9 +2793,12 @@ class Premium_Icon_List extends Widget_Base {
 					?>
 				</div>
 				<?php } ?>
-
-				<?php echo '<span ' . wp_kses_post( $this->get_render_attribute_string( 'title' ) ) . '  data-text="' . esc_attr( $item['list_title'] ) . '"> ' . wp_kses_post( $item['list_title'] ) . ' </span>'; ?>
-
+				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'title_wrapper' ) ); ?>>
+					<?php echo '<span class="premium-bullet-text" data-text="' . esc_attr( $item['list_title'] ) . '"> ' . wp_kses_post( $item['list_title'] ) . ' </span>'; ?>
+					<?php if ( ! empty( $item['list_desc'] ) ) : ?>
+					<span class="premium-bullet-list-desc" data-text="<?php echo esc_attr( $item['list_desc'] ); ?>"><?php echo wp_kses_post( $item['list_desc'] ); ?></span>
+					<?php endif; ?>
+				</div>
 				</div>
 
 				<?php if ( 'yes' === $item['show_badge'] ) { ?>

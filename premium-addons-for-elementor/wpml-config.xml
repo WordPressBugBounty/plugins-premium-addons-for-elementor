@@ -105,6 +105,7 @@
         <widget name="premium-icon-list">
             <fields-in-item items_of="list">
                 <field type="List: Item Title" editor_type="LINE">list_title</field>
+                <field type="List: Item Description" editor_type="AREA">list_desc</field>
                 <field type="List: Item Link Title" editor_type="LINE">link_title</field>
                 <field type="List: Item Badge" editor_type="LINE">badge_title</field>
                 <field type="List: Item Icon" editor_type="LINE">list_text_icon</field>

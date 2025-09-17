@@ -605,6 +605,22 @@ class Premium_Videobox extends Widget_Base {
 		);
 
 		$this->add_control(
+			'cc_load_policy',
+			[
+				'label' => esc_html__( 'Captions', 'premium-addons-for-elementor' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'video_type' => [ 'youtube' ],
+					'controls' => 'yes',
+				],
+				'condition'   => array(
+					'premium_video_box_controls' => 'yes',
+					'premium_video_box_video_type' => 'youtube',
+				),
+			]
+		);
+
+		$this->add_control(
 			'privacy_mode',
 			array(
 				'label'       => __( 'Privacy Mode', 'premium-addons-for-elementor' ),
@@ -1062,6 +1078,7 @@ class Premium_Videobox extends Widget_Base {
 				'selectors'            => array(
 					'{{WRAPPER}} .premium-video-box-container > div' => 'aspect-ratio: {{VALUE}}',
 				),
+				'frontend_available' => true,
 			)
 		);
 
@@ -2696,7 +2713,9 @@ class Premium_Videobox extends Widget_Base {
 				$options .= '&autoplay=1';
 			}
 
-			if ( 'vimeo' === $video_type ) {
+			if ( 'youtube' === $video_type ) {
+				$options .= '&cc_load_policy=' . ( 'yes' === $settings['cc_load_policy'] ? '1' : '0' );
+			} elseif ( 'vimeo' === $video_type ) {
 
 				// Filter any paramters after link to be added later.
 				$query_string = wp_parse_url( $link, PHP_URL_QUERY );

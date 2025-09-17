@@ -103,6 +103,9 @@
 
                 $element.addClass('premium-bullet-list-' + listAlignment);
 
+                if ('flex-end' === listAlignment) {
+                    $element.find('.pa-has-text-bullet:not(.premium-bullet-list-wrapper-top)').css('transform-origin', 'right');
+                }
             },
 
             addRandomBadges: function () {

@@ -19,7 +19,7 @@ use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Box_Shadow;
-use PremiumAddons\Includes\Controls\Premium_Background;
+use Elementor\Group_Control_Background;
 
 // PremiumAddons Classes.
 use PremiumAddons\Admin\Includes\Admin_Helper;
@@ -2220,7 +2220,7 @@ class Premium_Modalbox extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Premium_Background::get_type(),
+			Group_Control_Background::get_type(),
 			array(
 				'name'     => 'premium_modal_box_modal_background',
 				'types'    => array( 'classic', 'gradient' ),

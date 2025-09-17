@@ -2753,6 +2753,10 @@
 
 				$element.addClass('premium-bullet-list-' + listAlignment);
 
+				if (['flex-end', 'flex-start'].includes(listAlignment)) {
+					var transformOrigin = 'flex-start' === listAlignment ? 'left' : 'right';
+					$element.find('.pa-has-text-bullet:not(.premium-bullet-list-wrapper-top)').css('transform-origin', transformOrigin);
+				}
 			},
 
 			addRandomBadges: function () {

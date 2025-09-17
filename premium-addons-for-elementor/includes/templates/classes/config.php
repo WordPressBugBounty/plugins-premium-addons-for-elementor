@@ -147,7 +147,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 
 			} else {
 
-				$url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'templates-library', 'wp-editor', 'get-pro' );
+				$url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', '', 'wp-editor', 'get-pro' );
 
 				return $url;
 

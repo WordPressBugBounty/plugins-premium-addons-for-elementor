@@ -57,7 +57,7 @@ abstract class Premium_Templates_Source_Base {
 	 * @return string
 	 */
 	public function templates_key() {
-		return 'premium_templates_' . $this->get_slug() . '_1.0.1';
+		return 'premium_templates_' . $this->get_slug() . '_1.0.2';
 	}
 
 	/**
@@ -66,7 +66,7 @@ abstract class Premium_Templates_Source_Base {
 	 * @return string
 	 */
 	public function categories_key() {
-		return 'premium_categories_' . $this->get_slug() . '_1.0.1';
+		return 'premium_categories_' . $this->get_slug() . '_1.0.2';
 	}
 
 	/**
@@ -75,7 +75,7 @@ abstract class Premium_Templates_Source_Base {
 	 * @return string
 	 */
 	public function keywords_key() {
-		return 'premium_keywords_' . $this->get_slug() . '_1.0.1';
+		return 'premium_keywords_' . $this->get_slug() . '_1.0.2';
 	}
 
 	/**

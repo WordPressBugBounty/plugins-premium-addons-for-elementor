@@ -1769,6 +1769,11 @@ class Helper_Functions {
 
 		// If icon library is SVG, then go to Elementor. Used for widgets where this function is called in all cases.
 		if ( false === strpos( $icon['library'], 'fa-' ) ) {
+
+			if( is_string( $attributes ) ) {
+				$attributes = str_replace( '"', '', $attributes );
+			}
+
 			$svg_html = Icons_Manager::try_get_icon_html( $icon, wp_parse_args( $attributes, array( 'aria-hidden' => 'true' ) ) );
 
 			return $svg_html;

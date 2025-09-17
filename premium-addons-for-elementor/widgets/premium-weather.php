@@ -3989,7 +3989,7 @@ class Premium_Weather extends Widget_Base {
 						<?php if ( $show_curr_weather_desc ) : ?>
 						<div class="premium-weather__desc-wrapper">
 							<div class="premium-weather__desc"><?php echo esc_html( $current['weather'][0]['description'] ); ?></div>
-							<div class="premium-weather__feels-like"> Feels Like: <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+							<div class="premium-weather__feels-like"> <?php esc_html_e( 'Feels Like:', 'premium-addons-for-elementor' ); ?> <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						</div>
 						<?php endif; ?>
 					</div>
@@ -4042,7 +4042,7 @@ class Premium_Weather extends Widget_Base {
 								</div>
 								<?php if ( $show_curr_weather_desc ) : ?>
 									<div class="premium-weather__desc"><?php echo esc_html( $current['weather'][0]['description'] ); ?></div>
-									<div class="premium-weather__feels-like"> Feels Like: <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+									<div class="premium-weather__feels-like"> <?php esc_html_e( 'Feels Like:', 'premium-addons-for-elementor' ); ?> <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 								<?php endif; ?>
 							</div>
 						</div>
@@ -4090,7 +4090,7 @@ class Premium_Weather extends Widget_Base {
 						<?php } ?>
 						<?php if ( $show_curr_weather_desc ) : ?>
 							<div class="premium-weather__desc"><?php echo esc_html( $current['weather'][0]['description'] ); ?></div>
-							<div class="premium-weather__feels-like"> Feels Like: <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+							<div class="premium-weather__feels-like"> <?php esc_html_e( 'Feels Like:', 'premium-addons-for-elementor' ); ?> <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						<?php endif; ?>
 					</div>
 

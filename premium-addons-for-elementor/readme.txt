@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.2
 Requires PHP: 7.4
-Stable Tag: 4.11.36
+Stable Tag: 4.11.37
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -236,6 +236,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.37 =
+
+- Tweak: Added Slide Bullet and Translate Bullet effects in Bullet List widget.
+- Tweak: Added Sort By select in Premium Templates.
+- Tweak: Improved compatibility between Bullet List, Weather Forecast and WPML translation plugin.
+- Fixed: Accessibility issue in Advanced Carousel widget.
+- Fixed: Gradient Effect not working in Bullet List widget.
 
 = 4.11.36 =
 

@@ -21,8 +21,10 @@
 		?>
 		</span>
 	</button>
-<# } else { #>
-<a class="template-library-activate-license elementor-button elementor-button-go-pro" href="{{{ window.PremiumTempsData.license.activateLink }}}" target="_blank">
+<# } else {
+	var templateLink = window.PremiumTempsData.license.activateLink + '&utm_source=template-back-' + template_id;
+#>
+<a class="template-library-activate-license elementor-button elementor-button-go-pro" href="{{{ templateLink }}}" target="_blank">
 	{{{ window.PremiumTempsData.license.headerProMessage }}}
 </a>
 <# } #>

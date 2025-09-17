@@ -1488,13 +1488,13 @@ class Premium_Media_Wheel extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'desc_typography',
-				'selector' => '{{WRAPPER}} .premium-adv-carousel__media-desc',
+				'name'           => 'desc_typography',
+				'selector'       => '{{WRAPPER}} .premium-adv-carousel__media-desc',
 				'fields_options' => array(
 					'letter_spacing' => array(
 						'responsive' => false,
 					),
-					'word_spacing' => array(
+					'word_spacing'   => array(
 						'responsive' => false,
 					),
 				),
@@ -2661,7 +2661,15 @@ class Premium_Media_Wheel extends Widget_Base {
 								$link = $item['media_wheel_custom_link']['url'];
 							}
 
-							echo '<a class="premium-adv-carousel__item-link" href="' . esc_url( $link ) . '" ' . esc_html( $target ) . '></a>';
+							$aria_label = '';
+
+							if ( ! empty( $item['item_name'] ) ) {
+								$aria_label = esc_attr( $item['item_name'] );
+							} elseif ( $media_info && ! empty( $item['media_title'] ) ) {
+								$aria_label = esc_attr( $item['media_title'] );
+							}
+
+							echo '<a class="premium-adv-carousel__item-link" aria-label="' . $aria_label . '" href="' . esc_url( $link ) . '" ' . esc_html( $target ) . '></a>';
 						}
 
 						?>
