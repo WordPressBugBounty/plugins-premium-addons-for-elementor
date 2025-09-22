@@ -2296,8 +2296,8 @@ class Woo_CTA extends Widget_Base {
 										<div class="quantity-grouped-wrapper">
 											<input type="number" class="grouped_product_qty" name="<?php echo wp_kses_post( $child_id ); ?>" value="0" min="0" max="<?php echo esc_attr( $max_stock ); ?>" aria-label="Product quantity">
 											<div class="add-to-cart-icons-quantity-wrapper">
-												<i type="button" class="fas fa-plus quantity-button g-plus"></i>
-												<i type="button" class="fas fa-minus quantity-button g-minus"></i>
+												<i type="button" class="fas fa-plus quantity-button g-plus" aria-hidden="true"></i>
+												<i type="button" class="fas fa-minus quantity-button g-minus" aria-hidden="true"></i>
 											</div>
 										</div>
 									</div>
@@ -2355,8 +2355,8 @@ class Woo_CTA extends Widget_Base {
 				<div class="quantity-input-wrapper">
 					<input type="number" class="product-quantity"  value="1" min="1" max="<?php echo esc_attr( $max_stock ); ?>"  aria-label="Product quantity">
 						<div class="add-to-cart-icons-quantity-wrapper">
-							<i type="button" class="fas fa-plus quantity-button plus"></i>
-							<i type="button" class="fas fa-minus quantity-button minus"></i>
+							<i type="button" class="fas fa-plus quantity-button plus" aria-hidden="true"></i>
+							<i type="button" class="fas fa-minus quantity-button minus" aria-hidden="true"></i>
 						</div>
 				</div>
 				<?php endif; ?>

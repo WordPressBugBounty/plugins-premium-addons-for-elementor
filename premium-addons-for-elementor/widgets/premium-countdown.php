@@ -1032,7 +1032,7 @@ class Premium_Countdown extends Widget_Base {
 			array(
 				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SELECT,
-				'description' => sprintf(
+				'description'  => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',

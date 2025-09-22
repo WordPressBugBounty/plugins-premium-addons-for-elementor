@@ -95,15 +95,33 @@ class Premium_Tiktok_Feed extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		return array(
-			'pa-glass',
-			// 'tiktok-embed',
-			'lottie-js',
-			'imagesloaded',
-			'isotope-js',
-			'pa-slick',
-			'premium-addons',
-		);
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array( 'imagesloaded' );
+
+		if ( $is_edit ) {
+
+			$scripts = array_merge( $scripts, array( 'pa-glass', 'isotope-js', 'pa-slick' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'none' !== $settings['tiktok_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+
+			if ( 'yes' === $settings['carousel'] ) {
+				$scripts[] = 'pa-slick';
+			}
+
+			if ( 'masonry' === $settings['outer_layout'] ) {
+				$scripts[] = 'isotope-js';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**
@@ -771,8 +789,8 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				'label'     => __( 'On Click', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => array(
-					'default'  => __( 'Redirect To TikTok', 'premium-addons-for-elementor' ),
-					'play'     => __( 'Play Video', 'premium-addons-for-elementor' ),
+					'default' => __( 'Redirect To TikTok', 'premium-addons-for-elementor' ),
+					'play'    => __( 'Play Video', 'premium-addons-for-elementor' ),
 				),
 				'default'   => 'play',
 				'separator' => 'before',
@@ -1216,15 +1234,15 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		$this->add_control(
 			'tiktok_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -1233,8 +1251,8 @@ class Premium_Tiktok_Feed extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
+				'default'     => 'none',
+				'label_block' => true,
 			)
 		);
 
@@ -2680,10 +2698,9 @@ class Premium_Tiktok_Feed extends Widget_Base {
 			}
 		}
 
-
 		$this->add_render_attribute( 'video_wrap', 'class', 'premium-tiktok-feed__video-wrapper' );
 
-		if( 'none' !== $settings['tiktok_lq_effect'] ) {
+		if ( 'none' !== $settings['tiktok_lq_effect'] ) {
 			$this->add_render_attribute( 'video_wrap', 'class', 'premium-con-lq__' . $settings['tiktok_lq_effect'] );
 		}
 
@@ -2947,7 +2964,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		$follow_class = 'premium-tiktok-icon-' . $from;
 		?>
 			<span class="premium-tiktok-feed__tiktok-icon <?php echo esc_attr( $follow_class ); ?>">
-				<svg id="TikTok" xmlns="http://www.w3.org/2000/svg" width="18.72" height="18.72" viewBox="0 0 18.72 18.72"><defs><style>.premium-tiktok-icon-1{fill:#25f4ee;}.premium-tiktok-icon-1,.premium-tiktok-icon-2,.premium-tiktok-icon-3{fill-rule:evenodd;}.premium-tiktok-icon-2{fill:#fff;}.premium-tiktok-icon-3{fill:#ff1753;}</style></defs><circle cx="9.36" cy="9.36" r="9.36"/><path class="premium-tiktok-icon-3" d="m11.91,7.68c.76.56,1.69.89,2.71.9l.03-1.95c-.19,0-.38-.03-.57-.07l-.02,1.53c-1.01-.01-1.95-.35-2.71-.9l-.05,3.98c-.03,1.99-1.66,3.58-3.65,3.56-.74,0-1.43-.24-2-.64.65.68,1.55,1.1,2.56,1.12,1.99.03,3.63-1.57,3.65-3.56l.05-3.98h0Zm.73-1.96c-.39-.43-.64-.99-.68-1.6v-.25s-.54,0-.54,0c.13.78.58,1.45,1.22,1.86h0Zm-5.72,6.86c-.21-.29-.33-.64-.32-1,.01-.91.76-1.64,1.67-1.63.17,0,.34.03.5.08l.03-1.99c-.19-.03-.38-.04-.57-.04l-.02,1.55c-.16-.05-.33-.08-.5-.08-.91-.01-1.66.72-1.67,1.63,0,.64.35,1.21.89,1.48Z"/><path class="premium-tiktok-icon-2" d="m11.35,7.19c.76.56,1.69.89,2.71.9l.02-1.53c-.56-.13-1.06-.43-1.43-.85-.64-.41-1.1-1.08-1.22-1.86l-1.42-.02-.1,7.79c-.01.91-.76,1.63-1.67,1.62-.54,0-1.01-.27-1.3-.67-.53-.28-.9-.84-.89-1.48.01-.91.76-1.64,1.67-1.63.17,0,.34.03.5.08l.02-1.55c-1.96.01-3.55,1.59-3.58,3.56-.01.98.37,1.87.99,2.53.57.39,1.26.63,2,.64,1.99.03,3.63-1.57,3.65-3.56l.05-3.98Z"/><path class="premium-tiktok-icon-1" d="m14.08,6.56v-.41c-.5,0-1-.16-1.43-.43.38.42.88.72,1.43.85Zm-2.65-2.7c-.01-.07-.02-.15-.03-.22v-.25s-1.96-.03-1.96-.03l-.1,7.79c-.01.91-.76,1.63-1.67,1.62-.27,0-.52-.07-.74-.19.3.4.77.66,1.3.67.91.01,1.66-.71,1.67-1.62l.1-7.79,1.42.02Zm-3.19,4.14v-.44c-.16-.02-.32-.04-.49-.04-1.99-.03-3.63,1.57-3.65,3.56-.02,1.25.6,2.35,1.56,3.01-.63-.66-1.01-1.55-.99-2.53.03-1.96,1.62-3.54,3.58-3.56h0Z"/></svg>
+				<svg id="TikTok" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="18.72" height="18.72" viewBox="0 0 18.72 18.72"><defs><style>.premium-tiktok-icon-1{fill:#25f4ee;}.premium-tiktok-icon-1,.premium-tiktok-icon-2,.premium-tiktok-icon-3{fill-rule:evenodd;}.premium-tiktok-icon-2{fill:#fff;}.premium-tiktok-icon-3{fill:#ff1753;}</style></defs><circle cx="9.36" cy="9.36" r="9.36"/><path class="premium-tiktok-icon-3" d="m11.91,7.68c.76.56,1.69.89,2.71.9l.03-1.95c-.19,0-.38-.03-.57-.07l-.02,1.53c-1.01-.01-1.95-.35-2.71-.9l-.05,3.98c-.03,1.99-1.66,3.58-3.65,3.56-.74,0-1.43-.24-2-.64.65.68,1.55,1.1,2.56,1.12,1.99.03,3.63-1.57,3.65-3.56l.05-3.98h0Zm.73-1.96c-.39-.43-.64-.99-.68-1.6v-.25s-.54,0-.54,0c.13.78.58,1.45,1.22,1.86h0Zm-5.72,6.86c-.21-.29-.33-.64-.32-1,.01-.91.76-1.64,1.67-1.63.17,0,.34.03.5.08l.03-1.99c-.19-.03-.38-.04-.57-.04l-.02,1.55c-.16-.05-.33-.08-.5-.08-.91-.01-1.66.72-1.67,1.63,0,.64.35,1.21.89,1.48Z"/><path class="premium-tiktok-icon-2" d="m11.35,7.19c.76.56,1.69.89,2.71.9l.02-1.53c-.56-.13-1.06-.43-1.43-.85-.64-.41-1.1-1.08-1.22-1.86l-1.42-.02-.1,7.79c-.01.91-.76,1.63-1.67,1.62-.54,0-1.01-.27-1.3-.67-.53-.28-.9-.84-.89-1.48.01-.91.76-1.64,1.67-1.63.17,0,.34.03.5.08l.02-1.55c-1.96.01-3.55,1.59-3.58,3.56-.01.98.37,1.87.99,2.53.57.39,1.26.63,2,.64,1.99.03,3.63-1.57,3.65-3.56l.05-3.98Z"/><path class="premium-tiktok-icon-1" d="m14.08,6.56v-.41c-.5,0-1-.16-1.43-.43.38.42.88.72,1.43.85Zm-2.65-2.7c-.01-.07-.02-.15-.03-.22v-.25s-1.96-.03-1.96-.03l-.1,7.79c-.01.91-.76,1.63-1.67,1.62-.27,0-.52-.07-.74-.19.3.4.77.66,1.3.67.91.01,1.66-.71,1.67-1.62l.1-7.79,1.42.02Zm-3.19,4.14v-.44c-.16-.02-.32-.04-.49-.04-1.99-.03-3.63,1.57-3.65,3.56-.02,1.25.6,2.35,1.56,3.01-.63-.66-1.01-1.55-.99-2.53.03-1.96,1.62-3.54,3.58-3.56h0Z"/></svg>
 			</span>
 		<?php
 	}
@@ -3006,21 +3023,21 @@ class Premium_Tiktok_Feed extends Widget_Base {
 
 			<?php if ( $vid_settings['likes'] ) : ?>
 				<span class="premium-tiktok-feed__likes" title="Likes">
-					<i class="far fa-heart"></i>
+					<i class="far fa-heart" aria-hidden="true"></i>
 					<span class="premium-tiktok-feed__count"> <?php echo esc_html( Helper_Functions::premium_format_numbers( $feed['like_count'] ) ); ?></span>
 				</span>
 			<?php endif; ?>
 
 			<?php if ( $vid_settings['comments'] ) : ?>
 				<span class="premium-tiktok-feed__comments" title="Comments">
-					<i class="far fa-comment"></i>
+					<i class="far fa-comment" aria-hidden="true"></i>
 					<span class="premium-tiktok-feed__count"><?php echo esc_html( Helper_Functions::premium_format_numbers( $feed['comment_count'] ) ); ?></span>
 				</span>
 			<?php endif; ?>
 
 			<?php if ( $vid_settings['views'] ) : ?>
 				<span class="premium-tiktok-feed__views"  title="Views">
-					<i class="far fa-eye"></i>
+					<i class="far fa-eye" aria-hidden="true"></i>
 					<span class="premium-tiktok-feed__count"><?php echo esc_html( Helper_Functions::premium_format_numbers( $feed['view_count'] ) ); ?></span>
 				</span>
 			<?php endif; ?>
@@ -3058,7 +3075,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				<span class="premium-tiktok-feed__vid-creator">
 					<a href="<?php echo esc_url( $user_info['url'] ); ?>" target="_blank"><?php echo esc_html( $user_info['username'] ); ?></a>
 					<?php if ( $user_info['is_verified'] ) : ?>
-						<i class="far fa-check-circle"></i>
+						<i class="far fa-check-circle" aria-hidden="true"></i>
 					<?php endif; ?>
 				</span>
 			<?php endif; ?>
@@ -3150,19 +3167,19 @@ class Premium_Tiktok_Feed extends Widget_Base {
 					<span class="premium-tiktok-sharer">Share</span>
 					<div class="premium-tiktok-share-menu">
 						<a data-pa-link="<?php echo $link; ?>" href="javascript:;" class="premium-tiktok-share-item premium-copy-link">
-							<i class="fas fa-link if-link"></i>
+							<i class="fas fa-link if-link" aria-hidden="true"></i>
 							<span class="premium-tiktok-share-text pre-infs-fb">Copy to Clipboard</span>
 						</a>
 						<a data-pa-link="https://www.facebook.com/sharer/sharer.php?u=<?php echo $link; ?>" href="javascript:;" class="premium-tiktok-share-item">
-							<i class="fab fa-facebook-f if-fb"></i>
+							<i class="fab fa-facebook-f if-fb" aria-hidden="true"></i>
 							<span class="premium-tiktok-share-text pre-infs-fb">Share on Facebook</span>
 						</a>
 						<a data-pa-link="https://twitter.com/intent/tweet?text=tweet&url=<?php echo $link; ?>" href="javascript:;" class="premium-tiktok-share-item">
-							<i class="fab fa-twitter if-tw"></i>
+							<i class="fab fa-twitter if-tw" aria-hidden="true"></i>
 							<span class="premium-tiktok-share-text pre-infs-tw">Share on Twitter</span>
 						</a>
 						<a data-pin-do="buttonPin" data-pa-link="https://www.pinterest.com/pin/create/button/?url=<?php echo $link; ?>" href="javascript:;" class="premium-tiktok-share-item">
-							<i class="fab fa-pinterest-p if-pi"></i>
+							<i class="fab fa-pinterest-p if-pi" aria-hidden="true"></i>
 							<span class="premium-tiktok-share-text pre-infs-pi">Share on Pinterest</span>
 						</a>
 					</div>

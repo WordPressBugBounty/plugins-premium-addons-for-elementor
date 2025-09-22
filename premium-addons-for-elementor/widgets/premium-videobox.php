@@ -606,18 +606,18 @@ class Premium_Videobox extends Widget_Base {
 
 		$this->add_control(
 			'cc_load_policy',
-			[
-				'label' => esc_html__( 'Captions', 'premium-addons-for-elementor' ),
-				'type' => Controls_Manager::SWITCHER,
-				'condition' => [
-					'video_type' => [ 'youtube' ],
-					'controls' => 'yes',
-				],
-				'condition'   => array(
-					'premium_video_box_controls' => 'yes',
+			array(
+				'label'     => esc_html__( 'Captions', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'condition' => array(
+					'video_type' => array( 'youtube' ),
+					'controls'   => 'yes',
+				),
+				'condition' => array(
+					'premium_video_box_controls'   => 'yes',
 					'premium_video_box_video_type' => 'youtube',
 				),
-			]
+			)
 		);
 
 		$this->add_control(
@@ -1078,7 +1078,7 @@ class Premium_Videobox extends Widget_Base {
 				'selectors'            => array(
 					'{{WRAPPER}} .premium-video-box-container > div' => 'aspect-ratio: {{VALUE}}',
 				),
-				'frontend_available' => true,
+				'frontend_available'   => true,
 			)
 		);
 
@@ -1463,7 +1463,7 @@ class Premium_Videobox extends Widget_Base {
 				'type'        => Controls_Manager::MEDIA,
 				'dynamic'     => array( 'active' => true ),
 				// 'default'     => array(
-				// 	'url' => Utils::get_placeholder_image_src(),
+				// 'url' => Utils::get_placeholder_image_src(),
 				// ),
 				'label_block' => true,
 			)
@@ -3021,14 +3021,14 @@ class Premium_Videobox extends Widget_Base {
 						</div>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'image_container' ) ); ?>></div>
 							<?php if ( 'yes' === $sticky ) { ?>
-								<span class="premium-video-box-sticky-close"><i class="fas fa-times"></i></span>
+								<span class="premium-video-box-sticky-close"><i class="fas fa-times" aria-hidden="true"></i></span>
 							<?php } ?>
 							<?php if ( 'yes' === $settings['sticky_info_bar_switch'] && '' !== $settings['sticky_info_bar_text'] ) { ?>
 									<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'info_bar' ) ); ?>><?php echo wp_kses_post( $settings['sticky_info_bar_text'] ); ?></div>
 							<?php } ?>
 						<?php if ( 'yes' === $settings['premium_video_box_play_icon_switcher'] && 'yes' !== $autoplay && ! empty( $thumbnail ) ) : ?>
 							<div class="premium-video-box-play-icon-container">
-								<i class="premium-video-box-play-icon fa fa-play fa-lg"></i>
+								<i class="premium-video-box-play-icon fa fa-play fa-lg" aria-hidden="true"></i>
 							</div>
 						<?php endif; ?>
 						<?php if ( 'yes' === $settings['premium_video_box_video_text_switcher'] && ! empty( $settings['premium_video_box_description_text'] ) ) : ?>
@@ -3470,7 +3470,7 @@ class Premium_Videobox extends Widget_Base {
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'image_container' . $id ) ); ?> ></div>
 							<?php if ( 'yes' === $settings['premium_video_box_play_icon_switcher'] ) : ?>
 								<div class="premium-video-box-play-icon-container">
-									<i class="premium-video-box-play-icon fa fa-play fa-lg"></i>
+									<i class="premium-video-box-play-icon fa fa-play fa-lg" aria-hidden="true"></i>
 								</div>
 							<?php endif; ?>
 						</div>

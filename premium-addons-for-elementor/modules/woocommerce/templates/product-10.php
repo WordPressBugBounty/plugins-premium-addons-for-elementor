@@ -105,7 +105,7 @@ $out_of_stock = 'outofstock' === get_post_meta( $product_id, '_stock_status', tr
 		woocommerce_template_loop_product_link_close();
 
 		if ( 'yes' === $quick_view ) {
-			echo '<div class="premium-woo-qv-btn" data-product-id="' . esc_attr( $product_id ) . '"><i class="fas fa-search"></i></div>';
+			echo '<div class="premium-woo-qv-btn" data-product-id="' . esc_attr( $product_id ) . '"><i class="fas fa-search" aria-hidden="true"></i></div>';
 		}
 
 		echo '</div>';

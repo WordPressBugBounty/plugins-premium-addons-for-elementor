@@ -98,10 +98,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 						?>
 							<li class="<?php echo esc_attr( $list_class ); ?>">
 								<div class="pa-wz-list-title-wrapper pa-wz-flex pa-wz-align-items-center">
-									<svg class="pa-wz-bulltet-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><defs><style>.pa-wz-bulltet-1{fill:#231f20;stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><circle id="Bullet" class="pa-wz-bulltet-1" cx="12" cy="12" r="8.8"/></svg>
+									<svg class="pa-wz-bulltet-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.pa-wz-bulltet-1{fill:#231f20;stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><circle id="Bullet" class="pa-wz-bulltet-1" cx="12" cy="12" r="8.8"/></svg>
 									<!-- translators: %s is the title of the wizard list step. -->
 									<span class="pa-wz-list-title"><?php printf( __( '%1$s', 'premium-addons-for-elementor' ), esc_html( $list['title'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-									<svg class="pa-wz-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><defs><style>.pa-wz-toggle-1{fill:none;stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><g id="Arrow_Down"><path class="pa-wz-toggle-1" d="M12,22c5.52,0,10-4.48,10-10S17.52,2,12,2,2,6.48,2,12s4.48,10,10,10Z"/><path class="pa-wz-toggle-1" d="M8.47,10.74l3.53,3.52,3.53-3.52"/></g></svg>
+									<svg class="pa-wz-toggle-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.pa-wz-toggle-1{fill:none;stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><g id="Arrow_Down"><path class="pa-wz-toggle-1" d="M12,22c5.52,0,10-4.48,10-10S17.52,2,12,2,2,6.48,2,12s4.48,10,10,10Z"/><path class="pa-wz-toggle-1" d="M8.47,10.74l3.53,3.52,3.53-3.52"/></g></svg>
 								</div>
 								<div class="pa-wz-list-content">
 								<?php

@@ -47,7 +47,7 @@ $out_of_stock    = 'outofstock' === get_post_meta( $product_id, '_stock_status',
 			$attributes = count( $product->get_attributes() ) > 0 ? 'data-variations="true"' : '';
 			echo '<div class="premium-woo-atc-button" ' . esc_attr( $attributes ) . '>';
 				echo '<a href=' . esc_url( $product->add_to_cart_url() ) . ' class="button premium-woo-cart-btn ' . esc_attr( $cart_class ) . ' product_type_' . esc_attr( $product->get_type() ) . '" data-product_id="' . esc_html( $product_id ) . '">';
-					echo '<i class="premium-woo-add-cart-icon fas fa-plus"></i>';
+					echo '<i class="premium-woo-add-cart-icon fas fa-plus" aria-hidden="true"></i>';
 				echo '</a>';
 			echo '</div>';
 			do_action( 'pa_woo_product_after_cta', $product_id, $settings );
@@ -55,7 +55,7 @@ $out_of_stock    = 'outofstock' === get_post_meta( $product_id, '_stock_status',
 
 		if ( 'yes' === $quick_view ) {
 			echo '<div class="premium-woo-qv-btn" data-product-id="' . esc_html( $product_id ) . '">';
-				echo '<i class="premium-woo-qv-icon fa fa-eye"></i>';
+				echo '<i class="premium-woo-qv-icon fa fa-eye" aria-hidden="true"></i>';
 			echo '</div>';
 		}
 			echo '</div>';

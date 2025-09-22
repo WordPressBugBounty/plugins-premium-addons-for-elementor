@@ -80,12 +80,31 @@ class Premium_Tcloud extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		return array(
-			'pa-glass',
-			'pa-awesomecloud',
-			'pa-tagcanvas',
-			'premium-addons',
-		);
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$scripts = array( 'pa-glass', 'pa-awesomecloud', 'pa-tagcanvas' );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'none' !== $settings['term_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+
+			if ( 'sphere' === $settings['words_order'] ) {
+				$scripts[] = 'pa-tagcanvas';
+			} elseif ( 'shape' === $settings['words_order'] ) {
+				$scripts[] = 'pa-awesomecloud';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

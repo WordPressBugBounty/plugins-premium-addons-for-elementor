@@ -55,7 +55,6 @@ class Premium_Image_Button extends Widget_Base {
 		}
 
 		return $this->is_draw_enabled;
-
 	}
 
 	/**
@@ -103,18 +102,31 @@ class Premium_Image_Button extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-tweenmax',
-			'pa-motionpath',
-		) : array();
+		$is_edit = Helper_Functions::is_edit_mode();
 
-		return array_merge(
-			$draw_scripts,
-			array(
-				'lottie-js',
-				'premium-addons',
-			)
-		);
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+
+			$scripts = array_merge( $draw_scripts, array( 'lottie-js' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'yes' === $settings['draw_svg'] ) {
+				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+			}
+
+			if ( 'animation' === $settings['icon_type'] || 'animation' === $settings['slide_icon_type'] ) {
+				$scripts[] = 'lottie-js';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

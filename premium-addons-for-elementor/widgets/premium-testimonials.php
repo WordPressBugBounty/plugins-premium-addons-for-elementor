@@ -92,11 +92,30 @@ class Premium_Testimonials extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-glass',
-			'pa-slick',
-			'premium-addons',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$scripts = array( 'pa-glass', 'pa-slick' );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'yes' === $settings['carousel'] ) {
+				$scripts[] = 'pa-slick';
+
+				if ( 'none' !== $settings['arrows_lq_effect'] ) {
+					$scripts[] = 'pa-glass';
+				}
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**
@@ -1316,7 +1335,7 @@ class Premium_Testimonials extends Widget_Base {
 						'max' => 10,
 					),
 				),
-				'conditions'         => array(
+				'conditions' => array(
 					'terms' => array(
 						array(
 							'name'  => 'multiple',
@@ -1376,7 +1395,7 @@ class Premium_Testimonials extends Widget_Base {
 						'max' => 20,
 					),
 				),
-				'conditions'         => array(
+				'conditions' => array(
 					'terms' => array(
 						array(
 							'name'  => 'multiple',
@@ -1490,15 +1509,15 @@ class Premium_Testimonials extends Widget_Base {
 		$this->add_control(
 			'arrows_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
-				'description' => sprintf(
+				'label'              => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'               => Controls_Manager::SELECT,
+				'description'        => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'            => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -1508,8 +1527,8 @@ class Premium_Testimonials extends Widget_Base {
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
 				'frontend_available' => true,
-				'default'      => 'none',
-				'label_block'  => true,
+				'default'            => 'none',
+				'label_block'        => true,
 			)
 		);
 
@@ -1975,11 +1994,11 @@ class Premium_Testimonials extends Widget_Base {
 
 		if ( 'rounded' === $settings['icon_style'] ) {
 
-			$svg_html = '<svg id="Layer_1" class="premium-testimonial-quote" xmlns="http://www.w3.org/2000/svg" width="48" height="37" viewBox="0 0 48 37"><path d="m37,37c6.07,0,11-4.93,11-11s-4.93-11-11-11c-.32,0-.63.02-.94.05.54-4.81,2.18-9.43,4.79-13.52.19-.31.2-.7.03-1.01-.18-.32-.51-.52-.88-.52h-2c-.27,0-.54.11-.73.31-5.14,5.41-11.27,14.26-11.27,25.69,0,6.07,4.93,10.99,11,11h0Zm-26,0c6.07,0,11-4.93,11-11s-4.93-11-11-11c-.32,0-.63.02-.94.05.54-4.81,2.18-9.43,4.79-13.52.19-.31.2-.7.03-1.01-.18-.32-.51-.52-.87-.52h-2c-.27,0-.54.11-.73.31C6.13,5.72,0,14.57,0,26c0,6.07,4.93,10.99,11,11h0Zm0,0"/></svg>';
+			$svg_html = '<svg id="Layer_1" class="premium-testimonial-quote" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="48" height="37" viewBox="0 0 48 37"><path d="m37,37c6.07,0,11-4.93,11-11s-4.93-11-11-11c-.32,0-.63.02-.94.05.54-4.81,2.18-9.43,4.79-13.52.19-.31.2-.7.03-1.01-.18-.32-.51-.52-.88-.52h-2c-.27,0-.54.11-.73.31-5.14,5.41-11.27,14.26-11.27,25.69,0,6.07,4.93,10.99,11,11h0Zm-26,0c6.07,0,11-4.93,11-11s-4.93-11-11-11c-.32,0-.63.02-.94.05.54-4.81,2.18-9.43,4.79-13.52.19-.31.2-.7.03-1.01-.18-.32-.51-.52-.87-.52h-2c-.27,0-.54.11-.73.31C6.13,5.72,0,14.57,0,26c0,6.07,4.93,10.99,11,11h0Zm0,0"/></svg>';
 
 		} else {
 
-			$svg_html = '<svg id="Layer_1" class="premium-testimonial-quote" xmlns="http://www.w3.org/2000/svg" width="48" height="37.5" viewBox="0 0 48 37.5"><path d="m21,16.5v21H0v-21.3C0,1.8,13.5,0,13.5,0l1.8,4.2s-6,.9-7.2,5.7c-1.2,3.6,1.2,6.6,1.2,6.6h11.7Zm27,0v21h-21v-21.3C27,1.8,40.5,0,40.5,0l1.8,4.2s-6,.9-7.2,5.7c-1.2,3.6,1.2,6.6,1.2,6.6h11.7Z"/></svg>';
+			$svg_html = '<svg id="Layer_1" class="premium-testimonial-quote" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="48" height="37.5" viewBox="0 0 48 37.5"><path d="m21,16.5v21H0v-21.3C0,1.8,13.5,0,13.5,0l1.8,4.2s-6,.9-7.2,5.7c-1.2,3.6,1.2,6.6,1.2,6.6h11.7Zm27,0v21h-21v-21.3C27,1.8,40.5,0,40.5,0l1.8,4.2s-6,.9-7.2,5.7c-1.2,3.6,1.2,6.6,1.2,6.6h11.7Z"/></svg>';
 		}
 
 		echo $svg_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

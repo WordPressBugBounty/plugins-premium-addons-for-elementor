@@ -29,42 +29,6 @@
 
 				});
 
-			} else {
-
-				var action = $scope.data('returning-condition');
-
-				if (!action)
-					return;
-
-				// If cookie exists, then a returning visitor.
-				var isReturningVisitor = cookieExists('isReturningVisitor' + elementorFrontend.config.post.id);
-
-				// If returning visitor and action is hide.
-				if (isReturningVisitor) {
-
-					if ('hide' === action) {
-						$scope.hide();
-					} else {
-						$scope.removeClass('elementor-hidden');
-					}
-
-				} else {
-					$scope.removeClass('elementor-hidden');
-				}
-
-
-				// Returning User condition cookie.
-				if (elementorFrontend.config.post.id && action)
-					document.cookie = "isReturningVisitor" + elementorFrontend.config.post.id + "=true;expires=Fri, 31 Dec 2030 23:59:59 GMT;SameSite=Strict;" + isSecured;
-
-
-				function cookieExists(name) {
-					return document.cookie.split(';').some(function (cookie) {
-						return cookie.trim().startsWith(name + '=');
-					});
-
-				}
-
 			}
 
 		};

@@ -8,7 +8,7 @@
 <div class="elementor-template-library-template-body">
 	<div class="elementor-template-library-template-screenshot">
 		<div class="elementor-template-library-template-preview">
-			<i class="eicon-plus-circle-o"></i>
+			<i class="eicon-plus-circle-o" aria-hidden="true"></i>
 		</div>
 		<img src="{{ thumbnail }}">
 	</div>

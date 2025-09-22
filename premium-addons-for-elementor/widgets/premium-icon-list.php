@@ -109,19 +109,47 @@ class Premium_Icon_List extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-tweenmax',
-			'pa-motionpath',
-		) : array();
+		$is_edit = Helper_Functions::is_edit_mode();
 
-		return array_merge(
-			$draw_scripts,
-			array(
-				'pa-glass',
-				'lottie-js',
-				'premium-addons',
-			)
-		);
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+
+			$scripts = array_merge( $draw_scripts, array( 'lottie-js', 'pa-glass' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( ! empty( $settings['list'] ) ) {
+				foreach ( $settings['list'] as $item ) {
+					if ( 'yes' === $item['draw_svg'] ) {
+						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+
+						$draw_js = true;
+					}
+
+					if ( 'lottie' === $item['icon_type'] ) {
+						$scripts[] = 'lottie-js';
+
+						$lottie_js = true;
+					}
+
+					if ( isset( $draw_js ) && isset( $lottie_js ) ) {
+						break;
+					}
+				}
+			}
+
+			if ( 'none' !== $settings['items_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

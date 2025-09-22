@@ -768,7 +768,8 @@ class Module {
 						'id': 'premium-shape-divider-fill-' + view.getID(),
 						'width': '0px',
 						'height': '0px',
-						'preserveAspectRatio': 'none'
+						'preserveAspectRatio': 'none',
+						'aria-hidden': 'true'
 					});
 
 					if ( imgFill && settings.premium_gdivider_image ) {
@@ -1008,7 +1009,7 @@ class Module {
 
 		$img_fill = 'image' === $settings['premium_gdivider_bg_type'];
 
-		$svg_html = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" id="premium-shape-divider-fill-' . $id . '" width="0px" height="0px"><defs>';
+		$svg_html = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true" id="premium-shape-divider-fill-' . $id . '" width="0px" height="0px"><defs>';
 
 		if ( $img_fill ) {
 			$img_src     = $settings['premium_gdivider_image']['url'];

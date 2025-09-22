@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="pa-popup-outer-body">
         <div class="popup-body">
             <span class="pa-popup-close">
-                <svg class="pa-popup-close-icon" xmlns="http://www.w3.org/2000/svg" width="24.5" height="24" viewBox="0 0 24.5 24"><defs><style>.pa-popup-close-icon-1{fill:#979797;fill-rule:evenodd;}</style></defs><path id="Close_Bold" class="pa-popup-close-icon-1" d="M12.5,14.12l5.3,5.3c.59.59,1.54.59,2.12,0s.59-1.54,0-2.12l-5.3-5.3,5.3-5.3c.59-.59.59-1.54,0-2.12-.59-.59-1.54-.59-2.12,0l-5.3,5.3-5.3-5.3c-.59-.59-1.54-.59-2.12,0-.59.59-.59,1.54,0,2.12l5.3,5.3-5.3,5.3c-.59.59-.59,1.54,0,2.12.59.59,1.54.59,2.12,0l5.3-5.3Z"/></svg>
+                <svg class="pa-popup-close-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24.5" height="24" viewBox="0 0 24.5 24"><defs><style>.pa-popup-close-icon-1{fill:#979797;fill-rule:evenodd;}</style></defs><path id="Close_Bold" class="pa-popup-close-icon-1" d="M12.5,14.12l5.3,5.3c.59.59,1.54.59,2.12,0s.59-1.54,0-2.12l-5.3-5.3,5.3-5.3c.59-.59.59-1.54,0-2.12-.59-.59-1.54-.59-2.12,0l-5.3,5.3-5.3-5.3c-.59-.59-1.54-.59-2.12,0-.59.59-.59,1.54,0,2.12l5.3,5.3-5.3,5.3c-.59.59-.59,1.54,0,2.12.59.59,1.54.59,2.12,0l5.3-5.3Z"/></svg>
             </span>
             <span class="pa-popup-widget-icon">
                 <span class="pa-popup-badge-wrapper">

@@ -86,12 +86,32 @@ class Premium_Fancytext extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-glass',
-			'pa-typed',
-			'pa-vticker',
-			'premium-addons',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$scripts = array( 'pa-glass', 'pa-typed', 'pa-vticker' );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'typing' === $settings['premium_fancy_text_effect'] ) {
+				$scripts[] = 'pa-typed';
+			} elseif ( 'slide' === $settings['premium_fancy_text_effect'] ) {
+				$scripts[] = 'pa-vticker';
+			}
+
+			if ( 'none' !== $settings['text_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**
@@ -909,15 +929,15 @@ class Premium_Fancytext extends Widget_Base {
 		$this->add_control(
 			'text_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -926,9 +946,9 @@ class Premium_Fancytext extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
-				'conditions'   => array(
+				'default'     => 'none',
+				'label_block' => true,
+				'conditions'  => array(
 					'relation' => 'or',
 					'terms'    => array(
 						array(
@@ -1429,7 +1449,7 @@ class Premium_Fancytext extends Widget_Base {
 
 		$this->add_render_attribute( 'switch_text', 'class', 'premium-atext__text' );
 
-		if( 'none' !== $settings['text_lq_effect'] ) {
+		if ( 'none' !== $settings['text_lq_effect'] ) {
 			$this->add_render_attribute( 'switch_text', 'class', 'premium-con-lq__' . $settings['text_lq_effect'] );
 		}
 
@@ -1489,7 +1509,7 @@ class Premium_Fancytext extends Widget_Base {
 
 		}
 
-		if( 'none' !== $settings['text_lq_effect'] && 'fill' !== $settings['highlight_effect'] ) {
+		if ( 'none' !== $settings['text_lq_effect'] && 'fill' !== $settings['highlight_effect'] ) {
 			$this->add_render_attribute( 'text', 'class', 'premium-con-lq__' . $settings['text_lq_effect'] );
 		}
 
@@ -1504,7 +1524,8 @@ class Premium_Fancytext extends Widget_Base {
 				</span>
 
 			<?php else : ?>
-				<svg class="premium-atext__text">
+				<span class="elementor-screen-only"><?php echo wp_kses_post( $settings['text'] ); ?></span>
+				<svg class="premium-atext__text" aria-hidden="true" focusable="false">
 					<!-- Symbol -->
 					<symbol id="s-text">
 						<text text-anchor="middle" x="50%" y="50%" dy=".35em">
@@ -1538,19 +1559,19 @@ class Premium_Fancytext extends Widget_Base {
 		$shape = $settings['shape'];
 
 		$shapes_array = array(
-			'circle'    => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M325,18C228.7-8.3,118.5,8.3,78,21C22.4,38.4,4.6,54.6,5.6,77.6c1.4,32.4,52.2,54,142.6,63.7 c66.2,7.1,212.2,7.5,273.5-8.3c64.4-16.6,104.3-57.6,33.8-98.2C386.7-4.9,179.4-1.4,126.3,20.7"></path></svg>',
+			'circle'    => '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M325,18C228.7-8.3,118.5,8.3,78,21C22.4,38.4,4.6,54.6,5.6,77.6c1.4,32.4,52.2,54,142.6,63.7 c66.2,7.1,212.2,7.5,273.5-8.3c64.4-16.6,104.3-57.6,33.8-98.2C386.7-4.9,179.4-1.4,126.3,20.7"></path></svg>',
 
-			'wavy'      => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M3,146.1c17.1-8.8,33.5-17.8,51.4-17.8c15.6,0,17.1,18.1,30.2,18.1c22.9,0,36-18.6,53.9-18.6 c17.1,0,21.3,18.5,37.5,18.5c21.3,0,31.8-18.6,49-18.6c22.1,0,18.8,18.8,36.8,18.8c18.8,0,37.5-18.6,49-18.6c20.4,0,17.1,19,36.8,19 c22.9,0,36.8-20.6,54.7-18.6c17.7,1.4,7.1,19.5,33.5,18.8c17.1,0,47.2-6.5,61.1-15.6"></path></svg>',
+			'wavy'      => '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M3,146.1c17.1-8.8,33.5-17.8,51.4-17.8c15.6,0,17.1,18.1,30.2,18.1c22.9,0,36-18.6,53.9-18.6 c17.1,0,21.3,18.5,37.5,18.5c21.3,0,31.8-18.6,49-18.6c22.1,0,18.8,18.8,36.8,18.8c18.8,0,37.5-18.6,49-18.6c20.4,0,17.1,19,36.8,19 c22.9,0,36.8-20.6,54.7-18.6c17.7,1.4,7.1,19.5,33.5,18.8c17.1,0,47.2-6.5,61.1-15.6"></path></svg>',
 
-			'underline' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M7.7,145.6C109,125,299.9,116.2,401,121.3c42.1,2.2,87.6,11.8,87.3,25.7"></path></svg>',
+			'underline' => '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M7.7,145.6C109,125,299.9,116.2,401,121.3c42.1,2.2,87.6,11.8,87.3,25.7"></path></svg>',
 
-			'double'    => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"></path><path d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"></path></svg>',
+			'double'    => '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"></path><path d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"></path></svg>',
 
-			'zigzag'    => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M9.3,127.3c49.3-3,150.7-7.6,199.7-7.4c121.9,0.4,189.9,0.4,282.3,7.2C380.1,129.6,181.2,130.6,70,139 c82.6-2.9,254.2-1,335.9,1.3c-56,1.4-137.2-0.3-197.1,9"></path></svg>',
+			'zigzag'    => '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M9.3,127.3c49.3-3,150.7-7.6,199.7-7.4c121.9,0.4,189.9,0.4,282.3,7.2C380.1,129.6,181.2,130.6,70,139 c82.6-2.9,254.2-1,335.9,1.3c-56,1.4-137.2-0.3-197.1,9"></path></svg>',
 
-			'strike'    => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M3,75h493.5"></path></svg>',
+			'strike'    => '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M3,75h493.5"></path></svg>',
 
-			'cross'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M497.4,23.9C301.6,40,155.9,80.6,4,144.4"></path><path d="M14.1,27.6c204.5,20.3,393.8,74,467.3,111.7"></path></svg>',
+			'cross'     => '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M497.4,23.9C301.6,40,155.9,80.6,4,144.4"></path><path d="M14.1,27.6c204.5,20.3,393.8,74,467.3,111.7"></path></svg>',
 
 		);
 

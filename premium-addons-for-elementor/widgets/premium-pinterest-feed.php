@@ -3365,7 +3365,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 		?>
 
 			<span class="premium-pinterest-feed__pinterest-icon <?php echo esc_attr( $follow_class ); ?>">
-				<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="45.1" height="45.17" viewBox="0 0 45.1 45.17"><defs><style>.premium-pinterest-icon-1{fill:#e60023;}</style></defs><path id="Pinterest" class="premium-pinterest-icon-1" d="m22.57,0C10.1,0,0,10.1,0,22.57c0,9.57,5.94,17.74,14.34,21.03-.2-1.78-.37-4.53.07-6.48.41-1.76,2.64-11.22,2.64-11.22,0,0-.67-1.36-.67-3.34,0-3.14,1.82-5.48,4.09-5.48,1.93,0,2.86,1.45,2.86,3.18,0,1.93-1.23,4.83-1.88,7.52-.54,2.25,1.13,4.09,3.34,4.09,4.01,0,7.1-4.24,7.1-10.33,0-5.41-3.88-9.18-9.44-9.18-6.43,0-10.2,4.81-10.2,9.79,0,1.93.74,4.01,1.67,5.15.19.22.2.43.15.65-.17.71-.56,2.25-.63,2.56-.09.41-.33.5-.76.3-2.82-1.32-4.59-5.42-4.59-8.75,0-7.11,5.16-13.65,14.92-13.65,7.82,0,13.91,5.57,13.91,13.04s-4.9,14.04-11.7,14.04c-2.28,0-4.44-1.19-5.16-2.6,0,0-1.13,4.31-1.41,5.37-.5,1.97-1.88,4.42-2.8,5.93,2.12.65,4.35,1,6.69,1,12.46,0,22.57-10.1,22.57-22.57.04-12.5-10.07-22.61-22.53-22.61Z"/></svg>
+				<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="45.1" height="45.17" viewBox="0 0 45.1 45.17"><defs><style>.premium-pinterest-icon-1{fill:#e60023;}</style></defs><path id="Pinterest" class="premium-pinterest-icon-1" d="m22.57,0C10.1,0,0,10.1,0,22.57c0,9.57,5.94,17.74,14.34,21.03-.2-1.78-.37-4.53.07-6.48.41-1.76,2.64-11.22,2.64-11.22,0,0-.67-1.36-.67-3.34,0-3.14,1.82-5.48,4.09-5.48,1.93,0,2.86,1.45,2.86,3.18,0,1.93-1.23,4.83-1.88,7.52-.54,2.25,1.13,4.09,3.34,4.09,4.01,0,7.1-4.24,7.1-10.33,0-5.41-3.88-9.18-9.44-9.18-6.43,0-10.2,4.81-10.2,9.79,0,1.93.74,4.01,1.67,5.15.19.22.2.43.15.65-.17.71-.56,2.25-.63,2.56-.09.41-.33.5-.76.3-2.82-1.32-4.59-5.42-4.59-8.75,0-7.11,5.16-13.65,14.92-13.65,7.82,0,13.91,5.57,13.91,13.04s-4.9,14.04-11.7,14.04c-2.28,0-4.44-1.19-5.16-2.6,0,0-1.13,4.31-1.41,5.37-.5,1.97-1.88,4.42-2.8,5.93,2.12.65,4.35,1,6.69,1,12.46,0,22.57-10.1,22.57-22.57.04-12.5-10.07-22.61-22.53-22.61Z"/></svg>
 			</span>
 
 		<?php
@@ -3380,19 +3380,19 @@ class Premium_Pinterest_Feed extends Widget_Base {
 					<span class="premium-pinterest-sharer">Share</span>
 					<div class="premium-pinterest-share-menu">
 						<a data-pa-link="<?php echo esc_url( $link ); ?>" class="premium-pinterest-share-item premium-copy-link">
-							<i class="fas fa-link"></i>
+							<i class="fas fa-link" aria-hidden="true"></i>
 							<span class="premium-pinterest-share-text pre-infs-fb">Copy To Clipboard</span>
 						</a>
 						<a data-pa-link="https://www.facebook.com/sharer/sharer.php?u=<?php echo esc_url( $link ); ?>" class="premium-pinterest-share-item">
-							<i class="fab fa-facebook-f if-fb"></i>
+							<i class="fab fa-facebook-f if-fb" aria-hidden="true"></i>
 							<span class="premium-pinterest-share-text pre-infs-fb">Share on Facebook</span>
 						</a>
 						<a data-pa-link="https://twitter.com/intent/tweet?text=tweet&url=<?php echo esc_url( $link ); ?>" class="premium-pinterest-share-item">
-							<i class="fab fa-twitter if-tw"></i>
+							<i class="fab fa-twitter if-tw" aria-hidden="true"></i>
 							<span class="premium-pinterest-share-text pre-infs-tw">Share on Twitter</span>
 						</a>
 						<a data-pin-do="buttonPin" data-pa-link="https://www.pinterest.com/pin/create/button/?url=<?php echo esc_url( $link ); ?>" class="premium-pinterest-share-item">
-							<i class="fab fa-pinterest-p if-pi"></i>
+							<i class="fab fa-pinterest-p if-pi" aria-hidden="true"></i>
 							<span class="premium-pinterest-share-text pre-infs-pi">Share on Pinterest</span>
 						</a>
 					</div>

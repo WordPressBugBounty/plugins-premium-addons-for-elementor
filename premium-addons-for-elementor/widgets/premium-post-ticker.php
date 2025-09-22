@@ -71,7 +71,6 @@ class Premium_Post_Ticker extends Widget_Base {
 		}
 
 		return $this->is_draw_enabled;
-
 	}
 
 	/**
@@ -1924,7 +1923,7 @@ class Premium_Post_Ticker extends Widget_Base {
 				'type'      => Controls_Manager::SWITCHER,
 				'condition' => array(
 					'fade!'   => 'yes',
-					'typing!'   => 'yes',
+					'typing!' => 'yes',
 					'layout!' => 'layout-4',
 				),
 			)
@@ -3342,15 +3341,15 @@ class Premium_Post_Ticker extends Widget_Base {
 		$should_be_rtl = false;
 
 		if ( 'layout-4' !== $layout && ! $fade ) {
-			$is_reverse = isset( $settings['reverse'] ) && 'yes' === $settings['reverse'];
+			$is_reverse    = isset( $settings['reverse'] ) && 'yes' === $settings['reverse'];
 			$should_be_rtl = ( is_rtl() && ! $is_reverse ) || ( ! is_rtl() && $is_reverse );
 
 			// Special case: RTL + reversed + typing enabled
-                if ( is_rtl() && $is_reverse && $typing ) {
-                $should_be_rtl = true;
-            }
+			if ( is_rtl() && $is_reverse && $typing ) {
+				$should_be_rtl = true;
+			}
 
-            $this->add_render_attribute( 'inner-wrapper', 'dir', $should_be_rtl ? 'rtl' : 'ltr' );
+			$this->add_render_attribute( 'inner-wrapper', 'dir', $should_be_rtl ? 'rtl' : 'ltr' );
 		}
 
 		$slider_settings = array(
@@ -3365,7 +3364,7 @@ class Premium_Post_Ticker extends Widget_Base {
 			'slidesToShow' => $settings['slides_to_show'],
 			'pauseOnHover' => 'yes' === $settings['pause_on_hover'] ? true : false,
 			'animation'    => ! $infinite && ! $typing ? $settings['entrance_animation'] : '',
-			'shouldBeRtl' => $should_be_rtl,
+			'shouldBeRtl'  => $should_be_rtl,
 		);
 
 		if ( $auto_play ) {
@@ -3796,10 +3795,10 @@ class Premium_Post_Ticker extends Widget_Base {
 		?>
 		<div class="premium-post-ticker__arrows">
 			<a class="prev-arrow" type="button" role="button" aria-label="Previous">
-				<i class="<?php echo esc_attr( $prev ); ?>"></i>
+				<i class="<?php echo esc_attr( $prev ); ?>" aria-hidden="true"></i>
 			</a>
 			<a class="next-arrow" type="button" role="button" aria-label="Next">
-				<i class="<?php echo esc_attr( $next ); ?>"></i>
+				<i class="<?php echo esc_attr( $next ); ?>" aria-hidden="true"></i>
 			</a>
 		</div>
 		<?php

@@ -112,13 +112,36 @@ class Premium_Media_Wheel extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-tweenmax',
-			'mousewheel-js',
-			'pa-flipster',
-			'prettyPhoto-js',
-			'premium-addons',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$scripts = array_merge( $scripts, array( 'pa-tweenmax', 'mousewheel-js', 'pa-flipster', 'prettyPhoto-js' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'infinite' === $settings['media_wheel_animation'] ) {
+				$scripts[] = 'pa-tweenmax';
+			} else {
+				$scripts[] = 'pa-flipster';
+			}
+
+			if ( 'yes' === $settings['media_wheel_scroll'] ) {
+				$scripts[] = 'mousewheel-js';
+			}
+
+			if ( 'yes' === $settings['media_light_box'] ) {
+				$scripts[] = 'prettyPhoto-js';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

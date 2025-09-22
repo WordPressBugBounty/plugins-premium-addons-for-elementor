@@ -57,7 +57,6 @@ class Premium_Pricing_Table extends Widget_Base {
 		}
 
 		return $this->is_draw_enabled;
-
 	}
 
 	/**
@@ -119,18 +118,56 @@ class Premium_Pricing_Table extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-tweenmax',
-			'pa-motionpath',
-		) : array();
+		$is_edit = Helper_Functions::is_edit_mode();
 
-		return array_merge(
-			$draw_scripts,
-			array(
-				'pa-glass',
-				'lottie-js',
-			)
-		);
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+
+			$scripts = array_merge( $draw_scripts, array( 'pa-glass', 'lottie-js' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			// Check main icon settings.
+			if ( 'yes' === $settings['premium_pricing_table_icon_switcher'] ) {
+
+				if ( 'yes' === $settings['draw_svg'] ) {
+					array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+				}
+
+				if ( 'animation' === $settings['icon_type'] ) {
+					$scripts[] = 'lottie-js';
+				}
+			}
+
+			// Check feature list items settings.
+			if ( 'yes' === $settings['premium_pricing_table_list_switcher'] && ! empty( $settings['premium_fancy_text_list_items'] ) ) {
+				foreach ( $settings['premium_fancy_text_list_items'] as $item ) {
+					if ( 'yes' === $item['draw_svg'] ) {
+						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+						$draw_js = true;
+					}
+
+					if ( 'animation' === $item['icon_type'] ) {
+						$scripts[] = 'lottie-js';
+						$lottie_js = true;
+					}
+
+					if ( isset( $draw_js ) && isset( $lottie_js ) ) {
+						break;
+					}
+				}
+			}
+
+			if ( 'none' !== $settings['price_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+		}
+
+		return $scripts;
 	}
 
 	/**
@@ -2121,15 +2158,15 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->add_control(
 			'price_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -2138,8 +2175,8 @@ class Premium_Pricing_Table extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
+				'default'     => 'none',
+				'label_block' => true,
 			)
 		);
 
@@ -3291,10 +3328,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		if ( 'yes' === $settings['premium_pricing_table_price_switcher'] ) {
 			$this->add_render_attribute( 'price_container', 'class', 'premium-pricing-price-container' );
 
-			if( 'none' !== $settings['price_lq_effect'] ) {
+			if ( 'none' !== $settings['price_lq_effect'] ) {
 				$this->add_render_attribute( 'price_container', 'class', 'premium-con-lq__' . $settings['price_lq_effect'] );
 			}
-
 		}
 
 		?>

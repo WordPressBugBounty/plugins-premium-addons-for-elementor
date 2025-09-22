@@ -58,7 +58,6 @@ class Premium_Modalbox extends Widget_Base {
 		}
 
 		return $this->is_draw_enabled;
-
 	}
 
 	/**
@@ -129,20 +128,37 @@ class Premium_Modalbox extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-tweenmax',
-			'pa-motionpath',
-		) : array();
+		$is_edit = Helper_Functions::is_edit_mode();
 
-		return array_merge(
-			$draw_scripts,
-			array(
-				'pa-glass',
-				'pa-modal',
-				'lottie-js',
-				'premium-addons',
-			)
-		);
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+
+			$scripts = array_merge( $draw_scripts, array( 'pa-glass', 'pa-modal', 'lottie-js' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			$scripts[] = 'pa-modal';
+
+			if ( 'yes' === $settings['draw_svg'] ) {
+				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+			}
+
+			if ( 'animation' === $settings['premium_modal_box_icon_selection'] || 'animation' === $settings['premium_modal_box_display_on'] ) {
+				$scripts[] = 'lottie-js';
+			}
+
+			if ( 'none' !== $settings['body_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

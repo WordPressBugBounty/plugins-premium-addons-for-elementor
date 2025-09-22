@@ -227,24 +227,24 @@ class Premium_Carousel extends Widget_Base {
 		$this->add_control(
 			'premium_carousel_templates_repeater',
 			array(
-				'label'       => __( 'Templates', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::REPEATER,
-				'fields'      => $repeater->get_controls(),
-				'title_field' => 'Template: {{{  "" !== premium_carousel_repeater_item ? premium_carousel_repeater_item : "Live Template" }}}',
-				'prevent_empty'      => false,
+				'label'         => __( 'Templates', 'premium-addons-for-elementor' ),
+				'type'          => Controls_Manager::REPEATER,
+				'fields'        => $repeater->get_controls(),
+				'title_field'   => 'Template: {{{  "" !== premium_carousel_repeater_item ? premium_carousel_repeater_item : "Live Template" }}}',
+				'prevent_empty' => false,
 			)
 		);
 
 		$this->add_control(
 			'premium_carousel_slider_type',
 			array(
-				'label'       => __( 'Direction', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
+				'label'   => __( 'Direction', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::SELECT,
+				'options' => array(
 					'horizontal' => __( 'Horizontal', 'premium-addons-for-elementor' ),
 					'vertical'   => __( 'Vertical', 'premium-addons-for-elementor' ),
 				),
-				'default'     => 'horizontal',
+				'default' => 'horizontal',
 			)
 		);
 
@@ -553,7 +553,7 @@ class Premium_Carousel extends Widget_Base {
 				'condition'  => array(
 					'premium_carousel_navigation_show' => 'yes',
 					'premium_carousel_slider_type'     => 'horizontal',
-					'arrows_position'                 => 'below',
+					'arrows_position'                  => 'below',
 				),
 			)
 		);
@@ -1560,7 +1560,7 @@ class Premium_Carousel extends Widget_Base {
 		$content_type = 'repeater';
 
 		// Use the old select field only if it's value is not empty.
-		if( ! empty ( $settings['premium_carousel_slider_content'] ) && empty( $settings['premium_carousel_templates_repeater'] ) ) {
+		if ( ! empty( $settings['premium_carousel_slider_content'] ) && empty( $settings['premium_carousel_templates_repeater'] ) ) {
 			$content_type = 'select';
 		}
 
@@ -1758,7 +1758,7 @@ class Premium_Carousel extends Widget_Base {
 
 		$carousel_settings = array(
 			'vertical'           => $vertical,
-			'appearance'		 => $settings['premium_carousel_slides_to_show'],
+			'appearance'         => $settings['premium_carousel_slides_to_show'],
 			'slidesToShow'       => $slides_show,
 			'infinite'           => $infinite,
 			'speed'              => $speed,

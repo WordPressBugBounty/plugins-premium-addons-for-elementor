@@ -1589,8 +1589,8 @@ class Premium_Grid extends Widget_Base {
 		$this->add_control(
 			'container_heading',
 			array(
-				'label' => __( 'Container', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
+				'label'     => __( 'Container', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
 		);
@@ -1598,9 +1598,9 @@ class Premium_Grid extends Widget_Base {
 		$this->add_group_control(
 			Premium_Background::get_type(),
 			array(
-				'name'      => 'premium_gallery_content_background',
-				'types'     => array( 'classic', 'gradient' ),
-				'selector'  => '{{WRAPPER}} .premium-gallery-caption',
+				'name'     => 'premium_gallery_content_background',
+				'types'    => array( 'classic', 'gradient' ),
+				'selector' => '{{WRAPPER}} .premium-gallery-caption',
 			)
 		);
 
@@ -1964,15 +1964,15 @@ class Premium_Grid extends Widget_Base {
 		$this->add_control(
 			'filter_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -1981,8 +1981,8 @@ class Premium_Grid extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
+				'default'     => 'none',
+				'label_block' => true,
 			)
 		);
 
@@ -2551,7 +2551,7 @@ class Premium_Grid extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		if( 'none' !== $settings['filter_lq_effect'] ) {
+		if ( 'none' !== $settings['filter_lq_effect'] ) {
 			$first .= ' premium-con-lq__' . $settings['filter_lq_effect'];
 		}
 
@@ -2583,7 +2583,7 @@ class Premium_Grid extends Widget_Base {
 							array(
 								'category',
 								'elementor-repeater-item-' . $category['_id'],
-								'none' !== $settings['filter_lq_effect'] ? 'premium-con-lq__' . $settings['filter_lq_effect'] : ''
+								'none' !== $settings['filter_lq_effect'] ? 'premium-con-lq__' . $settings['filter_lq_effect'] : '',
 							)
 						);
 
@@ -2989,7 +2989,7 @@ class Premium_Grid extends Widget_Base {
 	/**
 	 * Gets lightbox Title according to the Global Lightbox Settings.
 	 *
-	 * @param object $attachement  image(post) object.
+	 * @param object $attachment  image(post) object.
 	 *
 	 * @since 4.10.62
 	 *

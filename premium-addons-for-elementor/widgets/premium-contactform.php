@@ -183,27 +183,27 @@ class Premium_Contactform extends Widget_Base {
 				'label_block'  => true,
 				'options'      => array(
 					'preset1' => array(
-						'title'      => __( 'Preset 1', 'premium-addons-for-elementor' ),
+						'title' => __( 'Preset 1', 'premium-addons-for-elementor' ),
 						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset1.svg',
 					),
 					'preset2' => array(
-						'title'      => __( 'Preset 2', 'premium-addons-for-elementor' ),
+						'title' => __( 'Preset 2', 'premium-addons-for-elementor' ),
 						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset2.svg',
 					),
 					'preset3' => array(
-						'title'      => __( 'Preset 3', 'premium-addons-for-elementor' ),
+						'title' => __( 'Preset 3', 'premium-addons-for-elementor' ),
 						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset3.svg',
 					),
 					'preset4' => array(
-						'title'      => __( 'Preset 4', 'premium-addons-for-elementor' ),
+						'title' => __( 'Preset 4', 'premium-addons-for-elementor' ),
 						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset4.svg',
 					),
 					'preset5' => array(
-						'title'      => __( 'Preset 5', 'premium-addons-for-elementor' ),
+						'title' => __( 'Preset 5', 'premium-addons-for-elementor' ),
 						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset5.svg',
 					),
 					'preset6' => array(
-						'title'      => __( 'Preset 6', 'premium-addons-for-elementor' ),
+						'title' => __( 'Preset 6', 'premium-addons-for-elementor' ),
 						'image' => PREMIUM_ADDONS_URL . 'widgets/dep/form-presets/pa-cf7-preset6.svg',
 					),
 				),
@@ -791,15 +791,15 @@ class Premium_Contactform extends Widget_Base {
 		$this->add_control(
 			'fields_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -808,8 +808,8 @@ class Premium_Contactform extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
+				'default'     => 'none',
+				'label_block' => true,
 			)
 		);
 
@@ -1491,15 +1491,15 @@ class Premium_Contactform extends Widget_Base {
 		$this->add_control(
 			'submit_lq_effect',
 			array(
-				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SELECT,
+				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
 				'description' => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'      => array(
+				'options'     => array(
 					'none'   => __( 'None', 'premium-addons-for-elementor' ),
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
@@ -1508,8 +1508,8 @@ class Premium_Contactform extends Widget_Base {
 					'glass5' => apply_filters( 'pa_pro_label', __( 'Preset 05 (Pro)', 'premium-addons-for-elementor' ) ),
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
-				'default'      => 'none',
-				'label_block'  => true,
+				'default'     => 'none',
+				'label_block' => true,
 			)
 		);
 
@@ -1842,13 +1842,16 @@ class Premium_Contactform extends Widget_Base {
 
 			$form_settings = array(
 				'fields_glass' => $settings['fields_lq_effect'],
-				'submit_glass' => $settings['submit_lq_effect']
+				'submit_glass' => $settings['submit_lq_effect'],
 			);
 
-			$this->add_render_attribute( 'container', array(
-				'class'=> 'premium-cf7-container',
-				'data-settings' => wp_json_encode( $form_settings ),
-			));
+			$this->add_render_attribute(
+				'container',
+				array(
+					'class'         => 'premium-cf7-container',
+					'data-settings' => wp_json_encode( $form_settings ),
+				)
+			);
 
 			?>
 

@@ -87,7 +87,6 @@ class Premium_Notifications extends Widget_Base {
 		}
 
 		return $this->is_draw_enabled;
-
 	}
 
 	/**
@@ -170,18 +169,31 @@ class Premium_Notifications extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-tweenmax',
-			'pa-motionpath',
-		) : array();
+		$is_edit = Helper_Functions::is_edit_mode();
 
-		return array_merge(
-			$draw_scripts,
-			array(
-				'lottie-js',
-				'pa-notifications',
-			)
-		);
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+
+			$scripts = array_merge( $draw_scripts, array( 'lottie-js' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'yes' === $settings['draw_svg'] || 'yes' === $settings['header_draw_svg'] ) {
+				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+			}
+
+			if ( 'animation' === $settings['icon_type'] || 'animation' === $settings['header_icon_type'] ) {
+				$scripts[] = 'lottie-js';
+			}
+		}
+
+		$scripts[] = 'pa-notifications';
+
+		return $scripts;
 	}
 
 	/**
@@ -1727,14 +1739,13 @@ class Premium_Notifications extends Widget_Base {
 			)
 		);
 
-
 		$this->add_responsive_control(
 			'post_text_align',
 			array(
-				'label'        => __( 'Alignment', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'options'      => array(
-					'left'   => array(
+				'label'                => __( 'Alignment', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'options'              => array(
+					'left'    => array(
 						'title' => __( 'start', 'premium-addons-for-elementor' ),
 						'icon'  => is_rtl() ? 'eicon-text-align-right' : 'eicon-text-align-left',
 					),
@@ -1742,7 +1753,7 @@ class Premium_Notifications extends Widget_Base {
 						'title' => __( 'Center', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-center',
 					),
-					'right'     => array(
+					'right'   => array(
 						'title' => __( 'end', 'premium-addons-for-elementor' ),
 						'icon'  => is_rtl() ? 'eicon-text-align-left' : 'eicon-text-align-right',
 					),
@@ -1751,14 +1762,14 @@ class Premium_Notifications extends Widget_Base {
 						'icon'  => 'eicon-text-align-justify',
 					),
 				),
-				'toggle'       => false,
-				'default'      => 'left',
-				'prefix_class' => 'premium-blog-align-',
+				'toggle'               => false,
+				'default'              => 'left',
+				'prefix_class'         => 'premium-blog-align-',
 				'selectors_dictionary' => array(
-					'left'   => 'start',
-					'right'  => 'end',
+					'left'  => 'start',
+					'right' => 'end',
 				),
-				'selectors'    => array(
+				'selectors'            => array(
 					'{{WRAPPER}} .premium-blog-content-wrapper' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .post-categories , {{WRAPPER}} .premium-blog-post-tags-container ' => 'justify-content: {{VALUE}};',
 				),
@@ -3885,7 +3896,7 @@ class Premium_Notifications extends Widget_Base {
 				</div>
 
 				<div class="pa-rec-posts-close">
-					<i class="pa-rec-posts-close-icon fa fa-close"></i>
+					<i class="pa-rec-posts-close-icon fa fa-close" aria-hidden="true"></i>
 				</div>
 			</div>
 

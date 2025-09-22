@@ -45,7 +45,7 @@ class PAPRO_Promotion {
 
 		$html = '<div class="premium-promote-box addon-promotion">
             <div class="premium-promote-box-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" height="56.85" viewBox="0 0 56 56" width="">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" aria-hidden="true" height="56.85" viewBox="0 0 56 56" width="">
 					<defs>
 						<style>
 						.pa-logo-1 { fill: url(#linear-gradient); }

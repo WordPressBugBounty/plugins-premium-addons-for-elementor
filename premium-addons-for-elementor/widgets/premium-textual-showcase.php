@@ -57,7 +57,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 		}
 
 		return $this->is_draw_enabled;
-
 	}
 
 	/**
@@ -119,19 +118,46 @@ class Premium_Textual_Showcase extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-tweenmax',
-			'pa-motionpath',
-		) : array();
+		$is_edit = Helper_Functions::is_edit_mode();
 
-		return array_merge(
-			$draw_scripts,
-			array(
-				'pa-glass',
-				'lottie-js',
-				'premium-addons',
-			)
-		);
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+
+			$scripts = array_merge( $draw_scripts, array( 'pa-glass', 'lottie-js' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( ! empty( $settings['content'] ) ) {
+				foreach ( $settings['content'] as $item ) {
+
+					if ( 'yes' === $item['draw_svg'] || 'yes' === $item['draw_svg_hov'] ) {
+						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+						$draw_js = true;
+					}
+
+					if ( 'lottie' === $item['item_type'] || 'lottie' === $item['item_type_hov'] ) {
+						$scripts[] = 'lottie-js';
+						$lottie_js = true;
+					}
+
+					if ( 'none' !== $item['item_lq_effect'] ) {
+						$scripts[] = 'pa-glass';
+					}
+
+					if ( isset( $draw_js ) && isset( $lottie_js ) ) {
+						break;
+					}
+				}
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**
@@ -2551,7 +2577,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		$effects_svg = apply_filters(
 			'pa_showcase_highlights',
 			array(
-				'strikethrough' => '<svg class="outline-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M3,75h493.5"></path></svg>',
+				'strikethrough' => '<svg class="outline-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M3,75h493.5"></path></svg>',
 			)
 		);
 

@@ -89,12 +89,30 @@ class Premium_Blog extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'imagesloaded',
-			'isotope-js',
-			'pa-slick',
-			'premium-addons',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array( 'imagesloaded' );
+
+		if ( $is_edit ) {
+
+			$scripts = array_merge( $scripts, array( 'isotope-js', 'pa-slick' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'masonry' === $settings['premium_blog_layout'] ) {
+				$scripts[] = 'isotope-js';
+			}
+
+			if ( 'yes' === $settings['premium_blog_carousel'] ) {
+				$scripts[] = 'pa-slick';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**
@@ -1479,9 +1497,9 @@ class Premium_Blog extends Widget_Base {
 		$this->add_responsive_control(
 			'premium_blog_pagination_align',
 			array(
-				'label'     => __( 'Alignment', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
+				'label'                => __( 'Alignment', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'options'              => array(
 					'left'   => array(
 						'title' => __( 'Start', 'premium-addons-for-elementor' ),
 						'icon'  => is_rtl() ? 'eicon-text-align-right' : 'eicon-text-align-left',
@@ -1495,16 +1513,16 @@ class Premium_Blog extends Widget_Base {
 						'icon'  => is_rtl() ? 'eicon-text-align-left' : 'eicon-text-align-right',
 					),
 				),
-				'default'   => 'right',
-				'toggle'    => false,
-				'condition' => array(
+				'default'              => 'right',
+				'toggle'               => false,
+				'condition'            => array(
 					'premium_blog_paging' => 'yes',
 				),
 				'selectors_dictionary' => array(
-					'left'   => 'start',
-					'right'  => 'end',
+					'left'  => 'start',
+					'right' => 'end',
 				),
-				'selectors' => array(
+				'selectors'            => array(
 					'{{WRAPPER}} .premium-blog-pagination-container' => 'text-align: {{VALUE}}',
 				),
 			)

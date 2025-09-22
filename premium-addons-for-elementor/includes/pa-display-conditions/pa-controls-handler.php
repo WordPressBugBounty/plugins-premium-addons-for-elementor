@@ -208,34 +208,8 @@ class PA_Controls_Handler {
 		add_filter( 'elementor/frontend/widget/should_render', array( $this, 'should_render' ), 10, 2 );
 		add_filter( 'elementor/frontend/column/should_render', array( $this, 'should_render' ), 10, 2 );
 		add_filter( 'elementor/frontend/section/should_render', array( $this, 'should_render' ), 10, 2 );
+
 		add_filter( 'elementor/frontend/container/should_render', array( $this, 'should_render' ), 10, 2 );
-
-		add_action( 'elementor/frontend/before_render', array( $this, 'before_render' ) );
-	}
-
-	public function before_render( $element ) {
-
-		$settings = $element->get_settings_for_display();
-
-        if ( 'yes' === $element->get_settings_for_display('pa_display_conditions_switcher') ) {
-
-			$display_conditions = $settings['pa_condition_repeater'];
-			$action = $settings['pa_display_action'];
-
-			foreach ( $display_conditions as $key => $list ) {
-
-				if ( 'return_visitor' === $list['pa_condition_key'] ) {
-
-					$element->add_render_attribute( '_wrapper', array(
-						'class' => 'elementor-hidden',
-						'data-returning-condition' => $action
-					));
-
-				}
-
-			}
-
-		}
 	}
 
 	/**
@@ -304,12 +278,7 @@ class PA_Controls_Handler {
 			$conditions_list = $settings['pa_condition_repeater'];
 			$action          = $settings['pa_display_action'];
 
-			$contains_is_return_visitor = $this->store_condition_results( $settings, $element_id, $conditions_list );
-
-			// Return visitor will be handled via JS.
-			if( $contains_is_return_visitor ) {
-				return true;
-			}
+			$this->store_condition_results( $settings, $element_id, $conditions_list );
 
 			return $this->check_visiblity( $element_id, $settings['pa_display_when'], $action );
 
@@ -338,11 +307,6 @@ class PA_Controls_Handler {
 
 			if ( ! in_array( $list['pa_condition_key'], self::$conditions_keys, true ) ) {
 				continue;
-			}
-
-			// We will handle this using JS to prevent huge number of cookies.
-			if( 'return_visitor' === $list['pa_condition_key'] ) {
-				return true;
 			}
 
 			$class    = static::$conditions_classes[ $list['pa_condition_key'] ];

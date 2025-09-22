@@ -92,12 +92,30 @@ class Premium_Nav_Menu extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-glass',
-			'lottie-js',
-			'pa-headroom',
-			'pa-menu',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array( 'lottie-js' );
+
+		if ( $is_edit ) {
+
+			$scripts = array( 'pa-glass', 'pa-headroom' );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'yes' === $settings['pa_sticky_on_scroll'] ) {
+				$scripts[] = 'pa-headroom';
+			}
+
+			if ( 'none' !== $settings['item_lq_effect'] || 'none' !== $settings['submenu_lq_effect'] || 'none' !== $settings['mega_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+		}
+
+		$scripts[] = 'pa-menu';
+
+		return $scripts;
 	}
 
 	/**
@@ -4751,7 +4769,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 		$menu_type = $settings['menu_type'];
 
-		$menu_id = 'wordpress_menu' === $menu_type ? $settings['pa_nav_menus'] : false;
+		$menu_id = ( 'wordpress_menu' === $menu_type && isset( $settings['pa_nav_menus'] ) ) ? $settings['pa_nav_menus'] : false;
 
 		$render_mobile_menu = 'yes' === $settings['render_mobile_menu'] || in_array( $settings['pa_nav_menu_layout'], array( 'slide', 'dropdown' ), true );
 
@@ -5283,7 +5301,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 					if ( 'submenu' === $menu_items[ $index + 1 ]['item_type'] && $has_icon ) {
 						$icon_class   = 'premium-dropdown-icon ' . esc_attr( $settings['submenu_icon']['value'] );
-						$html_output .= sprintf( '<i class="%1$s"></i>', $icon_class );
+						$html_output .= sprintf( '<i class="%1$s" aria-hidden="true"></i>', $icon_class );
 					}
 				}
 

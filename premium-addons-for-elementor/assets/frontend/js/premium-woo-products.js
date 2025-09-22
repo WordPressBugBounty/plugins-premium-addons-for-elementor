@@ -457,7 +457,7 @@
 								viewCartTxt = $scope.data('woo-cart-text') || '';
 
 							if ('' == viewCartTxt)
-								viewCartTxt = 'View Cart';
+								viewCartTxt = PAWooProductsSettings.view_cart;
 
 							$this.removeClass('add_to_cart_button').attr('href', PAWooProductsSettings.woo_cart_url).text(viewCartTxt);
 
