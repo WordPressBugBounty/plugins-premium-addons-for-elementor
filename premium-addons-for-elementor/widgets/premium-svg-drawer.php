@@ -112,13 +112,26 @@ class Premium_SVG_Drawer extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-tweenmax',
-			'pa-scrolltrigger',
-			'pa-gsap',
-			'premium-addons',
-			'pa-motionpath',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array();
+
+		if ( $is_edit ) {
+			$scripts = array( 'pa-tweenmax', 'pa-scrolltrigger', 'pa-gsap', 'premium-addons', 'pa-motionpath' );
+		} else {
+
+			$settings = $this->get_settings();
+
+			if ( 'yes' === $settings['animate_icon'] ) {
+				array_push( $scripts, 'pa-tweenmax', 'pa-scrolltrigger', 'pa-gsap', 'pa-motionpath' );
+			}
+
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

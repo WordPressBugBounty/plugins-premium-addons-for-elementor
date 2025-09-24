@@ -7,7 +7,6 @@ namespace PremiumAddons\Widgets;
 
 // Elementor Classes.
 use Elementor\Plugin;
-use Elementor\Utils;
 use Elementor\Repeater;
 use Elementor\Widget_Base;
 use Elementor\Icons_Manager;
@@ -16,7 +15,6 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Image_Size;
 use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
@@ -167,22 +165,59 @@ class Premium_Post_Ticker extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-tweenmax',
-			'pa-motionpath',
-		) : array();
+		$is_edit = Helper_Functions::is_edit_mode();
 
-		return array_merge(
-			$draw_scripts,
-			array(
-				'pa-glass',
-				'imagesloaded',
-				'isotope-js',
-				'pa-slick',
-				'lottie-js',
-				'premium-addons',
-			)
-		);
+		$scripts = array( 'pa-slick' );
+
+		if ( $is_edit ) {
+
+            $draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+
+			$scripts = array_merge( $draw_scripts, array( 'pa-glass', 'lottie-js' ) );
+
+		} else {
+
+			$settings = $this->get_settings();
+
+			$draw_js = false;
+			$lottie_js = false;
+
+			if ( 'yes' === $settings['draw_svg'] ) {
+				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+				$draw_js = true;
+			}
+
+			if ( 'lottie' === $settings['icon_type'] ) {
+				$scripts[] = 'lottie-js';
+				$lottie_js = true;
+			}
+
+			if ( ! empty( $settings['text_content'] ) ) {
+
+				foreach ( $settings['text_content'] as $item ) {
+
+					if ( ! $draw_js && 'yes' === $item['draw_svg'] ) {
+						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+						$draw_js = true;
+					}
+
+					if ( ! $lottie_js && 'lottie' === $item['icon_type'] ) {
+						$scripts[] = 'lottie-js';
+						$lottie_js = true;
+					}
+
+
+				}
+			}
+
+			if ( 'none' !== $settings['post_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

@@ -1312,8 +1312,9 @@ class Premium_Icon_List extends Widget_Base {
 			array(
 				'label'     => __( 'Text Alignment', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::CHOOSE,
+				'description' => __( 'Aligns the <b>title and description</b> inside each list item.', 'premium-addons-for-elementor' ),
 				'options'   => array(
-					'flex-start' => array(
+					'start' => array(
 						'title' => __( 'Left', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-left',
 					),
@@ -1321,16 +1322,16 @@ class Premium_Icon_List extends Widget_Base {
 						'title' => __( 'Center', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-center',
 					),
-					'flex-end'   => array(
+					'end'   => array(
 						'title' => __( 'Right', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-right',
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-bullet-list-content .premium-bullet-list-text-wrapper > span' => 'align-self: {{VALUE}};',
+					'{{WRAPPER}} .premium-bullet-list-content .premium-bullet-list-text-wrapper > span' => 'align-self: {{VALUE}}; text-align: {{VALUE}};',
 				),
 				'toggle'    => false,
-				'default'   => 'flex-start',
+				'default'   => 'start',
 			)
 		);
 

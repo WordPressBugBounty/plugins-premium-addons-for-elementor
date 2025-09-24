@@ -103,13 +103,30 @@ class Premium_Grid extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-glass',
-			'imagesloaded',
-			'prettyPhoto-js',
-			'isotope-js',
-			'premium-addons',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array( 'imagesloaded', 'isotope-js' );
+
+		if ( $is_edit ) {
+
+			$scripts = array_merge( $scripts, array( 'pa-glass', 'prettyPhoto-js' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'yes' === $settings['premium_gallery_light_box'] && 'default' === $settings['premium_gallery_lightbox_type'] ) {
+				$scripts[] = 'prettyPhoto-js';
+			}
+
+			if ( 'none' !== $settings['filter_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

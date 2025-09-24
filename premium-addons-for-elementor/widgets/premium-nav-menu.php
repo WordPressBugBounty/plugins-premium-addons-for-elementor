@@ -95,14 +95,28 @@ class Premium_Nav_Menu extends Widget_Base {
 
 		$is_edit = Helper_Functions::is_edit_mode();
 
-		$scripts = array( 'lottie-js' );
+		$scripts = array();
 
 		if ( $is_edit ) {
 
-			$scripts = array( 'pa-glass', 'pa-headroom' );
+			$scripts = array( 'lottie-js', 'pa-glass', 'pa-headroom' );
 
 		} else {
 			$settings = $this->get_settings();
+
+			if( 'wordpress_menu' === $settings['menu_type'] ) {
+				$scripts[] = 'lottie-js';
+			} elseif ( ! empty( $settings['menu_items'] ) ) {
+
+				foreach ( $settings['menu_items'] as $item ) {
+
+					if ( 'animation' === $item['icon_type'] ) {
+						$scripts[] = 'lottie-js';
+						break;
+					}
+
+				}
+			}
 
 			if ( 'yes' === $settings['pa_sticky_on_scroll'] ) {
 				$scripts[] = 'pa-headroom';

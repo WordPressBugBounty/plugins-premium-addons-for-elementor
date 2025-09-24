@@ -116,19 +116,35 @@ class Premium_Title extends Widget_Base {
 	 */
 	public function get_script_depends() {
 
-		$draw_scripts = $this->check_icon_draw() ? array(
-			'pa-tweenmax',
-			'pa-motionpath',
-		) : array();
+		$is_edit = Helper_Functions::is_edit_mode();
 
-		return array_merge(
-			$draw_scripts,
-			array(
-				'pa-glass',
-				'premium-addons',
-				'lottie-js',
-			)
-		);
+		$scripts = array();
+
+		if ( $is_edit ) {
+
+			$draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+
+			$scripts = array_merge( $draw_scripts, array( 'pa-glass', 'lottie-js' ) );
+
+		} else {
+			$settings = $this->get_settings();
+
+			if ( 'yes' === $settings['draw_svg'] ) {
+				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+			}
+
+			if ( 'animation' === $settings['icon_type'] ) {
+				$scripts[] = 'lottie-js';
+			}
+
+			if ( 'none' !== $settings['heading_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+		}
+
+        $scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

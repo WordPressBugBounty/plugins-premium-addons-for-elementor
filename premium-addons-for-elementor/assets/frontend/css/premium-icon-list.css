@@ -55,9 +55,6 @@
 }
 .premium-bullet-list-content .premium-bullet-list-text span {
   margin: 0 5px;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
 }
 .premium-bullet-list-content .premium-bullet-list-icon-text p {
   font-size: 18px;
@@ -268,11 +265,9 @@ ul[data-list-animation*=animated-] .premium-bullet-list-divider-inline {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-}
-.premium-bullet-list-content .premium-bullet-list-text-wrapper > span {
-  -webkit-align-self: flex-start;
-  -ms-flex-item-align: start;
-  align-self: flex-start;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 /* Show Bullet Hover Effect */

@@ -74,10 +74,25 @@ class Premium_Dual_Header extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-glass',
-			'premium-addons',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array();
+		if ( $is_edit ) {
+			$scripts[] = 'pa-glass';
+		} else {
+
+			$settings = $this->get_settings();
+
+			if ( 'none' !== $settings['first_lq_effect'] || 'none' !== $settings['second_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

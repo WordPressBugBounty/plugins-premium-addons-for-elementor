@@ -107,10 +107,25 @@ class Premium_Contactform extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-glass',
-			'premium-addons',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array();
+		if ( $is_edit ) {
+			$scripts[] = 'pa-glass';
+		} else {
+
+			$settings = $this->get_settings();
+
+			if ( 'none' !== $settings['fields_lq_effect'] || 'none' !== $settings['submit_lq_effect'] ) {
+				$scripts[] = 'pa-glass';
+			}
+
+		}
+
+		$scripts[] = 'premium-addons';
+
+		return $scripts;
 	}
 
 	/**

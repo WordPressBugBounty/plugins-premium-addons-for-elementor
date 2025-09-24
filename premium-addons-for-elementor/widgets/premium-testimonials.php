@@ -104,7 +104,7 @@ class Premium_Testimonials extends Widget_Base {
 		} else {
 			$settings = $this->get_settings();
 
-			if ( 'yes' === $settings['carousel'] ) {
+			if ( 'yes' === $settings['carousel'] || 'skin4' === $settings['skin'] ) {
 				$scripts[] = 'pa-slick';
 
 				if ( 'none' !== $settings['arrows_lq_effect'] ) {

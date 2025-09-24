@@ -59,10 +59,17 @@ class Premium_Lottie extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-tilt',
-			'lottie-js',
-		);
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		$scripts = array();
+		if ( $is_edit || ( ! $is_edit && 'yes' === $this->get_settings( 'mouse_tilt' ) ) ) {
+			$scripts[] = 'pa-tilt';
+		}
+
+		$scripts[] = 'lottie-js';
+
+		return $scripts;
 	}
 
 	/**

@@ -98,10 +98,12 @@ class Premium_Fancytext extends Widget_Base {
 		} else {
 			$settings = $this->get_settings();
 
-			if ( 'typing' === $settings['premium_fancy_text_effect'] ) {
-				$scripts[] = 'pa-typed';
-			} elseif ( 'slide' === $settings['premium_fancy_text_effect'] ) {
-				$scripts[] = 'pa-vticker';
+			if( 'switch' === $settings['style'] ) {
+				if ( 'typing' === $settings['premium_fancy_text_effect'] ) {
+					$scripts[] = 'pa-typed';
+				} elseif ( 'slide' === $settings['premium_fancy_text_effect'] ) {
+					$scripts[] = 'pa-vticker';
+				}
 			}
 
 			if ( 'none' !== $settings['text_lq_effect'] ) {
