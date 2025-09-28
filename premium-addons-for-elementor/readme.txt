@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.8.2
 Requires PHP: 7.4
-Stable Tag: 4.11.39
+Stable Tag: 4.11.40
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -19,6 +19,9 @@ Supercharge your [Elementor Page Builder](https://wordpress.org/plugins/elemento
 
 ### Useful Links
 [Support](https://my.leap13.com/contact-support/) | [Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
+
+### New: Image Carousel Option
+We have recently added Source option in our Premium Carousel widget which helps you to create an image carousel/slider in a second jus by selecting the images you want from site's media library.
 
 ### New: Performance and Speed Improvements
 Premium Addons for Elementor is now much faster than ever. Only the required JS files will be loaded on your page to boost your page loading speed and site performance. All the editor loading issues have been fixed to make your site faster and minimize the time it takes for Elementor editor to load.
@@ -41,7 +44,7 @@ Add animated shape dividers for Elementor flexbox containers. You can select bet
 ### Advanced Media Carousel Widget
 You can now create carousel using images, videos, Elementor templates to create the carousel you want. Select between four animations and dozens of customization options. [Check it out now!](https://premiumaddons.com/elementor-advanced-carousel-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
-### New: Magazine Bundle
+### Magazine Bundle
 Smart Post Listing, Weather, World Clock, News Ticker, Tags Cloud and Recent Posts Notification widgets newly added to create the magazine website you ever dreamed. [Check it out now!](https://premiumaddons.com/elementor-news-magazine-widgets-bundle/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 ### Elementor Navigation/Mega Menu Widget
@@ -239,6 +242,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.40 =
+
+- New: Gallery option in Carousel widget to create image carousel much easier.
+- Tweak: Code improvements for better performance.
+- Fixed: SVG Draw not working when draw option is disabled.
+- Fixed: Link not working in Animated Text widget.
 
 = 4.11.39 =
 

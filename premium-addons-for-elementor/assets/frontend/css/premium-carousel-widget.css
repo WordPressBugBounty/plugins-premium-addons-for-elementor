@@ -222,3 +222,13 @@
   -webkit-transition: width 0s ease-in-out !important;
   transition: width 0s ease-in-out !important;
 }
+
+.pa-carousel-gallery .premium-carousel-template.slick-slide {
+  text-align: center;
+}
+.pa-carousel-gallery .premium-carousel-template.slick-slide img {
+  -webkit-transition: -webkit-filter 0.5s ease-in-out;
+  transition: -webkit-filter 0.5s ease-in-out;
+  transition: filter 0.5s ease-in-out;
+  transition: filter 0.5s ease-in-out, -webkit-filter 0.5s ease-in-out;
+}

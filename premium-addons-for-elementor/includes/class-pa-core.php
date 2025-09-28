@@ -29,9 +29,6 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 */
 		public function __construct() {
 
-			// Autoloader.
-			spl_autoload_register( array( $this, 'autoload' ) );
-
 			// Load plugin textdomain.
 			add_action( 'init', array( $this, 'i18n' ) );
 
@@ -43,41 +40,6 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			// Register Activation hooks.
 			register_activation_hook( PREMIUM_ADDONS_FILE, array( $this, 'handle_activation' ) );
 			register_uninstall_hook( PREMIUM_ADDONS_FILE, array( __CLASS__, 'uninstall' ) );
-		}
-
-		/**
-		 * AutoLoad
-		 *
-		 * @since 3.20.9
-		 * @param string $class class.
-		 */
-		public function autoload( $class ) {
-
-			if ( 0 !== strpos( $class, 'PremiumAddons' ) ) {
-				return;
-			}
-
-			$class_to_load = $class;
-
-			if ( ! class_exists( $class_to_load ) ) {
-				$filename = strtolower(
-					preg_replace(
-						array( '/^PremiumAddons\\\/', '/([a-z])([A-Z])/', '/_/', '/\\\/' ),
-						array( '', '$1-$2', '-', DIRECTORY_SEPARATOR ),
-						$class_to_load
-					)
-				);
-
-				if ( false !== strpos( $filename, 'premium-template-tags' ) ) {
-					$filename = 'includes' . DIRECTORY_SEPARATOR . 'class-premium-template-tags';
-				}
-
-				$filename = PREMIUM_ADDONS_PATH . $filename . '.php';
-
-				if ( is_readable( $filename ) ) {
-					include $filename;
-				}
-			}
 		}
 
 		/**

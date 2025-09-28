@@ -7,16 +7,18 @@ namespace PremiumAddons\Widgets;
 
 // Elementor Classes.
 use Elementor\Plugin;
-use Elementor\Widget_Base;
-use Elementor\Controls_Manager;
-use Elementor\Icons_Manager;
 use Elementor\Repeater;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Widget_Base;
+use Elementor\Control_Media;
+use Elementor\Icons_Manager;
+use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
-use PremiumAddons\Includes\Controls\Premium_Background;
-
+use Elementor\Group_Control_Css_Filter;
+use Elementor\Group_Control_Image_Size;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
@@ -167,6 +169,79 @@ class Premium_Carousel extends Widget_Base {
 		Helper_Functions::add_templates_controls( $this, 'carousel', $demo );
 
 		$this->add_control(
+			'source',
+			array(
+				'label'        => __( 'Source', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'prefix_class' => 'pa-carousel-',
+				'options'      => array(
+					'template' => __( 'Templates', 'premium-addons-for-elementor' ),
+					'gallery'  => __( 'Gallery', 'premium-addons-for-elementor' ),
+				),
+				'default'      => 'template',
+			)
+		);
+
+		$this->add_control(
+			'gallery',
+			array(
+				'label'     => esc_html__( 'Images', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::GALLERY,
+				'dynamic'   => array( 'active' => true ),
+				'condition' => array(
+					'source' => 'gallery',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Image_Size::get_type(),
+			array(
+				'name'      => 'thumbnail',
+				'default'   => 'full',
+				'condition' => array(
+					'source' => 'gallery',
+				),
+			)
+		);
+
+		$this->add_control(
+			'full_width_img',
+			array(
+				'label'     => __( 'Full Width', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'default'   => 'yes',
+				'selectors' => array(
+					'{{WRAPPER}} .premium-carousel-template img' => 'width: 100%',
+				),
+				'condition' => array(
+					'source' => 'gallery',
+				),
+			)
+		);
+
+		$this->add_control(
+			'img_fit',
+			array(
+				'label'     => __( 'Image Fit', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => '',
+				'options'   => array(
+					''        => __( 'Default', 'premium-addons-for-elementor' ),
+					'fill'    => __( 'Fill', 'premium-addons-for-elementor' ),
+					'cover'   => __( 'Cover', 'premium-addons-for-elementor' ),
+					'contain' => __( 'Contain', 'premium-addons-for-elementor' ),
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-carousel-template img' => 'object-fit: {{VALUE}};',
+				),
+				'condition' => array(
+					'source' => 'gallery',
+				),
+			)
+		);
+
+		$this->add_control(
 			'premium_carousel_slider_content',
 			array(
 				'label'       => __( 'Templates', 'premium-addons-for-elementor' ),
@@ -175,7 +250,9 @@ class Premium_Carousel extends Widget_Base {
 				'label_block' => true,
 				'multiple'    => true,
 				'source'      => 'elementor_library',
-
+				'condition'   => array(
+					'source' => 'template',
+				),
 			)
 		);
 
@@ -232,19 +309,23 @@ class Premium_Carousel extends Widget_Base {
 				'fields'        => $repeater->get_controls(),
 				'title_field'   => 'Template: {{{  "" !== premium_carousel_repeater_item ? premium_carousel_repeater_item : "Live Template" }}}',
 				'prevent_empty' => false,
+				'condition'     => array(
+					'source' => 'template',
+				),
 			)
 		);
 
 		$this->add_control(
 			'premium_carousel_slider_type',
 			array(
-				'label'   => __( 'Direction', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SELECT,
-				'options' => array(
+				'label'     => __( 'Direction', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'separator' => 'before',
+				'options'   => array(
 					'horizontal' => __( 'Horizontal', 'premium-addons-for-elementor' ),
 					'vertical'   => __( 'Vertical', 'premium-addons-for-elementor' ),
 				),
-				'default' => 'horizontal',
+				'default'   => 'horizontal',
 			)
 		);
 
@@ -840,6 +921,56 @@ class Premium_Carousel extends Widget_Base {
 		$this->end_controls_section();
 
 		Helper_Functions::register_papro_promotion_controls( $this, 'carousel' );
+
+		$this->start_controls_section(
+			'gallery_style_section',
+			array(
+				'label'     => __( 'Image', 'premium-addons-for-elementor' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'source' => 'gallery',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			array(
+				'name'     => 'css_filters',
+				'selector' => '{{WRAPPER}} .premium-carousel-template img',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			array(
+				'name'     => 'hover_css_filters',
+				'label'    => __( 'Hover CSS Filters', 'premium-addons-for-elementor' ),
+				'selector' => '{{WRAPPER}} .premium-carousel-template:hover img',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'img_border',
+				'selector' => '{{WRAPPER}} .premium-carousel-template img',
+			)
+		);
+
+		$this->add_control(
+			'img_border_radius',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%', 'custom' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-carousel-template img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'premium_carousel_navigation_arrows',
@@ -1551,38 +1682,46 @@ class Premium_Carousel extends Widget_Base {
 	 * @access protected
 	 */
 	protected function render() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
+		$source   = $settings['source'];
 
 		$templates = array();
 
-		$templates_count = 0;
+		if ( 'gallery' === $source ) {
+			// Gallery is returned as array of IDs when we're using an ACF Gallery Field.
+			$templates = ! empty( $settings['gallery'] ) ? $settings['gallery'] : array();
 
-		$content_type = 'repeater';
-
-		// Use the old select field only if it's value is not empty.
-		if ( ! empty( $settings['premium_carousel_slider_content'] ) && empty( $settings['premium_carousel_templates_repeater'] ) ) {
-			$content_type = 'select';
-		}
-
-		if ( 'select' === $content_type ) {
-			$templates       = $settings['premium_carousel_slider_content'];
-			$templates_count = ! empty( $templates ) ? count( $templates ) : 0;
+			$content_type = 'gallery';
 
 		} else {
-			$custom_navigation = array();
-			$temp_id           = '';
 
-			foreach ( $settings['premium_carousel_templates_repeater'] as $template ) {
-				$temp_id = empty( $template['premium_carousel_repeater_item'] ) ? $template['live_temp_content'] : $template['premium_carousel_repeater_item'];
-				array_push( $templates, $temp_id );
-				array_push( $custom_navigation, $template['custom_navigation'] );
-				$templates_count = count( $templates );
+			$content_type = 'repeater';
+
+			// Use the old select field only if it's value is not empty.
+			if ( ! empty( $settings['premium_carousel_slider_content'] ) && empty( $settings['premium_carousel_templates_repeater'] ) ) {
+				$content_type = 'select';
+			}
+
+			if ( 'select' === $content_type ) {
+				$templates = $settings['premium_carousel_slider_content'];
+
+			} else {
+				$custom_navigation = array();
+				$temp_id           = '';
+
+				foreach ( $settings['premium_carousel_templates_repeater'] as $template ) {
+					$temp_id = empty( $template['premium_carousel_repeater_item'] ) ? $template['live_temp_content'] : $template['premium_carousel_repeater_item'];
+					array_push( $templates, $temp_id );
+					array_push( $custom_navigation, $template['custom_navigation'] );
+				}
 			}
 		}
 
 		if ( empty( $templates ) ) {
 			return;
 		}
+
+		$templates_count = count( $templates );
 
 		$vertical = 'vertical' === $settings['premium_carousel_slider_type'];
 
@@ -1821,9 +1960,7 @@ class Premium_Carousel extends Widget_Base {
 		}
 
 		$this->add_render_attribute( 'carousel', 'data-settings', wp_json_encode( $carousel_settings ) );
-
 		?>
-
 		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'carousel' ) ); ?>>
 			<?php if ( 'dots' === $settings['premium_carousel_nav_options'] ) { ?>
 					<div class="premium-carousel-nav-dot">
@@ -1869,11 +2006,21 @@ class Premium_Carousel extends Widget_Base {
 			<?php } ?>
 			<div id="premium-carousel-<?php echo esc_attr( $this->get_id() ); ?>" class="premium-carousel-inner">
 				<?php
-				foreach ( $templates as $template_title ) :
+				foreach ( $templates as $index => $template_title ) :
 					if ( ! empty( $template_title ) ) :
 						?>
 						<div class="premium-carousel-template item-wrapper">
-							<?php echo Helper_Functions::render_elementor_template( $template_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<?php
+							if ( 'gallery' === $source ) {
+								$image_url = Group_Control_Image_Size::get_attachment_image_src( $template_title['id'], 'thumbnail', $settings );
+								?>
+									<img src="<?php echo esc_attr( $image_url ); ?>" alt="<?php echo esc_attr( Control_Media::get_image_alt( $template_title ) ); ?>">
+														<?php
+							} else {
+								echo Helper_Functions::render_elementor_template( $template_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							}
+							?>
+
 							<?php if ( 'progress' === $settings['premium_carousel_nav_options'] ) { ?>
 								<div class="premium-carousel-nav-progress">
 									<span class="premium-carousel-nav-progress-fill"></span>

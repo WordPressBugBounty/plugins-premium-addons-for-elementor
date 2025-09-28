@@ -2884,17 +2884,10 @@
 
 			bindEvents: function () {
 
-				ScrollTrigger.config({
-					limitCallbacks: true,
-					ignoreMobileResize: true
-				});
-
 				this.run();
 			},
 
 			run: function () {
-
-				gsap.registerPlugin(ScrollTrigger);
 
 				var $scope = this.$element;
 
@@ -2905,6 +2898,13 @@
 
 				if (!$scope.hasClass("premium-svg-animated-yes"))
 					return;
+
+				ScrollTrigger.config({
+					limitCallbacks: true,
+					ignoreMobileResize: true
+				});
+
+				gsap.registerPlugin(ScrollTrigger);
 
 				var elemID = $scope.data("id"),
 					settings = this.getElementSettings(),

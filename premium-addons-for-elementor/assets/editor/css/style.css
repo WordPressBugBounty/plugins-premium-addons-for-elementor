@@ -967,7 +967,9 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 }
 
 .premium-promote-ctas > a.elementor-button {
-	white-space: nowrap;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .premium-promote-box .elementor-button {
