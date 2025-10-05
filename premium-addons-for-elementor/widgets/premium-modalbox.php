@@ -230,12 +230,15 @@ class Premium_Modalbox extends Widget_Base {
 
 		$draw_icon = $this->check_icon_draw();
 
-				$this->start_controls_section(
-					'premium_modal_box_content_section',
-					array(
-						'label' => __( 'Trigger', 'premium-addons-for-elementor' ),
-					)
-				);
+		$this->start_controls_section(
+			'premium_modal_box_content_section',
+			array(
+				'label' => __( 'Trigger', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/modal-box-widget-for-elementor-page-builder/', 'modal-box', 'wp-editor', 'demo' );
+    	Helper_Functions::add_templates_controls( $this, 'modal-box', $demo );
 
 		$this->add_control(
 			'premium_modal_box_display_on',

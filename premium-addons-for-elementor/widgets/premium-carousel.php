@@ -174,6 +174,7 @@ class Premium_Carousel extends Widget_Base {
 				'label'        => __( 'Source', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SELECT,
 				'prefix_class' => 'pa-carousel-',
+				'render_type'  => 'template',
 				'options'      => array(
 					'template' => __( 'Templates', 'premium-addons-for-elementor' ),
 					'gallery'  => __( 'Gallery', 'premium-addons-for-elementor' ),
@@ -211,6 +212,7 @@ class Premium_Carousel extends Widget_Base {
 				'label'     => __( 'Full Width', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'default'   => 'yes',
+				'description' => __( 'Make images take full width of the slide', 'premium-addons-for-elementor' ),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-carousel-template img' => 'width: 100%',
 				),

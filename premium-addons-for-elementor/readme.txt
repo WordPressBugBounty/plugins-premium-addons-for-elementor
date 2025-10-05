@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, widgets, elementor elements, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 6.8.2
+Tested Up To: 6.8.3
 Requires PHP: 7.4
-Stable Tag: 4.11.40
+Stable Tag: 4.11.41
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -21,7 +21,7 @@ Supercharge your [Elementor Page Builder](https://wordpress.org/plugins/elemento
 [Support](https://my.leap13.com/contact-support/) | [Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
 
 ### New: Image Carousel Option
-We have recently added Source option in our Premium Carousel widget which helps you to create an image carousel/slider in a second jus by selecting the images you want from site's media library.
+We have recently added Source option in our Premium Carousel widget which helps you to create an image carousel/slider in a second just by selecting the images you want from site's media library.
 
 ### New: Performance and Speed Improvements
 Premium Addons for Elementor is now much faster than ever. Only the required JS files will be loaded on your page to boost your page loading speed and site performance. All the editor loading issues have been fixed to make your site faster and minimize the time it takes for Elementor editor to load.
@@ -242,6 +242,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.41 =
+
+- New: Added Order controls in Pricing Table to allow content reordering.
+- Tweak: Improve Button and Image Buttons widget performance by removing duplicate Icon Spacing control.
+- Tweak: Added Media Info option for videos in Advanced Carousel widget.
+- Fixed: Link not working in Animated Text widget.
 
 = 4.11.40 =
 

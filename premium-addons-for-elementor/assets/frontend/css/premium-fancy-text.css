@@ -8,12 +8,12 @@
 .premium-atext__wrapper {
   position: relative;
 }
-.premium-atext__wrapper > a {
+.premium-atext__wrapper a {
   position: absolute;
   inset: 0;
   z-index: 9;
 }
-.premium-atext__wrapper > a span {
+.premium-atext__wrapper a span {
   display: none;
 }
 .premium-atext__wrapper .premium-fancy-list-items {

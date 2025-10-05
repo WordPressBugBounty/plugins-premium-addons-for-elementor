@@ -517,35 +517,10 @@ class Premium_Banner extends Widget_Base {
 		$this->add_control(
 			'premium_banner_responsive_switcher',
 			array(
-				'label'       => __( 'Responsive Controls', 'premium-addons-for-elementor' ),
+				'label'       => __( 'Responsive', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'If the description text is not suiting well on specific screen sizes, you may enable this option which will hide the description text.', 'premium-addons-for-elementor' ),
-			)
-		);
-
-		$this->add_control(
-			'premium_banner_min_range',
-			array(
-				'label'       => __( 'Minimum Size', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => __( 'Note: minimum size for extra small screens is 1px.', 'premium-addons-for-elementor' ),
-				'default'     => 1,
-				'condition'   => array(
-					'premium_banner_responsive_switcher' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'premium_banner_max_range',
-			array(
-				'label'       => __( 'Maximum Size', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => __( 'Note: maximum size for extra small screens is 767px.', 'premium-addons-for-elementor' ),
-				'default'     => 767,
-				'condition'   => array(
-					'premium_banner_responsive_switcher' => 'yes',
-				),
+				'description' => __( 'If the description text is not suiting well on mobile devices, you can enable this option to hide it.', 'premium-addons-for-elementor' ),
+				'prefix_class' => 'premium-banner-responsive-',
 			)
 		);
 
@@ -1356,8 +1331,6 @@ class Premium_Banner extends Widget_Base {
 		$hover_class     = ' ' . $settings['premium_banner_hover_effect'];
 		$active          = 'yes' === $settings['premium_banner_active'] ? ' active' : '';
 		$full_class      = $animation_class . $hover_class . $active;
-		$min_size        = $settings['premium_banner_min_range'] . 'px';
-		$max_size        = $settings['premium_banner_max_range'] . 'px';
 
 		if ( 'yes' === $settings['premium_banner_link_switcher'] ) {
 
@@ -1463,15 +1436,7 @@ class Premium_Banner extends Widget_Base {
 				<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>></a>
 			<?php endif; ?>
 		</div>
-		<?php if ( 'yes' === $settings['premium_banner_responsive_switcher'] ) : ?>
-			<style>
-				@media( min-width: <?php echo wp_kses_post( $min_size ); ?> ) and (max-width:<?php echo wp_kses_post( $max_size ); ?> ) {
-					#premium-banner-<?php echo esc_attr( $this->get_id() ); ?> .premium-banner-ib-content {
-						display: none;
-					}
-				}
-			</style>
-		<?php endif; ?>
+
 		<?php
 	}
 
@@ -1518,9 +1483,6 @@ class Premium_Banner extends Widget_Base {
 				bannerUrl    = 'url' === settings.premium_banner_link_selection ? settings.premium_banner_link.url : settings.premium_banner_existing_link;
 
 			var bannerLink = 'yes' === settings.premium_banner_image_link_switcher ? settings.premium_banner_image_custom_link.url : settings.premium_banner_image_existing_page_link;
-
-			var minSize = settings.premium_banner_min_range + 'px',
-				maxSize = settings.premium_banner_max_range + 'px';
 
 			var imageHtml = '';
 			if ( settings.premium_banner_image.url ) {
@@ -1646,15 +1608,6 @@ class Premium_Banner extends Widget_Base {
 					<a {{{ view.getRenderAttributeString('banner_link') }}}></a>
 				<# } #>
 			</div>
-			<# if( 'yes' === settings.premium_banner_responsive_switcher ) { #>
-			<style>
-				@media( min-width: {{minSize}} ) and ( max-width: {{maxSize}} ) {
-					#premium-banner-{{ view.getID() }} .premium-banner-ib-content {
-						display: none;
-					}
-				}
-			</style>
-			<# } #>
 		<?php
 	}
 }

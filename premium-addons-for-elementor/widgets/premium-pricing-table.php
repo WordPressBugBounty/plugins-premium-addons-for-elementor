@@ -223,6 +223,69 @@ class Premium_Pricing_Table extends Widget_Base {
 
 		$draw_icon = $this->check_icon_draw();
 
+		$this->add_content_tab_sections( $draw_icon );
+
+		Helper_Functions::register_papro_promotion_controls( $this, 'pricing' );
+
+		$this->add_style_tab_sections( $draw_icon );
+	}
+
+	private function add_content_tab_sections( $draw_icon ) {
+		$animation_conds = array(
+			'relation' => 'or',
+			'terms'    => array(
+				array(
+					'name'  => 'icon_type',
+					'value' => 'animation',
+				),
+				array(
+					'terms' => array(
+						array(
+							'relation' => 'or',
+							'terms'    => array(
+								array(
+									'name'  => 'icon_type',
+									'value' => 'icon',
+								),
+								array(
+									'name'  => 'icon_type',
+									'value' => 'svg',
+								),
+							),
+						),
+						array(
+							'name'  => 'draw_svg',
+							'value' => 'yes',
+						),
+					),
+				),
+			),
+
+		);
+
+		$this->add_icon_controls( $draw_icon, $animation_conds );
+		$this->add_title_controls();
+		$this->add_price_controls();
+		$this->add_featured_list_controls( $draw_icon, $animation_conds );
+		$this->add_description_controls();
+		$this->add_button_controls();
+		$this->add_ribbon_controls();
+		$this->add_display_option_controls();
+	}
+
+	private function add_style_tab_sections( $draw_icon ) {
+		$this->add_icon_style_controls( $draw_icon );
+		$this->add_title_style_controls();
+		$this->add_price_style_controls();
+		$this->add_feature_list_style_controls();
+		$this->add_tooltips_style_controls();
+		$this->add_description_style_controls();
+		$this->add_button_style_controls();
+		$this->add_ribbon_style_controls();
+		$this->add_box_style_controls();
+	}
+
+	private function add_icon_controls( $draw_icon, $animation_conds ) {
 		$this->start_controls_section(
 			'premium_pricing_table_icon_section',
 			array(
@@ -302,39 +365,6 @@ class Premium_Pricing_Table extends Widget_Base {
 					'premium_pricing_table_icon_selection_updated[library]!' => 'svg',
 				),
 			)
-		);
-
-		$animation_conds = array(
-
-			'relation' => 'or',
-			'terms'    => array(
-				array(
-					'name'  => 'icon_type',
-					'value' => 'animation',
-				),
-				array(
-					'terms' => array(
-						array(
-							'relation' => 'or',
-							'terms'    => array(
-								array(
-									'name'  => 'icon_type',
-									'value' => 'icon',
-								),
-								array(
-									'name'  => 'icon_type',
-									'value' => 'svg',
-								),
-							),
-						),
-						array(
-							'name'  => 'draw_svg',
-							'value' => 'yes',
-						),
-					),
-				),
-			),
-
 		);
 
 		if ( $draw_icon ) {
@@ -498,8 +528,24 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		$this->end_controls_section();
+		$this->add_control(
+			'icon_order',
+			array(
+				'label'       => __( 'Order', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'separator'   => 'before',
+				'description' => __( 'Set the display order of this element. Elements with lower order numbers will appear before those with higher numbers. Default is 1.', 'premium-addons-for-elementor' ),
+				'default'     => 1,
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-pricing-icon-container' => 'order: {{VALUE}};',
+				),
+			)
+		);
 
+		$this->end_controls_section();
+	}
+
+	private function add_title_controls() {
 		$this->start_controls_section(
 			'premium_pricing_table_title_section',
 			array(
@@ -509,6 +555,9 @@ class Premium_Pricing_Table extends Widget_Base {
 				),
 			)
 		);
+
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-pricing-table-widget/', 'pricing', 'wp-editor', 'demo' );
+		Helper_Functions::add_templates_controls( $this, 'pricing-table', $demo );
 
 		$this->add_control(
 			'premium_pricing_table_title_text',
@@ -543,9 +592,25 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		$this->end_controls_section();
+		$this->add_control(
+			'title_order',
+			array(
+				'label'       => __( 'Order', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'separator'   => 'before',
+				'description' => __( 'Set the display order of this element. Elements with lower order numbers will appear before those with higher numbers. Default is 1.', 'premium-addons-for-elementor' ),
+				'default'     => 1,
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-pricing-table-title' => 'order: {{VALUE}};',
+				),
+			)
+		);
 
-		/*Price Content Section*/
+		$this->end_controls_section();
+	}
+
+	private function add_price_controls() {
+
 		$this->start_controls_section(
 			'premium_pricing_table_price_section',
 			array(
@@ -556,7 +621,6 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		/*Price Value*/
 		$this->add_control(
 			'premium_pricing_table_slashed_price_value',
 			array(
@@ -567,7 +631,29 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		/*Price Currency*/
+		$this->add_control(
+			'slashed_price_placement',
+			array(
+				'label'     => __( 'Placement', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'0' => array(
+						'title' => __( 'Default', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-order-start',
+					),
+					'1' => array(
+						'title' => __( 'Reverse', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-order-end',
+					),
+				),
+				'default'   => '0',
+				'toggle'    => false,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-pricing-slashed-price-value' => 'order: {{VALUE}}',
+				),
+			)
+		);
+
 		$this->add_control(
 			'premium_pricing_table_price_currency',
 			array(
@@ -575,11 +661,11 @@ class Premium_Pricing_Table extends Widget_Base {
 				'type'        => Controls_Manager::TEXT,
 				'dynamic'     => array( 'active' => true ),
 				'default'     => '$',
+				'separator'   => 'before',
 				'label_block' => true,
 			)
 		);
 
-		/*Price Value*/
 		$this->add_control(
 			'premium_pricing_table_price_value',
 			array(
@@ -591,7 +677,6 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		/*Price Separator*/
 		$this->add_control(
 			'premium_pricing_table_price_separator',
 			array(
@@ -615,8 +700,24 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		$this->end_controls_section();
+		$this->add_control(
+			'price_order',
+			array(
+				'label'       => __( 'Order', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'separator'   => 'before',
+				'description' => __( 'Set the display order of this element. Elements with lower order numbers will appear before those with higher numbers. Default is 1.', 'premium-addons-for-elementor' ),
+				'default'     => 1,
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-pricing-price-container' => 'order: {{VALUE}};',
+				),
+			)
+		);
 
+		$this->end_controls_section();
+	}
+
+	private function add_featured_list_controls( $draw_icon, $animation_conds ) {
 		$this->start_controls_section(
 			'premium_pricing_table_list_section',
 			array(
@@ -1053,42 +1154,24 @@ class Premium_Pricing_Table extends Widget_Base {
 			);
 		}
 
-		$this->add_responsive_control(
-			'premium_pricing_table_list_align',
+		$this->add_control(
+			'featured_order',
 			array(
-				'label'                => __( 'Alignment', 'premium-addons-for-elementor' ),
-				'type'                 => Controls_Manager::CHOOSE,
-				'options'              => array(
-					'left'   => array(
-						'title' => __( 'Left', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-left',
-					),
-					'center' => array(
-						'title' => __( 'Center', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-center',
-					),
-					'right'  => array(
-						'title' => __( 'Right', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-right',
-					),
+				'label'       => __( 'Order', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'separator'   => 'before',
+				'description' => __( 'Set the display order of this element. Elements with lower order numbers will appear before those with higher numbers. Default is 1.', 'premium-addons-for-elementor' ),
+				'default'     => 1,
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-pricing-list' => 'order: {{VALUE}};',
 				),
-				'prefix_class'         => 'premium-pricing-features-',
-				'selectors_dictionary' => array(
-					'left'   => 'flex-start',
-					'center' => 'center',
-					'right'  => 'flex-end',
-				),
-				'toggle'               => false,
-				'selectors'            => array(
-					'{{WRAPPER}} .premium-pricing-list .premium-pricing-list-item' => 'justify-content: {{VALUE}}',
-				),
-				'default'              => 'center',
 			)
 		);
 
 		$this->end_controls_section();
+	}
 
-		/*Description Content Section*/
+	private function add_description_controls() {
 		$this->start_controls_section(
 			'premium_pricing_table_description_section',
 			array(
@@ -1109,8 +1192,24 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		$this->end_controls_section();
+		$this->add_control(
+			'description_order',
+			array(
+				'label'       => __( 'Order', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'separator'   => 'before',
+				'description' => __( 'Set the display order of this element. Elements with lower order numbers will appear before those with higher numbers. Default is 1.', 'premium-addons-for-elementor' ),
+				'default'     => 1,
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-pricing-description-container ' => 'order: {{VALUE}};',
+				),
+			)
+		);
 
+		$this->end_controls_section();
+	}
+
+	private function add_button_controls() {
 		$this->start_controls_section(
 			'premium_pricing_table_button_section',
 			array(
@@ -1197,8 +1296,24 @@ class Premium_Pricing_Table extends Widget_Base {
 
 		Helper_Functions::add_btn_hover_controls( $this, array() );
 
-		$this->end_controls_section();
+		$this->add_control(
+			'btn_order',
+			array(
+				'label'       => __( 'Order', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => 1,
+				'separator'   => 'before',
+				'description' => __( 'Set the display order of this element. Elements with lower order numbers will appear before those with higher numbers. Default is 1.', 'premium-addons-for-elementor' ),
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-pricing-button-container ' => 'order: {{VALUE}};',
+				),
+			)
+		);
 
+		$this->end_controls_section();
+	}
+
+	private function add_ribbon_controls() {
 		$this->start_controls_section(
 			'premium_pricing_table_ribbon_section',
 			array(
@@ -1425,7 +1540,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_display_option_controls() {
 		$this->start_controls_section(
 			'premium_pricing_table_title',
 			array(
@@ -1494,10 +1611,45 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
+		$this->add_responsive_control(
+			'premium_pricing_table_list_align',
+			array(
+				'label'                => __( 'Content Alignment', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'separator'            => 'before',
+				'options'              => array(
+					'left'   => array(
+						'title' => __( 'Left', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-left',
+					),
+					'center' => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'right'  => array(
+						'title' => __( 'Right', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-right',
+					),
+				),
+				'prefix_class'         => 'premium-pricing-features-',
+				'selectors_dictionary' => array(
+					'left'   => 'start',
+					'center' => 'center',
+					'right'  => 'end',
+				),
+				'toggle'               => false,
+				'selectors'            => array(
+					'{{WRAPPER}} .premium-pricing-list .premium-pricing-list-item, {{WRAPPER}} .premium-pricing-price-container, {{WRAPPER}} .premium-pricing-icon-container' => 'justify-content: {{VALUE}}',
+					'{{WRAPPER}} .premium-pricing-table-container' => 'text-align: {{VALUE}}',
+				),
+				'default'              => 'center',
+			)
+		);
+
 		$this->end_controls_section();
+	}
 
-		Helper_Functions::register_papro_promotion_controls( $this, 'pricing' );
-
+	private function add_icon_style_controls( $draw_icon ) {
 		$this->start_controls_section(
 			'premium_pricing_icon_style_settings',
 			array(
@@ -1642,7 +1794,7 @@ class Premium_Pricing_Table extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-pricing-icon-container i, {{WRAPPER}} .premium-pricing-icon, {{WRAPPER}} .premium-pricing-image' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .premium-pricing-icon-container i, {{WRAPPER}} .premium-pricing-icon-container > svg, {{WRAPPER}} .premium-pricing-icon, {{WRAPPER}} .premium-pricing-image' => 'background-color: {{VALUE}};',
 				),
 			)
 		);
@@ -1654,11 +1806,11 @@ class Premium_Pricing_Table extends Widget_Base {
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', 'em' ),
 				'default'    => array(
-					'size' => 10,
+					'size' => 5,
 					'unit' => 'px',
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-pricing-icon-container i, {{WRAPPER}} .premium-pricing-icon, {{WRAPPER}} .premium-pricing-image' => 'padding: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-pricing-icon-container i, {{WRAPPER}} .premium-pricing-icon-container > svg, {{WRAPPER}} .premium-pricing-icon, {{WRAPPER}} .premium-pricing-image' => 'padding: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -1667,7 +1819,7 @@ class Premium_Pricing_Table extends Widget_Base {
 			Group_Control_Border::get_type(),
 			array(
 				'name'     => 'premium_pricing_icon_inner_border',
-				'selector' => '{{WRAPPER}} .premium-pricing-icon-container i, {{WRAPPER}} .premium-pricing-icon, {{WRAPPER}} .premium-pricing-image',
+				'selector' => '{{WRAPPER}} .premium-pricing-icon-container i, {{WRAPPER}} .premium-pricing-icon-container > svg, {{WRAPPER}} .premium-pricing-icon, {{WRAPPER}} .premium-pricing-image',
 			)
 		);
 
@@ -1682,7 +1834,7 @@ class Premium_Pricing_Table extends Widget_Base {
 					'unit' => 'px',
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-pricing-icon-container i, {{WRAPPER}} .premium-pricing-icon, {{WRAPPER}} .premium-pricing-image' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-pricing-icon-container i, {{WRAPPER}} .premium-pricing-icon-container > svg, {{WRAPPER}} .premium-pricing-icon, {{WRAPPER}} .premium-pricing-image' => 'border-radius: {{SIZE}}{{UNIT}};',
 				),
 				'separator'  => 'after',
 			)
@@ -1726,26 +1878,6 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'premium_pricing_icon_margin',
-			array(
-				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'default'    => array(
-					'top'    => 50,
-					'right'  => 0,
-					'bottom' => 20,
-					'left'   => 0,
-					'unit'   => 'px',
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-pricing-icon-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-			)
-		);
-
-		/*Icon Padding*/
-		$this->add_responsive_control(
 			'premium_pricing_icon_padding',
 			array(
 				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
@@ -1764,8 +1896,29 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		$this->end_controls_section();
+		$this->add_responsive_control(
+			'premium_pricing_icon_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'default'    => array(
+					'top'    => 50,
+					'right'  => 0,
+					'bottom' => 20,
+					'left'   => 0,
+					'unit'   => 'px',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-pricing-icon-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
 
+		$this->end_controls_section();
+	}
+
+	private function add_title_style_controls() {
 		$this->start_controls_section(
 			'premium_pricing_title_style_settings',
 			array(
@@ -1812,44 +1965,33 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'premium_pricing_title_margin',
-			array(
-				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'default'    => array(
-					'top'    => 0,
-					'right'  => 0,
-					'bottom' => 0,
-					'left'   => 0,
-					'unit'   => 'px',
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-pricing-table-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
 			'premium_pricing_title_padding',
 			array(
 				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
-				'default'    => array(
-					'top'    => 0,
-					'right'  => 0,
-					'bottom' => 20,
-					'left'   => 0,
-					'unit'   => 'px',
-				),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-pricing-table-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
 
+		$this->add_responsive_control(
+			'premium_pricing_title_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-pricing-table-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
 		$this->end_controls_section();
+	}
+
+	private function add_price_style_controls() {
 
 		$this->start_controls_section(
 			'premium_pricing_price_style_settings',
@@ -1910,8 +2052,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->add_control(
 			'premium_pricing_currency_heading',
 			array(
-				'label' => __( 'Currency', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
+				'label'     => __( 'Currency', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 			)
 		);
 
@@ -1985,12 +2128,12 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->add_control(
 			'premium_pricing_price_heading',
 			array(
-				'label' => __( 'Price', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
+				'label'     => __( 'Price', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 			)
 		);
 
-		/*Price Color*/
 		$this->add_control(
 			'premium_pricing_price_color',
 			array(
@@ -2002,11 +2145,9 @@ class Premium_Pricing_Table extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-pricing-price-value'  => 'color: {{VALUE}};',
 				),
-				'separator' => 'before',
 			)
 		);
 
-		/*Price Typo*/
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -2034,12 +2175,12 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->add_control(
 			'premium_pricing_sep_heading',
 			array(
-				'label' => __( 'Divider', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
+				'label'     => __( 'Divider', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 			)
 		);
 
-		/*Separator Color*/
 		$this->add_control(
 			'premium_pricing_sep_color',
 			array(
@@ -2051,11 +2192,9 @@ class Premium_Pricing_Table extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-pricing-price-separator'  => 'color: {{VALUE}};',
 				),
-				'separator' => 'before',
 			)
 		);
 
-		/*Separator Typo*/
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -2078,7 +2217,7 @@ class Premium_Pricing_Table extends Widget_Base {
 					'top'    => 0,
 					'right'  => 0,
 					'bottom' => 20,
-					'left'   => -15,
+					'left'   => 0,
 					'unit'   => 'px',
 				),
 				'selectors'  => array(
@@ -2090,12 +2229,12 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->add_control(
 			'premium_pricing_dur_heading',
 			array(
-				'label' => __( 'Duration', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
+				'label'     => __( 'Duration', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 			)
 		);
 
-		/*Duration Color*/
 		$this->add_control(
 			'premium_pricing_dur_color',
 			array(
@@ -2107,11 +2246,9 @@ class Premium_Pricing_Table extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-pricing-price-duration'  => 'color: {{VALUE}};',
 				),
-				'separator' => 'before',
 			)
 		);
 
-		/*Duration Typography*/
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -2140,8 +2277,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->add_control(
 			'premium_pricing_price_container_heading',
 			array(
-				'label' => __( 'Container', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
+				'label'     => __( 'Container', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 			)
 		);
 
@@ -2180,27 +2318,14 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		/*Price Margin*/
-		$this->add_responsive_control(
-			'premium_pricing_price_container_margin',
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
 			array(
-				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'default'    => array(
-					'top'    => 16,
-					'right'  => 0,
-					'bottom' => 16,
-					'left'   => 0,
-					'unit'   => 'px',
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-pricing-price-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
+				'name'     => 'price_cont_border',
+				'selector' => '{{WRAPPER}} .premium-pricing-price-container',
 			)
 		);
 
-		/*Price Padding*/
 		$this->add_responsive_control(
 			'premium_pricing_price_padding',
 			array(
@@ -2213,8 +2338,22 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		$this->end_controls_section();
+		$this->add_responsive_control(
+			'premium_pricing_price_container_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-pricing-price-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
 
+		$this->end_controls_section();
+	}
+
+	private function add_feature_list_style_controls() {
 		$this->start_controls_section(
 			'premium_pricing_list_style_settings',
 			array(
@@ -2366,6 +2505,19 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
+		/*List Padding*/
+		$this->add_responsive_control(
+			'premium_pricing_list_padding',
+			array(
+				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-pricing-list' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
 		/*List Margin*/
 		$this->add_responsive_control(
 			'premium_pricing_list_margin',
@@ -2386,21 +2538,10 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
-		/*List Padding*/
-		$this->add_responsive_control(
-			'premium_pricing_list_padding',
-			array(
-				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-pricing-list' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-			)
-		);
-
 		$this->end_controls_section();
+	}
 
+	private function add_tooltips_style_controls() {
 		$this->start_controls_section(
 			'tooltips_style',
 			array(
@@ -2499,7 +2640,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_description_style_controls() {
 		$this->start_controls_section(
 			'premium_pricing_description_style_settings',
 			array(
@@ -2593,7 +2736,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_button_style_controls() {
 		$this->start_controls_section(
 			'premium_pricing_button_style_settings',
 			array(
@@ -2861,7 +3006,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->end_controls_section();
+	}
 
+	private function add_ribbon_style_controls() {
 		$this->start_controls_section(
 			'premium_pricing_table_badge_style',
 			array(
@@ -2947,7 +3094,9 @@ class Premium_Pricing_Table extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	private function add_box_style_controls() {
 		$this->start_controls_section(
 			'premium_pricing_box_style_settings',
 			array(
@@ -3399,15 +3548,10 @@ class Premium_Pricing_Table extends Widget_Base {
 			<?php endif; ?>
 
 			<?php if ( ! empty( $settings['premium_pricing_table_price_currency'] ) ) : ?>
-				<span class="premium-pricing-price-currency">
-					<?php echo wp_kses_post( $settings['premium_pricing_table_price_currency'] ); ?>
-				</span>
+				<span class="premium-pricing-price-currency"><?php echo wp_kses_post( $settings['premium_pricing_table_price_currency'] ); ?></span>
 			<?php endif; ?>
-
 			<?php if ( ! empty( $settings['premium_pricing_table_price_value'] ) ) : ?>
-				<span class="premium-pricing-price-value">
-					<?php echo wp_kses_post( $settings['premium_pricing_table_price_value'] ); ?>
-				</span>
+				<span class="premium-pricing-price-value"><?php echo wp_kses_post( $settings['premium_pricing_table_price_value'] ); ?></span>
 			<?php endif; ?>
 
 			<?php if ( ! empty( $settings['premium_pricing_table_price_separator'] ) ) : ?>

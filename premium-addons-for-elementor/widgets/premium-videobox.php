@@ -152,6 +152,9 @@ class Premium_Videobox extends Widget_Base {
 			)
 		);
 
+		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-video-box-widget/', 'video-box', 'wp-editor', 'demo' );
+    	Helper_Functions::add_templates_controls( $this, 'video-box', $demo );
+
 		$this->add_control(
 			'premium_video_box_video_type',
 			array(

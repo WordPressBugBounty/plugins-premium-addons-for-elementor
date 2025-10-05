@@ -3,7 +3,7 @@
 .premium-pricing-table-container {
   position: relative;
   text-align: center;
-  display: inline-block;
+  display: grid;
   width: 100%;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -269,6 +269,21 @@
   background: #6ec1e4;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+}
+
+.premium-pricing-price-container {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+.premium-pricing-price-container .premium-pricing-price-separator,
+.premium-pricing-price-container .premium-pricing-price-duration {
+  -webkit-order: 2;
+  -ms-flex-order: 2;
+  order: 2;
 }
 
 .rtl .premium-badge-stripe .corner {

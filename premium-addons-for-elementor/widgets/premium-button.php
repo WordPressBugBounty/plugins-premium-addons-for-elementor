@@ -893,6 +893,13 @@ class Premium_Button extends Widget_Base {
 					'premium_button_icon_switcher' => 'yes',
 					'premium_button_hover_effect!' => 'style4',
 				),
+				'selectors_dictionary' => array(
+					'before'  => 'row',
+					'after' => 'row-reverse',
+				),
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-button-text-icon-wrapper' => 'flex-direction: {{VALUE}}',
+				),
 			)
 		);
 
@@ -935,10 +942,6 @@ class Premium_Button extends Widget_Base {
 			)
 		);
 
-		$icon_spacing = is_rtl() ? 'left' : 'right';
-
-		$icon_spacing_after = is_rtl() ? 'right' : 'left';
-
 		$this->add_responsive_control(
 			'premium_button_icon_before_spacing',
 			array(
@@ -946,34 +949,13 @@ class Premium_Button extends Widget_Base {
 				'type'      => Controls_Manager::SLIDER,
 				'condition' => array(
 					'premium_button_icon_switcher' => 'yes',
-					'premium_button_icon_position' => 'before',
 					'premium_button_hover_effect!' => array( 'style3', 'style4' ),
 				),
 				'default'   => array(
 					'size' => 15,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-button-text-icon-wrapper i, {{WRAPPER}} .premium-button-text-icon-wrapper svg' => 'margin-' . $icon_spacing . ': {{SIZE}}px',
-				),
-				'separator' => 'after',
-			)
-		);
-
-		$this->add_responsive_control(
-			'premium_button_icon_after_spacing',
-			array(
-				'label'     => __( 'Icon Spacing', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SLIDER,
-				'condition' => array(
-					'premium_button_icon_switcher' => 'yes',
-					'premium_button_icon_position' => 'after',
-					'premium_button_hover_effect!' => array( 'style3', 'style4' ),
-				),
-				'default'   => array(
-					'size' => 15,
-				),
-				'selectors' => array(
-					'{{WRAPPER}} .premium-button-text-icon-wrapper i, {{WRAPPER}} .premium-button-text-icon-wrapper svg' => 'margin-' . $icon_spacing_after . ': {{SIZE}}px',
+					'{{WRAPPER}} .premium-button-text-icon-wrapper' => 'gap: {{SIZE}}px',
 				),
 				'separator' => 'after',
 			)
@@ -986,7 +968,7 @@ class Premium_Button extends Widget_Base {
 				'type'      => Controls_Manager::SLIDER,
 				'condition' => array(
 					'premium_button_icon_switcher' => 'yes',
-					'premium_button_icon_position' => 'before',
+					// 'premium_button_icon_position' => 'before',
 					'premium_button_hover_effect'  => 'style3',
 				),
 				'range'     => array(
@@ -996,29 +978,7 @@ class Premium_Button extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-button-style3-before:hover i, {{WRAPPER}} .premium-button-style3-before:hover svg' => '-webkit-transform: translateX({{SIZE}}{{UNIT}}); transform: translateX({{SIZE}}{{UNIT}})',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
-			'premium_button_icon_style3_after_transition',
-			array(
-				'label'     => __( 'Icon Spacing', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SLIDER,
-				'condition' => array(
-					'premium_button_icon_switcher'  => 'yes',
-					'premium_button_icon_position!' => 'before',
-					'premium_button_hover_effect'   => 'style3',
-				),
-				'range'     => array(
-					'px' => array(
-						'min' => -50,
-						'max' => 50,
-					),
-				),
-				'selectors' => array(
-					'{{WRAPPER}} .premium-button-style3-after:hover i, {{WRAPPER}} .premium-button-style3-after:hover svg' => '-webkit-transform: translateX({{SIZE}}{{UNIT}}); transform: translateX({{SIZE}}{{UNIT}})',
+					'{{WRAPPER}} .premium-button-style3:hover i, {{WRAPPER}} .premium-button-style3:hover svg' => '-webkit-transform: translateX({{SIZE}}{{UNIT}}); transform: translateX({{SIZE}}{{UNIT}})',
 				),
 			)
 		);
@@ -1862,7 +1822,7 @@ class Premium_Button extends Widget_Base {
 			<div class="premium-button-text-icon-wrapper">
 				<?php if ( 'yes' === $settings['premium_button_icon_switcher'] ) : ?>
 
-					<?php if ( 'before' === $settings['premium_button_icon_position'] && 'style4' !== $settings['premium_button_hover_effect'] ) : ?>
+					<?php if ( 'style4' !== $settings['premium_button_hover_effect'] ) : ?>
 						<?php if ( 'icon' === $icon_type ) : ?>
 							<?php
 
@@ -1886,25 +1846,6 @@ class Premium_Button extends Widget_Base {
 					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_button_text' ) ); ?>>
 						<?php echo wp_kses_post( $button_text ); ?>
 					</span>
-				<?php endif; ?>
-
-				<?php if ( 'yes' === $settings['premium_button_icon_switcher'] ) : ?>
-					<?php if ( 'after' === $settings['premium_button_icon_position'] && 'style4' !== $settings['premium_button_hover_effect'] ) : ?>
-						<?php if ( 'icon' === $icon_type ) : ?>
-							<?php
-								echo Helper_Functions::get_svg_by_icon(
-									$settings['premium_button_icon_selection_updated'],
-									$this->get_render_attribute_string( 'icon' )
-								); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							?>
-						<?php elseif ( 'svg' === $icon_type ) : ?>
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
-								<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</div>
-						<?php else : ?>
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'lottie' ) ); ?>></div>
-						<?php endif; ?>
-					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 

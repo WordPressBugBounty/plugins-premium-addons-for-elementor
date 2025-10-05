@@ -728,7 +728,7 @@ class Premium_Media_Wheel extends Widget_Base {
 				'type'      => Controls_Manager::SWITCHER,
 				'separator' => 'before',
 				'condition' => array(
-					'pa_media_type' => 'image',
+					'pa_media_type' => array( 'image', 'video' ),
 				),
 			)
 		);
@@ -743,7 +743,7 @@ class Premium_Media_Wheel extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'media_info'    => 'yes',
-					'pa_media_type' => 'image',
+					'pa_media_type' => array( 'image', 'video' ),
 				),
 			)
 		);
@@ -757,7 +757,7 @@ class Premium_Media_Wheel extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'media_info'    => 'yes',
-					'pa_media_type' => 'image',
+					'pa_media_type' => array( 'image', 'video' ),
 				),
 			)
 		);
@@ -1442,7 +1442,7 @@ class Premium_Media_Wheel extends Widget_Base {
 	private function add_info_style_controls() {
 
 		$this->start_controls_section(
-			'media_ifno_style_sec',
+			'media_info_style_sec',
 			array(
 				'label' => __( 'Media Info', 'premium-addons-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
@@ -2625,7 +2625,7 @@ class Premium_Media_Wheel extends Widget_Base {
 				$hover_effect = '';
 			}
 
-			$media_info = 'image' === $media_type && 'yes' === $item['media_info'];
+			$media_info = in_array( $media_type, array( 'image', 'video' ), true ) && 'yes' === $item['media_info'];
 
 			$this->add_render_attribute(
 				'wheel_item' . $index,

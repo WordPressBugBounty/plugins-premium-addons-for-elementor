@@ -13,6 +13,7 @@ use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
@@ -2885,7 +2886,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Premium_Background::get_type(),
+			Group_Control_Background::get_type(),
 			array(
 				'name'     => 'pa_ham_menu_background',
 				'types'    => array( 'classic', 'gradient' ),
