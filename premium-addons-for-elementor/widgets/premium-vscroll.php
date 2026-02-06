@@ -86,7 +86,21 @@ class Premium_Vscroll extends Widget_Base {
 	}
 
 	protected function is_dynamic_content(): bool {
-		return false;
+
+		$is_edit = Plugin::instance()->editor->is_edit_mode();
+
+		if ( $is_edit ) {
+			return false;
+		}
+
+		$content_type       = $this->get_settings( 'content_type' );
+		$is_dynamic_content = false;
+
+		if ( 'templates' === $content_type ) {
+			$is_dynamic_content = true;
+		}
+
+		return $is_dynamic_content;
 	}
 
 	/**
@@ -225,6 +239,9 @@ class Premium_Vscroll extends Widget_Base {
 				'type'        => Controls_Manager::TEXT,
 				'description' => __( 'Use this option to add unique ID to your template container', 'premium-addons-for-elementor' ),
 				'dynamic'     => array( 'active' => true ),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -249,6 +266,9 @@ class Premium_Vscroll extends Widget_Base {
 				'label'   => __( 'Container ID', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::TEXT,
 				'dynamic' => array( 'active' => true ),
+				'ai'      => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -625,6 +645,8 @@ class Premium_Vscroll extends Widget_Base {
 				'content_classes' => 'editor-pa-doc',
 			)
 		);
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 

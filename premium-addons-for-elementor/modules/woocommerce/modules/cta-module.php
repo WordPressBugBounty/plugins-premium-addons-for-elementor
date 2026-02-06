@@ -169,12 +169,14 @@ class CTA_Module extends Module_Base {
 						} else {
 
 							$product_url = $child_product ? get_permalink( $child_id ) : '';
-							wp_send_json_error( array( 
-								'message' => 'Failed to add product to cart.',
-								'product_url' => $product_url,
-								) );
+							wp_send_json_error(
+								array(
+									'message'     => 'Failed to add product to cart.',
+									'product_url' => $product_url,
+								)
+							);
 
-							//wp_send_json_error( array( 'qty_message' => 'The maximum available quantity for ' . $child_product->get_name() . ' is ' . $stock_quantity . '.' ) );
+							// wp_send_json_error( array( 'qty_message' => 'The maximum available quantity for ' . $child_product->get_name() . ' is ' . $stock_quantity . '.' ) );
 						}
 					} else {
 						wp_send_json_error( array( 'message' => 'Product ' . $child_product->get_name() . ' is out of stock.' ) );
@@ -204,7 +206,7 @@ class CTA_Module extends Module_Base {
 				}
 
 				$stock_quantity = $variation->get_stock_quantity();
-				$product_url = $product ? get_permalink( $product_id ) : '';
+				$product_url    = $product ? get_permalink( $product_id ) : '';
 
 				if ( ( $quantity <= $stock_quantity ) || ( null === $stock_quantity ) ) {
 
@@ -217,19 +219,21 @@ class CTA_Module extends Module_Base {
 							)
 						);
 					} else {
-						wp_send_json_error( array( 
-							'message' => 'Failed to add product to cart.',
-							'product_url' => $product_url,
-							) );
+						wp_send_json_error(
+							array(
+								'message'     => 'Failed to add product to cart.',
+								'product_url' => $product_url,
+							)
+						);
 					}
 				} else {
-					
-					wp_send_json_error( array( 
-						'message' => 'Failed to add product to cart.',
-						) );
-				}
-			
 
+					wp_send_json_error(
+						array(
+							'message' => 'Failed to add product to cart.',
+						)
+					);
+				}
 			} else {
 				wp_send_json_error( array( 'message' => 'No matching variation found.' ) );
 			}
@@ -238,7 +242,7 @@ class CTA_Module extends Module_Base {
 			$quantity = isset( $_POST['quantity'] ) ? intval( $_POST['quantity'] ) : 1;
 			// Check stock quantity for simple product.
 			$stock_quantity = $product->get_stock_quantity();
-			$product_url = $product ? get_permalink( $product_id ) : '';
+			$product_url    = $product ? get_permalink( $product_id ) : '';
 
 			// Check if the stock quantity is set or is unlimited.
 			if ( ( $quantity <= $stock_quantity ) || ( null === $stock_quantity ) ) {
@@ -251,14 +255,20 @@ class CTA_Module extends Module_Base {
 						)
 					);
 				} else {
-					wp_send_json_error( array( 'message' => 'Failed to add product to cart.',
-					'product_url' => $product_url,
-					) );
+					wp_send_json_error(
+						array(
+							'message'     => 'Failed to add product to cart.',
+							'product_url' => $product_url,
+						)
+					);
 				}
 			} else {
-				wp_send_json_error( array( 'message' => "Failed to add product to cart.
+				wp_send_json_error(
+					array(
+						'message' => "Failed to add product to cart.
 				The maximum available quantity is ' . $stock_quantity . '.'",
-				) );
+					)
+				);
 				return;
 			}
 		}

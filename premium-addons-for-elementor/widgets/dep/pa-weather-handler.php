@@ -189,15 +189,27 @@ class Pa_Weather_Handler {
 
 		$ip_address = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 
-		$location_data = json_decode( rplg_urlopen( 'http://www.geoplugin.net/json.gp?ip=' . $ip_address )['data'] );
+		$location_data = wp_remote_get(
+			'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
+			array(
+				'timeout'   => 15,
+				'sslverify' => false,
+			)
+		);
 
-		if ( 404 === $location_data->geoplugin_status ) {
-			return false; // localhost.
+		if ( is_wp_error( $location_data ) || empty( $location_data ) ) {
+			return; // localhost.
+		}
+
+		$location_data = json_decode( wp_remote_retrieve_body( $location_data ), true );
+
+		if ( null == $location_data ) {
+			return;
 		}
 
 		return array(
-			'lat'  => $location_data->geoplugin_latitude,
-			'long' => $location_data->geoplugin_longitude,
+			'lat'  => $location_data['location']['latitude'],
+			'long' => $location_data['location']['longitude'],
 		);
 	}
 

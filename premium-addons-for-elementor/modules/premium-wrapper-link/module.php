@@ -47,16 +47,14 @@ class Module {
 		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// Creates Premium Wrapper Link tab at the end of layout/content tab.
-		add_action( 'elementor/element/section/section_layout/after_section_end', array( $this, 'register_controls' ));
+		add_action( 'elementor/element/section/section_layout/after_section_end', array( $this, 'register_controls' ) );
 		add_action( 'elementor/element/column/section_advanced/after_section_end', array( $this, 'register_controls' ) );
 		add_action( 'elementor/element/common/_section_style/after_section_end', array( $this, 'register_controls' ) );
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ) );
-        add_action( 'elementor/frontend/before_render', array( $this, 'before_render' ), 100 );
-
-
+		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ) );
+		add_action( 'elementor/frontend/before_render', array( $this, 'before_render' ), 100 );
 	}
 
 	/**
@@ -82,12 +80,12 @@ class Module {
 			)
 		);
 
-        $element->add_control(
+		$element->add_control(
 			'premium_wrapper_link_switcher',
 			array(
-				'label'              => __( 'Enable Wrapper Link', 'premium-addons-for-elementor' ),
-				'type'               => Controls_Manager::SWITCHER,
-                'prefix_class'       => 'premium-wrapper-link-',
+				'label'        => __( 'Enable Wrapper Link', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'premium-wrapper-link-',
 			)
 		);
 
@@ -97,9 +95,9 @@ class Module {
 				'raw'             => __( 'Please note that Wrapper Link works on the frontend.', 'premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-                'condition'=> [
-                    'premium_wrapper_link_switcher'=> 'yes'
-                ]
+				'condition'       => array(
+					'premium_wrapper_link_switcher' => 'yes',
+				),
 			)
 		);
 
@@ -114,9 +112,9 @@ class Module {
 				),
 				'default'     => 'url',
 				'label_block' => true,
-                'condition'=> [
-                    'premium_wrapper_link_switcher'=> 'yes'
-                ]
+				'condition'   => array(
+					'premium_wrapper_link_switcher' => 'yes',
+				),
 			)
 		);
 
@@ -130,7 +128,7 @@ class Module {
 				),
 				'placeholder' => 'https://example.com',
 				'condition'   => array(
-                    'premium_wrapper_link_switcher'=> 'yes',
+					'premium_wrapper_link_switcher'  => 'yes',
 					'premium_wrapper_link_selection' => 'url',
 				),
 			)
@@ -139,13 +137,13 @@ class Module {
 		$element->add_control(
 			'premium_wrapper_existing_link',
 			array(
-				'label'         => __( 'Existing Page', 'premium-addons-for-elementor' ),
-				'type'          => Premium_Post_Filter::TYPE,
-				'label_block'   => true,
-                'multiple'      => false,
-                'source'        => array( 'post', 'page' ),
+				'label'       => __( 'Existing Page', 'premium-addons-for-elementor' ),
+				'type'        => Premium_Post_Filter::TYPE,
+				'label_block' => true,
+				'multiple'    => false,
+				'source'      => array( 'post', 'page' ),
 				'condition'   => array(
-                    'premium_wrapper_link_switcher'=> 'yes',
+					'premium_wrapper_link_switcher'  => 'yes',
 					'premium_wrapper_link_selection' => 'link',
 				),
 			)
@@ -168,31 +166,30 @@ class Module {
 
 		$settings = $element->get_settings_for_display();
 
-        if ( 'yes' === $element->get_settings_for_display('premium_wrapper_link_switcher') ) {
+		if ( 'yes' === $element->get_settings_for_display( 'premium_wrapper_link_switcher' ) ) {
 
-            if ( 'link' === $settings['premium_wrapper_link_selection'] ) {
-                $href = get_permalink( $settings['premium_wrapper_existing_link'] );
-            } else {
-                $href = $settings['premium_wrapper_link']['url'];
-            }
+			if ( 'link' === $settings['premium_wrapper_link_selection'] ) {
+				$href = get_permalink( $settings['premium_wrapper_existing_link'] );
+			} else {
+				$href = $settings['premium_wrapper_link']['url'];
+			}
 
-            $link_settings = array(
-                'type' => $settings['premium_wrapper_link_selection'],
-                'link' => $settings['premium_wrapper_link'],
-                'href' => esc_url( $href ),
-            );
+			$link_settings = array(
+				'type' => $settings['premium_wrapper_link_selection'],
+				'link' => $settings['premium_wrapper_link'],
+				'href' => esc_url( $href ),
+			);
 
-            if ( ! empty( $href ) ) {
-                $element->add_render_attribute(
-                    '_wrapper',
-                    array(
-                        'data-premium-element-link' => wp_json_encode( $link_settings ),
-                        'style'                     => 'cursor: pointer',
-                    )
-                );
-            }
-
-        }
+			if ( ! empty( $href ) ) {
+				$element->add_render_attribute(
+					'_wrapper',
+					array(
+						'data-premium-element-link' => wp_json_encode( $link_settings ),
+						'style'                     => 'cursor: pointer',
+					)
+				);
+			}
+		}
 	}
 
 	/**
@@ -224,15 +221,15 @@ class Module {
 			return;
 		}
 
-        if ( 'yes' === $element->get_settings_for_display( 'premium_wrapper_link_switcher' ) ) {
+		if ( 'yes' === $element->get_settings_for_display( 'premium_wrapper_link_switcher' ) ) {
 
-            $this->enqueue_scripts();
+			$this->enqueue_scripts();
 
-            self::$load_script = true;
+			self::$load_script = true;
 
-            remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
+			remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-        }
+		}
 	}
 
 	/**

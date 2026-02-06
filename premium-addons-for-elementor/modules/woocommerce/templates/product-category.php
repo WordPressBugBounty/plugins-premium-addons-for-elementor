@@ -27,10 +27,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 * @hooked woocommerce_subcategory_thumbnail - 10
 	 */
 
-    echo '<div class="premium-woo-cats__img-wrap">';
-        echo wp_kses_post( $thumbnail_html );
-        echo '<div class="premium-woo-cats__img-overlay"></div>';
-    echo '</div>';
+	echo '<div class="premium-woo-cats__img-wrap">';
+		echo wp_kses_post( $thumbnail_html );
+		echo '<div class="premium-woo-cats__img-overlay"></div>';
+	echo '</div>';
 
 	/**
 	 * Subcategory Title

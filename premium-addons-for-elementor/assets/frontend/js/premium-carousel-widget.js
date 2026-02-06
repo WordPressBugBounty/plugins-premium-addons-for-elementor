@@ -16,10 +16,12 @@
 		if ($carouselElem.find(".item-wrapper").length < 1)
 			return;
 
-		function slideToShow(slick) {
+		addSlideContent();
 
+		function slideToShow(slick) {
 			var slidesToShow = slick.options.slidesToShow,
 				windowWidth = $(window).width();
+
 			if (windowWidth > settings.tabletBreak) {
 				slidesToShow = settings.slidesDesk;
 			}
@@ -33,7 +35,36 @@
 			}
 
 			return slidesToShow;
+		}
 
+		/**
+		 * Used to add the template content to the carousel slide when the template source is an existing template on the page.
+		 */
+		function addSlideContent() {
+			$scope.find(".premium-carousel-template[data-template-src]").each(function () {
+				var containerID = $(this).data("template-src");
+
+				var $templateContent = $('#' + containerID);
+
+				if (!$templateContent.length) {
+					$(this).html(
+						'<div class="premium-error-notice"><span>Container with ID <b>' +
+						containerID +
+						"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>"
+					);
+
+					return;
+				}
+
+				if (!elementorFrontend.isEditMode()) {
+					$(this).append($templateContent);
+				} else {
+					$scope.find(".elementor-element-overlay")
+						.remove();
+					$(this).append($templateContent.clone(true));
+				}
+
+			});
 		}
 
 		$carouselElem.on("init", function (event) {
@@ -57,19 +88,20 @@
 
 		$carouselElem.find(".premium-carousel-inner").slick(getSlickOptions(settings));
 
-		function getSlickOptions(settings) {
+		if (settings.hasNavSlider) {
 
-			var appearance = settings.appearance;
+			var isVerticalNav = $scope.hasClass('pa-thumb-nav-pos-row') || $scope.hasClass('pa-thumb-nav-pos-row-reverse');
 
-			var options = {
-				vertical: settings.vertical,
-				slidesToScroll: 'all' === appearance ? settings.slidesDesk : 1,
-				slidesToShow: settings.slidesToShow,
+			var navOptions = {
+				rows: 0, // uses the DIVs we added directly without wrapping it in extra DIVs to create a grid layout, the Divs class will be alongside the slick-slide class.
+				vertical: isVerticalNav,
+				slidesToScroll: 1,
+				slidesToShow: settings.slidesDesk,
 				responsive: [{
 					breakpoint: settings.tabletBreak,
 					settings: {
 						slidesToShow: settings.slidesTab,
-						slidesToScroll: 'all' === appearance ? settings.slidesTab : 1,
+						slidesToScroll: settings.slidesTab,
 						swipe: settings.touchMove,
 					}
 				},
@@ -77,40 +109,106 @@
 					breakpoint: settings.mobileBreak,
 					settings: {
 						slidesToShow: settings.slidesMob,
-						slidesToScroll: 'all' === appearance ? settings.slidesMob : 1,
+						slidesToScroll: settings.slidesMob,
 						swipe: settings.touchMove,
 					}
 				}
 				],
+				draggable: settings.draggable,
+				infinite: true,
+				autoplay: settings.thumbAutoplay,
+				autoplaySpeed: settings.thumbAutoplaySpeed,
+				arrows: settings.arrows,
+				prevArrow: $carouselElem.find(".premium-carousel-nav-arrow-prev").html(),
+				nextArrow: $carouselElem.find(".premium-carousel-nav-arrow-next").html(),
+				dots: false,
+				focusOnSelect: true,
+				pauseOnHover: settings.pauseOnHover,
+				// rtl: !isVerticalNav && elementorFrontend.config.is_rtl,
+				rtl: false, // false as it causes issues in RTL mode with the .slick-current class
+				centerMode: settings.centerMode,
+				centerPadding: computedStyle.getPropertyValue('--pa-thumb-slider-center-padding') + 'px',
+				asNavFor: $carouselElem.find(".premium-carousel-inner")
+			};
+
+			if (settings.arrowCustomPos) {
+				navOptions.appendArrows = $carouselElem.find(".premium-carousel-arrows-wrapper");
+			}
+
+			$scope.find('#premium-carousel-nav-' + widgetID).slick(navOptions);
+		}
+
+		function getSlickOptions(settings) {
+
+			var options = {
+				vertical: settings.vertical,
 				useTransform: true,
 				fade: settings.fade,
 				infinite: settings.infinite,
 				speed: settings.speed,
-				autoplay: settings.autoplay,
-				autoplaySpeed: settings.autoplaySpeed,
 				rows: 0,
 				draggable: settings.draggable,
-				rtl: elementorFrontend.config.is_rtl,
-				adaptiveHeight: settings.adaptiveHeight,
-				pauseOnHover: settings.pauseOnHover,
-				centerMode: settings.centerMode,
-				centerPadding: computedStyle.getPropertyValue('--pa-carousel-center-padding') + 'px',
-				arrows: settings.arrows,
-				prevArrow: $carouselElem.find(".premium-carousel-nav-arrow-prev").html(),
-				nextArrow: $carouselElem.find(".premium-carousel-nav-arrow-next").html(),
-				dots: settings.dots,
-				variableWidth: settings.variableWidth,
-				cssEase: settings.cssEase,
-				customPaging: function () {
-					var customDot = $carouselElem.find(".premium-carousel-nav-dot").html();
-					return customDot;
-				},
-				carouselNavigation: settings.carouselNavigation,
-				templatesNumber: settings.templatesNumber,
-			}
+				rtl: !settings.vertical && elementorFrontend.config.is_rtl
+			};
 
-			if (settings.arrowCustomPos) {
-				options.appendArrows = $carouselElem.find(".premium-carousel-arrows-wrapper");
+			if (settings.hasNavSlider) {
+				Object.assign(options, {
+					slidesToShow: 1,
+					slidesToScroll: 1,
+					autoplay: false,
+					arrows: false,
+					autoplay: false,
+					centerMode: false,
+					asNavFor: '#premium-carousel-nav-' + widgetID
+				});
+
+			} else {
+				var appearance = settings.appearance;
+
+				Object.assign(options, {
+					vertical: settings.vertical,
+					slidesToScroll: 'all' === appearance ? settings.slidesDesk : 1,
+					slidesToShow: settings.slidesToShow,
+					responsive: [{
+						breakpoint: settings.tabletBreak,
+						settings: {
+							slidesToShow: settings.slidesTab,
+							slidesToScroll: 'all' === appearance ? settings.slidesTab : 1,
+							swipe: settings.touchMove,
+						}
+					},
+					{
+						breakpoint: settings.mobileBreak,
+						settings: {
+							slidesToShow: settings.slidesMob,
+							slidesToScroll: 'all' === appearance ? settings.slidesMob : 1,
+							swipe: settings.touchMove,
+						}
+					}
+					],
+					autoplay: settings.autoplay,
+					autoplaySpeed: settings.autoplaySpeed,
+					adaptiveHeight: settings.adaptiveHeight,
+					pauseOnHover: settings.pauseOnHover,
+					centerMode: settings.centerMode,
+					centerPadding: computedStyle.getPropertyValue('--pa-carousel-center-padding') + 'px',
+					dots: settings.dots,
+					variableWidth: settings.variableWidth,
+					cssEase: settings.cssEase,
+					arrows: settings.arrows,
+					prevArrow: $carouselElem.find(".premium-carousel-nav-arrow-prev").html(),
+					nextArrow: $carouselElem.find(".premium-carousel-nav-arrow-next").html(),
+					customPaging: function () {
+						var customDot = $carouselElem.find(".premium-carousel-nav-dot").html();
+						return customDot;
+					},
+					carouselNavigation: settings.carouselNavigation,
+					templatesNumber: settings.templatesNumber,
+				});
+
+				if (settings.arrowCustomPos) {
+					options.appendArrows = $carouselElem.find(".premium-carousel-arrows-wrapper");
+				}
 			}
 
 			return options;
@@ -128,7 +226,6 @@
 		if (settings.carouselNavigation === "progress") {
 			runProgress();
 		}
-
 
 		$scope.find(".premium-carousel-hidden").removeClass("premium-carousel-hidden");
 		$carouselElem.find(".premium-carousel-nav-arrow-prev").remove();
@@ -263,6 +360,7 @@
 						maxHeight = $(this).height();
 					}
 				});
+
 				$carouselElem.find(".slick-slide").each(function () {
 					if ($(this).height() < maxHeight) {
 						$(this).css("margin", Math.ceil(
@@ -271,6 +369,7 @@
 				});
 			});
 		}
+
 		var marginFix = {
 			element: $("a.ver-carousel-arrow"),
 			getWidth: function () {
@@ -286,9 +385,12 @@
 				}
 			}
 		};
-		marginFix.setWidth();
-		marginFix.element = $("a.carousel-arrow");
-		//marginFix.setWidth("horizontal");
+
+		if (!settings.hasNavSlider) {
+			marginFix.setWidth();
+			marginFix.element = $("a.carousel-arrow");
+			//marginFix.setWidth("horizontal");
+		}
 
 		$(document).ready(function () {
 
@@ -322,7 +424,11 @@
 	};
 
 	$(window).on('elementor/frontend/init', function () {
+
+		if ('undefined' !== typeof paElementsHandler && paElementsHandler.isElementAlreadyExists('paCarousel')) {
+			return false;
+		}
+
 		elementorFrontend.hooks.addAction('frontend/element_ready/premium-carousel-widget.default', PremiumCarouselHandler);
 	});
 })(jQuery);
-

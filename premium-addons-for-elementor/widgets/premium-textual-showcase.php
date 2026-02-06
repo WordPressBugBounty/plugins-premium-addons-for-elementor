@@ -226,7 +226,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 	 */
 	private function add_general_controls() {
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$this->start_controls_section(
 			'sect_gen_controls',
@@ -333,7 +333,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 				'label'       => __( 'HTML Tag', 'premium-addons-for-elementor' ),
 				'description' => __( 'Select an HTML tag for the text.', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
-				'default'     => 'span',
 				'options'     => array(
 					'h1'   => 'H1',
 					'h2'   => 'H2',
@@ -345,6 +344,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 					'span' => 'span',
 					'p'    => 'p',
 				),
+				'default'     => 'span',
 				'label_block' => true,
 				'condition'   => array(
 					'item_type' => 'text',
@@ -788,7 +788,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			array(
 				'label'      => __( 'Width', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em', '%' ),
+				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
 				'range'      => array(
 					'px' => array(
 						'min' => 1,
@@ -814,7 +814,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			array(
 				'label'      => __( 'Height', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em' ),
+				'size_units' => array( 'px', 'em', '%' ),
 				'range'      => array(
 					'px' => array(
 						'min' => 1,
@@ -962,7 +962,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 				'label'       => __( 'HTML Tag', 'premium-addons-for-elementor' ),
 				'description' => __( 'Select an HTML tag for the text.', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
-				'default'     => 'span',
 				'options'     => array(
 					'h1'   => 'H1',
 					'h2'   => 'H2',
@@ -974,6 +973,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 					'span' => 'span',
 					'p'    => 'p',
 				),
+				'default'     => 'span',
 				'label_block' => true,
 				'condition'   => array(
 					'item_type_hov' => 'text',
@@ -2042,6 +2042,48 @@ class Premium_Textual_Showcase extends Widget_Base {
 		);
 
 		$this->add_control(
+			'entrance_animation',
+			array(
+				'label'       => __( 'Entrance Animation', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::ANIMATION,
+				'separator'   => 'before',
+				'default'     => '',
+				'label_block' => true,
+				'render_type' => 'template',
+			)
+		);
+
+		$this->add_control(
+			'en_anime_dur',
+			array(
+				'label'     => __( 'Animation Duration', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => '',
+				'options'   => array(
+					'slow' => __( 'Slow', 'premium-addons-for-elementor' ),
+					''     => __( 'Normal', 'premium-addons-for-elementor' ),
+					'fast' => __( 'Fast', 'premium-addons-for-elementor' ),
+				),
+				'condition' => array(
+					'entrance_animation!' => '',
+				),
+			)
+		);
+
+		$this->add_control(
+			'en_anime_delay',
+			array(
+				'label'     => __( 'Animation Delay in Between (s)', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::NUMBER,
+				'default'   => 0,
+				'step'      => 0.1,
+				'condition' => array(
+					'entrance_animation!' => '',
+				),
+			)
+		);
+
+		$this->add_control(
 			'trigger',
 			array(
 				'label'       => __( 'Trigger Animation on', 'premium-addons-for-elementor' ),
@@ -2091,6 +2133,8 @@ class Premium_Textual_Showcase extends Widget_Base {
 			++$doc_index;
 
 		}
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 	}
@@ -2279,7 +2323,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.10', '<' ) ) {
 
@@ -2298,9 +2342,16 @@ class Premium_Textual_Showcase extends Widget_Base {
 			}
 		}
 
-		$content = $settings['content'];
+		$content            = $settings['content'];
+		$entrance_animation = $settings['entrance_animation'];
+		$delay              = 0;
 
 		$this->add_render_attribute( 'container', 'class', 'pa-txt-sc__outer-container pa-trigger-on-' . $settings['trigger'] );
+
+		if ( $entrance_animation ) {
+			$anime_dur = 'animated-' . $settings['en_anime_dur'];
+			$this->add_render_attribute( 'container', 'data-list-animation', array( $entrance_animation, $anime_dur ) );
+		}
 
 		?>
 		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
@@ -2367,6 +2418,20 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 				if ( 'none' !== $item['item_lq_effect'] ) {
 					$this->add_render_attribute( 'item-container' . $item['_id'], 'class', 'premium-lq__' . $item['item_lq_effect'] );
+				}
+
+				if ( $entrance_animation ) {
+
+					$this->add_render_attribute(
+						'item-container' . $item['_id'],
+						'data-delay',
+						array(
+							$delay,
+						)
+					);
+
+					$this->add_render_attribute( 'item-container' . $item['_id'], 'style', 'opacity: 0' );
+					$delay += $settings['en_anime_delay'] * 1000;
 				}
 
 				?>

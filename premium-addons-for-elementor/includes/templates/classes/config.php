@@ -168,7 +168,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 			if ( Helper_Functions::check_papro_version() ) {
 				return __( 'Activate License', 'premium-addons-for-elementor' );
 			} else {
-				return __( 'Get Pro', 'premium-addons-for-elementor' );
+				return __( 'Get PRO', 'premium-addons-for-elementor' );
 			}
 		}
 
@@ -183,8 +183,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 		 */
 		public function get_header_pro_message() {
 
-			return Helper_Functions::check_papro_version() ? __('Activate License', 'premium-addons-for-elementor') : __('Get Pro. SAVE 10% NOW', 'premium-addons-for-elementor');
-
+			return Helper_Functions::check_papro_version() ? __( 'Activate License', 'premium-addons-for-elementor' ) : __( 'Get Pro. SAVE UP TO 30% NOW', 'premium-addons-for-elementor' );
 		}
 
 		/**

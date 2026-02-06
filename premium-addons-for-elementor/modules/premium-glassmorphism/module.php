@@ -54,8 +54,6 @@ class Module {
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-
-
 	}
 
 	/**
@@ -98,7 +96,6 @@ class Module {
 	 */
 	public function register_controls( $element ) {
 
-
 		$element->start_controls_section(
 			'premium_glass_effect',
 			array(
@@ -107,27 +104,27 @@ class Module {
 			)
 		);
 
-        $element->add_control(
+		$element->add_control(
 			'premium_glass_switcher',
 			array(
 				'label'        => __( 'Enable Liquid Glass', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'return_value'       => 'yes',
+				'return_value' => 'yes',
 			)
 		);
 
 		$element->add_control(
 			'lq_effect',
 			array(
-				'label'       => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => sprintf(
+				'label'        => __( 'Liquid Glass Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'description'  => sprintf(
 					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
 					esc_html__( 'Important: Make sure this element has a semi-transparent background color to see the effect. See all presets from %1$shere%2$s.', 'premium-addons-for-elementor' ),
 					'<a href="https://premiumaddons.com/liquid-glass/" target="_blank">',
 					'</a>'
 				),
-				'options'     => array(
+				'options'      => array(
 					'glass1' => __( 'Preset 01', 'premium-addons-for-elementor' ),
 					'glass2' => __( 'Preset 02', 'premium-addons-for-elementor' ),
 					'glass3' => apply_filters( 'pa_pro_label', __( 'Preset 03 (Pro)', 'premium-addons-for-elementor' ) ),
@@ -136,38 +133,38 @@ class Module {
 					'glass6' => apply_filters( 'pa_pro_label', __( 'Preset 06 (Pro)', 'premium-addons-for-elementor' ) ),
 				),
 				'prefix_class' => 'premium-con-lq__',
-				'default'     => 'glass1',
-				'label_block' => true,
-				'render_type'=> 'template',
-				'condition' => [
-					'premium_glass_switcher' => 'yes'
-				]
+				'default'      => 'glass1',
+				'label_block'  => true,
+				'render_type'  => 'template',
+				'condition'    => array(
+					'premium_glass_switcher' => 'yes',
+				),
 			)
 		);
 
 		$element->add_control(
 			'glass_shadow',
 			array(
-				'label'       => __( 'Shadow Effect', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
-					'none'		=> __( 'None', 'premium-addons-for-elementor' ),
-					'shadow1' 	=> __( 'Shadow 01', 'premium-addons-for-elementor' ),
-					'shadow2' 	=> __( 'Shadow 02', 'premium-addons-for-elementor' ),
-					'shadow3' 	=> __( 'Shadow 03', 'premium-addons-for-elementor' ),
-					'shadow4' 	=> __( 'Shadow 04', 'premium-addons-for-elementor' ),
-					'shadow5' 	=> __( 'Shadow 05', 'premium-addons-for-elementor' ),
-					'shadow6' 	=> __( 'Shadow 06', 'premium-addons-for-elementor' ),
-					'shadow7' 	=> __( 'Shadow 07', 'premium-addons-for-elementor' ),
-					'shadow8' 	=> __( 'Shadow 08', 'premium-addons-for-elementor' ),
+				'label'        => __( 'Shadow Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'options'      => array(
+					'none'    => __( 'None', 'premium-addons-for-elementor' ),
+					'shadow1' => __( 'Shadow 01', 'premium-addons-for-elementor' ),
+					'shadow2' => __( 'Shadow 02', 'premium-addons-for-elementor' ),
+					'shadow3' => __( 'Shadow 03', 'premium-addons-for-elementor' ),
+					'shadow4' => __( 'Shadow 04', 'premium-addons-for-elementor' ),
+					'shadow5' => __( 'Shadow 05', 'premium-addons-for-elementor' ),
+					'shadow6' => __( 'Shadow 06', 'premium-addons-for-elementor' ),
+					'shadow7' => __( 'Shadow 07', 'premium-addons-for-elementor' ),
+					'shadow8' => __( 'Shadow 08', 'premium-addons-for-elementor' ),
 				),
 				'prefix_class' => 'premium-lq__',
-				'default'     => 'shadow1',
-				'label_block' => true,
-				'render_type'=> 'template',
-				'condition' => [
-					'premium_glass_switcher' => 'yes'
-				]
+				'default'      => 'none',
+				'label_block'  => true,
+				'render_type'  => 'template',
+				'condition'    => array(
+					'premium_glass_switcher' => 'yes',
+				),
 			)
 		);
 
@@ -219,8 +216,4 @@ class Module {
 
 		return self::$instance;
 	}
-
-
-
 }
-

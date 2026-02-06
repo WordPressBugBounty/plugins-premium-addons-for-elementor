@@ -97,26 +97,38 @@
   display: none;
 }
 
-.premium-bullet-list-content:not(:last-of-type) .premium-bullet-list-connector {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0.5em;
-  z-index: 100;
+.premium-bullet-list-wrapper {
+  position: relative;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  z-index: 1 !important;
 }
-.premium-bullet-list-content:not(:last-of-type) .premium-bullet-list-connector .premium-icon-connector-content:after {
+
+.premium-bullet-list-content:not(:last-of-type) .premium-bullet-list-connector {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.premium-icon-connector-content {
+  position: relative;
+}
+.premium-icon-connector-content::after {
   content: "";
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-color: #333333;
   display: block;
-  height: 100%;
+  height: var(--pa-connector-height, 10px);
+  z-index: 2 !important;
 }
 
 li.premium-bullet-list-content.premium-bullet-list-content-inline {
@@ -268,6 +280,9 @@ ul[data-list-animation*=animated-] .premium-bullet-list-divider-inline {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }
 
 /* Show Bullet Hover Effect */

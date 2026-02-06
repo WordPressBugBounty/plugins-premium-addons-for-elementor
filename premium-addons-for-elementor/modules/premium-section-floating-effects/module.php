@@ -132,7 +132,7 @@ class Module {
 
 		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'feffect-addon', 'wp-editor', 'get-pro' );
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated ) {
 			$element->add_control(

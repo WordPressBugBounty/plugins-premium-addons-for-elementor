@@ -517,7 +517,7 @@
          * @returns {Controller} Parent object for chaining.
          */
         this.scrollTo = function (scrollTarget, additionalParameter) {
-            if (_util.type.Number(scrollTarget)) { // excecute
+            if (_util.type.Number(scrollTarget)) { // execute
                 setScrollPos.call(_options.container, scrollTarget, additionalParameter);
             } else if (scrollTarget instanceof ScrollMagic.Scene) { // scroll to scene
                 if (scrollTarget.controller() === Controller) { // check if the controller is associated with this scene

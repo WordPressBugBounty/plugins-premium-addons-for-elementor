@@ -212,7 +212,7 @@ class Module {
 	 */
 	private function add_tooltips_controls( $element ) {
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$element->start_controls_tab(
 			'premium_tooltip_content_tab',
@@ -377,6 +377,18 @@ class Module {
 			)
 		);
 
+		$element->add_control(
+			'pa_tooltip_tutorial',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => sprintf( '<a href="%s" target="_blank">%s</a>', 'https://www.youtube.com/watch?v=Ng4o0XojexI', __( 'Check the video tutorial »', 'premium-addons-for-elementor' ) ),
+				'content_classes' => 'editor-pa-doc',
+				'condition'       => array(
+					'premium_tooltip_switcher' => 'yes',
+				),
+			)
+		);
+
 		$element->end_controls_tab();
 	}
 
@@ -434,20 +446,20 @@ class Module {
 		$element->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
-				'name'      => 'premium_tooltip_text_typo',
-				'selector'  => '.tooltipster-box.tooltipster-box-{{ID}} .premium-tooltip-content-wrapper-{{ID}} .premium-tootltip-text',
+				'name'           => 'premium_tooltip_text_typo',
+				'selector'       => '.tooltipster-box.tooltipster-box-{{ID}} .premium-tooltip-content-wrapper-{{ID}} .premium-tootltip-text',
 				'fields_options' => array(
-					'line_height' => array(
+					'line_height'    => array(
 						'responsive' => false,
 					),
 					'letter_spacing' => array(
 						'responsive' => false,
 					),
-					'word_spacing' => array(
+					'word_spacing'   => array(
 						'responsive' => false,
 					),
 				),
-				'condition' => array(
+				'condition'      => array(
 					'premium_tooltip_switcher' => 'yes',
 					'premium_tooltip_type'     => 'text',
 				),
@@ -1097,7 +1109,7 @@ class Module {
 
 		$settings = $element->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$tooltips_enabled = $element->get_settings_for_display( 'premium_tooltip_switcher' );
 
@@ -1213,7 +1225,6 @@ class Module {
 
 				$tooltip_settings['follow_mouse'] = 'yes' === $settings['premium_tooltip_mouse_follow'];
 			}
-
 
 			$element->add_render_attribute( '_wrapper', 'data-tooltip-id', $id );
 

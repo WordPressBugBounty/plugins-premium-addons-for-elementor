@@ -44,7 +44,6 @@ class Beta_Testers {
 		$this->transient_key = md5( 'premium_addons_beta_response_key' );
 
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'compare_version' ) );
-
 	}
 
 	/**

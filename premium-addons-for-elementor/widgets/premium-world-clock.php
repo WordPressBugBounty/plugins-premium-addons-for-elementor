@@ -240,7 +240,7 @@ class Premium_World_Clock extends Widget_Base {
 			)
 		);
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$this->add_control(
 			'skin',
@@ -1450,6 +1450,8 @@ class Premium_World_Clock extends Widget_Base {
 			++$doc_index;
 
 		}
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 	}
@@ -3010,7 +3012,7 @@ class Premium_World_Clock extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated && in_array( $settings['skin'], array( 'skin-4', 'skin-6', 'skin-7' ), true ) ) {
 			?>

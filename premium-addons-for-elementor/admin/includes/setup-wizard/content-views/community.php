@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$user = wp_get_current_user();
+$user      = wp_get_current_user();
 $user_mail = isset( $user->user_email ) ? $user->user_email : '';
 ?>
 	<span class="pa-welcome-msg-wrapper pa-wz-flex pa-wz-flex-d-col pa-wz-justify-content-center">

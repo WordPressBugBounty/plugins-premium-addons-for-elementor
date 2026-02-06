@@ -136,7 +136,7 @@ class Premium_Testimonials extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium testimonials', 'quote', 'appreciate', 'rating', 'review', 'recommendation' );
@@ -169,7 +169,7 @@ class Premium_Testimonials extends Widget_Base {
 	 */
 	protected function register_controls() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$this->start_controls_section(
 			'testimonial_section',
@@ -314,7 +314,7 @@ class Premium_Testimonials extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$repeater = new REPEATER();
+		$repeater = new Repeater();
 
 		$repeater->add_control(
 			'person_image',
@@ -447,6 +447,23 @@ class Premium_Testimonials extends Widget_Base {
 				'frontend_available' => true,
 				'condition'          => array(
 					'multiple' => 'yes',
+					'skin!'    => 'skin4',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'slides_to_scroll',
+			array(
+				'label'       => __( 'Slides To Scroll', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'render_type' => 'template',
+				'selectors'   => array(
+					'{{WRAPPER}}' => '--pa-carousel-slides: {{VALUE}}',
+				),
+				'condition'   => array(
+					'multiple' => 'yes',
+					'carousel' => 'yes',
 					'skin!'    => 'skin4',
 				),
 			)
@@ -822,6 +839,8 @@ class Premium_Testimonials extends Widget_Base {
 			)
 		);
 
+		Helper_Functions::register_element_feedback_controls( $this );
+
 		$this->end_controls_section();
 
 		Helper_Functions::register_papro_promotion_controls( $this, 'testimonials' );
@@ -1129,6 +1148,18 @@ class Premium_Testimonials extends Widget_Base {
 				'label'  => __( 'Empty Star Color', 'premium-addons-for-elementor' ),
 				'type'   => Controls_Manager::COLOR,
 				'global' => false,
+			)
+		);
+
+		$this->add_control(
+			'rating_spacing',
+			array(
+				'label'      => __( 'Spacing', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', 'custom' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-fb-rev-star:not(:last-child)' => 'margin-inline-end: {{SIZE}}{{UNIT}};',
+				),
 			)
 		);
 
@@ -1688,7 +1719,7 @@ class Premium_Testimonials extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.8', '<' ) ) {
 

@@ -94,7 +94,7 @@ class Premium_Maps extends Widget_Base {
 	 */
 	public function get_style_depends() {
 
-		$icons_css = apply_filters( 'papro_activated', false ) ? array( 'elementor-icons' ) : array();
+		$icons_css = Helper_Functions::check_papro_version() ? array( 'elementor-icons' ) : array();
 
 		return array_merge(
 			$icons_css,
@@ -346,7 +346,7 @@ class Premium_Maps extends Widget_Base {
 
 		$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'maps-widget', 'wp-editor', 'get-pro' );
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated ) {
 			$repeater->add_control(
@@ -517,19 +517,22 @@ class Premium_Maps extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'premium_maps_map_zoom',
 			array(
-				'label'   => __( 'Zoom', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SLIDER,
-				'default' => array(
+				'label'     => __( 'Zoom', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SLIDER,
+				'default'   => array(
 					'size' => 12,
 				),
-				'range'   => array(
+				'range'     => array(
 					'px' => array(
 						'min' => 0,
 						'max' => 22,
 					),
+				),
+				'selectors' => array(
+					'{{WRAPPER}}' => '--pa-map-zoom: {{SIZE}}',
 				),
 			)
 		);
@@ -723,6 +726,8 @@ class Premium_Maps extends Widget_Base {
 				'content_classes' => 'editor-pa-doc',
 			)
 		);
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 
@@ -1154,7 +1159,7 @@ class Premium_Maps extends Widget_Base {
 	 */
 	protected function render() {
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$settings = $this->get_settings_for_display();
 
@@ -1216,17 +1221,27 @@ class Premium_Maps extends Widget_Base {
 
 			$ip_address = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 
-			$env = unserialize( rplg_urlopen( "http://www.geoplugin.net/php.gp?ip=$ip_address" )['data'] );
+			$env = wp_remote_get(
+				'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
+				array(
+					'timeout'   => 15,
+					'sslverify' => false,
+				)
+			);
 
-			$centerlat = isset( $env['geoplugin_latitude'] ) ? $env['geoplugin_latitude'] : $centerlat;
+			if ( is_wp_error( $env ) || empty( $env ) ) {
+				return; // localhost.
+			}
 
-			$centerlong = isset( $env['geoplugin_longitude'] ) ? $env['geoplugin_longitude'] : $centerlong;
+			$env = json_decode( wp_remote_retrieve_body( $env ), true );
 
+			$centerlat = isset( $env['location']['latitude'] ) ? $env['location']['latitude'] : $centerlat;
+
+			$centerlong = isset( $env['location']['longitude'] ) ? $env['location']['longitude'] : $centerlong;
 		}
 
 		$map_settings = array(
 			'mapId'             => $settings['premium_map_id'],
-			'zoom'              => $settings['premium_maps_map_zoom']['size'],
 			'maptype'           => $settings['premium_maps_map_type'],
 			'streetViewControl' => $street_view,
 			'centerlat'         => $centerlat,
@@ -1391,7 +1406,7 @@ class Premium_Maps extends Widget_Base {
 						<?php endif; ?>
 
 						<div class='premium-maps-info-img'>
-							<img src='<?php echo esc_attr( $pin['pin_img']['url'] ); ?>' alt='<?php echo esc_attr( $pin['pin_img']['alt'] ); ?>'>
+							<img src='<?php echo esc_attr( $pin['pin_img']['url'] ); ?>' alt='<?php echo esc_attr( isset( $pin['pin_img']['alt'] ) ? $pin['pin_img']['alt'] : '' ); ?>'>
 						</div>
 
 

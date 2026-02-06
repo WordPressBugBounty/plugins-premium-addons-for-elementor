@@ -166,7 +166,7 @@ class Premium_Search_Form extends Widget_Base {
 	 */
 	protected function register_controls() {  // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$this->start_controls_section(
 			'query_section',
@@ -1141,7 +1141,6 @@ class Premium_Search_Form extends Widget_Base {
 			array(
 				'label'       => __( 'Title HTML Tag', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
-				'default'     => 'h2',
 				'options'     => array(
 					'h1'   => 'H1',
 					'h2'   => 'H2',
@@ -1153,6 +1152,7 @@ class Premium_Search_Form extends Widget_Base {
 					'span' => 'span',
 					'p'    => 'p',
 				),
+				'default'     => 'h2',
 				'label_block' => true,
 			)
 		);
@@ -3212,7 +3212,7 @@ class Premium_Search_Form extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.15', '<' ) ) {
 

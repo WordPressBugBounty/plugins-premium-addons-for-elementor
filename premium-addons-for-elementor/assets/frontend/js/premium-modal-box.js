@@ -11,11 +11,41 @@
 		if (!settings) {
 			return;
 		}
+		addModalBoxContent($scope);
 
 		var modalOptions = {
 			backdrop: isDismissible ? true : "static",
 			keyboard: isDismissible
 		};
+
+		function addModalBoxContent($scope) {
+
+			var $modalTemplate = $scope.find('.premium-modalbox-template[data-template-src]').first();
+
+			if (!$modalTemplate.length) {
+				return;
+			}
+
+			var containerID = $modalTemplate.data('template-src'),
+				$templateContent = $('#' + containerID);
+
+			if (!$templateContent.length) {
+				$(this).html(
+					'<div class="premium-error-notice"><span>Container with ID <b>' +
+					containerID +
+					'</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.</span></div>'
+				);
+				return;
+			}
+
+			if (!elementorFrontend.isEditMode()) {
+				$modalTemplate.append($templateContent);
+			} else {
+				$scope.find('.elementor-element-overlay').remove();
+				$modalTemplate.append($templateContent.clone(true));
+			}
+		}
+
 
 		// Disable dismiss behavior if not dismissible.
 		if (!isDismissible) {
@@ -33,9 +63,9 @@
 				}, settings.delay * 1000);
 			});
 
-		} else if ("exit" === settings.trigger) {
+		} else if ("exit" === settings.trigger || settings.show_on_exit) {
 
-			if (elementorFrontend.config.user) {
+			if (elementorFrontend.config.user && !settings.show_on_exit) {
 
 				$modalElem.find(".premium-modal-box-modal").modal(modalOptions);
 			} else {
@@ -74,7 +104,7 @@
 							$modal.css("opacity", "1").addClass("animated " + $modal.data("modal-animation"));
 						}, animationDelay * 1000);
 
-						eleObserver.unobserve(entry.target); // to only excecute the callback func once.
+						eleObserver.unobserve(entry.target); // to only execute the callback func once.
 					}
 				});
 			}, {
@@ -89,4 +119,3 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/premium-addon-modal-box.default', PremiumModalBoxHandler);
 	});
 })(jQuery);
-

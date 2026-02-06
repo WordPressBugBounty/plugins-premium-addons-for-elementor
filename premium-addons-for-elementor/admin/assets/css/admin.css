@@ -1535,12 +1535,18 @@
 
 .papro-admin-notice-left {
 	position: relative;
-	padding: 16px;
+	/* padding: 16px; */
 	border-radius: 15px;
-	background-color: #fff;
+	/* background-color: #fff; */
 	-ms-flex-preferred-size: 80%;
 	-webkit-flex-basis: 80%;
 	flex-basis: 80%;
+}
+
+.papro-admin-notice-left img {
+	height: 100px;
+	width: 100%;
+	object-fit: cover;
 }
 
 .papro-admin-notice-left a {
@@ -1571,10 +1577,13 @@
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	align-items: center;
+	background-color: #fff;
+	padding: 16px;
 }
 
 .papro-admin-notice-logo img {
 	width: auto;
+	height: auto;
 }
 
 .papro-admin-notice-logo label {
@@ -2665,6 +2674,7 @@
 	color: #252c59;
 	text-transform: uppercase;
 	font-weight: bold;
+	text-decoration: underline;
 }
 
 /*PRO Popup - CTA*/

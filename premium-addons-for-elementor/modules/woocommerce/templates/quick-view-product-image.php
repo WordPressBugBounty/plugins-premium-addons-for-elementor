@@ -14,13 +14,13 @@ global $post, $product, $woocommerce;
 ?>
 <div class="premium-woo-qv-image-slider flexslider">
 
-    <?php if( $product->is_on_sale() ) : ?>
-        <div class="premium-qv-badge">
-            <div class="corner">
-                <span><?php echo esc_html( __('Sale!', 'premium-addons-for-elementor') ); ?></span>
-            </div>
-        </div>
-    <?php endif; ?>
+	<?php if ( $product->is_on_sale() ) : ?>
+		<div class="premium-qv-badge">
+			<div class="corner">
+				<span><?php echo esc_html( __( 'Sale!', 'premium-addons-for-elementor' ) ); ?></span>
+			</div>
+		</div>
+	<?php endif; ?>
 	<div class="premium-woo-qv-slides slides">
 	<?php
 	if ( has_post_thumbnail() ) {

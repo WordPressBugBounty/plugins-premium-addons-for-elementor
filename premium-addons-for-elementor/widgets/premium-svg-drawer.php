@@ -126,7 +126,6 @@ class Premium_SVG_Drawer extends Widget_Base {
 			if ( 'yes' === $settings['animate_icon'] ) {
 				array_push( $scripts, 'pa-tweenmax', 'pa-scrolltrigger', 'pa-gsap', 'pa-motionpath' );
 			}
-
 		}
 
 		$scripts[] = 'premium-addons';
@@ -682,6 +681,8 @@ class Premium_SVG_Drawer extends Widget_Base {
 			++$doc_index;
 
 		}
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 

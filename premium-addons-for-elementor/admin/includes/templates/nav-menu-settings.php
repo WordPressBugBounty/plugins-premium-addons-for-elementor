@@ -56,12 +56,12 @@
 								<?php
 									printf(
 										/* translators: 1: Premium Mega Menu */
-                                        __('Please note that these settings are related to %1$s widget. You need to search for "%1$s" in Elementor editor panel.', 'premium-addons-for-elementor'),
-                                        '<strong>' . __( 'Premium Mega Menu', 'premium-addons-for-elementor' ) . '</strong>'
+										__( 'Please note that these settings are related to %1$s widget. You need to search for "%1$s" in Elementor editor panel.', 'premium-addons-for-elementor' ),
+										'<strong>' . __( 'Premium Mega Menu', 'premium-addons-for-elementor' ) . '</strong>'
 									);
-                                ?>
-                                </p>
-                                </div>
+									?>
+								</p>
+								</div>
 
 
 							</div>

@@ -21,7 +21,7 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-							<h4><?php echo sprintf( '%1$s %2$s', esc_html( $prefix ), esc_html( __( 'Templates', 'premium-addons-for-elementor' ) ) ); ?></h4>
+							<h4><?php printf( '%1$s %2$s', esc_html( $prefix ), esc_html( __( 'Templates', 'premium-addons-for-elementor' ) ) ); ?></h4>
 							<p><?php echo esc_html( __( 'Build Professional Website in Minutes Using Our Pre-Made Premium Elementor Templates.', 'premium-addons-for-elementor' ) ); ?></p>
 						</div>
 

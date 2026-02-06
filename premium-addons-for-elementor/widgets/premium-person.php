@@ -734,7 +734,7 @@ class Premium_Person extends Widget_Base {
 				'label'       => __( 'Phone Number', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'dynamic'     => array( 'active' => true ),
-				'description' => __( 'Example: tel: +012 345 678 910', 'premium-addons-for-elementor' ),
+				'description' => __( 'Example: tel: +012 345 678 910. Please note that this icon will show only on mobile devices', 'premium-addons-for-elementor' ),
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
@@ -1161,6 +1161,8 @@ class Premium_Person extends Widget_Base {
 				'content_classes' => 'editor-pa-doc',
 			)
 		);
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 

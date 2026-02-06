@@ -57,6 +57,13 @@ class Premium_Post_Ticker extends Widget_Base {
 	private $options = null;
 
 	/**
+	 * Check Premium Addons Pro Version.
+	 *
+	 * @var bool $papro_activated
+	 */
+	private $papro_activated;
+
+	/**
 	 * Check Icon Draw Option.
 	 *
 	 * @since 4.9.26
@@ -171,7 +178,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 		if ( $is_edit ) {
 
-            $draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
+			$draw_scripts = $this->check_icon_draw() ? array( 'pa-tweenmax', 'pa-motionpath' ) : array();
 
 			$scripts = array_merge( $draw_scripts, array( 'pa-glass', 'lottie-js' ) );
 
@@ -179,7 +186,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 			$settings = $this->get_settings();
 
-			$draw_js = false;
+			$draw_js   = false;
 			$lottie_js = false;
 
 			if ( 'yes' === $settings['draw_svg'] ) {
@@ -205,8 +212,6 @@ class Premium_Post_Ticker extends Widget_Base {
 						$scripts[] = 'lottie-js';
 						$lottie_js = true;
 					}
-
-
 				}
 			}
 
@@ -272,9 +277,9 @@ class Premium_Post_Ticker extends Widget_Base {
 		$this->add_query_section_controls();
 		$this->add_posts_section_controls();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$this->papro_activated = Helper_Functions::check_papro_version();
 
-		if ( $papro_activated ) {
+		if ( $this->papro_activated ) {
 			do_action( 'pa_ticker_stock_controls', $this );
 		}
 
@@ -339,9 +344,8 @@ class Premium_Post_Ticker extends Widget_Base {
 			)
 		);
 
-		$papro_activated = apply_filters( 'papro_activated', false );
-
-		if ( ! $papro_activated ) {
+		$this->papro_activated = Helper_Functions::check_papro_version();
+		if ( ! $this->papro_activated ) {
 
 			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'ticker-widget', 'wp-editor', 'get-pro' );
 
@@ -1083,7 +1087,6 @@ class Premium_Post_Ticker extends Widget_Base {
 			array(
 				'label'       => __( 'Title HTML Tag', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
-				'default'     => 'h4',
 				'options'     => array(
 					'h1'   => 'H1',
 					'h2'   => 'H2',
@@ -1095,6 +1098,7 @@ class Premium_Post_Ticker extends Widget_Base {
 					'span' => 'span',
 					'p'    => 'p',
 				),
+				'default'     => 'h4',
 				'label_block' => true,
 				'conditions'  => array(
 					'relation' => 'or',
@@ -1753,10 +1757,8 @@ class Premium_Post_Ticker extends Widget_Base {
 			)
 		);
 
-		$papro_activated = apply_filters( 'papro_activated', false );
-
-		if ( $papro_activated ) {
-
+		$this->papro_activated = Helper_Functions::check_papro_version();
+		if ( $this->papro_activated ) {
 			do_action( 'pa_ticker_stock_query', $this );
 
 		}
@@ -2082,6 +2084,8 @@ class Premium_Post_Ticker extends Widget_Base {
 			++$doc_index;
 
 		}
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 	}
@@ -2642,9 +2646,8 @@ class Premium_Post_Ticker extends Widget_Base {
 			)
 		);
 
-		$papro_activated = apply_filters( 'papro_activated', false );
-
-		if ( $papro_activated ) {
+		$this->papro_activated = Helper_Functions::check_papro_version();
+		if ( $this->papro_activated ) {
 			do_action( 'pa_ticker_stock_style', $this );
 		}
 
@@ -3145,9 +3148,9 @@ class Premium_Post_Ticker extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$this->papro_activated = Helper_Functions::check_papro_version();
 
-		if ( ! $papro_activated && ( in_array( $settings['layout'], array( 'layout-3', 'layout-4' ), true ) || ! in_array( $settings['post_type_filter'], array( 'post', 'text' ), true ) ) ) {
+		if ( ! $this->papro_activated && ( in_array( $settings['layout'], array( 'layout-3', 'layout-4' ), true ) || ! in_array( $settings['post_type_filter'], array( 'post', 'text' ), true ) ) ) {
 			?>
 			<div class="premium-error-notice">
 				<?php

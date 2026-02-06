@@ -120,7 +120,6 @@ class Premium_Contactform extends Widget_Base {
 			if ( 'none' !== $settings['fields_lq_effect'] || 'none' !== $settings['submit_lq_effect'] ) {
 				$scripts[] = 'pa-glass';
 			}
-
 		}
 
 		$scripts[] = 'premium-addons';
@@ -151,7 +150,7 @@ class Premium_Contactform extends Widget_Base {
 	 */
 	protected function register_controls() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$this->start_controls_section(
 			'premium_section_wpcf7_form',
@@ -279,10 +278,9 @@ class Premium_Contactform extends Widget_Base {
 		$this->add_control(
 			'title_tag',
 			array(
-				'label'       => __( 'HTML Tag', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'default'     => 'h3',
-				'options'     => array(
+				'label'     => __( 'HTML Tag', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => array(
 					'h1'   => 'H1',
 					'h2'   => 'H2',
 					'h3'   => 'H3',
@@ -293,8 +291,8 @@ class Premium_Contactform extends Widget_Base {
 					'span' => 'span',
 					'p'    => 'p',
 				),
-				'label_block' => true,
-				'condition'   => array(
+				'default'   => 'h3',
+				'condition' => array(
 					'form_title' => 'yes',
 				),
 			)
@@ -1815,7 +1813,7 @@ class Premium_Contactform extends Widget_Base {
 
 		$settings = $this->get_settings();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$source = $settings['source'];
 

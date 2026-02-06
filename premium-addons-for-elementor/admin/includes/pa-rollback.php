@@ -115,7 +115,6 @@ class PA_Rollback {
 		$update_plugins->response[ $this->plugin_name ] = $plugin_info;
 
 		set_site_transient( 'update_plugins', $update_plugins );
-
 	}
 
 	/**
@@ -144,7 +143,6 @@ class PA_Rollback {
 		$upgrader = new \Plugin_Upgrader( new \Plugin_Upgrader_Skin( $upgrader_args ) );
 
 		$upgrader->upgrade( $this->plugin_name );
-
 	}
 
 	/**
@@ -160,6 +158,5 @@ class PA_Rollback {
 		$this->apply_package();
 
 		$this->upgrade();
-
 	}
 }

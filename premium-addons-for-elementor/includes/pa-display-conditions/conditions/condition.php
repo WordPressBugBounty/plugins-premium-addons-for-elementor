@@ -53,5 +53,5 @@ abstract class Condition {
 	 *
 	 * @return bool|void
 	 */
-	public function compare_location( $settings, $operator, $value, $compare_val, $tz, $method ) {}
+	public function compare_location( $settings, $operator, $value, $compare_val, $tz ) {}
 }

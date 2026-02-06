@@ -112,7 +112,7 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 
 					$memory_limit = wp_convert_hr_to_bytes( ini_get( 'memory_limit' ) );
 
-					if( $memory_limit < 314572800 ) {
+					if ( $memory_limit < 314572800 ) {
 
 						$translated_text = sprintf(
 							/* translators: %1$s is the memory limit, %2$s is the URL for increasing memory limit */
@@ -254,10 +254,12 @@ use PremiumAddonsPro\Includes\White_Label\Helper;
 				?>
 				<tr>
 					<td><?php echo wp_kses_post( $plugin_name ); ?></td>
-					<td><?php
+					<td>
+					<?php
 						/* translators: %s is the plugin author name. */
 						echo sprintf( esc_html_x( 'by %s', 'by author', 'premium-addons-for-elementor' ), wp_kses_post( $plugin_data['Author'] ) ) . ' &ndash; ' . esc_html( $plugin_data['Version'] ) . wp_kses_post( $version_string ) . wp_kses_post( $network_string );
-					?></td>
+					?>
+					</td>
 				</tr>
 				<?php
 			}

@@ -69,46 +69,29 @@ class Ip_Location extends Condition {
 	 *
 	 * @return bool|void
 	 */
-	public function compare_location( $settings, $operator, $value, $compare_val, $tz, $method ) {
+	public function compare_location( $settings, $operator, $value, $compare_val, $tz ) {
 
 		$ip_address = Helper_Functions::get_user_ip_address();
 
-		if ( 'old' === $method ) {
+		$location_data = wp_remote_get(
+			'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
+			array(
+				'timeout'   => 15,
+				'sslverify' => false,
+			)
+		);
 
-			$location_data = unserialize( rplg_urlopen( 'http://www.geoplugin.net/php.gp?ip=' . $ip_address )['data'] );
-
-			if ( ! is_array( $location_data ) ) {
-				return;
-			}
-
-			if ( 404 === $location_data['geoplugin_status'] ) {
-				return; // localhost.
-			}
-
-			$location = strtolower( $location_data['geoplugin_countryName'] );
-		} else {
-
-			$location_data = wp_remote_get(
-				'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
-				array(
-					'timeout'   => 15,
-					'sslverify' => false,
-				)
-			);
-
-			if ( is_wp_error( $location_data ) || empty( $location_data ) ) {
-				return; // localhost.
-			}
-
-			$location_data = json_decode( wp_remote_retrieve_body( $location_data ), true );
-
-			if( null == $location_data ) {
-				return;
-			}
-
-			$location = strtolower( $location_data['country']['names']['en'] );
-
+		if ( is_wp_error( $location_data ) || empty( $location_data ) ) {
+			return; // localhost.
 		}
+
+		$location_data = json_decode( wp_remote_retrieve_body( $location_data ), true );
+
+		if ( null == $location_data ) {
+			return;
+		}
+
+		$location = strtolower( $location_data['country']['names']['en'] );
 
 		$condition_result = is_array( $value ) && ! empty( $value ) ? in_array( $location, $value, true ) : $value === $location;
 

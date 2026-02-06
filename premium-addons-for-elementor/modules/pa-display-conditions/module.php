@@ -42,11 +42,29 @@ class Module {
 	private static $instance = null;
 
 	/**
-	 * Display conditions.
+	 * Has ACF
 	 *
-	 * Class Constructor Function.
+	 * @var bool
 	 */
-	public function __construct() {
+	private $has_acf = false;
+
+	/**
+	 * Has WooCommerce
+	 *
+	 * @var bool
+	 */
+	private $has_woo = false;
+
+	/**
+	 * Constructor
+	 *
+	 * @param bool $has_acf Whether ACF is active.
+	 * @param bool $has_woo Whether WooCommerce is active.
+	 */
+	public function __construct( $has_acf = false, $has_woo = false ) {
+
+		$this->has_acf = $has_acf;
+		$this->has_woo = $has_woo;
 
 		// Enqueue the required JS file.
 		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -57,8 +75,7 @@ class Module {
 
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
-        add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-
+		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
 	}
 
 	/**
@@ -92,47 +109,50 @@ class Module {
 			)
 		);
 
+		$element->add_control(
+			'pa_dc_cache_notice',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => __( 'Please note that you need to <b>deactivate</b> the <a href="https://elementor.com/help/element-caching-help/" style="color: var(--e-a-color-warning);" target="_blank">Element Caching</a> feature to avoid any conflicts', 'premium-addons-for-elementor' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				'condition'       => array(
+					'pa_display_conditions_switcher' => 'yes',
+				),
+			)
+		);
+
 		$controls_obj = new PA_Controls_Handler();
 
-		$options = $controls_obj::$conditions;
+		$options = PA_Controls_Handler::$conditions;
 
-		if ( class_exists( 'ACF' ) ) {
-			$options = array_merge(
-				array(
-					'acf' => array(
-						'label'   => __( 'ACF (PRO)', 'premium-addons-for-elementor' ),
-						'options' => array(
-							'acf_choice'  => __( 'Choice', 'premium-addons-for-elementor' ),
-							'acf_text'    => __( 'Text', 'premium-addons-for-elementor' ),
-							'acf_boolean' => __( 'True/False', 'premium-addons-for-elementor' ),
-						),
-					),
-				),
-				$options
+		if ( $this->has_acf ) {
+			$options['acf'] = array(
+				'label'   => __( 'ACF (PRO)', 'premium-addons-for-elementor' ),
+				'options' => array(
+					'acf_choice'  => __( 'Choice', 'premium-addons-for-elementor' ),
+					'acf_text'    => __( 'Text', 'premium-addons-for-elementor' ),
+					'acf_boolean' => __( 'True/False', 'premium-addons-for-elementor' ),
+				)
 			);
 		}
 
-		if ( class_exists( 'woocommerce' ) ) {
-			$options = array_merge(
-				$options,
-				array(
-					'woocommerce' => array(
-						'label'   => __( 'WooCommerce (PRO)', 'premium-addons-for-elementor' ),
-						'options' => array(
-							'woo_cat_page'          => __( 'Current Category Page', 'premium-addons-for-elementor' ),
-							'woo_product_cat'       => __( 'Current Product Category', 'premium-addons-for-elementor' ),
-							'woo_product_price'     => __( 'Current Product Price', 'premium-addons-for-elementor' ),
-							'woo_product_stock'     => __( 'Current Product Stock', 'premium-addons-for-elementor' ),
-							'woo_orders'            => __( 'Purchased/In Cart Orders', 'premium-addons-for-elementor' ),
-							'woo_category'          => __( 'Purchased/In Cart Categories', 'premium-addons-for-elementor' ),
-							'woo_last_purchase'     => __( 'Last Purchase In Cart', 'premium-addons-for-elementor' ),
-							'woo_total_price'       => __( 'Amount In Cart', 'premium-addons-for-elementor' ),
-							'woo_cart_products'     => __( 'Products In Cart', 'premium-addons-for-elementor' ),
-							'woo_purchase_products' => __( 'Purchased Products', 'premium-addons-for-elementor' ),
-						),
-					),
+		if ( $this->has_woo ) {
+			$options['woocommerce'] = array(
+				'label'   => __( 'WooCommerce (PRO)', 'premium-addons-for-elementor' ),
+				'options' => array(
+					'woo_cat_page'          => __( 'Current Category Page', 'premium-addons-for-elementor' ),
+					'woo_product_cat'       => __( 'Current Product Category', 'premium-addons-for-elementor' ),
+					'woo_product_price'     => __( 'Current Product Price', 'premium-addons-for-elementor' ),
+					'woo_product_stock'     => __( 'Current Product Stock', 'premium-addons-for-elementor' ),
+					'woo_orders'            => __( 'Purchased/In Cart Orders', 'premium-addons-for-elementor' ),
+					'woo_category'          => __( 'Purchased/In Cart Categories', 'premium-addons-for-elementor' ),
+					'woo_last_purchase'     => __( 'Last Purchase In Cart', 'premium-addons-for-elementor' ),
+					'woo_total_price'       => __( 'Amount In Cart', 'premium-addons-for-elementor' ),
+					'woo_cart_products'     => __( 'Products In Cart', 'premium-addons-for-elementor' ),
+					'woo_purchase_products' => __( 'Purchased Products', 'premium-addons-for-elementor' ),
 				)
 			);
+
 		}
 
 		$options = apply_filters( 'pa_display_conditions', $options );
@@ -312,6 +332,8 @@ class Module {
 	 * @since 4.9.39
 	 * @access private
 	 * @param object $element for current element.
+	 *
+	 * @return void
 	 */
 	private function add_helpful_information( $element ) {
 
@@ -329,6 +351,7 @@ class Module {
 
 		$docs = array(
 			'https://premiumaddons.com/docs/elementor-display-conditions-tutorial/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
+			'https://www.youtube.com/watch?v=ydv343MTf4w/' => __( 'Check the video tutorial »', 'premium-addons-for-elementor' ),
 			'https://premiumaddons.com/docs/elementor-editor-not-loading-with-display-conditions/' => __( 'Fix editor not loading with Display Conditions enabled »', 'premium-addons-for-elementor' ),
 			'https://premiumaddons.com/docs/how-to-show-hide-element-based-on-browser-elementor-display-conditions/' => __( 'Show/Hide Element Based on Browser »', 'premium-addons-for-elementor' ),
 			'https://premiumaddons.com/docs/how-to-show-hide-element-on-specific-time-range-elementor-display-conditions/' => __( 'Show/Hide Element Based on Time Range »', 'premium-addons-for-elementor' ),
@@ -344,7 +367,7 @@ class Module {
 				'pa_condition_doc_' . $doc_index,
 				array(
 					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => sprintf( '<a href="%s" target="_blank">%s</a>', $doc_url, $title ),
+					'raw'             => sprintf( '<a href="%s" target="_blank">%s</a>', esc_url( $doc_url ), esc_html( $title ) ),
 					'content_classes' => 'editor-pa-doc',
 					'condition'       => array(
 						'pa_display_conditions_switcher' => 'yes',
@@ -373,15 +396,15 @@ class Module {
 			return;
 		}
 
-        $settings = $element->get_active_settings();
+		$settings = $element->get_active_settings();
 
-		if ( ! empty( $settings[ 'pa_display_conditions_switcher' ] ) ) {
+		if ( ! empty( $settings['pa_display_conditions_switcher'] ) ) {
 
 			$this->enqueue_scripts();
 
 			self::$load_script = true;
 
-			remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
+			// remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 		}
 	}
 
@@ -389,11 +412,13 @@ class Module {
 	 * Returns an instance of this class.
 	 *
 	 * @access public
+	 * @param bool $has_acf Whether ACF is active.
+	 * @param bool $has_woo Whether WooCommerce is active.
 	 */
-	public static function get_instance() {
+	public static function get_instance( $has_acf = false, $has_woo = false ) {
 
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
+			self::$instance = new self( $has_acf, $has_woo );
 		}
 
 		return self::$instance;

@@ -20,6 +20,7 @@ use Elementor\Group_Control_Border;
 
 
 use PremiumAddons\Modules\Woocommerce\TemplateBlocks\Skin_Init;
+use PremiumAddons\Includes\Helper_Functions;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -60,7 +61,7 @@ class Skin_10 extends Skin_Base {
 	 */
 	protected function _register_controls_actions() {
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated ) {
 			return;
@@ -679,7 +680,7 @@ class Skin_10 extends Skin_Base {
 	 * @access protected
 	 */
 	public function render() {
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated ) { ?>
 			<div class="premium-error-notice">

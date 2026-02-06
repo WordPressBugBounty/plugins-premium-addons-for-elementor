@@ -38,7 +38,7 @@
                     entries.forEach(function (entry) {
                         if (entry.isIntersecting) {
                             triggerEqualHeight();
-                            eleObserver.unobserve(entry.target); // to only excecute the callback func once.
+                            eleObserver.unobserve(entry.target); // to only execute the callback func once.
                         }
                     });
                 });
@@ -78,7 +78,7 @@
                 }
             }
 
-            window.onresize = triggerEqualHeight;
+            $(window).on('resize.premiumEqHeight', triggerEqualHeight);
         };
 
         elementorFrontend.hooks.addAction("frontend/element_ready/section", PremiumEqualHeightHandler);

@@ -182,7 +182,21 @@ class Premium_Modalbox extends Widget_Base {
 	 * @return bool
 	 */
 	protected function is_dynamic_content(): bool {
-		return false;
+
+		$is_edit = Plugin::instance()->editor->is_edit_mode();
+
+		if ( $is_edit ) {
+			return false;
+		}
+
+		$content_type       = $this->get_settings( 'premium_modal_box_content_type' );
+		$is_dynamic_content = false;
+
+		if ( 'editor' !== $content_type ) {
+			$is_dynamic_content = true;
+		}
+
+		return $is_dynamic_content;
 	}
 
 	/**
@@ -238,7 +252,7 @@ class Premium_Modalbox extends Widget_Base {
 		);
 
 		$demo = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/modal-box-widget-for-elementor-page-builder/', 'modal-box', 'wp-editor', 'demo' );
-    	Helper_Functions::add_templates_controls( $this, 'modal-box', $demo );
+		Helper_Functions::add_templates_controls( $this, 'modal-box', $demo );
 
 		$this->add_control(
 			'premium_modal_box_display_on',
@@ -260,13 +274,34 @@ class Premium_Modalbox extends Widget_Base {
 		);
 
 		$this->add_control(
+			'show_again_exit',
+			array(
+				'label'     => apply_filters( 'pa_pro_label', __( 'Show Again on Page Exit (Pro)', 'premium-addons-for-elementor' ) ),
+				'type'      => Controls_Manager::SWITCHER,
+				'condition' => array(
+					'premium_modal_box_display_on!' => 'exit',
+				),
+			)
+		);
+
+		$this->add_control(
 			'page_exit_notice',
 			array(
 				'raw'             => __( 'When you are logged in, the modal box will normally show on page load. To try this option, you need to be logged out. This option uses localstorage to show the modal box for the first time only.', 'premium-addons-for-elementor' ),
 				'type'            => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-				'condition'       => array(
-					'premium_modal_box_display_on' => 'exit',
+				'conditions'      => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'  => 'premium_modal_box_display_on',
+							'value' => 'exit',
+						),
+						array(
+							'name'  => 'show_again_exit',
+							'value' => 'yes',
+						),
+					),
 				),
 			)
 		);
@@ -1101,6 +1136,7 @@ class Premium_Modalbox extends Widget_Base {
 				'options'     => array(
 					'editor'   => __( 'Text Editor', 'premium-addons-for-elementor' ),
 					'template' => __( 'Elementor Template', 'premium-addons-for-elementor' ),
+					'id'       => __( 'Container ID', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'editor',
 				'separator'   => 'before',
@@ -1161,6 +1197,34 @@ class Premium_Modalbox extends Widget_Base {
 					'premium_modal_box_content_type' => 'editor',
 				),
 				'show_label' => false,
+			)
+		);
+
+		$this->add_control(
+			'container_id',
+			array(
+				'label'       => __( 'Container ID', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => __( 'Use the container ID added from container settings -> Advanced tab -> CSS ID ', 'premium-addons-for-elementor' ),
+				'label_block' => true,
+				'ai'          => array(
+					'active' => false,
+				),
+				'condition'   => array(
+					'premium_modal_box_content_type' => 'id',
+				),
+			)
+		);
+
+		$this->add_control(
+			'container_id_notice',
+			array(
+				'raw'             => __( 'Use this option to load content from a container on the current page (example: container-1). The container must be added to the page before the Modal Box widget.', 'premium-addons-for-elementor' ),
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition'       => array(
+					'premium_modal_box_content_type' => 'id',
+				),
 			)
 		);
 
@@ -1291,6 +1355,8 @@ class Premium_Modalbox extends Widget_Base {
 			++$doc_index;
 
 		}
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 
@@ -2384,13 +2450,13 @@ class Premium_Modalbox extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$trigger = $settings['premium_modal_box_display_on'];
 
 		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.26', '<' ) ) {
 
-			if ( 'exit' === $trigger ) {
+			if ( 'exit' === $trigger || 'yes' === $settings['show_again_exit'] ) {
 
 				?>
 				<div class="premium-error-notice">
@@ -2498,7 +2564,9 @@ class Premium_Modalbox extends Widget_Base {
 		}
 
 		if ( 'template' === $settings['premium_modal_box_content_type'] ) {
-			$template = empty( $settings['premium_modal_box_content_temp'] ) ? $settings['live_temp_content'] : $settings['premium_modal_box_content_temp'];
+			$template = empty( $settings['premium_modal_box_content_temp'] )
+			? $settings['live_temp_content']
+			: $settings['premium_modal_box_content_temp'];
 		}
 
 		if ( 'yes' === $settings['premium_modal_box_header_switcher'] ) {
@@ -2538,7 +2606,8 @@ class Premium_Modalbox extends Widget_Base {
 		}
 
 		$modal_settings = array(
-			'trigger' => $trigger,
+			'trigger'      => $trigger,
+			'show_on_exit' => 'yes' === $settings['show_again_exit'],
 		);
 
 		if ( 'pageload' === $trigger ) {
@@ -2672,13 +2741,23 @@ class Premium_Modalbox extends Widget_Base {
 						</div>
 					<?php endif; ?>
 					<div class="premium-modal-box-modal-body">
-						<?php
-						if ( 'editor' === $settings['premium_modal_box_content_type'] ) :
-							echo $this->parse_text_editor( $settings['premium_modal_box_content'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						else :
-							echo Helper_Functions::render_elementor_template( $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						endif;
-						?>
+						<?php if ( 'editor' === $settings['premium_modal_box_content_type'] ) : ?>
+							<?php
+								echo $this->parse_text_editor( $settings['premium_modal_box_content'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+
+						<?php elseif ( 'template' === $settings['premium_modal_box_content_type'] && ! empty( $template ) ) : ?>
+
+							<?php
+								echo Helper_Functions::render_elementor_template( $template );
+							?>
+
+						<?php elseif ( 'id' === $settings['premium_modal_box_content_type'] && ! empty( $settings['container_id'] ) ) : ?>
+							<div class="premium-modalbox-template"
+								data-template-src="<?php echo esc_attr( $settings['container_id'] ); ?>">
+							</div>
+
+						<?php endif; ?>
 					</div>
 					<?php if ( 'yes' === $settings['premium_modal_box_lower_close'] ) : ?>
 						<div class="premium-modal-box-modal-footer">
@@ -2690,7 +2769,6 @@ class Premium_Modalbox extends Widget_Base {
 				</div>
 			</div>
 		</div>
-
 		<?php
 	}
 }

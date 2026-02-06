@@ -522,7 +522,7 @@ class Premium_Image_Scroll extends Widget_Base {
 					'trigger_type' => 'hover',
 				),
 				'selectors'   => array(
-					'{{WRAPPER}} .premium-image-scroll-container img'   => 'transition-duration: {{Value}}s',
+					'{{WRAPPER}} .premium-image-scroll-container img'   => 'transition-duration: {{VALUE}}s',
 				),
 			)
 		);
@@ -589,6 +589,8 @@ class Premium_Image_Scroll extends Widget_Base {
 				'content_classes' => 'editor-pa-doc',
 			)
 		);
+
+		Helper_Functions::register_element_feedback_controls( $this );
 
 		$this->end_controls_section();
 
@@ -1008,7 +1010,7 @@ class Premium_Image_Scroll extends Widget_Base {
 			var scrollSettings = {};
 
 			scrollSettings.trigger = trigger;
-			scrollSettings.direction = direction,
+			scrollSettings.direction = direction;
 			scrollSettings.reverse  = reverse;
 
 			if ( 'yes' == settings.link_switcher ) {
@@ -1033,19 +1035,21 @@ class Premium_Image_Scroll extends Widget_Base {
 				view.addRenderAttribute( 'direction_type', 'class', 'premium-image-scroll-mask-media');
 			}
 
-			var imageHtml = '';
+			var imageHtml = '',
+				image_url = '';
+
 			if ( settings.image.url ) {
-			var image = {
-				id: settings.image.id,
-				url: settings.image.url,
-				size: settings.thumbnail_size,
-				dimension: settings.thumbnail_custom_dimension,
-				model: view.getEditModel()
-			};
+				var image = {
+					id: settings.image.id,
+					url: settings.image.url,
+					size: settings.thumbnail_size,
+					dimension: settings.thumbnail_custom_dimension,
+					model: view.getEditModel()
+				};
 
-			var image_url = elementor.imagesManager.getImageUrl( image );
+				image_url = elementor.imagesManager.getImageUrl( image );
 
-		}
+			}
 		if( 'yes' === settings.mask_image_scroll_switcher && settings.mask_shape_image_scroll.url !== '' && 'yes' === settings.image_scroll_shadow ) {
 			view.addRenderAttribute( 'shadow', 'style', 'filter: drop-shadow('+settings.image_scroll_shadow_color +' '+ settings.image_scroll_shadow_h.size +'px '+ settings.image_scroll_shadow_v.size +'px '+ settings.image_scroll_shadow_blur.size+'px '+')' );
 		}

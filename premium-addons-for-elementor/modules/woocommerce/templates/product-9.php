@@ -5,7 +5,7 @@
  * @package PA
  */
 
-use PremiumAddons\Includes\Premium_Template_Tags;
+use PremiumAddons\Modules\Woocommerce\Module as Woocommerce;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -40,7 +40,7 @@ $out_of_stock = 'outofstock' === get_post_meta( $product_id, '_stock_status', tr
 
 ?>
 <li class="<?php echo esc_attr( $wc_classes ); ?>">
-	<div class="premium-woo-product-wrapper <?php echo esc_attr( 'premium-con-lq__' . $this->get_option_value('product_lq_effect') ) ?>">
+	<div class="premium-woo-product-wrapper <?php echo esc_attr( 'premium-con-lq__' . $this->get_option_value( 'product_lq_effect' ) ); ?>">
 		<?php
 
 		echo '<div class="premium-woo-product-thumbnail">';
@@ -72,14 +72,16 @@ $out_of_stock = 'outofstock' === get_post_meta( $product_id, '_stock_status', tr
 			echo '<img src="' . esc_url( $product_thumb ) . '" alt="' . esc_attr( $alt ) . '">';
 
 			if ( 'swap' === $settings['hover_style'] ) {
-				Premium_Template_Tags::get_current_product_swap_image( $image_size );
+				Woocommerce::get_current_product_swap_image( $image_size );
 			}
 		}
 
 			woocommerce_template_loop_product_link_close();
 
 		if ( 'yes' === $quick_view ) {
-			echo '<div class="premium-woo-qv-container"><span class="premium-woo-qv-btn" data-product-id="' . esc_attr( $product_id ) . '">Quick View</span></div>';
+			echo '<div class="premium-woo-qv-container"><span class="premium-woo-qv-btn" data-product-id="' . esc_attr( $product_id ) . '">
+			'. esc_html( apply_filters( 'premium_woo_product_quick_view', __( 'Quick View', 'premium-addons-for-elementor' ) ) ) .'
+			</span></div>';
 		}
 
 		echo '</div>';
@@ -99,7 +101,7 @@ $out_of_stock = 'outofstock' === get_post_meta( $product_id, '_stock_status', tr
 
 		if ( 'yes' === $this->get_option_value( 'product_category' ) ) {
 			do_action( 'pa_woo_product_before_cat', $product_id, $settings );
-			Premium_Template_Tags::get_current_product_category();
+			Woocommerce::get_current_product_category();
 			do_action( 'pa_woo_product_after_cat', $product_id, $settings );
 		}
 

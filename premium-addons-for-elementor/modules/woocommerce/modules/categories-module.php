@@ -40,7 +40,7 @@ class Categories_Module extends Module_Base {
 			self::$instance = new self();
 		}
 
-        return self::$instance;
+		return self::$instance;
 	}
 
 	/**

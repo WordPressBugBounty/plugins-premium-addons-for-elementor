@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Premium Addons Classes
 use PremiumAddons\Includes\Helper_Functions;
 
-$get_license  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/', 'free-license-page', 'wp-dash', 'get-pro' );
+$get_license  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'free-license-page', 'wp-dash', 'get-pro' );
 $account_link = Helper_Functions::get_campaign_link( 'https://my.leap13.com/', 'free-license-page', 'wp-dash', 'get-pro' );
 
 
@@ -29,7 +29,7 @@ $account_link = Helper_Functions::get_campaign_link( 'https://my.leap13.com/', '
 								<span>
 									<?php echo __( 'Get ', 'premium-addons-for-elementor' ); ?>
 									<a href="<?php echo esc_url( $get_license ); ?>" target="_blank"><?php echo __( 'Premium Addons Pro', 'premium-addons-for-elementor' ); ?></a>
-									<?php echo __( 'now. ', 'premium-addons-for-elementor' ); ?></span><b><?php echo __( 'SAVE 10%', 'premium-addons-for-elementor' ); ?></b><span><?php echo __( ' on Lifetime license.', 'premium-addons-for-elementor' ); ?> using the code <span style="font-weight: 600; color: #FF6000;">SUMMER10</span>.</span>
+									<?php echo __( 'now. ', 'premium-addons-for-elementor' ); ?></span><b style="text-decoration: underline; color: #FF6000"><?php echo __( 'SAVE UP TO 30%', 'premium-addons-for-elementor' ); ?></b>.</span>
 							</li>
 
 							<li>

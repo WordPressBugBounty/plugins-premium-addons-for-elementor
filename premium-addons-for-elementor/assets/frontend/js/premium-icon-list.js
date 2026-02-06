@@ -1,163 +1,213 @@
 
 (function ($) {
-    $(window).on('elementor/frontend/init', function () {
+	$(window).on('elementor/frontend/init', function () {
 
-        var PremiumBulletListHandler = elementorModules.frontend.handlers.Base.extend({
+		var PremiumBulletListHandler = elementorModules.frontend.handlers.Base.extend({
 
+			getDefaultSettings: function () {
 
-            getDefaultSettings: function () {
+				return {
+					selectors: {
+						listItems: '.premium-bullet-list-box',
+						items: '.premium-bullet-list-content',
+					}
+				}
 
-                return {
-                    selectors: {
-                        listItems: '.premium-bullet-list-box',
-                        items: '.premium-bullet-list-content',
-                    }
-                }
+			},
 
-            },
+			getDefaultElements: function () {
 
-            getDefaultElements: function () {
+				var selectors = this.getSettings('selectors'),
+					elements = {
+						$listItems: this.$element.find(selectors.listItems),
+						$items: this.$element.find(selectors.items)
+					};
 
-                var selectors = this.getSettings('selectors'),
-                    elements = {
-                        $listItems: this.$element.find(selectors.listItems),
-                        $items: this.$element.find(selectors.items)
-                    };
+				return elements;
+			},
 
-                return elements;
-            },
+			bindEvents: function () {
+				this.run();
 
-            bindEvents: function () {
-                this.run();
+				this.addRandomBadges();
 
-                this.addRandomBadges();
+				var self = this;
+				var settings = this.getElementSettings();
 
-                var self = this;
-                if (!this.$element.is(':visible') && this.$element.closest('.premium-mega-nav-item').length > 0)
-                    this.$element.closest('.premium-mega-nav-item').find('.premium-menu-link').on('click', function () {
-                        self.addRandomBadges();
-                    });
+				if (!this.$element.is(':visible') && this.$element.closest('.premium-mega-nav-item').length > 0)
+					this.$element.closest('.premium-mega-nav-item').find('.premium-menu-link').on('click', function () {
+						self.addRandomBadges();
+					});
 
-                $(window).on('resize', self.handleAlignment);
+				$(window).on('resize.paHandleAlignment', self.handleAlignment);
 
-            },
+				if (!this.elements.$listItems.data("list-animation") && settings.show_connector === 'yes') {
+					// Update connectors on load
+					setTimeout(function () { self.updateBulletConnectors(); }, 100);
 
-            run: function () {
+					// observe items size.
+					if (typeof ResizeObserver !== 'undefined') {
+						self.paResizeObserver = new ResizeObserver(() => {
+							self.updateBulletConnectors();
+						});
 
-                this.handleAlignment();
+						// Observe all relevant items
+						self.elements.$items.each(function () {
+							self.paResizeObserver.observe(this);
+						});
+					}
+				}
+			},
+			unbindEvents: function () {
+				if (this.paResizeObserver) {
+					this.paResizeObserver.disconnect();
+					this.paResizeObserver = null;
+				}
+				$(window).off('resize.paHandleAlignment', this.handleAlignment);
+			},
+			run: function () {
 
-                var $listItems = this.elements.$listItems,
-                    $items = this.elements.$items,
-                    $scope = this.$element;
+				this.handleAlignment();
 
-                var devices = ['widescreen', 'desktop', 'laptop', 'tablet', 'tablet_extra', 'mobile', 'mobile_extra'].filter(function (ele) { return ele != elementorFrontend.getCurrentDeviceMode(); });
+				var $listItems = this.elements.$listItems,
+					$items = this.elements.$items,
+					$scope = this.$element;
 
-                devices.map(function (device) {
-                    device = ('desktop' !== device) ? device + '-' : '';
-                    $scope.removeClass(function (index, selector) {
-                        return (selector.match(new RegExp("(^|\\s)premium-" + device + "type\\S+", 'g')) || []).join(' ');
-                    });
-                });
+				var devices = ['widescreen', 'desktop', 'laptop', 'tablet', 'tablet_extra', 'mobile', 'mobile_extra'].filter(function (ele) { return ele != elementorFrontend.getCurrentDeviceMode(); });
 
-                var typeRow = $scope.filter('*[class*="type-row"]');
+				devices.map(function (device) {
+					device = ('desktop' !== device) ? device + '-' : '';
+					$scope.removeClass(function (index, selector) {
+						return (selector.match(new RegExp("(^|\\s)premium-" + device + "type\\S+", 'g')) || []).join(' ');
+					});
+				});
 
-                if (typeRow.length > 0) {
-                    $items.addClass('premium-bullet-list-content-inline');
-                }
+				var typeRow = $scope.filter('*[class*="type-row"]');
 
-                var eleObserver = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
+				if (typeRow.length > 0) {
+					$items.addClass('premium-bullet-list-content-inline');
+				}
 
-                            var element = $(entry.target),
-                                delay = element.data('delay');
+				var eleObserver = new IntersectionObserver(function (entries) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting) {
 
-                            setTimeout(function () {
-                                element.next('.premium-bullet-list-divider , .premium-bullet-list-divider-inline').css("opacity", "1");
-                                element.next('.premium-bullet-list-divider-inline , .premium-bullet-list-divider').addClass("animated " + $listItems.data("list-animation"));
+							var element = $(entry.target),
+								delay = element.data('delay');
 
-                                element.css("opacity", "1").addClass("animated " + $listItems.data("list-animation"));
-                            }, delay);
+							setTimeout(function () {
+								element.next('.premium-bullet-list-divider , .premium-bullet-list-divider-inline').css("opacity", "1");
+								element.next('.premium-bullet-list-divider-inline , .premium-bullet-list-divider').addClass("animated " + $listItems.data("list-animation"));
 
-                            eleObserver.unobserve(entry.target); // to only excecute the callback func once.
-                        }
-                    });
-                });
+								element.css("opacity", "1").addClass("animated " + $listItems.data("list-animation"));
+							}, delay);
 
-                $items.each(function (index, item) {
+							eleObserver.unobserve(entry.target); // to only execute the callback func once.
+						}
+					});
+				});
 
-                    if ($listItems.data("list-animation") && " " != $listItems.data("list-animation")) {
+				$items.each(function (index, item) {
+					if ($listItems.data("list-animation") && " " != $listItems.data("list-animation")) {
+						eleObserver.observe($(item)[0]); // we need to apply this on each item
+					}
+				});
+			},
 
-                        eleObserver.observe($(item)[0]); // we need to apply this on each item
+			handleAlignment: function () {
 
-                    }
+				var $element = this.$element,
+					computedStyle = getComputedStyle($element[0]),
+					listAlignment = computedStyle.getPropertyValue('--pa-bullet-align');
 
-                });
-            },
+				$element.addClass('premium-bullet-list-' + listAlignment);
 
-            handleAlignment: function () {
+				if ('flex-end' === listAlignment) {
+					$element.find('.pa-has-text-bullet:not(.premium-bullet-list-wrapper-top)').css('transform-origin', 'right');
+				}
+			},
 
-                var $element = this.$element,
-                    computedStyle = getComputedStyle($element[0]),
-                    listAlignment = computedStyle.getPropertyValue('--pa-bullet-align');
+			addRandomBadges: function () {
 
-                $element.addClass('premium-bullet-list-' + listAlignment);
+				var settings = this.getElementSettings();
 
-                if ('flex-end' === listAlignment) {
-                    $element.find('.pa-has-text-bullet:not(.premium-bullet-list-wrapper-top)').css('transform-origin', 'right');
-                }
-            },
+				if (settings.rbadges_repeater.length < 1)
+					return;
 
-            addRandomBadges: function () {
+				var $currentList = $('.elementor-element-' + this.$element.data('id'));
 
-                var settings = this.getElementSettings();
+				if (!$currentList.is(':visible') || this.$element.hasClass('randomb-applied'))
+					return;
 
-                if (settings.rbadges_repeater.length < 1)
-                    return;
+				var randomBadges = settings.rbadges_repeater;
 
-                var $currentList = $('.elementor-element-' + this.$element.data('id'));
+				randomBadges.forEach(function (badge, index) {
 
-                if (!$currentList.is(':visible') || this.$element.hasClass('randomb-applied'))
-                    return;
+					if ('' != badge.rbadge_selector) {
 
-                var randomBadges = settings.rbadges_repeater;
+						var notBadgedItems = $(badge.rbadge_selector).find('.premium-bullet-list-text').filter(':not(:has(+ .premium-bullet-list-badge))');
 
-                randomBadges.forEach(function (badge, index) {
+						var badgeText = '<div class="premium-bullet-list-badge elementor-repeater-item-' + badge._id + '"><span>' + badge.badge_title + '</span></div>';
 
-                    if ('' != badge.rbadge_selector) {
+						var numOfApplies = Math.floor(Math.random() * (badge.rbadge_max - badge.rbadge_min + 1)) + badge.rbadge_min;
 
-                        var notBadgedItems = $(badge.rbadge_selector).find('.premium-bullet-list-text').filter(':not(:has(+ .premium-bullet-list-badge))');
+						// Get a random number of elements from the list.
+						for (var i = 0; i < numOfApplies; i++) {
 
-                        var badgeText = '<div class="premium-bullet-list-badge elementor-repeater-item-' + badge._id + '"><span>' + badge.badge_title + '</span></div>';
+							// notBadgedItems = $(badge.rbadge_selector).find('.premium-bullet-list-text').filter(':not(:has(+ .premium-bullet-list-badge))');
 
-                        var numOfApplies = Math.floor(Math.random() * (badge.rbadge_max - badge.rbadge_min + 1)) + badge.rbadge_min;
+							var randomIndex = Math.floor(Math.random() * notBadgedItems.length),
+								wasBadgedBefore = $(notBadgedItems[randomIndex]).siblings('.premium-bullet-list-badge').length > 0;
 
-                        // Get a random number of elements from the list.
-                        for (var i = 0; i < numOfApplies; i++) {
+							if (!wasBadgedBefore) {
+								$(notBadgedItems[randomIndex]).after(badgeText);
+							}
+						}
+					}
+				})
 
-                            // notBadgedItems = $(badge.rbadge_selector).find('.premium-bullet-list-text').filter(':not(:has(+ .premium-bullet-list-badge))');
+				this.$element.addClass('randomb-applied');
+			},
 
-                            var randomIndex = Math.floor(Math.random() * notBadgedItems.length),
-                                wasBadgedBefore = $(notBadgedItems[randomIndex]).siblings('.premium-bullet-list-badge').length > 0;
+			updateBulletConnectors: function () {
+				const elements = this.elements;
 
+				if (!elements || !elements.$items || !elements.$items.length) {
+					return;
+				}
 
-                            if (!wasBadgedBefore) {
-                                $(notBadgedItems[randomIndex]).after(badgeText);
-                            }
+				elements.$items.each((index, item) => {
+					const wrapper = item.querySelector('.premium-bullet-list-wrapper');
+					const nextItem = elements.$items[index + 1];
 
+					// last item || no bullet list.
+					if (!wrapper || !nextItem) {
+						if (wrapper) {
+							wrapper.style.setProperty('--pa-connector-height', '0px');
+						}
+						return;
+					}
 
-                        }
+					const nextWrapper = nextItem.querySelector('.premium-bullet-list-wrapper');
 
-                    }
-                })
+					if (!nextWrapper) {
+						wrapper.style.setProperty('--pa-connector-height', '0px');
+						return;
+					}
 
-                this.$element.addClass('randomb-applied');
-            }
+					const currentRect = wrapper.getBoundingClientRect();
+					const nextRect = nextWrapper.getBoundingClientRect();
 
-        });
+					// Distance from bottom of current icon to top of next icon
+					const height = Math.max(0, nextRect.top - currentRect.bottom);
 
-        elementorFrontend.elementsHandler.attachHandler('premium-icon-list', PremiumBulletListHandler);
-    });
+					wrapper.style.setProperty('--pa-connector-height', `${height}px`);
+				});
+			}
+		});
+
+		elementorFrontend.elementsHandler.attachHandler('premium-icon-list', PremiumBulletListHandler);
+	});
 
 })(jQuery);
 

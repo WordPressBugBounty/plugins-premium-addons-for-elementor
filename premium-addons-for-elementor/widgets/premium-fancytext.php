@@ -98,7 +98,7 @@ class Premium_Fancytext extends Widget_Base {
 		} else {
 			$settings = $this->get_settings();
 
-			if( 'switch' === $settings['style'] ) {
+			if ( 'switch' === $settings['style'] ) {
 				if ( 'typing' === $settings['premium_fancy_text_effect'] ) {
 					$scripts[] = 'pa-typed';
 				} elseif ( 'slide' === $settings['premium_fancy_text_effect'] ) {
@@ -714,6 +714,8 @@ class Premium_Fancytext extends Widget_Base {
 
 		}
 
+		Helper_Functions::register_element_feedback_controls( $this );
+
 		$this->end_controls_section();
 
 		Helper_Functions::register_papro_promotion_controls( $this, 'fancy-text' );
@@ -1273,7 +1275,7 @@ class Premium_Fancytext extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.18', '<' ) ) {
 

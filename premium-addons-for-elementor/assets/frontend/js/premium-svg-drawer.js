@@ -2,7 +2,11 @@
 
 	$(window).on('elementor/frontend/init', function () {
 
-		var PremiumSVGDrawerHandler = elementorModules.frontend.handlers.Base.extend({
+		if ('undefined' !== typeof paElementsHandler && paElementsHandler.isElementAlreadyExists('paSVGDraw')) {
+			return false;
+		}
+
+		var PremiumSVGDrawHandler = elementorModules.frontend.handlers.Base.extend({
 
 			bindEvents: function () {
 
@@ -89,7 +93,15 @@
 					if (lastPathIndex == 0)
 						lastPathIndex = 1;
 
-					var fillSpeed = settings.svg_fill_speed ? settings.svg_fill_speed.size : 1;
+					var fillSpeed = parseFloat(
+						settings &&
+						settings.svg_fill_speed &&
+						settings.svg_fill_speed.size
+					);
+
+					if (!fillSpeed || isNaN(fillSpeed)) {
+						fillSpeed = 1;
+					}
 
 					timeLine.to($paths, fillSpeed, {
 						fill: settings.svg_color,
@@ -130,7 +142,7 @@
 
 		});
 
-		elementorFrontend.elementsHandler.attachHandler('premium-svg-drawer', PremiumSVGDrawerHandler);
+		elementorFrontend.elementsHandler.attachHandler('premium-svg-drawer', PremiumSVGDrawHandler);
 
 	});
 })(jQuery);

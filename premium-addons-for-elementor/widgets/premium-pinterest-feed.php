@@ -43,6 +43,13 @@ class Premium_Pinterest_Feed extends Widget_Base {
 		return 'premium-pinterest-feed';
 	}
 
+	/**
+	 * Check Premium Addons Pro Version.
+	 *
+	 * @var bool $papro_activated
+	 */
+	private $papro_activated;
+
 	private $common_conds = array(
 		'terms' => array(
 			array(
@@ -179,7 +186,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 	 */
 	protected function register_controls() {
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$this->papro_activated = Helper_Functions::check_papro_version();
 
 		$this->add_login_controls();
 
@@ -189,7 +196,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 
 		$this->add_pin_settings_controls();
 
-		if ( $papro_activated ) {
+		if ( $this->papro_activated ) {
 			do_action( 'pa_pinterest_board_controls', $this );
 		}
 
@@ -206,7 +213,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 
 		$this->add_feed_box_style_controls();
 
-		if ( $papro_activated ) {
+		if ( $this->papro_activated ) {
 			do_action( 'pa_pinterest_board_style', $this );
 		}
 
@@ -214,7 +221,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 
 		$this->add_carousel_style();
 
-		if ( $papro_activated ) {
+		if ( $this->papro_activated ) {
 			do_action( 'pa_pinterest_profile_style', $this );
 		}
 
@@ -272,7 +279,6 @@ class Premium_Pinterest_Feed extends Widget_Base {
 
 	/** Content Controls. */
 	private function add_query_controls() {
-		$papro_activated = apply_filters( 'papro_activated', false );
 
 		$this->start_controls_section(
 			'pa_pinterest_query_sec',
@@ -310,7 +316,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 			)
 		);
 
-		if ( ! $papro_activated ) {
+		if ( ! $this->papro_activated ) {
 			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'pinterest-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
@@ -512,8 +518,6 @@ class Premium_Pinterest_Feed extends Widget_Base {
 
 	private function add_profile_controls() {
 
-		$papro_activated = apply_filters( 'papro_activated', false );
-
 		$this->start_controls_section(
 			'pa_pinterest_profile_sec',
 			array(
@@ -531,7 +535,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 			)
 		);
 
-		if ( ! $papro_activated ) {
+		if ( ! $this->papro_activated ) {
 			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'pinterest-widget', 'wp-editor', 'get-pro' );
 
 			$this->add_control(
@@ -808,9 +812,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 			)
 		);
 
-		$papro_activated = apply_filters( 'papro_activated', false );
-
-		if ( $papro_activated ) {
+		if ( $this->papro_activated ) {
 			do_action( 'pa_pinterest_slide_align', $this );
 		}
 
@@ -1181,13 +1183,13 @@ class Premium_Pinterest_Feed extends Widget_Base {
 
 		}
 
+		Helper_Functions::register_element_feedback_controls( $this );
+
 		$this->end_controls_section();
 	}
 
 	/** Style Controls. */
 	private function add_feed_box_style_controls() {
-
-		$papro_activated = apply_filters( 'papro_activated', false );
 
 		$this->start_controls_section(
 			'pa_feedbox_style_sec',
@@ -1198,7 +1200,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 			)
 		);
 
-		if ( $papro_activated ) {
+		if ( $this->papro_activated ) {
 			do_action( 'pa_pinterest_dots_style', $this );
 		}
 
@@ -1744,9 +1746,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 			)
 		);
 
-		$papro_activated = apply_filters( 'papro_activated', false );
-
-		if ( $papro_activated ) {
+		if ( $this->papro_activated ) {
 			do_action( 'pa_image_hover_effects', $this );
 		}
 
@@ -2543,9 +2543,9 @@ class Premium_Pinterest_Feed extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$this->papro_activated = Helper_Functions::check_papro_version();
 
-		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.2', '<' ) ) {
+		if ( ! $this->papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.2', '<' ) ) {
 
 			$settings['image_hover_effect'] = '';
 

@@ -121,7 +121,7 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 													<i class="pa-dash-<?php echo esc_attr( $elem['key'] ); ?> pa-element-icon"></i>
 												</div>
 												<div class="pa-element-meta-wrap">
-													<p class="pa-element-name <?php echo isset( $elem['is_freemium'] ) ? esc_attr( 'freemium' ): ''; ?>">
+													<p class="pa-element-name <?php echo isset( $elem['is_freemium'] ) ? esc_attr( 'freemium' ) : ''; ?>">
 														<?php echo esc_html( $elem['title'] ); ?>
 														<span class="pa-total-use" title="Total Use">
 															<?php

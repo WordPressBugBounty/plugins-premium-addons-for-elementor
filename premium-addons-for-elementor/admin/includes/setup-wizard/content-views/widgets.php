@@ -16,9 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$rows          = intval( ceil( count( $rec_widgets ) / 4 ) ); // each row should have 4 elements.
 	$is_second_run = get_option( 'pa_complete_wizard' ) ? false : true;
 
-	if ( $is_second_run ) {
-		$enabled_elements = self::get_enabled_elements();
-    }
+if ( $is_second_run ) {
+	$enabled_elements = self::get_enabled_elements();
+}
 
 ?>
 	<span class="pa-welcome-msg-wrapper pa-wz-flex pa-wz-flex-d-col pa-wz-justify-content-center">

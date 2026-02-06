@@ -329,10 +329,7 @@ class PA_Controls_Handler {
 				$check = ( in_array( $list['pa_condition_key'], array( 'time_range', 'acf_text' ) ) || '' !== $value ) ? $class->compare_value( $settings, $operator, $value, $compare_val, $time_zone ) : true;
 			} else {
 
-				$detect_method = $list['pa_condition_loc_method'];
-
-				$check = $class->compare_location( $settings, $operator, $value, $compare_val, $time_zone, $detect_method );
-
+				$check = $class->compare_location( $settings, $operator, $value, $compare_val, $time_zone );
 			}
 
 			$this->conditions_results_holder[ $element_id ][ $id ] = $check;

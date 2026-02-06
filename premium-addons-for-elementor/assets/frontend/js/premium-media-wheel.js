@@ -29,7 +29,7 @@
 					entries.forEach(function (entry) {
 						if (entry.isIntersecting) {
 							runInfiniteAnimation();
-							wheelObserver.unobserve(entry.target); // to only excecute the callback func once.
+							wheelObserver.unobserve(entry.target); // to only execute the callback func once.
 						}
 					});
 				});
@@ -119,7 +119,7 @@
 
 							$carouselContainer.focusWithoutScrolling();
 
-							eleObserver.unobserve(entry.target); // to only excecute the callback func once.
+							eleObserver.unobserve(entry.target); // to only execute the callback func once.
 						}
 					});
 				});
@@ -178,6 +178,37 @@
 						$video.css("visibility", "visible");
 					}
 				});
+			});
+		}
+		addSlideContent();
+
+		/**
+		 * Used to add the template content to the carousel slide when the template source is an exisitng template on the page.
+		 */
+		function addSlideContent() {
+			$scope.find(".premium-adv-carousel__item--container[data-template-src]").each(function () {
+				var containerID = $(this).data("template-src");
+
+				var $templateContent = $('#' + containerID);
+
+				if (!$templateContent.length) {
+					$(this).html(
+						'<div class="premium-error-notice"><span>Container with ID <b>' +
+						containerID +
+						"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>"
+					);
+
+					return;
+				}
+
+				if (!elementorFrontend.isEditMode()) {
+					$(this).append($templateContent);
+				} else {
+					$scope.find(".elementor-element-overlay")
+						.remove();
+					$(this).append($templateContent.clone(true));
+				}
+
 			});
 		}
 

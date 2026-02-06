@@ -68,6 +68,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
+			'bf25-last-not',
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -91,7 +92,7 @@ class Admin_Notices {
 
 		$this->handle_review_notice();
 
-		if ( defined( 'ELEMENTOR_VERSION' ) && get_transient( 'pa_activation_redirect' ) ) {
+		if ( Helper_Functions::check_elementor_version() && get_transient( 'pa_activation_redirect' ) ) {
 
 			delete_transient( 'pa_activation_redirect' );
 
@@ -113,6 +114,11 @@ class Admin_Notices {
 	 */
 	public function admin_notices() {
 
+		// Skip rendering notices during AJAX requests.
+		if ( wp_doing_ajax() ) {
+			return;
+		}
+
 		$this->required_plugins_check();
 
 		// Make sure "Already did" was not clicked before.
@@ -132,6 +138,7 @@ class Admin_Notices {
 			return;
 		}
 
+		// $this->get_black_friday_notice();
 	}
 
 	/**
@@ -169,29 +176,39 @@ class Admin_Notices {
 	 */
 	public function required_plugins_check() {
 
+		// Early return if Elementor is already active.
+		if ( Helper_Functions::check_elementor_version() ) {
+			return;
+		}
+
 		$elementor_path = sprintf( '%1$s/%1$s.php', self::$elementor );
 
-		if ( ! defined( 'ELEMENTOR_VERSION' ) ) {
+		$message = '';
 
-			if ( ! Helper_Functions::is_plugin_installed( $elementor_path ) ) {
+		if ( ! Helper_Functions::is_plugin_installed( $elementor_path ) ) {
 
-				if ( Admin_Helper::check_user_can( 'install_plugins' ) ) {
-
-					$install_url = wp_nonce_url( self_admin_url( sprintf( 'update.php?action=install-plugin&plugin=%s', self::$elementor ) ), 'install-plugin_elementor' );
-
-					$message = sprintf( '<p>%s</p>', __( 'Premium Addons for Elementor is not working because you need to Install Elementor plugin.', 'premium-addons-for-elementor' ) );
-
-					$message .= sprintf( '<p><a href="%s" class="button-primary">%s</a></p>', $install_url, __( 'Install Now', 'premium-addons-for-elementor' ) );
-
-				}
-			} elseif ( Admin_Helper::check_user_can( 'activate_plugins' ) ) {
-
-					$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $elementor_path . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $elementor_path );
-
-					$message = '<p>' . __( 'Premium Addons for Elementor is not working because you need to activate Elementor plugin.', 'premium-addons-for-elementor' ) . '</p>';
-
-					$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, __( 'Activate Now', 'premium-addons-for-elementor' ) ) . '</p>';
+			if ( ! Admin_Helper::check_user_can( 'install_plugins' ) ) {
+				return;
 			}
+
+			$install_url = wp_nonce_url( self_admin_url( sprintf( 'update.php?action=install-plugin&plugin=%s', self::$elementor ) ), 'install-plugin_elementor' );
+
+			$message = sprintf( '<p>%s</p>', __( 'Premium Addons for Elementor is not working because you need to Install Elementor plugin.', 'premium-addons-for-elementor' ) );
+
+			$message .= sprintf( '<p><a href="%s" class="button-primary">%s</a></p>', $install_url, __( 'Install Now', 'premium-addons-for-elementor' ) );
+
+		} elseif ( Admin_Helper::check_user_can( 'activate_plugins' ) ) {
+
+			$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $elementor_path . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $elementor_path );
+
+			$message = '<p>' . __( 'Premium Addons for Elementor is not working because you need to activate Elementor plugin.', 'premium-addons-for-elementor' ) . '</p>';
+
+			$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, __( 'Activate Now', 'premium-addons-for-elementor' ) ) . '</p>';
+		} else {
+			return;
+		}
+
+		if ( ! empty( $message ) ) {
 			$this->render_admin_notices( $message );
 		}
 	}
@@ -252,6 +269,88 @@ class Admin_Notices {
 		<?php
 	}
 
+	public function get_black_friday_notice() {
+
+		$time = time();
+
+		if ( $time > 1765497600 || '1' === get_option( 'bf25-last-not' ) ) {
+			return;
+		}
+
+		$is_papro_active = Helper_Functions::check_papro_version();
+
+		$license_key = get_option( 'papro_license_key' );
+
+		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/black-friday/#bfdeals', 'wp-dash', 'bf25-notification', 'cm25' );
+
+		$promotion_type = 'new';
+
+		if ( $is_papro_active ) {
+
+			$license_data = get_transient( 'pa_license_info' );
+
+			if ( isset( $license_data['status'] ) && 'valid' === $license_data['status'] ) {
+
+				if ( isset( $license_data['id'] ) && '4' === $license_data['id'] ) {
+					return;
+				} else {
+
+					$promotion_type = 'upgrade';
+
+					$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'bf25-notification', 'cm25' );
+				}
+			}
+		}
+
+		$message = $this->get_promotion_message( $promotion_type );
+
+		?>
+
+		<div class="error pa-notice-wrap pa-new-feature-notice pa-review-notice">
+			<div class="pa-img-wrap">
+				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
+			</div>
+			<div class="pa-text-wrap">
+				<p>
+					<?php echo wp_kses_post( $message['message'] ); ?>
+					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
+						<span><?php echo wp_kses_post( $message['cta'] ); ?></span>
+					</a>
+				</p>
+			</div>
+			<div class="pa-notice-close" data-notice="bf25-last-not">
+				<span class="dashicons dashicons-dismiss"></span>
+			</div>
+		</div>
+
+		<?php
+	}
+
+	/**
+	 * Get Promotion Message
+	 *
+	 * @since 4.11.43
+	 * @access private
+	 *
+	 * @param string $type promotion type.
+	 * @return array
+	 */
+	private function get_promotion_message( $type = 'new' ) {
+
+		if ( 'upgrade' === $type ) {
+			return array(
+				'message' => __( 'Get a <b>FLAT 35% OFF</b> when you upgrade to <b>Premium Addons Pro Lifetime</b>. Use code <b>BFUL2025</b> at checkout – <b>expires soon!</b>', 'premium-addons-for-elementor' ),
+				'cta'     => __( 'Upgrade Now', 'premium-addons-for-elementor' ),
+			);
+
+		}
+
+		return array(
+			'message' => __( '<b>Cyber Monday – Save Up To $105 on Premium Addons Pro</b>.', 'premium-addons-for-elementor' ),
+			'cta'     => __( 'Catch The Deal', 'premium-addons-for-elementor' ),
+		);
+	}
+
 	/**
 	 * Renders an admin notice error message
 	 *
@@ -281,6 +380,11 @@ class Admin_Notices {
 	 * @access public
 	 */
 	public function admin_enqueue_scripts() {
+
+		// Skip loading scripts during AJAX or REST requests.
+		if ( wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+			return;
+		}
 
 		wp_enqueue_script(
 			'pa-dashboard',
@@ -353,8 +457,8 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			//Make sure new features notices will not appear again.
-			if( false != strpos( $key, 'not' ) ) {
+			// Make sure new features notices will not appear again.
+			if ( false != strpos( $key, 'not' ) ) {
 				update_option( $key, '1' );
 			} else {
 				set_transient( $key, true, 20 * DAY_IN_SECONDS );
@@ -421,7 +525,7 @@ class Admin_Notices {
 	 */
 	public function get_pa_stories() {
 
-		$stories = get_transient( 'pa_stories' );
+		$stories = get_transient( 'pa_stories_' . PREMIUM_ADDONS_VERSION );
 
 		if ( ! $stories ) {
 
@@ -436,14 +540,14 @@ class Admin_Notices {
 			);
 
 			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				set_transient( 'pa_stories', true, WEEK_IN_SECONDS );
+				set_transient( 'pa_stories_' . PREMIUM_ADDONS_VERSION, true, WEEK_IN_SECONDS );
 				return false;
 			}
 
 			$body    = wp_remote_retrieve_body( $response );
 			$stories = json_decode( $body, true );
 
-			set_transient( 'pa_stories', $stories, WEEK_IN_SECONDS );
+			set_transient( 'pa_stories_' . PREMIUM_ADDONS_VERSION, $stories, WEEK_IN_SECONDS );
 
 		}
 
@@ -480,7 +584,24 @@ class Admin_Notices {
 
 		$papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
 
-		$is_papro_installed = Helper_Functions::is_plugin_installed( $papro_path );
+		$license_data = get_transient( 'pa_license_info' );
+		$highlight    = false;
+
+		if ( isset( $license_data['status'] ) && 'valid' === $license_data['status'] ) {
+
+			if ( isset( $license_data['id'] ) && '4' !== $license_data['id'] ) {
+
+				$highlight = true;
+				array_unshift(
+					$stories['posts'],
+					array(
+						'title' => 'Switch to Premium Addons Pro Lifetime, Pay the Difference & Save 30% Today!',
+						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'xmas25-dash-widget', 'xmas25' ),
+					)
+				);
+
+			}
+		}
 
 		?>
 			<style>
@@ -548,7 +669,7 @@ class Admin_Notices {
 							<div class="pa-story-img-container">
 								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'dash-widget', 'wp-dash', 'liquid-glass-dash' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'xmas25' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>
@@ -563,7 +684,7 @@ class Admin_Notices {
 				<?php foreach ( $stories['posts'] as $index => $post ) : ?>
 
 					<div class="pa-news-post">
-						<a target="_blank" href="<?php echo esc_url( $post['link'] ); ?>">
+						<a style="<?php echo 0 === $index && $highlight ? 'color: #93003f' : ''; ?>" target="_blank" href="<?php echo esc_url( $post['link'] ); ?>">
 							<?php echo wp_kses_post( $post['title'] ); ?>
 						</a>
 					</div>
@@ -574,7 +695,7 @@ class Admin_Notices {
 
 			<div class="pa-dashboard-widget-block">
 				<div class="pa-footer-bar">
-					<a href="https://my.leap13.com/contact-support" target="_blank" style="color: #27ae60">
+					<a href="https://wordpress.org/support/plugin/premium-addons-for-elementor/" target="_blank" style="color: #27ae60">
 						Need Help?
 						<span aria-hidden="true" class="dashicons dashicons-external"></span>
 					</a>

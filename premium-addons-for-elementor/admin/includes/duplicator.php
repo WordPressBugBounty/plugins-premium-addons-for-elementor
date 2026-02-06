@@ -38,7 +38,6 @@ class Duplicator {
 		add_filter( 'post_row_actions', array( $this, 'add_duplicator_actions' ), 10, 2 );
 
 		add_filter( 'page_row_actions', array( $this, 'add_duplicator_actions' ), 10, 2 );
-
 	}
 
 	/**
@@ -248,7 +247,6 @@ class Duplicator {
 				}
 			}
 		}
-
 	}
 
 
@@ -270,5 +268,4 @@ class Duplicator {
 
 		return self::$instance;
 	}
-
 }

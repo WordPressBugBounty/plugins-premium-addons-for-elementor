@@ -10,12 +10,12 @@ use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Plugin;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 // PHP Classes.
 use Datetime;
@@ -23,6 +23,7 @@ use DateTimeZone;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
+use PremiumAddons\Includes\Controls\Premium_Background;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -156,7 +157,7 @@ class Premium_Countdown extends Widget_Base {
 	 */
 	protected function register_controls() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		$options = apply_filters(
 			'pa_countdown_options',
@@ -936,6 +937,8 @@ class Premium_Countdown extends Widget_Base {
 			)
 		);
 
+		Helper_Functions::register_element_feedback_controls( $this );
+
 		$this->end_controls_section();
 
 		Helper_Functions::register_papro_promotion_controls( $this, 'countdown' );
@@ -1013,16 +1016,35 @@ class Premium_Countdown extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
-			'premium_countdown_timer_digit_bg_color',
+		// $this->add_control(
+		// 'premium_countdown_timer_digit_bg_color',
+		// array(
+		// 'label'     => __( 'Background Color', 'premium-addons-for-elementor' ),
+		// 'type'      => Controls_Manager::COLOR,
+		// 'global'    => array(
+		// 'default' => Global_Colors::COLOR_PRIMARY,
+		// ),
+		// 'selectors' => array(
+		// '{{WRAPPER}} .countdown-amount, {{WRAPPER}} .inn' => 'background-color: {{VALUE}};',
+		// ),
+		// )
+		// );
+
+		$this->add_group_control(
+			Premium_Background::get_type(),
 			array(
-				'label'     => __( 'Background Color', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'global'    => array(
-					'default' => Global_Colors::COLOR_PRIMARY,
-				),
-				'selectors' => array(
-					'{{WRAPPER}} .countdown-amount, {{WRAPPER}} .inn' => 'background-color: {{VALUE}};',
+				'name'           => 'premium_countdown_timer_digit_bg',
+				'types'          => array( 'classic', 'gradient' ),
+				'selector'       => '{{WRAPPER}} .countdown-amount, {{WRAPPER}} .inn',
+				'fields_options' => array(
+					'background' => array(
+						'default' => 'classic',
+					),
+					'color'      => array(
+						'global' => array(
+							'default' => Global_Colors::COLOR_PRIMARY,
+						),
+					),
 				),
 			)
 		);
@@ -1723,7 +1745,7 @@ class Premium_Countdown extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$papro_activated = apply_filters( 'papro_activated', false );
+		$papro_activated = Helper_Functions::check_papro_version();
 
 		if ( ! $papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.14', '<' ) ) {
 
@@ -1787,6 +1809,10 @@ class Premium_Countdown extends Widget_Base {
 
 			if ( ! $last_target ) {
 				$last_target = $target_date;
+			}
+
+			if ( $last_target instanceof DateTime ) {
+				$last_target = $last_target->format( 'Y-m-d H:i:s' );
 			}
 
 			$is_date_passed = strtotime( $last_target ) < strtotime( current_time( 'mysql' ) );
@@ -1858,10 +1884,9 @@ class Premium_Countdown extends Widget_Base {
 
 			if ( 'featured' === $settings['style'] ) {
 				$countdown_settings['featuredUnit'] = $settings['featured_unit'];
+			} elseif ( 'circle' === $settings['style'] ) {
+				$this->add_render_attribute( 'inner_counter', 'class', 'premium-addons__v-hidden' );
 			}
-
-			$this->add_render_attribute( 'inner_counter', 'class', 'premium-addons__v-hidden' );
-
 		} else {
 
 			$countdown_settings = array(

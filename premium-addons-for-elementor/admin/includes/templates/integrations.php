@@ -22,7 +22,7 @@ $locales = Helper_Functions::get_google_maps_prefixes();
 				<div class="pa-section-info-wrap">
 					<div class="pa-section-info">
 						<h4><?php echo esc_html_e( 'Google API Keys', 'premium-addons-for-elementor' ); ?></h4>
-						<p><?php echo sprintf( 'Google APIs are used in Google Maps and Video Box widgets. If you don\'t have one, click %1$shere%2$s to get your key. Click %3$shere%2$s to enable Youtube Data for your API key', '<a href="https://premiumaddons.com/docs/google-api-key-for-elementor-widgets/" target="_blank">', '</a>', '<a href="https://premiumaddons.com/docs/how-to-enable-youtube-data-api-for-premium-video-box-widget" target="_blank">' ); ?></p>
+						<p><?php printf( 'Google APIs are used in Google Maps and Video Box widgets. If you don\'t have one, click %1$shere%2$s to get your key. Click %3$shere%2$s to enable Youtube Data for your API key', '<a href="https://premiumaddons.com/docs/google-api-key-for-elementor-widgets/" target="_blank">', '</a>', '<a href="https://premiumaddons.com/docs/how-to-enable-youtube-data-api-for-premium-video-box-widget" target="_blank">' ); ?></p>
 					</div>
 				</div>
 
@@ -94,21 +94,21 @@ $locales = Helper_Functions::get_google_maps_prefixes();
 						</td>
 					</tr>
 
-                    <?php if( class_exists('WP_Optimize') ) : ?>
-                        <tr>
-                            <td>
-                                <span class="pa-maps-circle-icon"></span>
-                                <h4 class="pa-api-disable-title">
-                                    <?php echo esc_html_e( 'Exclude Dynamic Assets from WP-Optimize Minification:', 'premium-addons-for-elementor' ); ?>
-                                </h4>
-                            </td>
-                            <td>
-                                <input name="premium-wp-optimize-exclude" id="premium-wp-optimize-exclude" type="checkbox" <?php checked( 1, $settings['premium-wp-optimize-exclude'], true ); ?>>
-                                <label for="premium-wp-optimize-exclude"></label>
-                                <span><?php echo esc_html_e( 'This will exclude the dynamic generated CSS/JS files from being minified.', 'premium-addons-for-elementor' ); ?></span>
-                            </td>
-                        </tr>
-                    <?php endif; ?>
+					<?php if ( class_exists( 'WP_Optimize' ) ) : ?>
+						<tr>
+							<td>
+								<span class="pa-maps-circle-icon"></span>
+								<h4 class="pa-api-disable-title">
+									<?php echo esc_html_e( 'Exclude Dynamic Assets from WP-Optimize Minification:', 'premium-addons-for-elementor' ); ?>
+								</h4>
+							</td>
+							<td>
+								<input name="premium-wp-optimize-exclude" id="premium-wp-optimize-exclude" type="checkbox" <?php checked( 1, $settings['premium-wp-optimize-exclude'], true ); ?>>
+								<label for="premium-wp-optimize-exclude"></label>
+								<span><?php echo esc_html_e( 'This will exclude the dynamic generated CSS/JS files from being minified.', 'premium-addons-for-elementor' ); ?></span>
+							</td>
+						</tr>
+					<?php endif; ?>
 
 				</table>
 			</div>

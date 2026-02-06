@@ -3,12 +3,11 @@
     var PremiumTextualShowcaseHandler = function ($scope, $) {
 
         var trigger = $scope.find('.pa-txt-sc__outer-container').hasClass('pa-trigger-on-viewport') ? 'viewport' : 'hover',
-            hasGrowEffect = $scope.find('.pa-txt-sc__effect-grow').length;
+            hasGrowEffect = $scope.find('.pa-txt-sc__effect-grow').length,
+            entranceAnimation = $scope.find('.pa-txt-sc__outer-container').data('list-animation');
 
         // Using IntersectionObserverAPI.
-        $scope.off('.PaTextualHandler');
-
-        var eleObserver = new IntersectionObserver(function (entries) {
+        var itemObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
 
@@ -20,42 +19,32 @@
                         triggerItemsEffects();
                     }
 
-                    eleObserver.unobserve(entry.target); // to only excecute the callback func once.
+                    if (entranceAnimation) {
+                        var element = $(entry.target),
+                            delay = element.data('delay');
+
+                        setTimeout(function () {
+                            element.css("opacity", "1").addClass("animated " + entranceAnimation);
+                        }, delay);
+                    }
+
+                    itemObserver.unobserve(entry.target); // to only execute the callback func once.
                 }
             });
         });
 
-        eleObserver.observe($scope[0]);
+        if (entranceAnimation) {
+            $scope.find('.pa-txt-sc__item-container').each(function (index, item) {
+                itemObserver.observe($(item)[0]); // we need to apply this on each item
+            });
+        }
 
+        $scope.off('.PaTextualHandler');
         if ('viewport' !== trigger) {
             $scope.on("mouseenter.PaTextualHandler mouseleave.PaTextualHandler", function () {
                 triggerItemsEffects();
             });
         }
-
-        // if (hasGrowEffect) { // grow always triggered on viewport.
-        //     elementorFrontend.waypoint($scope, function () {
-        //         $scope.find('.pa-txt-sc__effect-grow').css('clip-path', 'inset(0 0 0 0)');
-        //     }, {
-        //         offset: '100%',
-        //     });
-        // }
-
-
-        // if ('viewport' === trigger) {
-
-        //     elementorFrontend.waypoint($scope, function () {
-        //         triggerItemsEffects();
-        //     }, {
-        //         offset: '100%',
-        //     });
-
-        // } else {
-
-        //     $scope.on("mouseenter.PaTextualHandler mouseleave.PaTextualHandler", function () {
-        //         triggerItemsEffects();
-        //     });
-        // }
 
         function triggerItemsEffects() {
             $scope.find('.pa-txt-sc__item-container:not(.pa-txt-sc__effect-none)').each(function () {
@@ -117,7 +106,7 @@
                         $($scope).addClass('premium-mask-active');
                     }
 
-                    eleObserver.unobserve(entry.target); // to only excecute the callback func once.
+                    eleObserver.unobserve(entry.target); // to only execute the callback func once.
                 }
             });
         });
