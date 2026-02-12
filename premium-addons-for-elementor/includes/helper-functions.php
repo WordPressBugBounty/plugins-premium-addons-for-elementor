@@ -610,16 +610,27 @@ class Helper_Functions {
 			$thumbnail_src = is_array( $vimeo ) ? $vimeo['src'] : '';
 
 		} elseif ( 'dailymotion' === $type ) {
-			$video_data = wp_remote_get( 'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url' );
 
-			if ( is_wp_error( $video_data ) || 200 !== wp_remote_retrieve_response_code( $video_data ) ) {
-				return $thumbnail_src;
+			$cache_key = 'pa_dm_' . $video_id;
+
+			$thumbnail_src = get_transient( $cache_key );
+
+			if ( false === $thumbnail_src ) {
+
+				$video_data = wp_remote_get( 'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url' );
+
+				if ( is_wp_error( $video_data ) || 200 !== wp_remote_retrieve_response_code( $video_data ) ) {
+					$thumbnail_src = 'transparent';
+				} else {
+					$video_data = wp_remote_retrieve_body( $video_data );
+					$video_data = json_decode( $video_data );
+
+					$thumbnail_src = isset( $video_data->thumbnail_url ) ? $video_data->thumbnail_url : 'transparent';
+				}
+
+				set_transient( $cache_key, $thumbnail_src, WEEK_IN_SECONDS );
+
 			}
-
-			$video_data = wp_remote_retrieve_body( $video_data );
-			$video_data = json_decode( $video_data );
-
-			$thumbnail_src = $video_data->thumbnail_url;
 		}
 
 		return $thumbnail_src;
@@ -755,7 +766,8 @@ class Helper_Functions {
 	 * @return string
 	 */
 	public static function validate_html_tag( $tag ) {
-		return in_array( strtolower( $tag ), self::ALLOWED_HTML_WRAPPER_TAGS, true ) ? $tag : 'div';
+		$tag = strtolower( (string) $tag );
+		return in_array( $tag, self::ALLOWED_HTML_WRAPPER_TAGS, true ) ? $tag : 'div';
 	}
 
 	/**
@@ -926,20 +938,73 @@ class Helper_Functions {
 	 */
 	public static function get_user_ip_address() {
 
+		$ip_address = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+
 		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 
 			$x_forward = sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
 
-			if ( is_array( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			$ips = explode( ',', $x_forward );
 
-				$http_x_headers         = explode( ',', filter_var_array( $x_forward ) );
-				$_SERVER['REMOTE_ADDR'] = $http_x_headers[0];
-			} else {
-				$_SERVER['REMOTE_ADDR'] = $x_forward;
+			if ( ! empty( $ips ) ) {
+				$ip_address = trim( $ips[0] );
 			}
 		}
 
-		return isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+		return '::1' === $ip_address ? '127.0.0.1' : $ip_address;
+	}
+
+	/**
+	 * Get IP location data.
+	 *
+	 * Uses multi-layered caching (object cache + transients) to optimize performance.
+	 *
+	 * @access public
+	 * @since 4.11.54
+	 *
+	 * @param string $ip_address user's ip address.
+	 *
+	 * @return array|false
+	 */
+	public static function get_ip_location_data( $ip_address ) {
+
+		if ( '127.0.0.1' === $ip_address || empty( $ip_address ) ) {
+			return false;
+		}
+
+		$cache_key = 'pa_ip_loc_' . md5( $ip_address );
+
+		$location_data = wp_cache_get( $cache_key, 'premium_addons' );
+
+		if ( false === $location_data ) {
+
+			$location_data = get_transient( $cache_key );
+
+			if ( false === $location_data ) {
+
+				$response = wp_remote_get(
+					'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
+					array(
+						'timeout'   => 15,
+						'sslverify' => true,
+					)
+				);
+
+				if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+					return false;
+				}
+
+				$location_data = json_decode( wp_remote_retrieve_body( $response ), true );
+
+				set_transient( $cache_key, $location_data, 24 * HOUR_IN_SECONDS );
+
+			}
+
+			wp_cache_set( $cache_key, $location_data, 'premium_addons' );
+
+		}
+
+		return $location_data;
 	}
 
 	/**
@@ -954,27 +1019,13 @@ class Helper_Functions {
 	 */
 	public static function get_timezone_by_ip( $ip_address ) {
 
-		if ( '127.0.0.1' === $ip_address || empty( $ip_address ) ) {
+		$location_data = self::get_ip_location_data( $ip_address );
+
+		if ( ! $location_data || ! isset( $location_data['location']['time_zone'] ) ) {
 			return date_default_timezone_get();
 		}
 
-		$location_data = wp_remote_get(
-			'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
-			array(
-				'timeout'   => 15,
-				'sslverify' => false,
-			)
-		);
-
-		if ( is_wp_error( $location_data ) || empty( $location_data ) ) {
-			return date_default_timezone_get(); // localhost.
-		}
-
-		$location_data = json_decode( wp_remote_retrieve_body( $location_data ), true );
-
-		$time_zone = strtolower( $location_data['location']['time_zone'] );
-
-		return $time_zone;
+		return strtolower( $location_data['location']['time_zone'] );
 	}
 
 	/**
@@ -1593,7 +1644,7 @@ class Helper_Functions {
 					'type'        => Controls_Manager::NOTICE,
 					'notice_type' => 'info',
 					'dismissible' => false,
-					'content'     => __( '<b>Build smarter and faster</b> with premium widgets, 580+ container blocks, and advanced customization controls — all available in the <a href="' . esc_url( $pro_link ) . '" target="_blank">PA Pro</a>. <b>Save up to 30%!</b>.', 'premium-addons-for-elementor' ),
+					'content'     => __( '<b>Build smarter and faster</b> with premium widgets, 580+ container blocks, and advanced customization controls — all available in the <a href="' . esc_url( $pro_link ) . '" target="_blank">PA Pro</a>. <b>Save up to 20%!</b>.', 'premium-addons-for-elementor' ),
 				)
 			);
 
@@ -1633,7 +1684,6 @@ class Helper_Functions {
 				'label_block' => true,
 			)
 		);
-
 	}
 
 	/**
@@ -1836,6 +1886,14 @@ class Helper_Functions {
 			return;
 		}
 
+		$cache_key = 'pa_tpl_id_' . md5( $title );
+
+		$post_id = wp_cache_get( $cache_key, 'premium_addons' );
+
+		if ( false !== $post_id ) {
+			return $post_id;
+		}
+
 		$args = array(
 			'post_type'        => 'elementor_library',
 			'post_status'      => 'publish',
@@ -1853,6 +1911,8 @@ class Helper_Functions {
 
 			wp_reset_postdata();
 		}
+
+		wp_cache_set( $cache_key, $post_id, 'premium_addons' );
 
 		return $post_id;
 	}

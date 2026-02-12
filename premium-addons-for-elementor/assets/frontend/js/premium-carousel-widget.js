@@ -18,6 +18,32 @@
 
 		addSlideContent();
 
+		function initCarouselTilt() {
+
+			var reverse = settings.mouseTiltRev,
+				thumbnailSlider = settings.hasNavSlider,
+				$tiltTarget = thumbnailSlider ? $scope.find('.premium-carousel-thumbnail') : $scope.find('.premium-carousel-template.item-wrapper');
+
+			if (!$tiltTarget.length) return;
+
+			$tiltTarget.each(function () {
+				UniversalTilt.init({
+					elements: [this],
+					settings: {
+						reverse: reverse
+					},
+					callbacks: {
+						onMouseLeave(el) {
+							el.style.boxShadow = "0 45px 100px rgba(255,255,255,0)";
+						},
+						onDeviceMove(el) {
+							el.style.boxShadow = "0 45px 100px rgba(255,255,255,0.3)";
+						}
+					}
+				});
+			});
+		}
+
 		function slideToShow(slick) {
 			var slidesToShow = slick.options.slidesToShow,
 				windowWidth = $(window).width();
@@ -75,6 +101,11 @@
 				window.carouselTrigger = true;
 				$scope.trigger("paCarouselLoaded");
 				resetAnimations("init");
+
+				if (settings.mouseTilt) {
+					initCarouselTilt();
+				}
+
 			}, 500);
 
 			$(this).find("item-wrapper.slick-active").each(function () {

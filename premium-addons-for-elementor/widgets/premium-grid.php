@@ -1580,6 +1580,23 @@ class Premium_Grid extends Widget_Base {
 		);
 
 		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			array(
+				'label'    => __( 'Text Shadow', 'premium-addons-for-elementor' ),
+				'name'     => 'premium_gallery_content_shadow',
+				'selector' => '{{WRAPPER}} .premium-gallery-caption',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => 'premium_gallery_content_box_shadow',
+				'selector' => '{{WRAPPER}} .premium-gallery-caption',
+			)
+		);
+
+		$this->add_group_control(
 			Premium_Background::get_type(),
 			array(
 				'name'     => 'premium_gallery_content_background',
@@ -1608,23 +1625,6 @@ class Premium_Grid extends Widget_Base {
 			)
 		);
 
-		$this->add_group_control(
-			Group_Control_Text_Shadow::get_type(),
-			array(
-				'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
-				'name'     => 'premium_gallery_content_shadow',
-				'selector' => '{{WRAPPER}} .premium-gallery-caption',
-			)
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			array(
-				'name'     => 'premium_gallery_content_box_shadow',
-				'selector' => '{{WRAPPER}} .premium-gallery-caption',
-			)
-		);
-
 		$this->add_responsive_control(
 			'premium_gallery_content_margin',
 			array(
@@ -1633,18 +1633,6 @@ class Premium_Grid extends Widget_Base {
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-gallery-caption' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
-			'premium_gallery_content_padding',
-			array(
-				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-gallery-caption' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
 			)
 		);

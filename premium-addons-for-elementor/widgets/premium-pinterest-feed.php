@@ -255,6 +255,21 @@ class Premium_Pinterest_Feed extends Widget_Base {
 				'label'   => __( 'Access Token', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::TEXTAREA,
 				'dynamic' => array( 'active' => true ),
+				'ai'          => array(
+					'active' => false,
+				),
+			)
+		);
+
+		$this->add_control(
+			'refresh_access_token',
+			array(
+				'label'   => __( 'Refresh Access Token', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::TEXTAREA,
+				'dynamic' => array( 'active' => true ),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 

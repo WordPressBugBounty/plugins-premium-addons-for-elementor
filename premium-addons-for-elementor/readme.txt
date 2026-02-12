@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, elementor widgets, elementor mega menu, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 6.9
+Tested Up To: 6.9.1
 Requires PHP: 7.4
-Stable Tag: 4.11.67
+Stable Tag: 4.11.68
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -256,6 +256,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.68 - 12/2/2026 =
+
+- Tweak: Multiple core improvements for faster editor and frontend loading speed.
+- Tweak: Improved Premium Templates styling in Elementor Dark Mode.
+- Fixed: Images in Advanced Carousel are not showing after widget is dropped into the preview area.
 
 = 4.11.67 - 3/2/2026 =
 

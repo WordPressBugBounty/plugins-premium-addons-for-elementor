@@ -24,9 +24,11 @@ class Query_Helper {
 	 */
 	private static $instance = null;
 
+
+	/**
+	 * Query_Helper constructor.
+	 */
 	public function __construct() {
-
-
 	}
 
 	/**
@@ -44,7 +46,7 @@ class Query_Helper {
 		$users = get_users(
 			array(
 				'role__in' => array( 'administrator', 'editor', 'author', 'contributor' ),
-				'fields'   => array( 'ID', 'display_name' ), // Only fetch the necessary fields
+				'fields'   => array( 'ID', 'display_name' ), // Only fetch the necessary fields.
 			)
 		);
 
@@ -68,6 +70,9 @@ class Query_Helper {
 	 *
 	 * @since 3.20.3
 	 * @access public
+	 *
+	 * @param array  $settings widget settings.
+	 * @param string $target_post_type target post type.
 	 *
 	 * @return array query args
 	 */
@@ -164,15 +169,12 @@ class Query_Helper {
 			}
 		} elseif ( ! empty( $settings['custom_posts_filter'] ) && ! in_array( $post_type, array( 'post', 'related' ), true ) ) {
 
-			$keys = array_keys( self::get_default_posts_list( $post_type ) );
-
-			if ( empty( array_diff( ( $settings['custom_posts_filter'] ), $keys ) ) ) {
-
-				if ( 'post__in' === $settings['posts_filter_rule'] ) {
-					$post_args['post__in'] = $settings['custom_posts_filter'];
-				} else {
-					$excluded_posts = $settings['custom_posts_filter'];
-				}
+			// Optimization: Removed expensive validation that fetched all posts for the current post type.
+			// WP_Query already handles post type filtering when using post__in or post__not_in.
+			if ( 'post__in' === $settings['posts_filter_rule'] ) {
+				$post_args['post__in'] = $settings['custom_posts_filter'];
+			} else {
+				$excluded_posts = $settings['custom_posts_filter'];
 			}
 		}
 
@@ -329,6 +331,14 @@ class Query_Helper {
 	 */
 	public static function get_default_posts_list( $post_type ) {
 
+		// Use WP object cache to avoid repeated expensive database queries for post lists.
+		$cache_key = 'pa_posts_list_' . $post_type;
+		$options   = wp_cache_get( $cache_key, 'premium_addons' );
+
+		if ( false !== $options ) {
+			return $options;
+		}
+
 		global $wpdb;
 
 		$list = $wpdb->get_results(
@@ -345,6 +355,8 @@ class Query_Helper {
 				$options[ $post->ID ] = $post->post_title;
 			}
 		}
+
+		wp_cache_set( $cache_key, $options, 'premium_addons', 15 * MINUTE_IN_SECONDS );
 
 		return $options;
 	}
@@ -430,6 +442,4 @@ class Query_Helper {
 
 		return self::$instance;
 	}
-
-
 }

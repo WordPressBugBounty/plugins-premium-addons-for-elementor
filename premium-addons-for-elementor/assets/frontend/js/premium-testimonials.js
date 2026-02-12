@@ -1,6 +1,11 @@
 (function ($) {
 	$(window).on('elementor/frontend/init', function () {
 
+		//Prevent initialization of the same widget more than once
+		if ('undefined' !== typeof paElementsHandler && paElementsHandler.isElementAlreadyExists('paTestimonial')) {
+			return false;
+		}
+
 		var PremiumTestimonialsHandler = elementorModules.frontend.handlers.Base.extend({
 
 			getDefaultSettings: function () {

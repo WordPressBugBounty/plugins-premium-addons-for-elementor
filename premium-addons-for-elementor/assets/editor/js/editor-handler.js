@@ -44,15 +44,20 @@ function connectPinterest(obj) {
 
 					if (res.success) {
 
-						var accessToken = res.data;
-
-						pinterestToken = accessToken;
+						var response = res.data;
 
 						jQuery(obj)
 							.parents(".elementor-control-pinterest_login")
 							.nextAll(".elementor-control-access_token")
 							.find("textarea")
-							.val(accessToken)
+							.val(response[0])
+							.trigger("input");
+
+						jQuery(obj)
+							.parents(".elementor-control-pinterest_login")
+							.nextAll(".elementor-control-refresh_access_token")
+							.find("textarea")
+							.val(response[1])
 							.trigger("input");
 
 					}

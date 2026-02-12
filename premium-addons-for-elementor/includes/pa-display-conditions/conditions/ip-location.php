@@ -73,21 +73,9 @@ class Ip_Location extends Condition {
 
 		$ip_address = Helper_Functions::get_user_ip_address();
 
-		$location_data = wp_remote_get(
-			'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
-			array(
-				'timeout'   => 15,
-				'sslverify' => false,
-			)
-		);
+		$location_data = Helper_Functions::get_ip_location_data( $ip_address );
 
-		if ( is_wp_error( $location_data ) || empty( $location_data ) ) {
-			return; // localhost.
-		}
-
-		$location_data = json_decode( wp_remote_retrieve_body( $location_data ), true );
-
-		if ( null == $location_data ) {
+		if ( ! $location_data ) {
 			return;
 		}
 

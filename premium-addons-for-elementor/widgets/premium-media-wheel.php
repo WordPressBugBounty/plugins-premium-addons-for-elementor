@@ -2733,9 +2733,9 @@ class Premium_Media_Wheel extends Widget_Base {
 							$this->add_render_attribute(
 								'wheel_img' . $index,
 								array(
-									'src'   => esc_url( $image_url ),
+									'src'   => esc_url( $image_url ?: $item['media_wheel_img']['url'] ),
 									'alt'   => esc_attr( Control_Media::get_image_alt( $item['media_wheel_img'] ) ),
-									'class' => 'premium-adv-carousel__item-img ' . $hover_effect,
+									'class' => 'premium-adv-carousel__item-img ' . esc_attr( $hover_effect ),
 								)
 							);
 

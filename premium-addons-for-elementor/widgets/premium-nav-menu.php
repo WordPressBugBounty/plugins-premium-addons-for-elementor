@@ -315,8 +315,8 @@ class Premium_Nav_Menu extends Widget_Base {
 				'empty_nav_menu_notice',
 				array(
 					'raw'             => '<strong>' . __( 'There are no menus in your site.', 'premium-addons-for-elementor' ) . '</strong><br>' .
-					/* translators: %s is the URL to the Menus screen in the WordPress admin. */
-					sprintf( __( 'Go to the <a href="%s" target="_blank">Menus screen</a> to create one.', 'premium-addons-for-elementor' ), admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
+						/* translators: %s is the URL to the Menus screen in the WordPress admin. */
+						sprintf( __( 'Go to the <a href="%s" target="_blank">Menus screen</a> to create one.', 'premium-addons-for-elementor' ), admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
 					'type'            => Controls_Manager::RAW_HTML,
 					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 					'condition'       => array(
@@ -547,10 +547,33 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'icon_switcher',
+			'icon_type',
 			array(
-				'label'      => __( 'Icon', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SWITCHER,
+				'label'      => __( 'Icon Type', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::CHOOSE,
+				'options'    => array(
+					'none'      => array(
+						'title' => __( 'None', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-ban',
+					),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
+				),
+				'default'    => 'none',
 				'conditions' => array(
 					'relation' => 'or',
 					'terms'    => array(
@@ -563,46 +586,6 @@ class Premium_Nav_Menu extends Widget_Base {
 							'name'     => 'menu_content_type',
 							'operator' => '==',
 							'value'    => 'link',
-						),
-					),
-				),
-			)
-		);
-
-		$repeater->add_control(
-			'icon_type',
-			array(
-				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => __( 'Use a font awesome icon or upload a custom image', 'premium-addons-for-elementor' ),
-				'options'     => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
-				),
-				'default'     => 'icon',
-				'conditions'  => array(
-					'relation' => 'and',
-					'terms'    => array(
-						array(
-							'name'  => 'icon_switcher',
-							'value' => 'yes',
-						),
-						array(
-							'relation' => 'or',
-							'terms'    => array(
-								array(
-									'name'     => 'item_type',
-									'operator' => '==',
-									'value'    => 'menu',
-								),
-								array(
-									'name'     => 'menu_content_type',
-									'operator' => '==',
-									'value'    => 'link',
-								),
-							),
 						),
 
 					),
@@ -620,10 +603,6 @@ class Premium_Nav_Menu extends Widget_Base {
 				'conditions'  => array(
 					'relation' => 'and',
 					'terms'    => array(
-						array(
-							'name'  => 'icon_switcher',
-							'value' => 'yes',
-						),
 						array(
 							'name'  => 'icon_type',
 							'value' => 'icon',
@@ -660,10 +639,6 @@ class Premium_Nav_Menu extends Widget_Base {
 				'conditions' => array(
 					'relation' => 'and',
 					'terms'    => array(
-						array(
-							'name'  => 'icon_switcher',
-							'value' => 'yes',
-						),
 						array(
 							'name'  => 'icon_type',
 							'value' => 'image',
@@ -713,10 +688,6 @@ class Premium_Nav_Menu extends Widget_Base {
 					'relation' => 'and',
 					'terms'    => array(
 						array(
-							'name'  => 'icon_switcher',
-							'value' => 'yes',
-						),
-						array(
 							'name'  => 'icon_type',
 							'value' => 'animation',
 						),
@@ -742,11 +713,10 @@ class Premium_Nav_Menu extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'badge_switcher',
+			'badge_text',
 			array(
-				'label'      => __( 'Badge', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SWITCHER,
-				'separator'  => 'before',
+				'label'      => __( 'Badge Text', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::TEXT,
 				'conditions' => array(
 					'relation' => 'or',
 					'terms'    => array(
@@ -760,39 +730,6 @@ class Premium_Nav_Menu extends Widget_Base {
 							'operator' => '==',
 							'value'    => 'link',
 						),
-					),
-				),
-			)
-		);
-
-		$repeater->add_control(
-			'badge_text',
-			array(
-				'label'      => __( 'Badge Text', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::TEXT,
-				'conditions' => array(
-					'relation' => 'and',
-					'terms'    => array(
-						array(
-							'name'  => 'badge_switcher',
-							'value' => 'yes',
-						),
-						array(
-							'relation' => 'or',
-							'terms'    => array(
-								array(
-									'name'     => 'item_type',
-									'operator' => '==',
-									'value'    => 'menu',
-								),
-								array(
-									'name'     => 'menu_content_type',
-									'operator' => '==',
-									'value'    => 'link',
-								),
-							),
-						),
-
 					),
 				),
 			)
@@ -2062,7 +1999,7 @@ class Premium_Nav_Menu extends Widget_Base {
 					'{{WRAPPER}}.premium-nav-sticky-yes.premium-sticky-active.premium-ham-dropdown .premium-mobile-menu-container,
 					 {{WRAPPER}}.premium-ham-dropdown .premium-stretch-dropdown .premium-mobile-menu-container' => 'max-height: {{SIZE}}{{UNIT}};',
 				),
-				'conditions' => array(
+				'conditions'  => array(
 					'terms' => array(
 						array(
 							'name'     => 'pa_toggle_full',
@@ -2091,9 +2028,9 @@ class Premium_Nav_Menu extends Widget_Base {
 									),
 								),
 							),
-						)
-					)
-				)
+						),
+					),
+				),
 			)
 		);
 
@@ -4850,9 +4787,9 @@ class Premium_Nav_Menu extends Widget_Base {
 
 			if ( ! $this->is_valid_menu( $menu_id ) ) {
 				?>
-					<div class="premium-error-notice">
-						<?php echo esc_html( __( 'This is an empty menu. Please make sure your menu has items.', 'premium-addons-for-elementor' ) ); ?>
-					</div>
+				<div class="premium-error-notice">
+					<?php echo esc_html( __( 'This is an empty menu. Please make sure your menu has items.', 'premium-addons-for-elementor' ) ); ?>
+				</div>
 				<?php
 
 				return;
@@ -4960,20 +4897,20 @@ class Premium_Nav_Menu extends Widget_Base {
 		 * Hamburger Menu Button.
 		 */
 		?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrapper' ) ); ?>>
-				<div class="premium-ver-inner-container">
+		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrapper' ) ); ?>>
+			<div class="premium-ver-inner-container">
 				<?php if ( $render_mobile_menu ) { ?>
 					<div class="premium-hamburger-toggle premium-mobile-menu-icon" role="button" aria-label="Toggle Menu">
 						<span class="premium-toggle-text">
 							<?php
-								Icons_Manager::render_icon( $settings['pa_mobile_toggle_icon'], array( 'aria-hidden' => 'true' ) );
-								echo esc_html( $settings['pa_mobile_toggle_text'] );
+							Icons_Manager::render_icon( $settings['pa_mobile_toggle_icon'], array( 'aria-hidden' => 'true' ) );
+							echo esc_html( $settings['pa_mobile_toggle_text'] );
 							?>
 						</span>
 						<span class="premium-toggle-close">
 							<?php
-								Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) );
-								echo esc_html( $settings['pa_mobile_toggle_close'] );
+							Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) );
+							echo esc_html( $settings['pa_mobile_toggle_close'] );
 							?>
 						</span>
 					</div>
@@ -4998,32 +4935,32 @@ class Premium_Nav_Menu extends Widget_Base {
 
 					if ( in_array( $settings['pa_nav_menu_layout'], array( 'hor', 'ver' ), true ) ) {
 						?>
-							<div class="premium-nav-menu-container premium-nav-default">
-								<?php echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</div>
+						<div class="premium-nav-menu-container premium-nav-default">
+							<?php echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						</div>
 						<?php
 					}
 				} else {
 					?>
-						<div class="premium-nav-menu-container">
-							<ul class="premium-nav-menu premium-main-nav-menu">
-								<?php
-									$menu_html = $this->get_custom_menu();
-									echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-								?>
-							</ul>
-						</div>
+					<div class="premium-nav-menu-container">
+						<ul class="premium-nav-menu premium-main-nav-menu">
+							<?php
+							$menu_html = $this->get_custom_menu();
+							echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+						</ul>
+					</div>
 					<?php
 				}
 
 				if ( 'slide' === $settings['pa_mobile_menu_layout'] || 'slide' === $settings['pa_nav_menu_layout'] ) {
 					$div_end = '</div>';
 					?>
-						<div class="premium-nav-slide-overlay"></div>
-						<div class="premium-mobile-menu-outer-container">
-							<div class="premium-mobile-menu-close" role="button" aria-label="Close Menu">
+					<div class="premium-nav-slide-overlay"></div>
+					<div class="premium-mobile-menu-outer-container">
+						<div class="premium-mobile-menu-close" role="button" aria-label="Close Menu">
 							<?php Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) ); ?>
-								<span class="premium-toggle-close"><?php echo esc_html( $settings['pa_mobile_toggle_close'] ); ?></span>
+							<span class="premium-toggle-close"><?php echo esc_html( $settings['pa_mobile_toggle_close'] ); ?></span>
 						</div>
 						<?php
 						/**
@@ -5041,31 +4978,31 @@ class Premium_Nav_Menu extends Widget_Base {
 							<?php
 							if ( 'wordpress_menu' === $menu_type ) {
 								?>
-									<?php echo $this->mobile_menu_filter( $menu_html, $menu_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-									<?php
+								<?php echo $this->mobile_menu_filter( $menu_html, $menu_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<?php
 							} else {
 								?>
-									<ul class="premium-mobile-menu premium-main-mobile-menu premium-main-nav-menu">
+								<ul class="premium-mobile-menu premium-main-mobile-menu premium-main-nav-menu">
 									<?php
 									echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									?>
-									</ul>
-									<?php
+								</ul>
+								<?php
 							}
 							?>
 						</div>
-					<?php
+						<?php
 				}
 
 				if ( 'slide' === $settings['pa_mobile_menu_layout'] || 'slide' === $settings['pa_nav_menu_layout'] ) {
 					do_action( 'pa_slide_menu_bottom_template', $menu_id, $settings );
 				}
 
-					echo wp_kses_post( $div_end );
+				echo wp_kses_post( $div_end );
 				?>
 				</div>
 			</div>
-		<?php
+			<?php
 	}
 
 	/**
@@ -5080,27 +5017,27 @@ class Premium_Nav_Menu extends Widget_Base {
 		$id       = $this->get_id();
 
 		?>
-		<div class="premium-ver-toggler premium-ver-toggler-<?php echo esc_attr( $id ); ?>">
-			<div class="premium-ver-toggler-title">
-				<span class="premium-ver-title-icon">
-					<?php Icons_Manager::render_icon( $settings['pa_ver_toggle_main_icon'], array( 'aria-hidden' => 'true' ) ); ?>
-				</span>
-				<span class="premium-ver-toggler-txt">
-					<?php echo esc_html( $settings['pa_ver_toggle_txt'] ); ?>
-				</span>
+			<div class="premium-ver-toggler premium-ver-toggler-<?php echo esc_attr( $id ); ?>">
+				<div class="premium-ver-toggler-title">
+					<span class="premium-ver-title-icon">
+						<?php Icons_Manager::render_icon( $settings['pa_ver_toggle_main_icon'], array( 'aria-hidden' => 'true' ) ); ?>
+					</span>
+					<span class="premium-ver-toggler-txt">
+						<?php echo esc_html( $settings['pa_ver_toggle_txt'] ); ?>
+					</span>
+				</div>
+				<div class="premium-ver-toggler-btn">
+					<span class="premium-ver-open">
+						<?php Icons_Manager::render_icon( $settings['pa_ver_toggle_toggle_icon'], array( 'aria-hidden' => 'true' ) ); ?>
+					</span>
+					<?php if ( 'always' !== $settings['pa_ver_toggle_event'] ) : ?>
+						<span class="premium-ver-close">
+							<?php Icons_Manager::render_icon( $settings['pa_ver_toggle_close_icon'], array( 'aria-hidden' => 'true' ) ); ?>
+						</span>
+					<?php endif; ?>
+				</div>
 			</div>
-			<div class="premium-ver-toggler-btn">
-			<span class="premium-ver-open">
-				<?php Icons_Manager::render_icon( $settings['pa_ver_toggle_toggle_icon'], array( 'aria-hidden' => 'true' ) ); ?>
-			</span>
-			<?php if ( 'always' !== $settings['pa_ver_toggle_event'] ) : ?>
-			<span class="premium-ver-close">
-				<?php Icons_Manager::render_icon( $settings['pa_ver_toggle_close_icon'], array( 'aria-hidden' => 'true' ) ); ?>
-			</span>
-			<?php endif; ?>
-			</div>
-		</div>
-		<?php
+			<?php
 	}
 
 	/**
@@ -5258,7 +5195,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 					$this->add_render_attribute( 'menu-item-' . $index, 'class', 'premium-sub-menu-item' );
 
-					if ( 'yes' === $item['badge_switcher'] ) {
+					if ( ! empty( $item['badge_text'] ) ) {
 						$this->add_render_attribute( 'menu-item-' . $index, 'class', 'has-pa-badge' );
 
 						if ( '' !== $badge_effect ) {
@@ -5323,7 +5260,7 @@ class Premium_Nav_Menu extends Widget_Base {
 					$this->add_render_attribute( 'menu-item-' . $index, 'class', 'menu-item-has-children' );
 				}
 
-				if ( 'yes' === $item['badge_switcher'] ) {
+				if ( ! empty( $item['badge_text'] ) ) {
 					$this->add_render_attribute( 'menu-item-' . $index, 'class', 'has-pa-badge' );
 				}
 
@@ -5359,9 +5296,9 @@ class Premium_Nav_Menu extends Widget_Base {
 
 				$html_output .= '<a ' . $this->get_render_attribute_string( $item_link ) . ' class="premium-menu-link premium-menu-link-parent premium-lq__' . $settings['item_lq_effect'] . '">';
 
-					$html_output .= $this->get_icon_html( $item );
+				$html_output .= $this->get_icon_html( $item );
 
-					$html_output .= esc_html( $item['text'] );
+				$html_output .= esc_html( $item['text'] );
 
 				if ( array_key_exists( $index + 1, $menu_items ) ) {
 					$has_icon = ! empty( $settings['submenu_icon']['value'] );
@@ -5380,7 +5317,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 			?>
 
-			<?php
+				<?php
 
 		}
 
@@ -5402,7 +5339,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 		$html = '';
 
-		if ( 'yes' !== $item['icon_switcher'] ) {
+		if ( 'none' === $item['icon_type'] ) {
 			return '';
 		}
 
@@ -5413,18 +5350,18 @@ class Premium_Nav_Menu extends Widget_Base {
 
 			// We should add the icon's class here.
 			$icon_html = 'svg' === $icon_type ? $item['custom_svg'] :
-			Helper_Functions::get_svg_by_icon(
-				$item['item_icon'],
-				array(
-					'aria-hidden' => 'true',
-					'class'       => $class,
-				)
-			);
+				Helper_Functions::get_svg_by_icon(
+					$item['item_icon'],
+					array(
+						'aria-hidden' => 'true',
+						'class'       => $class,
+					)
+				);
 
 			if ( 'icon' === $icon_type && 'svg' !== $item['item_icon']['library'] ) { // This means it's a fontawesome icon.
 				$html .= $icon_html;
 			} else { // This mean it's an svg icon || svg code. => we want to wrap the svg icon with a span.
-				    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$html .= '<span class="' . esc_attr( $class ) . '">' . $icon_html . '</span>';
 			}
 		} elseif ( 'image' === $icon_type ) {
@@ -5451,7 +5388,7 @@ class Premium_Nav_Menu extends Widget_Base {
 	 */
 	private function get_badge_html( $item, $type = '' ) {
 
-		if ( 'yes' !== $item['badge_switcher'] ) {
+		if ( empty( $item['badge_text'] ) ) {
 			return '';
 		}
 

@@ -1902,14 +1902,6 @@ class Premium_Mobile_Menu extends Widget_Base {
 														<?php echo $this->print_unescaped_setting( 'custom_svg', 'menu_items', $index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 														</div>
 														<?php
-												} elseif ( 'text' === $item['icon_type'] ) {
-													?>
-														<div class="premium-bullet-list-icon-text">
-															<p <?php echo wp_kses_post( $this->get_render_attribute_string( $text_icon ) ); ?>>
-															<?php echo wp_kses_post( $item['list_text_icon'] ); ?>
-															</p>
-														</div>
-														<?php
 												} elseif ( 'image' === $item['icon_type'] ) {
 													if ( ! empty( $item['custom_image']['url'] ) ) {
 														$alt = Control_Media::get_image_alt( $item['custom_image'] );

@@ -102,10 +102,16 @@ class Premium_Carousel extends Widget_Base {
 	 * @return array JS script handles.
 	 */
 	public function get_script_depends() {
-		return array(
-			'pa-slick',
-			'premium-addons',
-		);
+		$scripts = array( 'pa-slick' );
+
+		$is_edit = Helper_Functions::is_edit_mode();
+
+		if ( $is_edit || 'true' === $this->get_settings()['mouse_tilt'] ) {
+			$scripts[] = 'pa-tilt';
+		}
+
+		$scripts[] = 'premium-addons';
+		return $scripts;
 	}
 
 	/**
@@ -516,6 +522,44 @@ class Premium_Carousel extends Widget_Base {
 				'prefix_class' => 'pa-has-thumb-slider-',
 				'type'         => Controls_Manager::SWITCHER,
 				'separator'    => 'before',
+			)
+		);
+
+		$this->add_control(
+			'mouse_tilt',
+			array(
+				'label'        => __( 'Mouse Tilt Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'separator'    => 'before',
+				'conditions'   => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'     => 'thumbnail_slider',
+							'operator' => '==',
+							'value'    => 'yes',
+						),
+						array(
+							'name'     => 'source',
+							'operator' => '==',
+							'value'    => 'gallery',
+						),
+					),
+				),
+
+			)
+		);
+
+		$this->add_control(
+			'mouse_tilt_rev',
+			array(
+				'label'        => __( 'Reverse', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'condition'    => array(
+					'mouse_tilt' => 'true',
+				),
 			)
 		);
 
@@ -2847,7 +2891,7 @@ class Premium_Carousel extends Widget_Base {
 		$this->add_control(
 			'thumb_cont_bg',
 			array(
-				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Background Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .premium-carousel-thumb-slider' => 'background-color: {{VALUE}};',
@@ -3165,6 +3209,8 @@ class Premium_Carousel extends Widget_Base {
 			'carouselNavigation' => $carouselNavigation,
 			'templatesNumber'    => $templates_count,
 			'hasNavSlider'       => $has_nav_slider,
+			'mouseTilt'          => 'true' === $settings['mouse_tilt'],
+			'mouseTiltRev'       => 'true' === $settings['mouse_tilt_rev'],
 		);
 
 		if ( $has_nav_slider ) {

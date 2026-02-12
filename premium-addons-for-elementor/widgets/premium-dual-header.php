@@ -222,7 +222,7 @@ class Premium_Dual_Header extends Widget_Base {
 					'inline-block' => __( 'Inline', 'premium-addons-for-elementor' ),
 					'block'        => __( 'Block', 'premium-addons-for-elementor' ),
 				),
-				'default'      => 'inline',
+				'default'      => 'inline-block',
 				'prefix_class' => 'premium-header-',
 				'selectors'    => array(
 					'{{WRAPPER}} .premium-dual-header-first-header span' => 'display: {{VALUE}}',

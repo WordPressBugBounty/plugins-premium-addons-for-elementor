@@ -31,7 +31,7 @@
 							// if (dialog.querySelector(".papro-dialog-buttons") === null) {
 
 							var button = document.createElement("a");
-							var buttonText = document.createTextNode("Upgrade Premium Addons (Save 30%)");
+							var buttonText = document.createTextNode("Upgrade Premium Addons (Save 20%)");
 
 							button.setAttribute("href", PremiumSettings.upgrade_link + '&utm_source=panel-' + proElement);
 							button.setAttribute("target", "_blank");

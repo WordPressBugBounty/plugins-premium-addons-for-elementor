@@ -1172,7 +1172,7 @@ class Premium_Button extends Widget_Base {
 				'global'   => array(
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				),
-				'selector' => '{{WRAPPER}} .premium-button',
+				'selector' => '{{WRAPPER}} .premium-button .premium-button-text-icon-wrapper span',
 			)
 		);
 

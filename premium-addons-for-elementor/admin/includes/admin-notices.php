@@ -595,8 +595,8 @@ class Admin_Notices {
 				array_unshift(
 					$stories['posts'],
 					array(
-						'title' => 'Switch to Premium Addons Pro Lifetime, Pay the Difference & Save 30% Today!',
-						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'xmas25-dash-widget', 'xmas25' ),
+						'title' => 'Switch to Premium Addons Pro Lifetime, Pay the Difference & Save 20% Today!',
+						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'val26-dash-widget', 'val26' ),
 					)
 				);
 
@@ -669,7 +669,7 @@ class Admin_Notices {
 							<div class="pa-story-img-container">
 								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'xmas25' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'val26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>

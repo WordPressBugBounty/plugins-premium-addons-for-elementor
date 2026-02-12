@@ -1206,34 +1206,13 @@ class Premium_Maps extends Widget_Base {
 
 		if ( 'true' === $ip_location ) {
 
-			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
+			$ip_address = Helper_Functions::get_user_ip_address();
 
-			if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			$env = Helper_Functions::get_ip_location_data( $ip_address );
 
-				$http_x_headers = sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
-
-				if ( is_array( $http_x_headers ) ) {
-					$http_x_headers = explode( ',', filter_var_array( $http_x_headers ) );
-				}
-
-				$_SERVER['REMOTE_ADDR'] = $http_x_headers[0];
+			if ( ! $env ) {
+				return;
 			}
-
-			$ip_address = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
-
-			$env = wp_remote_get(
-				'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
-				array(
-					'timeout'   => 15,
-					'sslverify' => false,
-				)
-			);
-
-			if ( is_wp_error( $env ) || empty( $env ) ) {
-				return; // localhost.
-			}
-
-			$env = json_decode( wp_remote_retrieve_body( $env ), true );
 
 			$centerlat = isset( $env['location']['latitude'] ) ? $env['location']['latitude'] : $centerlat;
 

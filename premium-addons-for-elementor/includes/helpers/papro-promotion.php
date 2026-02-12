@@ -166,7 +166,7 @@ class PAPRO_Promotion {
             ' . __( 'Check Demo', 'premium-addons-for-elementor' ) . '
             </a>
             <a class="premium-promote-upgrade elementor-button elementor-button-default" href="' . esc_url( $upgrade_link ) . '" target="_blank">
-            ' . __( 'Get PRO (30% OFF)', 'premium-addons-for-elementor' ) . '
+            ' . __( 'Get PRO (20% OFF)', 'premium-addons-for-elementor' ) . '
             </a>
         </div>';
 

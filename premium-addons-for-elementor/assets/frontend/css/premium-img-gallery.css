@@ -191,6 +191,10 @@
   display: block;
   margin-bottom: 0;
 }
+.pa-gallery-img .premium-gallery-caption .premium-gallery-img-desc {
+  margin: 0;
+  padding: 0;
+}
 .pa-gallery-img.style1 {
   overflow: hidden;
 }

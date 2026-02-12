@@ -11,6 +11,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'PINTEREST_API_URL', 'https://api.pinterest.com/v5/' );
 
+function refresh_pinterest_token( $refresh_token ) {
+
+	$api_url = 'https://appfb.premiumaddons.com/wp-json/fbapp/v2/pinterest_refresh';
+
+	$response = wp_remote_post(
+		$api_url,
+		array(
+			'timeout'   => 15,
+			'sslverify' => true,
+			'body'      => array(
+				'refresh_token' => $refresh_token,
+			),
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		return;
+	}
+
+	$body = wp_remote_retrieve_body( $response );
+	$body = json_decode( $body, true );
+
+	update_option( 'pinterest_token', $body['access_token'] );
+	update_option( 'pinterest_refresh_token', $body['refresh_token'] );
+
+	return $body;
+
+}
+
 
 /**
  * Get Pinterset Data
@@ -24,7 +53,7 @@ function get_pinterest_data( $id, $settings, $endpoint ) {
 
 	$filter_id = $settings['match_id'];
 
-	$token = $settings['access_token'];
+	$token = get_option( 'pinterest_token', $settings['access_token'] );
 
 	$transient_name = sprintf( 'papro_pinterest_feed_%s_%s', $id, substr( $token, -8 ) );
 
@@ -71,6 +100,7 @@ function get_pinterest_data( $id, $settings, $endpoint ) {
 		$response = json_decode( $response, true );
 
 		if ( 'failure' === $response['status'] ) {
+			refresh_pinterest_token( get_option( 'pinterest_refresh_token', $settings['refresh_access_token'] ) );
 			return;
 		}
 
