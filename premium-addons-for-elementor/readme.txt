@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 6.9.1
 Requires PHP: 7.4
-Stable Tag: 4.11.68
+Stable Tag: 4.11.69
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -20,7 +20,7 @@ It has Elementor elements like **Carousel, Blog Posts List/Slider, Mega Menu Bui
 [**Check Elementor Widgets & Addons Demo Pages**](https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=demos)
 
 ### Useful Links
-[Support](https://my.leap13.com/contact-support/) | [Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=docs) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=upgrade-pro)
+[Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=docs) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=upgrade-pro)
 
 ## KEY FEATURES
 
@@ -203,7 +203,6 @@ Premium Addons for Elementor is fully modular. You can enable/disable specific e
 * [**Video Tutorials**](https://www.youtube.com/@Leap13/videos) This playlist includes Premium Addons elements' video tutorials. We are adding more regularly.
 * [**Facebook Group**](https://www.facebook.com/groups/PremiumAddons/) A great place to get help or ask a question about Premium Addons.
 * [**Community Forums**](https://my.leap13.com/forums/forum/premium-addons-for-elementor-plugin-community-support/) Another good place to search for answers or post your own question.
-* [**Support Ticket System**](https://my.leap13.com/contact-support/) We also welcome Free users' issues which require access credentials to check.
 
 Check [Premium Addons PRO](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=premium-pro)
 
@@ -256,6 +255,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.69 - 12/2/2026 =
+
+- Fixed: Dual Heading not working correctly after v4.11.68.
 
 = 4.11.68 - 12/2/2026 =
 

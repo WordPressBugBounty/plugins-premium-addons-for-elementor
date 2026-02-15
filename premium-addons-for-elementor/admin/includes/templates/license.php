@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use PremiumAddons\Includes\Helper_Functions;
 
 $get_license  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'free-license-page', 'wp-dash', 'get-pro' );
-$account_link = Helper_Functions::get_campaign_link( 'https://my.leap13.com/', 'free-license-page', 'wp-dash', 'get-pro' );
+$account_link = Helper_Functions::get_campaign_link( 'https://clients.leap13.com/', 'free-license-page', 'wp-dash', 'get-pro' );
 
 
 ?>
@@ -34,7 +34,7 @@ $account_link = Helper_Functions::get_campaign_link( 'https://my.leap13.com/', '
 
 							<li>
 								<span>
-									<?php echo __( 'Download the PRO version from your account at: ', 'premium-addons-for-elementor' ); ?><a href="<?php echo esc_url( $account_link ); ?>" target="_blank"><?php echo __( 'https://my.leap13.com', 'premium-addons-for-elementor' ); ?></a>
+									<?php echo __( 'Download the PRO version from your account at: ', 'premium-addons-for-elementor' ); ?><a href="<?php echo esc_url( $account_link ); ?>" target="_blank"><?php echo __( 'https://clients.leap13.com/', 'premium-addons-for-elementor' ); ?></a>
 									<?php echo __( ' -> Downloads tab.', 'premium-addons-for-elementor' ); ?>
 								</span>
 							</li>
@@ -44,7 +44,7 @@ $account_link = Helper_Functions::get_campaign_link( 'https://my.leap13.com/', '
 							</li>
 
 							<li>
-								<span><?php echo __( 'Get your license key from your account page on my.leap13.com -> License Keys tab.', 'premium-addons-for-elementor' ); ?></span>
+								<span><?php echo __( 'Get your license key from your account page on clients.leap13.com -> License Keys tab.', 'premium-addons-for-elementor' ); ?></span>
 							</li>
 
 							<li>

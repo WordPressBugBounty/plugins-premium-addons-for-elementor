@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.11.68\n"
+"Project-Id-Version: Premium Addons for Elementor 4.11.69\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2026-02-12 12:48:34+00:00\n"
+"POT-Creation-Date: 2026-02-15 14:07:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4074,10 +4074,6 @@ msgstr ""
 msgid "> Support Tickets."
 msgstr ""
 
-#: admin/includes/templates/general.php:102
-msgid "> Community Forums."
-msgstr ""
-
 #: admin/includes/templates/info.php:13
 msgid "WordPress Environment"
 msgstr ""
@@ -4276,7 +4272,7 @@ msgid "Download the PRO version from your account at: "
 msgstr ""
 
 #: admin/includes/templates/license.php:37
-msgid "https://my.leap13.com"
+msgid "https://clients.leap13.com/"
 msgstr ""
 
 #: admin/includes/templates/license.php:38
@@ -4291,8 +4287,8 @@ msgstr ""
 
 #: admin/includes/templates/license.php:47
 msgid ""
-"Get your license key from your account page on my.leap13.com -> License "
-"Keys tab."
+"Get your license key from your account page on clients.leap13.com -> "
+"License Keys tab."
 msgstr ""
 
 #: admin/includes/templates/license.php:51
