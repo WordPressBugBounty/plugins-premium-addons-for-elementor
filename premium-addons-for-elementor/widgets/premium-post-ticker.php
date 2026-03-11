@@ -915,9 +915,29 @@ class Premium_Post_Ticker extends Widget_Base {
 		$this->add_control(
 			'infinite',
 			array(
-				'label'   => __( 'Marquee Effect', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'label'        => __( 'Marquee Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'render_type'  => 'template',
+				'default'      => 'yes',
+				'prefix_class' => 'pa-infinite-ticker-',
+			)
+		);
+
+		$this->add_control(
+			'fade_color',
+			array(
+				'label'     => __( 'Fade Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'separator' => 'after',
+				'condition' => array(
+					'infinite' => 'yes',
+				),
+				'selectors' => array(
+					'{{WRAPPER}}.premium-post-ticker__layout-1 .premium-post-ticker__posts-wrapper::after, {{WRAPPER}}.premium-post-ticker__layout-2 .premium-post-ticker__posts-wrapper::after' => 'background: linear-gradient(to right, {{VALUE}}, {{VALUE}} 0%, transparent 10%, transparent 90%, {{VALUE}}) !important;',
+					'{{WRAPPER}}.premium-post-ticker__layout-3 .premium-post-ticker__content::after' => 'background: linear-gradient(to right, {{VALUE}}, {{VALUE}} 0%, transparent 10%, transparent 90%, {{VALUE}}) !important;',
+					'{{WRAPPER}}.premium-post-ticker__layout-4 .premium-post-ticker__posts-wrapper::after' => 'background: linear-gradient(to bottom, {{VALUE}}, {{VALUE}} 0%, transparent 15%, transparent 85%, {{VALUE}}) !important;',
+				),
 			)
 		);
 

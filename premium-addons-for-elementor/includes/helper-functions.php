@@ -549,7 +549,13 @@ class Helper_Functions {
 
 		if ( $vimeo_data === false ) {
 
-			$vimeo_data = wp_remote_get( 'http://www.vimeo.com/api/v2/video/' . intval( $video_id ) . '.php' );
+			$vimeo_data = wp_remote_get(
+				'http://www.vimeo.com/api/v2/video/' . intval( $video_id ) . '.php',
+				array(
+					'timeout'   => 5,
+					'sslverify' => true,
+				)
+			);
 
 			if ( is_wp_error( $vimeo_data ) ) {
 				return false;
@@ -617,7 +623,13 @@ class Helper_Functions {
 
 			if ( false === $thumbnail_src ) {
 
-				$video_data = wp_remote_get( 'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url' );
+				$video_data = wp_remote_get(
+					'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url',
+					array(
+						'timeout'   => 5,
+						'sslverify' => true,
+					)
+				);
 
 				if ( is_wp_error( $video_data ) || 200 !== wp_remote_retrieve_response_code( $video_data ) ) {
 					$thumbnail_src = 'transparent';
@@ -923,9 +935,17 @@ class Helper_Functions {
 	 */
 	public static function get_location_time_zone() {
 
+		static $cached_timezone = null;
+
+		if ( null !== $cached_timezone ) {
+			return $cached_timezone;
+		}
+
 		$ip_address = self::get_user_ip_address();
 
-		return self::get_timezone_by_ip( $ip_address );
+		$cached_timezone = self::get_timezone_by_ip( $ip_address );
+
+		return $cached_timezone;
 	}
 
 	/**

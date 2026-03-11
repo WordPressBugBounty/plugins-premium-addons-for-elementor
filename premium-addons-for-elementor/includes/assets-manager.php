@@ -235,7 +235,7 @@ class Assets_Manager {
 			'pafe' . $dynamic_asset_id,
 			Helper_Functions::get_safe_url( PREMIUM_ASSETS_URL . '/' . 'pafe' . $dynamic_asset_id . '.css' ),
 			array(),
-			get_post_modified_time()
+			time()
 		);
 
 		// If no JS file found, then generate it.
@@ -249,7 +249,7 @@ class Assets_Manager {
 				'pafe' . $dynamic_asset_id,
 				Helper_Functions::get_safe_url( PREMIUM_ASSETS_URL . '/' . 'pafe' . $dynamic_asset_id . '.js' ),
 				array(),
-				get_post_modified_time(),
+				time(),
 				true
 			);
 		}
@@ -541,11 +541,20 @@ class Assets_Manager {
 	 */
 	public static function get_file_content( $path ) {
 
+		static $file_cache = array();
+
+		if ( isset( $file_cache[ $path ] ) ) {
+			return $file_cache[ $path ];
+		}
+
 		if ( ! file_exists( $path ) ) {
+			$file_cache[ $path ] = '';
 			return '';
 		}
 
 		$file_content = file_get_contents( $path );
+
+		$file_cache[ $path ] = $file_content;
 
 		return $file_content;
 	}
@@ -664,7 +673,7 @@ class Assets_Manager {
 
 		foreach ( $pro_elements as $element ) {
 			if ( isset( $element['name'] ) ) {
-				array_push( $pro_names, $element['name'] );
+				$pro_names[] = $element['name'];
 			}
 		}
 
@@ -753,17 +762,20 @@ class Assets_Manager {
 		}
 
 		if ( empty( $id ) ) {
-			foreach ( scandir( $path ) as $file ) {
-				if ( '.' === $file || '..' === $file ) {
+			$dir = new \DirectoryIterator( $path );
+			foreach ( $dir as $file ) {
+				if ( $file->isDot() || ! $file->isFile() ) {
 					continue;
 				}
 
-				unlink( Helper_Functions::get_safe_path( $path . DIRECTORY_SEPARATOR . $file ) );
+				unlink( Helper_Functions::get_safe_path( $file->getPathname() ) );
 			}
 		} else {
 
 			foreach ( glob( PREMIUM_ASSETS_PATH . '/*' . $id . '*' ) as $file ) {
-				unlink( Helper_Functions::get_safe_path( $file ) );
+				if ( is_file( $file ) ) {
+					unlink( Helper_Functions::get_safe_path( $file ) );
+				}
 			}
 		}
 	}
@@ -826,7 +838,7 @@ class Assets_Manager {
 
 		// No new elements added.
 		$existing_elements = get_post_meta( $post_id, self::ASSETS_KEY, true );
-		if ( $list === $existing_elements || serialize( $list ) === serialize( $existing_elements ) ) {
+		if ( $list === $existing_elements ) {
 			return false;
 		}
 

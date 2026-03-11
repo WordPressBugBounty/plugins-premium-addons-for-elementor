@@ -983,7 +983,15 @@ class Premium_Mobile_Menu extends Widget_Base {
 						'icon'  => 'eicon-cog',
 					),
 				),
-				'prefix_class' => 'premium-mobile-menu__',
+				'selectors_dictionary' => array(
+					'left'   => 'left: 0; right: auto; transform: none;',
+					'center' => 'left: 50%; right: auto; transform: translateX(-50%);',
+					'right'  => 'right: 0; left: auto; transform: none;',
+					'custom' => '',
+				),
+				'selectors'          => array(
+					'{{WRAPPER}} .premium-mobile-menu__wrap' => '{{VALUE}}',
+				),
 				'toggle'       => false,
 				'default'      => 'left',
 				'condition'    => array(
@@ -1037,7 +1045,14 @@ class Premium_Mobile_Menu extends Widget_Base {
 						'icon'  => 'eicon-cog',
 					),
 				),
-				'prefix_class' => 'premium-mobile-menu__',
+				'selectors_dictionary' => array(
+					'top'    => 'top: 0; bottom: auto;',
+					'bottom' => 'bottom: 0; top: auto;',
+					'custom' => 'top: auto; bottom: auto;',
+				),
+				'selectors'          => array(
+					'{{WRAPPER}} .premium-mobile-menu__wrap' => '{{VALUE}}',
+				),
 				'toggle'       => false,
 				'default'      => 'bottom',
 				'condition'    => array(

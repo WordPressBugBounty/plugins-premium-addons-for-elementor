@@ -81,19 +81,20 @@
 
         if ($titleContainer.hasClass('style8')) {
 
-            var holdTime = $titleElement.attr('data-shiny-delay') * 1000,
-                duration = $titleElement.attr('data-shiny-dur') * 1000;
+            var shinyDelay = $titleElement.attr('data-shiny-delay') * 1000,
+                shinyDuration = $titleElement.attr('data-shiny-dur') * 1000;
 
-            function shinyEffect() {
+            function runShinyEffect() {
                 $titleElement.get(0).setAttribute('data-animation', 'shiny');
+
                 setTimeout(function () {
                     $titleElement.removeAttr('data-animation')
-                }, duration);
+                }, shinyDuration);
             }
 
-            (function repeat() {
-                shinyEffect();
-                setTimeout(repeat, holdTime);
+            (function repeatShinyEffect() {
+                runShinyEffect();
+                setTimeout(repeatShinyEffect, shinyDelay);
             })();
         }
 

@@ -880,6 +880,7 @@ class Premium_Button extends Widget_Base {
 			array(
 				'label'                => __( 'Icon Position', 'premium-addons-for-elementor' ),
 				'type'                 => Controls_Manager::SELECT,
+				'prefix_class'         => 'pa-icon-pos-',
 				'default'              => 'before',
 				'options'              => array(
 					'before' => __( 'Before', 'premium-addons-for-elementor' ),
@@ -953,6 +954,8 @@ class Premium_Button extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-button-text-icon-wrapper' => 'gap: {{SIZE}}px',
+					'{{WRAPPER}}.pa-icon-pos-before' => '--pa-btn-line6-translate-x: {{SIZE}}px',
+					'{{WRAPPER}}.pa-icon-pos-after' => '--pa-btn-line6-translate-x: -{{SIZE}}px',
 				),
 				'separator' => 'after',
 			)

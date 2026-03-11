@@ -235,6 +235,7 @@
   display: inline-block;
   font-size: 20px;
   font-weight: 400;
+  text-decoration: line-through !important;
   -webkit-margin-end: 5px;
   margin-inline-end: 5px;
 }
@@ -287,6 +288,34 @@
   gap: 3%;
 }
 
+.premium-pricing-inner-wrapper {
+  gap: 5px;
+}
+
+.premium-pricing-inner-wrapper,
+.premium-pricing-actual-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.premium-pricing-actual-wrapper,
+.pa-d-price-row .premium-pricing-inner-wrapper {
+  -webkit-align-items: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+
+.pa-d-price-column .premium-pricing-inner-wrapper,
+.pa-d-price-column .premium-pricing-price-container {
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 .premium-pricing-reveal-wrapper {
   position: relative;
 }
@@ -319,7 +348,7 @@
   font-size: 30px;
 }
 
-.premium-pricing-table-container:hover .premium-pricing-actual-wrapper {
+.premium-pricing-table-container:hover .premium-pricing-reveal-wrapper .premium-pricing-actual-wrapper {
   -webkit-transform: rotate(-25deg) translateY(-80%);
   -ms-transform: rotate(-25deg) translateY(-80%);
   transform: rotate(-25deg) translateY(-80%);
@@ -338,7 +367,7 @@
   -ms-transform: rotate(5deg) translateY(0);
   transform: rotate(5deg) translateY(0);
 }
-.rtl .premium-pricing-table-container:hover .premium-pricing-actual-wrapper {
+.rtl .premium-pricing-table-container:hover .premium-pricing-reveal-wrapper .premium-pricing-actual-wrapper {
   -webkit-transform: rotate(25deg) translateY(-80%);
   -ms-transform: rotate(25deg) translateY(-80%);
   transform: rotate(25deg) translateY(-80%);

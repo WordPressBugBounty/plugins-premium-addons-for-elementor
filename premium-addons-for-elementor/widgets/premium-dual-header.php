@@ -219,8 +219,8 @@ class Premium_Dual_Header extends Widget_Base {
 				'label'        => __( 'Display', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SELECT,
 				'options'      => array(
-					'inline-block' => __( 'Inline', 'premium-addons-for-elementor' ),
-					'block'        => __( 'Block', 'premium-addons-for-elementor' ),
+					'inline' => __( 'Inline', 'premium-addons-for-elementor' ),
+					'block'  => __( 'Block', 'premium-addons-for-elementor' ),
 				),
 				'default'      => 'inline',
 				'prefix_class' => 'premium-header-',

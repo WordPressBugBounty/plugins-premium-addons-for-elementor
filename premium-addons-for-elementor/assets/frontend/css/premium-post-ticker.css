@@ -460,3 +460,36 @@ body:not(.rtl) .premium-reversed-yes.premium-ticker-pointer-yes:not(.premium-pos
 }
 
 /*End of RTL Compatibility*/
+/**Fade Color - Marquee Effect*/
+.pa-infinite-ticker-yes.premium-post-ticker__layout-1 .premium-post-ticker__posts-wrapper, .pa-infinite-ticker-yes.premium-post-ticker__layout-2 .premium-post-ticker__posts-wrapper {
+  position: relative;
+}
+.pa-infinite-ticker-yes.premium-post-ticker__layout-1 .premium-post-ticker__posts-wrapper::after, .pa-infinite-ticker-yes.premium-post-ticker__layout-2 .premium-post-ticker__posts-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+.pa-infinite-ticker-yes.premium-post-ticker__layout-3 .premium-post-ticker__content {
+  position: relative;
+}
+.pa-infinite-ticker-yes.premium-post-ticker__layout-3 .premium-post-ticker__content::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+.pa-infinite-ticker-yes.premium-post-ticker__layout-4 .premium-post-ticker__posts-wrapper {
+  position: relative;
+}
+.pa-infinite-ticker-yes.premium-post-ticker__layout-4 .premium-post-ticker__posts-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/*End of Fade Color*/

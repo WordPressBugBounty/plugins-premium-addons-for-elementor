@@ -12,24 +12,6 @@
   -ms-flex-direction: column;
   flex-direction: column;
 }
-.premium-mobile-menu__left .premium-mobile-menu__wrap {
-  left: 0;
-}
-.premium-mobile-menu__center .premium-mobile-menu__wrap {
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-}
-.premium-mobile-menu__right .premium-mobile-menu__wrap {
-  right: 0;
-}
-.premium-mobile-menu__top .premium-mobile-menu__wrap {
-  top: 0;
-}
-.premium-mobile-menu__bottom .premium-mobile-menu__wrap {
-  bottom: 0;
-}
 .premium-mobile-menu__list {
   margin: 0;
   padding: 0;

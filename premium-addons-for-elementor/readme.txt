@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, elementor widgets, elementor mega menu, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 6.9.1
+Tested Up To: 6.9
 Requires PHP: 7.4
-Stable Tag: 4.11.69
+Stable Tag: 4.11.70
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -255,6 +255,22 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.70 - 11/3/2026 =
+
+- Tweak: Core improved for better performance and loading speed.
+- Tweak: Added Price Display option in Pricing Table widget.
+- Tweak: Added Fade Color option for Layout #4 in News Ticker widget.
+- Tweak: Compatibility between Media Grid and Elementor Tabs widget.
+- Tweak: Woo Mini Cart widget code refactored.
+- Tweak: Removed duplicated IDs given to SVGs on the same page.
+- Fixed: Style #8 not working correctly in Heading widget.
+- Fixed: Effects not working in Textual Showcase widget.
+- Fixed: Hover Lottie Animation option not showing in Textual Showcase widget.
+- Fixed: Posts built with Elementor shows as plain text in Premium Blog widget.
+- Fixed: Menu Position option not working on responsive in Mobile Menu widget.
+- Fixed: Icon Separator Color option not working in Woo Mini Cart widget.
+- Fixed: Thumbnail Slider not working in Carousel widget when Border is applied on active slide only.
 
 = 4.11.69 - 12/2/2026 =
 

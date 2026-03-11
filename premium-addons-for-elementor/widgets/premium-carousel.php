@@ -1969,8 +1969,13 @@ class Premium_Carousel extends Widget_Base {
 		$this->start_controls_section(
 			'premium_carousel_navigation',
 			array(
-				'label' => __( 'Navigation Dots/Progress Bar', 'premium-addons-for-elementor' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
+				'label'     => __( 'Navigation Dots/Progress Bar', 'premium-addons-for-elementor' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'mscroll!'                      => 'yes',
+					'premium_carousel_nav_options!' => 'none',
+					'thumbnail_slider!'             => 'yes',
+				),
 			)
 		);
 
@@ -2758,7 +2763,7 @@ class Premium_Carousel extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-carousel-thumbnail, {{WRAPPER}} .premium-carousel-thumbnail-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+					'{{WRAPPER}} .premium-carousel-thumbnail' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
 			)
 		);
@@ -2788,11 +2793,15 @@ class Premium_Carousel extends Widget_Base {
 			)
 		);
 
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
+		$this->add_control(
+			'thumb_border_color_hov',
 			array(
-				'name'     => 'thumb_border_hov',
-				'selector' => '{{WRAPPER}} .premium-carousel-thumbnail:hover',
+				'label'       => __( 'Border Color', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::COLOR,
+				'description' => __( 'Border color will only be visible if a border is set in the normal state.', 'premium-addons-for-elementor' ),
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-carousel-thumbnail:hover' => 'border-color: {{VALUE}};',
+				),
 			)
 		);
 
@@ -2803,7 +2812,7 @@ class Premium_Carousel extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-carousel-thumbnail:hover, {{WRAPPER}} .premium-carousel-thumbnail-container:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+					'{{WRAPPER}} .premium-carousel-thumbnail:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
 			)
 		);
@@ -2847,11 +2856,15 @@ class Premium_Carousel extends Widget_Base {
 			)
 		);
 
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
+		$this->add_control(
+			'thumb_border_color_active',
 			array(
-				'name'     => 'thumb_border_active',
-				'selector' => '{{WRAPPER}} .premium-carousel-thumbnail.slick-current',
+				'label'       => __( 'Border Color', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::COLOR,
+				'description' => __( 'Border color will only be visible if a border is set in the normal state.', 'premium-addons-for-elementor' ),
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-carousel-thumbnail.slick-current' => 'border-color: {{VALUE}};',
+				),
 			)
 		);
 

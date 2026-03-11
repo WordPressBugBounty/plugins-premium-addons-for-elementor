@@ -37,6 +37,8 @@
             $scope.find('.pa-txt-sc__item-container').each(function (index, item) {
                 itemObserver.observe($(item)[0]); // we need to apply this on each item
             });
+        } else {
+            itemObserver.observe($scope[0]);
         }
 
         $scope.off('.PaTextualHandler');
@@ -55,9 +57,11 @@
                 }
 
                 if (['outline', 'curly', 'circle', 'x', 'h-underline', 'underline-zigzag', 'double-underline', 'diagonal', 'strikethrough'].includes(effectName)) {
-                    $(this).find('svg').toggleClass('outline');
+                    // $(this).find('svg').toggleClass('outline');
+                    $(this).find('svg').addClass('outline');
                 } else {
-                    $(this).toggleClass(effectName);
+                    // $(this).toggleClass(effectName);
+                    $(this).addClass(effectName);
                 }
             });
         }

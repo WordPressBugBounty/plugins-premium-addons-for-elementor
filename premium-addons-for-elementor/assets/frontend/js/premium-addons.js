@@ -823,7 +823,6 @@
 			run: function () {
 
 				var $galleryElement = this.elements.$galleryElement,
-					$vidWrap = this.elements.$vidWrap,
 					$filters = this.elements.$filters,
 					_this = this;
 
@@ -840,6 +839,10 @@
 
 				$isotopeGallery.imagesLoaded().progress(function () {
 					$isotopeGallery.isotope("layout");
+				});
+
+				elementorFrontend.elements.$window.on('elementor/nested-tabs/activate', function () {
+					window.dispatchEvent(new Event('resize'));
 				});
 
 				$(document).ready(function () { _this.onReady($isotopeGallery); });
@@ -1624,7 +1627,6 @@
 						slidesToScroll: 1,
 						autoplay: false,
 						arrows: false,
-						autoplay: false,
 						centerMode: false,
 						asNavFor: '#premium-carousel-nav-' + widgetID
 					});
@@ -2927,19 +2929,20 @@
 
 			if ($titleContainer.hasClass('style8')) {
 
-				var holdTime = $titleElement.attr('data-shiny-delay') * 1000,
-					duration = $titleElement.attr('data-shiny-dur') * 1000;
+				var shinyDelay = $titleElement.attr('data-shiny-delay') * 1000,
+					shinyDuration = $titleElement.attr('data-shiny-dur') * 1000;
 
-				function shinyEffect() {
+				function runShinyEffect() {
 					$titleElement.get(0).setAttribute('data-animation', 'shiny');
+
 					setTimeout(function () {
 						$titleElement.removeAttr('data-animation')
-					}, duration);
+					}, shinyDuration);
 				}
 
-				(function repeat() {
-					shinyEffect();
-					setTimeout(repeat, holdTime);
+				(function repeatShinyEffect() {
+					runShinyEffect();
+					setTimeout(repeatShinyEffect, shinyDelay);
 				})();
 			}
 
@@ -5251,6 +5254,8 @@
 				$scope.find('.pa-txt-sc__item-container').each(function (index, item) {
 					itemObserver.observe($(item)[0]); // we need to apply this on each item
 				});
+			} else {
+				itemObserver.observe($scope[0]);
 			}
 
 			$scope.off('.PaTextualHandler');
@@ -5269,9 +5274,11 @@
 					}
 
 					if (['outline', 'curly', 'circle', 'x', 'h-underline', 'underline-zigzag', 'double-underline', 'diagonal', 'strikethrough'].includes(effectName)) {
-						$(this).find('svg').toggleClass('outline');
+						// $(this).find('svg').toggleClass('outline');
+						$(this).find('svg').addClass('outline');
 					} else {
-						$(this).toggleClass(effectName);
+						// $(this).toggleClass(effectName);
+						$(this).addClass(effectName);
 					}
 				});
 			}

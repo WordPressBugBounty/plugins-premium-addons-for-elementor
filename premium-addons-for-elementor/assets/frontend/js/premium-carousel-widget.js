@@ -188,7 +188,6 @@
 					slidesToScroll: 1,
 					autoplay: false,
 					arrows: false,
-					autoplay: false,
 					centerMode: false,
 					asNavFor: '#premium-carousel-nav-' + widgetID
 				});

@@ -762,6 +762,7 @@ class Mini_Cart extends Widget_Base {
 				'render_type'  => 'template',
 				'description'  => __( 'Displays the tax label next to the subtotal amount when the ', 'premium-addons-for-elementor' ) . sprintf( __( '<a href="%s" target="_blank">Enable Taxes</a>', 'premium-addons-for-elementor' ), esc_url( admin_url( 'admin.php?page=wc-settings&tab=general' ) ) ) . __( ' option is enabled.', 'premium-addons-for-elementor' ),
 				'condition'    => array(
+					'placement' => 'default',
 					'presets!' => array( 'preset-1', 'preset-2' ),
 				),
 			)
@@ -1162,8 +1163,8 @@ class Mini_Cart extends Widget_Base {
 				'label'       => __( 'Text', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'render_type' => 'template',
-				'default'     => 'Spend {{thershold}} to Get Free Shipping',
-				'description' => __( 'Use this option to add a text of your choice, and use the {{thershold}} placeholder to add the free shipping minium amount.', 'premium-addons-for-elementor' ),
+				'default'     => 'Spend {{threshold}} to Get Free Shipping',
+				'description' => __( 'Use this option to add a text of your choice, and use the {{threshold}} placeholder to add the free shipping minium amount.', 'premium-addons-for-elementor' ),
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
 				'condition'   => array(
@@ -1776,9 +1777,6 @@ class Mini_Cart extends Widget_Base {
 					'{{WRAPPER}} .pa-woo-mc__item-divider' => 'border-color: {{VALUE}}',
 				),
 				'condition' => array(
-					'cart_txt!' => '',
-				),
-				'condition' => array(
 					'separator' => 'yes',
 				),
 			)
@@ -1907,6 +1905,7 @@ class Mini_Cart extends Widget_Base {
 				),
 				'skin'                   => 'inline',
 				'condition'              => array(
+					'cart_type' => 'slide',
 					'content_layout!' => array( 'layout-3', 'layout-4' ),
 				),
 			)
@@ -1921,6 +1920,10 @@ class Mini_Cart extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button i' => 'font-size: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .pa-woo-mc__close-button svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
+				),
+				'condition'              => array(
+					'cart_type' => 'slide',
+					'content_layout!' => array( 'layout-3', 'layout-4' ),
 				),
 			)
 		);
@@ -1946,6 +1949,7 @@ class Mini_Cart extends Widget_Base {
 					'{{WRAPPER}} .pa-woo-mc__cart-title' => 'order: {{VALUE}}',
 				),
 				'condition' => array(
+					'cart_type' => 'slide',
 					'content_layout!' => array( 'layout-3', 'layout-4' ),
 					'cart_title!'     => '',
 				),
@@ -1979,21 +1983,8 @@ class Mini_Cart extends Widget_Base {
 				'condition'            => array(
 					'content_layout!' => array( 'layout-3', 'layout-4' ),
 					'cart_title'      => '',
+					'cart_type' => 'slide',
 				),
-				// 'conditions' => array(
-				// 'relation' => 'or',
-				// 'terms'    => array(
-				// array(
-				// 'name'     => 'cart_title',
-				// 'value'    => '',
-				// ),
-				// array(
-				// 'name'     => 'content_layout',
-				// 'operator' => '!in',
-				// 'value'    => array( 'layout-3', 'layout-4' ),
-				// ),
-				// ),
-				// ),
 			)
 		);
 
@@ -2503,8 +2494,8 @@ class Mini_Cart extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .pa-woo-mc__icon-sep' => 'color: {{SIZE}}px',
-					'{{WRAPPER}}.pa-woo-mc__preset-7 .pa-woo-mc__text-wrapper' => 'border-color: {{SIZE}}px',
+					'{{WRAPPER}} .pa-woo-mc__icon-sep' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.pa-woo-mc__preset-7 .pa-woo-mc__text-wrapper' => 'border-color: {{VALUE}}',
 				),
 				'conditions' => array(
 					'terms' => array(
@@ -3793,12 +3784,12 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'pa_btn_color_hov',
+			'pa_btn_color_qta_cta_hov',
 			array(
 				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .pa-woo-mc__qty-btn:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .pa-woo-mc__qty-btn:hover, {{WRAPPER}} .pa-woo-mc__qty-btn:hover *' => 'fill: {{VALUE}}',
 				),
 				'condition' => array(
 					'qty_controls'   => 'yes',
@@ -3808,12 +3799,12 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'pa_btn_color_qta_cta_hov',
+			'pa_btn_bg_qty_cta_hov',
 			array(
 				'label'     => __( 'Background Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .pa-woo-mc__qty-btn:hover, {{WRAPPER}} .pa-woo-mc__qty-btn:hover *' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .pa-woo-mc__qty-btn:hover' => 'background-color: {{VALUE}}',
 				),
 				'condition' => array(
 					'qty_controls'   => 'yes',
@@ -4048,7 +4039,7 @@ class Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'pa_heading_color_cart_count',
 			array(
-				'label'     => __( 'Title Color', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Count Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .pa-woo-mc__cart-header .pa-woo-mc__cart-count' => 'color: {{VALUE}}',
@@ -4078,17 +4069,23 @@ class Mini_Cart extends Widget_Base {
 				'label'     => __( 'Close Icon', 'premium-addons-for-elementor' ),
 				'separator' => 'before',
 				'type'      => Controls_Manager::HEADING,
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
 		$this->start_controls_tabs(
-			'cicon_tabs'
+			'cicon_tabs',
 		);
 
 		$this->start_controls_tab(
 			'cicon_tab_normal',
 			array(
 				'label' => __( 'Normal', 'premium-addons-for-elementor' ),
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4101,6 +4098,9 @@ class Mini_Cart extends Widget_Base {
 					'{{WRAPPER}} .pa-woo-mc__close-button i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .pa-woo-mc__close-button svg, {{WRAPPER}} .pa-woo-mc__close-button svg *' => 'fill: {{VALUE}}',
 				),
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4112,6 +4112,9 @@ class Mini_Cart extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button' => 'background-color: {{VALUE}}',
 				),
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4120,6 +4123,9 @@ class Mini_Cart extends Widget_Base {
 			array(
 				'name'     => 'cicon_shadow',
 				'selector' => '{{WRAPPER}} .pa-woo-mc__close-button',
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4128,6 +4134,9 @@ class Mini_Cart extends Widget_Base {
 			array(
 				'name'     => 'pa_border_color_cicon',
 				'selector' => '{{WRAPPER}} .pa-woo-mc__close-button',
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4139,6 +4148,9 @@ class Mini_Cart extends Widget_Base {
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+				'condition' => array(
+					'cart_type' => 'slide',
 				),
 			)
 		);
@@ -4152,6 +4164,9 @@ class Mini_Cart extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4161,6 +4176,9 @@ class Mini_Cart extends Widget_Base {
 			'cicon_tab_hov',
 			array(
 				'label' => __( 'Hover', 'premium-addons-for-elementor' ),
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4173,6 +4191,9 @@ class Mini_Cart extends Widget_Base {
 					'{{WRAPPER}} .pa-woo-mc__close-button:hover i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .pa-woo-mc__close-button:hover svg, {{WRAPPER}} .pa-woo-mc__close-button:hover svg *' => 'fill: {{VALUE}}',
 				),
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4184,6 +4205,9 @@ class Mini_Cart extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button:hover' => 'background-color: {{VALUE}}',
 				),
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4192,6 +4216,9 @@ class Mini_Cart extends Widget_Base {
 			array(
 				'name'     => 'cicon_shadow_hov',
 				'selector' => '{{WRAPPER}} .pa-woo-mc__close-button:hover',
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4200,6 +4227,9 @@ class Mini_Cart extends Widget_Base {
 			array(
 				'name'     => 'pa_border_color_cicon_hov',
 				'selector' => '{{WRAPPER}} .pa-woo-mc__close-button:hover',
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4212,6 +4242,9 @@ class Mini_Cart extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
+				'condition' => array(
+					'cart_type' => 'slide',
+				),
 			)
 		);
 
@@ -4223,6 +4256,9 @@ class Mini_Cart extends Widget_Base {
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button:hover' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+				'condition' => array(
+					'cart_type' => 'slide',
 				),
 			)
 		);
@@ -5500,6 +5536,7 @@ class Mini_Cart extends Widget_Base {
 
 				break;
 			case 'image':
+				$image_html = '';
 				if ( ! empty( $settings['image']['url'] ) ) {
 					$image_html = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image' );
 				}
@@ -5609,7 +5646,7 @@ class Mini_Cart extends Widget_Base {
 	private function render_remove_all_btn( $text ) {
 		?>
 			<div class="pa-woo-mc__empty-mc">
-				<a type="button" role="button" class="pa-woo-mc__remove-all-btn"><?php echo esc_html__( $text, 'premium-addons-for-elementor' ); ?></a>
+				<button type="button" role="button" class="pa-woo-mc__remove-all-btn"><?php echo esc_html( $text ); ?></button>
 				<div class="pa-woo-mc__empty-mc-confirm" style="display: none;">
 					<span class="pa-woo-mc__confirm-msg"><?php echo esc_html__( 'Are you sure? ', 'premium-addons-for-elementor' ); ?></span>
 					<a type="button" role="button" class="pa-woo-mc__confirm-btn pa-empty-mc"><?php echo esc_html__( 'Yes', 'premium-addons-for-elementor' ); ?></a> / <a type="button" role="button" class="pa-woo-mc__confirm-btn"><?php echo esc_html__( 'No', 'premium-addons-for-elementor' ); ?></a>
@@ -5681,7 +5718,7 @@ class Mini_Cart extends Widget_Base {
 
 			if ( ! empty( $title ) ) {
 				?>
-						<div class="pa-woo-mc__cart-title"> <?php echo esc_html__( $title ); ?> </div>
+						<div class="pa-woo-mc__cart-title"> <?php echo esc_html( $title ); ?> </div>
 					<?php
 			}
 
@@ -5689,10 +5726,10 @@ class Mini_Cart extends Widget_Base {
 				?>
 						<span class="pa-woo-mc__close-button">
 						<?php
-						if ( in_array( $layout, array( 'layout-3', 'layout-4', true ) ) ) {
+						if ( in_array( $layout, array( 'layout-3', 'layout-4'), true ) ) {
 							?>
-									<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="15.99" viewBox="0 0 16 15.99"><path d="M15.85,15.14l-7.15-7.15L15.85.85c.19-.19.19-.5,0-.69-.19-.2-.51-.2-.71-.01l-7.15,7.15L.85.14C.66-.05.35-.05.16.14c-.2.19-.2.51-.01.71l7.15,7.15L.15,15.14C.05,15.23,0,15.36,0,15.49c0,.28.22.5.5.5.13,0,.26-.05.35-.15l7.15-7.15,7.15,7.15c.09.09.22.15.35.15.13,0,.26-.05.35-.15.2-.2.2-.51,0-.71Z"/></svg>
-									<?php
+								<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="15.99" viewBox="0 0 16 15.99"><path d="M15.85,15.14l-7.15-7.15L15.85.85c.19-.19.19-.5,0-.69-.19-.2-.51-.2-.71-.01l-7.15,7.15L.85.14C.66-.05.35-.05.16.14c-.2.19-.2.51-.01.71l7.15,7.15L.15,15.14C.05,15.23,0,15.36,0,15.49c0,.28.22.5.5.5.13,0,.26-.05.35-.15l7.15-7.15,7.15,7.15c.09.09.22.15.35.15.13,0,.26-.05.35-.15.2-.2.2-.51,0-.71Z"/></svg>
+							<?php
 						} else {
 							Icons_Manager::render_icon(
 								$settings['close_icon'],
@@ -5740,14 +5777,14 @@ class Mini_Cart extends Widget_Base {
 			$this->add_render_attribute( 'cart_footer', 'class', 'pa-woo-mc__cart-footer' );
 
 			if ( 'layout-3' !== $layout ) {
-				$this->add_render_attribute( 'cart_footer', 'data-pa-count-txt', __( $settings['subtotal_txt'], 'premium-addons-for-elementor' ) );
+				$this->add_render_attribute( 'cart_footer', 'data-pa-count-txt', __( $settings['subtotal_txt'] ) );
 
 				$has_item_count = str_contains( $settings['subtotal_txt'], '{{count}}' );
 
 				if ( $has_item_count ) {
 					$subtotal_heading = ! empty( $settings['subtotal_txt'] ) ? '<span class="pa-woo-mc__cart-count">' . $cart_count . '</span>' : false;
 				} else {
-					$subtotal_heading = ! empty( $settings['subtotal_txt'] ) ? __( $settings['subtotal_txt'], 'premium-addons-for-elementor' ) : false;
+					$subtotal_heading = ! empty( $settings['subtotal_txt'] ) ? __( $settings['subtotal_txt'] ) : false;
 				}
 			}
 		}
@@ -5846,8 +5883,13 @@ class Mini_Cart extends Widget_Base {
 	 * @return string The formatted progress bar text.
 	 */
 	private function format_free_shipping_txt( $settings, $threshold, $subtotal ) {
+		$text = $settings['progressbar_txt'];
 
-		return str_replace( '{{thershold}}', wc_price( $threshold, array( 'in_span' => false ) ), $settings['progressbar_txt'] );
+		// Support both the old typo and the corrected spelling
+		$text = str_replace( '{{thershold}}', wc_price( $threshold, array( 'in_span' => false ) ), $text );
+		$text = str_replace( '{{threshold}}', wc_price( $threshold, array( 'in_span' => false ) ), $text );
+
+		return $text;
 	}
 
 	/**
@@ -5858,10 +5900,13 @@ class Mini_Cart extends Widget_Base {
 	 * @return number
 	 */
 	private function get_purchase_percentage( $threshold ) {
+		if ( ! $threshold || floatval( $threshold ) === 0.0 ) {
+			return 0;
+		}
 
 		$cart_total = WC()->cart ? WC()->cart->get_cart_contents_total() : 0;
 
-		return round( ( $cart_total / floatval( $threshold ) ) * 100, 2 );
+		return min( round( ( $cart_total / floatval( $threshold ) ) * 100, 2 ), 100 );
 	}
 
 	/**

@@ -372,7 +372,7 @@ class Admin_Helper {
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 					'nonce'         => wp_create_nonce( 'pa-wizard-nonce' ),
 					'exitWizardURL' => admin_url( 'plugins.php' ),
-					'isSecondRun'   => get_option( 'pa_complete_wizard' ) ? false : true,
+					'isSecondRun'   => $is_second_run,
 					'dashboardURL'  => admin_url( 'admin.php' ) . '?page=premium-addons#tab=elements',
 					'newPageURL'    => Plugin::$instance->documents->get_create_new_post_url(),
 				),
@@ -1028,6 +1028,10 @@ class Admin_Helper {
 
 		update_option( 'pa_maps_save_settings', $new_settings );
 
+		// Clear cache and static property.
+		wp_cache_delete( 'pa_integrations', 'premium_addons' );
+		self::$integrations_settings = null;
+
 		wp_send_json_success( $settings );
 	}
 
@@ -1380,23 +1384,33 @@ class Admin_Helper {
 	 */
 	public static function get_integrations_settings() {
 
-		if ( null === self::$integrations_settings ) {
+		$cache_key = 'pa_integrations';
+		$cached    = wp_cache_get( $cache_key, 'premium_addons' );
 
-			$defaults = self::get_default_integrations();
-
-			$enabled_keys = get_option( 'pa_maps_save_settings', $defaults );
-
-			foreach ( $defaults as $key => $value ) {
-
-				if ( isset( $enabled_keys[ $key ] ) ) {
-
-					$defaults[ $key ] = $enabled_keys[ $key ];
-				}
-			}
-
-			self::$integrations_settings = $defaults;
-
+		if ( false !== $cached ) {
+			self::$integrations_settings = $cached;
+			return self::$integrations_settings;
 		}
+
+		// Check static property as fallback for multiple calls in same request.
+		if ( null !== self::$integrations_settings ) {
+			return self::$integrations_settings;
+		}
+
+		$defaults = self::get_default_integrations();
+
+		$enabled_keys = get_option( 'pa_maps_save_settings', $defaults );
+
+		foreach ( $defaults as $key => $value ) {
+
+			if ( isset( $enabled_keys[ $key ] ) ) {
+
+				$defaults[ $key ] = $enabled_keys[ $key ];
+			}
+		}
+
+		self::$integrations_settings = $defaults;
+		wp_cache_set( $cache_key, $defaults, 'premium_addons', HOUR_IN_SECONDS );
 
 		return self::$integrations_settings;
 	}
@@ -1564,9 +1578,7 @@ class Admin_Helper {
 	 */
 	public static function get_pa_elements_names() {
 
-		$names = self::$elements_names;
-
-		if ( null === $names ) {
+		if ( null === self::$elements_names ) {
 
 			$names = array_map(
 				function ( $item ) {
@@ -1575,7 +1587,7 @@ class Admin_Helper {
 				self::get_elements_list()['cat-1']['elements']
 			);
 
-			$names = array_filter(
+			self::$elements_names = array_filter(
 				$names,
 				function ( $name ) {
 					return 'global' !== $name;
@@ -1584,7 +1596,7 @@ class Admin_Helper {
 
 		}
 
-		return $names;
+		return self::$elements_names;
 	}
 
 	/**

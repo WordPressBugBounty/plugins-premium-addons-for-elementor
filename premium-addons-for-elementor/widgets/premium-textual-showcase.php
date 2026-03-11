@@ -1174,7 +1174,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 				'description' => 'Get JSON code URL from <a href="https://lottiefiles.com/" target="_blank">here</a>',
 				'label_block' => true,
 				'condition'   => array(
-					'item_type' => 'lottie',
+					'item_type_hov' => 'lottie',
 				),
 			)
 		);
@@ -2065,7 +2065,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 					'fast' => __( 'Fast', 'premium-addons-for-elementor' ),
 				),
 				'condition' => array(
-					'entrance_animation!' => '',
+					'entrance_animation!' => array( '', 'none'),
 				),
 			)
 		);
@@ -2078,7 +2078,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 				'default'   => 0,
 				'step'      => 0.1,
 				'condition' => array(
-					'entrance_animation!' => '',
+					'entrance_animation!' => array( '', 'none')
 				),
 			)
 		);

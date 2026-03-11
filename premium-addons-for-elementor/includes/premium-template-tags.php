@@ -294,9 +294,18 @@ class Premium_Template_Tags {
 		$excerpt = '';
 
 		if ( 'full' === $source ) {
+			// Ensure posts build with Elementor loads properly, not as a plain text.
+			$post_id = get_the_ID();
+			$frontend_instance = Plugin::$instance->frontend;
+			$content = $frontend_instance->get_builder_content( $post_id, true );
 
-			// Print post full content.
-			the_content();
+			if ( ! empty( $content ) ) {
+				echo $content;
+			} else {
+				// Normal Post Content [ not built with elementor ].
+				// Print post full content.
+				the_content();
+			}
 
 		} else {
 			$excerpt = trim( get_the_excerpt() );
@@ -538,7 +547,6 @@ class Premium_Template_Tags {
 		}
 
 		$this->add_render_attribute( 'post-content-inner-' . get_the_ID(), 'class', $options['content_classes'] );
-
 		?>
 		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'post-content-inner-' . get_the_ID() ) ); ?>>
 		<?php
@@ -1565,7 +1573,7 @@ class Premium_Template_Tags {
 				/**
 				 * Add a new grid template to the output if:
 				 * 1- first render.
-				 * 2- we looped through all the templates ids choosen by the user and the queried posts are > the loop templates ids.
+				 * 2- we looped through all the templates ids chosen by the user and the queried posts are > the loop templates ids.
 				 */
 				if ( empty( $items_templates_container ) ) {
 

@@ -509,6 +509,11 @@
 				});
 			}
 
+			// Prevent clicks inside the cart dropdown from bubbling to body and closing the cart.
+			$scope.find('.pa-woo-mc__content-wrapper-' + id).on('click.paStopPropagation', function (e) {
+				e.stopPropagation();
+			});
+
 			/**
 			 * Events: Closing the slide menu.
 			 */

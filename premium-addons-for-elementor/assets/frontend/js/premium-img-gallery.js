@@ -264,7 +264,6 @@
 			run: function () {
 
 				var $galleryElement = this.elements.$galleryElement,
-					$vidWrap = this.elements.$vidWrap,
 					$filters = this.elements.$filters,
 					_this = this;
 
@@ -281,6 +280,10 @@
 
 				$isotopeGallery.imagesLoaded().progress(function () {
 					$isotopeGallery.isotope("layout");
+				});
+
+				elementorFrontend.elements.$window.on('elementor/nested-tabs/activate', function () {
+					window.dispatchEvent(new Event('resize'));
 				});
 
 				$(document).ready(function () { _this.onReady($isotopeGallery); });
