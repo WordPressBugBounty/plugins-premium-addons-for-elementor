@@ -60,7 +60,7 @@ class Addons_Integration {
 		}
 
 		if ( null === self::$modules ) {
-			self::$modules = Admin_Helper::get_enabled_elements();
+			self::$modules      = Admin_Helper::get_enabled_elements();
 			self::$integrations = Admin_Helper::get_integrations_settings();
 		}
 
@@ -75,7 +75,6 @@ class Addons_Integration {
 
 		// Handle everything related to widgets assets.
 		Assets_Manager::get_instance( self::$modules, self::$integrations );
-
 	}
 
 	/**
@@ -98,7 +97,6 @@ class Addons_Integration {
 		add_action( 'elementor/elements/categories_registered', array( $this, 'register_widgets_category' ), 9 );
 		add_action( 'elementor/controls/register', array( $this, 'register_controls' ) );
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
-
 	}
 
 	/**
@@ -143,7 +141,6 @@ class Addons_Integration {
 		);
 
 		wp_localize_script( 'pa-editor-handler', 'paEditorSettings', $data );
-
 	}
 
 	/**
@@ -262,11 +259,11 @@ class Addons_Integration {
 
 			$class = Helper_Functions::get_widget_class_name( $key );
 
-			if( ! $class ) {
+			if ( ! $class ) {
 				continue;
 			}
 
-			if( 'PremiumAddons\Widgets\Premium_Contactform' === $class && ! function_exists( 'wpcf7' ) ) {
+			if ( 'PremiumAddons\Widgets\Premium_Contactform' === $class && ! function_exists( 'wpcf7' ) ) {
 				continue;
 			}
 
@@ -316,8 +313,8 @@ class Addons_Integration {
 		);
 
 		$data = array(
-			'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
-			'nonce'   => wp_create_nonce( 'pa-disable-unused' ),
+			'ajaxurl'             => esc_url( admin_url( 'admin-ajax.php' ) ),
+			'nonce'               => wp_create_nonce( 'pa-disable-unused' ),
 			'disable_unused_link' => add_query_arg(
 				array(
 					'page'      => 'premium-addons',
@@ -325,7 +322,7 @@ class Addons_Integration {
 					'#tab'      => 'elements',
 				),
 				esc_url( admin_url( 'admin.php' ) )
-			)
+			),
 
 		);
 
@@ -476,7 +473,6 @@ class Addons_Integration {
 		if ( ! Helper_Functions::check_papro_version() ) {
 			Helpers\PAPRO_Promotion::get_instance();
 		}
-
 	}
 
 	/**

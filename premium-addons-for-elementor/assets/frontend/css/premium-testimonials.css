@@ -231,3 +231,17 @@
 .premium-testimonial-heading {
   margin-bottom: 10px;
 }
+
+.elementor-editor-active .elementor-widget-premium-addon-testimonials {
+  clear: both;
+}
+.elementor-editor-active .premium-testimonial-box.multiple-testimonials.premium-testimonial-masonry {
+  display: block !important;
+}
+.elementor-editor-active .premium-testimonial-box.multiple-testimonials.premium-testimonial-masonry .premium-testimonial-container {
+  float: inline-start;
+}
+
+.elementor-widget-premium-addon-testimonials {
+  width: 100%;
+}

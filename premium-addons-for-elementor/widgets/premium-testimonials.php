@@ -99,10 +99,11 @@ class Premium_Testimonials extends Widget_Base {
 
 		if ( $is_edit ) {
 
-			$scripts = array( 'pa-glass', 'pa-slick' );
+			$scripts = array( 'isotope-js', 'pa-glass', 'pa-slick' );
 
 		} else {
 			$settings = $this->get_settings();
+			$load_masonry = 'masonry' === $settings['premium_testimonial_layout'] && 'yes' !== $settings['carousel'] && 'skin4' !== $settings['skin'];
 
 			if ( 'yes' === $settings['carousel'] || 'skin4' === $settings['skin'] ) {
 				$scripts[] = 'pa-slick';
@@ -110,6 +111,10 @@ class Premium_Testimonials extends Widget_Base {
 				if ( 'none' !== $settings['arrows_lq_effect'] ) {
 					$scripts[] = 'pa-glass';
 				}
+			}
+
+			if ( $load_masonry ) {
+				$scripts[] = 'isotope-js';
 			}
 		}
 
@@ -746,6 +751,34 @@ class Premium_Testimonials extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'premium_testimonial_layout',
+			array(
+				'label'              => esc_html__( 'Layout', 'premium-addons-for-elementor' ),
+				'type'               => Controls_Manager::CHOOSE,
+				'render_type'        => 'template',
+				'separator'          => 'before',
+				'options'            => array(
+					'grid'    => array(
+						'title' => esc_html__( 'Grid', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-gallery-grid',
+					),
+					'masonry' => array(
+						'title' => esc_html__( 'Masonry', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-gallery-masonry',
+					),
+				),
+				'label_block'        => true,
+				'frontend_available' => true,
+				'default'            => 'grid',
+				'condition'          => array(
+					'multiple'  => 'yes',
+					'skin!'     => 'skin4',
+					'carousel!' => 'yes',
+				),
+			)
+		);
+
 		$this->add_responsive_control(
 			'testimonials_per_row',
 			array(
@@ -810,10 +843,33 @@ class Premium_Testimonials extends Widget_Base {
 			array(
 				'label'        => __( 'Equal Height', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
+				'render_type'  => 'template',
 				'description'  => __( 'This option searches for the testimonial with the largest height and applies that height to the other testimonials', 'premium-addons-for-elementor' ),
 				'prefix_class' => 'premium-testimonial__equal-',
-				'condition'    => array(
-					'multiple' => 'yes',
+				'conditions'   => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'multiple',
+							'operator' => '===',
+							'value'    => 'yes',
+						),
+						array(
+							'relation' => 'or',
+							'terms'    => array(
+								array(
+									'name'     => 'premium_testimonial_layout',
+									'operator' => '!==',
+									'value'    => 'masonry',
+								),
+								array(
+									'name'     => 'carousel',
+									'operator' => '===',
+									'value'    => 'yes',
+								),
+							),
+						),
+					),
 				),
 			)
 		);
@@ -1787,6 +1843,10 @@ class Premium_Testimonials extends Widget_Base {
 
 		}
 
+		if ( 'yes' === $settings['multiple'] && 'masonry' === $settings['premium_testimonial_layout'] && 'yes' !== $settings['carousel'] ) {
+			$this->add_render_attribute( 'testimonials_container', 'class', 'premium-testimonial-masonry' );
+		}
+
 		$carousel = 'yes' === $settings['carousel'] ? true : false;
 
 		if ( $carousel ) {
@@ -2002,13 +2062,21 @@ class Premium_Testimonials extends Widget_Base {
 								<?php $this->render_quote_icon(); ?>
 							</div>
 						<?php endif; ?>
-
 					</div>
 
 				<?php endforeach; ?>
-			<?php endif; ?>
+				<?php
+					endif;
 
+					if ( Plugin::instance()->editor->is_edit_mode() ) {
 
+						if ( 'yes' === $settings['multiple'] ) {
+							if ( 'masonry' === $settings['premium_testimonial_layout'] && 'yes' !== $settings['carousel'] ) {
+								$this->render_editor_script();
+							}
+						}
+					}
+				?>
 		</div>
 		<?php
 	}
@@ -2055,5 +2123,66 @@ class Premium_Testimonials extends Widget_Base {
 		}
 
 		return $testionial_image_html;
+	}
+
+	/**
+	 * Render Editor Masonry Script.
+	 *
+	 * @since 4.10.13
+	 * @access protected
+	 */
+	protected function render_editor_script() {
+
+		?>
+		<script type="text/javascript">
+			jQuery( document ).ready( function( $ ) {
+
+				$( '.premium-testimonial-box' ).each( function() {
+
+					var $node_id 	= '<?php echo esc_attr( $this->get_id() ); ?>',
+						scope 		= $( '[data-id="' + $node_id + '"]' ),
+						selector 	= $(this);
+
+					if ( selector.closest( scope ).length < 1 ) {
+						return;
+					}
+
+					var masonryArgs = {
+						itemSelector	: '.premium-testimonial-container',
+						percentPosition : true,
+						layoutMode		: 'masonry',
+					};
+
+					var $isotopeObj = {};
+
+					selector.imagesLoaded( function() {
+
+						$isotopeObj = selector.isotope( masonryArgs );
+
+						$isotopeObj.imagesLoaded().progress(function() {
+							$isotopeObj.isotope("layout");
+						});
+
+						selector.find('.premium-testimonial-container').resize( function() {
+							$isotopeObj.isotope( 'layout' );
+						});
+					});
+
+					if ( window.elementor ) {
+						//No need to limit the change to the spacing control only, as changing the container size for example will affect the masonry layout.
+						var debounceDelay;
+						elementor.channels.editor.on('change', function(e) {
+							
+							clearTimeout(debounceDelay);
+
+							debounceDelay = setTimeout(function() {
+								$isotopeObj.isotope('layout');
+							}, 300);
+						});
+					}
+				});
+			});
+		</script>
+		<?php
 	}
 }

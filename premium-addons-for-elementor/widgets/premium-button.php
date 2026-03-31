@@ -955,7 +955,7 @@ class Premium_Button extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-button-text-icon-wrapper' => 'gap: {{SIZE}}px',
 					'{{WRAPPER}}.pa-icon-pos-before' => '--pa-btn-line6-translate-x: {{SIZE}}px',
-					'{{WRAPPER}}.pa-icon-pos-after' => '--pa-btn-line6-translate-x: -{{SIZE}}px',
+					'{{WRAPPER}}.pa-icon-pos-after'  => '--pa-btn-line6-translate-x: -{{SIZE}}px',
 				),
 				'separator' => 'after',
 			)
@@ -1843,7 +1843,7 @@ class Premium_Button extends Widget_Base {
 							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
-								<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist ?>
 							</div>
 						<?php else : ?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'lottie' ) ); ?>></div>

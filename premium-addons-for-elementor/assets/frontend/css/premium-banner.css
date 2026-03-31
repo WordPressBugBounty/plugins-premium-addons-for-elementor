@@ -306,6 +306,7 @@
 }
 .premium-banner-animation4 .premium-banner-ib-content,
 .premium-banner-animation4 .premium-banner-read-more {
+  position: relative;
   padding: 10px 30px;
   opacity: 0;
   overflow: hidden;

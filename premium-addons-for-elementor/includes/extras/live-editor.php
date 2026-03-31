@@ -76,7 +76,6 @@ if ( ! class_exists( 'Live_Editor' ) ) {
 			);
 
 			wp_localize_script( 'live-editor', 'liveEditor', $live_editor_data );
-
 		}
 
 		/**

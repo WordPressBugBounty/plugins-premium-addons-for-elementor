@@ -126,8 +126,8 @@ class Floating_Effects {
 				'type'               => Controls_Manager::SELECT,
 				'default'            => 'load',
 				'options'            => array(
-					'load'    => __( 'Page Load', 'premium-addons-for-elementor' ),
-					'hover'   => __( 'Hover', 'premium-addons-for-elementor' ),
+					'load'  => __( 'Page Load', 'premium-addons-for-elementor' ),
+					'hover' => __( 'Hover', 'premium-addons-for-elementor' ),
 				),
 				'condition'          => array(
 					'premium_fe_switcher' => 'yes',
@@ -145,7 +145,7 @@ class Floating_Effects {
 				'dynamic'            => array( 'active' => true ),
 				'label_block'        => true,
 				'render_type'        => 'template',
-				'ai'          => array(
+				'ai'                 => array(
 					'active' => false,
 				),
 				'condition'          => array(
@@ -728,8 +728,8 @@ class Floating_Effects {
 				'condition'          => array(
 					'premium_fe_switcher' => 'yes',
 				),
-				'render_type' => 'template',
-				'selectors' => array(
+				'render_type'        => 'template',
+				'selectors'          => array(
 					'{{WRAPPER}}' => 'opacity: 0',
 				),
 				'frontend_available' => true,

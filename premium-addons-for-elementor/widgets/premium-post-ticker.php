@@ -3941,9 +3941,9 @@ class Premium_Post_Ticker extends Widget_Base {
 						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' . $index ) ); ?>>
 						<?php
 						if ( $is_repeater_item ) {
-							$this->print_unescaped_setting( 'custom_svg', 'text_content', $settings['index'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo Helper_Functions::sanitize_svg( $settings['custom_svg'] );
 						} else {
-							$this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) );
 						}
 						?>
 						</div>

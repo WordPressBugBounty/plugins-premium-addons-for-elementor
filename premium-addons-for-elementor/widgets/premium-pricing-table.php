@@ -3709,7 +3709,7 @@ class Premium_Pricing_Table extends Widget_Base {
 
 					<?php elseif ( 'svg' === $icon_type ) : ?>
 						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
-							<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
 						</div>
 					<?php elseif ( 'animation' === $icon_type ) : ?>
 						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'pricing_lottie' ) ); ?>></div>
@@ -3838,7 +3838,7 @@ class Premium_Pricing_Table extends Widget_Base {
 								endif;
 								?>
 							<?php elseif ( 'svg' === $item['icon_type'] ) : ?>
-								<?php echo $this->print_unescaped_setting( 'custom_svg', 'premium_fancy_text_list_items', $index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); ?>
 								<?php
 							elseif ( 'animation' === $item['icon_type'] ) :
 								$lottie_key = 'pricing_item_lottie_' . $index;

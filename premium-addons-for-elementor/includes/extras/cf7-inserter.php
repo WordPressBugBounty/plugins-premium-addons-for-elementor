@@ -31,7 +31,6 @@ if ( ! class_exists( 'CF7_Inserter' ) ) {
 		public function __construct() {
 
 			add_action( 'wp_ajax_insert_cf_form', array( $this, 'insert_cf_form' ) );
-
 		}
 
 		/**

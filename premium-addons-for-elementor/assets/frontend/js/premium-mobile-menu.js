@@ -151,7 +151,8 @@
 
 							e.preventDefault();
 
-							$(window).animate({
+							// $(window).animate({
+							$('html, body').animate({
 								scrollTop: targetElement.offset().top
 							}, 500, function () {
 

@@ -258,6 +258,7 @@
 .premium-carousel-thumbnail {
   margin-left: 3px;
   margin-right: 3px;
+  overflow: hidden;
 }
 
 .pa-thumb-nav-pos-col .premium-carousel-wrapper,

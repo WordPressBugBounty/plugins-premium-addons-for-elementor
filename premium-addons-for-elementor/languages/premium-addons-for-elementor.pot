@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Premium Addons for Elementor 4.11.70\n"
+"Project-Id-Version: Premium Addons for Elementor 4.11.69\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/premium-addons-for-elementor\n"
-"POT-Creation-Date: 2026-03-11 10:12:09+00:00\n"
+"POT-Creation-Date: 2026-03-09 09:07:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -64,10 +64,10 @@ msgstr ""
 #: widgets/premium-nav-menu.php:3037 widgets/premium-notifications.php:259
 #: widgets/premium-notifications.php:541 widgets/premium-post-ticker.php:1544
 #: widgets/premium-post-ticker.php:1761 widgets/premium-pricing-table.php:571
-#: widgets/premium-pricing-table.php:805 widgets/premium-pricing-table.php:1341
-#: widgets/premium-pricing-table.php:1463
-#: widgets/premium-pricing-table.php:2565
-#: widgets/premium-pricing-table.php:2854 widgets/premium-search-form.php:869
+#: widgets/premium-pricing-table.php:776 widgets/premium-pricing-table.php:1312
+#: widgets/premium-pricing-table.php:1434
+#: widgets/premium-pricing-table.php:2531
+#: widgets/premium-pricing-table.php:2820 widgets/premium-search-form.php:869
 #: widgets/premium-textual-showcase.php:308
 #: widgets/premium-textual-showcase.php:320
 #: widgets/premium-textual-showcase.php:937
@@ -161,7 +161,7 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-products.php:1113
 #: modules/woocommerce/widgets/woo-products.php:1324
 #: widgets/premium-countdown.php:189 widgets/premium-grid.php:705
-#: widgets/premium-media-wheel.php:443 widgets/premium-pricing-table.php:1448
+#: widgets/premium-media-wheel.php:443 widgets/premium-pricing-table.php:1419
 #: widgets/premium-progressbar.php:205 widgets/premium-textual-showcase.php:303
 #: widgets/premium-textual-showcase.php:931
 msgid "Type"
@@ -421,8 +421,8 @@ msgstr ""
 #: widgets/premium-pinterest-feed.php:1414
 #: widgets/premium-pinterest-feed.php:1641
 #: widgets/premium-pinterest-feed.php:2351 widgets/premium-post-ticker.php:2939
-#: widgets/premium-pricing-table.php:3055
-#: widgets/premium-pricing-table.php:3415 widgets/premium-search-form.php:1935
+#: widgets/premium-pricing-table.php:3021
+#: widgets/premium-pricing-table.php:3381 widgets/premium-search-form.php:1935
 #: widgets/premium-search-form.php:2378 widgets/premium-search-form.php:2794
 #: widgets/premium-tcloud.php:734 widgets/premium-tiktok-feed.php:2257
 #: widgets/premium-tiktok-feed.php:2481 widgets/premium-weather.php:3034
@@ -488,7 +488,7 @@ msgstr ""
 #: addons/floating-effects.php:270 addons/floating-effects.php:423
 #: addons/floating-effects.php:546 addons/floating-effects.php:667
 #: addons/floating-effects.php:768 addons/floating-effects.php:859
-#: widgets/premium-pricing-table.php:761 widgets/premium-pricing-table.php:2426
+#: widgets/premium-pricing-table.php:732 widgets/premium-pricing-table.php:2392
 msgid "Duration"
 msgstr ""
 
@@ -666,11 +666,11 @@ msgstr ""
 #: widgets/premium-pinterest-feed.php:1344
 #: widgets/premium-pinterest-feed.php:2148
 #: widgets/premium-pinterest-feed.php:2511 widgets/premium-post-ticker.php:2906
-#: widgets/premium-post-ticker.php:2961 widgets/premium-pricing-table.php:1912
-#: widgets/premium-pricing-table.php:2310
-#: widgets/premium-pricing-table.php:2817
-#: widgets/premium-pricing-table.php:3245
-#: widgets/premium-pricing-table.php:3263 widgets/premium-progressbar.php:1323
+#: widgets/premium-post-ticker.php:2961 widgets/premium-pricing-table.php:1883
+#: widgets/premium-pricing-table.php:2276
+#: widgets/premium-pricing-table.php:2783
+#: widgets/premium-pricing-table.php:3211
+#: widgets/premium-pricing-table.php:3229 widgets/premium-progressbar.php:1323
 #: widgets/premium-search-form.php:1622 widgets/premium-search-form.php:1727
 #: widgets/premium-search-form.php:1775 widgets/premium-search-form.php:2733
 #: widgets/premium-search-form.php:2813 widgets/premium-search-form.php:2893
@@ -804,8 +804,8 @@ msgstr ""
 #: widgets/premium-pinterest-feed.php:1383
 #: widgets/premium-pinterest-feed.php:1621
 #: widgets/premium-pinterest-feed.php:2294 widgets/premium-post-ticker.php:2885
-#: widgets/premium-pricing-table.php:2963
-#: widgets/premium-pricing-table.php:3307 widgets/premium-search-form.php:1709
+#: widgets/premium-pricing-table.php:2929
+#: widgets/premium-pricing-table.php:3273 widgets/premium-search-form.php:1709
 #: widgets/premium-search-form.php:1845 widgets/premium-search-form.php:2295
 #: widgets/premium-search-form.php:2714 widgets/premium-svg-drawer.php:869
 #: widgets/premium-tcloud.php:596 widgets/premium-textual-showcase.php:2064
@@ -833,8 +833,8 @@ msgstr ""
 #: widgets/premium-mobile-menu.php:480 widgets/premium-modalbox.php:486
 #: widgets/premium-modalbox.php:847 widgets/premium-modalbox.php:1088
 #: widgets/premium-notifications.php:448 widgets/premium-post-ticker.php:629
-#: widgets/premium-pricing-table.php:452 widgets/premium-pricing-table.php:683
-#: widgets/premium-pricing-table.php:986 widgets/premium-progressbar.php:594
+#: widgets/premium-pricing-table.php:452 widgets/premium-pricing-table.php:655
+#: widgets/premium-pricing-table.php:957 widgets/premium-progressbar.php:594
 #: widgets/premium-textual-showcase.php:586
 #: widgets/premium-textual-showcase.php:1215 widgets/premium-title.php:819
 msgid "Reverse"
@@ -858,7 +858,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:1074 widgets/premium-notifications.php:437
 #: widgets/premium-notifications.php:1134 widgets/premium-post-ticker.php:618
 #: widgets/premium-post-ticker.php:1750 widgets/premium-pricing-table.php:441
-#: widgets/premium-pricing-table.php:960 widgets/premium-pricing-table.php:1198
+#: widgets/premium-pricing-table.php:931 widgets/premium-pricing-table.php:1169
 #: widgets/premium-progressbar.php:583 widgets/premium-svg-drawer.php:446
 #: widgets/premium-textual-showcase.php:575
 #: widgets/premium-textual-showcase.php:1204 widgets/premium-title.php:808
@@ -962,7 +962,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:2219 widgets/premium-nav-menu.php:3543
 #: widgets/premium-nav-menu.php:3925 widgets/premium-nav-menu.php:4049
 #: widgets/premium-person.php:1647 widgets/premium-post-ticker.php:2770
-#: widgets/premium-pricing-table.php:2493 widgets/premium-search-form.php:2311
+#: widgets/premium-pricing-table.php:2459 widgets/premium-search-form.php:2311
 #: widgets/premium-tcloud.php:640 widgets/premium-testimonials.php:1543
 #: widgets/premium-textual-showcase.php:1895
 #: widgets/premium-tiktok-feed.php:1240 widgets/premium-title.php:1350
@@ -988,7 +988,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:2223 widgets/premium-nav-menu.php:3547
 #: widgets/premium-nav-menu.php:3929 widgets/premium-nav-menu.php:4053
 #: widgets/premium-person.php:1651 widgets/premium-post-ticker.php:2774
-#: widgets/premium-pricing-table.php:2497 widgets/premium-search-form.php:2315
+#: widgets/premium-pricing-table.php:2463 widgets/premium-search-form.php:2315
 #: widgets/premium-tcloud.php:644 widgets/premium-testimonials.php:1547
 #: widgets/premium-textual-showcase.php:1899
 #: widgets/premium-tiktok-feed.php:1244 widgets/premium-title.php:1354
@@ -1017,7 +1017,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:2229 widgets/premium-nav-menu.php:3553
 #: widgets/premium-nav-menu.php:3935 widgets/premium-nav-menu.php:4059
 #: widgets/premium-person.php:1657 widgets/premium-post-ticker.php:2780
-#: widgets/premium-pricing-table.php:2503 widgets/premium-search-form.php:2321
+#: widgets/premium-pricing-table.php:2469 widgets/premium-search-form.php:2321
 #: widgets/premium-tcloud.php:650 widgets/premium-testimonials.php:1553
 #: widgets/premium-textual-showcase.php:1905
 #: widgets/premium-tiktok-feed.php:1250 widgets/premium-title.php:1360
@@ -1043,7 +1043,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:2230 widgets/premium-nav-menu.php:3554
 #: widgets/premium-nav-menu.php:3936 widgets/premium-nav-menu.php:4060
 #: widgets/premium-person.php:1658 widgets/premium-post-ticker.php:2781
-#: widgets/premium-pricing-table.php:2504 widgets/premium-search-form.php:2322
+#: widgets/premium-pricing-table.php:2470 widgets/premium-search-form.php:2322
 #: widgets/premium-tcloud.php:651 widgets/premium-testimonials.php:1554
 #: widgets/premium-textual-showcase.php:1906
 #: widgets/premium-tiktok-feed.php:1251 widgets/premium-title.php:1361
@@ -1069,7 +1069,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:2231 widgets/premium-nav-menu.php:3555
 #: widgets/premium-nav-menu.php:3937 widgets/premium-nav-menu.php:4061
 #: widgets/premium-person.php:1659 widgets/premium-post-ticker.php:2782
-#: widgets/premium-pricing-table.php:2505 widgets/premium-search-form.php:2323
+#: widgets/premium-pricing-table.php:2471 widgets/premium-search-form.php:2323
 #: widgets/premium-tcloud.php:652 widgets/premium-testimonials.php:1555
 #: widgets/premium-textual-showcase.php:1907
 #: widgets/premium-tiktok-feed.php:1252 widgets/premium-title.php:1362
@@ -1095,7 +1095,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:2232 widgets/premium-nav-menu.php:3556
 #: widgets/premium-nav-menu.php:3938 widgets/premium-nav-menu.php:4062
 #: widgets/premium-person.php:1660 widgets/premium-post-ticker.php:2783
-#: widgets/premium-pricing-table.php:2506 widgets/premium-search-form.php:2324
+#: widgets/premium-pricing-table.php:2472 widgets/premium-search-form.php:2324
 #: widgets/premium-tcloud.php:653 widgets/premium-testimonials.php:1556
 #: widgets/premium-textual-showcase.php:1908
 #: widgets/premium-tiktok-feed.php:1253 widgets/premium-title.php:1363
@@ -1121,7 +1121,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:2233 widgets/premium-nav-menu.php:3557
 #: widgets/premium-nav-menu.php:3939 widgets/premium-nav-menu.php:4063
 #: widgets/premium-person.php:1661 widgets/premium-post-ticker.php:2784
-#: widgets/premium-pricing-table.php:2507 widgets/premium-search-form.php:2325
+#: widgets/premium-pricing-table.php:2473 widgets/premium-search-form.php:2325
 #: widgets/premium-tcloud.php:654 widgets/premium-testimonials.php:1557
 #: widgets/premium-textual-showcase.php:1909
 #: widgets/premium-tiktok-feed.php:1254 widgets/premium-title.php:1364
@@ -1147,7 +1147,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:2234 widgets/premium-nav-menu.php:3558
 #: widgets/premium-nav-menu.php:3940 widgets/premium-nav-menu.php:4064
 #: widgets/premium-person.php:1662 widgets/premium-post-ticker.php:2785
-#: widgets/premium-pricing-table.php:2508 widgets/premium-search-form.php:2326
+#: widgets/premium-pricing-table.php:2474 widgets/premium-search-form.php:2326
 #: widgets/premium-tcloud.php:655 widgets/premium-testimonials.php:1558
 #: widgets/premium-textual-showcase.php:1910
 #: widgets/premium-tiktok-feed.php:1255 widgets/premium-title.php:1365
@@ -1195,7 +1195,7 @@ msgstr ""
 #: widgets/premium-notifications.php:1930 widgets/premium-person.php:293
 #: widgets/premium-person.php:1656 widgets/premium-pinterest-feed.php:894
 #: widgets/premium-post-ticker.php:1384 widgets/premium-post-ticker.php:2779
-#: widgets/premium-pricing-table.php:2502 widgets/premium-progressbar.php:837
+#: widgets/premium-pricing-table.php:2468 widgets/premium-progressbar.php:837
 #: widgets/premium-search-form.php:570 widgets/premium-search-form.php:747
 #: widgets/premium-search-form.php:2100 widgets/premium-search-form.php:2320
 #: widgets/premium-tcloud.php:490 widgets/premium-tcloud.php:649
@@ -1286,7 +1286,7 @@ msgstr ""
 #: widgets/premium-countdown.php:680 widgets/premium-grid.php:1266
 #: widgets/premium-icon-list.php:1570 widgets/premium-media-wheel.php:348
 #: widgets/premium-media-wheel.php:1321 widgets/premium-pinterest-feed.php:818
-#: widgets/premium-pricing-table.php:679 widgets/premium-tcloud.php:182
+#: widgets/premium-pricing-table.php:651 widgets/premium-tcloud.php:182
 #: widgets/premium-textual-showcase.php:388
 #: widgets/premium-textual-showcase.php:1017
 #: widgets/premium-tiktok-feed.php:730 widgets/premium-videobox.php:1117
@@ -1315,8 +1315,8 @@ msgstr ""
 #: widgets/premium-media-wheel.php:2256 widgets/premium-nav-menu.php:3198
 #: widgets/premium-nav-menu.php:4530 widgets/premium-notifications.php:764
 #: widgets/premium-post-ticker.php:802 widgets/premium-post-ticker.php:1434
-#: widgets/premium-post-ticker.php:3101 widgets/premium-pricing-table.php:1541
-#: widgets/premium-pricing-table.php:1562 widgets/premium-videobox.php:803
+#: widgets/premium-post-ticker.php:3101 widgets/premium-pricing-table.php:1512
+#: widgets/premium-pricing-table.php:1533 widgets/premium-videobox.php:803
 #: widgets/premium-vscroll.php:309 widgets/premium-world-clock.php:2159
 #: widgets/premium-world-clock.php:2295 widgets/premium-world-clock.php:2442
 msgid "Position"
@@ -1331,7 +1331,7 @@ msgstr ""
 #: widgets/premium-icon-list.php:1363 widgets/premium-icon-list.php:1410
 #: widgets/premium-lottie.php:322 widgets/premium-mobile-menu.php:1036
 #: widgets/premium-notifications.php:1198
-#: widgets/premium-pricing-table.php:2224 widgets/premium-search-form.php:1511
+#: widgets/premium-pricing-table.php:2195 widgets/premium-search-form.php:1511
 #: widgets/premium-testimonials.php:667 widgets/premium-title.php:404
 #: widgets/premium-title.php:551 widgets/premium-videobox.php:357
 #: widgets/premium-videobox.php:2707 widgets/premium-vscroll.php:426
@@ -1347,7 +1347,7 @@ msgstr ""
 #: widgets/premium-countdown.php:529 widgets/premium-icon-list.php:1418
 #: widgets/premium-lottie.php:321 widgets/premium-mobile-menu.php:1040
 #: widgets/premium-notifications.php:1206
-#: widgets/premium-pricing-table.php:2232 widgets/premium-search-form.php:1519
+#: widgets/premium-pricing-table.php:2203 widgets/premium-search-form.php:1519
 #: widgets/premium-testimonials.php:671 widgets/premium-title.php:405
 #: widgets/premium-title.php:552 widgets/premium-videobox.php:358
 #: widgets/premium-vscroll.php:428 widgets/premium-world-clock.php:1082
@@ -1393,11 +1393,11 @@ msgstr ""
 #: widgets/premium-nav-menu.php:3202 widgets/premium-nav-menu.php:4534
 #: widgets/premium-notifications.php:594 widgets/premium-notifications.php:768
 #: widgets/premium-person.php:268 widgets/premium-person.php:315
-#: widgets/premium-pricing-table.php:1246
-#: widgets/premium-pricing-table.php:1546
-#: widgets/premium-pricing-table.php:1567
-#: widgets/premium-pricing-table.php:1743
-#: widgets/premium-pricing-table.php:2757 widgets/premium-progressbar.php:855
+#: widgets/premium-pricing-table.php:1217
+#: widgets/premium-pricing-table.php:1517
+#: widgets/premium-pricing-table.php:1538
+#: widgets/premium-pricing-table.php:1714
+#: widgets/premium-pricing-table.php:2723 widgets/premium-progressbar.php:855
 #: widgets/premium-search-form.php:923 widgets/premium-search-form.php:1359
 #: widgets/premium-svg-drawer.php:317 widgets/premium-testimonials.php:1052
 #: widgets/premium-testimonials.php:1607
@@ -1452,11 +1452,11 @@ msgstr ""
 #: widgets/premium-nav-menu.php:3206 widgets/premium-nav-menu.php:4538
 #: widgets/premium-notifications.php:602 widgets/premium-notifications.php:769
 #: widgets/premium-person.php:276 widgets/premium-person.php:323
-#: widgets/premium-pricing-table.php:1254
-#: widgets/premium-pricing-table.php:1550
-#: widgets/premium-pricing-table.php:1571
-#: widgets/premium-pricing-table.php:1751
-#: widgets/premium-pricing-table.php:2765 widgets/premium-progressbar.php:863
+#: widgets/premium-pricing-table.php:1225
+#: widgets/premium-pricing-table.php:1521
+#: widgets/premium-pricing-table.php:1542
+#: widgets/premium-pricing-table.php:1722
+#: widgets/premium-pricing-table.php:2731 widgets/premium-progressbar.php:863
 #: widgets/premium-search-form.php:927 widgets/premium-search-form.php:1367
 #: widgets/premium-svg-drawer.php:325 widgets/premium-testimonials.php:1060
 #: widgets/premium-testimonials.php:1615
@@ -1717,19 +1717,19 @@ msgstr ""
 #: widgets/premium-post-ticker.php:2309 widgets/premium-post-ticker.php:2429
 #: widgets/premium-post-ticker.php:2521 widgets/premium-post-ticker.php:2572
 #: widgets/premium-post-ticker.php:2892 widgets/premium-post-ticker.php:2947
-#: widgets/premium-post-ticker.php:3137 widgets/premium-pricing-table.php:1788
-#: widgets/premium-pricing-table.php:2057
-#: widgets/premium-pricing-table.php:2139
-#: widgets/premium-pricing-table.php:2191
-#: widgets/premium-pricing-table.php:2281
-#: widgets/premium-pricing-table.php:2381
-#: widgets/premium-pricing-table.php:2435
+#: widgets/premium-post-ticker.php:3137 widgets/premium-pricing-table.php:1759
+#: widgets/premium-pricing-table.php:2028
+#: widgets/premium-pricing-table.php:2110
+#: widgets/premium-pricing-table.php:2162
+#: widgets/premium-pricing-table.php:2247
+#: widgets/premium-pricing-table.php:2347
+#: widgets/premium-pricing-table.php:2401
+#: widgets/premium-pricing-table.php:2539
 #: widgets/premium-pricing-table.php:2573
-#: widgets/premium-pricing-table.php:2607
-#: widgets/premium-pricing-table.php:2795
-#: widgets/premium-pricing-table.php:2862
-#: widgets/premium-pricing-table.php:3062
-#: widgets/premium-pricing-table.php:3220 widgets/premium-progressbar.php:1176
+#: widgets/premium-pricing-table.php:2761
+#: widgets/premium-pricing-table.php:2828
+#: widgets/premium-pricing-table.php:3028
+#: widgets/premium-pricing-table.php:3186 widgets/premium-progressbar.php:1176
 #: widgets/premium-progressbar.php:1222 widgets/premium-progressbar.php:1272
 #: widgets/premium-progressbar.php:1466 widgets/premium-progressbar.php:1512
 #: widgets/premium-progressbar.php:1597 widgets/premium-progressbar.php:1644
@@ -1804,7 +1804,7 @@ msgstr ""
 #: widgets/premium-person.php:774 widgets/premium-person.php:1172
 #: widgets/premium-post-ticker.php:398 widgets/premium-post-ticker.php:450
 #: widgets/premium-post-ticker.php:1583 widgets/premium-post-ticker.php:1631
-#: widgets/premium-pricing-table.php:306 widgets/premium-pricing-table.php:823
+#: widgets/premium-pricing-table.php:306 widgets/premium-pricing-table.php:794
 #: widgets/premium-testimonials.php:212 widgets/premium-testimonials.php:322
 #: widgets/premium-textual-showcase.php:309
 #: widgets/premium-textual-showcase.php:938 widgets/premium-title.php:532
@@ -1834,8 +1834,8 @@ msgstr ""
 #: widgets/premium-notifications.php:2043
 #: widgets/premium-notifications.php:2184
 #: widgets/premium-notifications.php:2686 widgets/premium-post-ticker.php:2176
-#: widgets/premium-post-ticker.php:2474 widgets/premium-pricing-table.php:1114
-#: widgets/premium-pricing-table.php:1807 widgets/premium-progressbar.php:1291
+#: widgets/premium-post-ticker.php:2474 widgets/premium-pricing-table.php:1085
+#: widgets/premium-pricing-table.php:1778 widgets/premium-progressbar.php:1291
 #: widgets/premium-svg-drawer.php:701 widgets/premium-textual-showcase.php:499
 #: widgets/premium-textual-showcase.php:866
 #: widgets/premium-textual-showcase.php:1128
@@ -1944,10 +1944,10 @@ msgstr ""
 #: widgets/premium-notifications.php:940 widgets/premium-notifications.php:954
 #: widgets/premium-post-ticker.php:380 widgets/premium-post-ticker.php:396
 #: widgets/premium-post-ticker.php:1581 widgets/premium-pricing-table.php:292
-#: widgets/premium-pricing-table.php:305 widgets/premium-pricing-table.php:822
-#: widgets/premium-pricing-table.php:834 widgets/premium-pricing-table.php:1677
-#: widgets/premium-pricing-table.php:1777
-#: widgets/premium-pricing-table.php:2598 widgets/premium-progressbar.php:367
+#: widgets/premium-pricing-table.php:305 widgets/premium-pricing-table.php:793
+#: widgets/premium-pricing-table.php:805 widgets/premium-pricing-table.php:1648
+#: widgets/premium-pricing-table.php:1748
+#: widgets/premium-pricing-table.php:2564 widgets/premium-progressbar.php:367
 #: widgets/premium-progressbar.php:1261 widgets/premium-svg-drawer.php:693
 #: widgets/premium-textual-showcase.php:307
 #: widgets/premium-textual-showcase.php:936 widgets/premium-title.php:513
@@ -1966,7 +1966,7 @@ msgstr ""
 #: widgets/premium-nav-menu.php:683 widgets/premium-notifications.php:298
 #: widgets/premium-notifications.php:984 widgets/premium-post-ticker.php:465
 #: widgets/premium-post-ticker.php:1645 widgets/premium-pricing-table.php:333
-#: widgets/premium-pricing-table.php:866 widgets/premium-progressbar.php:427
+#: widgets/premium-pricing-table.php:837 widgets/premium-progressbar.php:427
 #: widgets/premium-textual-showcase.php:542
 #: widgets/premium-textual-showcase.php:1171 widgets/premium-title.php:659
 msgid "Animation JSON URL"
@@ -1998,8 +1998,8 @@ msgstr ""
 #: widgets/premium-pinterest-feed.php:1432
 #: widgets/premium-pinterest-feed.php:1628
 #: widgets/premium-pinterest-feed.php:1648
-#: widgets/premium-pricing-table.php:1143
-#: widgets/premium-pricing-table.php:2970 widgets/premium-search-form.php:1716
+#: widgets/premium-pricing-table.php:1114
+#: widgets/premium-pricing-table.php:2936 widgets/premium-search-form.php:1716
 #: widgets/premium-tcloud.php:603 widgets/premium-tcloud.php:741
 #: widgets/premium-textual-showcase.php:753
 #: widgets/premium-textual-showcase.php:1382
@@ -2028,7 +2028,7 @@ msgstr ""
 #: widgets/premium-notifications.php:2670
 #: widgets/premium-pinterest-feed.php:1390
 #: widgets/premium-pinterest-feed.php:1421 widgets/premium-post-ticker.php:2158
-#: widgets/premium-post-ticker.php:2457 widgets/premium-pricing-table.php:1098
+#: widgets/premium-post-ticker.php:2457 widgets/premium-pricing-table.php:1069
 #: widgets/premium-tiktok-feed.php:1886 widgets/premium-tiktok-feed.php:2233
 #: widgets/premium-tiktok-feed.php:2264 widgets/premium-weather.php:1552
 #: widgets/premium-weather.php:1684 widgets/premium-weather.php:2114
@@ -2119,10 +2119,10 @@ msgstr ""
 #: widgets/premium-banner.php:1228 widgets/premium-carousel.php:2890
 #: widgets/premium-grid.php:1576 widgets/premium-image-scroll.php:738
 #: widgets/premium-media-wheel.php:1644 widgets/premium-nav-menu.php:2383
-#: widgets/premium-post-ticker.php:2678 widgets/premium-pricing-table.php:1967
-#: widgets/premium-pricing-table.php:2474
-#: widgets/premium-pricing-table.php:2666
-#: widgets/premium-pricing-table.php:2887 widgets/premium-testimonials.php:1595
+#: widgets/premium-post-ticker.php:2678 widgets/premium-pricing-table.php:1938
+#: widgets/premium-pricing-table.php:2440
+#: widgets/premium-pricing-table.php:2632
+#: widgets/premium-pricing-table.php:2853 widgets/premium-testimonials.php:1595
 #: widgets/premium-vscroll.php:861 widgets/premium-weather.php:1330
 #: widgets/premium-weather.php:1803 widgets/premium-weather.php:3674
 #: widgets/premium-world-clock.php:2836
@@ -2306,16 +2306,16 @@ msgstr ""
 #: widgets/premium-post-ticker.php:2640 widgets/premium-post-ticker.php:2712
 #: widgets/premium-post-ticker.php:2804 widgets/premium-post-ticker.php:2925
 #: widgets/premium-post-ticker.php:2983 widgets/premium-post-ticker.php:3041
-#: widgets/premium-post-ticker.php:3148 widgets/premium-pricing-table.php:1950
-#: widgets/premium-pricing-table.php:1992
-#: widgets/premium-pricing-table.php:2327
-#: widgets/premium-pricing-table.php:2693
-#: widgets/premium-pricing-table.php:3001
-#: widgets/premium-pricing-table.php:3149
-#: widgets/premium-pricing-table.php:3331
-#: widgets/premium-pricing-table.php:3355
-#: widgets/premium-pricing-table.php:3439
-#: widgets/premium-pricing-table.php:3463 widgets/premium-progressbar.php:1033
+#: widgets/premium-post-ticker.php:3148 widgets/premium-pricing-table.php:1921
+#: widgets/premium-pricing-table.php:1963
+#: widgets/premium-pricing-table.php:2293
+#: widgets/premium-pricing-table.php:2659
+#: widgets/premium-pricing-table.php:2967
+#: widgets/premium-pricing-table.php:3115
+#: widgets/premium-pricing-table.php:3297
+#: widgets/premium-pricing-table.php:3321
+#: widgets/premium-pricing-table.php:3405
+#: widgets/premium-pricing-table.php:3429 widgets/premium-progressbar.php:1033
 #: widgets/premium-progressbar.php:1345 widgets/premium-search-form.php:1641
 #: widgets/premium-search-form.php:1746 widgets/premium-search-form.php:1794
 #: widgets/premium-search-form.php:1889 widgets/premium-search-form.php:1979
@@ -2485,17 +2485,17 @@ msgstr ""
 #: widgets/premium-pinterest-feed.php:2537 widgets/premium-post-ticker.php:2273
 #: widgets/premium-post-ticker.php:2363 widgets/premium-post-ticker.php:2724
 #: widgets/premium-post-ticker.php:2836 widgets/premium-post-ticker.php:3012
-#: widgets/premium-post-ticker.php:3053 widgets/premium-pricing-table.php:1926
-#: widgets/premium-pricing-table.php:2004
-#: widgets/premium-pricing-table.php:2091
-#: widgets/premium-pricing-table.php:2357
-#: widgets/premium-pricing-table.php:2526
-#: widgets/premium-pricing-table.php:2706
-#: widgets/premium-pricing-table.php:2923
-#: widgets/premium-pricing-table.php:3034
-#: widgets/premium-pricing-table.php:3182
-#: widgets/premium-pricing-table.php:3394
-#: widgets/premium-pricing-table.php:3502 widgets/premium-progressbar.php:1369
+#: widgets/premium-post-ticker.php:3053 widgets/premium-pricing-table.php:1897
+#: widgets/premium-pricing-table.php:1975
+#: widgets/premium-pricing-table.php:2062
+#: widgets/premium-pricing-table.php:2323
+#: widgets/premium-pricing-table.php:2492
+#: widgets/premium-pricing-table.php:2672
+#: widgets/premium-pricing-table.php:2889
+#: widgets/premium-pricing-table.php:3000
+#: widgets/premium-pricing-table.php:3148
+#: widgets/premium-pricing-table.php:3360
+#: widgets/premium-pricing-table.php:3468 widgets/premium-progressbar.php:1369
 #: widgets/premium-search-form.php:1673 widgets/premium-search-form.php:1921
 #: widgets/premium-search-form.php:2011 widgets/premium-search-form.php:2364
 #: widgets/premium-search-form.php:2422 widgets/premium-search-form.php:2473
@@ -2639,7 +2639,7 @@ msgstr ""
 #: widgets/premium-media-wheel.php:1038 widgets/premium-notifications.php:3345
 #: widgets/premium-notifications.php:3575 widgets/premium-person.php:406
 #: widgets/premium-pinterest-feed.php:945 widgets/premium-post-ticker.php:2999
-#: widgets/premium-pricing-table.php:2640 widgets/premium-progressbar.php:246
+#: widgets/premium-pricing-table.php:2606 widgets/premium-progressbar.php:246
 #: widgets/premium-progressbar.php:1625 widgets/premium-progressbar.php:1670
 #: widgets/premium-search-form.php:2530 widgets/premium-testimonials.php:781
 #: widgets/premium-testimonials.php:1157 widgets/premium-tiktok-feed.php:976
@@ -2680,7 +2680,7 @@ msgstr ""
 #: widgets/premium-media-wheel.php:989 widgets/premium-media-wheel.php:1116
 #: widgets/premium-nav-menu.php:2503 widgets/premium-notifications.php:1886
 #: widgets/premium-notifications.php:3013 widgets/premium-post-ticker.php:3125
-#: widgets/premium-pricing-table.php:1887 widgets/premium-progressbar.php:735
+#: widgets/premium-pricing-table.php:1858 widgets/premium-progressbar.php:735
 #: widgets/premium-progressbar.php:1015 widgets/premium-progressbar.php:1544
 #: widgets/premium-search-form.php:651 widgets/premium-search-form.php:2067
 #: widgets/premium-svg-drawer.php:255 widgets/premium-textual-showcase.php:815
@@ -2755,7 +2755,7 @@ msgstr ""
 #: widgets/premium-button.php:224 widgets/premium-dual-header.php:246
 #: widgets/premium-grid.php:900 widgets/premium-image-button.php:221
 #: widgets/premium-lottie.php:420 widgets/premium-media-wheel.php:732
-#: widgets/premium-pricing-table.php:1355
+#: widgets/premium-pricing-table.php:1326
 #: widgets/premium-textual-showcase.php:1590 widgets/premium-title.php:348
 msgid "Link Type"
 msgstr ""
@@ -2769,7 +2769,7 @@ msgstr ""
 #: widgets/premium-image-separator.php:598
 #: widgets/premium-image-separator.php:627 widgets/premium-lottie.php:423
 #: widgets/premium-media-wheel.php:735 widgets/premium-mobile-menu.php:593
-#: widgets/premium-mobile-menu.php:607 widgets/premium-pricing-table.php:1358
+#: widgets/premium-mobile-menu.php:607 widgets/premium-pricing-table.php:1329
 #: widgets/premium-textual-showcase.php:1593
 #: widgets/premium-textual-showcase.php:1607 widgets/premium-title.php:351
 #: widgets/premium-videobox.php:555
@@ -2788,8 +2788,8 @@ msgstr ""
 #: widgets/premium-image-separator.php:612 widgets/premium-lottie.php:424
 #: widgets/premium-lottie.php:456 widgets/premium-media-wheel.php:736
 #: widgets/premium-media-wheel.php:769 widgets/premium-mobile-menu.php:594
-#: widgets/premium-mobile-menu.php:622 widgets/premium-pricing-table.php:1359
-#: widgets/premium-pricing-table.php:1382
+#: widgets/premium-mobile-menu.php:622 widgets/premium-pricing-table.php:1330
+#: widgets/premium-pricing-table.php:1353
 #: widgets/premium-textual-showcase.php:1594
 #: widgets/premium-textual-showcase.php:1622 widgets/premium-title.php:352
 #: widgets/premium-title.php:375
@@ -2809,7 +2809,7 @@ msgstr ""
 #: widgets/premium-nav-menu.php:364 widgets/premium-nav-menu.php:405
 #: widgets/premium-notifications.php:1660
 #: widgets/premium-pinterest-feed.php:716 widgets/premium-post-ticker.php:1554
-#: widgets/premium-pricing-table.php:1369 widgets/premium-svg-drawer.php:633
+#: widgets/premium-pricing-table.php:1340 widgets/premium-svg-drawer.php:633
 #: widgets/premium-testimonials.php:267 widgets/premium-testimonials.php:276
 #: widgets/premium-testimonials.php:368 widgets/premium-testimonials.php:376
 #: widgets/premium-textual-showcase.php:1582
@@ -3237,7 +3237,7 @@ msgstr ""
 #: admin/includes/elements.php:251 admin/includes/elements.php:803
 #: admin/includes/setup-wizard/elements.php:130
 #: widgets/premium-icon-list.php:1461 widgets/premium-icon-list.php:2365
-#: widgets/premium-pricing-table.php:746 widgets/premium-pricing-table.php:2372
+#: widgets/premium-pricing-table.php:717 widgets/premium-pricing-table.php:2338
 msgid "Divider"
 msgstr ""
 
@@ -3378,9 +3378,9 @@ msgstr ""
 #: widgets/premium-button.php:203 widgets/premium-button.php:1127
 #: widgets/premium-image-button.php:200 widgets/premium-image-button.php:1086
 #: widgets/premium-modalbox.php:264 widgets/premium-notifications.php:3324
-#: widgets/premium-pricing-table.php:1331
-#: widgets/premium-pricing-table.php:1720
-#: widgets/premium-pricing-table.php:2939
+#: widgets/premium-pricing-table.php:1302
+#: widgets/premium-pricing-table.php:1691
+#: widgets/premium-pricing-table.php:2905
 msgid "Button"
 msgstr ""
 
@@ -4436,7 +4436,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:1009 widgets/premium-nav-menu.php:552
 #: widgets/premium-notifications.php:253 widgets/premium-notifications.php:936
 #: widgets/premium-post-ticker.php:392 widgets/premium-post-ticker.php:1577
-#: widgets/premium-pricing-table.php:302 widgets/premium-pricing-table.php:819
+#: widgets/premium-pricing-table.php:302 widgets/premium-pricing-table.php:790
 #: widgets/premium-progressbar.php:364 widgets/premium-title.php:528
 msgid "Icon Type"
 msgstr ""
@@ -4655,35 +4655,35 @@ msgid ""
 "able to reset White Labeling tab options."
 msgstr ""
 
-#: includes/assets-manager.php:1464 includes/assets-manager.php:1485
-#: includes/assets-manager.php:1502
+#: includes/assets-manager.php:1465 includes/assets-manager.php:1486
+#: includes/assets-manager.php:1503
 #: modules/woocommerce/widgets/mini-cart.php:5815
 msgid "View cart"
 msgstr ""
 
-#: includes/assets-manager.php:1488
+#: includes/assets-manager.php:1489
 msgid "*The current stock is only "
 msgstr ""
 
-#: includes/assets-manager.php:1528 widgets/premium-notifications.php:1451
+#: includes/assets-manager.php:1529 widgets/premium-notifications.php:1451
 #: widgets/premium-pinterest-feed.php:286 widgets/premium-tiktok-feed.php:260
 #: widgets/premium-videobox.php:288
 msgid "Year"
 msgstr ""
 
-#: includes/assets-manager.php:1529 widgets/premium-notifications.php:1450
+#: includes/assets-manager.php:1530 widgets/premium-notifications.php:1450
 #: widgets/premium-pinterest-feed.php:285 widgets/premium-tiktok-feed.php:259
 #: widgets/premium-videobox.php:287
 msgid "Month"
 msgstr ""
 
-#: includes/assets-manager.php:1530 widgets/premium-notifications.php:1449
+#: includes/assets-manager.php:1531 widgets/premium-notifications.php:1449
 #: widgets/premium-pinterest-feed.php:284 widgets/premium-tiktok-feed.php:258
 #: widgets/premium-videobox.php:286
 msgid "Week"
 msgstr ""
 
-#: includes/assets-manager.php:1531
+#: includes/assets-manager.php:1532
 #: includes/pa-display-conditions/pa-controls-handler.php:94
 #: widgets/premium-notifications.php:1448
 #: widgets/premium-pinterest-feed.php:283 widgets/premium-tiktok-feed.php:257
@@ -4691,40 +4691,40 @@ msgstr ""
 msgid "Day"
 msgstr ""
 
-#: includes/assets-manager.php:1532 widgets/premium-pinterest-feed.php:282
+#: includes/assets-manager.php:1533 widgets/premium-pinterest-feed.php:282
 #: widgets/premium-videobox.php:284 widgets/premium-weather.php:472
 msgid "Hour"
 msgstr ""
 
-#: includes/assets-manager.php:1533
+#: includes/assets-manager.php:1534
 msgid "Minute"
 msgstr ""
 
-#: includes/assets-manager.php:1534
+#: includes/assets-manager.php:1535
 msgid "Second"
 msgstr ""
 
-#: includes/assets-manager.php:1537 widgets/premium-countdown.php:330
+#: includes/assets-manager.php:1538 widgets/premium-countdown.php:330
 #: widgets/premium-countdown.php:407
 msgid "Years"
 msgstr ""
 
-#: includes/assets-manager.php:1538 widgets/premium-countdown.php:331
+#: includes/assets-manager.php:1539 widgets/premium-countdown.php:331
 #: widgets/premium-countdown.php:408
 msgid "Months"
 msgstr ""
 
-#: includes/assets-manager.php:1539
+#: includes/assets-manager.php:1540
 msgid "Weeks"
 msgstr ""
 
-#: includes/assets-manager.php:1540 widgets/premium-countdown.php:221
+#: includes/assets-manager.php:1541 widgets/premium-countdown.php:221
 #: widgets/premium-countdown.php:332 widgets/premium-countdown.php:409
 #: widgets/premium-countdown.php:743 widgets/premium-world-clock.php:2683
 msgid "Days"
 msgstr ""
 
-#: includes/assets-manager.php:1541 widgets/premium-countdown.php:236
+#: includes/assets-manager.php:1542 widgets/premium-countdown.php:236
 #: widgets/premium-countdown.php:279 widgets/premium-countdown.php:333
 #: widgets/premium-countdown.php:410 widgets/premium-countdown.php:755
 #: widgets/premium-weather.php:2442 widgets/premium-weather.php:3461
@@ -4732,14 +4732,14 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 
-#: includes/assets-manager.php:1542 widgets/premium-countdown.php:252
+#: includes/assets-manager.php:1543 widgets/premium-countdown.php:252
 #: widgets/premium-countdown.php:295 widgets/premium-countdown.php:334
 #: widgets/premium-countdown.php:411 widgets/premium-countdown.php:767
 #: widgets/premium-world-clock.php:2176
 msgid "Minutes"
 msgstr ""
 
-#: includes/assets-manager.php:1543 widgets/premium-countdown.php:335
+#: includes/assets-manager.php:1544 widgets/premium-countdown.php:335
 #: widgets/premium-countdown.php:412 widgets/premium-world-clock.php:2312
 msgid "Seconds"
 msgstr ""
@@ -5848,7 +5848,7 @@ msgstr ""
 #: widgets/premium-grid.php:1020 widgets/premium-icon-list.php:1246
 #: widgets/premium-mobile-menu.php:920 widgets/premium-nav-menu.php:758
 #: widgets/premium-pinterest-feed.php:639
-#: widgets/premium-pricing-table.php:1670 widgets/premium-search-form.php:1004
+#: widgets/premium-pricing-table.php:1641 widgets/premium-search-form.php:1004
 #: widgets/premium-tcloud.php:174 widgets/premium-testimonials.php:575
 #: widgets/premium-tiktok-feed.php:492 widgets/premium-title.php:1046
 #: widgets/premium-weather.php:587
@@ -5937,8 +5937,8 @@ msgstr ""
 #: widgets/premium-maps.php:1033 widgets/premium-media-wheel.php:1008
 #: widgets/premium-media-wheel.php:1653 widgets/premium-modalbox.php:909
 #: widgets/premium-notifications.php:590 widgets/premium-notifications.php:1746
-#: widgets/premium-person.php:264 widgets/premium-pricing-table.php:1241
-#: widgets/premium-pricing-table.php:2753 widgets/premium-search-form.php:1355
+#: widgets/premium-person.php:264 widgets/premium-pricing-table.php:1212
+#: widgets/premium-pricing-table.php:2719 widgets/premium-search-form.php:1355
 #: widgets/premium-svg-drawer.php:313 widgets/premium-tcloud.php:373
 #: widgets/premium-testimonials.php:1048 widgets/premium-testimonials.php:1603
 #: widgets/premium-textual-showcase.php:2021 widgets/premium-title.php:272
@@ -5997,9 +5997,9 @@ msgstr ""
 #: widgets/premium-nav-menu.php:1941 widgets/premium-notifications.php:598
 #: widgets/premium-notifications.php:1754 widgets/premium-person.php:272
 #: widgets/premium-person.php:319 widgets/premium-post-ticker.php:1442
-#: widgets/premium-pricing-table.php:1250
-#: widgets/premium-pricing-table.php:1747
-#: widgets/premium-pricing-table.php:2761 widgets/premium-progressbar.php:859
+#: widgets/premium-pricing-table.php:1221
+#: widgets/premium-pricing-table.php:1718
+#: widgets/premium-pricing-table.php:2727 widgets/premium-progressbar.php:859
 #: widgets/premium-search-form.php:1363 widgets/premium-search-form.php:1515
 #: widgets/premium-svg-drawer.php:321 widgets/premium-tcloud.php:381
 #: widgets/premium-testimonials.php:1056 widgets/premium-testimonials.php:1611
@@ -6049,10 +6049,10 @@ msgstr ""
 #: widgets/premium-person.php:809 widgets/premium-person.php:1413
 #: widgets/premium-pinterest-feed.php:689
 #: widgets/premium-pinterest-feed.php:1971
-#: widgets/premium-pricing-table.php:1293
-#: widgets/premium-pricing-table.php:1303
-#: widgets/premium-pricing-table.php:1712
-#: widgets/premium-pricing-table.php:2843 widgets/premium-tiktok-feed.php:539
+#: widgets/premium-pricing-table.php:1264
+#: widgets/premium-pricing-table.php:1274
+#: widgets/premium-pricing-table.php:1683
+#: widgets/premium-pricing-table.php:2809 widgets/premium-tiktok-feed.php:539
 #: widgets/premium-tiktok-feed.php:1621 widgets/premium-videobox.php:1599
 #: widgets/premium-weather.php:1137 widgets/premium-weather.php:1633
 msgid "Description"
@@ -6141,20 +6141,20 @@ msgstr ""
 #: widgets/premium-pinterest-feed.php:2457 widgets/premium-post-ticker.php:2375
 #: widgets/premium-post-ticker.php:2656 widgets/premium-post-ticker.php:2736
 #: widgets/premium-post-ticker.php:2824 widgets/premium-post-ticker.php:3065
-#: widgets/premium-pricing-table.php:2023
-#: widgets/premium-pricing-table.php:2103
-#: widgets/premium-pricing-table.php:2167
-#: widgets/premium-pricing-table.php:2256
-#: widgets/premium-pricing-table.php:2342
-#: widgets/premium-pricing-table.php:2407
-#: widgets/premium-pricing-table.php:2461
-#: widgets/premium-pricing-table.php:2538
-#: widgets/premium-pricing-table.php:2719
-#: widgets/premium-pricing-table.php:2904
-#: widgets/premium-pricing-table.php:3022
-#: widgets/premium-pricing-table.php:3170
-#: widgets/premium-pricing-table.php:3382
-#: widgets/premium-pricing-table.php:3490 widgets/premium-progressbar.php:1140
+#: widgets/premium-pricing-table.php:1994
+#: widgets/premium-pricing-table.php:2074
+#: widgets/premium-pricing-table.php:2138
+#: widgets/premium-pricing-table.php:2222
+#: widgets/premium-pricing-table.php:2308
+#: widgets/premium-pricing-table.php:2373
+#: widgets/premium-pricing-table.php:2427
+#: widgets/premium-pricing-table.php:2504
+#: widgets/premium-pricing-table.php:2685
+#: widgets/premium-pricing-table.php:2870
+#: widgets/premium-pricing-table.php:2988
+#: widgets/premium-pricing-table.php:3136
+#: widgets/premium-pricing-table.php:3348
+#: widgets/premium-pricing-table.php:3456 widgets/premium-progressbar.php:1140
 #: widgets/premium-progressbar.php:1201 widgets/premium-progressbar.php:1247
 #: widgets/premium-progressbar.php:1357 widgets/premium-search-form.php:1661
 #: widgets/premium-search-form.php:1909 widgets/premium-search-form.php:1999
@@ -6288,8 +6288,8 @@ msgstr ""
 #: widgets/premium-notifications.php:3083 widgets/premium-person.php:504
 #: widgets/premium-person.php:798 widgets/premium-post-ticker.php:1387
 #: widgets/premium-post-ticker.php:2128 widgets/premium-pricing-table.php:558
-#: widgets/premium-pricing-table.php:1685
-#: widgets/premium-pricing-table.php:2046 widgets/premium-progressbar.php:1168
+#: widgets/premium-pricing-table.php:1656
+#: widgets/premium-pricing-table.php:2017 widgets/premium-progressbar.php:1168
 #: widgets/premium-search-form.php:573 widgets/premium-search-form.php:2164
 #: widgets/premium-title.php:207 widgets/premium-title.php:217
 #: widgets/premium-title.php:1204 widgets/premium-weather.php:557
@@ -6346,10 +6346,10 @@ msgstr ""
 #: modules/woocommerce/skins/skin-base.php:1331
 #: modules/woocommerce/widgets/mini-cart.php:3613
 #: modules/woocommerce/widgets/woo-products.php:1037
-#: widgets/premium-pricing-table.php:623 widgets/premium-pricing-table.php:732
-#: widgets/premium-pricing-table.php:1694
-#: widgets/premium-pricing-table.php:2120
-#: widgets/premium-pricing-table.php:2272
+#: widgets/premium-pricing-table.php:623 widgets/premium-pricing-table.php:703
+#: widgets/premium-pricing-table.php:1665
+#: widgets/premium-pricing-table.php:2091
+#: widgets/premium-pricing-table.php:2238
 msgid "Price"
 msgstr ""
 
@@ -6432,11 +6432,11 @@ msgstr ""
 #: widgets/premium-nav-menu.php:3240 widgets/premium-nav-menu.php:4572
 #: widgets/premium-notifications.php:2742 widgets/premium-person.php:1479
 #: widgets/premium-person.php:1772 widgets/premium-pinterest-feed.php:2499
-#: widgets/premium-pricing-table.php:1477
-#: widgets/premium-pricing-table.php:1498
-#: widgets/premium-pricing-table.php:1519
-#: widgets/premium-pricing-table.php:1838
-#: widgets/premium-pricing-table.php:2622 widgets/premium-progressbar.php:273
+#: widgets/premium-pricing-table.php:1448
+#: widgets/premium-pricing-table.php:1469
+#: widgets/premium-pricing-table.php:1490
+#: widgets/premium-pricing-table.php:1809
+#: widgets/premium-pricing-table.php:2588 widgets/premium-progressbar.php:273
 #: widgets/premium-progressbar.php:1483 widgets/premium-progressbar.php:1529
 #: widgets/premium-search-form.php:3085 widgets/premium-search-form.php:3157
 #: widgets/premium-svg-drawer.php:284 widgets/premium-testimonials.php:862
@@ -6572,9 +6572,9 @@ msgstr ""
 #: widgets/premium-modalbox.php:2008 widgets/premium-modalbox.php:2245
 #: widgets/premium-nav-menu.php:2519 widgets/premium-notifications.php:721
 #: widgets/premium-notifications.php:2991 widgets/premium-person.php:236
-#: widgets/premium-post-ticker.php:3113 widgets/premium-pricing-table.php:1396
-#: widgets/premium-pricing-table.php:1858
-#: widgets/premium-pricing-table.php:2778 widgets/premium-progressbar.php:703
+#: widgets/premium-post-ticker.php:3113 widgets/premium-pricing-table.php:1367
+#: widgets/premium-pricing-table.php:1829
+#: widgets/premium-pricing-table.php:2744 widgets/premium-progressbar.php:703
 #: widgets/premium-search-form.php:629 widgets/premium-search-form.php:812
 #: widgets/premium-search-form.php:2041 widgets/premium-svg-drawer.php:226
 #: widgets/premium-textual-showcase.php:789
@@ -6786,7 +6786,7 @@ msgstr ""
 
 #: modules/woocommerce/widgets/mini-cart.php:210
 #: widgets/premium-carousel.php:2515 widgets/premium-media-wheel.php:1680
-#: widgets/premium-pricing-table.php:675
+#: widgets/premium-pricing-table.php:647
 msgid "Placement"
 msgstr ""
 
@@ -6868,7 +6868,7 @@ msgstr ""
 #: widgets/premium-modalbox.php:1015 widgets/premium-nav-menu.php:568
 #: widgets/premium-notifications.php:260 widgets/premium-notifications.php:942
 #: widgets/premium-post-ticker.php:397 widgets/premium-post-ticker.php:1582
-#: widgets/premium-pricing-table.php:307 widgets/premium-pricing-table.php:824
+#: widgets/premium-pricing-table.php:307 widgets/premium-pricing-table.php:795
 #: widgets/premium-progressbar.php:369 widgets/premium-title.php:533
 msgid "Lottie Animation"
 msgstr ""
@@ -6889,8 +6889,8 @@ msgstr ""
 #: widgets/premium-notifications.php:999 widgets/premium-post-ticker.php:399
 #: widgets/premium-post-ticker.php:436 widgets/premium-post-ticker.php:1584
 #: widgets/premium-post-ticker.php:1618 widgets/premium-pricing-table.php:308
-#: widgets/premium-pricing-table.php:350 widgets/premium-pricing-table.php:825
-#: widgets/premium-pricing-table.php:850 widgets/premium-progressbar.php:370
+#: widgets/premium-pricing-table.php:350 widgets/premium-pricing-table.php:796
+#: widgets/premium-pricing-table.php:821 widgets/premium-progressbar.php:370
 #: widgets/premium-progressbar.php:412 widgets/premium-svg-drawer.php:202
 #: widgets/premium-title.php:534 widgets/premium-title.php:644
 msgid "SVG Code"
@@ -7388,9 +7388,9 @@ msgstr ""
 #: widgets/premium-blog.php:618 widgets/premium-notifications.php:1483
 #: widgets/premium-post-ticker.php:829 widgets/premium-post-ticker.php:1404
 #: widgets/premium-pricing-table.php:540 widgets/premium-pricing-table.php:604
-#: widgets/premium-pricing-table.php:775 widgets/premium-pricing-table.php:1275
-#: widgets/premium-pricing-table.php:1313
-#: widgets/premium-pricing-table.php:1420 widgets/premium-search-form.php:591
+#: widgets/premium-pricing-table.php:746 widgets/premium-pricing-table.php:1246
+#: widgets/premium-pricing-table.php:1284
+#: widgets/premium-pricing-table.php:1391 widgets/premium-search-form.php:591
 #: widgets/premium-tcloud.php:505
 msgid "Order"
 msgstr ""
@@ -7411,8 +7411,7 @@ msgstr ""
 #: modules/woocommerce/widgets/mini-cart.php:2267
 #: widgets/premium-contactform.php:359 widgets/premium-contactform.php:1045
 #: widgets/premium-dual-header.php:219 widgets/premium-fancytext.php:293
-#: widgets/premium-pricing-table.php:647 widgets/premium-weather.php:850
-#: widgets/premium-world-clock.php:827
+#: widgets/premium-weather.php:850 widgets/premium-world-clock.php:827
 msgid "Display"
 msgstr ""
 
@@ -7421,11 +7420,10 @@ msgstr ""
 #: widgets/premium-contactform.php:363 widgets/premium-contactform.php:1049
 #: widgets/premium-countdown.php:502 widgets/premium-dual-header.php:222
 #: widgets/premium-fancytext.php:296 widgets/premium-icon-list.php:1283
-#: widgets/premium-mobile-menu.php:1165 widgets/premium-pricing-table.php:652
-#: widgets/premium-weather.php:604 widgets/premium-weather.php:705
-#: widgets/premium-weather.php:854 widgets/premium-world-clock.php:804
-#: widgets/premium-world-clock.php:834 widgets/premium-world-clock.php:872
-#: widgets/premium-world-clock.php:910
+#: widgets/premium-mobile-menu.php:1165 widgets/premium-weather.php:604
+#: widgets/premium-weather.php:705 widgets/premium-weather.php:854
+#: widgets/premium-world-clock.php:804 widgets/premium-world-clock.php:834
+#: widgets/premium-world-clock.php:872 widgets/premium-world-clock.php:910
 msgid "Inline"
 msgstr ""
 
@@ -7436,11 +7434,10 @@ msgstr ""
 #: widgets/premium-countdown.php:503 widgets/premium-dual-header.php:223
 #: widgets/premium-fancytext.php:297 widgets/premium-icon-list.php:1284
 #: widgets/premium-image-button.php:982 widgets/premium-mobile-menu.php:1166
-#: widgets/premium-modalbox.php:777 widgets/premium-pricing-table.php:656
-#: widgets/premium-weather.php:608 widgets/premium-weather.php:709
-#: widgets/premium-weather.php:858 widgets/premium-world-clock.php:808
-#: widgets/premium-world-clock.php:838 widgets/premium-world-clock.php:876
-#: widgets/premium-world-clock.php:914
+#: widgets/premium-modalbox.php:777 widgets/premium-weather.php:608
+#: widgets/premium-weather.php:709 widgets/premium-weather.php:858
+#: widgets/premium-world-clock.php:808 widgets/premium-world-clock.php:838
+#: widgets/premium-world-clock.php:876 widgets/premium-world-clock.php:914
 msgid "Block"
 msgstr ""
 
@@ -7550,10 +7547,10 @@ msgstr ""
 #: modules/woocommerce/widgets/mini-cart.php:3655
 #: modules/woocommerce/widgets/mini-cart.php:4329
 #: modules/woocommerce/widgets/woo-cta.php:1343
-#: widgets/premium-pricing-table.php:2205
-#: widgets/premium-pricing-table.php:2295
-#: widgets/premium-pricing-table.php:2395
-#: widgets/premium-pricing-table.php:2449
+#: widgets/premium-pricing-table.php:2176
+#: widgets/premium-pricing-table.php:2261
+#: widgets/premium-pricing-table.php:2361
+#: widgets/premium-pricing-table.php:2415
 msgid "Typography"
 msgstr ""
 
@@ -7937,7 +7934,7 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-categories.php:476
 #: widgets/premium-banner.php:465 widgets/premium-grid.php:1187
 #: widgets/premium-nav-menu.php:1115 widgets/premium-person.php:311
-#: widgets/premium-pricing-table.php:1738
+#: widgets/premium-pricing-table.php:1709
 msgid "Content Alignment"
 msgstr ""
 
@@ -8094,7 +8091,7 @@ msgstr ""
 #: widgets/premium-mobile-menu.php:377 widgets/premium-modalbox.php:393
 #: widgets/premium-notifications.php:359 widgets/premium-notifications.php:1051
 #: widgets/premium-post-ticker.php:525 widgets/premium-post-ticker.php:1699
-#: widgets/premium-pricing-table.php:365 widgets/premium-pricing-table.php:883
+#: widgets/premium-pricing-table.php:365 widgets/premium-pricing-table.php:854
 #: widgets/premium-progressbar.php:444 widgets/premium-textual-showcase.php:429
 #: widgets/premium-textual-showcase.php:1058 widgets/premium-title.php:715
 #: widgets/premium-weather.php:1195
@@ -8107,7 +8104,7 @@ msgstr ""
 #: widgets/premium-mobile-menu.php:379 widgets/premium-modalbox.php:395
 #: widgets/premium-notifications.php:361 widgets/premium-notifications.php:1053
 #: widgets/premium-post-ticker.php:527 widgets/premium-post-ticker.php:1701
-#: widgets/premium-pricing-table.php:367 widgets/premium-pricing-table.php:885
+#: widgets/premium-pricing-table.php:367 widgets/premium-pricing-table.php:856
 #: widgets/premium-progressbar.php:446 widgets/premium-textual-showcase.php:431
 #: widgets/premium-textual-showcase.php:1060 widgets/premium-title.php:717
 #: widgets/premium-weather.php:1197
@@ -8120,7 +8117,7 @@ msgstr ""
 #: widgets/premium-mobile-menu.php:393 widgets/premium-modalbox.php:411
 #: widgets/premium-notifications.php:375 widgets/premium-notifications.php:1068
 #: widgets/premium-post-ticker.php:544 widgets/premium-post-ticker.php:1716
-#: widgets/premium-pricing-table.php:380 widgets/premium-pricing-table.php:898
+#: widgets/premium-pricing-table.php:380 widgets/premium-pricing-table.php:869
 #: widgets/premium-progressbar.php:510 widgets/premium-svg-drawer.php:755
 #: widgets/premium-textual-showcase.php:443
 #: widgets/premium-textual-showcase.php:1072 widgets/premium-title.php:734
@@ -8134,7 +8131,7 @@ msgstr ""
 #: widgets/premium-mobile-menu.php:414 widgets/premium-modalbox.php:435
 #: widgets/premium-notifications.php:396 widgets/premium-notifications.php:1090
 #: widgets/premium-post-ticker.php:568 widgets/premium-pricing-table.php:401
-#: widgets/premium-pricing-table.php:919 widgets/premium-progressbar.php:534
+#: widgets/premium-pricing-table.php:890 widgets/premium-progressbar.php:534
 #: widgets/premium-svg-drawer.php:567 widgets/premium-textual-showcase.php:466
 #: widgets/premium-textual-showcase.php:1095 widgets/premium-title.php:758
 msgid "Draw All Paths Together"
@@ -8150,7 +8147,7 @@ msgstr ""
 #: widgets/premium-mobile-menu.php:426 widgets/premium-modalbox.php:450
 #: widgets/premium-notifications.php:408 widgets/premium-notifications.php:1103
 #: widgets/premium-post-ticker.php:583 widgets/premium-pricing-table.php:413
-#: widgets/premium-pricing-table.php:931 widgets/premium-pricing-table.php:1211
+#: widgets/premium-pricing-table.php:902 widgets/premium-pricing-table.php:1182
 #: widgets/premium-progressbar.php:549 widgets/premium-svg-drawer.php:428
 #: widgets/premium-textual-showcase.php:478
 #: widgets/premium-textual-showcase.php:1107 widgets/premium-title.php:773
@@ -8163,8 +8160,8 @@ msgstr ""
 #: widgets/premium-image-separator.php:434 widgets/premium-mobile-menu.php:428
 #: widgets/premium-modalbox.php:452 widgets/premium-notifications.php:410
 #: widgets/premium-notifications.php:1105 widgets/premium-post-ticker.php:585
-#: widgets/premium-pricing-table.php:415 widgets/premium-pricing-table.php:933
-#: widgets/premium-pricing-table.php:1213 widgets/premium-progressbar.php:551
+#: widgets/premium-pricing-table.php:415 widgets/premium-pricing-table.php:904
+#: widgets/premium-pricing-table.php:1184 widgets/premium-progressbar.php:551
 #: widgets/premium-textual-showcase.php:480
 #: widgets/premium-textual-showcase.php:1109 widgets/premium-title.php:775
 msgid "Larger value means longer animation duration."
@@ -8176,7 +8173,7 @@ msgstr ""
 #: widgets/premium-image-button.php:788 widgets/premium-image-separator.php:481
 #: widgets/premium-mobile-menu.php:527 widgets/premium-modalbox.php:545
 #: widgets/premium-modalbox.php:859 widgets/premium-pricing-table.php:499
-#: widgets/premium-pricing-table.php:1033 widgets/premium-progressbar.php:648
+#: widgets/premium-pricing-table.php:1004 widgets/premium-progressbar.php:648
 #: widgets/premium-title.php:873
 msgid "Only Play on Hover"
 msgstr ""
@@ -8187,7 +8184,7 @@ msgstr ""
 #: widgets/premium-image-separator.php:531 widgets/premium-mobile-menu.php:540
 #: widgets/premium-modalbox.php:561 widgets/premium-notifications.php:498
 #: widgets/premium-notifications.php:1147 widgets/premium-post-ticker.php:679
-#: widgets/premium-pricing-table.php:512 widgets/premium-pricing-table.php:1046
+#: widgets/premium-pricing-table.php:512 widgets/premium-pricing-table.php:1017
 #: widgets/premium-progressbar.php:664 widgets/premium-svg-drawer.php:461
 #: widgets/premium-textual-showcase.php:650
 #: widgets/premium-textual-showcase.php:1279 widgets/premium-title.php:889
@@ -8243,8 +8240,8 @@ msgstr ""
 #: widgets/premium-counter.php:849 widgets/premium-icon-list.php:858
 #: widgets/premium-image-button.php:1115
 #: widgets/premium-image-separator.php:772 widgets/premium-mobile-menu.php:442
-#: widgets/premium-modalbox.php:1414 widgets/premium-pricing-table.php:1129
-#: widgets/premium-pricing-table.php:1824 widgets/premium-progressbar.php:1309
+#: widgets/premium-modalbox.php:1414 widgets/premium-pricing-table.php:1100
+#: widgets/premium-pricing-table.php:1795 widgets/premium-progressbar.php:1309
 #: widgets/premium-svg-drawer.php:740 widgets/premium-textual-showcase.php:515
 #: widgets/premium-textual-showcase.php:1144 widgets/premium-title.php:1857
 #: widgets/premium-weather.php:1254
@@ -8262,10 +8259,10 @@ msgstr ""
 #: widgets/premium-media-wheel.php:2436 widgets/premium-modalbox.php:1545
 #: widgets/premium-modalbox.php:1738 widgets/premium-nav-menu.php:1498
 #: widgets/premium-notifications.php:2777
-#: widgets/premium-pricing-table.php:3013
-#: widgets/premium-pricing-table.php:3161
-#: widgets/premium-pricing-table.php:3373
-#: widgets/premium-pricing-table.php:3481 widgets/premium-svg-drawer.php:857
+#: widgets/premium-pricing-table.php:2979
+#: widgets/premium-pricing-table.php:3127
+#: widgets/premium-pricing-table.php:3339
+#: widgets/premium-pricing-table.php:3447 widgets/premium-svg-drawer.php:857
 #: widgets/premium-title.php:1441 widgets/premium-videobox.php:1881
 #: widgets/premium-videobox.php:2229 widgets/premium-vscroll.php:894
 #: widgets/premium-vscroll.php:979 widgets/premium-vscroll.php:1039
@@ -8274,7 +8271,7 @@ msgstr ""
 
 #: modules/woocommerce/widgets/woo-cta.php:1197 widgets/premium-banner.php:1102
 #: widgets/premium-button.php:1445 widgets/premium-image-button.php:1390
-#: widgets/premium-modalbox.php:1637 widgets/premium-pricing-table.php:3076
+#: widgets/premium-modalbox.php:1637 widgets/premium-pricing-table.php:3042
 #: widgets/premium-title.php:1379 widgets/premium-title.php:1407
 #: widgets/premium-title.php:2211
 msgid "Line Color"
@@ -8282,13 +8279,13 @@ msgstr ""
 
 #: modules/woocommerce/widgets/woo-cta.php:1215 widgets/premium-banner.php:1120
 #: widgets/premium-button.php:1524 widgets/premium-modalbox.php:1656
-#: widgets/premium-pricing-table.php:3094
+#: widgets/premium-pricing-table.php:3060
 msgid "Layer #1 Color"
 msgstr ""
 
 #: modules/woocommerce/widgets/woo-cta.php:1233 widgets/premium-banner.php:1138
 #: widgets/premium-button.php:1542 widgets/premium-modalbox.php:1675
-#: widgets/premium-pricing-table.php:3112
+#: widgets/premium-pricing-table.php:3078
 msgid "Layer #2 Color"
 msgstr ""
 
@@ -8314,7 +8311,7 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-cta.php:1455 widgets/premium-blog.php:2019
 #: widgets/premium-carousel.php:2799 widgets/premium-carousel.php:2862
 #: widgets/premium-contactform.php:1148 widgets/premium-notifications.php:2929
-#: widgets/premium-pricing-table.php:2828 widgets/premium-progressbar.php:1069
+#: widgets/premium-pricing-table.php:2794 widgets/premium-progressbar.php:1069
 #: widgets/premium-world-clock.php:1702 widgets/premium-world-clock.php:2664
 msgid "Border Color"
 msgstr ""
@@ -8459,8 +8456,8 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-products.php:2864
 #: widgets/premium-carousel.php:629 widgets/premium-carousel.php:2396
 #: widgets/premium-dual-header.php:427 widgets/premium-mobile-menu.php:1006
-#: widgets/premium-nav-menu.php:4687 widgets/premium-pricing-table.php:1586
-#: widgets/premium-pricing-table.php:1613 widgets/premium-title.php:967
+#: widgets/premium-nav-menu.php:4687 widgets/premium-pricing-table.php:1557
+#: widgets/premium-pricing-table.php:1584 widgets/premium-title.php:967
 msgid "Horizontal Offset"
 msgstr ""
 
@@ -8469,7 +8466,7 @@ msgstr ""
 #: modules/woocommerce/widgets/woo-products.php:2882
 #: widgets/premium-carousel.php:646 widgets/premium-carousel.php:2417
 #: widgets/premium-dual-header.php:456 widgets/premium-nav-menu.php:4708
-#: widgets/premium-pricing-table.php:1640 widgets/premium-title.php:996
+#: widgets/premium-pricing-table.php:1611 widgets/premium-title.php:996
 msgid "Vertical Offset"
 msgstr ""
 
@@ -8806,14 +8803,6 @@ msgstr ""
 msgid "Cross-Sells"
 msgstr ""
 
-#: tmp/wordpress-tests-lib/includes/factory/class-wp-unittest-factory-for-bookmark.php:56
-msgid "Could not update link."
-msgstr ""
-
-#: tmp/wordpress-tests-lib/includes/factory/class-wp-unittest-factory-for-comment.php:45
-msgid "Could not insert comment into the database."
-msgstr ""
-
 #: widgets/dep/pa-tiktok-handler.php:87 widgets/dep/pa-tiktok-handler.php:154
 msgid "Something went wrong: Code "
 msgstr ""
@@ -8958,8 +8947,8 @@ msgstr ""
 #: widgets/premium-notifications.php:2376
 #: widgets/premium-notifications.php:2491 widgets/premium-person.php:1195
 #: widgets/premium-person.php:1577 widgets/premium-post-ticker.php:2249
-#: widgets/premium-pricing-table.php:3346
-#: widgets/premium-pricing-table.php:3454 widgets/premium-search-form.php:2768
+#: widgets/premium-pricing-table.php:3312
+#: widgets/premium-pricing-table.php:3420 widgets/premium-search-form.php:2768
 #: widgets/premium-search-form.php:2848 widgets/premium-search-form.php:2928
 #: widgets/premium-svg-drawer.php:833 widgets/premium-testimonials.php:1666
 #: widgets/premium-title.php:1984 widgets/premium-videobox.php:1857
@@ -8981,8 +8970,8 @@ msgstr ""
 #: widgets/premium-notifications.php:2378
 #: widgets/premium-notifications.php:2493 widgets/premium-person.php:1197
 #: widgets/premium-person.php:1579 widgets/premium-post-ticker.php:2251
-#: widgets/premium-pricing-table.php:3348
-#: widgets/premium-pricing-table.php:3456 widgets/premium-search-form.php:2770
+#: widgets/premium-pricing-table.php:3314
+#: widgets/premium-pricing-table.php:3422 widgets/premium-search-form.php:2770
 #: widgets/premium-search-form.php:2850 widgets/premium-search-form.php:2930
 #: widgets/premium-svg-drawer.php:835 widgets/premium-testimonials.php:1668
 #: widgets/premium-title.php:1986 widgets/premium-videobox.php:1859
@@ -9004,8 +8993,8 @@ msgstr ""
 #: widgets/premium-notifications.php:2378
 #: widgets/premium-notifications.php:2493 widgets/premium-person.php:1197
 #: widgets/premium-person.php:1579 widgets/premium-post-ticker.php:2251
-#: widgets/premium-pricing-table.php:3348
-#: widgets/premium-pricing-table.php:3456 widgets/premium-search-form.php:2770
+#: widgets/premium-pricing-table.php:3314
+#: widgets/premium-pricing-table.php:3422 widgets/premium-search-form.php:2770
 #: widgets/premium-search-form.php:2850 widgets/premium-search-form.php:2930
 #: widgets/premium-svg-drawer.php:835 widgets/premium-testimonials.php:1668
 #: widgets/premium-title.php:1986 widgets/premium-videobox.php:1859
@@ -9315,7 +9304,7 @@ msgid "Split"
 msgstr ""
 
 #: widgets/premium-blog.php:800 widgets/premium-notifications.php:1941
-#: widgets/premium-pricing-table.php:1451
+#: widgets/premium-pricing-table.php:1422
 msgid "Triangle"
 msgstr ""
 
@@ -9767,7 +9756,7 @@ msgstr ""
 #: widgets/premium-image-separator.php:493 widgets/premium-mobile-menu.php:491
 #: widgets/premium-modalbox.php:502 widgets/premium-notifications.php:460
 #: widgets/premium-post-ticker.php:641 widgets/premium-pricing-table.php:463
-#: widgets/premium-pricing-table.php:997 widgets/premium-progressbar.php:605
+#: widgets/premium-pricing-table.php:968 widgets/premium-progressbar.php:605
 #: widgets/premium-svg-drawer.php:370 widgets/premium-textual-showcase.php:597
 #: widgets/premium-textual-showcase.php:1226 widgets/premium-title.php:830
 msgid "Start Point (%)"
@@ -9778,7 +9767,7 @@ msgstr ""
 #: widgets/premium-image-separator.php:495 widgets/premium-mobile-menu.php:493
 #: widgets/premium-modalbox.php:504 widgets/premium-notifications.php:462
 #: widgets/premium-post-ticker.php:643 widgets/premium-pricing-table.php:465
-#: widgets/premium-pricing-table.php:999 widgets/premium-progressbar.php:607
+#: widgets/premium-pricing-table.php:970 widgets/premium-progressbar.php:607
 #: widgets/premium-svg-drawer.php:372 widgets/premium-textual-showcase.php:599
 #: widgets/premium-textual-showcase.php:1228 widgets/premium-title.php:832
 msgid "Set the point that the SVG should start from."
@@ -9789,7 +9778,7 @@ msgstr ""
 #: widgets/premium-image-separator.php:512 widgets/premium-mobile-menu.php:509
 #: widgets/premium-modalbox.php:523 widgets/premium-notifications.php:479
 #: widgets/premium-post-ticker.php:660 widgets/premium-pricing-table.php:481
-#: widgets/premium-pricing-table.php:1015 widgets/premium-progressbar.php:626
+#: widgets/premium-pricing-table.php:986 widgets/premium-progressbar.php:626
 #: widgets/premium-svg-drawer.php:389 widgets/premium-textual-showcase.php:624
 #: widgets/premium-textual-showcase.php:1253 widgets/premium-title.php:851
 msgid "End Point (%)"
@@ -9800,7 +9789,7 @@ msgstr ""
 #: widgets/premium-image-separator.php:514 widgets/premium-mobile-menu.php:511
 #: widgets/premium-modalbox.php:525 widgets/premium-notifications.php:481
 #: widgets/premium-post-ticker.php:662 widgets/premium-pricing-table.php:483
-#: widgets/premium-pricing-table.php:1017 widgets/premium-progressbar.php:628
+#: widgets/premium-pricing-table.php:988 widgets/premium-progressbar.php:628
 #: widgets/premium-svg-drawer.php:391 widgets/premium-textual-showcase.php:626
 #: widgets/premium-textual-showcase.php:1255 widgets/premium-title.php:853
 msgid "Set the point that the SVG should end at."
@@ -11621,7 +11610,7 @@ msgstr ""
 msgid "Icon/Text Background "
 msgstr ""
 
-#: widgets/premium-icon-list.php:1188 widgets/premium-pricing-table.php:1188
+#: widgets/premium-icon-list.php:1188 widgets/premium-pricing-table.php:1159
 msgid "Draw SVGs In Sequence"
 msgstr ""
 
@@ -12322,7 +12311,7 @@ msgid "Enter the CSS ID of the container you want to use as a media item."
 msgstr ""
 
 #: widgets/premium-media-wheel.php:310 widgets/premium-pricing-table.php:526
-#: widgets/premium-pricing-table.php:1060
+#: widgets/premium-pricing-table.php:1031
 #: widgets/premium-textual-showcase.php:358
 #: widgets/premium-textual-showcase.php:987
 msgid "Choose Image"
@@ -13599,7 +13588,7 @@ msgid "Menu Background Color"
 msgstr ""
 
 #: widgets/premium-pinterest-feed.php:1596
-#: widgets/premium-pricing-table.php:2654
+#: widgets/premium-pricing-table.php:2620
 #: widgets/premium-textual-showcase.php:2009
 #: widgets/premium-tiktok-feed.php:2436
 msgid "Vertical Spacing"
@@ -13835,9 +13824,9 @@ msgid "Please Enter Currencies of your choice to query."
 msgstr ""
 
 #: widgets/premium-pricing-table.php:543 widgets/premium-pricing-table.php:607
-#: widgets/premium-pricing-table.php:778 widgets/premium-pricing-table.php:1278
-#: widgets/premium-pricing-table.php:1316
-#: widgets/premium-pricing-table.php:1424
+#: widgets/premium-pricing-table.php:749 widgets/premium-pricing-table.php:1249
+#: widgets/premium-pricing-table.php:1287
+#: widgets/premium-pricing-table.php:1395
 msgid ""
 "Set the display order of this element. Elements with lower order numbers "
 "will appear before those with higher numbers. Default is 1."
@@ -13847,7 +13836,7 @@ msgstr ""
 msgid "Select HTML tag for the title"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:633 widgets/premium-pricing-table.php:2131
+#: widgets/premium-pricing-table.php:633 widgets/premium-pricing-table.php:2102
 msgid "Slashed Price"
 msgstr ""
 
@@ -13857,98 +13846,98 @@ msgid ""
 "Price, if available."
 msgstr ""
 
-#: widgets/premium-pricing-table.php:702
+#: widgets/premium-pricing-table.php:673
 msgid "Discount Reveal Effect"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:717 widgets/premium-pricing-table.php:2182
+#: widgets/premium-pricing-table.php:688 widgets/premium-pricing-table.php:2153
 msgid "Currency"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:793
+#: widgets/premium-pricing-table.php:764
 msgid "Feature List"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:807
+#: widgets/premium-pricing-table.php:778
 msgid "Feature Title"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:972
+#: widgets/premium-pricing-table.php:943
 msgid ""
 "Loop and Speed options are overriden when Draw SVGs in Sequence option is "
 "enabled."
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1074
+#: widgets/premium-pricing-table.php:1045
 msgid "Tooltip"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1082
+#: widgets/premium-pricing-table.php:1053
 msgid "Tooltip Text"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1154
-#: widgets/premium-pricing-table.php:1703
-#: widgets/premium-pricing-table.php:2554
+#: widgets/premium-pricing-table.php:1125
+#: widgets/premium-pricing-table.php:1674
+#: widgets/premium-pricing-table.php:2520
 msgid "Features"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1162
+#: widgets/premium-pricing-table.php:1133
 msgid "List Item #1"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1169
+#: widgets/premium-pricing-table.php:1140
 msgid "List Item #2"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1176
+#: widgets/premium-pricing-table.php:1147
 msgid "List Item #3"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1226
+#: widgets/premium-pricing-table.php:1197
 msgid "Yoyo Animation"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1342
+#: widgets/premium-pricing-table.php:1313
 msgid "Get Started"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1438
-#: widgets/premium-pricing-table.php:1729
-#: widgets/premium-pricing-table.php:3209
+#: widgets/premium-pricing-table.php:1409
+#: widgets/premium-pricing-table.php:1700
+#: widgets/premium-pricing-table.php:3175
 msgid "Ribbon"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1452 widgets/premium-progressbar.php:210
+#: widgets/premium-pricing-table.php:1423 widgets/premium-progressbar.php:210
 msgid "Circle"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1453 widgets/premium-title.php:391
+#: widgets/premium-pricing-table.php:1424 widgets/premium-title.php:391
 #: widgets/premium-title.php:2046
 msgid "Stripe"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1454
+#: widgets/premium-pricing-table.php:1425
 msgid "Flag"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1464
+#: widgets/premium-pricing-table.php:1435
 msgid "NEW"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:2220
+#: widgets/premium-pricing-table.php:2191
 msgid "Vertical Align"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:2228
+#: widgets/premium-pricing-table.php:2199
 msgid "Unset"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:2742 widgets/premium-vscroll.php:669
+#: widgets/premium-pricing-table.php:2708 widgets/premium-vscroll.php:669
 msgid "Tooltips"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:3297
+#: widgets/premium-pricing-table.php:3263
 msgid "Box Settings"
 msgstr ""
 

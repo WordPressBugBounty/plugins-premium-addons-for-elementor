@@ -2949,7 +2949,7 @@
 		};
 
 		/****** Premium Bullet List Handler ******/
-		var PremiumBulletListHandler = elementorModules.frontend.handlers.Base.extend({
+		var PremiumBulletListHandler = ModuleHandler.extend({
 
 			getDefaultSettings: function () {
 
@@ -5142,6 +5142,7 @@
 
 				var settings = this.getElementSettings(),
 					skin = settings.skin,
+					layout = settings.premium_testimonial_layout,
 					carousel = 'skin4' !== skin ? settings.carousel : true;
 
 				if (carousel) {
@@ -5210,9 +5211,19 @@
 					if ('none' !== settings.arrows_lq_effect) {
 						this.$element.find('a.slick-arrow').addClass('premium-con-lq__' + settings.arrows_lq_effect);
 					}
-
 				}
 
+				if ("masonry" === layout && !carousel) {
+					this.$element.imagesLoaded(function () {
+						$multipleTestimonials.isotope({
+							itemSelector: ".premium-testimonial-container",
+							percentPosition: true,
+							masonry: {
+								columnWidth: ".premium-testimonial-container"
+							}
+						});
+					});
+				}
 			}
 
 		});
@@ -5812,7 +5823,8 @@
 
 							e.preventDefault();
 
-							$(window).animate({
+							// $(window).animate({
+							$('html, body').animate({
 								scrollTop: targetElement.offset().top
 							}, 500, function () {
 

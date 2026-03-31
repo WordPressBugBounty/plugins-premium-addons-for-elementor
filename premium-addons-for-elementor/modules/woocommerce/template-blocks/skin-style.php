@@ -127,9 +127,9 @@ abstract class Skin_Style {
 
 		$settings = self::$settings;
 
-		$is_rtl = is_rtl();
-		$dots   = 'yes' === $settings['dots'] ? true : false;
-		$arrows = 'yes' === $settings['arrows'] ? true : false;
+		$is_rtl            = is_rtl();
+		$dots              = 'yes' === $settings['dots'] ? true : false;
+		$arrows            = 'yes' === $settings['arrows'] ? true : false;
 		$arrows_custom_pos = 'default' !== $settings['arrows_position'];
 
 		$slick_options = array(
@@ -207,7 +207,7 @@ abstract class Skin_Style {
 		$marquee_settings = array(
 			'direction' => $settings['marquee_direction'],
 			'speed'     => $settings['marquee_speed'] ? absint( $settings['marquee_speed'] ) : 50,
-			'draggable'      => 'yes' === $settings['marquee_draggable'],
+			'draggable' => 'yes' === $settings['marquee_draggable'],
 		);
 
 		$this->add_render_attribute(
@@ -959,7 +959,7 @@ abstract class Skin_Style {
 
 		echo '<div ' . wp_kses_post( $this->get_render_attribute_string( 'inner' ) ) . '>';
 
-		if( 'carousel' === $settings['layout_type'] && 'above' === $settings['arrows_position'] ) {
+		if ( 'carousel' === $settings['layout_type'] && 'above' === $settings['arrows_position'] ) {
 			echo '<div class="premium-carousel-arrows-wrapper"></div>';
 		}
 	}
@@ -973,7 +973,7 @@ abstract class Skin_Style {
 
 		$settings = self::$settings;
 
-		if( 'carousel' === $settings['layout_type'] && 'below' === $settings['arrows_position'] ) {
+		if ( 'carousel' === $settings['layout_type'] && 'below' === $settings['arrows_position'] ) {
 			echo '<div class="premium-carousel-arrows-wrapper"></div>';
 		}
 

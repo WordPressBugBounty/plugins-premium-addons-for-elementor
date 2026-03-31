@@ -674,6 +674,9 @@ class Premium_Maps extends Widget_Base {
 				'description' => __( 'Add the CSS ID given to Premium Carousel to link carousel slides with the maps marker. ', 'premium-addons-for-elementor' ) .
 					'<a href="https://premiumaddons.com/docs/how-to-link-google-maps-markers-carousel/" target="_blank">' . __( 'Learn more', 'premium-addons-for-elementor' ) . '</a>',
 				'label_block' => true,
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 

@@ -1914,7 +1914,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 												} elseif ( 'svg' === $item['icon_type'] ) {
 													?>
 														<div <?php echo wp_kses_post( $this->get_render_attribute_string( $animation_key ) ); ?>>
-														<?php echo $this->print_unescaped_setting( 'custom_svg', 'menu_items', $index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+														<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); ?>
 														</div>
 														<?php
 												} elseif ( 'image' === $item['icon_type'] ) {

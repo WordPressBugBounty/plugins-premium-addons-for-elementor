@@ -799,9 +799,9 @@ class Woo_CTA extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_position',
 			array(
-				'label'     => __( 'Icon Position', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
+				'label'        => __( 'Icon Position', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::CHOOSE,
+				'options'      => array(
 					'2'  => array(
 						'title' => __( 'Before', 'premium-addons-for-elementor' ),
 						'icon'  => is_rtl() ? 'eicon-order-end' : 'eicon-order-start',
@@ -811,12 +811,13 @@ class Woo_CTA extends Widget_Base {
 						'icon'  => is_rtl() ? 'eicon-order-start' : 'eicon-order-end',
 					),
 				),
-				'default'   => '2',
-				'toggle'    => false,
-				'selectors' => array(
+				'prefix_class' => 'pa-icon-pos-',
+				'default'      => '2',
+				'toggle'       => false,
+				'selectors'    => array(
 					'{{WRAPPER}} .premium-button-text-icon-wrapper' => 'order: {{VALUE}}',
 				),
-				'condition' => array(
+				'condition'    => array(
 					'icon_switcher' => 'yes',
 				),
 			)
@@ -833,7 +834,7 @@ class Woo_CTA extends Widget_Base {
 				),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-woo-cta-button i' => 'font-size: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .premium-woo-cta-button svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important',
+					'{{WRAPPER}} .premium-woo-cta-button svg:not(.premium-btn-svg)' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
 					'{{WRAPPER}} .premium-woo-cta-button img' => 'width: {{SIZE}}{{UNIT}};',
 				),
 				'conditions' => array(
@@ -862,6 +863,8 @@ class Woo_CTA extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-woo-cta-button' => 'column-gap: {{SIZE}}px;',
+					'{{WRAPPER}}.pa-icon-pos-2'           => '--pa-btn-line6-translate-x: {{SIZE}}px',
+					'{{WRAPPER}}.pa-icon-pos--1'          => '--pa-btn-line6-translate-x: -{{SIZE}}px',
 				),
 				'condition' => $common_conditions,
 			)
@@ -2125,6 +2128,23 @@ class Woo_CTA extends Widget_Base {
 				'data-external-url' => 'external' === $product_type ? esc_url( $external_url ) : '',
 			)
 		);
+
+		// Add data-text for the line6 (style8 + underline_style=line6) hover effect.
+		if ( 'style8' === $settings['premium_button_hover_effect'] && 'line6' === $settings['underline_style'] ) {
+			if ( 'external' === $product_type ) {
+				$line6_text = $button_text;
+			} elseif ( 'add_to_cart' === $button_action ) {
+				$line6_text = $settings['cart_button_text'];
+			} elseif ( 'add_to_wishlist' === $button_action ) {
+				$line6_text = $settings['wishlist_button_text'];
+			} elseif ( 'add_to_compare' === $button_action ) {
+				$line6_text = $settings['compare_button_text'];
+			} else {
+				$line6_text = '';
+			}
+
+			$this->add_render_attribute( 'button', 'data-text', $line6_text );
+		}
 
 		$in_wishlist    = false;
 		$in_mc_wishlist = false;

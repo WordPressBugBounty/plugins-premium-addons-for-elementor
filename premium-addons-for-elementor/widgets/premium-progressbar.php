@@ -1958,7 +1958,7 @@ class Premium_Progressbar extends Widget_Base {
 				elseif ( 'svg' === $icon_type ) :
 					?>
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
-						<?php $this->print_unescaped_setting( 'custom_svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
 					</div>
 					<?php
 				elseif ( 'image' === $icon_type ) :

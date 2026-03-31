@@ -2120,4 +2120,154 @@ class Helper_Functions {
 
 		return $enabled_names;
 	}
+
+	/**
+	 * Sanitize SVG
+	 *
+	 * Strips dangerous attributes (on* event handlers, javascript: hrefs) and
+	 * disallowed tags from a raw SVG string. Used as sanitize_callback for
+	 * custom_svg controls to prevent Stored XSS (CVE-2026-4790).
+	 *
+	 * @since 4.11.71
+	 * @access public
+	 *
+	 * @param string $svg Raw SVG input.
+	 * @return string Sanitized SVG string.
+	 */
+	public static function sanitize_svg( $svg ) {
+
+		$allowed_tags = array(
+			'svg'      => array(
+				'xmlns'       => array(),
+				'xmlns:xlink' => array(),
+				'viewbox'     => array(),
+				'width'       => array(),
+				'height'      => array(),
+				'fill'        => array(),
+				'stroke'      => array(),
+				'class'       => array(),
+				'id'          => array(),
+				'role'        => array(),
+				'aria-hidden' => array(),
+				'aria-label'  => array(),
+				'focusable'   => array(),
+				'style'       => array(),
+			),
+			'circle'   => array(
+				'cx'           => array(),
+				'cy'           => array(),
+				'r'            => array(),
+				'fill'         => array(),
+				'stroke'       => array(),
+				'stroke-width' => array(),
+				'class'        => array(),
+				'id'           => array(),
+				'style'        => array(),
+			),
+			'ellipse'  => array(
+				'cx'           => array(),
+				'cy'           => array(),
+				'rx'           => array(),
+				'ry'           => array(),
+				'fill'         => array(),
+				'stroke'       => array(),
+				'stroke-width' => array(),
+				'class'        => array(),
+				'id'           => array(),
+				'style'        => array(),
+			),
+			'rect'     => array(
+				'x'            => array(),
+				'y'            => array(),
+				'width'        => array(),
+				'height'       => array(),
+				'rx'           => array(),
+				'ry'           => array(),
+				'fill'         => array(),
+				'stroke'       => array(),
+				'stroke-width' => array(),
+				'class'        => array(),
+				'id'           => array(),
+				'style'        => array(),
+			),
+			'line'     => array(
+				'x1'           => array(),
+				'y1'           => array(),
+				'x2'           => array(),
+				'y2'           => array(),
+				'stroke'       => array(),
+				'stroke-width' => array(),
+				'class'        => array(),
+				'id'           => array(),
+				'style'        => array(),
+			),
+			'polyline' => array(
+				'points'       => array(),
+				'fill'         => array(),
+				'stroke'       => array(),
+				'stroke-width' => array(),
+				'class'        => array(),
+				'id'           => array(),
+				'style'        => array(),
+			),
+			'polygon'  => array(
+				'points'       => array(),
+				'fill'         => array(),
+				'stroke'       => array(),
+				'stroke-width' => array(),
+				'class'        => array(),
+				'id'           => array(),
+				'style'        => array(),
+			),
+			'path'     => array(
+				'd'            => array(),
+				'fill'         => array(),
+				'stroke'       => array(),
+				'stroke-width' => array(),
+				'fill-rule'    => array(),
+				'clip-rule'    => array(),
+				'class'        => array(),
+				'id'           => array(),
+				'style'        => array(),
+			),
+			'g'        => array(
+				'fill'      => array(),
+				'stroke'    => array(),
+				'transform' => array(),
+				'class'     => array(),
+				'id'        => array(),
+				'style'     => array(),
+			),
+			'defs'     => array(
+				'class' => array(),
+				'id'    => array(),
+			),
+			'text'     => array(
+				'x'           => array(),
+				'y'           => array(),
+				'dx'          => array(),
+				'dy'          => array(),
+				'fill'        => array(),
+				'font-size'   => array(),
+				'font-family' => array(),
+				'text-anchor' => array(),
+				'class'       => array(),
+				'id'          => array(),
+				'style'       => array(),
+			),
+			'tspan'    => array(
+				'x'     => array(),
+				'y'     => array(),
+				'dx'    => array(),
+				'dy'    => array(),
+				'class' => array(),
+				'id'    => array(),
+				'style' => array(),
+			),
+			'title'    => array(),
+			'desc'     => array(),
+		);
+
+		return wp_kses( $svg, $allowed_tags );
+	}
 }

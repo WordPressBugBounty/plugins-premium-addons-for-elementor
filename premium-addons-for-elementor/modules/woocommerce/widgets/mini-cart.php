@@ -763,7 +763,7 @@ class Mini_Cart extends Widget_Base {
 				'description'  => __( 'Displays the tax label next to the subtotal amount when the ', 'premium-addons-for-elementor' ) . sprintf( __( '<a href="%s" target="_blank">Enable Taxes</a>', 'premium-addons-for-elementor' ), esc_url( admin_url( 'admin.php?page=wc-settings&tab=general' ) ) ) . __( ' option is enabled.', 'premium-addons-for-elementor' ),
 				'condition'    => array(
 					'placement' => 'default',
-					'presets!' => array( 'preset-1', 'preset-2' ),
+					'presets!'  => array( 'preset-1', 'preset-2' ),
 				),
 			)
 		);
@@ -1905,7 +1905,7 @@ class Mini_Cart extends Widget_Base {
 				),
 				'skin'                   => 'inline',
 				'condition'              => array(
-					'cart_type' => 'slide',
+					'cart_type'       => 'slide',
 					'content_layout!' => array( 'layout-3', 'layout-4' ),
 				),
 			)
@@ -1921,8 +1921,8 @@ class Mini_Cart extends Widget_Base {
 					'{{WRAPPER}} .pa-woo-mc__close-button i' => 'font-size: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .pa-woo-mc__close-button svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
 				),
-				'condition'              => array(
-					'cart_type' => 'slide',
+				'condition'  => array(
+					'cart_type'       => 'slide',
 					'content_layout!' => array( 'layout-3', 'layout-4' ),
 				),
 			)
@@ -1949,7 +1949,7 @@ class Mini_Cart extends Widget_Base {
 					'{{WRAPPER}} .pa-woo-mc__cart-title' => 'order: {{VALUE}}',
 				),
 				'condition' => array(
-					'cart_type' => 'slide',
+					'cart_type'       => 'slide',
 					'content_layout!' => array( 'layout-3', 'layout-4' ),
 					'cart_title!'     => '',
 				),
@@ -1983,7 +1983,7 @@ class Mini_Cart extends Widget_Base {
 				'condition'            => array(
 					'content_layout!' => array( 'layout-3', 'layout-4' ),
 					'cart_title'      => '',
-					'cart_type' => 'slide',
+					'cart_type'       => 'slide',
 				),
 			)
 		);
@@ -4082,7 +4082,7 @@ class Mini_Cart extends Widget_Base {
 		$this->start_controls_tab(
 			'cicon_tab_normal',
 			array(
-				'label' => __( 'Normal', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Normal', 'premium-addons-for-elementor' ),
 				'condition' => array(
 					'cart_type' => 'slide',
 				),
@@ -4121,8 +4121,8 @@ class Mini_Cart extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
-				'name'     => 'cicon_shadow',
-				'selector' => '{{WRAPPER}} .pa-woo-mc__close-button',
+				'name'      => 'cicon_shadow',
+				'selector'  => '{{WRAPPER}} .pa-woo-mc__close-button',
 				'condition' => array(
 					'cart_type' => 'slide',
 				),
@@ -4132,8 +4132,8 @@ class Mini_Cart extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
-				'name'     => 'pa_border_color_cicon',
-				'selector' => '{{WRAPPER}} .pa-woo-mc__close-button',
+				'name'      => 'pa_border_color_cicon',
+				'selector'  => '{{WRAPPER}} .pa-woo-mc__close-button',
 				'condition' => array(
 					'cart_type' => 'slide',
 				),
@@ -4149,7 +4149,7 @@ class Mini_Cart extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-				'condition' => array(
+				'condition'  => array(
 					'cart_type' => 'slide',
 				),
 			)
@@ -4164,7 +4164,7 @@ class Mini_Cart extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-				'condition' => array(
+				'condition'  => array(
 					'cart_type' => 'slide',
 				),
 			)
@@ -4175,7 +4175,7 @@ class Mini_Cart extends Widget_Base {
 		$this->start_controls_tab(
 			'cicon_tab_hov',
 			array(
-				'label' => __( 'Hover', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Hover', 'premium-addons-for-elementor' ),
 				'condition' => array(
 					'cart_type' => 'slide',
 				),
@@ -4214,8 +4214,8 @@ class Mini_Cart extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
-				'name'     => 'cicon_shadow_hov',
-				'selector' => '{{WRAPPER}} .pa-woo-mc__close-button:hover',
+				'name'      => 'cicon_shadow_hov',
+				'selector'  => '{{WRAPPER}} .pa-woo-mc__close-button:hover',
 				'condition' => array(
 					'cart_type' => 'slide',
 				),
@@ -4225,8 +4225,8 @@ class Mini_Cart extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
-				'name'     => 'pa_border_color_cicon_hov',
-				'selector' => '{{WRAPPER}} .pa-woo-mc__close-button:hover',
+				'name'      => 'pa_border_color_cicon_hov',
+				'selector'  => '{{WRAPPER}} .pa-woo-mc__close-button:hover',
 				'condition' => array(
 					'cart_type' => 'slide',
 				),
@@ -4242,7 +4242,7 @@ class Mini_Cart extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-				'condition' => array(
+				'condition'  => array(
 					'cart_type' => 'slide',
 				),
 			)
@@ -4257,7 +4257,7 @@ class Mini_Cart extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .pa-woo-mc__close-button:hover' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-				'condition' => array(
+				'condition'  => array(
 					'cart_type' => 'slide',
 				),
 			)
@@ -5726,7 +5726,7 @@ class Mini_Cart extends Widget_Base {
 				?>
 						<span class="pa-woo-mc__close-button">
 						<?php
-						if ( in_array( $layout, array( 'layout-3', 'layout-4'), true ) ) {
+						if ( in_array( $layout, array( 'layout-3', 'layout-4' ), true ) ) {
 							?>
 								<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="15.99" viewBox="0 0 16 15.99"><path d="M15.85,15.14l-7.15-7.15L15.85.85c.19-.19.19-.5,0-.69-.19-.2-.51-.2-.71-.01l-7.15,7.15L.85.14C.66-.05.35-.05.16.14c-.2.19-.2.51-.01.71l7.15,7.15L.15,15.14C.05,15.23,0,15.36,0,15.49c0,.28.22.5.5.5.13,0,.26-.05.35-.15l7.15-7.15,7.15,7.15c.09.09.22.15.35.15.13,0,.26-.05.35-.15.2-.2.2-.51,0-.71Z"/></svg>
 							<?php

@@ -2875,7 +2875,7 @@ class Premium_Carousel extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-carousel-thumbnail.slick-current,{{WRAPPER}} .premium-carousel-thumbnail.slick-current .premium-carousel-thumbnail-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+					'{{WRAPPER}} .premium-carousel-thumbnail.slick-current' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
 			)
 		);
@@ -2883,6 +2883,21 @@ class Premium_Carousel extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->add_control(
+			'thumbnail_vertical_margin',
+			array(
+				'label'       => __( 'Thumbnail Outer Margin', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SLIDER,
+				'description' => __( 'Adjust the outer margin of thumbnail images. Applied horizontally for column layouts and vertically for row layouts.', 'premium-addons-for-elementor' ),
+				'separator'   => 'before',
+				'size_units'  => array( 'px', '%', 'custom' ),
+				'selectors'   => array(
+					'{{WRAPPER}}[class*="pa-thumb-nav-pos-col"] .premium-carousel-thumbnail'   => 'margin-block: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}}[class*="pa-thumb-nav-pos-row"] .premium-carousel-thumbnail'   => 'margin-inline: {{SIZE}}{{UNIT}}',
+				),
+			)
+		);
 
 		$this->add_control(
 			'thumb_container',
@@ -2924,10 +2939,10 @@ class Premium_Carousel extends Widget_Base {
 			'thumb_cont_border_radius',
 			array(
 				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SLIDER,
+				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-carousel-thumb-slider'   => 'border-radius: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .premium-carousel-thumb-slider'   => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
