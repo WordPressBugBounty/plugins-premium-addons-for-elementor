@@ -31,6 +31,10 @@
   transform-origin: right center;
 }
 
+.premium-bullet-list-text {
+  width: 100%;
+}
+
 .premium-bullet-list-content {
   display: -webkit-flex;
   display: -ms-flexbox;

@@ -2416,7 +2416,7 @@ class Woo_CTA extends Widget_Base {
 
 					<?php else : ?>
 						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
-							<?php $this->print_unescaped_setting( 'custom_svg' ); ?>
+							<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist ?>
 						</div>
 						<?php
 					endif;

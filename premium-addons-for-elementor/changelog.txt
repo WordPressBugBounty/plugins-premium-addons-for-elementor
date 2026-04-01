@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.11.72 - 1/4/2026 =
+
+- Fixed: Premium Templates not working in v4.11.71.
+
 = 4.11.71 - 31/3/2026 =
 
 - Tweak: Added Masonry Layout in Testimonials widget.
