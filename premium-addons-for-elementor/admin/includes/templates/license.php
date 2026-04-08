@@ -21,7 +21,7 @@ $account_link = Helper_Functions::get_campaign_link( 'https://clients.leap13.com
 				<div class="pa-section-info-wrap">
 					<div class="pa-section-info">
 
-						<b><?php echo __( 'Premium Addons PRO is an extension to the free version. It boosts what you can do with the free version. Get access to 90+ Elementor widgets, 10+ global features and container add-ons, and 580+ ready-built templates to take your designs further.', 'premium-addons-for-elementor' ); ?></b>
+						<b><?php echo __( 'Premium Addons PRO is an extension to the free version. It boosts what you can do with the free version. Get access to 90+ Elementor widgets, 17+ global features and container add-ons, and 580+ ready-built templates to take your designs further.', 'premium-addons-for-elementor' ); ?></b>
 
 						<ol>
 

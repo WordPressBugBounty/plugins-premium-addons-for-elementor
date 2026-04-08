@@ -650,6 +650,9 @@ class Premium_Title extends Widget_Base {
 						'icon_type' => 'svg',
 					)
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -666,6 +669,9 @@ class Premium_Title extends Widget_Base {
 					array(
 						'icon_type' => 'animation',
 					)
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1515,7 +1521,8 @@ class Premium_Title extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-title-text, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .premium-title-text, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .premium-title-header, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -1998,6 +2005,9 @@ class Premium_Title extends Widget_Base {
 				),
 				'condition' => array(
 					'icon_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

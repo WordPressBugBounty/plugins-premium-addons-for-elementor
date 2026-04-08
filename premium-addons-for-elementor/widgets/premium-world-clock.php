@@ -237,6 +237,9 @@ class Premium_World_Clock extends Widget_Base {
 					'tz_type' => 'custom',
 				),
 				'render_type' => 'template',
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -787,6 +790,9 @@ class Premium_World_Clock extends Widget_Base {
 					'skin'                => 'skin-4',
 					'date'                => 'yes',
 					'date_format_digital' => 'custom',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1414,6 +1420,9 @@ class Premium_World_Clock extends Widget_Base {
 				'label'       => __( 'Language', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'description' => __( 'Enter language prefix, eg. en for English, ja for Japanese, if you don\'t know your language prefix, please check <a href="https://developers.google.com/maps/faq#languagesupport" target="_blank">here</a>', 'premium-addons-for-elementor' ),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 

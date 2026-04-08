@@ -17,6 +17,7 @@ use PremiumAddons\Includes\Controls\Premium_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
@@ -441,6 +442,9 @@ class Premium_Post_Ticker extends Widget_Base {
 					'ticker_title!'  => '',
 					'icon_type'      => 'svg',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -471,6 +475,9 @@ class Premium_Post_Ticker extends Widget_Base {
 					'ticker_icon_sw' => 'yes',
 					'ticker_title!'  => '',
 					'icon_type'      => 'lottie',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -861,6 +868,9 @@ class Premium_Post_Ticker extends Widget_Base {
 				'condition'   => array(
 					'show_date' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -917,7 +927,7 @@ class Premium_Post_Ticker extends Widget_Base {
 			array(
 				'label'        => __( 'Marquee Effect', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'separator' => 'before',
+				'separator'    => 'before',
 				'render_type'  => 'template',
 				'default'      => 'yes',
 				'prefix_class' => 'pa-infinite-ticker-',
@@ -984,6 +994,9 @@ class Premium_Post_Ticker extends Widget_Base {
 					'infinite!'         => 'yes',
 					'typing'            => 'yes',
 					'layout!'           => 'layout-4',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1622,6 +1635,9 @@ class Premium_Post_Ticker extends Widget_Base {
 					'txt_icon_sw' => 'yes',
 					'icon_type'   => 'svg',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1650,6 +1666,9 @@ class Premium_Post_Ticker extends Widget_Base {
 				'condition'   => array(
 					'txt_icon_sw' => 'yes',
 					'icon_type'   => 'lottie',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1930,6 +1949,9 @@ class Premium_Post_Ticker extends Widget_Base {
 				'default'     => get_option( 'date_format' ),
 				'condition'   => array(
 					'date_meta' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -2264,6 +2286,9 @@ class Premium_Post_Ticker extends Widget_Base {
 				'condition' => array(
 					'title_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -2451,11 +2476,24 @@ class Premium_Post_Ticker extends Widget_Base {
 			)
 		);
 
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			array(
+				'name'      => 'element_text_stroke',
+				'separator' => 'after',
+				'selector'  => '{{WRAPPER}} .premium-post-ticker__post-title',
+				'condition' => array(
+					'post_type_filter!' => array( 'gold', 'stock' ),
+				),
+			)
+		);
+
 		$this->add_control(
 			'text_icon_color',
 			array(
 				'label'     => __( 'Icon Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
+				'separator' => 'before',
 				'selectors' => array(
 					'{{WRAPPER}} .premium-post-ticker__icon-wrapper.premium-repeater-item i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .premium-post-ticker__icon-wrapper.premium-repeater-item .premium-drawable-icon *,

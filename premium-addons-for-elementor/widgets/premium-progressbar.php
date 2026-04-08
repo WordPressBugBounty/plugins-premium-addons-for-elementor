@@ -418,6 +418,9 @@ class Premium_Progressbar extends Widget_Base {
 						'icon_type' => 'svg',
 					)
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -434,6 +437,9 @@ class Premium_Progressbar extends Widget_Base {
 					array(
 						'icon_type' => 'animation',
 					)
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -879,6 +885,9 @@ class Premium_Progressbar extends Widget_Base {
 				'type'    => Controls_Manager::TEXT,
 				'dynamic' => array( 'active' => true ),
 				'default' => 50,
+				'ai'      => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -934,6 +943,9 @@ class Premium_Progressbar extends Widget_Base {
 				'condition'   => array(
 					'layout_type'                        => 'line',
 					'premium_progressbar_progress_style' => 'gradient',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);

@@ -630,6 +630,9 @@ class Premium_Countdown extends Widget_Base {
 						),
 					),
 				),
+				'ai'         => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -733,6 +736,9 @@ class Premium_Countdown extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'expiration_type' => 'url',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1162,6 +1168,9 @@ class Premium_Countdown extends Widget_Base {
 					'style!'           => 'circle',
 					'digit_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1519,6 +1528,9 @@ class Premium_Countdown extends Widget_Base {
 				),
 				'condition' => array(
 					'boxes_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

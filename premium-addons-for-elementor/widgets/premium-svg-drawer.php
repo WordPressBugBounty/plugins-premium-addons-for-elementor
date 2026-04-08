@@ -205,6 +205,9 @@ class Premium_SVG_Drawer extends Widget_Base {
 				'condition'   => array(
 					'icon_type' => 'custom',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -847,6 +850,9 @@ class Premium_SVG_Drawer extends Widget_Base {
 				),
 				'condition' => array(
 					'icon_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

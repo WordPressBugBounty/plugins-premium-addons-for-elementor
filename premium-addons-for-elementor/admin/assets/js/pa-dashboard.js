@@ -176,7 +176,8 @@
 				method: 'POST',
 				data: {
 					action: 'pa_handle_feedback_action',
-					data: data
+					data: data,
+					nonce: PaNoticeSettings.feedback_nonce
 				},
 				beforeSend: function () {
 					$this.prop('disabled', true);

@@ -398,8 +398,9 @@ class Admin_Notices {
 			'pa-dashboard',
 			'PaNoticeSettings',
 			array(
-				'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
-				'nonce'   => wp_create_nonce( 'pa-notice-nonce' ),
+				'ajaxurl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
+				'nonce'          => wp_create_nonce( 'pa-notice-nonce' ),
+				'feedback_nonce' => wp_create_nonce( 'pa-feedback-nonce' ),
 			)
 		);
 	}
@@ -596,7 +597,7 @@ class Admin_Notices {
 					$stories['posts'],
 					array(
 						'title' => 'Switch to Premium Addons Pro Lifetime, Pay the Difference & Save 20% Today!',
-						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'val26-dash-widget', 'val26' ),
+						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'spring26-dash-widget', 'spring26' ),
 					)
 				);
 
@@ -669,7 +670,7 @@ class Admin_Notices {
 							<div class="pa-story-img-container">
 								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'val26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'spring26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>

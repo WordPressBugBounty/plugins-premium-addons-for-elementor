@@ -333,6 +333,9 @@ class Premium_Tcloud extends Widget_Base {
 					'words_order!'  => $options['order_condition'],
 					'colors_select' => 'custom',
 				),
+				'ai'                 => array(
+					'active' => false,
+				),
 			)
 		);
 

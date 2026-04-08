@@ -773,6 +773,9 @@ class Premium_Banner extends Widget_Base {
 				'condition' => array(
 					'image_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1028,6 +1031,9 @@ class Premium_Banner extends Widget_Base {
 				),
 				'condition' => array(
 					'button_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

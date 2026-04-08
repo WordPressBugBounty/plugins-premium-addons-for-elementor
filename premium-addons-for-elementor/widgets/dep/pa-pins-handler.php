@@ -33,11 +33,19 @@ function refresh_pinterest_token( $refresh_token ) {
 	$body = wp_remote_retrieve_body( $response );
 	$body = json_decode( $body, true );
 
-	update_option( 'pinterest_token', $body['access_token'] );
-	update_option( 'pinterest_refresh_token', $body['refresh_token'] );
+	if ( empty( $body ) || ! is_array( $body ) ) {
+		return;
+	}
+
+	if ( ! empty( $body['access_token'] ) ) {
+		update_option( 'pinterest_token', $body['access_token'] );
+	}
+
+	if ( ! empty( $body['refresh_token'] ) ) {
+		update_option( 'pinterest_refresh_token', $body['refresh_token'] );
+	}
 
 	return $body;
-
 }
 
 
@@ -53,7 +61,8 @@ function get_pinterest_data( $id, $settings, $endpoint ) {
 
 	$filter_id = $settings['match_id'];
 
-	$token = get_option( 'pinterest_token', $settings['access_token'] );
+	$token = get_option( 'pinterest_token', false );
+	$token = $token ?: $settings['access_token'];
 
 	$transient_name = sprintf( 'papro_pinterest_feed_%s_%s', $id, substr( $token, -8 ) );
 
@@ -99,8 +108,10 @@ function get_pinterest_data( $id, $settings, $endpoint ) {
 
 		$response = json_decode( $response, true );
 
-		if ( 'failure' === $response['status'] ) {
-			refresh_pinterest_token( get_option( 'pinterest_refresh_token', $settings['refresh_access_token'] ) );
+		if ( isset( $response['status'] ) && 'failure' === $response['status'] ) {
+			$refresh_token = get_option( 'pinterest_refresh_token', false );
+			$refresh_token = $refresh_token ?: $settings['refresh_access_token'];
+			refresh_pinterest_token( get_option( 'pinterest_refresh_token', $refresh_token ) );
 			return;
 		}
 

@@ -674,6 +674,9 @@ class Premium_Nav_Menu extends Widget_Base {
 					array(
 						'icon_type' => 'svg',
 					),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1573,6 +1576,9 @@ class Premium_Nav_Menu extends Widget_Base {
 				'condition'          => array(
 					'pa_nav_menu_layout' => 'hor',
 					'pa_sticky_switcher' => 'yes',
+				),
+				'ai'                 => array(
+					'active' => false,
 				),
 			)
 		);

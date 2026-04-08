@@ -245,6 +245,9 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				'label'   => __( 'Access Token', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::TEXTAREA,
 				'dynamic' => array( 'active' => true ),
+				'ai'      => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -332,6 +335,9 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				'condition'   => array(
 					'show_feed' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -347,6 +353,9 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				'condition'   => array(
 					'match_id'  => '',
 					'show_feed' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -610,6 +619,9 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				'default'     => 'F j, Y',
 				'condition'   => array(
 					'create_time' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);

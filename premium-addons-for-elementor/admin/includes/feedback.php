@@ -35,9 +35,15 @@ class Feedback {
 
 	public static function send() {
 
+		check_ajax_referer( 'pa-feedback-nonce', 'nonce' );
+
 		$response = array( 'success' => false );
 
-		$data = $_POST['data'];
+		if ( ! isset( $_POST['data'] ) || ! is_array( $_POST['data'] ) ) {
+			wp_send_json_error( 'Invalid data format' );
+		}
+
+		$data = array_map( 'sanitize_text_field', wp_unslash( $_POST['data'] ) );
 
 		if ( isset( $data['feedback'] ) ) {
 			$reason      = $data['feedback'];

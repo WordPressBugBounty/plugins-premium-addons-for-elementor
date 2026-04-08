@@ -255,6 +255,9 @@ class Premium_Videobox extends Widget_Base {
 					'youtube_list'                 => 'yes',
 					'source'                       => 'playlist',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -271,6 +274,9 @@ class Premium_Videobox extends Widget_Base {
 					'premium_video_box_video_type' => 'youtube',
 					'youtube_list'                 => 'yes',
 					'source'                       => 'channel',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -407,6 +413,9 @@ class Premium_Videobox extends Widget_Base {
 							),
 						),
 					),
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -578,6 +587,9 @@ class Premium_Videobox extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_video_box_video_type' => 'self',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1871,6 +1883,9 @@ class Premium_Videobox extends Widget_Base {
 				),
 				'condition' => array(
 					'adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

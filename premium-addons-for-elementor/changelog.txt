@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.11.73 - 8/4/2026 =
+
+- Fixed: Pinterest Feed widget not working correctly.
+
 = 4.11.72 - 1/4/2026 =
 
 - Fixed: Premium Templates not working in v4.11.71.

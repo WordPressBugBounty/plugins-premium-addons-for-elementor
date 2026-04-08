@@ -793,6 +793,9 @@ class Premium_Image_Scroll extends Widget_Base {
 				'condition' => array(
 					'container_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -856,6 +859,9 @@ class Premium_Image_Scroll extends Widget_Base {
 				),
 				'condition' => array(
 					'container_hover_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

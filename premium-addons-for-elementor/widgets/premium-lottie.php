@@ -179,6 +179,9 @@ class Premium_Lottie extends Widget_Base {
 				'condition'   => array(
 					'source' => 'url',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -700,6 +703,9 @@ class Premium_Lottie extends Widget_Base {
 				),
 				'condition' => array(
 					'lottie_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

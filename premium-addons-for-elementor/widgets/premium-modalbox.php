@@ -379,6 +379,9 @@ class Premium_Modalbox extends Widget_Base {
 					'premium_modal_box_icon_switcher' => 'yes',
 					'icon_type'                       => 'svg',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -829,6 +832,9 @@ class Premium_Modalbox extends Widget_Base {
 				'condition'   => array(
 					'premium_modal_box_display_on' => 'animation',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1069,6 +1075,9 @@ class Premium_Modalbox extends Widget_Base {
 					'premium_modal_box_icon_selection'  => 'animation',
 					'premium_modal_box_header_switcher' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1157,6 +1166,9 @@ class Premium_Modalbox extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_modal_box_content_type' => 'template',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);

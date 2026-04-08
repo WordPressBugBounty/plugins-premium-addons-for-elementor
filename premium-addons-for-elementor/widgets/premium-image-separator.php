@@ -240,6 +240,9 @@ class Premium_Image_Separator extends Widget_Base {
 				'condition'   => array(
 					'separator_type' => 'svg',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -269,6 +272,9 @@ class Premium_Image_Separator extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'separator_type' => 'animation',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -933,6 +939,9 @@ class Premium_Image_Separator extends Widget_Base {
 				'condition' => array(
 					'separator_adv_radius' => 'yes',
 					'separator_type!'      => 'animation',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

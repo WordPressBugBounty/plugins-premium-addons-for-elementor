@@ -253,6 +253,9 @@ class Premium_Counter extends Widget_Base {
 				'dynamic'     => array( 'active' => true ),
 				'description' => __( 'Separator converts 125000 into 125,000', 'premium-addons-for-elementor' ),
 				'default'     => ',',
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -410,6 +413,9 @@ class Premium_Counter extends Widget_Base {
 						'premium_counter_icon_image' => 'svg',
 					)
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -424,6 +430,9 @@ class Premium_Counter extends Widget_Base {
 				'condition'   => array(
 					'premium_counter_icon_image' => 'animation',
 					'icon_switcher'              => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1102,6 +1111,9 @@ class Premium_Counter extends Widget_Base {
 				'condition' => array(
 					'premium_counter_icon_style' => 'design',
 					'icon_adv_radius'            => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

@@ -303,6 +303,9 @@ class Premium_Notifications extends Widget_Base {
 				'condition'   => array(
 					'icon_type' => 'animation',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -314,6 +317,9 @@ class Premium_Notifications extends Widget_Base {
 				'description' => 'You can use these sites to create SVGs: <a href="https://danmarshall.github.io/google-font-to-svg-path/" target="_blank">Google Fonts</a> and <a href="https://boxy-svg.com/" target="_blank">Boxy SVG</a>',
 				'condition'   => array(
 					'icon_type' => 'svg',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -834,6 +840,9 @@ class Premium_Notifications extends Widget_Base {
 					'cookies'       => 'yes',
 					'shown_content' => 'template',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -990,6 +999,9 @@ class Premium_Notifications extends Widget_Base {
 					'header_icon_sw'   => 'yes',
 					'header_icon_type' => 'animation',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1002,6 +1014,9 @@ class Premium_Notifications extends Widget_Base {
 				'condition'   => array(
 					'header_icon_sw'   => 'yes',
 					'header_icon_type' => 'svg',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -2107,6 +2122,9 @@ class Premium_Notifications extends Widget_Base {
 				'condition' => array(
 					'icon_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -2247,6 +2265,9 @@ class Premium_Notifications extends Widget_Base {
 				),
 				'condition' => array(
 					'icon_adv_radius_hover' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);
@@ -2391,6 +2412,9 @@ class Premium_Notifications extends Widget_Base {
 				'condition' => array(
 					'number_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -2505,6 +2529,9 @@ class Premium_Notifications extends Widget_Base {
 				),
 				'condition' => array(
 					'number_adv_radius_hover' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

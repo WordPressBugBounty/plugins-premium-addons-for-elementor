@@ -293,6 +293,9 @@ class Premium_Mobile_Menu extends Widget_Base {
 				'condition'   => array(
 					'icon_type' => 'svg',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -963,9 +966,9 @@ class Premium_Mobile_Menu extends Widget_Base {
 		$this->add_responsive_control(
 			'menu_hpos',
 			array(
-				'label'        => __( 'Horizontal Position', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'options'      => array(
+				'label'                => __( 'Horizontal Position', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'options'              => array(
 					'left'   => array(
 						'title' => __( 'Left', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-left',
@@ -989,12 +992,12 @@ class Premium_Mobile_Menu extends Widget_Base {
 					'right'  => 'right: 0; left: auto; transform: none;',
 					'custom' => '',
 				),
-				'selectors'          => array(
+				'selectors'            => array(
 					'{{WRAPPER}} .premium-mobile-menu__wrap' => '{{VALUE}}',
 				),
-				'toggle'       => false,
-				'default'      => 'left',
-				'condition'    => array(
+				'toggle'               => false,
+				'default'              => 'left',
+				'condition'            => array(
 					'menu_display' => 'fixed',
 				),
 			)
@@ -1029,9 +1032,9 @@ class Premium_Mobile_Menu extends Widget_Base {
 		$this->add_responsive_control(
 			'menu_vpos',
 			array(
-				'label'        => __( 'Vertical Position', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'options'      => array(
+				'label'                => __( 'Vertical Position', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'options'              => array(
 					'top'    => array(
 						'title' => __( 'Top', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-arrow-up',
@@ -1050,12 +1053,12 @@ class Premium_Mobile_Menu extends Widget_Base {
 					'bottom' => 'bottom: 0; top: auto;',
 					'custom' => 'top: auto; bottom: auto;',
 				),
-				'selectors'          => array(
+				'selectors'            => array(
 					'{{WRAPPER}} .premium-mobile-menu__wrap' => '{{VALUE}}',
 				),
-				'toggle'       => false,
-				'default'      => 'bottom',
-				'condition'    => array(
+				'toggle'               => false,
+				'default'              => 'bottom',
+				'condition'            => array(
 					'menu_display' => 'fixed',
 				),
 			)

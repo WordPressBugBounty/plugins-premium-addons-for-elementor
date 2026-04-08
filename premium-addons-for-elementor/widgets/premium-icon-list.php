@@ -379,6 +379,9 @@ class Premium_Icon_List extends Widget_Base {
 						'icon_type' => 'svg',
 					)
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 

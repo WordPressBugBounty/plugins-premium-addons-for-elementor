@@ -48,8 +48,11 @@ class PA_Rollback {
 	 * @param array $args plugin args.
 	 */
 	public function __construct( $args = array() ) {
+		$allowed = array( 'package_url', 'version', 'plugin_name', 'plugin_slug' );
 		foreach ( $args as $key => $value ) {
-			$this->{$key} = $value;
+			if ( in_array( $key, $allowed, true ) ) {
+				$this->{$key} = $value;
+			}
 		}
 	}
 
@@ -76,11 +79,17 @@ class PA_Rollback {
 				padding: 70px !important;
 				text-transform: uppercase;
 				letter-spacing: 1px;
+				line-height: 1.4;
 			}
 			h1 img {
 				max-width: 300px;
 				display: block;
 				margin: auto auto 50px;
+			}
+
+			/* Override WP 7.0 admin button line-height */
+			.wrap .button {
+				line-height: normal;
 			}
 		</style>
 

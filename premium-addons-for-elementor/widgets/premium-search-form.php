@@ -202,6 +202,9 @@ class Premium_Search_Form extends Widget_Base {
 				'condition'   => array(
 					'query_type' => 'elements',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -214,6 +217,9 @@ class Premium_Search_Form extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'query_type' => 'elements',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -859,6 +865,9 @@ class Premium_Search_Form extends Widget_Base {
 					'query_type'    => 'post',
 					'search_button' => 'yes',
 					'button_action' => 'redirect',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -2783,6 +2792,9 @@ class Premium_Search_Form extends Widget_Base {
 				'condition' => array(
 					'navigation_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -2863,6 +2875,9 @@ class Premium_Search_Form extends Widget_Base {
 				'condition' => array(
 					'hover_navigation_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -2942,6 +2957,9 @@ class Premium_Search_Form extends Widget_Base {
 				),
 				'condition' => array(
 					'active_navigation_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

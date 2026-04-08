@@ -255,7 +255,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 				'label'   => __( 'Access Token', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::TEXTAREA,
 				'dynamic' => array( 'active' => true ),
-				'ai'          => array(
+				'ai'      => array(
 					'active' => false,
 				),
 			)
@@ -267,7 +267,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 				'label'   => __( 'Refresh Access Token', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::TEXTAREA,
 				'dynamic' => array( 'active' => true ),
-				'ai'          => array(
+				'ai'      => array(
 					'active' => false,
 				),
 			)
@@ -395,6 +395,9 @@ class Premium_Pinterest_Feed extends Widget_Base {
 					'show_feed' => 'yes',
 					'endpoint'  => 'pins/',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -446,6 +449,9 @@ class Premium_Pinterest_Feed extends Widget_Base {
 					'match_id'      => '',
 					'select_boards' => 'id',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -494,6 +500,9 @@ class Premium_Pinterest_Feed extends Widget_Base {
 					'match_id'  => '',
 					'show_feed' => 'yes',
 					'endpoint'  => 'pins/',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -759,6 +768,9 @@ class Premium_Pinterest_Feed extends Widget_Base {
 				'default'     => 'F j',
 				'condition'   => array(
 					'create_time' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);

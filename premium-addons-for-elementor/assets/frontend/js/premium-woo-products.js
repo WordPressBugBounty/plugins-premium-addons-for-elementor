@@ -1,5 +1,4 @@
 (function ($) {
-
 	var PremiumWooProductsHandler = function ($scope, $) {
 		var instance = null;
 
@@ -8,10 +7,9 @@
 	};
 
 	window.premiumWooProducts = function ($scope) {
-
 		var self = this,
 			$elem = $scope.find(".premium-woocommerce"),
-			skin = $elem.data('skin'),
+			skin = $elem.data("skin"),
 			html = null,
 			canLoadMore = true;
 
@@ -19,23 +17,20 @@
 		var isQuickView = $elem.data("quick-view");
 
 		if ("yes" === isQuickView) {
-
 			var widgetID = $scope.data("id"),
 				$modal = $elem.siblings(".premium-woo-quick-view-" + widgetID);
 
-			var $qvModal = $modal.find('#premium-woo-quick-view-modal'),
-				$contentWrap = $qvModal.find('#premium-woo-quick-view-content'),
-				$wrapper = $qvModal.find('.premium-woo-content-main-wrapper'),
-				$backWrap = $modal.find('.premium-woo-quick-view-back'),
-				$qvLoader = $modal.find('.premium-woo-quick-view-loader'),
-				align = getComputedStyle($modal[0]).getPropertyValue('--pa-qv-align');
+			var $qvModal = $modal.find("#premium-woo-quick-view-modal"),
+				$contentWrap = $qvModal.find("#premium-woo-quick-view-content"),
+				$wrapper = $qvModal.find(".premium-woo-content-main-wrapper"),
+				$backWrap = $modal.find(".premium-woo-quick-view-back"),
+				$qvLoader = $modal.find(".premium-woo-quick-view-loader"),
+				align = getComputedStyle($modal[0]).getPropertyValue("--pa-qv-align");
 
 			$qvModal.addClass(align);
-
 		}
 
 		self.init = function () {
-
 			self.handleProductsCarousel();
 
 			self.handleMarqueeEffect();
@@ -55,7 +50,6 @@
 			}
 
 			if (["grid_7", "grid_11"].includes(skin)) {
-
 				self.handleGalleryCarousel(skin);
 
 				if ("grid_11" === skin) {
@@ -64,23 +58,19 @@
 			}
 
 			if ($elem.hasClass("premium-woo-products-masonry")) {
-
 				self.handleGridMasonry();
 
 				$(window).on("resize", self.handleGridMasonry);
-
 			}
 
 			// place product title above thumbnail.
-			if ($scope.hasClass('premium-woo-title-above-yes')) {
-
+			if ($scope.hasClass("premium-woo-title-above-yes")) {
 				self.handleTitlePos();
 			}
 
-			$(document).on('berocket_ajax_products_loaded', function () {
+			$(document).on("berocket_ajax_products_loaded", function () {
 				self.handleGalleryCarousel();
 			});
-
 		};
 
 		self.getIsoTopeSettings = function () {
@@ -90,46 +80,50 @@
 				animationOptions: {
 					duration: 750,
 					easing: "linear",
-					queue: false
+					queue: false,
 				},
 				layoutMode: "masonry",
-			}
+			};
 		};
 
 		self.handleTitlePos = function () {
-
-			var hasTitle = $elem.find('.woocommerce-loop-product__title').length > 0 ? true : false,
-				hasImg = $elem.find('.premium-woo-product-thumbnail .woocommerce-loop-product__link img').length > 0 ? true : false;
+			var hasTitle =
+					$elem.find(".woocommerce-loop-product__title").length > 0
+						? true
+						: false,
+				hasImg =
+					$elem.find(
+						".premium-woo-product-thumbnail .woocommerce-loop-product__link img",
+					).length > 0
+						? true
+						: false;
 
 			if (!hasTitle || !hasImg) {
 				return;
 			}
 
-			var $products = $elem.find('li.product');
+			var $products = $elem.find("li.product");
 
 			$products.each(function (index, product) {
-
-				var $title = $(product).find('.woocommerce-loop-product__title').parent(),
-					$thumbnail = $(product).find('.premium-woo-product-thumbnail');
+				var $title = $(product)
+						.find(".woocommerce-loop-product__title")
+						.parent(),
+					$thumbnail = $(product).find(".premium-woo-product-thumbnail");
 
 				$title.insertBefore($thumbnail);
-
 			});
 
 			$elem.find(".premium-woo-product__link").css("opacity", 1);
-
 		};
 
 		self.handleProductsCarousel = function () {
-
 			var carousel = $elem.data("woo_carousel");
 
-			if (!carousel)
-				return;
+			if (!carousel) return;
 
-			var $products = $elem.find('ul.products');
+			var $products = $elem.find("ul.products");
 
-			carousel['customPaging'] = function () {
+			carousel["customPaging"] = function () {
 				return '<i class="fas fa-circle"></i>';
 			};
 
@@ -141,48 +135,46 @@
 				setTimeout(function () {
 					$elem.removeClass("premium-carousel-hidden");
 				}, 100);
-
 			});
 
-			if ($products.find('li.product').length < carousel.slidesToShow) {
+			if ($products.find("li.product").length < carousel.slidesToShow) {
 				$elem.removeClass("premium-carousel-hidden");
-				$products.find('li.product').css('width', (100 / carousel.slidesToShow) + '%');
+				$products
+					.find("li.product")
+					.css("width", 100 / carousel.slidesToShow + "%");
 				return;
 			}
 
 			$products.slick(carousel);
-
 		};
 
 		self.handleMarqueeEffect = function () {
 			var isMarquee = $elem.hasClass("premium-woo-products-marquee");
 
-			if (!isMarquee)
-				return;
+			if (!isMarquee) return;
 
-			var $products = $elem.find('ul.products'),
-				settings = $elem.data('woo_marquee'),
+			var $products = $elem.find("ul.products"),
+				settings = $elem.data("woo_marquee"),
 				scrollDir = settings.direction,
-				spacing = getComputedStyle($products[0]).getPropertyValue('--pa-marquee-spacing');
+				spacing = getComputedStyle($products[0]).getPropertyValue(
+					"--pa-marquee-spacing",
+				);
 
 			this.cloneItems();
 			var horAlignWidth = this.setHorizontalWidth(spacing);
 
 			var fullWidth = horAlignWidth;
-			if ('normal' === scrollDir) {
-
+			if ("normal" === scrollDir) {
 				var animation = gsap.to($products, {
 					x: -fullWidth,
 					duration: settings.speed || 50,
 					ease: "none",
 					repeat: -1,
 					modifiers: {
-						x: gsap.utils.unitize(x => parseFloat(x) % fullWidth)
-					}
-
+						x: gsap.utils.unitize((x) => parseFloat(x) % fullWidth),
+					},
 				});
 			} else {
-
 				gsap.set($products[0], { x: -fullWidth });
 
 				var animation = gsap.to($products, {
@@ -191,11 +183,11 @@
 					ease: "none",
 					repeat: -1,
 					modifiers: {
-						x: gsap.utils.unitize(x => {
+						x: gsap.utils.unitize((x) => {
 							var value = parseFloat(x);
 							return value > 0 ? value - fullWidth : value;
-						})
-					}
+						}),
+					},
 				});
 			}
 
@@ -205,18 +197,17 @@
 			// Make it draggable.
 			var isDraggable = settings.draggable && !elementorFrontend.isEditMode();
 			if (isDraggable) {
-
 				Draggable.create($products, {
 					type: "x",
 					inertia: false,
 					onDragStart: function () {
 						animation.pause();
-
 					},
 					onDragEnd: function () {
 						var currentX = gsap.getProperty($products[0], "x"),
 							// Calculate where we are in the cycle
-							normalizedX = ((currentX % fullWidth) + fullWidth) % fullWidth - fullWidth;
+							normalizedX =
+								(((currentX % fullWidth) + fullWidth) % fullWidth) - fullWidth;
 
 						// Set to normalized position and restart animation.
 						gsap.set($products[0], { x: normalizedX });
@@ -233,22 +224,22 @@
 						}
 					},
 				});
-
 			}
 
 			// Pause animation on hover.
-			$elem.hover(function () {
-				animation.pause();
-			}, function () {
-				animation.play();
-			})
-
+			$elem.hover(
+				function () {
+					animation.pause();
+				},
+				function () {
+					animation.play();
+				},
+			);
 		};
 
 		self.cloneItems = function () {
-
-			var $products = $elem.find('ul.products'),
-				$items = $products.find('li.product'),
+			var $products = $elem.find("ul.products"),
+				$items = $products.find("li.product"),
 				docFragment = new DocumentFragment();
 
 			$items.each(function () {
@@ -257,67 +248,64 @@
 			});
 
 			$products.append(docFragment);
-
 		};
 
 		self.setHorizontalWidth = function (spacing) {
-
 			var slidesSpacing = parseFloat(spacing) || 0,
 				fullWidth = 0,
-				$products = $elem.find('li.product'),
+				$products = $elem.find("li.product"),
 				slideWidth = $products[0].offsetWidth;
 
 			fullWidth = (slideWidth + slidesSpacing) * ($products.length / 2);
 
 			return fullWidth;
-
 		};
 
 		self.handleGridMasonry = function () {
-
-			var $products = $elem.find('ul.products');
+			var $products = $elem.find("ul.products");
 
 			$products
-				.imagesLoaded(function () { })
-				.done(
-					function () {
-						$products.isotope({
-							itemSelector: "li.product",
-							percentPosition: true,
-							animationOptions: {
-								duration: 750,
-								easing: "linear",
-								queue: false
-							},
-							layoutMode: "masonry",
-						});
+				.imagesLoaded(function () {})
+				.done(function () {
+					$products.isotope({
+						itemSelector: "li.product",
+						percentPosition: true,
+						animationOptions: {
+							duration: 750,
+							easing: "linear",
+							queue: false,
+						},
+						layoutMode: "masonry",
 					});
+				});
 		};
 
 		self.handleProductQuickView = function () {
 			$modal.appendTo(document.body);
 
-			$elem.on('click', '.premium-woo-qv-btn, .premium-woo-qv-data', self.triggerQuickViewModal);
+			$elem.on(
+				"click",
+				".premium-woo-qv-btn, .premium-woo-qv-data",
+				self.triggerQuickViewModal,
+			);
 
 			window.addEventListener("resize", function () {
 				self.updateQuickViewHeight();
 			});
-
 		};
 
 		self.triggerQuickViewModal = function (event) {
 			event.preventDefault();
 
 			var $this = $(this),
-				productID = $this.data('product-id');
+				productID = $this.data("product-id");
 
-			if (!$qvModal.hasClass('loading'))
-				$qvModal.addClass('loading');
+			if (!$qvModal.hasClass("loading")) $qvModal.addClass("loading");
 
-			if (!$backWrap.hasClass('premium-woo-quick-view-active'))
-				$backWrap.addClass('premium-woo-quick-view-active');
+			if (!$backWrap.hasClass("premium-woo-quick-view-active"))
+				$backWrap.addClass("premium-woo-quick-view-active");
 
-			if ($scope.hasClass('static-products')) {
+			if ($scope.hasClass("static-products")) {
 				self.getStaticQuickView(productID);
 			} else {
 				self.getProductByAjax(productID);
@@ -327,26 +315,24 @@
 		};
 
 		self.getStaticQuickView = function (itemID) {
-
 			$.ajax({
 				url: PAWooProductsSettings.ajaxurl,
 				data: {
-					action: 'get_elementor_template_content',
+					action: "get_elementor_template_content",
 					templateID: itemID,
-					is_id: true
+					is_id: true,
 				},
-				type: 'GET',
+				type: "GET",
 
 				beforeSend: function () {
-
-					$qvLoader.append('<div class="premium-loading-feed"><div class="premium-loader"></div></div>');
-
+					$qvLoader.append(
+						'<div class="premium-loading-feed"><div class="premium-loader"></div></div>',
+					);
 				},
 				success: function (response) {
+					$qvLoader.find(".premium-loading-feed").remove();
 
-					$qvLoader.find('.premium-loading-feed').remove();
-
-					$elem.trigger('qv_loaded');
+					$elem.trigger("qv_loaded");
 
 					//Insert the product content in the quick view modal.
 
@@ -355,40 +341,35 @@
 				},
 				error: function (err) {
 					console.log(err);
-				}
-
+				},
 			});
 
 			return;
-
-
 		};
 
 		self.getProductByAjax = function (itemID) {
-
-			var pageID = $elem.data('page-id');
+			var pageID = $elem.data("page-id");
 
 			$.ajax({
 				url: PAWooProductsSettings.ajaxurl,
 				data: {
-					action: 'get_woo_product_qv',
+					action: "get_woo_product_qv",
 					pageID: pageID,
-					elemID: $scope.data('id'),
+					elemID: $scope.data("id"),
 					product_id: itemID,
-					security: PAWooProductsSettings.qv_nonce
+					security: PAWooProductsSettings.qv_nonce,
 				},
-				dataType: 'html',
-				type: 'POST',
+				dataType: "html",
+				type: "POST",
 				beforeSend: function () {
-
-					$qvLoader.append('<div class="premium-loading-feed"><div class="premium-loader"></div></div>');
-
+					$qvLoader.append(
+						'<div class="premium-loading-feed"><div class="premium-loader"></div></div>',
+					);
 				},
 				success: function (data) {
+					$qvLoader.find(".premium-loading-feed").remove();
 
-					$qvLoader.find('.premium-loading-feed').remove();
-
-					$elem.trigger('qv_loaded');
+					$elem.trigger("qv_loaded");
 
 					//Insert the product content in the quick view modal.
 					$contentWrap.html(data);
@@ -396,151 +377,148 @@
 				},
 				error: function (err) {
 					console.log(err);
-				}
+				},
 			});
-
 		};
 
 		self.addCloseEvents = function () {
-
-			var $closeBtn = $qvModal.find('.premium-woo-quick-view-close');
+			var $closeBtn = $qvModal.find(".premium-woo-quick-view-close");
 
 			$(document).keyup(function (e) {
-				if (e.keyCode === 27)
-					self.closeModal();
+				if (e.keyCode === 27) self.closeModal();
 			});
 
-			$closeBtn.on('click', function (e) {
+			$closeBtn.on("click", function (e) {
 				e.preventDefault();
 				self.closeModal();
 			});
 
-			$wrapper.on('click', function (e) {
-
-				if (this === e.target)
-					self.closeModal();
-
+			$wrapper.on("click", function (e) {
+				if (this === e.target) self.closeModal();
 			});
 		};
 
 		self.handleQuickViewModal = function () {
-
 			$contentWrap.imagesLoaded(function () {
 				self.handleQuickViewSlider();
 			});
-
 		};
 
 		self.getBarWidth = function () {
-
-			var div = $('<div style="width:50px;height:50px;overflow:hidden;position:absolute;top:-200px;left:-200px;"><div style="height:100px;"></div>');
+			var div = $(
+				'<div style="width:50px;height:50px;overflow:hidden;position:absolute;top:-200px;left:-200px;"><div style="height:100px;"></div>',
+			);
 			// Append our div, do our calculation and then remove it
-			$('body').append(div);
-			var w1 = $('div', div).innerWidth();
-			div.css('overflow-y', 'scroll');
-			var w2 = $('div', div).innerWidth();
+			$("body").append(div);
+			var w1 = $("div", div).innerWidth();
+			div.css("overflow-y", "scroll");
+			var w2 = $("div", div).innerWidth();
 			$(div).remove();
 
-			return (w1 - w2);
+			return w1 - w2;
 		};
 
 		self.handleQuickViewSlider = function () {
+			var $productSlider = $qvModal.find(".premium-woo-qv-image-slider");
 
-			var $productSlider = $qvModal.find('.premium-woo-qv-image-slider');
-
-			if ($productSlider.find('li').length > 1) {
-
+			if ($productSlider.find("li").length > 1) {
 				$productSlider.flexslider({
 					animation: "slide",
-					nextText: '',
-					prevText: '',
+					nextText: "",
+					prevText: "",
 					start: function (slider) {
 						setTimeout(function () {
 							self.updateQuickViewHeight(true, true);
 						}, 300);
 					},
 				});
-
 			} else {
 				setTimeout(function () {
 					self.updateQuickViewHeight(true);
 				}, 300);
 			}
 
-			if (!$qvModal.hasClass('active')) {
-
+			if (!$qvModal.hasClass("active")) {
 				setTimeout(function () {
-					$qvModal.removeClass('loading').addClass('active');
+					$qvModal.removeClass("loading").addClass("active");
 
 					var barWidth = self.getBarWidth();
 
-					$("html").css('margin-right', barWidth);
-					$("html").addClass('premium-woo-qv-opened');
+					$("html").css("margin-right", barWidth);
+					$("html").addClass("premium-woo-qv-opened");
 				}, 350);
-
 			}
-
 		};
 
 		self.updateQuickViewHeight = function (update_css, isCarousel) {
 			var $quickView = $contentWrap,
-				imgHeight = $quickView.find('.product .premium-woo-qv-image-slider').first().height(),
-				summary = $quickView.find('.premium-woo-product-summary'),
-				content = summary.css('content');
+				imgHeight = $quickView
+					.find(".product .premium-woo-qv-image-slider")
+					.first()
+					.height(),
+				summary = $quickView.find(".premium-woo-product-summary"),
+				content = summary.css("content");
 
-			if ('undefined' != typeof content && 544 == content.replace(/[^0-9]/g, '') && 0 != imgHeight && null !== imgHeight) {
-				summary.css('height', imgHeight);
+			if (
+				"undefined" != typeof content &&
+				544 == content.replace(/[^0-9]/g, "") &&
+				0 != imgHeight &&
+				null !== imgHeight
+			) {
+				summary.css("height", imgHeight);
 			} else {
-				summary.css('height', '');
+				summary.css("height", "");
 			}
 
-			if (true === update_css)
-				$qvModal.css('opacity', 1);
+			if (true === update_css) $qvModal.css("opacity", 1);
 
 			//Make sure slider images have same height as summary.
 			if (isCarousel)
-				$quickView.find('.product .premium-woo-qv-image-slider img').height(summary.outerHeight());
-
+				$quickView
+					.find(".product .premium-woo-qv-image-slider img")
+					.height(summary.outerHeight());
 		};
 
 		self.closeModal = function () {
+			$backWrap.removeClass("premium-woo-quick-view-active");
 
-			$backWrap.removeClass('premium-woo-quick-view-active');
+			$qvModal.removeClass("active").removeClass("loading");
 
-			$qvModal.removeClass('active').removeClass('loading');
+			$("html").removeClass("premium-woo-qv-opened");
 
-			$('html').removeClass('premium-woo-qv-opened');
-
-			$('html').css('margin-right', '');
+			$("html").css("margin-right", "");
 
 			setTimeout(function () {
-				$contentWrap.html('');
+				$contentWrap.html("");
 			}, 600);
-
 		};
 
 		self.handleAddToCart = function () {
-
 			$elem
-				.on('click', '.instock .premium-woo-cart-btn.product_type_simple', self.onAddCartBtnClick).on('premium_product_add_to_cart', self.handleAddCartBtnClick)
-				.on('click', '.instock .premium-woo-atc-button .button.product_type_simple', self.onAddCartBtnClick).on('premium_product_add_to_cart', self.handleAddCartBtnClick);
-
+				.on(
+					"click",
+					".instock .premium-woo-cart-btn.product_type_simple",
+					self.onAddCartBtnClick,
+				)
+				.on("premium_product_add_to_cart", self.handleAddCartBtnClick)
+				.on(
+					"click",
+					".instock .premium-woo-atc-button .button.product_type_simple",
+					self.onAddCartBtnClick,
+				)
+				.on("premium_product_add_to_cart", self.handleAddCartBtnClick);
 		};
 
 		self.onAddCartBtnClick = function (event) {
-
 			var $this = $(this);
 
-			var productID = $this.data('product_id'),
+			var productID = $this.data("product_id"),
 				quantity = 1;
 
-
 			//If current product has no defined ID.
-			if (!productID)
-				return;
+			if (!productID) return;
 
-			if ($this.parent().data("variations"))
-				return;
+			if ($this.parent().data("variations")) return;
 
 			if (!$this.data("added-to-cart")) {
 				event.preventDefault();
@@ -548,92 +526,98 @@
 				return;
 			}
 
-			$this.removeClass('added').addClass('adding');
+			$this.removeClass("added").addClass("adding");
 
-			if (!$this.hasClass('premium-woo-cart-btn')) {
-				$this.append('<span class="premium-woo-cart-loader fas fa-cog"></span>')
+			if (!$this.hasClass("premium-woo-cart-btn")) {
+				$this.append(
+					'<span class="premium-woo-cart-loader fas fa-cog"></span>',
+				);
 			}
 
 			$.ajax({
 				url: PAWooProductsSettings.ajaxurl,
-				type: 'POST',
+				type: "POST",
 				data: {
-					action: 'premium_woo_add_cart_product',
+					action: "premium_woo_add_cart_product",
 					nonce: PAWooProductsSettings.cta_nonce,
 					product_id: productID,
 					quantity: quantity,
 				},
 				success: function () {
-					$(document.body).trigger('wc_fragment_refresh');
-					$elem.trigger('premium_product_add_to_cart', [$this]);
+					$(document.body).trigger("wc_fragment_refresh");
+					$elem.trigger("premium_product_add_to_cart", [$this]);
 
-					if ('grid_10' === skin || !$this.hasClass('premium-woo-cart-btn')) {
+					if ("grid_10" === skin || !$this.hasClass("premium-woo-cart-btn")) {
 						setTimeout(function () {
+							var viewCartTxt = $this.siblings(".added_to_cart").text();
 
-							var viewCartTxt = $this.siblings('.added_to_cart').text();
+							if ("" == viewCartTxt)
+								viewCartTxt = $scope.data("woo-cart-text") || "";
 
-							if ('' == viewCartTxt)
-								viewCartTxt = $scope.data('woo-cart-text') || '';
-
-							if ('' == viewCartTxt)
+							if ("" == viewCartTxt)
 								viewCartTxt = PAWooProductsSettings.view_cart;
 
-							$this.removeClass('add_to_cart_button').attr('href', PAWooProductsSettings.woo_cart_url).text(viewCartTxt);
+							$this
+								.removeClass("add_to_cart_button")
+								.attr("href", PAWooProductsSettings.woo_cart_url)
+								.text(viewCartTxt);
 
-							$this.attr('data-added-to-cart', true);
+							$this.attr("data-added-to-cart", true);
 						}, 200);
-
 					}
-
-				}
+				},
 			});
-
 		};
 
 		self.handleAddCartBtnClick = function (event, $btn) {
+			if (!$btn) return;
 
-			if (!$btn)
-				return;
-
-			$btn.removeClass('adding').addClass('added');
-
+			$btn.removeClass("adding").addClass("added");
 		};
 
 		self.handleGalleryImages = function () {
-
-			$elem.on('click', '.premium-woo-product__gallery_image', function () {
+			$elem.on("click", ".premium-woo-product__gallery_image", function () {
 				var $thisImg = $(this),
 					$closestThumb = $thisImg.closest(".premium-woo-product-thumbnail"),
-					imgSrc = $thisImg.attr('src');
+					imgSrc = $thisImg.attr("src");
 
 				if ($closestThumb.find(".premium-woo-product__on_hover").length < 1) {
-					$closestThumb.find(".woocommerce-loop-product__link img").replaceWith($thisImg.clone(true));
+					$closestThumb
+						.find(".woocommerce-loop-product__link img")
+						.replaceWith($thisImg.clone(true));
 				} else {
-					$closestThumb.find(".premium-woo-product__on_hover").attr('src', imgSrc);
+					$closestThumb
+						.find(".premium-woo-product__on_hover")
+						.attr("src", imgSrc);
 				}
-
 			});
-
 		};
 
 		self.handleGalleryNav = function () {
+			$elem.on(
+				"click",
+				".premium-woo-product-gallery-images .premium-woo-product__gallery_image",
+				function () {
+					var imgParent = $(this).parentsUntil(
+							".premium-woo-product-wrapper",
+						)[2],
+						slickContainer = $(imgParent)
+							.siblings(".premium-woo-product-thumbnail")
+							.find(".premium-woo-product-thumbnail-wrapper"),
+						imgIndex = $(this).index() + 1;
 
-			$elem.on('click', '.premium-woo-product-gallery-images .premium-woo-product__gallery_image', function () {
-
-				var imgParent = $(this).parentsUntil(".premium-woo-product-wrapper")[2],
-					slickContainer = $(imgParent).siblings('.premium-woo-product-thumbnail').find('.premium-woo-product-thumbnail-wrapper'),
-					imgIndex = $(this).index() + 1;
-
-				slickContainer.slick('slickGoTo', imgIndex);
-			});
+					slickContainer.slick("slickGoTo", imgIndex);
+				},
+			);
 		};
 
 		self.handleGalleryCarousel = function (skin) {
-
-			var products = $elem.find('.premium-woo-product-thumbnail-wrapper'),
-				prevArrow = '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>',
-				nextArrow = '<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>',
-				infinite = 'grid_11' === skin ? false : true,
+			var products = $elem.find(".premium-woo-product-thumbnail-wrapper"),
+				prevArrow =
+					'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>',
+				nextArrow =
+					'<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>',
+				infinite = "grid_11" === skin ? false : true,
 				slickSettings = {
 					infinite: infinite,
 					slidesToShow: 1,
@@ -643,7 +627,7 @@
 					rtl: elementorFrontend.config.is_rtl,
 				};
 
-			if ('grid_11' !== skin) {
+			if ("grid_11" !== skin) {
 				slickSettings.nextArrow = nextArrow;
 				slickSettings.prevArrow = prevArrow;
 			} else {
@@ -651,85 +635,84 @@
 			}
 
 			products.each(function (index, product) {
-				$imgs = $(product).find('a').length;
+				$imgs = $(product).find("a").length;
 
 				if ($imgs > 1) {
-					$(product).not('.slick-initialized').slick(slickSettings);
+					$(product).not(".slick-initialized").slick(slickSettings);
 				}
 			});
-		}
+		};
 
 		self.handleLoadMore = function () {
-
 			var $loadMoreBtn = $elem.find(".premium-woo-load-more-btn"),
 				page_number = 2,
-				pageID = $elem.data('page-id');
+				pageID = $elem.data("page-id");
 
-			if ($loadMoreBtn.length < 1)
-				return;
+			if ($loadMoreBtn.length < 1) return;
 
-			$loadMoreBtn.on('click', function (e) {
-
-				if (!canLoadMore)
-					return;
+			$loadMoreBtn.on("click", function (e) {
+				if (!canLoadMore) return;
 
 				canLoadMore = false;
 
-				$elem.find('ul.products').after('<div class="premium-loading-feed"><div class="premium-loader"></div></div>');
+				$elem
+					.find("ul.products")
+					.after(
+						'<div class="premium-loading-feed"><div class="premium-loader"></div></div>',
+					);
 
 				$loadMoreBtn.css("opacity", 0.3);
 
 				$.ajax({
 					url: PAWooProductsSettings.ajaxurl,
 					data: {
-						action: 'get_woo_products',
+						action: "get_woo_products",
 						pageID: pageID,
-						elemID: $scope.data('id'),
+						elemID: $scope.data("id"),
 						category: $loadMoreBtn.data("tax"),
 						orderBy: $loadMoreBtn.data("order"),
 						skin: skin,
 						page_number: page_number,
 						nonce: PAWooProductsSettings.products_nonce,
 					},
-					dataType: 'json',
-					type: 'POST',
+					dataType: "json",
+					type: "POST",
 					success: function (data) {
 						html = data.data.html;
 
 						//If the number of coming products is 0, then remove the button.
-						var newProductsLength = $loadMoreBtn.data("products") - html.match(/<li/g).length;
-						if (newProductsLength < 1)
-							$loadMoreBtn.remove();
+						var newProductsLength =
+							$loadMoreBtn.data("products") - html.match(/<li/g).length;
+						if (newProductsLength < 1) $loadMoreBtn.remove();
 
 						canLoadMore = true;
 
-						$elem.find('.premium-loading-feed').remove();
+						$elem.find(".premium-loading-feed").remove();
 						$loadMoreBtn.css("opacity", 1);
 
-						var $currentProducts = $elem.find('ul.products');
+						var $currentProducts = $elem.find("ul.products");
 
 						//Remove the wrapper <ul>
-						html = html.replace(html.substring(0, html.indexOf('>') + 1), '');
+						html = html.replace(html.substring(0, html.indexOf(">") + 1), "");
 						html = html.replace("</ul>", "");
 
-						$loadMoreBtn.find(".premium-woo-products-num").text("(" + newProductsLength + ")");
+						$loadMoreBtn
+							.find(".premium-woo-products-num")
+							.text("(" + newProductsLength + ")");
 
 						$loadMoreBtn.data("products", newProductsLength);
 
 						$currentProducts.append(html);
 
 						if ($elem.hasClass("premium-woo-products-masonry")) {
-
-							$currentProducts.isotope('reloadItems');
+							$currentProducts.isotope("reloadItems");
 
 							setTimeout(function () {
-
 								$currentProducts.isotope({
 									itemSelector: "li.product",
 									percentPosition: true,
 									layoutMode: "masonry",
 								});
-
 							}, 100);
 						}
 
@@ -739,115 +722,150 @@
 						}
 
 						page_number++;
-
 					},
 					error: function (err) {
 						console.log(err);
-					}
+					},
 				});
-
-
 			});
-		}
+		};
 
 		self.handleProductPagination = function () {
+			$elem.on(
+				"click",
+				".premium-woo-products-pagination a.page-numbers",
+				function (e) {
+					var $targetPage = $(this);
 
-			$elem.on('click', '.premium-woo-products-pagination a.page-numbers', function (e) {
+					if ($elem.hasClass("premium-woo-query-main")) return;
 
-				var $targetPage = $(this);
+					e.preventDefault();
 
-				if ($elem.hasClass('premium-woo-query-main'))
-					return;
+					$elem
+						.find("ul.products")
+						.after(
+							'<div class="premium-loading-feed"><div class="premium-loader"></div></div>',
+						);
 
-				e.preventDefault();
+					var pageID = $elem.data("page-id"),
+						currentPage = parseInt($elem.find(".page-numbers.current").html()),
+						page_number = 1;
 
-				$elem.find('ul.products').after('<div class="premium-loading-feed"><div class="premium-loader"></div></div>');
-
-				var pageID = $elem.data('page-id'),
-					currentPage = parseInt($elem.find('.page-numbers.current').html()),
-					page_number = 1;
-
-				if ($targetPage.hasClass('next')) {
-					page_number = currentPage + 1;
-				} else if ($targetPage.hasClass('prev')) {
-					page_number = currentPage - 1;
-				} else {
-					page_number = $targetPage.html();
-				}
-
-				$.ajax({
-					url: PAWooProductsSettings.ajaxurl,
-					data: {
-						action: 'get_woo_products',
-						pageID: pageID,
-						elemID: $scope.data('id'),
-						category: '',
-						skin: skin,
-						page_number: page_number,
-						nonce: PAWooProductsSettings.products_nonce,
-					},
-					dataType: 'json',
-					type: 'POST',
-					success: function (data) {
-
-						$elem.find('.premium-loading-feed').remove();
-
-						$('html, body').animate({
-							scrollTop: (($scope.find('.premium-woocommerce').offset().top) - 100)
-						}, 'slow');
-
-						var $currentProducts = $elem.find('ul.products');
-
-						$currentProducts.replaceWith(data.data.html);
-
-						$elem.find('.premium-woo-products-pagination').replaceWith(data.data.pagination);
-
-						//Trigger carousel for products in the next pages.
-						if ("grid_7" === skin || "grid_11" === skin) {
-							self.handleGalleryCarousel(skin);
-						}
-
-						if ($elem.hasClass("premium-woo-products-masonry"))
-							self.handleGridMasonry();
-
-					},
-					error: function (err) {
-						console.log(err);
+					if ($targetPage.hasClass("next")) {
+						page_number = currentPage + 1;
+					} else if ($targetPage.hasClass("prev")) {
+						page_number = currentPage - 1;
+					} else {
+						page_number = $targetPage.html();
 					}
-				});
 
-			});
+					$.ajax({
+						url: PAWooProductsSettings.ajaxurl,
+						data: {
+							action: "get_woo_products",
+							pageID: pageID,
+							elemID: $scope.data("id"),
+							category: "",
+							skin: skin,
+							page_number: page_number,
+							nonce: PAWooProductsSettings.products_nonce,
+						},
+						dataType: "json",
+						type: "POST",
+						success: function (data) {
+							$elem.find(".premium-loading-feed").remove();
 
+							$("html, body").animate(
+								{
+									scrollTop:
+										$scope.find(".premium-woocommerce").offset().top - 100,
+								},
+								"slow",
+							);
+
+							var $currentProducts = $elem.find("ul.products");
+
+							$currentProducts.replaceWith(data.data.html);
+
+							$elem
+								.find(".premium-woo-products-pagination")
+								.replaceWith(data.data.pagination);
+
+							//Trigger carousel for products in the next pages.
+							if ("grid_7" === skin || "grid_11" === skin) {
+								self.handleGalleryCarousel(skin);
+							}
+
+							if ($elem.hasClass("premium-woo-products-masonry"))
+								self.handleGridMasonry();
+						},
+						error: function (err) {
+							console.log(err);
+						},
+					});
+				},
+			);
 		};
 	};
 
-
 	//Elementor JS Hooks.
 	$(window).on("elementor/frontend/init", function () {
-
-		if ('undefined' !== typeof paElementsHandler && paElementsHandler.isElementAlreadyExists('paWooProducts')) {
+		if (
+			"undefined" !== typeof paElementsHandler &&
+			paElementsHandler.isElementAlreadyExists("paWooProducts")
+		) {
 			return false;
 		}
 
-		if ($('.static-products').length > 0) {
-			$('.elementor-widget-premium-woo-products').map(function (index, elem) {
+		if ($(".static-products").length > 0) {
+			$(".elementor-widget-premium-woo-products").map(function (index, elem) {
 				PremiumWooProductsHandler($(elem));
-			})
+			});
 		} else {
-
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-1", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-2", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-3", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-4", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-5", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-6", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-7", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-8", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-9", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-10", PremiumWooProductsHandler);
-			elementorFrontend.hooks.addAction("frontend/element_ready/premium-woo-products.grid-11", PremiumWooProductsHandler);
-
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-1",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-2",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-3",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-4",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-5",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-6",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-7",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-8",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-9",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-10",
+				PremiumWooProductsHandler,
+			);
+			elementorFrontend.hooks.addAction(
+				"frontend/element_ready/premium-woo-products.grid-11",
+				PremiumWooProductsHandler,
+			);
 		}
-
 	});
 })(jQuery);

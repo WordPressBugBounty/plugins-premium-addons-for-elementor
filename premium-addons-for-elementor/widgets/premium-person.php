@@ -553,6 +553,9 @@ class Premium_Person extends Widget_Base {
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -567,6 +570,9 @@ class Premium_Person extends Widget_Base {
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -579,6 +585,9 @@ class Premium_Person extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -593,6 +602,9 @@ class Premium_Person extends Widget_Base {
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -605,6 +617,9 @@ class Premium_Person extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -620,6 +635,9 @@ class Premium_Person extends Widget_Base {
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -633,6 +651,9 @@ class Premium_Person extends Widget_Base {
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -645,6 +666,9 @@ class Premium_Person extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -660,6 +684,9 @@ class Premium_Person extends Widget_Base {
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -672,6 +699,9 @@ class Premium_Person extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -686,6 +716,9 @@ class Premium_Person extends Widget_Base {
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -698,6 +731,9 @@ class Premium_Person extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -712,6 +748,9 @@ class Premium_Person extends Widget_Base {
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -724,6 +763,9 @@ class Premium_Person extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -738,6 +780,9 @@ class Premium_Person extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1214,6 +1259,9 @@ class Premium_Person extends Widget_Base {
 					'premium_person_style' => 'style2',
 					'image_adv_radius'     => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1591,6 +1639,9 @@ class Premium_Person extends Widget_Base {
 				),
 				'condition' => array(
 					'social_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

@@ -561,6 +561,9 @@ class Premium_Image_Button extends Widget_Base {
 						'icon_type' => 'svg',
 					)
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -577,6 +580,9 @@ class Premium_Image_Button extends Widget_Base {
 					array(
 						'icon_type' => 'animation',
 					)
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -855,6 +861,9 @@ class Premium_Image_Button extends Widget_Base {
 				'condition'   => array(
 					'slide_icon_type'                   => 'animation',
 					'premium_image_button_hover_effect' => 'style4',
+				),
+				'ai'          => array(
+					'active' => false,
 				),
 			)
 		);
@@ -1270,6 +1279,9 @@ class Premium_Image_Button extends Widget_Base {
 				'condition' => array(
 					'button_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1561,6 +1573,9 @@ class Premium_Image_Button extends Widget_Base {
 				),
 				'condition' => array(
 					'button_hover_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

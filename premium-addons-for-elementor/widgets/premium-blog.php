@@ -609,6 +609,9 @@ class Premium_Blog extends Widget_Base {
 					'post_type_filter!'     => 'main',
 					'premium_blog_order_by' => 'meta_value',
 				),
+				'ai'          => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -1281,6 +1284,9 @@ class Premium_Blog extends Widget_Base {
 					'premium_blog_cat_tabs'  => 'yes',
 					'premium_blog_carousel!' => 'yes',
 					'premium_blog_layout!'   => 'marquee',
+				),
+				'ai'                 => array(
+					'active' => false,
 				),
 			)
 		);
@@ -2857,6 +2863,9 @@ class Premium_Blog extends Widget_Base {
 				'condition' => array(
 					'box_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -2996,6 +3005,9 @@ class Premium_Blog extends Widget_Base {
 				'condition' => array(
 					'navigation_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -3082,6 +3094,9 @@ class Premium_Blog extends Widget_Base {
 				'condition' => array(
 					'hover_navigation_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -3167,6 +3182,9 @@ class Premium_Blog extends Widget_Base {
 				),
 				'condition' => array(
 					'active_navigation_adv_radius' => 'yes',
+				),
+				'ai'        => array(
+					'active' => false,
 				),
 			)
 		);

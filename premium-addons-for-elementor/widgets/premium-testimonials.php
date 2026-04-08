@@ -102,7 +102,7 @@ class Premium_Testimonials extends Widget_Base {
 			$scripts = array( 'isotope-js', 'pa-glass', 'pa-slick' );
 
 		} else {
-			$settings = $this->get_settings();
+			$settings     = $this->get_settings();
 			$load_masonry = 'masonry' === $settings['premium_testimonial_layout'] && 'yes' !== $settings['carousel'] && 'skin4' !== $settings['skin'];
 
 			if ( 'yes' === $settings['carousel'] || 'skin4' === $settings['skin'] ) {
@@ -1737,6 +1737,9 @@ class Premium_Testimonials extends Widget_Base {
 				'condition' => array(
 					'container_adv_radius' => 'yes',
 				),
+				'ai'        => array(
+					'active' => false,
+				),
 			)
 		);
 
@@ -2068,15 +2071,15 @@ class Premium_Testimonials extends Widget_Base {
 				<?php
 					endif;
 
-					if ( Plugin::instance()->editor->is_edit_mode() ) {
+			if ( Plugin::instance()->editor->is_edit_mode() ) {
 
-						if ( 'yes' === $settings['multiple'] ) {
-							if ( 'masonry' === $settings['premium_testimonial_layout'] && 'yes' !== $settings['carousel'] ) {
-								$this->render_editor_script();
-							}
-						}
+				if ( 'yes' === $settings['multiple'] ) {
+					if ( 'masonry' === $settings['premium_testimonial_layout'] && 'yes' !== $settings['carousel'] ) {
+						$this->render_editor_script();
 					}
-				?>
+				}
+			}
+			?>
 		</div>
 		<?php
 	}
