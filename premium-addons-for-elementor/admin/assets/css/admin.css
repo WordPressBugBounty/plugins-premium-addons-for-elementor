@@ -2058,6 +2058,18 @@
 	}
 }
 
+@keyframes spin {
+	0% {
+		-webkit-transform: rotateZ(-180deg) rotateY(180deg);
+		transform: rotateZ(-180deg) rotateY(180deg);
+	}
+
+	100% {
+		-webkit-transform: rotateZ(180deg) rotateY(180deg);
+		transform: rotateZ(180deg) rotateY(180deg);
+	}
+}
+
 /* Live Editor */
 .papro-btn-block {
 	width: 100% !important;
@@ -2840,6 +2852,16 @@
 	}
 }
 
+@keyframes fade {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0.3;
+	}
+}
+
 @keyframes swal2-show {
 	0% {
 		-webkit-transform: scale(0.7);
@@ -2881,6 +2903,42 @@
 	100% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
+	}
+}
+
+@keyframes swal2-show {
+	0% {
+		-webkit-transform: scale(0.7);
+		transform: scale(0.7);
+	}
+
+	45% {
+		-webkit-transform: scale(1.05);
+		transform: scale(1.05);
+	}
+
+	80% {
+		-webkit-transform: scale(0.95);
+		transform: scale(0.95);
+	}
+
+	100% {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+}
+
+@keyframes swal2-hide {
+	0% {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: 1;
+	}
+
+	100% {
+		-webkit-transform: scale(0.5);
+		transform: scale(0.5);
+		opacity: 0;
 	}
 }
 

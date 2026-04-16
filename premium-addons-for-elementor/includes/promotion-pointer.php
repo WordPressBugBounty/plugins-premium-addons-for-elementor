@@ -69,7 +69,10 @@ add_action(
 add_action(
 	'admin_init',
 	function () {
-		if ( isset( $_POST['action'] ) && 'dismiss-wp-pointer' == $_POST['action'] && isset( $_POST['pointer'] ) && 'pa' == $_POST['pointer'] ) {
+		$action  = isset( $_POST['action'] ) ? sanitize_text_field( wp_unslash( $_POST['action'] ) ) : '';
+		$pointer = isset( $_POST['pointer'] ) ? sanitize_text_field( wp_unslash( $_POST['pointer'] ) ) : '';
+
+		if ( 'dismiss-wp-pointer' === $action && 'pa' === $pointer ) {
 			set_transient( 'pa_spring26_pointer_dismiss', true, DAY_IN_SECONDS * 30 );
 			delete_option( '_pa_plugin_pointer_priority' );
 		}

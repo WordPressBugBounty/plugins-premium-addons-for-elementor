@@ -2874,10 +2874,10 @@ class Premium_Videobox extends Widget_Base {
 				$options .= '&cc_load_policy=' . ( 'yes' === $settings['cc_load_policy'] ? '1' : '0' );
 			} elseif ( 'vimeo' === $video_type ) {
 
-				// Filter any paramters after link to be added later.
+				// Filter any parameters after link to be added later.
 				$query_string = wp_parse_url( $link, PHP_URL_QUERY );
 
-				// If video link contains paramters.
+				// If video link contains parameters.
 				if ( false !== strpos( $link, '?' ) ) {
 					$link = strstr( $link, '?', true );
 				} else {

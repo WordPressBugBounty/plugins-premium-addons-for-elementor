@@ -546,26 +546,38 @@
 
 			getInfiniteScrollPosts: function () {
 				var windowHeight = jQuery(window).outerHeight() / 1.25,
-					_this = this;
+					_this = this,
+					ticking = false;
 
-				$(window).scroll(function () {
-
-					if (_this.settings.filterTabs) {
-						$blogPost = _this.elements.$blogElement.find(".premium-blog-post-outer-container");
-						_this.settings.total = $blogPost.data('total');
+				$(window).on('scroll', function () {
+					if (ticking) {
+						return;
 					}
 
-					if (_this.settings.count <= _this.settings.total) {
-						if (($(window).scrollTop() + windowHeight) >= (_this.$element.find('.premium-blog-post-outer-container:last').offset().top)) {
-							if (true == _this.settings.isLoaded) {
-								_this.settings.pageNumber = _this.settings.count;
-								_this.getPostsByAjax(false);
-								_this.settings.count++;
-								_this.settings.isLoaded = false;
-							}
+					ticking = true;
+					requestAnimationFrame(function () {
+						ticking = false;
 
+						if (_this.settings.filterTabs) {
+							$blogPost = _this.elements.$blogElement.find(".premium-blog-post-outer-container");
+							_this.settings.total = $blogPost.data('total');
 						}
-					}
+
+						if (_this.settings.count <= _this.settings.total) {
+							var scrollTop = $(window).scrollTop(),
+								lastPost = _this.$element.find('.premium-blog-post-outer-container:last'),
+								lastPostTop = lastPost.length ? lastPost.offset().top : 0;
+
+							if ((scrollTop + windowHeight) >= lastPostTop) {
+								if (true == _this.settings.isLoaded) {
+									_this.settings.pageNumber = _this.settings.count;
+									_this.getPostsByAjax(false);
+									_this.settings.count++;
+									_this.settings.isLoaded = false;
+								}
+							}
+						}
+					});
 				});
 			},
 

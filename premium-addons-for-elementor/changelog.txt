@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.11.74 - 16/4/2026 =
+
+- Tweak: Remove deprecated Vimeo API in Video Box widget.
+- Tweak: Core improved for security.
+- Fixed: Badge not showing correctly in Bullet List widget.
+- Fixed: Active menu item border radius not applied with Background Grow animation in Mega Menu widget.
+
 = 4.11.73 - 8/4/2026 =
 
 - Fixed: Pinterest Feed widget not working correctly.

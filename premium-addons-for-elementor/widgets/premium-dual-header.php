@@ -236,6 +236,7 @@ class Premium_Dual_Header extends Widget_Base {
 			array(
 				'label'       => __( 'Link', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
+				'separator'   => 'before',
 				'description' => __( 'Enable or disable link', 'premium-addons-for-elementor' ),
 			)
 		);
@@ -297,6 +298,7 @@ class Premium_Dual_Header extends Widget_Base {
 			array(
 				'label'     => __( 'Alignment', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::CHOOSE,
+				'separator' => 'before',
 				'options'   => array(
 					'left'   => array(
 						'title' => __( 'Left', 'premium-addons-for-elementor' ),
@@ -321,8 +323,9 @@ class Premium_Dual_Header extends Widget_Base {
 		$this->add_responsive_control(
 			'first_rotate',
 			array(
-				'label'     => __( 'First Heading Rotation (degrees)', 'premium-addons-for-elementor' ),
+				'label'     => __( 'First Heading Rotation (deg)', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::NUMBER,
+				'separator' => 'before',
 				'min'       => -180,
 				'max'       => 180,
 				'selectors' => array(
@@ -335,7 +338,7 @@ class Premium_Dual_Header extends Widget_Base {
 		$this->add_responsive_control(
 			'second_rotate',
 			array(
-				'label'     => __( 'Second Heading Rotation (degrees)', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Second Heading Rotation (deg)', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::NUMBER,
 				'min'       => -180,
 				'max'       => 180,
@@ -532,6 +535,7 @@ class Premium_Dual_Header extends Widget_Base {
 			array(
 				'label'        => __( 'Minimal Mask Effect', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
+				'separator'    => 'before',
 				'render_type'  => 'template',
 				'prefix_class' => 'premium-mask-',
 				'description'  => __( 'Please note That this effect takes place once the element is in the viewport', 'premium-addons-for-elementor' ),
@@ -593,6 +597,7 @@ class Premium_Dual_Header extends Widget_Base {
 			array(
 				'label'        => __( 'First Heading Noise Effect', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
+				'separator'    => 'before',
 				'prefix_class' => 'premium-title-first-noise-',
 				'render_type'  => 'template',
 				'condition'    => array(

@@ -316,7 +316,7 @@ abstract class Premium_Templates_Source_Base {
 
 	public function on_import_media( $settings, $media ) {
 
-		if ( empty( $settings['url'] ) || false != strpos( $settings['url'], 'placeholder' ) ) {
+		if ( empty( $settings['url'] ) || false !== strpos( $settings['url'], 'placeholder' ) ) {
 			return $settings;
 		}
 

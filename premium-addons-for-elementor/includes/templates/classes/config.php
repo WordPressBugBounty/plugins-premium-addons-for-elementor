@@ -212,7 +212,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 		 */
 		public static function get_instance() {
 
-			if ( self::$instance == null ) {
+			if ( null === self::$instance ) {
 
 				self::$instance = new self();
 

@@ -258,7 +258,9 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 			}
 
 			$source       = $this->sources['premium-api'];
-			$insert_media = isset( $_REQUEST['withMedia'] ) ? $_REQUEST['withMedia'] : true;
+			$insert_media = isset( $_REQUEST['withMedia'] )
+				? filter_var( wp_unslash( $_REQUEST['withMedia'] ), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE ) ?? true
+				: true;
 
 			if ( ! $source || ! $template_id ) {
 				wp_send_json_error();
@@ -284,7 +286,7 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 				);
 			}
 
-			wp_send_json_success( $template );
+			wp_send_json_success();
 		}
 
 		/**
@@ -387,7 +389,7 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 		public static function get_instance() {
 
 			// If the single instance hasn't been set, set it now.
-			if ( null == self::$instance ) {
+			if ( null === self::$instance ) {
 				self::$instance = new self();
 			}
 			return self::$instance;

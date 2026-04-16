@@ -151,7 +151,9 @@ trait AJAX_Helper {
 			wp_send_json_error( 'Insufficient user permission' );
 		}
 
-		$query_options = isset( $_POST['query_options'] ) ? array_map( 'strip_tags', $_POST['query_options'] ) : ''; // phpcs:ignore
+		$query_options = isset( $_POST['query_options'] ) && is_array( $_POST['query_options'] )
+			? array_map( 'sanitize_text_field', wp_unslash( $_POST['query_options'] ) )
+			: array();
 
 		$query = new \WP_Query(
 			array(

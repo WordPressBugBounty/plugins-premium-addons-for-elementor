@@ -192,7 +192,7 @@ if ( ! class_exists( 'Cross_Copy_Paste' ) ) {
 
 		protected static function on_import_media( $settings ) {
 
-			if ( empty( $settings['url'] ) || false != strpos( $settings['url'], 'placeholder' ) ) {
+			if ( empty( $settings['url'] ) || false !== strpos( $settings['url'], 'placeholder' ) ) {
 				return $settings;
 			}
 

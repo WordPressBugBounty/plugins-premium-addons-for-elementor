@@ -108,6 +108,14 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			}
 		}
 
+		/**
+		 * Plugin Uninstall Hook.
+		 *
+		 * @since 3.1.7
+		 * @access public
+		 *
+		 * @return void
+		 */
 		public static function uninstall() {
 
 			delete_option( 'pa_complete_wizard' );
@@ -134,6 +142,10 @@ if ( ! class_exists( 'PA_Core' ) ) {
 					'httpversion' => '1.1',
 				)
 			);
+
+			if ( is_wp_error( $response ) ) {
+				return;
+			}
 		}
 
 		/**

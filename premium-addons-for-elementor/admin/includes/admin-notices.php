@@ -129,7 +129,7 @@ class Admin_Notices {
 
 			$response = get_transient( $cache_key );
 
-			if ( false == $response ) {
+			if ( false === $response ) {
 				$this->show_review_notice();
 			}
 		}
@@ -155,7 +155,9 @@ class Admin_Notices {
 			return;
 		}
 
-		if ( 'opt_out' === $_GET['pa_review'] ) {
+		$pa_review = sanitize_text_field( wp_unslash( $_GET['pa_review'] ) );
+
+		if ( 'opt_out' === $pa_review ) {
 			check_admin_referer( 'opt_out' );
 
 			update_option( 'pa_review_notice', '1' );
@@ -308,7 +310,7 @@ class Admin_Notices {
 
 		<div class="error pa-notice-wrap pa-new-feature-notice pa-review-notice">
 			<div class="pa-img-wrap">
-				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
+				<img src="<?php echo esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>">
 			</div>
 			<div class="pa-text-wrap">
 				<p>
@@ -459,7 +461,7 @@ class Admin_Notices {
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
 			// Make sure new features notices will not appear again.
-			if ( false != strpos( $key, 'not' ) ) {
+			if ( false !== strpos( $key, 'not' ) ) {
 				update_option( $key, '1' );
 			} else {
 				set_transient( $key, true, 20 * DAY_IN_SECONDS );
@@ -492,7 +494,7 @@ class Admin_Notices {
 		);
 
 		$response = wp_remote_get(
-			'http://my.leap13.com',
+			'https://my.leap13.com',
 			array(
 				'timeout'   => 15,
 				'sslverify' => false,
