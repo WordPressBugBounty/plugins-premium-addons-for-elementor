@@ -75,7 +75,7 @@ class Ip_Location extends Condition {
 
 		$location_data = Helper_Functions::get_ip_location_data( $ip_address );
 
-		if ( ! $location_data ) {
+		if ( ! $location_data || ! isset( $location_data['country']['names']['en'] ) ) {
 			return;
 		}
 

@@ -93,7 +93,7 @@ class Operating_System extends Condition {
 			$match = preg_match( '/' . $key_val . '/i', $user_agent );
 
 			if ( $match ) {
-				array_push( $current_os, $key );
+				$current_os[] = $key;
 
 				// We need to remove mac_os if iPhone is the current OS, and Linux if Android is the current OS
 				if ( 'iphone' === $key ) {

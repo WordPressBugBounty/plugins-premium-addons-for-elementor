@@ -1372,10 +1372,10 @@ class Helper_Functions {
 
 		if ( count( $devices ) ) {
 			foreach ( $devices as $index => $device ) {
-				array_push( $classes, 'elementor-hidden-' . $device );
+				$classes[] = 'elementor-hidden-' . $device;
 			}
 
-			array_push( $classes, 'premium-addons-element' );
+			$classes[] = 'premium-addons-element';
 		}
 
 		return $classes;
@@ -2100,18 +2100,23 @@ class Helper_Functions {
 	 */
 	public static function get_enabled_widgets_names() {
 
+		static $names_list = null;
+
 		$enabled_elements = self::get_enabled_widgets();
 
 		$enabled_names = array();
 
-		$map_file = PREMIUM_ADDONS_PATH . 'includes/helpers/widget-name-map.php';
+		if ( null === $names_list ) {
 
-		if ( file_exists( $map_file ) ) {
+			$map_file = PREMIUM_ADDONS_PATH . 'includes/helpers/widget-name-map.php';
 
-			$map        = include $map_file;
-			$names_list = is_array( $map ) ? $map : array();
-		} else {
-			$names_list = array();
+			if ( file_exists( $map_file ) ) {
+
+				$map        = include $map_file;
+				$names_list = is_array( $map ) ? $map : array();
+			} else {
+				$names_list = array();
+			}
 		}
 
 		foreach ( $enabled_elements as $key ) {

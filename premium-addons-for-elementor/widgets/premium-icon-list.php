@@ -125,7 +125,8 @@ class Premium_Icon_List extends Widget_Base {
 			if ( ! empty( $settings['list'] ) ) {
 				foreach ( $settings['list'] as $item ) {
 					if ( 'yes' === $item['draw_svg'] ) {
-						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+						$scripts[] = 'pa-tweenmax';
+						$scripts[] = 'pa-motionpath';
 
 						$draw_js = true;
 					}

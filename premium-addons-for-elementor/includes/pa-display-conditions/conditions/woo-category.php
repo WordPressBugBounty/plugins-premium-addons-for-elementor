@@ -100,6 +100,9 @@ class Woo_Category extends Condition {
 
 				if ( $product->is_type( 'variation' ) ) {
 					$product = wc_get_product( $product->get_parent_id() );
+					if ( ! $product ) {
+						continue;
+					}
 				}
 
 				$product_cats = array_merge( $product_cats, $product->get_category_ids() );
@@ -121,6 +124,9 @@ class Woo_Category extends Condition {
 			foreach ( $customer_orders as $order ) {
 
 				$order = wc_get_order( $order->ID );
+				if ( ! $order ) {
+					continue;
+				}
 				$items = $order->get_items();
 				foreach ( $items as $item ) {
 					$product_id    = $item->get_product_id();
@@ -129,14 +135,21 @@ class Woo_Category extends Condition {
 			}
 
 			foreach ( $product_ids as $id ) {
+				if ( $id < 1 ) {
+					continue;
+				}
+
 				$product = wc_get_product( $id );
 
-				if ( $id < 1 ) {
+				if ( ! $product ) {
 					continue;
 				}
 
 				if ( $product->is_type( 'variation' ) ) {
 					$product = wc_get_product( $product->get_parent_id() );
+					if ( ! $product ) {
+						continue;
+					}
 				}
 
 				$product_cats = array_merge( $product_cats, $product->get_category_ids() );

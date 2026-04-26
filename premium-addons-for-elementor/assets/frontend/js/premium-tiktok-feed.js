@@ -1,16 +1,14 @@
 (function ($) {
-
 	var PremiumTiktokHandler = function ($scope, $) {
-
-		var widgetID = $scope.data('id'),
-			$outerWrapper = $scope.find('.premium-tiktok-feed__outer-wrapper'),
-			settings = $outerWrapper.data('pa-tiktok-settings');
+		var widgetID = $scope.data("id"),
+			$outerWrapper = $scope.find(".premium-tiktok-feed__outer-wrapper"),
+			settings = $outerWrapper.data("pa-tiktok-settings");
 
 		if (!settings) {
 			return;
 		}
 
-		var $videosWrapper = $scope.find('.premium-tiktok-feed__videos-wrapper');
+		var $videosWrapper = $scope.find(".premium-tiktok-feed__videos-wrapper");
 
 		if ("masonry" === settings.layout && !settings.carousel) {
 			$videosWrapper.imagesLoaded(function () {
@@ -19,101 +17,120 @@
 		}
 
 		if (settings.loadMore && !settings.carousel) {
+			window["paLoadMoreBookmark" + widgetID] =
+				$outerWrapper.data("pa-load-bookmark");
+			window["paHiddenPins" + widgetID] = $scope.find(
+				".premium-tiktok-feed__video-outer-wrapper.premium-display-none",
+			).length;
 
-			window['paLoadMoreBookmark' + widgetID] = $outerWrapper.data('pa-load-bookmark');
-			window['paHiddenPins' + widgetID] = $scope.find('.premium-tiktok-feed__video-outer-wrapper.premium-display-none').length;
+			$scope
+				.find(".premium-tiktok-feed__load-more-btn")
+				.on("click.paLoadMoreVids", function (e) {
+					var bookmark = window["paLoadMoreBookmark" + widgetID],
+						count = settings.loadMoreCount;
 
-			$scope.find('.premium-tiktok-feed__load-more-btn').on('click.paLoadMoreVids', function (e) {
+					var $videos = $scope.find(
+						".premium-tiktok-feed__video-outer-wrapper",
+					);
+					for (var i = 0; i < count; i++) {
+						// $scope.find('.premium-tiktok-feed__video-outer-wrapper').eq( bookmark + i ).show().addClass('premium-pin-shown');
+						$videos.eq(bookmark + i).show(0, function () {
+							var _this = this;
+							setTimeout(function () {
+								$(_this).removeClass("premium-display-none"); // fix: share menu not fully displayed.
+							}, 400);
+						});
+					}
 
-				var bookmark = window['paLoadMoreBookmark' + widgetID],
-					count = settings.loadMoreCount;
+					window["paLoadMoreBookmark" + widgetID] = bookmark + count;
+					window["paHiddenPins" + widgetID] -= count;
 
-				for (var i = 0; i < count; i++) {
-					// $scope.find('.premium-tiktok-feed__video-outer-wrapper').eq( bookmark + i ).show().addClass('premium-pin-shown');
-					$scope.find('.premium-tiktok-feed__video-outer-wrapper').eq(bookmark + i).show(0, function () {
-						var _this = this;
-						setTimeout(function () {
-							$(_this).removeClass('premium-display-none'); // fix: share menu not fully displayed.
-						}, 400);
-					});
-				}
-
-				window['paLoadMoreBookmark' + widgetID] = bookmark + count;
-				window['paHiddenPins' + widgetID] -= count;
-
-				if (0 >= window['paHiddenPins' + widgetID]) {
-					$scope.find('.premium-tiktok-feed__load-more-btn').remove();
-				}
-			});
+					if (0 >= window["paHiddenPins" + widgetID]) {
+						$scope.find(".premium-tiktok-feed__load-more-btn").remove();
+					}
+				});
 		}
 
 		if (settings.carousel) {
+			var carouselSettings = $outerWrapper.data("pa-carousel");
 
-			var carouselSettings = $outerWrapper.data('pa-carousel');
+			$videosWrapper
+				.addClass("premium-addons__v-hidden")
+				.slick(getSlickSettings(carouselSettings));
 
-			$videosWrapper.addClass('premium-addons__v-hidden').slick(getSlickSettings(carouselSettings));
-
-			$videosWrapper.removeClass('premium-addons__v-hidden');
+			$videosWrapper.removeClass("premium-addons__v-hidden");
 		}
 
 		// share links
-		$scope.find('.premium-copy-link').on('click.paTiktokCopyLink', function () {
-			$scope.find('.premium-tiktok-share-menu').css('visibility', 'hidden')
+		$scope.find(".premium-copy-link").on("click.paTiktokCopyLink", function () {
+			$scope.find(".premium-tiktok-share-menu").css("visibility", "hidden");
 
-			var txt = $(this).data('pa-link');
+			var txt = $(this).data("pa-link");
 			navigator.clipboard.writeText(txt);
 		});
 
-		$scope.find('.premium-tiktok-share-item:not(.premium-copy-link)').on('click.paTiktokShare', function () {
+		$scope
+			.find(".premium-tiktok-share-item:not(.premium-copy-link)")
+			.on("click.paTiktokShare", function () {
+				var link = $(this).data("pa-link");
+				window.open(link, "popup", "width=600,height=600");
+			});
 
-			var link = $(this).data('pa-link');
-			window.open(link, 'popup', 'width=600,height=600');
-		});
-
-		if ('play' === settings.onClick) {
-
-			if ($scope.hasClass('premium-tiktok-feed__vid-layout-2')) {
-				$scope.find('.premium-tiktok-feed__vid-meta-wrapper').on('click', function () {
-					$(this).next().trigger('click');
-				});
+		if ("play" === settings.onClick) {
+			if ($scope.hasClass("premium-tiktok-feed__vid-layout-2")) {
+				$scope
+					.find(".premium-tiktok-feed__vid-meta-wrapper")
+					.on("click", function () {
+						$(this).next().trigger("click");
+					});
 			}
 
-			$scope.find('.premium-tiktok-feed__video-media').on('click', function () {
-				var $video = $(this).find('video');
+			$scope.find(".premium-tiktok-feed__video-media").on("click", function () {
+				var $video = $(this).find("video");
 
-				$(this).find('.premium-tiktok-feed__play-icon').toggleClass('premium-addons__v-hidden');
+				$(this)
+					.find(".premium-tiktok-feed__play-icon")
+					.toggleClass("premium-addons__v-hidden");
 
-				if (!$video.hasClass('video-playing')) {
+				if (!$video.hasClass("video-playing")) {
 					$video.get(0).play();
 				} else {
 					$video.get(0).pause();
 				}
 
-				$video.toggleClass('video-playing');
-
+				$video.toggleClass("video-playing");
 			});
 		}
 
 		if (settings.playOnHover) {
+			$scope.find(".premium-tiktok-feed__video-media").hover(
+				function () {
+					$scope
+						.find(".premium-tiktok-feed__play-icon")
+						.removeClass("premium-addons__v-hidden");
+					$scope.find("video").get(0).pause();
 
-			$scope.find('.premium-tiktok-feed__video-media').hover(function () {
-
-				$scope.find('.premium-tiktok-feed__play-icon').removeClass('premium-addons__v-hidden');
-				$scope.find('video').get(0).pause();
-
-				$(this).find('.premium-tiktok-feed__play-icon').addClass('premium-addons__v-hidden');
-				$(this).find('video').get(0).play();
-
-			}, function () {
-				$(this).find('.premium-tiktok-feed__play-icon').removeClass('premium-addons__v-hidden');
-				$(this).find('video').get(0).pause();
-			})
+					$(this)
+						.find(".premium-tiktok-feed__play-icon")
+						.addClass("premium-addons__v-hidden");
+					$(this).find("video").get(0).play();
+				},
+				function () {
+					$(this)
+						.find(".premium-tiktok-feed__play-icon")
+						.removeClass("premium-addons__v-hidden");
+					$(this).find("video").get(0).pause();
+				},
+			);
 		}
 
 		function getSlickSettings(settings) {
-
-			var prevArrow = settings.arrows ? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>' : '',
-				nextArrow = settings.arrows ? '<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>' : '';
+			var prevArrow = settings.arrows
+					? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
+					: "",
+				nextArrow = settings.arrows
+					? '<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>'
+					: "";
 
 			return {
 				infinite: true,
@@ -126,16 +143,16 @@
 						breakpoint: 1025,
 						settings: {
 							slidesToShow: settings.slidesToShowTab,
-							slidesToScroll: 1
-						}
+							slidesToScroll: 1,
+						},
 					},
 					{
 						breakpoint: 768,
 						settings: {
 							slidesToShow: settings.slidesToShowMobile,
-							slidesToScroll: 1
-						}
-					}
+							slidesToScroll: 1,
+						},
+					},
 				],
 				autoplay: settings.autoPlay,
 				speed: settings.speed || 300,
@@ -148,25 +165,34 @@
 				dots: settings.dots,
 				customPaging: function () {
 					return '<i class="fas fa-circle"></i>';
-				}
+				},
 			};
-		};
+		}
 
 		function getIsoTopeSettings() {
-
 			return {
 				itemSelector: ".premium-tiktok-feed__video-outer-wrapper",
 				percentPosition: true,
 				animationOptions: {
 					duration: 750,
 					easing: "linear",
-					queue: false
-				}
-			}
-		};
+					queue: false,
+				},
+			};
+		}
 	};
 
-	$(window).on('elementor/frontend/init', function () {
-		elementorFrontend.hooks.addAction('frontend/element_ready/premium-tiktok-feed.default', PremiumTiktokHandler);
+	$(window).on("elementor/frontend/init", function () {
+		if (
+			"undefined" !== typeof paElementsHandler &&
+			paElementsHandler.isElementAlreadyExists("paTiktokFeed")
+		) {
+			return false;
+		}
+
+		elementorFrontend.hooks.addAction(
+			"frontend/element_ready/premium-tiktok-feed.default",
+			PremiumTiktokHandler,
+		);
 	});
 })(jQuery);

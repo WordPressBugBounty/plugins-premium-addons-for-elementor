@@ -946,15 +946,12 @@ class Premium_Tcloud extends Widget_Base {
 
 			$child_terms_count = 'yes' === $settings['show_parents_only'] ? $this->get_child_terms_count( $tax, $term_id ) : 0;
 
-			array_push(
-				$words_array,
-				array(
-					$name,
-					$term->count + $child_terms_count,
-					get_term_link( $term_id, $tax ),
-					$full_name,
-					$term->count + $child_terms_count,
-				)
+			$words_array[] = array(
+				$name,
+				$term->count + $child_terms_count,
+				get_term_link( $term_id, $tax ),
+				$full_name,
+				$term->count + $child_terms_count,
 			);
 
 		}

@@ -1697,7 +1697,7 @@ class Premium_Countdown extends Widget_Base {
 
 		add_option( $counter_key, array() );
 
-		$local_data = get_option( $counter_key, 'Null' );
+		$local_data = get_option( $counter_key, array() );
 
 		$local_due_date = isset( $local_data[ $evergreen_user ]['due_date'] ) ? $local_data[ $evergreen_user ]['due_date'] : 'Null';
 
@@ -1734,7 +1734,10 @@ class Premium_Countdown extends Widget_Base {
 
 		$end_time->setTime( $end_time->format( 'H' ) + 2, $end_time->format( 'i' ), $end_time->format( 's' ) + $eve_interval );
 
-		$local_data = get_option( $counter_key, 'Null' );
+		$local_data = get_option( $counter_key, array() );
+		if ( ! is_array( $local_data ) ) {
+			$local_data = array();
+		}
 
 		$local_data[ $evergreen_user ]['due_date'] = $end_time;
 		$local_data[ $evergreen_user ]['interval'] = $eve_interval;

@@ -232,6 +232,10 @@ function get_video_url( $url ) {
 
 	$check = explode( '"playAddr":"', $content );
 
+	if ( ! isset( $check[1] ) ) {
+		return '';
+	}
+
 	$contentURL = explode( '"', $check[1] )[0];
 	$contentURL = escape_sequence_decode( $contentURL );
 

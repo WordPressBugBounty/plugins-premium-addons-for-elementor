@@ -58,7 +58,7 @@ if ( ! function_exists( 'pa_render_layout_1' ) ) {
 
 						if ( count( $words ) > 10 ) {
 							array_pop( $words );
-							array_push( $words, '…' );
+							$words[] = '…';
 						}
 
 							$product_name = implode( ' ', $words );
@@ -119,7 +119,7 @@ if ( ! function_exists( 'pa_render_layout_2' ) ) {
 
 					if ( count( $words ) > 10 ) {
 						array_pop( $words );
-						array_push( $words, '…' );
+						$words[] = '…';
 					}
 
 						$product_name = implode( ' ', $words );
@@ -184,7 +184,7 @@ if ( ! function_exists( 'pa_render_layout_3' ) ) {
 
 					if ( count( $words ) > 10 ) {
 						array_pop( $words );
-						array_push( $words, '…' );
+						$words[] = '…';
 					}
 
 						$product_name = implode( ' ', $words );
@@ -237,7 +237,7 @@ if ( ! function_exists( 'pa_render_layout_4' ) ) {
 
 					if ( count( $words ) > 10 ) {
 						array_pop( $words );
-						array_push( $words, '…' );
+						$words[] = '…';
 					}
 
 						$product_name = implode( ' ', $words );
@@ -274,7 +274,10 @@ if ( ! function_exists( 'pa_render_cross_sells' ) ) {
 				<div class="pa-woo-mc__cross-sells">
 					<?php
 					foreach ( $products_ids as $product_id ) {
-						$product      = wc_get_product( $product_id );
+						$product = wc_get_product( $product_id );
+						if ( ! $product ) {
+							continue;
+						}
 						$thumbnail    = $product->get_image();
 						$permalink    = get_permalink( $product_id );
 						$product_name = $product->get_name();
@@ -300,7 +303,7 @@ if ( ! function_exists( 'pa_render_cross_sells' ) ) {
 
 										if ( count( $words ) > 10 ) {
 											array_pop( $words );
-											array_push( $words, '…' );
+											$words[] = '…';
 										}
 
 										$product_name = implode( ' ', $words );

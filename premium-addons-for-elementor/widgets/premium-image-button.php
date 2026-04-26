@@ -116,7 +116,8 @@ class Premium_Image_Button extends Widget_Base {
 			$settings = $this->get_settings();
 
 			if ( 'yes' === $settings['draw_svg'] ) {
-				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+				$scripts[] = 'pa-tweenmax';
+				$scripts[] = 'pa-motionpath';
 			}
 
 			if ( 'animation' === $settings['icon_type'] || 'animation' === $settings['slide_icon_type'] ) {
@@ -1792,6 +1793,8 @@ class Premium_Image_Button extends Widget_Base {
 			$style_dir = 'premium-button-' . $settings['underline_style'];
 
 			$this->add_render_attribute( 'button', 'data-text', $button_text );
+		} else {
+			$style_dir = '';
 		}
 
 		if ( 'style8' !== $settings['premium_image_button_hover_effect'] ) {

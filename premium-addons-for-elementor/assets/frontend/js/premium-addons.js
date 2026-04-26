@@ -4265,8 +4265,7 @@
 				for (var i = 0; i < 12; i++) {
 					var point = getCirclePoint(50, i * 30, 50, 50);
 
-					$($clockNumbers[i]).css("left", point.x + "%");
-					$($clockNumbers[i]).css("top", point.y + "%");
+					$($clockNumbers[i]).css({ left: point.x + "%", top: point.y + "%" });
 				}
 			}
 
@@ -4708,17 +4707,17 @@
 						var bookmark = window["paLoadMoreBookmark" + widgetID],
 							count = settings.loadMoreCount;
 
+						var $videos = $scope.find(
+							".premium-tiktok-feed__video-outer-wrapper",
+						);
 						for (var i = 0; i < count; i++) {
 							// $scope.find('.premium-tiktok-feed__video-outer-wrapper').eq( bookmark + i ).show().addClass('premium-pin-shown');
-							$scope
-								.find(".premium-tiktok-feed__video-outer-wrapper")
-								.eq(bookmark + i)
-								.show(0, function () {
-									var _this = this;
-									setTimeout(function () {
-										$(_this).removeClass("premium-display-none"); // fix: share menu not fully displayed.
-									}, 400);
-								});
+							$videos.eq(bookmark + i).show(0, function () {
+								var _this = this;
+								setTimeout(function () {
+									$(_this).removeClass("premium-display-none"); // fix: share menu not fully displayed.
+								}, 400);
+							});
 						}
 
 						window["paLoadMoreBookmark" + widgetID] = bookmark + count;
@@ -5128,24 +5127,20 @@
 						buttons: settings.buttons ? "custom" : false,
 						buttonPrev: $buttonPrev,
 						buttonNext: $buttonNext,
-						onItemSwitch: function () {
+						onItemSwitch: function (newItem) {
 							resetVideos();
+							if (settings.autoplay_videos) {
+								playActiveVideo($(newItem));
+							}
 						},
 					})
 					.css("visibility", "inherit");
 
+				if (settings.autoplay_videos) {
+					playActiveVideo();
+				}
+
 				if (settings.keyboard && !isSmallDevice) {
-					//Fix: keyboard nav won't start unless the elements is focused.
-					// elementorFrontend.waypoint($carouselContainer, function () {
-					//     $.fn.focusWithoutScrolling = function () {
-					//         var x = window.scrollX, y = window.scrollY;
-					//         this.focus();
-					//         window.scrollTo(x, y);
-					//     };
-
-					//     $carouselContainer.focusWithoutScrolling();
-					// });
-
 					// Using IntersectionObserverAPI.
 					var eleObserver = new IntersectionObserver(function (entries) {
 						entries.forEach(function (entry) {
@@ -5185,55 +5180,16 @@
 							".premium-adv-carousel__inner-container a[data-rel^='prettyPhoto']",
 						)
 						.prettyPhoto(getPrettyPhotoSettings());
-			} else {
-				// Play video.
+			} else if (!settings.autoplay_videos) {
+				// Play video on click (when autoplay_videos is disabled).
 				$scope
 					.find(".premium-adv-carousel__item .premium-adv-carousel__video-wrap")
 					.each(function (index, item) {
-						var type = $(item).data("type");
-
 						$(item)
 							.closest(".premium-adv-carousel__item")
 							.on("click.paPlayVid" + index, function () {
-								var _this = $(this);
-
 								resetVideos();
-
-								_this
-									.find(".premium-adv-carousel__media-wrap")
-									.css("background", "#000");
-
-								_this
-									.find(
-										".premium-adv-carousel__video-icon, .premium-adv-carousel__vid-overlay",
-									)
-									.css("visibility", "hidden");
-
-								if ("hosted" !== type) {
-									var $iframeWrap = _this.find(
-											".premium-adv-carousel__iframe-wrap",
-										),
-										src = $iframeWrap.data("src");
-
-									src = src.replace("&mute", "&autoplay=1&mute");
-
-									var $iframe = $("<iframe/>");
-
-									$iframe.attr({
-										src: src,
-										frameborder: "0",
-										allowfullscreen: "1",
-										allow: "autoplay;encrypted-media;",
-									});
-
-									$iframeWrap.html($iframe);
-
-									$iframe.css("visibility", "visible");
-								} else {
-									var $video = $(item).find("video");
-									$video.attr("pa-playing", "true").get(0).play();
-									$video.css("visibility", "visible");
-								}
+								playVideo($(this));
 							});
 					});
 			}
@@ -5296,6 +5252,53 @@
 				$scope
 					.find(".premium-adv-carousel__media-wrap")
 					.css("background", "unset");
+			}
+
+			// Resolves the active outer wrapper and delegates to playVideo.
+			// Called without args on init (flipster__item--current is already set);
+			// called with $(newItem) from onItemSwitch (fires before the class updates).
+			function playActiveVideo($outerWrapper) {
+				$outerWrapper =
+					$outerWrapper || $scope.find(".flipster__item--current");
+				playVideo($outerWrapper.find(".premium-adv-carousel__item"));
+			}
+
+			function playVideo($item) {
+				var $videoWrap = $item.find(".premium-adv-carousel__video-wrap");
+
+				if (!$videoWrap.length) {
+					return;
+				}
+
+				$item
+					.find(".premium-adv-carousel__media-wrap")
+					.css("background", "#000");
+				$item
+					.find(
+						".premium-adv-carousel__video-icon, .premium-adv-carousel__vid-overlay",
+					)
+					.css("visibility", "hidden");
+
+				if ("hosted" !== $videoWrap.data("type")) {
+					var $iframeWrap = $item.find(".premium-adv-carousel__iframe-wrap");
+
+					$("<iframe/>")
+						.attr({
+							src: $iframeWrap.data("src").replace("&mute", "&autoplay=1&mute"),
+							frameborder: "0",
+							allowfullscreen: "1",
+							allow: "autoplay;encrypted-media;",
+						})
+						.css("visibility", "visible")
+						.appendTo($iframeWrap.empty());
+				} else {
+					$videoWrap
+						.find("video")
+						.attr("pa-playing", "true")
+						.css("visibility", "visible")
+						.get(0)
+						.play();
+				}
 			}
 
 			function setHorizontalWidth() {

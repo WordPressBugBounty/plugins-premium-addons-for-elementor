@@ -10,8 +10,6 @@ use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Admin\Includes\Admin_Bar;
 
-require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -334,7 +332,7 @@ class Assets_Manager {
 
 						if ( in_array( $widget_type, $pa_names, true ) && ! in_array( $widget_type, $pa_elems, true ) ) {
 
-							array_push( $pa_elems, $widget_type );
+							$pa_elems[] = $widget_type;
 
 						}
 					}
@@ -667,6 +665,12 @@ class Assets_Manager {
 	 * @return array
 	 */
 	public function get_pro_widgets_names() {
+
+		static $pro_names = null;
+
+		if ( null !== $pro_names ) {
+			return $pro_names;
+		}
 
 		$pro_elements = Admin_Helper::get_pro_elements();
 		$pro_names    = array();

@@ -76,6 +76,10 @@ class Woo_Purchase_Products extends Condition {
 
 				$order = wc_get_order( $order->ID );
 
+				if ( ! $order ) {
+					continue;
+				}
+
 				$order_items = $order->get_items();
 
 				foreach ( $order_items as $order_item ) {

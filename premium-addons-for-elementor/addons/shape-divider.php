@@ -258,7 +258,7 @@ class Shape_Divider {
 			$pro_shapes = array();
 
 			for ( $x = 26; $x <= 55; $x++ ) {
-				array_push( $pro_shapes, 'shape' . $x );
+				$pro_shapes[] = 'shape' . $x;
 			}
 
 			$element->add_control(

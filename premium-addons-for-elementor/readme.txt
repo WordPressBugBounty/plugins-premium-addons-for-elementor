@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.74
+Stable Tag: 4.11.75
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -255,6 +255,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.75 - 26/4/2026 =
+
+- Tweak: Added option to autoplay video in active slide in Advanced Carousel widget.
+- Tweak: Added Description option in Heading and Dual Heading widgets.
+- Tweak: Code refactored for better performance and security.
+- Fixed: Load More button not working correctly in TikTok Feed widget.
 
 = 4.11.74 - 16/4/2026 =
 

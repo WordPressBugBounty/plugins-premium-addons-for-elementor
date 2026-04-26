@@ -123,7 +123,15 @@ class Mini_Cart_Module extends Module_Base {
 		$discount_total = WC()->cart->get_discount_total();
 		$raw_subtotal   = WC()->cart->get_subtotal();
 
-		$display_incl_tax = 'yes' === get_option( 'woocommerce_calc_taxes' );
+		$tax_defaults = array(
+			'exclude_tax'        => false,
+			'show_trigger_label' => false,
+			'show_footer_label'  => false,
+			'label'              => '',
+		);
+
+		$tax_config       = apply_filters( 'pa_mini_cart_tax_display', $tax_defaults, 0, array() );
+		$display_incl_tax = 'yes' === get_option( 'woocommerce_calc_taxes' ) && ! $tax_config['exclude_tax'];
 
 		if ( $display_incl_tax ) {
 			$raw_subtotal += WC()->cart->get_taxes_total();

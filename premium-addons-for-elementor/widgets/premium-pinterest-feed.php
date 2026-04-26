@@ -3323,7 +3323,8 @@ class Premium_Pinterest_Feed extends Widget_Base {
 	 */
 	private function render_feed_desc( $feed, $settings, $type = 'pin' ) {
 
-		$len = $settings[ $type . '_desc_len' ];
+		$desc = isset( $feed['description'] ) ? $feed['description'] : '';
+		$len  = $settings[ $type . '_desc_len' ];
 
 		if ( ! empty( $len ) ) {
 

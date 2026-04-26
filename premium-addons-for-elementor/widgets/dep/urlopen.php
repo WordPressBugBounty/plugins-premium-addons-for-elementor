@@ -136,17 +136,16 @@ if ( ! function_exists( 'rplg_urlopen' ) ) {
 
 		$response_header_array = explode( ' ', $http_response_header[0], 3 );
 
-		$unused = $response_header_array[0];
-
-		$response['code'] = $response_header_array[0];
-
-		$unused = $response_header_array[2];
+		$response['code'] = isset( $response_header_array[1] ) ? $response_header_array[1] : 0;
 
 		$resp_headers = array_slice( $http_response_header, 1 );
 
-		foreach ( $resp_headers as $unused => $header ) {
-			$header                                   = explode( ':', $header );
-			$header[0]                                = trim( $header[0] );
+		foreach ( $resp_headers as $header ) {
+			$header    = explode( ':', $header, 2 );
+			$header[0] = trim( $header[0] );
+			if ( ! isset( $header[1] ) ) {
+				continue;
+			}
 			$header[1]                                = trim( $header[1] );
 			$resp_headers[ strtolower( $header[0] ) ] = strtolower( $header[1] );
 		}
@@ -260,16 +259,15 @@ if ( ! function_exists( 'rplg_urlopen' ) ) {
 
 		$header_array = explode( ' ', $headers[0], 3 );
 
-		$unused = $header_array[0];
-
-		$response['code'] = $header_array[1];
-
-		$unused = $header_array[2];
+		$response['code'] = isset( $header_array[1] ) ? $header_array[1] : 0;
 
 		$headers = array_slice( $headers, 1 );
-		foreach ( $headers as $unused => $header ) {
-			$header                              = explode( ':', $header );
-			$header[0]                           = trim( $header[0] );
+		foreach ( $headers as $header ) {
+			$header    = explode( ':', $header, 2 );
+			$header[0] = trim( $header[0] );
+			if ( ! isset( $header[1] ) ) {
+				continue;
+			}
 			$header[1]                           = trim( $header[1] );
 			$headers[ strtolower( $header[0] ) ] = $header[1];
 		}

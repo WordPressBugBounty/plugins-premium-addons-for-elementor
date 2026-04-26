@@ -160,9 +160,9 @@ class ACF_Helper {
 		if ( $is_radio || $single_select ) {
 
 			if ( 'array' === $return_format ) {
-				array_push( $formatted_values, $values['value'] . ' : ' . $values['label'] );
+				$formatted_values[] = $values['value'] . ' : ' . $values['label'];
 			} else {
-				array_push( $formatted_values, $values . ' : ' . $values );
+				$formatted_values[] = $values . ' : ' . $values;
 			}
 		} else {
 
@@ -170,9 +170,9 @@ class ACF_Helper {
 
 			foreach ( $values as $index => $value ) {
 				if ( 'array' === $return_format ) {
-					array_push( $formatted_values, $value['value'] . ' : ' . $value['label'] );
+					$formatted_values[] = $value['value'] . ' : ' . $value['label'];
 				} else {
-					array_push( $formatted_values, $value . ' : ' . $value );
+					$formatted_values[] = $value . ' : ' . $value;
 				}
 			}
 		}

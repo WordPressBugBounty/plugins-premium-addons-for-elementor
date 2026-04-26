@@ -159,7 +159,8 @@ class Premium_Mobile_Menu extends Widget_Base {
 			if ( ! empty( $settings['menu_items'] ) ) {
 				foreach ( $settings['menu_items'] as $item ) {
 					if ( 'yes' === $item['draw_svg'] ) {
-						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+						$scripts[] = 'pa-tweenmax';
+						$scripts[] = 'pa-motionpath';
 						$draw_js = true;
 					}
 

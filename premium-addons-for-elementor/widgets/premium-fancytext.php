@@ -1320,7 +1320,7 @@ class Premium_Fancytext extends Widget_Base {
 
 				foreach ( $settings['premium_fancy_text_strings'] as $item ) {
 					if ( ! empty( $item['premium_text_strings_text_field'] ) ) {
-						array_push( $strings, str_replace( '\'', '&#39;', $item['premium_text_strings_text_field'] ) );
+						$strings[] = str_replace( '\'', '&#39;', $item['premium_text_strings_text_field'] );
 					}
 				}
 

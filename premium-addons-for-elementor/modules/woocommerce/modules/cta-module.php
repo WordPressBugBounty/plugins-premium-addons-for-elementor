@@ -200,6 +200,10 @@ class CTA_Module extends Module_Base {
 
 			if ( $variation_id ) {
 				$variation = wc_get_product( $variation_id );
+				if ( ! $variation ) {
+					wp_send_json_error( array( 'message' => 'Invalid variation.' ) );
+					return;
+				}
 				if ( ! $variation->is_in_stock() ) {
 					wp_send_json_error( array( 'message' => 'Selected variation is out of stock.' ) );
 					return;

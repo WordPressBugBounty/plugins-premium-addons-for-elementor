@@ -3016,20 +3016,17 @@ class Premium_Carousel extends Widget_Base {
 
 					if ( 'id' === $template['temp_source'] ) {
 						$temp_id = $template['container_id'];
-						array_push(
-							$templates,
-							array(
-								'id'  => $template['container_id'],
-								'src' => $template['temp_source'],
-							)
+						$templates[] = array(
+							'id'  => $template['container_id'],
+							'src' => $template['temp_source'],
 						);
 
 					} else {
 						$temp_id = empty( $template['premium_carousel_repeater_item'] ) ? $template['live_temp_content'] : $template['premium_carousel_repeater_item'];
-						array_push( $templates, $temp_id );
+						$templates[] = $temp_id;
 					}
 
-					array_push( $custom_navigation, $template['custom_navigation'] );
+					$custom_navigation[] = $template['custom_navigation'];
 				}
 			}
 		}
@@ -3425,7 +3422,7 @@ class Premium_Carousel extends Widget_Base {
 									$image_info = get_post( $template_title['id'] );
 									?>
 										<div class="premium-carousel-thumb-info">
-											<?php if ( ! empty( $image_info->post_excerpt ) ) : ?>
+											<?php if ( $image_info && ! empty( $image_info->post_excerpt ) ) : ?>
 												<span class="premium-carousel-thumb-title"><?php echo esc_html( $image_info->post_excerpt ); ?></span>
 											<?php endif; ?>
 										</div>

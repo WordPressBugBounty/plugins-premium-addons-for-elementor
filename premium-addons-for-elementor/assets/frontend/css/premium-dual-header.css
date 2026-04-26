@@ -1,5 +1,5 @@
 /**************** Premium Dual Heading *****************/
-/*******************************************************/
+/******************************************************  */
 .premium-dual-header-first-header,
 .premium-dual-header-second-header {
   position: relative;
@@ -25,7 +25,7 @@
   -webkit-text-stroke-width: 2px;
 }
 
-@media (max-width: 500px) {
+@media (width <= 500px) {
   .premium-dual-header-first-header,
   .premium-dual-header-second-header {
     word-wrap: break-word;
@@ -34,8 +34,8 @@
 .premium-dual-header-first-header.gradient .premium-dual-header-first-span,
 .premium-dual-header-second-header.gradient {
   background-size: 300% 300% !important;
-  -webkit-animation: Gradient 10s ease-in-out infinite;
-  animation: Gradient 10s ease-in-out infinite;
+  -webkit-animation: gradient 10s ease-in-out infinite;
+  animation: gradient 10s ease-in-out infinite;
 }
 
 .premium-title-first-noise-yes .premium-dual-header-first-span {
@@ -145,7 +145,7 @@
     filter: hue-rotate(360deg);
   }
 }
-@-webkit-keyframes Gradient {
+@-webkit-keyframes gradient {
   0% {
     background-position: 0% 50%;
   }
@@ -156,7 +156,7 @@
     background-position: 0% 50%;
   }
 }
-@keyframes Gradient {
+@keyframes gradient {
   0% {
     background-position: 0% 50%;
   }
@@ -426,4 +426,37 @@
   100% {
     clip: rect(41px, 9999px, 55px, 0);
   }
+}
+.premium-dh-desc-display-row .premium-dual-header-wrapper,
+.premium-dh-desc-display-column .premium-dual-header-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.premium-dh-desc-display-row .premium-dual-header-wrapper > *:not(.premium-dh-description),
+.premium-dh-desc-display-column .premium-dual-header-wrapper > *:not(.premium-dh-description) {
+  -webkit-order: 1;
+  -ms-flex-order: 1;
+  order: 1;
+}
+.premium-dh-desc-display-row .premium-dual-header-wrapper .premium-dual-header-first-header,
+.premium-dh-desc-display-column .premium-dual-header-wrapper .premium-dual-header-first-header {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.premium-dh-description {
+  display: block;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+.premium-dh-description * {
+  margin: 0;
+  padding: 0;
+}
+
+.premium-dh-desc-display-column .premium-dh-description {
+  width: 100%;
 }

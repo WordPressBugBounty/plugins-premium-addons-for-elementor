@@ -135,7 +135,8 @@ class Premium_Textual_Showcase extends Widget_Base {
 				foreach ( $settings['content'] as $item ) {
 
 					if ( 'yes' === $item['draw_svg'] || 'yes' === $item['draw_svg_hov'] ) {
-						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+						$scripts[] = 'pa-tweenmax';
+						$scripts[] = 'pa-motionpath';
 						$draw_js = true;
 					}
 

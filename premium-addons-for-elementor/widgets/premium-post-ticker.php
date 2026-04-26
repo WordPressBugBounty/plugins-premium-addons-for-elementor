@@ -191,7 +191,8 @@ class Premium_Post_Ticker extends Widget_Base {
 			$lottie_js = false;
 
 			if ( 'yes' === $settings['draw_svg'] ) {
-				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+				$scripts[] = 'pa-tweenmax';
+				$scripts[] = 'pa-motionpath';
 				$draw_js = true;
 			}
 
@@ -205,7 +206,8 @@ class Premium_Post_Ticker extends Widget_Base {
 				foreach ( $settings['text_content'] as $item ) {
 
 					if ( ! $draw_js && 'yes' === $item['draw_svg'] ) {
-						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+						$scripts[] = 'pa-tweenmax';
+						$scripts[] = 'pa-motionpath';
 						$draw_js = true;
 					}
 
@@ -1205,15 +1207,24 @@ class Premium_Post_Ticker extends Widget_Base {
 
 			if ( ! empty( $taxonomy ) ) {
 
+				// Batch-fetch terms for all taxonomies of this post type in one query.
+				$all_terms   = get_terms(
+					array(
+						'taxonomy'   => array_keys( $taxonomy ),
+						'hide_empty' => false,
+					)
+				);
+				$terms_by_tax = array();
+				if ( ! is_wp_error( $all_terms ) ) {
+					foreach ( $all_terms as $t ) {
+						$terms_by_tax[ $t->taxonomy ][] = $t;
+					}
+				}
+
 				// Get all taxonomy values under the taxonomy.
 				foreach ( $taxonomy as $index => $tax ) {
 
-					$terms = get_terms(
-						array(
-							'taxonomy'   => $index,
-							'hide_empty' => false,
-						)
-					);
+					$terms = isset( $terms_by_tax[ $index ] ) ? $terms_by_tax[ $index ] : array();
 
 					$related_tax = array();
 

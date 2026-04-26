@@ -222,7 +222,7 @@ class Module extends Module_Base {
 
 					array_pop( $words );
 
-					array_push( $words, '…' );
+					$words[] = '…';
 
 				}
 

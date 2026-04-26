@@ -79,7 +79,7 @@ class Post_Category extends Condition {
 
 		foreach ( $categories as $index => $category ) {
 
-			array_push( $cat_ids, $category->cat_ID );
+			$cat_ids[] = $category->cat_ID;
 
 		}
 

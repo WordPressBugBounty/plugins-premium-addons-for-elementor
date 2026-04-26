@@ -71,6 +71,10 @@ class Woo_Product_Price extends Condition {
 
 		$product = wc_get_product( $product_id );
 
+		if ( ! $product ) {
+			return true;
+		}
+
 		$product_price = $product->get_price();
 
 		$condition_result = (int) $value <= $product_price ? true : false;

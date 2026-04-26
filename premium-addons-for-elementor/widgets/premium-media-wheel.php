@@ -1262,6 +1262,19 @@ class Premium_Media_Wheel extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'autoplay_videos',
+			array(
+				'label'       => __( 'Auto Play Active Videos', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'separator'   => 'before',
+				'description' => __( 'Enable to automatically play videos when their carousel item becomes active and visible.', 'premium-addons-for-elementor' ),
+				'condition'   => array(
+					'media_wheel_animation!' => 'infinite',
+				),
+			)
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -2555,12 +2568,13 @@ class Premium_Media_Wheel extends Widget_Base {
 				$wheel_settings['autoPlay'] = false;
 			}
 
-			$wheel_settings['click']    = 'yes' === $settings['nav_on_click'];
-			$wheel_settings['keyboard'] = 'yes' === $settings['nav_by_keyboard'];
-			$wheel_settings['touch']    = 'yes' === $settings['nav_by_touch'];
-			$wheel_settings['buttons']  = $arrows;
-			$wheel_settings['spacing']  = floatval( $settings['media_wheel_spacing']['size'] );
-			$wheel_settings['start']    = '' === $settings['media_whee_start'] ? 'center' : $settings['media_whee_start'];
+			$wheel_settings['click']           = 'yes' === $settings['nav_on_click'];
+			$wheel_settings['keyboard']        = 'yes' === $settings['nav_by_keyboard'];
+			$wheel_settings['touch']           = 'yes' === $settings['nav_by_touch'];
+			$wheel_settings['buttons']         = $arrows;
+			$wheel_settings['spacing']         = floatval( $settings['media_wheel_spacing']['size'] );
+			$wheel_settings['start']           = '' === $settings['media_whee_start'] ? 'center' : $settings['media_whee_start'];
+			$wheel_settings['autoplay_videos'] = 'yes' === $settings['autoplay_videos'];
 
 		}
 

@@ -332,7 +332,7 @@ class Premium_Template_Tags {
 					array_pop( $words );
 
 					if ( 'dots' === $cta_type ) {
-						array_push( $words, '…' );
+						$words[] = '…';
 					}
 				}
 			}
@@ -1707,15 +1707,17 @@ class Premium_Template_Tags {
 
 					$featured_post = get_post( $post_id, OBJECT );
 
-					global $post;
+					if ( $featured_post ) {
+						global $post;
 
-					$post = $featured_post;
+						$post = $featured_post;
 
-					setup_postdata( $post );
+						setup_postdata( $post );
 
-					$this->render_featured_posts( $featured_post, 'custom' );
+						$this->render_featured_posts( $featured_post, 'custom' );
 
-					wp_reset_postdata();
+						wp_reset_postdata();
+					}
 				}
 			}
 

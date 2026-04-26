@@ -178,7 +178,7 @@ class Pa_Weather_Handler {
 
 		$location_data = \PremiumAddons\Includes\Helper_Functions::get_ip_location_data( $ip_address );
 
-		if ( ! $location_data ) {
+		if ( ! $location_data || ! isset( $location_data['location']['latitude'], $location_data['location']['longitude'] ) ) {
 			return;
 		}
 

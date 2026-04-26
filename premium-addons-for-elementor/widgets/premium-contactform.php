@@ -1421,10 +1421,10 @@ class Premium_Contactform extends Widget_Base {
 		$this->add_responsive_control(
 			'button_align',
 			array(
-				'label'        => __( 'Alignment', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'default'      => 'left',
-				'options'      => array(
+				'label'     => __( 'Alignment', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'default'   => 'left',
+				'options'   => array(
 					'left'   => array(
 						'title' => __( 'Left', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-left',
@@ -1438,9 +1438,12 @@ class Premium_Contactform extends Widget_Base {
 						'icon'  => 'eicon-h-align-right',
 					),
 				),
-				'prefix_class' => 'premium-cf7-button-align-',
-				'condition'    => array(
+				// 'prefix_class' => 'premium-cf7-button-align-',
+				'condition' => array(
 					'button_full_width!' => 'yes',
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-cf7-container p.premium-cf-submit' => 'text-align: {{VALUE}}',
 				),
 			)
 		);
@@ -1838,12 +1841,13 @@ class Premium_Contactform extends Widget_Base {
 
 		if ( ! empty( $form_id ) ) {
 
+			$title_tag = Helper_Functions::validate_html_tag( $settings['title_tag'] );
+
 			if ( 'yes' === $settings['form_title'] ) {
 
 				$this->add_inline_editing_attributes( 'title_text' );
 				$this->add_render_attribute( 'title_text', 'class', 'premium-cf7-title' );
 
-				$title_tag = Helper_Functions::validate_html_tag( $settings['title_tag'] );
 			}
 
 			if ( 'yes' === $settings['form_description'] ) {

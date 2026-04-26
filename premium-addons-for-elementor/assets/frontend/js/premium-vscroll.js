@@ -1,7 +1,6 @@
 (function ($) {
 	/****** Premium Vertical Scroll Handler ******/
 	var PremiumVerticalScrollHandler = function ($scope, $) {
-
 		var deviceType = elementorFrontend.getCurrentDeviceMode();
 
 		var hiddenClass = "elementor-hidden-" + deviceType;
@@ -9,8 +8,10 @@
 		// if ("mobile" === deviceType)
 		//     hiddenClass = "elementor-hidden-phone";
 
-		if ($scope.closest("section.elementor-element, .e-con").hasClass(hiddenClass)) {
-			return
+		if (
+			$scope.closest("section.elementor-element, .e-con").hasClass(hiddenClass)
+		) {
+			return;
 		}
 
 		var $vScrollElem = $scope.find(".premium-vscroll-wrap"),
@@ -19,22 +20,23 @@
 			vScrollSettings = $vScrollElem.data("settings");
 
 		//Change back to default animation on touch devices.
-		if (['mobile', 'mobile_extra', 'tablet', 'tablet_extra'].includes(deviceType)) {
-			$sectionsWrap.removeAttr('data-animation data-hijacking');
+		if (
+			["mobile", "mobile_extra", "tablet", "tablet_extra"].includes(deviceType)
+		) {
+			$sectionsWrap.removeAttr("data-animation data-hijacking");
 		}
 
 		vScrollSettings.deviceType = deviceType;
 
 		instance = new premiumVerticalScroll($vScrollElem, vScrollSettings);
 		instance.init();
-
 	};
 
 	window.premiumVerticalScroll = function ($selector, settings) {
 		var self = this,
 			$window = $(window),
 			currentDevice = elementorFrontend.getCurrentDeviceMode(),
-			isTouch = !['desktop', 'widescreen', 'laptop'].includes(currentDevice),
+			isTouch = !["desktop", "widescreen", "laptop"].includes(currentDevice),
 			$instance = $selector,
 			checkTemps = $selector.find(".premium-vscroll-sections-wrap").length,
 			$htmlBody = $("html, body"),
@@ -43,7 +45,7 @@
 			defaultSettings = {
 				speed: 700,
 				offset: 0,
-				fullSection: true
+				fullSection: true,
 			},
 			settings = $.extend({}, defaultSettings, settings),
 			sections = {},
@@ -57,18 +59,14 @@
 		//Extend jQuery default easing.
 		jQuery.extend(jQuery.easing, {
 			easeInOutCirc: function (x, t, b, c, d) {
-				if ((t /= d / 2) < 1)
-					return (-c / 2) * (Math.sqrt(1 - t * t) - 1) + b;
+				if ((t /= d / 2) < 1) return (-c / 2) * (Math.sqrt(1 - t * t) - 1) + b;
 				return (c / 2) * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
-			}
+			},
 		});
 
 		self.init = function () {
-
 			if (settings.fullTouch || (!isTouch && settings.fullSection)) {
-
 				if (settings.fullCheckOverflow) {
-
 					self.setSectionsOverflow();
 				}
 			}
@@ -88,10 +86,12 @@
 				$window.on("scroll.premiumVerticalScroll", self.onWheel);
 			}
 
-			$window.on("resize.premiumVerticalScroll orientationchange.premiumVerticalScroll", self.debounce(50, self.onResize));
+			$window.on(
+				"resize.premiumVerticalScroll orientationchange.premiumVerticalScroll",
+				self.debounce(50, self.onResize),
+			);
 
 			$(document).ready(function () {
-
 				self.setSectionsData();
 
 				//Handle Full Section Scroll.
@@ -99,7 +99,6 @@
 					self.sectionsOverflowRefresh();
 
 				self.checkCurrentActive();
-
 			});
 
 			self.keyboardHandler();
@@ -107,26 +106,30 @@
 			self.scrollHandler();
 
 			if (settings.fullSection) {
-
 				self.fullSectionHandler();
 			}
 
 			if (settings.animation) {
-				$instance.find(".premium-vscroll-dots").removeClass("elementor-invisible").addClass("animated " + settings.animation + " animated-" + settings.duration);
+				$instance
+					.find(".premium-vscroll-dots")
+					.removeClass("elementor-invisible")
+					.addClass(
+						"animated " + settings.animation + " animated-" + settings.duration,
+					);
 			}
-
-
 		};
 
 		self.checkCurrentActive = function () {
-
 			var firstSection = Object.keys(sections)[0];
 
 			//Get first section offset
 			var firstSectionOffset = sections[firstSection].offset;
 
 			//If page scroll is lower than first section offset, then set current active to 1
-			if (firstSectionOffset >= $window.scrollTop() && firstSectionOffset - $window.scrollTop() < 200) {
+			if (
+				firstSectionOffset >= $window.scrollTop() &&
+				firstSectionOffset - $window.scrollTop() < 200
+			) {
 				currentSection = 1;
 				$itemsList.removeClass("active");
 				$($itemsList[0]).addClass("active");
@@ -134,8 +137,9 @@
 
 			//If current active section is defined, then show the dots
 			if (currentSection)
-				$instance.find(".premium-vscroll-dots").removeClass("premium-vscroll-dots-hide");
-
+				$instance
+					.find(".premium-vscroll-dots")
+					.removeClass("premium-vscroll-dots-hide");
 		};
 
 		/**
@@ -144,26 +148,37 @@
 		 * than the window height and init the section scroller.
 		 */
 		self.setSectionsOverflow = function () {
-
 			$itemsList.each(function () {
-
 				var $this = $(this),
 					sectionId = $this.data("menuanchor"),
-					animeType = $instance.find('.premium-vscroll-sections-wrap').data('animation'),
+					animeType = $instance
+						.find(".premium-vscroll-sections-wrap")
+						.data("animation"),
 					$section = $("#" + sectionId),
-					height = animeType ? $section.find('> div').outerHeight() : $section.outerHeight();
+					height = animeType
+						? $section.find("> div").outerHeight()
+						: $section.outerHeight();
 
-				if (height > $window.outerHeight() && height - $window.outerHeight() >= 50) {
+				if (
+					height > $window.outerHeight() &&
+					height - $window.outerHeight() >= 50
+				) {
+					$section
+						.find(checkTemps ? ".elementor" : ".elementor-container")
+						.first()
+						.wrapInner("<div id='scroller-" + sectionId + "'></div>");
 
-					$section.find(checkTemps ? ".elementor" : ".elementor-container").first().wrapInner("<div id='scroller-" + sectionId + "'></div>");
-
-					var isSafari = 'mobile' === elementorFrontend.getCurrentDeviceMode() && /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
-						slimHeight = isSafari ? $window.outerHeight() + 100 + 'px' : $window.outerHeight();
+					var isSafari =
+							"mobile" === elementorFrontend.getCurrentDeviceMode() &&
+							/^((?!chrome|android).)*safari/i.test(navigator.userAgent),
+						slimHeight = isSafari
+							? $window.outerHeight() + 100 + "px"
+							: $window.outerHeight();
 
 					$("#scroller-" + sectionId).slimScroll({
 						height: slimHeight,
 						railVisible: false,
-						touchScrollStep: 60
+						touchScrollStep: 60,
 					});
 
 					var iScrollInstance = new IScroll("#scroller-" + sectionId, {
@@ -172,10 +187,10 @@
 						hideScrollbars: true,
 						fadeScrollbars: false,
 						disableMouse: true,
-						interactiveScrollbars: false
+						interactiveScrollbars: false,
 					});
 
-					$("#scroller-" + sectionId).data('iscrollInstance', iScrollInstance);
+					$("#scroller-" + sectionId).data("iscrollInstance", iScrollInstance);
 
 					setTimeout(function () {
 						iScrollInstance.refresh();
@@ -185,25 +200,21 @@
 		};
 
 		self.sectionsOverflowRefresh = function () {
-
 			$itemsList.each(function () {
 				var $this = $(this),
 					sectionId = $this.data("menuanchor");
 
 				var $section = $("#scroller-" + sectionId);
 
-				var scroller = $section.data('iscrollInstance');
+				var scroller = $section.data("iscrollInstance");
 
 				if (scroller) {
 					scroller.refresh();
 				}
-
 			});
-
 		};
 
 		self.setSectionsData = function () {
-
 			$itemsList.each(function () {
 				var $this = $(this),
 					sectionId = $this.data("menuanchor"),
@@ -212,81 +223,72 @@
 
 				//Make sure that section exists in the DOM
 				if ($section[0]) {
-
 					sections[sectionId] = {
 						selector: $section,
 						offset: Math.round($section.offset().top),
-						height: height
+						height: height,
 					};
 				}
 			});
 		};
 
 		self.fullSectionHandler = function () {
-
 			var vSection = document.getElementById($instance.attr("id"));
 
 			if (!isTouch || !settings.fullTouch) {
-
 				if (checkTemps) {
-
-					document.addEventListener ?
-						vSection.addEventListener("wheel", self.onWheel, {
-							passive: false
-						}) :
-						vSection.attachEvent("onmousewheel", self.onWheel);
-
+					document.addEventListener
+						? vSection.addEventListener("wheel", self.onWheel, {
+								passive: false,
+							})
+						: vSection.attachEvent("onmousewheel", self.onWheel);
 				} else {
-
-					document.addEventListener ?
-						document.addEventListener("wheel", self.onWheel, {
-							passive: false
-						}) :
-						document.attachEvent("onmousewheel", self.onWheel);
-
+					document.addEventListener
+						? document.addEventListener("wheel", self.onWheel, {
+								passive: false,
+							})
+						: document.attachEvent("onmousewheel", self.onWheel);
 				}
-
 			} else {
 				document.addEventListener("touchstart", self.onTouchStart);
 				document.addEventListener("touchmove", self.onTouchMove, {
-					passive: false
+					passive: false,
 				});
-
 			}
-
 		};
 
 		self.scrollHandler = function () {
-
 			var index = 0;
 
 			for (var section in sections) {
-
 				var $section = sections[section].selector;
 
-				new IntersectionObserver(function (entries, observer) {
-					entries.forEach(function (entry) {
-						if (entry.isIntersecting) {
+				new IntersectionObserver(
+					function (entries, observer) {
+						entries.forEach(function (entry) {
+							if (entry.isIntersecting) {
+								var $this = $(entry.target),
+									sectionId = $this.attr("id");
 
-							var $this = $(entry.target),
-								sectionId = $this.attr("id");
+								if (!isScrolling) {
+									currentSection = sectionId;
 
-							if (!isScrolling) {
+									$itemsList.removeClass("active");
+									$menuItems.removeClass("active");
 
-								currentSection = sectionId;
+									$("[data-menuanchor=" + sectionId + "]", $instance).addClass(
+										"active",
+									);
+								}
 
-								$itemsList.removeClass("active");
-								$menuItems.removeClass("active");
-
-								$("[data-menuanchor=" + sectionId + "]", $instance).addClass("active");
+								observer.unobserve(entry.target); // to only execute the callback func once.
 							}
-
-							observer.unobserve(entry.target); // to only execute the callback func once.
-						}
-					});
-				}, {
-					rootMargin: 0 !== index ? "0%" : "-1% 0px 0px 0px"
-				}).observe($section[0]);
+						});
+					},
+					{
+						rootMargin: 0 !== index ? "0%" : "-1% 0px 0px 0px",
+					},
+				).observe($section[0]);
 
 				// elementorFrontend.waypoint(
 				//     $section,
@@ -312,7 +314,6 @@
 
 				index++;
 			}
-
 		};
 
 		self.keyboardHandler = function () {
@@ -328,52 +329,57 @@
 		};
 
 		self.isScrolled = function (sectionID, direction) {
-
 			var $section = $("#scroller-" + sectionID);
 
-			var scroller = $section.data('iscrollInstance');
+			var scroller = $section.data("iscrollInstance");
 
 			if (scroller) {
-				if ('down' === direction) {
-					return (0 - scroller.y) + $section.scrollTop() + 1 + $section.innerHeight() >= $section[0].scrollHeight;
-				} else if ('up' === direction) {
+				if ("down" === direction) {
+					return (
+						0 -
+							scroller.y +
+							$section.scrollTop() +
+							1 +
+							$section.innerHeight() >=
+						$section[0].scrollHeight
+					);
+				} else if ("up" === direction) {
 					return scroller.y >= 0 && !$section.scrollTop();
 				}
-
 			} else {
 				return true;
 			}
-
 		};
 
 		self.getEventsPage = function (e) {
-
 			var events = [];
 
-			events.y = (typeof e.pageY !== 'undefined' && (e.pageY || e.pageX) ? e.pageY : e.touches[0].pageY);
-			events.x = (typeof e.pageX !== 'undefined' && (e.pageY || e.pageX) ? e.pageX : e.touches[0].pageX);
+			events.y =
+				typeof e.pageY !== "undefined" && (e.pageY || e.pageX)
+					? e.pageY
+					: e.touches[0].pageY;
+			events.x =
+				typeof e.pageX !== "undefined" && (e.pageY || e.pageX)
+					? e.pageX
+					: e.touches[0].pageX;
 
-			if (isTouch && typeof e.touches !== 'undefined') {
+			if (isTouch && typeof e.touches !== "undefined") {
 				events.y = e.touches[0].pageY;
 				events.x = e.touches[0].pageX;
 			}
 
 			return events;
-
 		};
 
 		self.onTouchStart = function (e) {
-
 			//Prevent page scroll if scrolled down below the last of our sections.
 			inScope = true;
 
 			var touchEvents = self.getEventsPage(e);
 			touchStartY = touchEvents.y;
-
 		};
 
 		self.onTouchMove = function (e) {
-
 			if (inScope) {
 				self.preventDefault(e);
 			}
@@ -388,8 +394,13 @@
 			touchEndY = touchEvents.y;
 
 			var $target = $(e.target),
-				sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
-				$section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
+				sectionSelector = checkTemps
+					? ".premium-vscroll-temp"
+					: ".elementor-top-section, .e-con",
+				$section =
+					$target.parents(sectionSelector).length > 1
+						? $target.parents(sectionSelector).last()
+						: $target.closest(sectionSelector),
 				sectionId = $section.attr("id"),
 				newSectionId = false,
 				prevSectionId = false,
@@ -407,16 +418,19 @@
 				sectionId = self.getLastSection(sections);
 			}
 
-			if ($target.closest('.premium_maps_map_height').length > 0) {
+			if ($target.closest(".premium_maps_map_height").length > 0) {
+				var $closestMapSettings = $target
+					.closest(".premium_maps_map_height")
+					.data("settings");
 
-				var $closestMapSettings = $target.closest('.premium_maps_map_height').data('settings');
-
-				if ($closestMapSettings.scrollwheel)
-					return;
+				if ($closestMapSettings.scrollwheel) return;
 			}
 
 			//Swiper is added here to prevent scrolling on swipe left/right on touch devices.
-			if ($('.premium-modal-open').length > 0 || $target.closest('.e-widget-swiper').length > 0) {
+			if (
+				$(".premium-modal-open").length > 0 ||
+				$target.closest(".e-widget-swiper").length > 0
+			) {
 				return;
 			}
 
@@ -441,18 +455,16 @@
 			}
 
 			if (touchStartY > touchEndY) {
-				direction = 'down';
+				direction = "down";
 			} else if (touchEndY > touchStartY) {
-				direction = 'up';
+				direction = "up";
 			}
 
 			if (sectionId && sections.hasOwnProperty(sectionId)) {
-
 				prevSectionId = self.checkPrevSection(sections, sectionId);
 				nextSectionId = self.checkNextSection(sections, sectionId);
 
 				if ("up" === direction) {
-
 					if (!nextSectionId && sections[sectionId].offset < windowScrollTop) {
 						newSectionId = sectionId;
 					} else {
@@ -461,8 +473,10 @@
 				}
 
 				if ("down" === direction) {
-
-					if (!prevSectionId && sections[sectionId].offset - settings.offset > windowScrollTop + 5) {
+					if (
+						!prevSectionId &&
+						sections[sectionId].offset - settings.offset > windowScrollTop + 5
+					) {
 						newSectionId = sectionId;
 					} else {
 						newSectionId = nextSectionId;
@@ -475,7 +489,9 @@
 
 				if (newSectionId) {
 					inScope = true;
-					$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
+					$instance
+						.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+						.removeClass("premium-vscroll-dots-hide");
 
 					if (!self.isScrolled(sectionId, direction)) {
 						return;
@@ -484,9 +500,7 @@
 					if (isAccelerating && !isScrolling) {
 						self.onAnchorChange(newSectionId);
 					}
-
 				} else {
-
 					//Make sure the scroll is done.
 					if (averageEnd <= 5) {
 						inScope = false;
@@ -495,28 +509,27 @@
 					var $lastselector = checkTemps ? $instance : $("#" + sectionId);
 
 					if ("down" === direction) {
-
-						if ($lastselector.offset().top + $lastselector.innerHeight() - $(document).scrollTop() > 600) {
-
-							$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
-
+						if (
+							$lastselector.offset().top +
+								$lastselector.innerHeight() -
+								$(document).scrollTop() >
+							600
+						) {
+							$instance
+								.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+								.addClass("premium-vscroll-dots-hide");
 						}
-
 					} else if ("up" === direction) {
-
 						if ($lastselector.offset().top - $(document).scrollTop() > 200) {
-
-							$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
-
+							$instance
+								.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+								.addClass("premium-vscroll-dots-hide");
 						}
-
 					}
 				}
-
 			} else {
 				inScope = false;
 			}
-
 		};
 
 		self.scrollStop = function () {
@@ -571,15 +584,13 @@
 		self.visible = function (selector, partial, hidden) {
 			var s = selector.get(0),
 				vpHeight = $window.outerHeight(),
-				clientSize =
-					hidden === true ? s.offsetWidth * s.offsetHeight : true;
+				clientSize = hidden === true ? s.offsetWidth * s.offsetHeight : true;
 			if (typeof s.getBoundingClientRect === "function") {
 				var rec = s.getBoundingClientRect();
 				var tViz = rec.top >= 0 && rec.top < vpHeight,
 					bViz = rec.bottom > 0 && rec.bottom <= vpHeight,
 					vVisible = partial ? tViz || bViz : tViz && bViz,
-					vVisible =
-						rec.top < 0 && rec.bottom > vpHeight ? true : vVisible;
+					vVisible = rec.top < 0 && rec.bottom > vpHeight ? true : vVisible;
 				return clientSize && vVisible;
 			} else {
 				var viewTop = 0,
@@ -590,8 +601,7 @@
 					compareTop = partial === true ? _bottom : _top,
 					compareBottom = partial === true ? _top : _bottom;
 				return (
-					!!clientSize &&
-					(compareBottom <= viewBottom && compareTop >= viewTop)
+					!!clientSize && compareBottom <= viewBottom && compareTop >= viewTop
 				);
 			}
 		};
@@ -606,8 +616,8 @@
 
 				$(
 					'<div class="premium-vscroll-tooltip"><span>' +
-					settings.dotsText[index] +
-					"</span></div>"
+						settings.dotsText[index] +
+						"</span></div>",
 				)
 					.hide()
 					.appendTo($this)
@@ -633,8 +643,7 @@
 
 			offset = sections[sectionId].offset - settings.offset;
 
-			if (offset < 0)
-				offset = sections[sectionId].offset;
+			if (offset < 0) offset = sections[sectionId].offset;
 
 			if (!isScrolling) {
 				isScrolling = true;
@@ -654,33 +663,28 @@
 				$htmlBody
 					.stop()
 					.clearQueue()
-					.animate({
-						scrollTop: offset
-					},
+					.animate(
+						{
+							scrollTop: offset,
+						},
 						settings.speed,
 						"easeInOutCirc",
 						function () {
 							isScrolling = false;
-						}
+						},
 					);
 			}
 		};
 
 		self.preventDefault = function (event) {
-
 			if (event.preventDefault) {
-
 				event.preventDefault();
-
 			} else {
-
 				event.returnValue = false;
-
 			}
 		};
 
 		self.onAnchorChange = function (sectionId) {
-
 			var $this = $("[data-menuanchor=" + sectionId + "]", $instance),
 				offset = null;
 
@@ -690,8 +694,7 @@
 
 			offset = sections[sectionId].offset - settings.offset;
 
-			if (offset < 0)
-				offset = sections[sectionId].offset;
+			if (offset < 0) offset = sections[sectionId].offset;
 
 			if (!isScrolling) {
 				isScrolling = true;
@@ -707,24 +710,36 @@
 
 				$this.addClass("active");
 
-				$htmlBody.animate({ scrollTop: offset }, settings.speed, "easeInOutCirc");
+				$htmlBody.animate(
+					{ scrollTop: offset },
+					settings.speed,
+					"easeInOutCirc",
+				);
 
-				setTimeout(function () {
-					isScrolling = false;
-				}, settings.speed < 700 ? 700 : settings.speed);
+				setTimeout(
+					function () {
+						isScrolling = false;
+					},
+					settings.speed < 700 ? 700 : settings.speed,
+				);
 			}
 		};
 
 		self.onKeyUp = function (event, direction) {
-
 			//If keyboard is triggered before scroll
 			if (currentSection === 1) {
 				currentSection = $itemsList.eq(0).data("menuanchor");
 			}
 
 			var direction = direction || "up",
-				nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).next(),
-				prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).prev();
+				nextItem = $(
+					".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]",
+					$instance,
+				).next(),
+				prevItem = $(
+					".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]",
+					$instance,
+				).prev();
 
 			event.preventDefault();
 
@@ -734,27 +749,61 @@
 
 			var $vTarget = self.visible($instance, true, false),
 				dotIndex = $(".premium-vscroll-dot-item.active").index(),
-				animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
+				animationType = $instance
+					.find(".premium-vscroll-sections-wrap")
+					.data("animation");
 
 			if ("up" === direction) {
 				if (prevItem[0]) {
 					prevItem.trigger("click.premiumVerticalScroll");
 					if (dotIndex === $itemsList.length - 1 && !$vTarget) {
-						prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
-					} else if (dotIndex === $itemsList.length - 1 && ($instance.offset().top + $instance.innerHeight() - $(document).scrollTop() < 600)) {
-						prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
+						prevItem = $(
+							".premium-vscroll-dot-item[data-menuanchor=" +
+								currentSection +
+								"]",
+							$instance,
+						);
+					} else if (
+						dotIndex === $itemsList.length - 1 &&
+						$instance.offset().top +
+							$instance.innerHeight() -
+							$(document).scrollTop() <
+							600
+					) {
+						prevItem = $(
+							".premium-vscroll-dot-item[data-menuanchor=" +
+								currentSection +
+								"]",
+							$instance,
+						);
 					} else {
-						$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type>div').removeClass("premium-vscroll-parallax-last");
-						$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp>div').removeClass("premium-vscroll-parallax-position");
+						$instance
+							.find(
+								".premium-vscroll-sections-wrap[data-animation=" +
+									animationType +
+									"] .premium-vscroll-temp:last-of-type>div",
+							)
+							.removeClass("premium-vscroll-parallax-last");
+						$instance
+							.find(
+								".premium-vscroll-sections-wrap[data-animation=" +
+									animationType +
+									"] .premium-vscroll-temp>div",
+							)
+							.removeClass("premium-vscroll-parallax-position");
 						// prevItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).prev(),
 					}
-
 				}
 			} else {
 				if (nextItem[0]) {
 					nextItem.trigger("click.premiumVerticalScroll");
 					if ($instance.offset().top - $(document).scrollTop() > 200) {
-						nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance);
+						nextItem = $(
+							".premium-vscroll-dot-item[data-menuanchor=" +
+								currentSection +
+								"]",
+							$instance,
+						);
 					}
 					// else {
 					//     // nextItem = $(".premium-vscroll-dot-item[data-menuanchor=" + currentSection + "]", $instance).next(),
@@ -765,11 +814,11 @@
 
 		self.getFirstSection = function (object) {
 			return Object.keys(object)[0];
-		}
+		};
 
 		self.getLastSection = function (object) {
 			return Object.keys(object)[Object.keys(object).length - 1];
-		}
+		};
 
 		function getScrollData(e) {
 			e = e || window.event;
@@ -784,34 +833,73 @@
 		//Used to unset position CSS property for vertical scroll sections becuase it causes position issue for the content below the widget.
 		function parallaxLastSection() {
 			var $target = $(event.target),
-				sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
-				$section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
+				sectionSelector = checkTemps
+					? ".premium-vscroll-temp"
+					: ".elementor-top-section, .e-con",
+				$section =
+					$target.parents(sectionSelector).length > 1
+						? $target.parents(sectionSelector).last()
+						: $target.closest(sectionSelector),
 				sectionId = $section.attr("id"),
 				$lastselector = checkTemps ? $instance : $("#" + sectionId),
-				animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
+				animationType = $instance
+					.find(".premium-vscroll-sections-wrap")
+					.data("animation");
 
 			if (animationType) {
-
-				if ($lastselector.offset().top + $lastselector.innerHeight() - $(document).scrollTop() + settings.offset < $window.outerHeight()) {
-					$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type > div').addClass("premium-vscroll-parallax-last");
-					$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp>div').addClass("premium-vscroll-parallax-position");
-
+				if (
+					$lastselector.offset().top +
+						$lastselector.innerHeight() -
+						$(document).scrollTop() +
+						settings.offset <
+					$window.outerHeight()
+				) {
+					$instance
+						.find(
+							".premium-vscroll-sections-wrap[data-animation=" +
+								animationType +
+								"] .premium-vscroll-temp:last-of-type > div",
+						)
+						.addClass("premium-vscroll-parallax-last");
+					$instance
+						.find(
+							".premium-vscroll-sections-wrap[data-animation=" +
+								animationType +
+								"] .premium-vscroll-temp>div",
+						)
+						.addClass("premium-vscroll-parallax-position");
 				} else {
-					$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp:last-of-type > div').removeClass("premium-vscroll-parallax-last");
-					$instance.find('.premium-vscroll-sections-wrap[data-animation=' + animationType + '] .premium-vscroll-temp > div').removeClass("premium-vscroll-parallax-position");
+					$instance
+						.find(
+							".premium-vscroll-sections-wrap[data-animation=" +
+								animationType +
+								"] .premium-vscroll-temp:last-of-type > div",
+						)
+						.removeClass("premium-vscroll-parallax-last");
+					$instance
+						.find(
+							".premium-vscroll-sections-wrap[data-animation=" +
+								animationType +
+								"] .premium-vscroll-temp > div",
+						)
+						.removeClass("premium-vscroll-parallax-position");
 				}
 			}
 		}
 
 		self.onWheel = function (event) {
-
 			if (inScope && !isTouch) {
 				self.preventDefault(event);
 			}
 
 			var $target = $(event.target),
-				sectionSelector = checkTemps ? ".premium-vscroll-temp" : ".elementor-top-section, .e-con",
-				$section = $target.parents(sectionSelector).length > 1 ? $target.parents(sectionSelector).last() : $target.closest(sectionSelector),
+				sectionSelector = checkTemps
+					? ".premium-vscroll-temp"
+					: ".elementor-top-section, .e-con",
+				$section =
+					$target.parents(sectionSelector).length > 1
+						? $target.parents(sectionSelector).last()
+						: $target.closest(sectionSelector),
 				sectionId = $section.attr("id"),
 				$vTarget = self.visible($instance, true, false),
 				newSectionId = false,
@@ -823,16 +911,16 @@
 				windowScrollTop = $window.scrollTop(),
 				dotIndex = $(".premium-vscroll-dot-item.active").index();
 
-			if ($target.closest('.premium_maps_map_height').length > 0) {
+			if ($target.closest(".premium_maps_map_height").length > 0) {
+				var $closestMapSettings = $target
+					.closest(".premium_maps_map_height")
+					.data("settings");
 
-				var $closestMapSettings = $target.closest('.premium_maps_map_height').data('settings');
-
-				if ($closestMapSettings.scrollwheel)
-					return;
+				if ($closestMapSettings.scrollwheel) return;
 			}
 
 			//We don't want to return if swiper on desktops.
-			if ($('.premium-modal-open').length > 0) {
+			if ($(".premium-modal-open").length > 0) {
 				return;
 			}
 
@@ -859,17 +947,22 @@
 			parallaxLastSection();
 
 			if (isTouch) {
-
 				$(".premium-vscroll-tooltip").hide();
 
 				if (dotIndex === $itemsList.length - 1 && !$vTarget) {
-					$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+					$instance
+						.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+						.addClass("premium-vscroll-dots-hide");
 				} else if (dotIndex === 0 && !$vTarget) {
 					if ($instance.offset().top - $(document).scrollTop() > 200) {
-						$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+						$instance
+							.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+							.addClass("premium-vscroll-dots-hide");
 					}
 				} else {
-					$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
+					$instance
+						.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+						.removeClass("premium-vscroll-dots-hide");
 				}
 			}
 
@@ -882,7 +975,6 @@
 			}
 
 			if (sectionId && sections.hasOwnProperty(sectionId)) {
-
 				prevSectionId = self.checkPrevSection(sections, sectionId);
 				nextSectionId = self.checkNextSection(sections, sectionId);
 
@@ -893,7 +985,10 @@
 						newSectionId = prevSectionId;
 					}
 				} else {
-					if (!prevSectionId && sections[sectionId].offset - settings.offset > windowScrollTop + 5) {
+					if (
+						!prevSectionId &&
+						sections[sectionId].offset - settings.offset > windowScrollTop + 5
+					) {
 						newSectionId = sectionId;
 					} else {
 						newSectionId = nextSectionId;
@@ -910,9 +1005,13 @@
 						return;
 					}
 
-					$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").removeClass("premium-vscroll-dots-hide");
+					$instance
+						.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+						.removeClass("premium-vscroll-dots-hide");
 
-					var iScrollInstance = $("#scroller-" + newSectionId).data('iscrollInstance');
+					var iScrollInstance = $("#scroller-" + newSectionId).data(
+						"iscrollInstance",
+					);
 
 					if (isAccelerating && !isScrolling) {
 						self.onAnchorChange(newSectionId);
@@ -927,7 +1026,6 @@
 						//     }, settings.speed);
 						// }
 					}
-
 				} else {
 					//Make sure the scroll is done.
 					if (averageEnd <= 5) {
@@ -939,14 +1037,18 @@
 					if ("down" === direction) {
 						if (
 							$lastselector.offset().top +
-							$lastselector.innerHeight() -
-							$(document).scrollTop() >
+								$lastselector.innerHeight() -
+								$(document).scrollTop() >
 							600
 						) {
-							$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+							$instance
+								.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+								.addClass("premium-vscroll-dots-hide");
 						}
 					} else if ("up" === direction) {
-						$instance.find(".premium-vscroll-dots, .premium-vscroll-nav-menu").addClass("premium-vscroll-dots-hide");
+						$instance
+							.find(".premium-vscroll-dots, .premium-vscroll-nav-menu")
+							.addClass("premium-vscroll-dots-hide");
 					}
 				}
 			}
@@ -965,14 +1067,13 @@
 				return true;
 			}
 			return false;
-		}
+		};
 
 		self.afterCheck = function () {
 			var windowScrollTop = $window.scrollTop(),
 				lastSectionId = self.getLastSection(sections),
 				bottomBorder =
-					sections[lastSectionId].offset +
-					sections[lastSectionId].height,
+					sections[lastSectionId].offset + sections[lastSectionId].height,
 				visible = self.visible($instance, true, false);
 
 			if (windowScrollTop < bottomBorder) {
@@ -982,7 +1083,7 @@
 			}
 
 			return false;
-		}
+		};
 
 		self.onResize = function () {
 			self.setSectionsData();
@@ -1003,112 +1104,138 @@
 		};
 
 		self.vscrollEffects = function () {
-
-			var animationType = $instance.find('.premium-vscroll-sections-wrap').data('animation');
+			var animationType = $instance
+				.find(".premium-vscroll-sections-wrap")
+				.data("animation");
 
 			if (animationType) {
+				var sectionsAvailable = $instance.find(".premium-vscroll-temp"),
+					windowHeight = $(window).height();
 
-				var sectionsAvailable = $instance.find('.premium-vscroll-temp');
+				$(window).off("resize.vscrollEffects");
+				$(window).on("resize.vscrollEffects", function () {
+					windowHeight = $(window).height();
+				});
 
 				//bind the animation to the window scroll event, arrows click and keyboard.
 				scrollAnimation();
 
-				$(window).on('scroll', scrollAnimation);
+				$(window).on("scroll", scrollAnimation);
 
 				function scrollAnimation() {
-
 					//We don't want scroll functions to be triggered if behance project lightbox is opened.
-					if ($(".eb-project-overlay").length > 0)
-						return;
+					if ($(".eb-project-overlay").length > 0) return;
 
 					//normal scroll - use requestAnimationFrame (if defined) to optimize performance.
-					(!window.requestAnimationFrame) ? animateSection() : window.requestAnimationFrame(animateSection);
+					!window.requestAnimationFrame
+						? animateSection()
+						: window.requestAnimationFrame(animateSection);
 				}
 
 				function animateSection() {
-
-					var scrollTop = $(window).scrollTop(),
-						windowHeight = $(window).height();
+					var scrollTop = $(window).scrollTop();
 
 					sectionsAvailable.each(function () {
 						var actualBlock = $(this),
 							offset = scrollTop - actualBlock.offset().top;
 
 						// according to animation type and window scroll, define animation parameters.
-						var animationValues = setSectionAnimation(offset, windowHeight, animationType);
+						var animationValues = setSectionAnimation(
+							offset,
+							windowHeight,
+							animationType,
+						);
 
-						transformSection(actualBlock.children('div'), animationValues[0], animationValues[1], animationValues[2], animationValues[3]);
+						transformSection(
+							actualBlock.children("div"),
+							animationValues[0],
+							animationValues[1],
+							animationValues[2],
+							animationValues[3],
+						);
 
-						(offset >= 0 && offset < windowHeight) ? actualBlock.addClass('visible') : actualBlock.removeClass('visible');
+						offset >= 0 && offset < windowHeight
+							? actualBlock.addClass("visible")
+							: actualBlock.removeClass("visible");
 					});
 				}
 
-				function transformSection(element, translateY, rotateXValue, opacityValue, scaleValue) {
-
+				function transformSection(
+					element,
+					translateY,
+					rotateXValue,
+					opacityValue,
+					scaleValue,
+				) {
 					element.css({
-						transform: 'translateY(' + translateY + 'vh) rotateX(' + rotateXValue + ') scale(' + scaleValue + ')',
+						transform:
+							"translateY(" +
+							translateY +
+							"vh) rotateX(" +
+							rotateXValue +
+							") scale(" +
+							scaleValue +
+							")",
 						// rotateX: rotateXValue,
-						opacity: opacityValue
+						opacity: opacityValue,
 					});
 				}
 
-				function setSectionAnimation(sectionOffset, windowHeight, animationName) {
-
+				function setSectionAnimation(
+					sectionOffset,
+					windowHeight,
+					animationName,
+				) {
 					// select section animation - normal scroll
 					var translateY = 100,
-						rotateX = '0deg',
+						rotateX = "0deg",
 						opacity = 1,
 						scale = 1,
 						boxShadowBlur = 0;
 
 					if (sectionOffset >= -windowHeight && sectionOffset <= 0) {
 						// section entering the viewport.
-						translateY = (-sectionOffset) * 100 / windowHeight;
+						translateY = (-sectionOffset * 100) / windowHeight;
 
-						if ('rotate' === animationName) {
+						if ("rotate" === animationName) {
 							translateY = 0;
-							rotateX = '0deg';
-						} else if ('scaleDown' === animationName) {
+							rotateX = "0deg";
+						} else if ("scaleDown" === animationName) {
 							scale = 1;
 							opacity = 1;
 						}
-
 					} else if (sectionOffset > 0 && sectionOffset <= windowHeight) {
 						//section leaving the viewport - still has the '.visible' class.
-						if ('rotate' === animationName) {
-							opacity = (1 - (sectionOffset / windowHeight)).toFixed(5);
-							rotateX = sectionOffset * 100 / windowHeight + 'deg';
+						if ("rotate" === animationName) {
+							opacity = (1 - sectionOffset / windowHeight).toFixed(5);
+							rotateX = (sectionOffset * 100) / windowHeight + "deg";
 							translateY = 0;
-						} else if ('scaleDown' === animationName) {
-							scale = (1 - (sectionOffset * 0.3 / windowHeight)).toFixed(5);
-							opacity = (1 - (sectionOffset / windowHeight)).toFixed(5);
+						} else if ("scaleDown" === animationName) {
+							scale = (1 - (sectionOffset * 0.3) / windowHeight).toFixed(5);
+							opacity = (1 - sectionOffset / windowHeight).toFixed(5);
 							translateY = 0;
 							boxShadowBlur = 40 * (sectionOffset / windowHeight);
-
-						} else { //parallax
-							translateY = (-sectionOffset) * 50 / windowHeight;
+						} else {
+							//parallax
+							translateY = (-sectionOffset * 50) / windowHeight;
 						}
-
 					} else if (sectionOffset < -windowHeight) {
 						//section not yet visible.
 						translateY = 100;
 
-						if ('scaleDown' === animationName) {
+						if ("scaleDown" === animationName) {
 							scale = 1;
 							opacity = 1;
 						}
-
 					} else {
 						//section not visible anymore.
-						if ('rotate' === animationName) {
+						if ("rotate" === animationName) {
 							translateY = 0;
-							rotateX = '90deg';
-
-						} else if ('scaleDown' === animationName) {
+							rotateX = "90deg";
+						} else if ("scaleDown" === animationName) {
 							scale = 0;
 							opacity = 0.7;
 							translateY = 0;
-
 						} else {
 							translateY = -50;
 						}
@@ -1116,15 +1243,14 @@
 
 					return [translateY, rotateX, opacity, scale];
 				}
-
 			}
-		}
+		};
 	};
 
 	$(window).on("elementor/frontend/init", function () {
 		elementorFrontend.hooks.addAction(
 			"frontend/element_ready/premium-vscroll.default",
-			PremiumVerticalScrollHandler
+			PremiumVerticalScrollHandler,
 		);
 	});
 })(jQuery);

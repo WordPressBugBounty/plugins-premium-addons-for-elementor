@@ -2292,7 +2292,10 @@ class Woo_CTA extends Widget_Base {
 							<tr><th>Product</th><th>Price</th><th>Quantity</th></tr>
 							<?php
 							foreach ( $child_products as $child_id ) {
-								$child_product  = wc_get_product( $child_id );
+								$child_product = wc_get_product( $child_id );
+								if ( ! $child_product ) {
+									continue;
+								}
 								$stock_quantity = $child_product->get_stock_quantity();
 								$max_stock      = $stock_quantity ? $stock_quantity : '';
 								if ( $max_stock && ! empty( $product_quantity_message ) ) {

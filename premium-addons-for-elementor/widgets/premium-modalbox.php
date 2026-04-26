@@ -144,7 +144,8 @@ class Premium_Modalbox extends Widget_Base {
 			$scripts[] = 'pa-modal';
 
 			if ( 'yes' === $settings['draw_svg'] ) {
-				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+				$scripts[] = 'pa-tweenmax';
+				$scripts[] = 'pa-motionpath';
 			}
 
 			if ( 'animation' === $settings['premium_modal_box_icon_selection'] || 'animation' === $settings['premium_modal_box_display_on'] ) {

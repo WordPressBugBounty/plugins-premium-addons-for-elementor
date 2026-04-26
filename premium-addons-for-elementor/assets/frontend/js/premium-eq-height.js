@@ -58,13 +58,13 @@
                     $targets = section.find(selector);
                 }
 
-                section.find(selector).css('minHeight', 'unset');
+                $targets.css('minHeight', 'unset');
 
                 jQuery.each($targets, function (key, valueObj) {
                     heights.push($(valueObj).outerHeight(true));
                 });
 
-                section.find(selector).css('minHeight', Math.max.apply(null, heights));
+                $targets.css('minHeight', Math.max.apply(null, heights));
             }
 
             function triggerEqualHeight() {

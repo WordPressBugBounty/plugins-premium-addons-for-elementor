@@ -135,7 +135,8 @@ class Premium_Pricing_Table extends Widget_Base {
 			if ( 'yes' === $settings['premium_pricing_table_icon_switcher'] ) {
 
 				if ( 'yes' === $settings['draw_svg'] ) {
-					array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+					$scripts[] = 'pa-tweenmax';
+					$scripts[] = 'pa-motionpath';
 				}
 
 				if ( 'animation' === $settings['icon_type'] ) {
@@ -147,7 +148,8 @@ class Premium_Pricing_Table extends Widget_Base {
 			if ( 'yes' === $settings['premium_pricing_table_list_switcher'] && ! empty( $settings['premium_fancy_text_list_items'] ) ) {
 				foreach ( $settings['premium_fancy_text_list_items'] as $item ) {
 					if ( 'yes' === $item['draw_svg'] ) {
-						array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+						$scripts[] = 'pa-tweenmax';
+						$scripts[] = 'pa-motionpath';
 						$draw_js = true;
 					}
 

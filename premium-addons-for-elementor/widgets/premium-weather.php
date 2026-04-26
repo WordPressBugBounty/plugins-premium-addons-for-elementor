@@ -184,7 +184,8 @@ class Premium_Weather extends Widget_Base {
 			$settings = $this->get_settings();
 
 			if ( isset( $settings['draw_svg'] ) && 'yes' === $settings['draw_svg'] ) {
-				array_push( $scripts, 'pa-tweenmax', 'pa-motionpath' );
+				$scripts[] = 'pa-tweenmax';
+				$scripts[] = 'pa-motionpath';
 			}
 
 			if ( 'yes' === $settings['enable_hourly'] || 'yes' === $settings['enable_forecast'] ) {
@@ -3924,6 +3925,8 @@ class Premium_Weather extends Widget_Base {
 		$show_temp_icon         = 'yes' === $settings['show_temp_icon'] ? true : false;
 		$show_current_weather   = 'yes' === $settings['show_current_weather'] ? true : false;
 		$current                = $weather_data['current'];
+		$current_weather_icon   = isset( $current['weather'][0]['icon'] ) ? $current['weather'][0]['icon'] : '';
+		$current_weather_desc   = isset( $current['weather'][0]['description'] ) ? $current['weather'][0]['description'] : '';
 		$forecast               = 'yes' === $settings['enable_forecast'] ? true : false;
 		$forecast_icon          = $forecast && 'yes' === $settings['show_forecast_icon'] ? true : false;
 		$hourly_forecast        = 'yes' === $settings['enable_hourly'] ? $weather_data['hourly'] : false;
@@ -3994,8 +3997,8 @@ class Premium_Weather extends Widget_Base {
 								<span class="premium-weather__city-name"> <?php echo esc_html( str_replace( '{{city_name}}', $weather_data['city_name'], $title ) ); ?></span>
 							</div>
 						<?php } ?>
-						<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $current['weather'][0]['description'] ); ?>">
-							<?php $this->render_weather_icon( $current['weather'][0]['icon'] ); ?>
+						<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $current_weather_desc ); ?>">
+							<?php $this->render_weather_icon( $current_weather_icon ); ?>
 						</div>
 						<div class="premium-weather__temp-wrapper">
 							<?php if ( $show_temp_icon ) : ?>
@@ -4006,7 +4009,7 @@ class Premium_Weather extends Widget_Base {
 						</div>
 						<?php if ( $show_curr_weather_desc ) : ?>
 						<div class="premium-weather__desc-wrapper">
-							<div class="premium-weather__desc"><?php echo esc_html( $current['weather'][0]['description'] ); ?></div>
+							<div class="premium-weather__desc"><?php echo esc_html( $current_weather_desc ); ?></div>
 							<div class="premium-weather__feels-like"> <?php esc_html_e( 'Feels Like:', 'premium-addons-for-elementor' ); ?> <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						</div>
 						<?php endif; ?>
@@ -4055,11 +4058,11 @@ class Premium_Weather extends Widget_Base {
 								<span class="premium-weather__temp-unit"><?php echo $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 							</div>
 							<div class="premium-weather__desc-wrapper">
-								<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $current['weather'][0]['description'] ); ?>">
-									<?php $this->render_weather_icon( $current['weather'][0]['icon'] ); ?>
+								<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $current_weather_desc ); ?>">
+									<?php $this->render_weather_icon( $current_weather_icon ); ?>
 								</div>
 								<?php if ( $show_curr_weather_desc ) : ?>
-									<div class="premium-weather__desc"><?php echo esc_html( $current['weather'][0]['description'] ); ?></div>
+									<div class="premium-weather__desc"><?php echo esc_html( $current_weather_desc ); ?></div>
 									<div class="premium-weather__feels-like"> <?php esc_html_e( 'Feels Like:', 'premium-addons-for-elementor' ); ?> <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 								<?php endif; ?>
 							</div>
@@ -4097,8 +4100,8 @@ class Premium_Weather extends Widget_Base {
 			<?php if ( $show_current_weather ) : ?>
 				<div class="premium-weather__current-weather">
 					<div class="premium-weather__basic-weather">
-						<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $current['weather'][0]['description'] ); ?>">
-							<?php $this->render_weather_icon( $current['weather'][0]['icon'] ); ?>
+						<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $current_weather_desc ); ?>">
+							<?php $this->render_weather_icon( $current_weather_icon ); ?>
 						</div>
 
 						<?php if ( false !== $title ) { ?>
@@ -4107,7 +4110,7 @@ class Premium_Weather extends Widget_Base {
 							</div>
 						<?php } ?>
 						<?php if ( $show_curr_weather_desc ) : ?>
-							<div class="premium-weather__desc"><?php echo esc_html( $current['weather'][0]['description'] ); ?></div>
+							<div class="premium-weather__desc"><?php echo esc_html( $current_weather_desc ); ?></div>
 							<div class="premium-weather__feels-like"> <?php esc_html_e( 'Feels Like:', 'premium-addons-for-elementor' ); ?> <?php echo esc_html( round( $current['feels_like'], 0 ) ) . $temp_unit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						<?php endif; ?>
 					</div>
@@ -4170,7 +4173,8 @@ class Premium_Weather extends Widget_Base {
 			for ( $i = 0; $i < $days_num; $i++ ) {
 
 				$item         = $data[ $i ];
-				$weather_desc = $item['weather'][0]['description'];
+				$weather_icon = isset( $item['weather'][0]['icon'] ) ? $item['weather'][0]['icon'] : '';
+				$weather_desc = isset( $item['weather'][0]['description'] ) ? $item['weather'][0]['description'] : '';
 				$date         = 'style-3' === $layout ? gmdate( 'l', $item['dt'] ) : gmdate( 'l, d', $item['dt'] );
 
 				if ( 0 === $i ) {
@@ -4187,7 +4191,7 @@ class Premium_Weather extends Widget_Base {
 					<div class="premium-weather__forecast-item-data">
 						<?php if ( $forecast_icon ) : ?>
 						<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $weather_desc ); ?>">
-							<?php $this->render_weather_icon( $item['weather'][0]['icon'] ); ?>
+							<?php $this->render_weather_icon( $weather_icon ); ?>
 						</div>
 						<?php endif; ?>
 						<div class="premium-weather__temp-wrapper">
@@ -4199,7 +4203,7 @@ class Premium_Weather extends Widget_Base {
 						<div class="premium-weather__forecast-item-data">
 							<?php if ( $forecast_icon ) : ?>
 							<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $weather_desc ); ?>">
-								<?php $this->render_weather_icon( $item['weather'][0]['icon'] ); ?>
+								<?php $this->render_weather_icon( $weather_icon ); ?>
 							</div>
 							<?php endif; ?>
 							<span class="premium-weather__temp-max">
@@ -4274,14 +4278,14 @@ class Premium_Weather extends Widget_Base {
 		<?php if ( in_array( 'rain', $extra_weather, true ) && isset( $current['rain'] ) ) : ?>
 			<div class="premium-weather__rain-wrapper">
 				<i class="fas fa-cloud-rain" aria-hidden="true"></i>
-			<span class="premium-weather__rain" title="Rain, Precipitation, mm/h"> <?php echo esc_html( $current['rain']['1h'] ) . 'mmph'; ?></span>
+			<span class="premium-weather__rain" title="Rain, Precipitation, mm/h"> <?php echo esc_html( isset( $current['rain']['1h'] ) ? $current['rain']['1h'] : ( isset( $current['rain']['3h'] ) ? $current['rain']['3h'] : '' ) ) . 'mmph'; ?></span>
 		</div>
 		<?php endif; ?>
 
 		<?php if ( in_array( 'snow', $extra_weather, true ) && isset( $current['snow'] ) ) : ?>
 		<div class="premium-weather__snow-wrapper">
 			<i class="far fa-snowflake" aria-hidden="true"></i>
-			<span class="premium-weather__snow" title="Snow, Precipitation, mm/h"><?php echo esc_html( $current['snow']['1h'] ) . 'mmph'; ?></span>
+			<span class="premium-weather__snow" title="Snow, Precipitation, mm/h"><?php echo esc_html( isset( $current['snow']['1h'] ) ? $current['snow']['1h'] : ( isset( $current['snow']['3h'] ) ? $current['snow']['3h'] : '' ) ) . 'mmph'; ?></span>
 		</div>
 		<?php endif; ?>
 		<?php
@@ -4304,23 +4308,25 @@ class Premium_Weather extends Widget_Base {
 
 		if ( $vertical_layout ) {
 			$weather_conditions = $settings['hourly_weather_data'];
+			$conditions_lookup  = array_flip( $weather_conditions );
 
-			$show_desc_icon = in_array( 'desc_icon', $weather_conditions, true ) ? true : false;
-			$show_desc      = in_array( 'desc', $weather_conditions, true ) ? true : false;
-			$show_temp      = in_array( 'temp', $weather_conditions, true ) ? true : false;
+			$show_desc_icon = isset( $conditions_lookup['desc_icon'] );
+			$show_desc      = isset( $conditions_lookup['desc'] );
+			$show_temp      = isset( $conditions_lookup['temp'] );
 		}
 
 		for ( $i = 0; $i < $limit; $i++ ) {
 			$current_time = time();
 			$item         = $data[ $i ];
-			$weather_desc = $item['weather'][0]['description'];
+			$weather_icon = isset( $item['weather'][0]['icon'] ) ? $item['weather'][0]['icon'] : '';
+			$weather_desc = isset( $item['weather'][0]['description'] ) ? $item['weather'][0]['description'] : '';
 
 			?>
 			<div class="premium-weather__hourly-item">
 				<span class="premium-weather__hourly-item-date"><?php echo esc_html( gmdate( 'g A', $item['dt'] + $timezone ) ); ?></span>
 				<?php if ( ! $vertical_layout ) : ?>
 					<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $weather_desc ); ?>">
-						<?php $this->render_weather_icon( $item['weather'][0]['icon'] ); ?>
+						<?php $this->render_weather_icon( $weather_icon ); ?>
 					</div>
 				<?php endif; ?>
 
@@ -4340,7 +4346,7 @@ class Premium_Weather extends Widget_Base {
 
 						<?php if ( $show_desc_icon ) : ?>
 							<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $weather_desc ); ?>">
-								<?php $this->render_weather_icon( $item['weather'][0]['icon'] ); ?>
+								<?php $this->render_weather_icon( $weather_icon ); ?>
 							</div>
 						<?php endif; ?>
 
@@ -4359,7 +4365,7 @@ class Premium_Weather extends Widget_Base {
 
 						<?php $this->render_extra_weather( $weather_conditions, $item ); ?>
 						<?php if ( $show_desc ) : ?>
-							<span class="premium-weather__hourly-desc"> <?php echo esc_html( $item['weather'][0]['description'] ); ?></span>
+							<span class="premium-weather__hourly-desc"> <?php echo esc_html( $weather_desc ); ?></span>
 						<?php endif; ?>
 					</div>
 				<?php } ?>
@@ -4506,7 +4512,7 @@ class Premium_Weather extends Widget_Base {
 				$img_src = wp_get_attachment_image_src( $icon['img']['id'], $icon['size'] );
 				$alt_text = isset( $icon['img']['alt'] ) ? $icon['img']['alt'] : '';
 				?>
-			<img src="<?php echo esc_url( $img_src[0] ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>">
+			<img src="<?php echo esc_url( $img_src ? $img_src[0] : $icon['img']['url'] ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>">
 				<?php
 			}
 		} else {
@@ -4710,16 +4716,17 @@ class Premium_Weather extends Widget_Base {
 		$i       = 0;
 
 		$weather_conditions = $settings['tabs_weather_data'];
+		$conditions_lookup  = array_flip( $weather_conditions );
 
 		$conditions_arr = array(
-			'desc_icon'  => in_array( 'desc_icon', $weather_conditions, true ) ? true : false,
-			'temp'       => in_array( 'temp', $weather_conditions, true ) ? true : false,
-			'wind'       => in_array( 'wind', $weather_conditions, true ) ? true : false,
-			'wind_dir'   => in_array( 'wind_dir', $weather_conditions, true ) ? true : false,
-			'humidity'   => in_array( 'humidity', $weather_conditions, true ) ? true : false,
-			'pressure'   => in_array( 'pressure', $weather_conditions, true ) ? true : false,
-			'desc'       => in_array( 'desc', $weather_conditions, true ) ? true : false,
-			'feels_like' => in_array( 'feels_like', $weather_conditions, true ) ? true : false,
+			'desc_icon'  => isset( $conditions_lookup['desc_icon'] ),
+			'temp'       => isset( $conditions_lookup['temp'] ),
+			'wind'       => isset( $conditions_lookup['wind'] ),
+			'wind_dir'   => isset( $conditions_lookup['wind_dir'] ),
+			'humidity'   => isset( $conditions_lookup['humidity'] ),
+			'pressure'   => isset( $conditions_lookup['pressure'] ),
+			'desc'       => isset( $conditions_lookup['desc'] ),
+			'feels_like' => isset( $conditions_lookup['feels_like'] ),
 		);
 
 		?>
@@ -4823,7 +4830,8 @@ class Premium_Weather extends Widget_Base {
 			$item = isset( $data[ $i ] ) ? $data[ $i ] : false;
 
 			if ( $item ) {
-				$weather_desc = $item['weather'][0]['description'];
+				$weather_icon = isset( $item['weather'][0]['icon'] ) ? $item['weather'][0]['icon'] : '';
+				$weather_desc = isset( $item['weather'][0]['description'] ) ? $item['weather'][0]['description'] : '';
 
 				?>
 				<div class="premium-weather__hourly-item">
@@ -4831,7 +4839,7 @@ class Premium_Weather extends Widget_Base {
 
 					<?php if ( $conditions_arr['desc_icon'] ) : ?>
 						<div class="premium-weather__icon-wrapper" title="<?php echo esc_attr( $weather_desc ); ?>">
-							<?php $this->render_weather_icon( $item['weather'][0]['icon'] ); ?>
+							<?php $this->render_weather_icon( $weather_icon ); ?>
 						</div>
 					<?php endif; ?>
 
@@ -4858,7 +4866,7 @@ class Premium_Weather extends Widget_Base {
 					?>
 
 					<?php if ( $conditions_arr['desc'] ) : ?>
-						<div class="premium-weather__hourly-desc"> <?php echo esc_html( $item['weather'][0]['description'] ); ?></div>
+						<div class="premium-weather__hourly-desc"> <?php echo esc_html( $weather_desc ); ?></div>
 					<?php endif; ?>
 				</div>
 				<?php

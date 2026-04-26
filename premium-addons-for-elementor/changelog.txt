@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.11.75 - 26/4/2026 =
+
+- Tweak: Added option to autoplay video in active slide in Advanced Carousel widget.
+- Tweak: Added Description option in Heading and Dual Heading widgets.
+- Tweak: Code refactored for better performance and security.
+- Fixed: Load More button not working correctly in TikTok Feed widget.
+
 = 4.11.74 - 16/4/2026 =
 
 - Tweak: Remove deprecated Vimeo API in Video Box widget.

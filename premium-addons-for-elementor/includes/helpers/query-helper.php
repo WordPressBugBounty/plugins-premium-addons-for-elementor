@@ -184,7 +184,7 @@ class Query_Helper {
 		}
 
 		if ( 'related' !== $post_type ) {
-			// Get all the taxanomies associated with the post type.
+			// Get all the taxonomies associated with the post type.
 			$taxonomy = self::get_taxnomies( $post_type );
 
 			if ( ! empty( $taxonomy ) && ! is_wp_error( $taxonomy ) ) {
@@ -241,14 +241,14 @@ class Query_Helper {
 
 		if ( isset( $settings['ignore_sticky_posts'] ) ) {
 			if ( 'yes' === $settings['ignore_sticky_posts'] ) {
-				$excluded_posts = array_merge( $excluded_posts, get_option( 'sticky_posts' ) );
+				$excluded_posts = array_merge( $excluded_posts, get_option( 'sticky_posts', array() ) );
 			} else {
 				$post_args['ignore_sticky_posts'] = true;
 			}
 		}
 
 		if ( ( isset( $settings['query_exclude_current'] ) && 'yes' === $settings['query_exclude_current'] ) || 'related' === $post_type ) {
-			array_push( $excluded_posts, $post_id );
+			$excluded_posts[] = $post_id;
 		}
 
 		$post_args['post__not_in'] = $excluded_posts;
@@ -314,7 +314,7 @@ class Query_Helper {
 		$cats_ids  = array();
 
 		foreach ( $prod_cats as $index => $cat ) {
-			array_push( $cats_ids, $cat->term_id );
+			$cats_ids[] = $cat->term_id;
 		}
 
 		return $cats_ids;

@@ -71,6 +71,10 @@ class Woo_Product_Stock extends Condition {
 
 		$product = wc_get_product( $product_id );
 
+		if ( ! $product ) {
+			return true;
+		}
+
 		$product_quantity = $product->get_stock_quantity();
 
 		if ( 0 === $value ) {

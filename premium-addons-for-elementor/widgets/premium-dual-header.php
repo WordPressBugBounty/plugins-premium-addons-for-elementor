@@ -14,6 +14,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Box_Shadow;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
@@ -617,6 +618,158 @@ class Premium_Dual_Header extends Widget_Base {
 				'condition'    => array(
 					'mask_switcher!'                       => 'yes',
 					'premium_dual_header_second_back_clip' => 'color',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'premium_dual_header_description_section',
+			array(
+				'label' => __( 'Description', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			'premium_dual_header_desc_switcher',
+			array(
+				'label'   => __( 'Description', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::SWITCHER,
+				'default' => '',
+			)
+		);
+
+		$this->add_control(
+			'premium_dual_header_desc_text',
+			array(
+				'label'     => __( 'Description', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::WYSIWYG,
+				'dynamic'   => array( 'active' => true ),
+				'default'   => __( 'Extend Your Elementor Website with Numerous Widgets, Global Addons, and Features.', 'premium-addons-for-elementor' ),
+				'condition' => array(
+					'premium_dual_header_desc_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'premium_dual_header_desc_display',
+			array(
+				'label'        => __( 'Display', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::CHOOSE,
+				'options'      => array(
+					'row'    => array(
+						'title' => __( 'Inline', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-ellipsis-h',
+					),
+					'column' => array(
+						'title' => __( 'Block', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-ellipsis-v',
+					),
+				),
+				'default'      => 'column',
+				'prefix_class' => 'premium-dh-desc-display-',
+				'toggle'       => false,
+				'selectors'    => array(
+					'{{WRAPPER}} .premium-dual-header-wrapper' => 'flex-direction: {{VALUE}};',
+				),
+				'condition'    => array(
+					'premium_dual_header_desc_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'premium_dual_header_desc_order',
+			array(
+				'label'     => __( 'Order', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'0' => array(
+						'title' => __( 'Before Heading', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-order-start',
+					),
+					'2' => array(
+						'title' => __( 'After Heading', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-order-end',
+					),
+				),
+				'default'   => '2',
+				'toggle'    => false,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-dh-description' => 'order: {{VALUE}};',
+				),
+				'condition' => array(
+					'premium_dual_header_desc_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'v_align',
+			array(
+				'label'       => __( 'Vertical Alignment', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::CHOOSE,
+				'description' => __( 'Effective when the display is set to <b>"inline</b>"', 'premium-addons-for-elementor' ),
+				'options'     => array(
+					'start'   => array(
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-align-start-v',
+					),
+					'center'  => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-align-center-v',
+					),
+					'end'     => array(
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-align-end-v',
+					),
+					'stretch' => array(
+						'title' => __( 'Stretch', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-align-stretch-v',
+					),
+				),
+				'default'     => 'center',
+				'toggle'      => false,
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-dh-description' => 'align-self: {{VALUE}};',
+				),
+				'condition'   => array(
+					'premium_dual_header_desc_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'premium_dual_header_desc_align',
+			array(
+				'label'     => __( 'Text Alignment', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'toggle'    => false,
+				'options'   => array(
+					'left'    => array(
+						'title' => __( 'Left', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-left',
+					),
+					'center'  => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'right'   => array(
+						'title' => __( 'Right', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-right',
+					),
+					'justify' => array(
+						'title' => __( 'Justify', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-justify',
+					),
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-dh-description' => 'text-align: {{VALUE}};',
+				),
+				'condition' => array(
+					'premium_dual_header_desc_switcher' => 'yes',
 				),
 			)
 		);
@@ -1259,6 +1412,110 @@ class Premium_Dual_Header extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
+			'premium_dual_header_desc_style_section',
+			array(
+				'label'     => __( 'Description', 'premium-addons-for-elementor' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'premium_dual_header_desc_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'premium_dual_header_desc_color',
+			array(
+				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-dh-description, {{WRAPPER}} .premium-dh-description *' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'premium_dual_header_desc_typography',
+				'global'   => array(
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				),
+				'selector' => '{{WRAPPER}} .premium-dh-description',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			array(
+				'name'     => 'premium_dual_header_desc_text_shadow',
+				'selector' => '{{WRAPPER}} .premium-dh-description',
+			)
+		);
+
+		$this->add_group_control(
+			Premium_Background::get_type(),
+			array(
+				'name'     => 'premium_dual_header_desc_background',
+				'types'    => array( 'classic', 'gradient' ),
+				'selector' => '{{WRAPPER}} .premium-dh-description',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => 'premium_dual_header_desc_box_shadow',
+				'selector' => '{{WRAPPER}} .premium-dh-description',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'premium_dual_header_desc_border',
+				'selector' => '{{WRAPPER}} .premium-dh-description',
+			)
+		);
+
+		$this->add_responsive_control(
+			'premium_dual_header_desc_border_radius',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%', 'em' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-dh-description' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'premium_dual_header_desc_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-dh-description' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'premium_dual_header_desc_padding',
+			array(
+				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-dh-description' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
 			'background_text_style_section',
 			array(
 				'label'     => __( 'Background Text', 'premium-addons-for-elementor' ),
@@ -1421,21 +1678,28 @@ class Premium_Dual_Header extends Widget_Base {
 			}
 		}
 
-		$this->add_render_attribute( 'container', 'class', 'premium-dual-header-container' );
+		$this->add_render_attribute( 'container', 'class', 'premium-dual-header-wrapper' );
 
-		if ( 'yes' === $settings['background_text_switcher'] ) {
-			$this->add_render_attribute(
-				'container',
-				array(
-					'class'           => 'premium-title-bg-text',
-					'data-background' => $settings['background_text'],
-				)
-			);
+		// if ( 'yes' === $settings['background_text_switcher'] ) {
+		// $this->add_render_attribute(
+		// 'container',
+		// array(
+		// 'class'           => 'premium-title-bg-text',
+		// 'data-background' => $settings['background_text'],
+		// )
+		// );
+		// }
+
+		$show_desc = 'yes' === $settings['premium_dual_header_desc_switcher'] && ! empty( $settings['premium_dual_header_desc_text'] );
+
+		if ( $show_desc ) {
+			$this->add_render_attribute( 'dh_description', 'class', 'premium-dh-description' );
 		}
 
 		?>
 
 		<div class="elementor-widget-container">
+		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
 		<?php if ( 'yes' === $settings['premium_dual_header_link_switcher'] ) : ?>
 		<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>>
 		<?php endif; ?>
@@ -1443,6 +1707,12 @@ class Premium_Dual_Header extends Widget_Base {
 		<?php if ( 'yes' === $settings['premium_dual_header_link_switcher'] ) : ?>
 		</a>
 		<?php endif; ?>
+		<?php if ( $show_desc ) : ?>
+		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'dh_description' ) ); ?>>
+			<?php echo wp_kses_post( $settings['premium_dual_header_desc_text'] ); ?>
+		</div>
+		<?php endif; ?>
+		</div>
 		</div>
 
 		<?php
@@ -1517,14 +1787,8 @@ class Premium_Dual_Header extends Widget_Base {
 				}
 			}
 
-			view.addRenderAttribute('container', 'class', 'premium-dual-header-container' );
+			view.addRenderAttribute('container', 'class', 'premium-dual-header-wrapper' );
 
-			if( 'yes' === settings.background_text_switcher ) {
-				view.addRenderAttribute( 'container', {
-					'class': 'premium-title-bg-text',
-					'data-background': settings.background_text
-				});
-			}
 
 			view.addRenderAttribute( 'button', 'href', link );
 
@@ -1532,18 +1796,23 @@ class Premium_Dual_Header extends Widget_Base {
 		#>
 
 		<div class="elementor-widget-container">
-			<# if( 'yes' === settings.premium_dual_header_link_switcher && '' !== link ) { #>
-				<a {{{ view.getRenderAttributeString('button') }}}>
-			<# } #>
-			<{{{firstTag}}} {{{ view.getRenderAttributeString('first_title') }}}>
-				<span class="premium-dual-header-first-span" data-text="{{ firstText }}">{{{ firstText }}}</span>
-				<# if ( '' != secondText ) { #>
-					<span {{{ view.getRenderAttributeString('second_title') }}}>{{{ secondText }}}</span>
+			<div {{{ view.getRenderAttributeString('container') }}}>
+				<# if( 'yes' === settings.premium_dual_header_link_switcher && '' !== link ) { #>
+					<a {{{ view.getRenderAttributeString('button') }}}>
 				<# } #>
-			</{{{firstTag}}}>
-			<# if( 'yes' == settings.premium_dual_header_link_switcher && '' !== link ) { #>
-				</a>
-			<# } #>
+				<{{{firstTag}}} {{{ view.getRenderAttributeString('first_title') }}}>
+					<span class="premium-dual-header-first-span" data-text="{{ firstText }}">{{{ firstText }}}</span>
+					<# if ( '' != secondText ) { #>
+						<span {{{ view.getRenderAttributeString('second_title') }}}>{{{ secondText }}}</span>
+					<# } #>
+				</{{{firstTag}}}>
+				<# if( 'yes' == settings.premium_dual_header_link_switcher && '' !== link ) { #>
+					</a>
+				<# } #>
+				<# if ( 'yes' === settings.premium_dual_header_desc_switcher && '' !== settings.premium_dual_header_desc_text ) { #>
+					<div class="premium-dh-description">{{{ settings.premium_dual_header_desc_text }}}</div>
+				<# } #>
+			</div>
 		</div>
 
 		<?php

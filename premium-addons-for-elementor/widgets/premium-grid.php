@@ -3378,7 +3378,8 @@ class Premium_Grid extends Widget_Base {
 		if ( 'yes' === $media_lib ) {
 			$title = Control_Media::get_image_title( $item['premium_gallery_img'] );
 
-			$description = get_post( $item['premium_gallery_img']['id'] )->post_content;
+			$post_obj    = get_post( $item['premium_gallery_img']['id'] );
+			$description = $post_obj ? $post_obj->post_content : '';
 		} else {
 			$title = $item['premium_gallery_img_name'];
 
