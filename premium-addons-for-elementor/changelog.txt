@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.11.76 - 10/5/2026 =
+
+- Tweak: Code refactored for better performance and security.
+- Fixed: PHP warnings and fatal errors in plugin core.
+
 = 4.11.75 - 26/4/2026 =
 
 - Tweak: Added option to autoplay video in active slide in Advanced Carousel widget.

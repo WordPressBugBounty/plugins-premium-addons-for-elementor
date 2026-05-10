@@ -3267,7 +3267,14 @@ class Premium_Videobox extends Widget_Base {
 		$overlay = $settings['premium_video_box_image_switcher'];
 
 		if ( 'yes' === $overlay || 'self' === $type ) {
+
 			$thumbnail_src = $settings['premium_video_box_image']['url'];
+
+			// add default placeholder for self-hosted video if overlay is enabled.
+			if ( 'self' === $type && ! $thumbnail_src ) {
+				$thumbnail_src = Utils::get_placeholder_image_src();
+			}
+
 			return $thumbnail_src;
 		}
 

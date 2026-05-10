@@ -45,11 +45,14 @@ class Feedback {
 
 		$data = array_map( 'sanitize_text_field', wp_unslash( $_POST['data'] ) );
 
+		$reason      = '';
+		$suggestions = null;
+		$anonymous   = false;
+
 		if ( isset( $data['feedback'] ) ) {
 			$reason      = $data['feedback'];
 			$suggestions = isset( $data['suggestions'] ) ? $data['suggestions'] : null;
 			$anonymous   = isset( $data['anonymous'] ) ? (bool) $data['anonymous'] : false;
-
 		}
 
 		if ( ! is_string( $reason ) || empty( $reason ) ) {

@@ -832,11 +832,11 @@ class Assets_Manager {
 
 		$documents = is_object( Plugin::$instance->documents ) ? Plugin::$instance->documents->get( $post_id ) : array();
 
-		if ( ! in_array( get_post_status( $post_id ), array( 'publish', 'private' ) ) || ( is_object( $documents ) && ! $documents->is_built_with_elementor() ) ) {
+		if ( ! in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) || ( is_object( $documents ) && ! $documents->is_built_with_elementor() ) ) {
 			return false;
 		}
 
-		if ( in_array( get_post_meta( $post_id, '_elementor_template_type', true ), array( 'kit' ) ) ) {
+		if ( in_array( get_post_meta( $post_id, '_elementor_template_type', true ), array( 'kit' ), true ) ) {
 			return false;
 		}
 

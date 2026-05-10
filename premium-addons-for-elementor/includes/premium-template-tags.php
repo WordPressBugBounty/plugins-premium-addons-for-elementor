@@ -1533,7 +1533,7 @@ class Premium_Template_Tags {
 			return false;
 		}
 
-		$general    = in_array( $settings['active_cat'], array( '*', '' ) );
+		$general    = in_array( $settings['active_cat'], array( '*', '' ), true );
 		$first_page = in_array( $page_num, array( 1, '' ) );
 
 		if ( $general && $first_page ) {

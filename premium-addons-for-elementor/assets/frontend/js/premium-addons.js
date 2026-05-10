@@ -1882,7 +1882,8 @@
 				if ("init" === event) $slides = $slides.not(".slick-current");
 
 				$slides.find(".animated").each(function (index, elem) {
-					var settings = $(elem).data("settings");
+					var $elem = $(elem),
+						settings = $elem.data("settings");
 
 					if (!settings) return;
 
@@ -1890,7 +1891,7 @@
 
 					var animation = settings._animation || settings.animation;
 
-					$(elem)
+					$elem
 						.removeClass("animated " + animation)
 						.addClass("elementor-invisible");
 				});
@@ -1904,7 +1905,8 @@
 				$carouselElem
 					.find(".slick-active .elementor-invisible")
 					.each(function (index, elem) {
-						var settings = $(elem).data("settings");
+						var $elem = $(elem),
+							settings = $elem.data("settings");
 
 						if (!settings) return;
 
@@ -1916,7 +1918,7 @@
 							animation = settings._animation || settings.animation;
 
 						setTimeout(function () {
-							$(elem)
+							$elem
 								.removeClass("elementor-invisible")
 								.addClass(animation + " animated");
 						}, delay);
@@ -1999,18 +2001,19 @@
 				var maxHeight = -1;
 
 				elementorFrontend.elements.$window.on("load", function () {
-					$carouselElem.find(".slick-slide").each(function () {
-						if ($(this).height() > maxHeight) {
-							maxHeight = $(this).height();
+					var $slides = $carouselElem.find(".slick-slide");
+
+					$slides.each(function () {
+						var h = $(this).height();
+						if (h > maxHeight) {
+							maxHeight = h;
 						}
 					});
 
-					$carouselElem.find(".slick-slide").each(function () {
-						if ($(this).height() < maxHeight) {
-							$(this).css(
-								"margin",
-								Math.ceil((maxHeight - $(this).height()) / 2) + "px 0",
-							);
+					$slides.each(function () {
+						var h = $(this).height();
+						if (h < maxHeight) {
+							$(this).css("margin", Math.ceil((maxHeight - h) / 2) + "px 0");
 						}
 					});
 				});
@@ -2928,46 +2931,39 @@
 					if ($(elem).find('input[type!="radio"], textarea').length > 0) {
 						$(elem).find("label").addClass("cf7-text-input-label");
 
-						$(elem)
-							.find("input, textarea")
-							.on("focus", function () {
-								$(elem).addClass("input-focused");
-							});
+						var $inputTextarea = $(elem).find("input, textarea");
 
-						$(elem)
-							.find("input, textarea")
-							.on("blur", function () {
-								if ("" == $(this).val()) $(elem).removeClass("input-focused");
-							});
+						$inputTextarea.on("focus", function () {
+							$(elem).addClass("input-focused");
+						});
+
+						$inputTextarea.on("blur", function () {
+							if ("" == $(this).val()) $(elem).removeClass("input-focused");
+						});
 					}
 				});
 			}
 
 			if ($scope.hasClass("premium-cf-anim-label-letter")) {
 				$contactForm.find("p").each(function (index, elem) {
-					$(elem)
-						.find("input, textarea")
-						.on("focus", function () {
-							var letterSpacing = parseFloat(
-								$(elem).find("label").css("letter-spacing").replace("px", ""),
-							);
+					var $label = $(elem).find("label");
+					var $inputTextarea = $(elem).find("input, textarea");
 
-							$(elem)
-								.find("label")
-								.css("letter-spacing", letterSpacing + 3 + "px");
-						});
+					$inputTextarea.on("focus", function () {
+						var letterSpacing = parseFloat(
+							$label.css("letter-spacing").replace("px", ""),
+						);
 
-					$(elem)
-						.find("input, textarea")
-						.on("blur", function () {
-							var letterSpacing = parseFloat(
-								$(elem).find("label").css("letter-spacing").replace("px", ""),
-							);
+						$label.css("letter-spacing", letterSpacing + 3 + "px");
+					});
 
-							$(elem)
-								.find("label")
-								.css("letter-spacing", letterSpacing - 3 + "px");
-						});
+					$inputTextarea.on("blur", function () {
+						var letterSpacing = parseFloat(
+							$label.css("letter-spacing").replace("px", ""),
+						);
+
+						$label.css("letter-spacing", letterSpacing - 3 + "px");
+					});
 				});
 			}
 		};
@@ -5938,24 +5934,22 @@
 			});
 
 			if ($scope.hasClass("premium-search-anim-label-letter")) {
+				var $label = $container.find("label");
+
 				$search.on("focus", function () {
 					var letterSpacing = parseFloat(
-						$container.find("label").css("letter-spacing").replace("px", ""),
+						$label.css("letter-spacing").replace("px", ""),
 					);
 
-					$container
-						.find("label")
-						.css("letter-spacing", letterSpacing + 3 + "px");
+					$label.css("letter-spacing", letterSpacing + 3 + "px");
 				});
 
 				$search.on("blur", function () {
 					var letterSpacing = parseFloat(
-						$container.find("label").css("letter-spacing").replace("px", ""),
+						$label.css("letter-spacing").replace("px", ""),
 					);
 
-					$container
-						.find("label")
-						.css("letter-spacing", letterSpacing - 3 + "px");
+					$label.css("letter-spacing", letterSpacing - 3 + "px");
 				});
 			}
 
@@ -5975,8 +5969,6 @@
 
 						if ("elements" !== queryType) {
 							if ("" !== searchQuery) {
-								console.log(settings.results_number);
-
 								$.ajax({
 									url: PremiumSettings.ajaxurl,
 									dataType: "json",

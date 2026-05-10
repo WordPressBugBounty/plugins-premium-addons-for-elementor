@@ -1082,7 +1082,7 @@ class Woo_Categories extends Widget_Base {
 		);
 
 		if ( 'top' === $settings['category_filter_rule'] ) {
-			$atts['parent'] = 0;
+			$args['parent'] = 0;
 		} elseif ( 'include' === $settings['category_filter_rule'] && is_array( $settings['category_filter'] ) ) {
 			$include_ids = array_filter( array_map( 'trim', $settings['category_filter'] ) );
 

@@ -2910,6 +2910,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		$show_avatar   = 'yes' === $settings['avatar_url'];
 		$show_username = 'yes' === $settings['username'];
 
+		$follow_url = '';
 		if ( $show_follow_btn ) {
 			$follow_url = $profile_data['profile_deep_link'];
 		}

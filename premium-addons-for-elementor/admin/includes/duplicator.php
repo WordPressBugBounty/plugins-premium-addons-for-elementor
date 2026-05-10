@@ -187,7 +187,7 @@ class Duplicator {
 			$data = array(
 				'meta_input' => array(
 					'_elementor_edit_mode'     => $post_meta['_elementor_edit_mode'][0],
-					'_elementor_template_type' => $post_meta['_elementor_template_type'][0],
+					'_elementor_template_type' => isset( $post_meta['_elementor_template_type'][0] ) ? $post_meta['_elementor_template_type'][0] : '',
 				),
 			);
 

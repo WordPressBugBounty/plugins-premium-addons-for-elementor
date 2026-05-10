@@ -1291,7 +1291,7 @@ class Helper_Functions {
 			'section',
 		);
 
-		return in_array( $template_name, $template_list );
+		return in_array( $template_name, $template_list, true );
 	}
 
 	/**
@@ -1724,7 +1724,7 @@ class Helper_Functions {
 
 		$papro_activated = self::check_papro_version();
 
-		if ( ! $papro_activated && ! in_array( $settings['premium_button_hover_effect'], array( 'none', 'style1', 'style2' ) ) ) {
+		if ( ! $papro_activated && ! in_array( $settings['premium_button_hover_effect'], array( 'none', 'style1', 'style2' ), true ) ) {
 			return '';
 		}
 

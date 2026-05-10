@@ -78,7 +78,9 @@ class Query_Helper {
 	 */
 	public static function get_query_args( $settings, $target_post_type = '' ) {
 
-		$paged     = self::get_paged();
+		// Non-paginated widgets (e.g. ticker) must not inherit the main query's page number,
+		// otherwise they return empty results when the archive is on page 2+.
+		$paged     = ( isset( $settings['widget_type'] ) && 'premium-post-ticker' === $settings['widget_type'] ) ? 1 : self::get_paged();
 		$tax_count = 0;
 
 		$post_type = $settings['post_type_filter'];

@@ -3555,7 +3555,7 @@ class Premium_Blog extends Widget_Base {
 
 			$filters = $this->get_filter_array( $filter_rule );
 
-			if ( empty( $settings['premium_blog_tab_label'] ) ) {
+			if ( ! empty( $filters ) && empty( $settings['premium_blog_tab_label'] ) ) {
 				$settings['active_cat'] = $filters[0]->slug;
 			}
 		}

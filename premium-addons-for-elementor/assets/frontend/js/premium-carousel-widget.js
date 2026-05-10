@@ -277,8 +277,8 @@
 				$slides = $slides.not(".slick-current");
 
 			$slides.find(".animated").each(function (index, elem) {
-
-				var settings = $(elem).data("settings");
+				var $elem = $(elem),
+					settings = $elem.data("settings");
 
 				if (!settings)
 					return;
@@ -288,7 +288,7 @@
 
 				var animation = settings._animation || settings.animation;
 
-				$(elem).removeClass("animated " + animation).addClass("elementor-invisible");
+				$elem.removeClass("animated " + animation).addClass("elementor-invisible");
 			});
 
 			if (settings.carouselNavigation === "progress") {
@@ -299,8 +299,8 @@
 		function triggerAnimation() {
 
 			$carouselElem.find(".slick-active .elementor-invisible").each(function (index, elem) {
-
-				var settings = $(elem).data("settings");
+				var $elem = $(elem),
+					settings = $elem.data("settings");
 
 				if (!settings)
 					return;
@@ -312,7 +312,7 @@
 					animation = settings._animation || settings.animation;
 
 				setTimeout(function () {
-					$(elem).removeClass("elementor-invisible").addClass(animation +
+					$elem.removeClass("elementor-invisible").addClass(animation +
 						' animated');
 				}, delay);
 			});
@@ -385,16 +385,19 @@
 			var maxHeight = -1;
 
 			elementorFrontend.elements.$window.on('load', function () {
-				$carouselElem.find(".slick-slide").each(function () {
-					if ($(this).height() > maxHeight) {
-						maxHeight = $(this).height();
+				var $slides = $carouselElem.find(".slick-slide");
+
+				$slides.each(function () {
+					var h = $(this).height();
+					if (h > maxHeight) {
+						maxHeight = h;
 					}
 				});
 
-				$carouselElem.find(".slick-slide").each(function () {
-					if ($(this).height() < maxHeight) {
-						$(this).css("margin", Math.ceil(
-							(maxHeight - $(this).height()) / 2) + "px 0");
+				$slides.each(function () {
+					var h = $(this).height();
+					if (h < maxHeight) {
+						$(this).css("margin", Math.ceil((maxHeight - h) / 2) + "px 0");
 					}
 				});
 			});

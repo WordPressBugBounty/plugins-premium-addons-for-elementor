@@ -246,10 +246,10 @@
                 var $postsContainer = this.elements.$postsContainer;
 
                 $postsContainer.find(".animated").each(function (index, elem) {
+                    var $elem = $(elem),
+                        animation = $elem.data('e-animation');
 
-                    var animation = $(elem).data('e-animation');
-
-                    $(elem).removeClass("animated " + animation).addClass("elementor-invisible");
+                    $elem.removeClass("animated " + animation).addClass("elementor-invisible");
                 });
 
             },

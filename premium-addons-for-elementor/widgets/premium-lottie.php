@@ -784,8 +784,8 @@ class Premium_Lottie extends Widget_Base {
 				'lottie',
 				array(
 					'data-lottie-viewport' => 'true',
-					'data-scroll-start'    => $settings['animate_view']['sizes']['start'],
-					'data-scroll-end'      => $settings['animate_view']['sizes']['end'],
+					'data-scroll-start'    => isset( $settings['animate_view']['sizes']['start'] ) ? $settings['animate_view']['sizes']['start'] : '0',
+					'data-scroll-end'      => isset( $settings['animate_view']['sizes']['end'] ) ? $settings['animate_view']['sizes']['end'] : '100',
 				)
 			);
 		} elseif ( 'click' === $settings['trigger'] ) {
