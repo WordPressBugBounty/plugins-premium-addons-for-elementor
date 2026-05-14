@@ -1407,12 +1407,12 @@ class Premium_Fancytext extends Widget_Base {
 		}
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrapper' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 
 			<<?php echo wp_kses_post( $title_tag ); ?> class="premium-atext__headline">
 			<?php if ( ! empty( $settings['premium_fancy_prefix_text'] ) ) : ?>
 				<span class="premium-prefix-text">
-					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'prefix' ) ); ?>><?php echo wp_kses( ( $settings['premium_fancy_prefix_text'] ), true ); ?></span>
+					<span <?php $this->print_render_attribute_string( 'prefix' ); ?>><?php echo wp_kses( ( $settings['premium_fancy_prefix_text'] ), true ); ?></span>
 				</span>
 			<?php endif; ?>
 
@@ -1426,7 +1426,7 @@ class Premium_Fancytext extends Widget_Base {
 
 			<?php if ( ! empty( $settings['premium_fancy_suffix_text'] ) ) : ?>
 				<span class="premium-suffix-text">
-					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'suffix' ) ); ?>><?php echo wp_kses( ( $settings['premium_fancy_suffix_text'] ), true ); ?></span>
+					<span <?php $this->print_render_attribute_string( 'suffix' ); ?>><?php echo wp_kses( ( $settings['premium_fancy_suffix_text'] ), true ); ?></span>
 				</span>
 			<?php endif; ?>
 
@@ -1459,9 +1459,9 @@ class Premium_Fancytext extends Widget_Base {
 
 		if ( 'typing' === $effect ) :
 			?>
-			<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'switch_text' ) ); ?>></span>
+			<span <?php $this->print_render_attribute_string( 'switch_text' ); ?>></span>
 		<?php else : ?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'switch_text' ) ); ?> style='display: inline-block; text-align: center'>
+			<div <?php $this->print_render_attribute_string( 'switch_text' ); ?> style='display: inline-block; text-align: center'>
 				<ul class="premium-atext__items-wrapper">
 			<?php
 			foreach ( $settings['premium_fancy_text_strings'] as $index => $item ) :
@@ -1475,7 +1475,7 @@ class Premium_Fancytext extends Widget_Base {
 					}
 
 					?>
-						<li <?php echo wp_kses_post( $this->get_render_attribute_string( 'text_' . $item['_id'] ) ); ?>>
+						<li <?php $this->print_render_attribute_string( 'text_' . $item['_id'] ); ?>>
 							<?php echo wp_kses_post( $item['premium_text_strings_text_field'] ); ?>
 						</li>
 					<?php
@@ -1520,7 +1520,7 @@ class Premium_Fancytext extends Widget_Base {
 		?>
 
 			<?php if ( 'lines' !== $settings['highlight_effect'] ) : ?>
-				<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'text' ) ); ?>>
+				<span <?php $this->print_render_attribute_string( 'text' ); ?>>
 					<?php echo wp_kses_post( $settings['text'] ); ?>
 					<?php if ( 'shape' === $settings['highlight_effect'] ) : ?>
 						<?php $this->render_draw_shape(); ?>

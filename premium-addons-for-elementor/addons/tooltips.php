@@ -1244,7 +1244,7 @@ class Tooltips {
 
 			if ( 'widget' === $element_type && \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
 				?>
-				<div <?php echo wp_kses_post( $element->get_render_attribute_string( 'gTooltips_temps' . $id ) ); ?>></div>
+				<div <?php $element->print_render_attribute_string( 'gTooltips_temps' . $id ); ?>></div>
 				<?php
 			}
 		}

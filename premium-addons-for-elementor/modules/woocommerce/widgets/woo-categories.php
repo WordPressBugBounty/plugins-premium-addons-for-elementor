@@ -1055,9 +1055,9 @@ class Woo_Categories extends Widget_Base {
 
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'categories_wrap' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'categories_wrap' ); ?>>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'list_wrap' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'list_wrap' ); ?>>
 
 				<?php echo $this->render_product_categories(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
@@ -1220,7 +1220,7 @@ class Woo_Categories extends Widget_Base {
 		}
 
 		?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'content_wrap' . $index ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'content_wrap' . $index ); ?>>
 				<<?php echo wp_kses_post( $text_tag ); ?> class="woocommerce-loop-category__title">
 					<span><?php echo wp_kses_post( $category->name ); ?></span>
 					<?php

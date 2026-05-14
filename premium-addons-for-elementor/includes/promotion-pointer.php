@@ -10,7 +10,7 @@ add_action(
 	'in_admin_header',
 	function () {
 
-		if ( Helper_Functions::check_papro_version() || time() > strtotime( '09:59:59pm 01th May, 2026' ) || ( $GLOBALS['pagenow'] !== 'index.php' && get_current_screen()->id !== 'toplevel_page_premium-addons' ) || get_transient( 'pa_spring26_pointer_dismiss' ) ) {
+		if ( Helper_Functions::check_papro_version() || time() > strtotime( '09:59:59pm 01th July, 2026' ) || ( $GLOBALS['pagenow'] !== 'index.php' && get_current_screen()->id !== 'toplevel_page_premium-addons' ) || get_transient( 'pa_summer26_pointer_dismiss' ) ) {
 			return;
 		}
 
@@ -33,9 +33,9 @@ add_action(
 						jQuery('#toplevel_page_premium-addons').pointer(
 							{
 								content:
-									"<h3 style='font-weight: 600;'>Spring Sale 2026!</h3>" +
+									"<h3 style='font-weight: 600;'>Summer Sale 2026!</h3>" +
 									"<p style='margin: 1em 0;'>Unlock the full power of Elementor with 90+ advanced elements and 580+ templates. Build smarter and faster.</p>" +
-									"<p><a class='button button-primary' href='<?php echo esc_attr( Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'pointer', 'wp-dash', 'spring26' ) ); ?>' target='_blank'>Save 20% Now</a></p>",
+									"<p><a class='button button-primary' href='<?php echo esc_attr( Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'pointer', 'wp-dash', 'summer26' ) ); ?>' target='_blank'>Save 20% Now</a></p>",
 
 								position:
 									{
@@ -73,7 +73,7 @@ add_action(
 		$pointer = isset( $_POST['pointer'] ) ? sanitize_text_field( wp_unslash( $_POST['pointer'] ) ) : '';
 
 		if ( 'dismiss-wp-pointer' === $action && 'pa' === $pointer ) {
-			set_transient( 'pa_spring26_pointer_dismiss', true, DAY_IN_SECONDS * 30 );
+			set_transient( 'pa_summer26_pointer_dismiss', true, DAY_IN_SECONDS * 30 );
 			delete_option( '_pa_plugin_pointer_priority' );
 		}
 	}

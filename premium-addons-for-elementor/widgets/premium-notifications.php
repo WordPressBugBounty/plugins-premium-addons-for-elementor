@@ -3815,16 +3815,16 @@ class Premium_Notifications extends Widget_Base {
 
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrap' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'wrap' ); ?>>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon_wrap' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'icon_wrap' ); ?>>
 				<?php if ( 'image' === $icon_type ) : ?>
 
 					<?php echo wp_kses_post( $image_html ); ?>
 
 				<?php elseif ( 'animation' === $icon_type ) : ?>
 
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'lottie_icon' ) ); ?>></div>
+					<div <?php $this->print_render_attribute_string( 'lottie_icon' ); ?>></div>
 
 				<?php elseif ( 'icon' === $icon_type ) : ?>
 					<?php
@@ -3847,7 +3847,7 @@ class Premium_Notifications extends Widget_Base {
 					?>
 
 				<?php elseif ( 'svg' === $icon_type ) : ?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
 						<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
 					</div>
 				<?php else : ?>
@@ -3875,7 +3875,7 @@ class Premium_Notifications extends Widget_Base {
 				<?php endif; ?>
 
 				<?php if ( $number > 0 ) : ?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'number' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'number' ); ?>>
 						<span><?php echo wp_kses_post( $number ); ?></span>
 					</div>
 				<?php endif; ?>
@@ -3884,14 +3884,14 @@ class Premium_Notifications extends Widget_Base {
 
 		</div>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'posts_container' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'posts_container' ); ?>>
 			<div class="pa-rec-posts-header">
 
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'title_wrap' ) ); ?>>
+				<div <?php $this->print_render_attribute_string( 'title_wrap' ); ?>>
 
 					<?php if ( 'yes' === $settings['header_icon_sw'] ) : ?>
 
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'header_icon_wrap' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'header_icon_wrap' ); ?>>
 							<?php if ( 'image' === $header_icon_type ) : ?>
 
 								<?php $img_src = wp_get_attachment_image_src( $settings['header_image']['id'], 'thumbnail' ); ?>
@@ -3899,7 +3899,7 @@ class Premium_Notifications extends Widget_Base {
 								<img src="<?php echo esc_url( $img_src ? $img_src[0] : $settings['header_image']['url'] ); ?>" alt="<?php echo esc_attr( $settings['header_image']['alt'] ); ?>">
 							<?php elseif ( 'animation' === $header_icon_type ) : ?>
 
-								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'header_lottie_icon' ) ); ?>></div>
+								<div <?php $this->print_render_attribute_string( 'header_lottie_icon' ); ?>></div>
 
 							<?php elseif ( 'icon' === $header_icon_type ) : ?>
 								<?php
@@ -3921,7 +3921,7 @@ class Premium_Notifications extends Widget_Base {
 								?>
 
 							<?php else : ?>
-								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'header_icon' ) ); ?>>
+								<div <?php $this->print_render_attribute_string( 'header_icon' ); ?>>
 									<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'header_custom_svg' ) ); ?>
 								</div>
 							<?php endif; ?>

@@ -2010,7 +2010,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				'label'      => __( 'Icon Spacing', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', '%', 'em' ),
-				'separtor'   => 'before',
+				'separator'  => 'before',
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-tiktok-feed__video-counts > span > i, {{WRAPPER}} .premium-tiktok-feed__video-counts > span > svg ' => 'margin: 0 {{SIZE}}{{UNIT}};',
 				),
@@ -2635,7 +2635,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		$this->add_render_attribute( 'outer_container', 'class', 'premium-tiktok-feed__outer-wrapper' );
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'outer_container' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'outer_container' ); ?>>
 			<?php
 			if ( $show_profile ) {
 				?>
@@ -2720,7 +2720,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		}
 
 		?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'videos_container' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'videos_container' ); ?>>
 				<?php
 				foreach ( $tiktok_feed as $index => $feed ) {
 
@@ -2768,8 +2768,8 @@ class Premium_Tiktok_Feed extends Widget_Base {
 						$this->add_render_attribute( 'vid_outer_container' . $index, 'class', 'premium-display-none' );
 					}
 					?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'vid_outer_container' . $index ) ); ?>>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'video_wrap' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'vid_outer_container' . $index ); ?>>
+						<div <?php $this->print_render_attribute_string( 'video_wrap' ); ?>>
 						<?php if ( 'layout-1' === $vid_layout ) { ?>
 
 							<div class="premium-tiktok-feed__vid-meta-wrapper">

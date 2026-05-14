@@ -2689,7 +2689,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 		$this->add_render_attribute( 'outer_container', 'class', 'premium-pinterest-feed__outer-wrapper' );
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'outer_container' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'outer_container' ); ?>>
 			<?php
 			if ( $show_profile ) {
 				?>
@@ -2771,14 +2771,14 @@ class Premium_Pinterest_Feed extends Widget_Base {
 					);
 
 					?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'board_wrap' . $feed['id'] ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'board_wrap' . $feed['id'] ); ?>>
 
 						<?php if ( $onclick_redirect ) : ?>
 							<a class="premium-pinterest-feed__board-link" target="_blank" href="https://www.pinterest.com/<?php echo esc_attr( $feed['owner']['username'] ); ?>/_saved/"></a>
 						<?php endif; ?>
 
 						<div class="premium-pinterest-feed__cover_wrap">
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'board_cover' . $feed['id'] ) ); ?>>
+							<div <?php $this->print_render_attribute_string( 'board_cover' . $feed['id'] ); ?>>
 								<?php
 								if ( 'layout-cover' === $board_layout ) {
 									?>
@@ -2845,7 +2845,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 							)
 						);
 						?>
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'board_content_container' . $feed['id'] ) ); ?>>
+							<div <?php $this->print_render_attribute_string( 'board_content_container' . $feed['id'] ); ?>>
 						<?php
 						$this->render_pins( $pinterest_feed, $settings, false );
 						?>
@@ -2895,7 +2895,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 		}
 
 		?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'pins_container' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'pins_container' ); ?>>
 				<?php
 				foreach ( $pinterest_feed as $index => $feed ) {
 
@@ -2915,7 +2915,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 					}
 
 					?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'pin_outer_container' . $index ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'pin_outer_container' . $index ); ?>>
 						<div class="premium-pinterest-feed__pin-wrapper">
 						<?php if ( 'layout-1' === $pin_layout ) { ?>
 							<div class="premium-pinterest-feed__pin-meta-wrapper">
@@ -2957,7 +2957,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 							}
 							?>
 							<div class="premium-pinterest-feed__pin-media">
-							<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'pin_link' . $feed['id'] ) ); ?> ></a>
+							<a <?php $this->print_render_attribute_string( 'pin_link' . $feed['id'] ); ?> ></a>
 								<?php $this->render_pin_image( $feed['media'], $settings['img_sizes'], $feed['alt_text'], $feed['title'], $settings['image_hover_effect'] ); ?>
 							</div>
 
@@ -3014,7 +3014,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 								$this->add_render_attribute( 'pin_link' . $feed['id'], 'target', '_blank' );
 							}
 							?>
-							<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'pin_link' . $feed['id'] ) ); ?> ></a>
+							<a <?php $this->print_render_attribute_string( 'pin_link' . $feed['id'] ); ?> ></a>
 
 							<div class="premium-pinterest-feed__pin-media">
 								<?php $this->render_pin_image( $feed['media'], $settings['img_sizes'], $feed['alt_text'], $feed['title'], $settings['image_hover_effect'] ); ?>
@@ -3066,7 +3066,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 							}
 							?>
 							<div class="premium-pinterest-feed__pin-media">
-								<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'pin_link' . $feed['id'] ) ); ?> ></a>
+								<a <?php $this->print_render_attribute_string( 'pin_link' . $feed['id'] ); ?> ></a>
 								<?php $this->render_pin_image( $feed['media'], $settings['img_sizes'], $feed['alt_text'], $feed['title'], $settings['image_hover_effect'] ); ?>
 							</div>
 						<?php } else { ?>
@@ -3121,7 +3121,7 @@ class Premium_Pinterest_Feed extends Widget_Base {
 								$this->add_render_attribute( 'pin_link' . $feed['id'], 'target', '_blank' );
 							}
 							?>
-							<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'pin_link' . $feed['id'] ) ); ?> ></a>
+							<a <?php $this->print_render_attribute_string( 'pin_link' . $feed['id'] ); ?> ></a>
 
 						<?php } ?>
 						</div>

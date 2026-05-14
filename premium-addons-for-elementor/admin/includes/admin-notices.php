@@ -68,7 +68,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'bf25-last-not',
+			'content-toggle-not',
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -138,7 +138,7 @@ class Admin_Notices {
 			return;
 		}
 
-		// $this->get_black_friday_notice();
+		$this->get_content_toggle_notice();
 	}
 
 	/**
@@ -271,56 +271,29 @@ class Admin_Notices {
 		<?php
 	}
 
-	public function get_black_friday_notice() {
+	public function get_content_toggle_notice() {
 
-		$time = time();
+		$option = get_option( 'content-toggle-not' );
 
-		if ( $time > 1765497600 || '1' === get_option( 'bf25-last-not' ) ) {
+		if ( '1' === $option ) {
 			return;
 		}
 
-		$is_papro_active = Helper_Functions::check_papro_version();
-
-		$license_key = get_option( 'papro_license_key' );
-
-		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/black-friday/#bfdeals', 'wp-dash', 'bf25-notification', 'cm25' );
-
-		$promotion_type = 'new';
-
-		if ( $is_papro_active ) {
-
-			$license_data = get_transient( 'pa_license_info' );
-
-			if ( isset( $license_data['status'] ) && 'valid' === $license_data['status'] ) {
-
-				if ( isset( $license_data['id'] ) && '4' === $license_data['id'] ) {
-					return;
-				} else {
-
-					$promotion_type = 'upgrade';
-
-					$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'bf25-notification', 'cm25' );
-				}
-			}
-		}
-
-		$message = $this->get_promotion_message( $promotion_type );
+		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-content-toggle-widget/', 'content-toggle-notification', 'wp-dash', 'content-toggle' );
 
 		?>
 
-		<div class="error pa-notice-wrap pa-new-feature-notice pa-review-notice">
+		<div class="error pa-notice-wrap pa-new-feature-notice">
 			<div class="pa-img-wrap">
-				<img src="<?php echo esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>">
+				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<?php echo wp_kses_post( $message['message'] ); ?>
-					<a class="button pa-cta-btn button-primary" href="<?php echo esc_url( $link ); ?>" target="_blank">
-						<span><?php echo wp_kses_post( $message['cta'] ); ?></span>
-					</a>
+					<strong><?php echo __( 'Elementor Content Toggle Widget', 'premium-addons-for-elementor' ); ?></strong>
+					<?php printf( __( 'has been rebuilt. <a href="%s" target="_blank">Check it out now!</a>', 'premium-addons-for-elementor' ), $link ); ?>
 				</p>
 			</div>
-			<div class="pa-notice-close" data-notice="bf25-last-not">
+			<div class="pa-notice-close" data-notice="content-toggle-not">
 				<span class="dashicons dashicons-dismiss"></span>
 			</div>
 		</div>
@@ -599,7 +572,7 @@ class Admin_Notices {
 					$stories['posts'],
 					array(
 						'title' => 'Switch to Premium Addons Pro Lifetime, Pay the Difference & Save 20% Today!',
-						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'spring26-dash-widget', 'spring26' ),
+						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'summer26-dash-widget', 'summer26' ),
 					)
 				);
 
@@ -672,7 +645,7 @@ class Admin_Notices {
 							<div class="pa-story-img-container">
 								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'spring26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'summer26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>

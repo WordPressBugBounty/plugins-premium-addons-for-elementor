@@ -91,8 +91,8 @@ $elements = array(
 			array(
 				'key'    => 'premium-content-toggle',
 				'name'   => 'premium-addon-content-toggle',
-				'title'  => __( 'Content Switcher', 'premium-addons-for-elementor' ),
-				'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/content-switcher-widget-for-elementor-page-builder/', 'content-switcher', 'wp-dash', 'dashboard' ),
+				'title'  => __( 'Content Toggle', 'premium-addons-for-elementor' ),
+				'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-content-toggle-widget/', 'content-switcher', 'wp-dash', 'dashboard' ),
 				'doc'    => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-content-switcher/', 'content-switcher', 'wp-dash', 'dashboard' ),
 				'is_pro' => true,
 				'icon'   => 'pa-pro-content-switcher',
@@ -768,8 +768,8 @@ $elements = array(
 			array(
 				'key'    => 'premium-content-toggle',
 				'name'   => 'premium-addon-content-toggle',
-				'title'  => __( 'Content Switcher', 'premium-addons-for-elementor' ),
-				'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/content-switcher-widget-for-elementor-page-builder/', 'content-switcher', 'wp-dash', 'dashboard' ),
+				'title'  => __( 'Content Toggle', 'premium-addons-for-elementor' ),
+				'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-content-toggle-widget/', 'content-switcher', 'wp-dash', 'dashboard' ),
 				'doc'    => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/premium-content-switcher/', 'content-switcher', 'wp-dash', 'dashboard' ),
 				'is_pro' => true,
 			),

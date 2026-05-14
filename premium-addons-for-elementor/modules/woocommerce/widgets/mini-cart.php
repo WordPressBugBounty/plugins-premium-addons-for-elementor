@@ -5381,7 +5381,7 @@ class Mini_Cart extends Widget_Base {
 		}
 
 		?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'cart_outer_wrapper' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'cart_outer_wrapper' ); ?>>
 				<div class="pa-woo-mc__inner-container">
 					<div class="pa-woo-mc__icon-wrapper">
 						<?php
@@ -5418,7 +5418,7 @@ class Mini_Cart extends Widget_Base {
 																													<?php
 							}
 							?>
-								<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'trigger_subtotal' ) ); ?>>
+								<span <?php $this->print_render_attribute_string( 'trigger_subtotal' ); ?>>
 									<?php
 									if ( $counting_effect ) {
 										?>
@@ -5481,7 +5481,7 @@ class Mini_Cart extends Widget_Base {
 					)
 				);
 				?>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'overlay' ) ); ?>></div>
+				<div <?php $this->print_render_attribute_string( 'overlay' ); ?>></div>
 								<?php
 			}
 		}
@@ -5516,7 +5516,7 @@ class Mini_Cart extends Widget_Base {
 		}
 
 		?>
-			<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'count_badge' ) ); ?>>
+			<span <?php $this->print_render_attribute_string( 'count_badge' ); ?>>
 				<?php
 				if ( $counting_effect ) {
 					?>
@@ -5578,7 +5578,7 @@ class Mini_Cart extends Widget_Base {
 					)
 				);
 				?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'cart_lottie' ) ); ?>></div>
+						<div <?php $this->print_render_attribute_string( 'cart_lottie' ); ?>></div>
 					<?php
 
 				break;
@@ -5594,7 +5594,7 @@ class Mini_Cart extends Widget_Base {
 		$progress_bar  = 'yes' === $settings['mc_progressbar'];
 
 		?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'cart_menu_content' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'cart_menu_content' ); ?>>
 				<?php
 				if ( $render_header ) {
 					$this->render_cart_header( $settings, $cart_type );
@@ -5758,7 +5758,7 @@ class Mini_Cart extends Widget_Base {
 		}
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'cart_header' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'cart_header' ); ?>>
 			<?php
 
 			if ( 'layout-3' === $layout ) {
@@ -5840,7 +5840,7 @@ class Mini_Cart extends Widget_Base {
 			}
 		}
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'cart_footer' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'cart_footer' ); ?>>
 			<?php if ( $subtotal ) : ?>
 			<div class="pa-woo-mc__cart-subtotal">
 				<?php if ( 'layout-3' === $layout || $subtotal_heading ) : ?>

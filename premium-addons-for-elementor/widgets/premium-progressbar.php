@@ -1769,13 +1769,13 @@ class Premium_Progressbar extends Widget_Base {
 
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'progressbar' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'progressbar' ); ?>>
 
 			<?php if ( 'left_right_labels' === $settings['premium_progressbar_select_label'] ) : ?>
-				<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_left_label' ) ); ?>>
+				<p <?php $this->print_render_attribute_string( 'premium_progressbar_left_label' ); ?>>
 					<?php echo wp_kses_post( $settings['premium_progressbar_left_label'] ); ?>
 				</p>
-				<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_right_label' ) ); ?>>
+				<p <?php $this->print_render_attribute_string( 'premium_progressbar_right_label' ); ?>>
 					<?php echo wp_kses_post( 'yes' !== $settings['magic_scroll'] ? $settings['premium_progressbar_right_label'] : '0%' ); ?>
 				</p>
 			<?php endif; ?>
@@ -1842,7 +1842,7 @@ class Premium_Progressbar extends Widget_Base {
 				<div class="clearfix"></div>
 			<?php endif; ?>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrap' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'wrap' ); ?>>
 				<?php if ( 'line' === $type ) : ?>
 					<div class="premium-progressbar-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 				<?php elseif ( 'circle' === $type ) : ?>
@@ -1970,7 +1970,7 @@ class Premium_Progressbar extends Widget_Base {
 
 				elseif ( 'svg' === $icon_type ) :
 					?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
 						<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
 					</div>
 					<?php
@@ -1978,15 +1978,15 @@ class Premium_Progressbar extends Widget_Base {
 					?>
 					<img class="premium-progressbar-circle-icon" src="<?php echo esc_attr( $settings['image_upload']['url'] ); ?>">
 				<?php else : ?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'progress_lottie' ) ); ?>></div>
+					<div <?php $this->print_render_attribute_string( 'progress_lottie' ); ?>></div>
 				<?php endif; ?>
 
-				<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_left_label' ) ); ?>>
+				<p <?php $this->print_render_attribute_string( 'premium_progressbar_left_label' ); ?>>
 					<?php echo wp_kses_post( $settings['premium_progressbar_left_label'] ); ?>
 				</p>
 				<?php if ( 'yes' === $settings['show_percentage_value'] ) : ?>
 					<?php if ( 'yes' === $settings['show_percentage_value'] ) : ?>
-						<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_right_label' ) ); ?>>0%</p>
+						<p <?php $this->print_render_attribute_string( 'premium_progressbar_right_label' ); ?>>0%</p>
 					<?php endif; ?>
 				<?php endif; ?>
 			</div>

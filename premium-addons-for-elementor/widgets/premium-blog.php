@@ -3521,7 +3521,7 @@ class Premium_Blog extends Widget_Base {
 					}
 					?>
 						<li>
-							<a href="javascript:;" <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?> data-filter="<?php echo esc_attr( $filter->slug ); ?>">
+							<a href="javascript:;" <?php $this->print_render_attribute_string( $key ); ?> data-filter="<?php echo esc_attr( $filter->slug ); ?>">
 								<?php echo wp_kses_post( $filter->name ); ?>
 							</a>
 						</li>
@@ -3633,7 +3633,7 @@ class Premium_Blog extends Widget_Base {
 		<?php if ( $carousel && $arrows && 'above' === $settings['arrows_position'] ) { ?>
 			<div class="premium-carousel-arrows-wrapper"></div>
 		<?php } ?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'blog' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'blog' ); ?>>
 			<?php if ( 'yes' === $settings['premium_blog_grid'] && 'marquee' === $settings['premium_blog_layout'] ) : ?>
 				<div class="premium-marquee-wrapper">
 			<?php endif; ?>

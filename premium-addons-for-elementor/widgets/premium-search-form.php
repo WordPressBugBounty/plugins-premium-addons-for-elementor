@@ -374,7 +374,7 @@ class Premium_Search_Form extends Widget_Base {
 			if ( ! empty( $taxonomy ) ) {
 
 				// Batch-fetch terms for all taxonomies of this post type in one query.
-				$all_terms   = get_terms(
+				$all_terms    = get_terms(
 					array(
 						'taxonomy'   => array_keys( $taxonomy ),
 						'hide_empty' => false,
@@ -3320,7 +3320,7 @@ class Premium_Search_Form extends Widget_Base {
 
 		?>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 
 				<?php if ( 'yes' === $settings['show_label'] ) : ?>
 					<div class="premium-search__label-wrap">
@@ -3359,7 +3359,7 @@ class Premium_Search_Form extends Widget_Base {
 					<?php endif; ?>
 
 					<div class="premium-search__input-wrap">
-						<input <?php echo wp_kses_post( $this->get_render_attribute_string( 'search_input' ) ); ?>>
+						<input <?php $this->print_render_attribute_string( 'search_input' ); ?>>
 
 						<div class="premium-search__spinner"></div>
 

@@ -930,7 +930,7 @@ class Premium_SVG_Drawer extends Widget_Base {
 			<div class="premium-svg-draw elementor-invisible">
 
 				<?php if ( ! empty( $settings['link']['url'] ) ) : ?>
-					<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>>
+					<a <?php $this->print_render_attribute_string( 'link' ); ?>>
 				<?php endif; ?>
 
 				<?php if ( 'icon' === $type ) : ?>

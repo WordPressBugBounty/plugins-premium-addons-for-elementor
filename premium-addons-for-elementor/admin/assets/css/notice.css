@@ -4,6 +4,7 @@
 	padding: 10px 13px;
 	margin: 0;
 	align-items: center;
+	background-color: #fff;
 }
 
 .error.pa-notice-wrap div {
@@ -13,7 +14,6 @@
 
 .pa-new-feature-notice .pa-text-wrap .pa-notice-close {
 	text-decoration: none;
-	margin-inline-start: 1em;
 	margin-inline-start: auto;
 }
 

@@ -2618,9 +2618,9 @@ class Premium_Media_Wheel extends Widget_Base {
 		$this->add_render_attribute( 'inner', 'class', 'premium-adv-carousel__inner-container' );
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wheel' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'wheel' ); ?>>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'inner' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'inner' ); ?>>
 
 				<div class="premium-adv-carousel__items">
 
@@ -2735,7 +2735,7 @@ class Premium_Media_Wheel extends Widget_Base {
 
 			?>
 			<div class="premium-adv-carousel__item-outer-wrapper">
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wheel_item' . $index ) ); ?>>
+				<div <?php $this->print_render_attribute_string( 'wheel_item' . $index ); ?>>
 					<div class="premium-adv-carousel__media-wrap">
 						<?php
 						if ( 'image' === $media_type ) {
@@ -2754,7 +2754,7 @@ class Premium_Media_Wheel extends Widget_Base {
 							);
 
 							?>
-								<img <?php echo wp_kses_post( $this->get_render_attribute_string( 'wheel_img' . $index ) ); ?>>
+								<img <?php $this->print_render_attribute_string( 'wheel_img' . $index ); ?>>
 							<?php
 						} elseif ( 'id' === $media_type ) {
 							?>
@@ -2876,7 +2876,7 @@ class Premium_Media_Wheel extends Widget_Base {
 		$thumbnail = empty( $thumbnail ) ? $video_thumb : $thumbnail;
 
 		?>
-			<div class="premium-adv-carousel__video-wrap"  data-type="<?php echo esc_html( $item['media_wheel_video_type'] ); ?>" <?php echo wp_kses_post( $this->get_render_attribute_string( 'video_container' ) ); ?>>
+			<div class="premium-adv-carousel__video-wrap"  data-type="<?php echo esc_html( $item['media_wheel_video_type'] ); ?>" <?php $this->print_render_attribute_string( 'video_container' ); ?>>
 				<?php if ( 'hosted' !== $item['media_wheel_video_type'] ) : ?>
 					<div class="premium-adv-carousel__iframe-wrap" data-src="<?php echo esc_url( $link ); ?>"></div>
 					<?php
@@ -3051,7 +3051,7 @@ class Premium_Media_Wheel extends Widget_Base {
 
 				?>
 				<div>
-					<a <?php echo wp_kses_post( $this->get_render_attribute_string( $lightbox_key ) ); ?>>
+					<a <?php $this->print_render_attribute_string( $lightbox_key ); ?>>
 						<span class="premium-adv-carousel__video-icon">
 						<?php
 							Icons_Manager::render_icon( $item['media_wheel_videos_icon'], array( 'aria-hidden' => 'true' ) );
@@ -3065,7 +3065,7 @@ class Premium_Media_Wheel extends Widget_Base {
 			if ( 'yes' !== $item['media_wheel_video_icon_switcher'] ) {
 				?>
 				<div>
-					<a <?php echo wp_kses_post( $this->get_render_attribute_string( $lightbox_key ) ); ?>>
+					<a <?php $this->print_render_attribute_string( $lightbox_key ); ?>>
 						<span>
 							<?php
 							Icons_Manager::render_icon( $settings['media_lightbox_icon'], array( 'aria-hidden' => 'true' ) );
@@ -3118,7 +3118,7 @@ class Premium_Media_Wheel extends Widget_Base {
 
 			?>
 
-				<a <?php echo wp_kses_post( $this->get_render_attribute_string( $lightbox_key ) ); ?>>
+				<a <?php $this->print_render_attribute_string( $lightbox_key ); ?>>
 					<span>
 						<?php
 						Icons_Manager::render_icon( $settings['media_lightbox_icon'], array( 'aria-hidden' => 'true' ) );

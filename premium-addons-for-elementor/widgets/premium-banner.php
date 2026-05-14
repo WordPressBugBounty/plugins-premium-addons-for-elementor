@@ -1429,7 +1429,7 @@ class Premium_Banner extends Widget_Base {
 		);
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'banner_inner' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'banner_inner' ); ?>>
 			<?php if ( 'animation7' === $settings['premium_banner_image_animation'] || 'animation8' === $settings['premium_banner_image_animation'] ) : ?>
 				<div class="premium-banner-border">
 					<div class="premium-banner-br premium-banner-bleft premium-banner-brlr"></div>
@@ -1458,14 +1458,14 @@ class Premium_Banner extends Widget_Base {
 				<?php
 				if ( ! empty( $settings['premium_banner_description'] ) ) :
 					?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_banner_description' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'premium_banner_description' ); ?>>
 						<?php echo $this->parse_text_editor( $settings['premium_banner_description'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 				<?php endif; ?>
 
 				<?php if ( 'yes' === $settings['premium_banner_link_switcher'] && ! empty( $settings['premium_banner_more_text'] ) ) : ?>
 					<div class="premium-banner-read-more">
-						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'button' ) ); ?>>
+						<a <?php $this->print_render_attribute_string( 'button' ); ?>>
 							<div class="premium-button-text-icon-wrapper">
 								<span><?php echo esc_html( $settings['premium_banner_more_text'] ); ?></span>
 							</div>
@@ -1489,7 +1489,7 @@ class Premium_Banner extends Widget_Base {
 			<?php
 			if ( 'yes' === $settings['premium_banner_link_url_switch'] && ( ! empty( $settings['premium_banner_image_custom_link']['url'] ) || ! empty( $settings['premium_banner_image_existing_page_link'] ) ) ) :
 				?>
-				<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>></a>
+				<a <?php $this->print_render_attribute_string( 'link' ); ?>></a>
 			<?php endif; ?>
 		</div>
 

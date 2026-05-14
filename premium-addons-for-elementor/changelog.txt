@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.11.77 - 14/5/2026 =
+
+- Tweak: Code refactored for better performance and security.
+- Fixed: Metro layout not working in Media Grid with Elementor extra breakpoints feature.
+- Fixed: Carousel widget navigation options not working correctly.
+
 = 4.11.76 - 10/5/2026 =
 
 - Tweak: Code refactored for better performance and security.

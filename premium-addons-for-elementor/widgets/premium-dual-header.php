@@ -1699,16 +1699,16 @@ class Premium_Dual_Header extends Widget_Base {
 		?>
 
 		<div class="elementor-widget-container">
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 		<?php if ( 'yes' === $settings['premium_dual_header_link_switcher'] ) : ?>
-		<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>>
+		<a <?php $this->print_render_attribute_string( 'link' ); ?>>
 		<?php endif; ?>
 			<?php echo wp_kses_post( $full_title ); ?>
 		<?php if ( 'yes' === $settings['premium_dual_header_link_switcher'] ) : ?>
 		</a>
 		<?php endif; ?>
 		<?php if ( $show_desc ) : ?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'dh_description' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'dh_description' ); ?>>
 			<?php echo wp_kses_post( $settings['premium_dual_header_desc_text'] ); ?>
 		</div>
 		<?php endif; ?>

@@ -1882,7 +1882,7 @@ class Premium_Testimonials extends Widget_Base {
 		}
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'testimonials_container' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'testimonials_container' ); ?>>
 
 			<?php if ( 'yes' !== $settings['multiple'] ) : ?>
 
@@ -1898,14 +1898,14 @@ class Premium_Testimonials extends Widget_Base {
 
 						<?php if ( ! empty( $settings['heading'] ) ) : ?>
 							<div class="premium-testimonial-heading">
-								<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'heading' ) ); ?>>
+								<p <?php $this->print_render_attribute_string( 'heading' ); ?>>
 									<?php echo wp_kses_post( $settings['heading'] ); ?>
 								</p>
 							</div>
 						<?php endif; ?>
 
 						<div class="premium-testimonial-text-wrapper">
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_testimonial_content' ) ); ?>>
+							<div <?php $this->print_render_attribute_string( 'premium_testimonial_content' ); ?>>
 								<?php echo $this->parse_text_editor( $settings['premium_testimonial_content'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 							</div>
 						</div>
@@ -1922,7 +1922,7 @@ class Premium_Testimonials extends Widget_Base {
 
 
 							<?php if ( ! empty( $image_src ) ) : ?>
-								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'img_wrap' ) ); ?>>
+								<div <?php $this->print_render_attribute_string( 'img_wrap' ); ?>>
 									<img src="<?php echo esc_url( $image_src ); ?>" alt="<?php echo esc_attr( $alt ); ?>" class="premium-testimonial-person-image">
 								</div>
 							<?php endif; ?>
@@ -1930,7 +1930,7 @@ class Premium_Testimonials extends Widget_Base {
 
 							<div class="premium-testimonial-author-info">
 								<<?php echo wp_kses_post( $person_title_tag ); ?> class="premium-testimonial-person-name">
-									<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_testimonial_person_name' ) ); ?>>
+									<span <?php $this->print_render_attribute_string( 'premium_testimonial_person_name' ); ?>>
 										<?php echo wp_kses_post( $settings['premium_testimonial_person_name'] ); ?>
 									</span>
 								</<?php echo wp_kses_post( $person_title_tag ); ?>>
@@ -1938,13 +1938,13 @@ class Premium_Testimonials extends Widget_Base {
 								<?php if ( ! empty( $settings['premium_testimonial_company_name'] ) ) : ?>
 									<<?php echo wp_kses_post( $job_tag ); ?> class="premium-testimonial-job">
 									<?php if ( 'yes' === $settings['premium_testimonial_company_link_switcher'] ) : ?>
-										<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>>
-											<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_testimonial_company_name' ) ); ?>>
+										<a <?php $this->print_render_attribute_string( 'link' ); ?>>
+											<span <?php $this->print_render_attribute_string( 'premium_testimonial_company_name' ); ?>>
 												<?php echo wp_kses_post( $settings['premium_testimonial_company_name'] ); ?>
 											</span>
 										</a>
 									<?php else : ?>
-										<span class="premium-testimonial-company-link" <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_testimonial_company_name' ) ); ?>>
+										<span class="premium-testimonial-company-link" <?php $this->print_render_attribute_string( 'premium_testimonial_company_name' ); ?>>
 											<?php echo wp_kses_post( $settings['premium_testimonial_company_name'] ); ?>
 										</span>
 									<?php endif; ?>
@@ -2000,14 +2000,14 @@ class Premium_Testimonials extends Widget_Base {
 
 							<?php if ( ! empty( $testimonial['heading'] ) ) : ?>
 								<div class="premium-testimonial-heading">
-									<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'heading' ) ); ?>>
+									<p <?php $this->print_render_attribute_string( 'heading' ); ?>>
 										<?php echo wp_kses_post( $testimonial['heading'] ); ?>
 									</p>
 								</div>
 							<?php endif; ?>
 
 							<div class="premium-testimonial-text-wrapper">
-								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_testimonial_content' ) ); ?>>
+								<div <?php $this->print_render_attribute_string( 'premium_testimonial_content' ); ?>>
 									<?php echo $this->parse_text_editor( $testimonial['content'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
 							</div>
@@ -2024,7 +2024,7 @@ class Premium_Testimonials extends Widget_Base {
 
 								<?php if ( 'skin4' !== $settings['skin'] ) : ?>
 									<?php if ( ! empty( $testionial_image_html ) ) : ?>
-										<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'img_wrap' ) ); ?>>
+										<div <?php $this->print_render_attribute_string( 'img_wrap' ); ?>>
 											<?php echo wp_kses_post( $testionial_image_html ); ?>
 										</div>
 									<?php endif; ?>
@@ -2032,7 +2032,7 @@ class Premium_Testimonials extends Widget_Base {
 
 								<div class="premium-testimonial-author-info">
 									<<?php echo wp_kses_post( $person_title_tag ); ?> class="premium-testimonial-person-name">
-										<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_testimonial_person_name' ) ); ?>>
+										<span <?php $this->print_render_attribute_string( 'premium_testimonial_person_name' ); ?>>
 											<?php echo wp_kses_post( $testimonial['person_name'] ); ?>
 										</span>
 									</<?php echo wp_kses_post( $person_title_tag ); ?>>
@@ -2040,13 +2040,13 @@ class Premium_Testimonials extends Widget_Base {
 									<?php if ( ! empty( $testimonial['company_name'] ) ) : ?>
 										<<?php echo wp_kses_post( $job_tag ); ?> class="premium-testimonial-job">
 										<?php if ( 'yes' === $testimonial['link_switcher'] ) : ?>
-											<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link_' . $index ) ); ?>>
-												<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_testimonial_company_name' ) ); ?>>
+											<a <?php $this->print_render_attribute_string( 'link_' . $index ); ?>>
+												<span <?php $this->print_render_attribute_string( 'premium_testimonial_company_name' ); ?>>
 													<?php echo wp_kses_post( $testimonial['company_name'] ); ?>
 												</span>
 											</a>
 										<?php else : ?>
-											<span class="premium-testimonial-company-link" <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_testimonial_company_name' ) ); ?>>
+											<span class="premium-testimonial-company-link" <?php $this->print_render_attribute_string( 'premium_testimonial_company_name' ); ?>>
 												<?php echo wp_kses_post( $testimonial['company_name'] ); ?>
 											</span>
 										<?php endif; ?>

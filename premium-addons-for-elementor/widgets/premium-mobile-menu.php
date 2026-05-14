@@ -161,7 +161,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 					if ( 'yes' === $item['draw_svg'] ) {
 						$scripts[] = 'pa-tweenmax';
 						$scripts[] = 'pa-motionpath';
-						$draw_js = true;
+						$draw_js   = true;
 					}
 
 					if ( 'animation' === $item['icon_type'] ) {
@@ -1762,7 +1762,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 
 		?>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrap' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'wrap' ); ?>>
 				<div class="premium-mobile-menu__items-wrap">
 
 					<ul class="premium-mobile-menu__list">
@@ -1882,10 +1882,10 @@ class Premium_Mobile_Menu extends Widget_Base {
 							}
 
 							?>
-							<li <?php echo wp_kses_post( $this->get_render_attribute_string( 'menu-item-' . $index ) ); ?> >
-								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item_inner' ) ); ?>>
+							<li <?php $this->print_render_attribute_string( 'menu-item-' . $index ); ?> >
+								<div <?php $this->print_render_attribute_string( 'item_inner' ); ?>>
 
-									<a <?php echo wp_kses_post( $this->get_render_attribute_string( $item_link ) ); ?>>
+									<a <?php $this->print_render_attribute_string( $item_link ); ?>>
 
 										<?php if ( 'yes' === $item['show_badge'] && ! empty( $item['badge_title'] ) ) : ?>
 											<div class="premium-mobile-menu__badge">
@@ -1910,14 +1910,14 @@ class Premium_Mobile_Menu extends Widget_Base {
 														echo '</div>';
 													} else {
 														?>
-															<div <?php echo wp_kses_post( $this->get_render_attribute_string( $animation_key ) ); ?>>
+															<div <?php $this->print_render_attribute_string( $animation_key ); ?>>
 																<?php echo Helper_Functions::get_svg_by_icon( $item['icon'] ); ?>
 															</div>
 														<?php
 													}
 												} elseif ( 'svg' === $item['icon_type'] ) {
 													?>
-														<div <?php echo wp_kses_post( $this->get_render_attribute_string( $animation_key ) ); ?>>
+														<div <?php $this->print_render_attribute_string( $animation_key ); ?>>
 														<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); ?>
 														</div>
 														<?php

@@ -1883,7 +1883,7 @@ class Premium_Contactform extends Widget_Base {
 					<?php endif; ?>
 
 					<?php if ( ! empty( $settings['description_text'] ) ) : ?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'description_text' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'description_text' ); ?>>
 							<?php echo wp_kses_post( $settings['description_text'] ); ?>
 						</div>
 					<?php endif; ?>
@@ -1892,7 +1892,7 @@ class Premium_Contactform extends Widget_Base {
 
 			<?php endif; ?>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 				<?php echo do_shortcode( '[contact-form-7 id="' . $form_id . '" ]' ); ?>
 			</div>
 

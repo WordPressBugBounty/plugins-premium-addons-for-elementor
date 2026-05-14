@@ -2017,7 +2017,7 @@ class Woo_CTA extends Widget_Base {
 		}
 		?>
 
-		<img <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon_img' ) ); ?>>
+		<img <?php $this->print_render_attribute_string( 'icon_img' ); ?>>
 
 		<?php
 	}

@@ -3105,10 +3105,10 @@ class Premium_World_Clock extends Widget_Base {
 		}
 
 		?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'pa-clock-wrapper' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'pa-clock-wrapper' ); ?>>
 				<?php if ( in_array( $skin, array( 'skin-1', 'skin-5', 'skin-6', 'skin-7' ), true ) ) { ?>
 					<?php if ( $show_time ) : ?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'time_wrapper' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'time_wrapper' ); ?>>
 							<div class="premium-world-clock__circle">
 								<?php
 								if ( 'skin-1' !== $skin ) {
@@ -3160,7 +3160,7 @@ class Premium_World_Clock extends Widget_Base {
 
 					<?php if ( $show_time ) : ?>
 
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'time_wrapper' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'time_wrapper' ); ?>>
 							<span class="premium-world-clock__hours premium-world-clock__hand"></span>
 							<span class="premium-world-clock__separator">:</span>
 							<span class="premium-world-clock__minutes premium-world-clock__hand"></span>
@@ -3180,7 +3180,7 @@ class Premium_World_Clock extends Widget_Base {
 						<div class='premium-world-clock__days-wrapper'></div>
 					<?php } ?>
 					<?php if ( $show_time ) : ?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'time_wrapper' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'time_wrapper' ); ?>>
 						<span class='premium-world-clock__hours premium-world-clock__hand'></span>
 						<span class='premium-world-clock__separator'>:</span>
 						<span class='premium-world-clock__minutes premium-world-clock__hand'></span>
@@ -3208,7 +3208,7 @@ class Premium_World_Clock extends Widget_Base {
 					</div>
 				<?php } elseif ( 'skin-4' === $skin ) { ?>
 					<?php if ( $show_time ) : ?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'time_wrapper' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'time_wrapper' ); ?>>
 							<span class="premium-world-clock__hours premium-world-clock__hand"></span>
 							<span class="premium-world-clock__separator">:</span>
 							<span class="premium-world-clock__minutes premium-world-clock__hand"></span>

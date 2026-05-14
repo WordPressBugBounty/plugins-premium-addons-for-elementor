@@ -4904,7 +4904,7 @@ class Premium_Nav_Menu extends Widget_Base {
 		 * Hamburger Menu Button.
 		 */
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrapper' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<div class="premium-ver-inner-container">
 				<?php if ( $render_mobile_menu ) { ?>
 					<div class="premium-hamburger-toggle premium-mobile-menu-icon" role="button" aria-label="Toggle Menu">

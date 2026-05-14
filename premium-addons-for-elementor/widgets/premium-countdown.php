@@ -1938,8 +1938,8 @@ class Premium_Countdown extends Widget_Base {
 		);
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'inner_counter' ) ); ?>></div>
+		<div <?php $this->print_render_attribute_string( 'container' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'inner_counter' ); ?>></div>
 
 			<?php if ( 'text' === $event ) : ?>
 

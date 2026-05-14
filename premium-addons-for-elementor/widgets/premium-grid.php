@@ -319,7 +319,7 @@ class Premium_Grid extends Widget_Base {
 				'condition' => array(
 					'premium_gallery_load_more' => 'yes',
 				),
-				'ai'          => array(
+				'ai'        => array(
 					'active' => false,
 				),
 			)
@@ -492,7 +492,7 @@ class Premium_Grid extends Widget_Base {
 					),
 					$condition
 				),
-				'ai'          => array(
+				'ai'        => array(
 					'active' => false,
 				),
 			)
@@ -506,7 +506,7 @@ class Premium_Grid extends Widget_Base {
 				'label'   => __( 'Category', 'premium-addons-for-elementor' ),
 				'type'    => Controls_Manager::TEXT,
 				'dynamic' => array( 'active' => true ),
-				'ai'          => array(
+				'ai'      => array(
 					'active' => false,
 				),
 			)
@@ -2002,7 +2002,7 @@ class Premium_Grid extends Widget_Base {
 				'condition' => array(
 					'filter_adv_radius' => 'yes',
 				),
-				'ai'          => array(
+				'ai'        => array(
 					'active' => false,
 				),
 			)
@@ -2083,7 +2083,7 @@ class Premium_Grid extends Widget_Base {
 				'condition' => array(
 					'filter_hover_adv_radius' => 'yes',
 				),
-				'ai'          => array(
+				'ai'        => array(
 					'active' => false,
 				),
 			)
@@ -2167,7 +2167,7 @@ class Premium_Grid extends Widget_Base {
 				'condition' => array(
 					'filter_active_adv_radius' => 'yes',
 				),
-				'ai'          => array(
+				'ai'        => array(
 					'active' => false,
 				),
 			)
@@ -2644,7 +2644,7 @@ class Premium_Grid extends Widget_Base {
 						$this->add_render_attribute( $key, 'data-filter', $slug );
 						?>
 						<li>
-							<a href="javascript:;" <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?>>
+							<a href="javascript:;" <?php $this->print_render_attribute_string( $key ); ?>>
 								<?php echo wp_kses_post( $category['premium_gallery_img_cat'] ); ?>
 							</a>
 						</li>
@@ -2815,14 +2815,14 @@ class Premium_Grid extends Widget_Base {
 
 		?>
 
-	<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'grid' ) ); ?>>
+	<div <?php $this->print_render_attribute_string( 'grid' ); ?>>
 		<?php
 		if ( 'yes' === $filter ) :
 			$this->render_filter_tabs( $is_all_active, $active_cat_index );
 		endif;
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'gallery_container' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'gallery_container' ); ?>>
 
 			<?php if ( 'metro' === $layout ) : ?>
 				<div class="grid-sizer"></div>
@@ -2837,7 +2837,7 @@ class Premium_Grid extends Widget_Base {
 
 				// Check for Image ID, but not for the default Elementor placeholder.
 				// if ( false === strpos( $image['premium_gallery_img']['url'], 'placeholder.png' ) && ! $image['premium_gallery_video'] && ! $image_id && empty( $image['premium_gallery_img']['url'] ) ) {
-				// 	continue;
+				// continue;
 				// }
 
 				$image_by_id = get_post( $image_id );
@@ -2865,9 +2865,9 @@ class Premium_Grid extends Widget_Base {
 					$this->add_render_attribute( $key, 'class', 'premium-gallery-video-item' );
 				}
 				?>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?>>
+				<div <?php $this->print_render_attribute_string( $key ); ?>>
 				<div class="pa-gallery-img <?php echo esc_attr( $skin ); ?>" onclick="">
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'image_container' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'image_container' ); ?>>
 						<?php
 							$video_data = $this->render_grid_item( $image, $index );
 
@@ -2940,7 +2940,7 @@ class Premium_Grid extends Widget_Base {
 							}
 
 							?>
-							<a <?php echo wp_kses_post( $this->get_render_attribute_string( $link_key ) ); ?>>
+							<a <?php $this->print_render_attribute_string( $link_key ); ?>>
 								<span>
 									<?php echo wp_kses_post( $image['premium_gallery_img_name'] ); ?>
 								</span>
@@ -2990,7 +2990,7 @@ class Premium_Grid extends Widget_Base {
 
 							?>
 
-								<a <?php echo wp_kses_post( $this->get_render_attribute_string( $lightbox_key ) ); ?>></a>
+								<a <?php $this->print_render_attribute_string( $lightbox_key ); ?>></a>
 
 							<?php
 						}
@@ -3256,7 +3256,7 @@ class Premium_Grid extends Widget_Base {
 
 			?>
 			<div>
-				<a <?php echo wp_kses_post( $this->get_render_attribute_string( $lightbox_key ) ); ?>>
+				<a <?php $this->print_render_attribute_string( $lightbox_key ); ?>>
 					<span>
 						<?php
 						Icons_Manager::render_icon( $settings['premium_gallery_videos_icon'], array( 'aria-hidden' => 'true' ) );
@@ -3311,7 +3311,7 @@ class Premium_Grid extends Widget_Base {
 
 				?>
 
-					<a <?php echo wp_kses_post( $this->get_render_attribute_string( $lightbox_key ) ); ?>>
+					<a <?php $this->print_render_attribute_string( $lightbox_key ); ?>>
 						<span>
 							<?php
 							Icons_Manager::render_icon( $settings['premium_gallery_lightbox_icon'], array( 'aria-hidden' => 'true' ) );
@@ -3348,7 +3348,7 @@ class Premium_Grid extends Widget_Base {
 					}
 
 					?>
-					<a <?php echo wp_kses_post( $this->get_render_attribute_string( $link_key ) ); ?>>
+					<a <?php $this->print_render_attribute_string( $link_key ); ?>>
 						<span>
 							<?php
 							Icons_Manager::render_icon( $settings['premium_gallery_links_icon'], array( 'aria-hidden' => 'true' ) );

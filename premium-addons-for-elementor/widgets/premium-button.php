@@ -1843,7 +1843,7 @@ class Premium_Button extends Widget_Base {
 		?>
 
 
-		<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'button' ) ); ?>>
+		<a <?php $this->print_render_attribute_string( 'button' ); ?>>
 			<div class="premium-button-text-icon-wrapper">
 				<?php if ( 'yes' === $settings['premium_button_icon_switcher'] ) : ?>
 
@@ -1858,17 +1858,17 @@ class Premium_Button extends Widget_Base {
 
 							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
+							<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
 								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist ?>
 							</div>
 						<?php else : ?>
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'lottie' ) ); ?>></div>
+							<div <?php $this->print_render_attribute_string( 'lottie' ); ?>></div>
 						<?php endif; ?>
 					<?php endif; ?>
 				<?php endif; ?>
 
 				<?php if ( ! empty( $button_text ) ) : ?>
-					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_button_text' ) ); ?>>
+					<span <?php $this->print_render_attribute_string( 'premium_button_text' ); ?>>
 						<?php echo wp_kses_post( $button_text ); ?>
 					</span>
 				<?php endif; ?>
@@ -1882,13 +1882,13 @@ class Premium_Button extends Widget_Base {
 							Icons_Manager::render_icon( $settings['premium_button_style4_icon_selection_updated'], array( 'aria-hidden' => 'true' ) );
 						?>
 					<?php else : ?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'slide_lottie' ) ); ?>></div>
+						<div <?php $this->print_render_attribute_string( 'slide_lottie' ); ?>></div>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( 'style6' === $settings['premium_button_hover_effect'] && 'yes' === $mouse_detect ) : ?>
-				<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'style6' ) ); ?>></span>
+				<span <?php $this->print_render_attribute_string( 'style6' ); ?>></span>
 			<?php endif; ?>
 
 			<?php if ( 'style8' === $settings['premium_button_hover_effect'] ) : ?>

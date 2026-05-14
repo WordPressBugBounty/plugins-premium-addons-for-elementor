@@ -150,7 +150,7 @@ class Premium_Pricing_Table extends Widget_Base {
 					if ( 'yes' === $item['draw_svg'] ) {
 						$scripts[] = 'pa-tweenmax';
 						$scripts[] = 'pa-motionpath';
-						$draw_js = true;
+						$draw_js   = true;
 					}
 
 					if ( 'animation' === $item['icon_type'] ) {
@@ -3675,11 +3675,11 @@ class Premium_Pricing_Table extends Widget_Base {
 
 		?>
 
-	<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+	<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 		<?php if ( 'yes' === $settings['premium_pricing_table_badge_switcher'] ) : ?>
 			<div class="premium-pricing-badge-container <?php echo esc_attr( $badge_position . ' ' . $badge_style ); ?>">
 				<div class="corner">
-					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_pricing_table_badge_text' ) ); ?>>
+					<span <?php $this->print_render_attribute_string( 'premium_pricing_table_badge_text' ); ?>>
 						<?php echo wp_kses_post( $settings['premium_pricing_table_badge_text'] ); ?>
 					</span>
 				</div>
@@ -3710,14 +3710,14 @@ class Premium_Pricing_Table extends Widget_Base {
 						?>
 
 					<?php elseif ( 'svg' === $icon_type ) : ?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
 							<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
 						</div>
 					<?php elseif ( 'animation' === $icon_type ) : ?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'pricing_lottie' ) ); ?>></div>
+						<div <?php $this->print_render_attribute_string( 'pricing_lottie' ); ?>></div>
 					<?php else : ?>
 						<div class='premium-pricing-image'>
-							<img <?php echo wp_kses_post( $this->get_render_attribute_string( 'pricing_img' ) ); ?> />
+							<img <?php $this->print_render_attribute_string( 'pricing_img' ); ?> />
 						</div>
 					<?php endif; ?>
 				</div>
@@ -3733,7 +3733,7 @@ class Premium_Pricing_Table extends Widget_Base {
 		<?php endif; ?>
 
 		<?php if ( $price_enabled ) : ?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'price_container' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'price_container' ); ?>>
 				<div class="premium-pricing-inner-wrapper <?php echo ( $has_effect ? esc_attr( 'premium-pricing-reveal-wrapper' ) : '' ); ?>">
 					<?php if ( $has_slashed_price ) : ?>
 						<s class="premium-pricing-slashed-price-value">
@@ -3817,7 +3817,7 @@ class Premium_Pricing_Table extends Widget_Base {
 							}
 
 							?>
-					<li <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?>>
+					<li <?php $this->print_render_attribute_string( $key ); ?>>
 							<?php if ( 'icon' === $item['icon_type'] ) : ?>
 								<?php
 
@@ -3857,7 +3857,7 @@ class Premium_Pricing_Table extends Widget_Base {
 									)
 								);
 								?>
-									<div <?php echo wp_kses_post( $this->get_render_attribute_string( $lottie_key ) ); ?>></div>
+									<div <?php $this->print_render_attribute_string( $lottie_key ); ?>></div>
 								<?php
 								else :
 									$img_key = 'pricing_list_img' . $index;
@@ -3870,7 +3870,7 @@ class Premium_Pricing_Table extends Widget_Base {
 									);
 									?>
 							<div class='premium-pricing-list-image premium-pricing-feature-icon'>
-								<img <?php echo wp_kses_post( $this->get_render_attribute_string( $img_key ) ); ?> />
+								<img <?php $this->print_render_attribute_string( $img_key ); ?> />
 							</div>
 								<?php endif; ?>
 
@@ -3892,13 +3892,13 @@ class Premium_Pricing_Table extends Widget_Base {
 			</ul>
 		<?php endif; ?>
 		<?php if ( 'yes' === $settings['premium_pricing_table_description_switcher'] ) : ?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_pricing_table_description_text' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'premium_pricing_table_description_text' ); ?>>
 				<?php echo $this->parse_text_editor( $settings['premium_pricing_table_description_text'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 		<?php endif; ?>
 		<?php if ( 'yes' === $settings['premium_pricing_table_button_switcher'] ) : ?>
 		<div class="premium-pricing-button-container">
-			<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'button' ) ); ?>>
+			<a <?php $this->print_render_attribute_string( 'button' ); ?>>
 				<div class="premium-button-text-icon-wrapper">
 					<span><?php echo wp_kses_post( $settings['premium_pricing_table_button_text'] ); ?></span>
 				</div>

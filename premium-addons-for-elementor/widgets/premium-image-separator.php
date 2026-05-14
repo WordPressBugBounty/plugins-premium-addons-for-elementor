@@ -1060,7 +1060,7 @@ class Premium_Image_Separator extends Widget_Base {
 
 		?>
 
-	<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+	<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 		<?php if ( 'image' === $type ) : ?>
 			<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt ); ?>">
 			<?php
@@ -1083,22 +1083,22 @@ class Premium_Image_Separator extends Widget_Base {
 			endif;
 			?>
 		<?php elseif ( 'svg' === $type ) : ?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
 				<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
 			</div>
 		<?php else : ?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'separator_lottie' ) ); ?>></div>
+			<div <?php $this->print_render_attribute_string( 'separator_lottie' ); ?>></div>
 		<?php endif; ?>
 
 		<?php if ( 'yes' === $settings['premium_image_separator_link_switcher'] ) : ?>
-			<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>></a>
+			<a <?php $this->print_render_attribute_string( 'link' ); ?>></a>
 		<?php endif; ?>
 	</div>
 		<?php
 	}
 
 	/**
-	 * Render Image Separtor widget output in the editor.
+	 * Render Image Separator widget output in the editor.
 	 *
 	 * Written as a Backbone JavaScript template and used to generate the live preview.
 	 *

@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.76
+Stable Tag: 4.11.77
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -112,7 +112,7 @@ Premium Addons for Elementor is fully modular. You can enable/disable specific e
 * [**Google Maps Widget**](https://premiumaddons.com/google-maps-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=google-maps) *(FREE)*: Advanced Google Maps Widget comes with features like adding multiple markers, custom skins, and much more options.
 * [**Team Members Widget**](https://premiumaddons.com/persons-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=team-members) *(FREE)*: Very good widget to list team members, co-workers, etc. Team Members Widget comes with many customization options.
 * [**Tabs Widget**](https://premiumaddons.com/elementor-tabs-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=tabs) *(PRO)*: Create both Vertical and Horizontal tabs with tons of styling features.
-* [**Content Switcher**](https://premiumaddons.com/content-switcher-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=content-switcher) *(PRO)*: Present multiple content in a smart way.
+* [**Content Toggle**](https://premiumaddons.com/elementor-content-toggle-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=content-switcher) *(PRO)*: Present multiple content in a smart way.
 * [**Animated Text Widget**](https://premiumaddons.com/elementor-animated-text-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=animated-text) *(FREE)*: The animated Fancy Text Widget comes with very useful options to help you create attractive marketing messages.
 * [**Heading Widget**](https://premiumaddons.com/heading-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=heading) *(FREE)*: Heading Widget has many customization options and ready-made heading styles.
 * [**Dual Heading Widget**](https://premiumaddons.com/dual-header-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=dual-heading) *(FREE)*: Create a headline with 2 different unique styles.
@@ -255,6 +255,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.77 - 14/5/2026 =
+
+- Tweak: Code refactored for better performance and security.
+- Fixed: Metro layout not working in Media Grid with Elementor extra breakpoints feature.
+- Fixed: Carousel widget navigation options not working correctly.
 
 = 4.11.76 - 10/5/2026 =
 

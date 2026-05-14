@@ -718,8 +718,6 @@
 					this.settings.counter = this.settings.minimum;
 
 					this.settings.isFilterClicked = false;
-				} else {
-					this.settings.counter = this.settings.counter;
 				}
 
 				this.settings.counter =
@@ -817,12 +815,13 @@
 				}
 			},
 
-			triggerFilerTabs: function (url) {
-				var filterIndex = url.searchParams.get(this.settings.flag),
-					$filters = this.elements.$filters;
+			triggerFilterTabs: function () {
+				var url = new URL(window.location.href),
+					filterIndex = url.searchParams.get(this.settings.flag);
 
 				if (filterIndex) {
-					var $targetFilter = $filters.eq(filterIndex).find("a");
+					var $filters = this.elements.$filters,
+						$targetFilter = $filters.eq(filterIndex).find("a");
 
 					$targetFilter.trigger("click");
 				}
@@ -831,15 +830,11 @@
 			onReady: function ($isotopeGallery) {
 				var _this = this;
 
-				$isotopeGallery.isotope("layout");
+				$isotopeGallery.find("img").on("load", function () {
+					$isotopeGallery.isotope("layout");
+				});
 
-				// $isotopeGallery.isotope({
-				//     filter: _this.settings.active_cat
-				// });
-
-				var url = new URL(window.location.href);
-
-				if (url) _this.triggerFilerTabs(url);
+				_this.triggerFilterTabs();
 
 				//Show the widget after making sure everything is ready.
 				_this.$element.find(".category.active").trigger("click");
@@ -1062,11 +1057,11 @@
 								repeater[index]["premium_gallery_image_vcell" + suffix].size;
 
 						if ("" === cells || undefined == cells) {
-							cells = repeater[index].premium_gallery_image_cell;
+							cells = repeater[index].premium_gallery_image_cell.size;
 						}
 
 						if ("" === vCells || undefined == vCells) {
-							vCells = repeater[index].premium_gallery_image_vcell;
+							vCells = repeater[index].premium_gallery_image_vcell.size;
 						}
 
 						$(item).css({
@@ -2367,7 +2362,7 @@
 						filterIndex = url.searchParams.get(this.settings.flag);
 
 					if (filterIndex) {
-						this.triggerFilerTabs(filterIndex);
+						this.triggerFilterTabs(filterIndex);
 					}
 				}
 
@@ -2680,7 +2675,7 @@
 				});
 			},
 
-			triggerFilerTabs: function (filterIndex) {
+			triggerFilterTabs: function (filterIndex) {
 				var $targetFilter = this.elements.$filterLinks.eq(filterIndex);
 
 				$targetFilter.trigger("click");

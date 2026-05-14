@@ -197,8 +197,8 @@
 				array(
 					'key'    => 'premium-content-toggle',
 					'name'   => 'premium-addon-content-toggle',
-					'title'  => __( 'Content Switcher', 'premium-addons-for-elementor' ),
-					'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/content-switcher-widget-for-elementor-page-builder/', 'content-switcher', 'wp-dash', 'wizard' ),
+					'title'  => __( 'Content Toggle', 'premium-addons-for-elementor' ),
+					'demo'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-content-toggle-widget/', 'content-switcher', 'wp-dash', 'wizard' ),
 					'is_pro' => true,
 					'icon'   => 'pa-pro-content-switcher',
 				),

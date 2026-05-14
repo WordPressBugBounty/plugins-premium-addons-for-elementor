@@ -750,7 +750,7 @@ class Premium_Carousel extends Widget_Base {
 				'type'         => Controls_Manager::CHOOSE,
 				'options'      => array(
 					'above'   => array(
-						'title' => __( 'Above Slide', 'premium-addons-for-elementor' ),
+						'title' => __( 'Above Slides', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-v-align-top',
 					),
 					'default' => array(
@@ -3015,14 +3015,14 @@ class Premium_Carousel extends Widget_Base {
 				foreach ( $settings['premium_carousel_templates_repeater'] as $template ) {
 
 					if ( 'id' === $template['temp_source'] ) {
-						$temp_id = $template['container_id'];
+						$temp_id     = $template['container_id'];
 						$templates[] = array(
 							'id'  => $template['container_id'],
 							'src' => $template['temp_source'],
 						);
 
 					} else {
-						$temp_id = empty( $template['premium_carousel_repeater_item'] ) ? $template['live_temp_content'] : $template['premium_carousel_repeater_item'];
+						$temp_id     = empty( $template['premium_carousel_repeater_item'] ) ? $template['live_temp_content'] : $template['premium_carousel_repeater_item'];
 						$templates[] = $temp_id;
 					}
 
@@ -3194,7 +3194,7 @@ class Premium_Carousel extends Widget_Base {
 		}
 
 		// not available for thumbnail slider mode.
-		$carouselNavigation = ! $has_nav_slider && $settings['premium_carousel_nav_options'];
+		$carouselNavigation = $has_nav_slider ? false : $settings['premium_carousel_nav_options'];
 
 		$extra_class = ! empty( $settings['premium_carousel_extra_class'] ) ? ' ' . $settings['premium_carousel_extra_class'] : '';
 
@@ -3284,7 +3284,7 @@ class Premium_Carousel extends Widget_Base {
 
 		$this->add_render_attribute( 'carousel', 'data-settings', wp_json_encode( $carousel_settings ) );
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'carousel' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'carousel' ); ?>>
 			<!-- Dots -->
 			<?php if ( ! $has_nav_slider && 'dots' === $settings['premium_carousel_nav_options'] ) { ?>
 				<div class="premium-carousel-nav-dot">

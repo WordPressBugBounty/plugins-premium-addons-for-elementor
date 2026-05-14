@@ -137,7 +137,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 					if ( 'yes' === $item['draw_svg'] || 'yes' === $item['draw_svg_hov'] ) {
 						$scripts[] = 'pa-tweenmax';
 						$scripts[] = 'pa-motionpath';
-						$draw_js = true;
+						$draw_js   = true;
 					}
 
 					if ( 'lottie' === $item['item_type'] || 'lottie' === $item['item_type_hov'] ) {
@@ -2066,7 +2066,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 					'fast' => __( 'Fast', 'premium-addons-for-elementor' ),
 				),
 				'condition' => array(
-					'entrance_animation!' => array( '', 'none'),
+					'entrance_animation!' => array( '', 'none' ),
 				),
 			)
 		);
@@ -2079,7 +2079,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 				'default'   => 0,
 				'step'      => 0.1,
 				'condition' => array(
-					'entrance_animation!' => array( '', 'none')
+					'entrance_animation!' => array( '', 'none' ),
 				),
 			)
 		);
@@ -2355,7 +2355,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		}
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 			<?php
 			foreach ( $content as $index => $item ) {
 
@@ -2436,7 +2436,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 				}
 
 				?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item-container' . $item['_id'] ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'item-container' . $item['_id'] ); ?>>
 						<?php
 
 							$this->render_item_elements( $index, $item );
@@ -2447,7 +2447,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 						if ( $has_link ) {
 							?>
-									<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' . $item['_id'] ) ); ?>></a>
+									<a <?php $this->print_render_attribute_string( 'link' . $item['_id'] ); ?>></a>
 								<?php
 						}
 						?>
@@ -2568,7 +2568,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 		if ( $svg_draw ) {
 			?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ); ?>>
 				<?php
 				echo Helper_Functions::get_svg_by_icon(
 					$item[ 'icon' . $elem_type ]
@@ -2604,8 +2604,8 @@ class Premium_Textual_Showcase extends Widget_Base {
 	 */
 	private function render_item_svg( $item, $index, $elem_type ) {
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ) ); ?>>
-			<?php echo Helper_Functions::sanitize_svg( $item['custom_svg' . $elem_type] ); ?>
+		<div <?php $this->print_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ); ?>>
+			<?php echo Helper_Functions::sanitize_svg( $item[ 'custom_svg' . $elem_type ] ); ?>
 		</div>
 		<?php
 	}
@@ -2707,7 +2707,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			)
 		);
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ) ); ?>></div>
+		<div <?php $this->print_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ); ?>></div>
 		<?php
 	}
 }

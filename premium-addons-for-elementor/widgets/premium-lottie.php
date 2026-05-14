@@ -815,9 +815,9 @@ class Premium_Lottie extends Widget_Base {
 
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'lottie' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'lottie' ); ?>>
 			<?php if ( 'yes' === $settings['link_switcher'] ) : ?>
-				<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>></a>
+				<a <?php $this->print_render_attribute_string( 'link' ); ?>></a>
 			<?php endif; ?>
 		</div>
 

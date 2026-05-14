@@ -978,7 +978,7 @@ class Shape_Divider {
 			);
 
 			?>
-				<div <?php echo wp_kses_post( $element->get_render_attribute_string( 'shape_divider_cont' . $id ) ); ?>>
+				<div <?php $element->print_render_attribute_string( 'shape_divider_cont' . $id ); ?>>
 					<?php echo $shape; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 			<?php

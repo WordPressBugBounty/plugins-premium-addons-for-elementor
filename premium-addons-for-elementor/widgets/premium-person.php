@@ -1952,13 +1952,13 @@ class Premium_Person extends Widget_Base {
 		}
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'persons_container' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'persons_container' ); ?>>
 			<?php if ( 'yes' !== $settings['multiple'] ) : ?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'person_container' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'person_container' ); ?>>
 
 				<div class="premium-person-image-container">
 					<?php if ( 'style3' !== $settings['premium_person_style'] && ! empty( $settings['premium_person_profile']['url'] ) ) { ?>
-						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_profile' ) ); ?>>
+						<a <?php $this->print_render_attribute_string( 'premium_person_profile' ); ?>>
 							<?php echo wp_kses_post( $image_html ); ?>
 						</a>
 						<?php
@@ -1973,7 +1973,7 @@ class Premium_Person extends Widget_Base {
 						</div>
 					<?php endif; ?>
 				</div>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'info_container' ) ); ?>>
+				<div <?php $this->print_render_attribute_string( 'info_container' ); ?>>
 					<?php $this->render_person_info(); ?>
 				</div>
 			</div>
@@ -2003,7 +2003,7 @@ class Premium_Person extends Widget_Base {
 					}
 
 					?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'person_container' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'person_container' ); ?>>
 						<div class="premium-person-image-container">
 						<?php echo wp_kses_post( $person_image_html ); ?>
 							<?php if ( 'style2' === $settings['premium_person_style'] && 'yes' === $person['multiple_social_enable'] ) : ?>
@@ -2012,7 +2012,7 @@ class Premium_Person extends Widget_Base {
 								</div>
 							<?php endif; ?>
 						</div>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'info_container' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'info_container' ); ?>>
 							<?php $this->render_person_info( $person, $index ); ?>
 						</div>
 					</div>
@@ -2126,7 +2126,7 @@ class Premium_Person extends Widget_Base {
 					$name_html      = $name_tag_open . $name_content . $name_tag_close;
 					?>
 					<?php if ( ! empty( $settings['premium_person_profile']['url'] ) ) { ?>
-						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_profile' ) ); ?>>
+						<a <?php $this->print_render_attribute_string( 'premium_person_profile' ); ?>>
 							<?php echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</a>
 						<?php
@@ -2152,7 +2152,7 @@ class Premium_Person extends Widget_Base {
 
 				if ( ! empty( $settings['premium_person_content'] ) ) :
 					?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_content' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'premium_person_content' ); ?>>
 							<?php echo $this->parse_text_editor( $settings['premium_person_content'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</div>
 					<?php
@@ -2177,7 +2177,7 @@ class Premium_Person extends Widget_Base {
 								$name_html        = $name_tag_open . $name_span . $name_tag_close;
 							?>
 							<?php if ( ! empty( $settings['premium_person_profile']['url'] ) ) { ?>
-								<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_person_profile' ) ); ?>>
+								<a <?php $this->print_render_attribute_string( 'premium_person_profile' ); ?>>
 									<?php echo $name_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</a>
 								<?php
@@ -2227,7 +2227,7 @@ class Premium_Person extends Widget_Base {
 					$name_html_multiple = $name_tag_open . $name_content . $name_tag_close;
 					?>
 					<?php if ( ! empty( $person['multiple_profile']['url'] ) ) { ?>
-						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_multiple_profile_' . $index ) ); ?>>
+						<a <?php $this->print_render_attribute_string( 'premium_multiple_profile_' . $index ); ?>>
 							<?php echo $name_html_multiple; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</a>
 						<?php
@@ -2253,7 +2253,7 @@ class Premium_Person extends Widget_Base {
 
 				if ( ! empty( $person['multiple_description'] ) ) :
 					?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( $desc_setting_key ) ); ?>>
+						<div <?php $this->print_render_attribute_string( $desc_setting_key ); ?>>
 							<?php echo $this->parse_text_editor( $person['multiple_description'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</div>
 					<?php
@@ -2276,7 +2276,7 @@ class Premium_Person extends Widget_Base {
 							$name_html_multiple = $name_tag_open . $name_content . $name_tag_close;
 							?>
 							<?php if ( ! empty( $person['multiple_profile']['url'] ) ) { ?>
-								<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_multiple_profile_' . $index ) ); ?>>
+								<a <?php $this->print_render_attribute_string( 'premium_multiple_profile_' . $index ); ?>>
 									<?php echo $name_html_multiple; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</a>
 								<?php

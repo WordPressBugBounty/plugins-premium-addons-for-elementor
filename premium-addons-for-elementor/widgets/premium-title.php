@@ -2705,7 +2705,7 @@ class Premium_Title extends Widget_Base {
 		?>
 
 		<div class="premium-title-wrapper">
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 				<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( 'title' ) ); ?>>
 					<?php if ( 'style7' === $selected_style ) : ?>
 						<?php if ( 'column' !== $icon_position ) : ?>
@@ -2738,16 +2738,16 @@ class Premium_Title extends Widget_Base {
 							?>
 
 						<?php elseif ( 'svg' === $icon_type ) : ?>
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
+							<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
 								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
 							</div>
 						<?php elseif ( 'animation' === $icon_type ) : ?>
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'title_lottie' ) ); ?>></div>
+							<div <?php $this->print_render_attribute_string( 'title_lottie' ); ?>></div>
 						<?php else : ?>
 							<?php if ( 'yes' === $settings['mask_switcher'] ) : ?>
 								<span class="premium-title-img">
 							<?php endif; ?>
-								<img <?php echo wp_kses_post( $this->get_render_attribute_string( 'title_img' ) ); ?>>
+								<img <?php $this->print_render_attribute_string( 'title_img' ); ?>>
 							<?php if ( 'yes' === $settings['mask_switcher'] ) : ?>
 								</span>
 							<?php endif; ?>
@@ -2765,7 +2765,7 @@ class Premium_Title extends Widget_Base {
 					if ( 'style9' !== $selected_style ) :
 						$text = str_replace( array( '{{', '}}' ), array( '<span class="premium-title__focused-word">', '</span>' ), $settings['premium_title_text'] );
 						?>
-					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_title_text' ) ); ?>>
+					<span <?php $this->print_render_attribute_string( 'premium_title_text' ); ?>>
 						<?php echo wp_kses_post( $text ); ?>
 					</span>
 						<?php
@@ -2784,7 +2784,7 @@ class Premium_Title extends Widget_Base {
 						</div>
 					<?php endif; ?>
 					<?php if ( ! empty( $link ) ) : ?>
-						<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>></a>
+						<a <?php $this->print_render_attribute_string( 'link' ); ?>></a>
 					<?php endif; ?>
 
 					<?php if ( 'none' !== $settings['hover_effect'] ) : ?>
@@ -2795,7 +2795,7 @@ class Premium_Title extends Widget_Base {
 			</div>
 
 			<?php if ( $show_desc ) : ?>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'title_description' ) ); ?>>
+				<div <?php $this->print_render_attribute_string( 'title_description' ); ?>>
 					<?php echo wp_kses_post( $settings['premium_title_desc_text'] ); ?>
 				</div>
 			<?php endif; ?>

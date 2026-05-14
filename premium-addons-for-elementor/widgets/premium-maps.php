@@ -1270,7 +1270,7 @@ class Premium_Maps extends Widget_Base {
 
 		<?php if ( count( $map_pins ) ) { ?>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'style_wrapper' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'style_wrapper' ); ?>>
 				<?php
 				foreach ( $map_pins as $index => $pin ) {
 
@@ -1347,7 +1347,7 @@ class Premium_Maps extends Widget_Base {
 
 		?>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?>>
+			<div <?php $this->print_render_attribute_string( $key ); ?>>
 				<?php if ( ! empty( $pin['pin_title'] ) || ! empty( $pin['pin_desc'] ) ) : ?>
 					<div class='premium-maps-info-container'>
 
@@ -1387,9 +1387,9 @@ class Premium_Maps extends Widget_Base {
 
 		?>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?>>
+			<div <?php $this->print_render_attribute_string( $key ); ?>>
 				<?php if ( ! empty( $pin['pin_title'] ) || ! empty( $pin['pin_desc'] ) ) : ?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( $info_key ) ); ?>>
+					<div <?php $this->print_render_attribute_string( $info_key ); ?>>
 
 						<div class='premium-maps-info-close'>
 							<i class='eicon-close' aria-hidden='true'></i>

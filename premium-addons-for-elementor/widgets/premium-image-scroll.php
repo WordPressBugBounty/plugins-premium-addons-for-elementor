@@ -966,21 +966,21 @@ class Premium_Image_Scroll extends Widget_Base {
 		}
 
 		?>
-			<div class="premium-image-scroll-section" <?php echo wp_kses_post( $this->get_render_attribute_string( 'shadow' ) ); ?>>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+			<div class="premium-image-scroll-section" <?php $this->print_render_attribute_string( 'shadow' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 					<?php if ( 'yes' === $settings['icon_switcher'] ) : ?>
 						<div class="premium-image-scroll-content">
 							<?php $this->render_icon_svg( $settings['direction_type'] ); ?>
 						</div>
 					<?php endif; ?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'direction_type' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'direction_type' ); ?>>
 						<?php if ( 'yes' === $settings['overlay'] ) : ?>
 							<div class="premium-image-scroll-overlay">
 							<?php
 						endif;
 						if ( 'yes' === $settings['link_switcher'] ) :
 							?>
-								<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'link' ) ); ?>></a>
+								<a <?php $this->print_render_attribute_string( 'link' ); ?>></a>
 							<?php
 						endif;
 						if ( 'yes' === $settings['overlay'] ) :

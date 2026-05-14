@@ -1432,7 +1432,7 @@ class Premium_Counter extends Widget_Base {
 
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'content_wrapper' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'content_wrapper' ); ?>>
 
 			<div class="premium-counter-value-wrap">
 				<?php if ( ! empty( $settings['premium_counter_preffix'] ) ) : ?>
@@ -1448,7 +1448,7 @@ class Premium_Counter extends Widget_Base {
 
 			<?php if ( ! empty( $settings['premium_counter_title'] ) ) : ?>
 				<div class="premium-counter-title">
-					<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_counter_title' ) ); ?>>
+					<p <?php $this->print_render_attribute_string( 'premium_counter_title' ); ?>>
 						<?php echo wp_kses_post( $settings['premium_counter_title'] ); ?>
 					</p>
 					<?php if ( ! empty( $settings['premium_counter_desc'] ) ) : ?>
@@ -1586,13 +1586,13 @@ class Premium_Counter extends Widget_Base {
 					?>
 
 				<?php elseif ( 'svg' === $icon_type ) : ?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
 						<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
 					</div>
 				<?php elseif ( 'custom' === $icon_type && ! empty( $settings['premium_counter_image_upload']['url'] ) ) : ?>
-					<img <?php echo wp_kses_post( $this->get_render_attribute_string( 'image' ) ); ?>>
+					<img <?php $this->print_render_attribute_string( 'image' ); ?>>
 				<?php else : ?>
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'counter_lottie' ) ); ?>></div>
+					<div <?php $this->print_render_attribute_string( 'counter_lottie' ); ?>></div>
 				<?php endif; ?>
 
 			</span>
@@ -1645,7 +1645,7 @@ class Premium_Counter extends Widget_Base {
 
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'counter' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'counter' ); ?>>
 			<?php
 			if ( 'yes' === $settings['icon_switcher'] ) {
 				$this->render_counter_icon();

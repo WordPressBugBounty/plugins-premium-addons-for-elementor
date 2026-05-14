@@ -998,13 +998,13 @@ class Premium_Tcloud extends Widget_Base {
 
 		?>
 
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'container' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 
 				<div class="premium-tcloud-canvas-container">
 
 					<?php if ( in_array( $settings['words_order'], array( 'shape', 'sphere' ), true ) ) : ?>
 						<span class="font-loader"></span>
-						<canvas <?php echo wp_kses_post( $this->get_render_attribute_string( 'canvas' ) ); ?>>
+						<canvas <?php $this->print_render_attribute_string( 'canvas' ); ?>>
 						</canvas>
 					<?php endif; ?>
 
@@ -1021,7 +1021,7 @@ class Premium_Tcloud extends Widget_Base {
 
 								<div class="premium-tcloud-term-wrap">
 
-									<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'term' ) ); ?>>
+									<span <?php $this->print_render_attribute_string( 'term' ); ?>>
 										<a class="premium-tcloud-term-link" data-weight="<?php echo esc_attr( $word[1] ); ?>" href="<?php echo esc_url( $word[2] ); ?>" title="<?php echo esc_attr( $word[3] ); ?>" target="<?php echo esc_attr( $target ); ?>"><?php echo wp_kses_post( $word[0] ); ?><?php if ( in_array( $settings['words_order'], array( 'default', 'ribbon' ), true ) && 'yes' === $settings['show_posts_number'] ) : ?>
 											<span class="premium-tcloud-number">(<?php echo wp_kses_post( $word[4] ); ?>)</span><?php endif; ?></a>
 									</span>

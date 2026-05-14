@@ -3983,7 +3983,7 @@ class Premium_Weather extends Widget_Base {
 		}
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'outer_wrapper' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'outer_wrapper' ); ?>>
 		<?php
 
 			// hourly_weather_data
@@ -4509,7 +4509,7 @@ class Premium_Weather extends Widget_Base {
 		} elseif ( 'image' === $icon_type ) {
 
 			if ( ! empty( $icon['img']['url'] ) ) {
-				$img_src = wp_get_attachment_image_src( $icon['img']['id'], $icon['size'] );
+				$img_src  = wp_get_attachment_image_src( $icon['img']['id'], $icon['size'] );
 				$alt_text = isset( $icon['img']['alt'] ) ? $icon['img']['alt'] : '';
 				?>
 			<img src="<?php echo esc_url( $img_src ? $img_src[0] : $icon['img']['url'] ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>">

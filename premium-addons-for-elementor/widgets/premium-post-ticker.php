@@ -193,7 +193,7 @@ class Premium_Post_Ticker extends Widget_Base {
 			if ( 'yes' === $settings['draw_svg'] ) {
 				$scripts[] = 'pa-tweenmax';
 				$scripts[] = 'pa-motionpath';
-				$draw_js = true;
+				$draw_js   = true;
 			}
 
 			if ( 'lottie' === $settings['icon_type'] ) {
@@ -208,7 +208,7 @@ class Premium_Post_Ticker extends Widget_Base {
 					if ( ! $draw_js && 'yes' === $item['draw_svg'] ) {
 						$scripts[] = 'pa-tweenmax';
 						$scripts[] = 'pa-motionpath';
-						$draw_js = true;
+						$draw_js   = true;
 					}
 
 					if ( ! $lottie_js && 'lottie' === $item['icon_type'] ) {
@@ -1208,7 +1208,7 @@ class Premium_Post_Ticker extends Widget_Base {
 			if ( ! empty( $taxonomy ) ) {
 
 				// Batch-fetch terms for all taxonomies of this post type in one query.
-				$all_terms   = get_terms(
+				$all_terms    = get_terms(
 					array(
 						'taxonomy'   => array_keys( $taxonomy ),
 						'hide_empty' => false,
@@ -3495,7 +3495,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		}
 
 		?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'outer-wrapper' ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'outer-wrapper' ); ?>>
 				<?php if ( 'layout-1' === $layout ) { ?>
 					<?php if ( $current_date ) : ?>
 					<div class="premium-post-ticker__header-wrapper">
@@ -3503,14 +3503,14 @@ class Premium_Post_Ticker extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'ticker_content' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'ticker_content' ); ?>>
 						<?php
 						if ( $title ) {
 							$this->render_ticker_title( $settings );
 						}
 						?>
 
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'inner-wrapper' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'inner-wrapper' ); ?>>
 							<?php
 							if ( in_array( $source, array( 'stock', 'gold' ), true ) ) {
 								$this->render_detailed_stock_element( $req_data, $settings );
@@ -3536,14 +3536,14 @@ class Premium_Post_Ticker extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'ticker_content' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'ticker_content' ); ?>>
 						<?php
 						if ( $current_date ) {
 							$this->render_ticker_date( $settings );
 						}
 						?>
 
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'inner-wrapper' ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'inner-wrapper' ); ?>>
 							<?php
 							if ( in_array( $source, array( 'stock', 'gold' ), true ) ) {
 								$this->render_detailed_stock_element( $req_data, $settings );
@@ -3577,8 +3577,8 @@ class Premium_Post_Ticker extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'ticker_content' ) ); ?>>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'inner-wrapper' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'ticker_content' ); ?>>
+						<div <?php $this->print_render_attribute_string( 'inner-wrapper' ); ?>>
 							<?php
 							if ( in_array( $source, array( 'stock', 'gold' ), true ) ) {
 								$this->render_detailed_stock_element( $req_data, $settings );
@@ -3615,8 +3615,8 @@ class Premium_Post_Ticker extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'ticker_content' ) ); ?>>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'inner-wrapper' ) ); ?>>
+					<div <?php $this->print_render_attribute_string( 'ticker_content' ); ?>>
+						<div <?php $this->print_render_attribute_string( 'inner-wrapper' ); ?>>
 							<?php
 							if ( in_array( $source, array( 'stock', 'gold' ), true ) ) {
 								$this->render_detailed_stock_element( $req_data, $settings );
@@ -3852,7 +3852,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		$this->add_render_attribute( 'title', 'class', $title_classes );
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'title' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'title' ); ?>>
 			<?php
 			if ( $icon_enabled ) {
 				$this->render_ticker_icon( $settings );
@@ -3881,7 +3881,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		$this->add_render_attribute( 'date', 'class', $date_classes );
 
 		?>
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'date' ) ); ?>>
+		<div <?php $this->print_render_attribute_string( 'date' ); ?>>
 			<span class="premium-post-ticker__date"> <?php echo esc_html( date_i18n( $date_format ) ); ?></span>
 		</div>
 		<?php
@@ -3987,7 +3987,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 					if ( 'svg' === $icon_type ) {
 						?>
-						<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'icon' . $index ) ); ?>>
+						<div <?php $this->print_render_attribute_string( 'icon' . $index ); ?>>
 						<?php
 						if ( $is_repeater_item ) {
 							echo Helper_Functions::sanitize_svg( $settings['custom_svg'] );
@@ -4018,7 +4018,7 @@ class Premium_Post_Ticker extends Widget_Base {
 						)
 					);
 					?>
-							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'pa_ticker_lottie' ) ); ?>></div>
+							<div <?php $this->print_render_attribute_string( 'pa_ticker_lottie' ); ?>></div>
 						<?php
 				}
 
@@ -4084,9 +4084,9 @@ class Premium_Post_Ticker extends Widget_Base {
 			}
 
 			?>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'post-wrapper' . $txt_id ) ); ?>>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'post-title' . $txt_id ) ); ?>>
-					<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'post-link' . $txt_id ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'post-wrapper' . $txt_id ); ?>>
+				<div <?php $this->print_render_attribute_string( 'post-title' . $txt_id ); ?>>
+					<a <?php $this->print_render_attribute_string( 'post-link' . $txt_id ); ?>>
 						<?php echo wp_kses_post( $item['text'] ); ?>
 					</a>
 				</div>
@@ -4191,7 +4191,7 @@ class Premium_Post_Ticker extends Widget_Base {
 		<<?php echo wp_kses_post( $post_tag . ' ' . $this->get_render_attribute_string( 'post-wrapper' . $post_id ) ); ?>>
 
 			<?php if ( $show_thumbnail ) : ?>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'thumbnail' . $post_id ) ); ?>>
+				<div <?php $this->print_render_attribute_string( 'thumbnail' . $post_id ); ?>>
 					<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $link_target ); ?>">
 						<?php echo wp_kses_post( $thumbnail_html ); ?>
 					</a>
@@ -4200,7 +4200,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 			<?php if ( $show_author ) : ?>
 				<div>
-					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'author' . $post_id ) ); ?>>
+					<span <?php $this->print_render_attribute_string( 'author' . $post_id ); ?>>
 						<i class="fa fa-user fa-fw" aria-hidden="true"></i>
 						<?php the_author_posts_link(); ?>
 					</span>
@@ -4209,7 +4209,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 			<div>
 				<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( 'post-title' . $post_id ) ); ?>>
-					<a <?php echo wp_kses_post( $this->get_render_attribute_string( 'post-link' . $post_id ) ); ?>>
+					<a <?php $this->print_render_attribute_string( 'post-link' . $post_id ); ?>>
 						<?php echo wp_kses_post( $title ); ?>
 					</a>
 				</<?php echo wp_kses_post( $title_tag ); ?>>
@@ -4217,7 +4217,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 			<?php if ( $show_date ) : ?>
 				<div>
-					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'post-date' . $post_id ) ); ?>>
+					<span <?php $this->print_render_attribute_string( 'post-date' . $post_id ); ?>>
 						<span><?php the_time( $date_format ); ?></span>
 					</span>
 				</div>
