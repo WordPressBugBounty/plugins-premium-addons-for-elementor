@@ -276,9 +276,9 @@ class Addons_Integration {
 
 	public function load_widget_files( $class ) {
 
-		if ( 'PremiumAddons\Widgets\Premium_Videobox' === $class || 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
-			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
-		}
+		// if ( 'PremiumAddons\Widgets\Premium_Videobox' === $class || 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
+		// require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
+		// }
 
 		if ( 'PremiumAddons\Widgets\Premium_Weather' === $class ) {
 			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/pa-weather-handler.php';
@@ -437,7 +437,7 @@ class Addons_Integration {
 		}
 
 		if ( self::$modules['pa-display-conditions'] ) {
-			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
+			// require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
 			require_once PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/pa-controls-handler.php';
 			\PremiumAddons\Addons\Display_Conditions::get_instance();
 		}

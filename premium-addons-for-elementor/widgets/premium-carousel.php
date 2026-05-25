@@ -406,6 +406,182 @@ class Premium_Carousel extends Widget_Base {
 			)
 		);
 
+		// Image Caption is relevant for gallery slides OR thumbnail-slider thumbnails.
+		$caption_visible = array(
+			'relation' => 'or',
+			'terms'    => array(
+				array(
+					'name'  => 'source',
+					'value' => 'gallery',
+				),
+				array(
+					'name'  => 'thumbnail_slider',
+					'value' => 'yes',
+				),
+			),
+		);
+
+		$this->add_control(
+			'image_info',
+			array(
+				'label'      => __( 'Image Caption', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SELECT,
+				'default'    => 'none',
+				'options'    => array(
+					'none'        => __( 'None', 'premium-addons-for-elementor' ),
+					'caption'     => __( 'Caption', 'premium-addons-for-elementor' ),
+					'title'       => __( 'Title', 'premium-addons-for-elementor' ),
+					'description' => __( 'Description', 'premium-addons-for-elementor' ),
+				),
+				'separator'  => 'before',
+				'conditions' => $caption_visible,
+			)
+		);
+
+		$this->add_control(
+			'image_info_placement',
+			array(
+				'label'        => __( 'Placement', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::CHOOSE,
+				'prefix_class' => 'pa-thumb-info-',
+				'options'      => array(
+					'default' => array(
+						'title' => __( 'Default', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-paragraph',
+					),
+					'overlay' => array(
+						'title' => __( 'Overlay', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-copy',
+					),
+				),
+				'default'      => 'default',
+				'toggle'       => false,
+				'conditions'   => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'image_info',
+							'operator' => '!==',
+							'value'    => 'none',
+						),
+						$caption_visible,
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'show_on_hover',
+			array(
+				'label'        => __( 'Show on Hover', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'pa-thumb-info-on-hover-',
+				'conditions'   => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'image_info',
+							'operator' => '!==',
+							'value'    => 'none',
+						),
+						array(
+							'name'  => 'image_info_placement',
+							'value' => 'overlay',
+						),
+						$caption_visible,
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'img_info_txt_align',
+			array(
+				'label'      => __( 'Text Alignment', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::CHOOSE,
+				'options'    => array(
+					'start'   => array(
+						'title' => __( 'Start', 'premium-addons-for-elementor' ),
+						'icon'  => is_rtl() ? 'eicon-text-align-right' : 'eicon-text-align-left',
+					),
+					'center'  => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'justify' => array(
+						'title' => __( 'Justify', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-justify',
+					),
+					'end'     => array(
+						'title' => __( 'End', 'premium-addons-for-elementor' ),
+						'icon'  => is_rtl() ? 'eicon-text-align-left' : 'eicon-text-align-right',
+					),
+				),
+				'default'    => 'center',
+				'toggle'     => false,
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-carousel-thumb-title'   => 'text-align: {{VALUE}};',
+				),
+				'conditions' => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'image_info',
+							'operator' => '!==',
+							'value'    => 'none',
+						),
+						array(
+							'name'  => 'image_info_placement',
+							'value' => 'overlay',
+						),
+						$caption_visible,
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'img_info_v_align',
+			array(
+				'label'      => __( 'Vertical Alignment', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::CHOOSE,
+				'options'    => array(
+					'flex-start' => array(
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-top',
+					),
+					'center'     => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-h-align-center',
+					),
+					'flex-end'   => array(
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-bottom',
+					),
+				),
+				'default'    => 'center',
+				'toggle'     => false,
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-carousel-thumb-info'   => 'align-items: {{VALUE}};',
+				),
+				'conditions' => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'image_info',
+							'operator' => '!==',
+							'value'    => 'none',
+						),
+						array(
+							'name'  => 'image_info_placement',
+							'value' => 'overlay',
+						),
+						$caption_visible,
+					),
+				),
+			)
+		);
+
 		$this->add_control(
 			'premium_carousel_slider_type',
 			array(
@@ -1373,6 +1549,99 @@ class Premium_Carousel extends Widget_Base {
 				'size_units' => array( 'px', '%', 'custom' ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-carousel-template img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'premium_carousel_caption_style',
+			array(
+				'label'      => __( 'Image Caption', 'premium-addons-for-elementor' ),
+				'tab'        => Controls_Manager::TAB_STYLE,
+				'conditions' => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'  => 'source',
+							'value' => 'gallery',
+						),
+						array(
+							'name'  => 'thumbnail_slider',
+							'value' => 'yes',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'      => 'caption_typo',
+				'selector'  => '{{WRAPPER}} .premium-carousel-thumb-title',
+				'condition' => array(
+					'image_info!' => 'none',
+				),
+			)
+		);
+
+		$this->add_control(
+			'caption_color',
+			array(
+				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-carousel-thumb-title'     => 'color: {{VALUE}}',
+				),
+				'condition' => array(
+					'image_info!' => 'none',
+				),
+			)
+		);
+
+		$this->add_control(
+			'caption_bg',
+			array(
+				'label'     => __( 'Background', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-carousel-thumb-info'     => 'background-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'image_info!' => 'none',
+				),
+			)
+		);
+
+		$this->add_control(
+			'img_info_radius',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-carousel-thumb-info' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				),
+				'condition'  => array(
+					'image_info!' => 'none',
+				),
+			)
+		);
+
+		$this->add_control(
+			'img_info_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'separator'  => 'after',
+				'selectors'  => array(
+					'{{WRAPPER}}.pa-thumb-info-default .premium-carousel-thumb-info, {{WRAPPER}}.pa-thumb-info-overlay .premium-carousel-thumb-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				),
+				'condition'  => array(
+					'image_info!' => 'none',
 				),
 			)
 		);
@@ -2500,118 +2769,6 @@ class Premium_Carousel extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
-			'image_info',
-			array(
-				'label'     => __( 'Image Caption', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'separator' => 'before',
-			)
-		);
-
-		$this->add_control(
-			'image_info_placement',
-			array(
-				'label'        => __( 'Placement', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'prefix_class' => 'pa-thumb-info-',
-				'options'      => array(
-					'default' => array(
-						'title' => __( 'Default', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-paragraph',
-					),
-					'overlay' => array(
-						'title' => __( 'Overlay', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-copy',
-					),
-				),
-				'default'      => 'default',
-				'toggle'       => false,
-				'condition'    => array(
-					'image_info' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'show_on_hover',
-			array(
-				'label'        => __( 'Show on Hover', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'prefix_class' => 'pa-thumb-info-on-hover-',
-				'condition'    => array(
-					'image_info'           => 'yes',
-					'image_info_placement' => 'overlay',
-				),
-			)
-		);
-
-		$this->add_control(
-			'img_info_txt_align',
-			array(
-				'label'     => __( 'Text Alignment', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
-					'start'   => array(
-						'title' => __( 'Start', 'premium-addons-for-elementor' ),
-						'icon'  => is_rtl() ? 'eicon-text-align-right' : 'eicon-text-align-left',
-					),
-					'center'  => array(
-						'title' => __( 'Center', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-center',
-					),
-					'justify' => array(
-						'title' => __( 'Justify', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-justify',
-					),
-					'end'     => array(
-						'title' => __( 'End', 'premium-addons-for-elementor' ),
-						'icon'  => is_rtl() ? 'eicon-text-align-left' : 'eicon-text-align-right',
-					),
-				),
-				'default'   => 'center',
-				'toggle'    => false,
-				'selectors' => array(
-					'{{WRAPPER}} .premium-carousel-thumb-title'   => 'text-align: {{VALUE}};',
-				),
-				'condition' => array(
-					'image_info'           => 'yes',
-					'image_info_placement' => 'overlay',
-				),
-			)
-		);
-
-		$this->add_control(
-			'img_info_v_align',
-			array(
-				'label'     => __( 'Vertical Alignment', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
-					'flex-start' => array(
-						'title' => __( 'Top', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-v-align-top',
-					),
-					'center'     => array(
-						'title' => __( 'Center', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-h-align-center',
-					),
-					'flex-end'   => array(
-						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-v-align-bottom',
-					),
-				),
-				'default'   => 'center',
-				'toggle'    => false,
-				'selectors' => array(
-					'{{WRAPPER}} .premium-carousel-thumb-info'   => 'align-items: {{VALUE}};',
-				),
-				'condition' => array(
-					'image_info'           => 'yes',
-					'image_info_placement' => 'overlay',
-				),
-			)
-		);
-
 		$this->end_controls_section();
 	}
 
@@ -2624,87 +2781,6 @@ class Premium_Carousel extends Widget_Base {
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'thumbnail_slider' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'caption_heading',
-			array(
-				'label'     => __( 'Caption', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::HEADING,
-				'condition' => array(
-					'image_info' => 'yes',
-				),
-			)
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			array(
-				'name'      => 'caption_typo',
-				'selector'  => '{{WRAPPER}} .premium-carousel-thumb-title',
-				'condition' => array(
-					'image_info' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'caption_color',
-			array(
-				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} .premium-carousel-thumb-title'     => 'color: {{VALUE}}',
-				),
-				'condition' => array(
-					'image_info' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'caption_bg',
-			array(
-				'label'     => __( 'Background', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} .premium-carousel-thumb-info'     => 'background-color: {{VALUE}}',
-				),
-				'condition' => array(
-					'image_info' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'img_info_radius',
-			array(
-				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-carousel-thumb-info' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
-				),
-				'condition'  => array(
-					'image_info' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
-			'img_info_margin',
-			array(
-				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'separator'  => 'after',
-				'selectors'  => array(
-					'{{WRAPPER}}.pa-thumb-info-default .premium-carousel-thumb-info, {{WRAPPER}}.pa-thumb-info-overlay .premium-carousel-thumb-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
-				),
-				'condition'  => array(
-					'image_info' => 'yes',
 				),
 			)
 		);
@@ -3353,6 +3429,12 @@ class Premium_Carousel extends Widget_Base {
 										</a>
 									<?php endif; ?>
 									<?php
+									if ( 'yes' !== $settings['thumbnail_slider'] && 'none' !== $settings['image_info'] ) {
+										$caption_text = $this->get_image_caption_text( get_post( $template_title['id'] ), $settings['image_info'] );
+										if ( '' !== $caption_text ) {
+											echo '<div class="premium-carousel-thumb-info"><span class="premium-carousel-thumb-title">' . wp_kses_post( $caption_text ) . '</span></div>';
+										}
+									}
 							} elseif ( ! is_array( $template_title ) ) {
 									echo Helper_Functions::render_elementor_template( $template_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -3405,6 +3487,32 @@ class Premium_Carousel extends Widget_Base {
 		<?php
 	}
 
+	/**
+	 * Resolve the caption text for a gallery image based on the chosen metadata field.
+	 *
+	 * @param \WP_Post|null $attachment attachment post object.
+	 * @param string        $field      one of none|caption|title|description (legacy 'yes' = caption).
+	 *
+	 * @return string
+	 */
+	private function get_image_caption_text( $attachment, $field ) {
+		if ( ! $attachment ) {
+			return '';
+		}
+
+		switch ( $field ) {
+			case 'title':
+				return $attachment->post_title;
+			case 'description':
+				return $attachment->post_content;
+			case 'caption':
+			case 'yes': // Legacy switcher value maps to the WP Caption field.
+				return $attachment->post_excerpt;
+		}
+
+		return '';
+	}
+
 	private function render_thumbnail_slider( $settings ) {
 		$carousel_source = $settings['source'];
 		$slider_source   = 'template' === $carousel_source || ( 'gallery' === $carousel_source && ! empty( $settings['thumb_source'] ) ) ? $settings['thumb_source'] : $settings['gallery'];
@@ -3418,15 +3526,16 @@ class Premium_Carousel extends Widget_Base {
 							<div class="premium-carousel-thumbnail">
 								<div class="premium-carousel-thumbnail-container" style="background-image: url('<?php echo esc_url( Group_Control_Image_Size::get_attachment_image_src( $template_title['id'], 'thumb_slider_size', $settings ) ); ?>')"></div>
 								<?php
-								if ( 'yes' === $settings['image_info'] ) :
-									$image_info = get_post( $template_title['id'] );
-									?>
+								$caption_field = $settings['image_info'];
+								if ( 'none' !== $caption_field ) :
+									$caption_text = $this->get_image_caption_text( get_post( $template_title['id'] ), $caption_field );
+									if ( '' !== $caption_text ) :
+										?>
 										<div class="premium-carousel-thumb-info">
-											<?php if ( $image_info && ! empty( $image_info->post_excerpt ) ) : ?>
-												<span class="premium-carousel-thumb-title"><?php echo esc_html( $image_info->post_excerpt ); ?></span>
-											<?php endif; ?>
+											<span class="premium-carousel-thumb-title"><?php echo wp_kses_post( $caption_text ); ?></span>
 										</div>
-									<?php
+										<?php
+									endif;
 								endif;
 								?>
 							</div>

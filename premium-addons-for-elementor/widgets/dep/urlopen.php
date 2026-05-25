@@ -134,11 +134,16 @@ if ( ! function_exists( 'rplg_urlopen' ) ) {
 		if ( ! $fp ) {
 			return false; }
 
-		$response_header_array = explode( ' ', $http_response_header[0], 3 );
+		// PHP 8.5 deprecates the predefined locally scoped $http_response_header variable.
+		$http_response_headers = function_exists( 'http_get_last_response_headers' )
+			? http_get_last_response_headers()
+			: $http_response_header;
+
+		$response_header_array = explode( ' ', $http_response_headers[0], 3 );
 
 		$response['code'] = isset( $response_header_array[1] ) ? $response_header_array[1] : 0;
 
-		$resp_headers = array_slice( $http_response_header, 1 );
+		$resp_headers = array_slice( $http_response_headers, 1 );
 
 		foreach ( $resp_headers as $header ) {
 			$header    = explode( ':', $header, 2 );

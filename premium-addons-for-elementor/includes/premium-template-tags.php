@@ -229,9 +229,9 @@ class Premium_Template_Tags {
 
 
 	/**
-	 * Get taxnomies.
+	 * Get taxonomies.
 	 *
-	 * Get post taxnomies for post type
+	 * Get post taxonomies for post type
 	 *
 	 * @since 3.20.3
 	 * @access public
