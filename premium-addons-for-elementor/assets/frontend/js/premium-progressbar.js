@@ -7,7 +7,9 @@
             length = settings.progress_length,
             speed = settings.speed,
             type = settings.type,
-            mScroll = settings.mScroll;
+            mScroll = settings.mScroll,
+            maxVal = parseFloat(settings.maxVal),
+            displayFormat = settings.displayFormat;
 
         if ("line" === type) {
 
@@ -46,7 +48,14 @@
 
                     if ('yes' !== mScroll) {
 
-                        $progressbarElem.find(".premium-progressbar-right-label").text(Math.ceil(counter) + "%");
+                        var displayText = Math.ceil(counter) + "%";
+
+                        if (maxVal && 'percentage' !== displayFormat) {
+                            var absVal = Math.ceil(counter / 100 * maxVal);
+                            displayText = ('value_max' === displayFormat) ? absVal + '/' + maxVal : '' + absVal;
+                        }
+
+                        $progressbarElem.find(".premium-progressbar-right-label").text(displayText);
 
                         $progressbarElem.find(".premium-progressbar-circle-left").css('transform', "rotate(" + rotate + "deg)");
                     }
@@ -175,6 +184,11 @@
     };
 
     $(window).on('elementor/frontend/init', function () {
+
+        if ('undefined' !== typeof paElementsHandler && paElementsHandler.isElementAlreadyExists('paProgressBar')) {
+            return false;
+        }
+
         elementorFrontend.hooks.addAction('frontend/element_ready/premium-addon-progressbar.default', PremiumProgressBarScrollWidgetHandler);
     });
 })(jQuery);

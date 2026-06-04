@@ -35,6 +35,7 @@
 	border-radius: 10px;
 	padding: 5px 10px;
 	border: 1px solid #dcdcdc;
+	line-height: 1.5;
 }
 
 .premium-menu-control select:focus,
@@ -130,7 +131,6 @@
 .pa-control.slider.round,
 .pa-control.pro-slider.round {
 	border-radius: 34px;
-	background-image: -webkit-linear-gradient(top, #cfcfcf 0%, #dbdbdb 100%);
 	background-image: linear-gradient(180deg, #cfcfcf 0%, #dbdbdb 100%);
 }
 
@@ -160,8 +160,6 @@
 
 .pa-element-meta {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-direction: column;
 	-webkit-flex-direction: column;
@@ -307,8 +305,6 @@
 .papro-admin-notice a,
 .pa-settings-wrap .pa-settings-tabs a {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: center;
 	-webkit-justify-content: center;
@@ -375,8 +371,6 @@
 */
 #pa-general-settings {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-flow: row wrap;
 	-webkit-flex-flow: row wrap;
@@ -394,8 +388,6 @@
 	min-width: 250px;
 	margin: 0 5px 10px;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-direction: column;
 	-webkit-flex-direction: column;
@@ -426,8 +418,6 @@
 
 #pa-general-settings .pa-element-icon.icon-inline {
 	-js-display: inline-flex;
-	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
 	margin-bottom: 0;
 	vertical-align: middle;
@@ -451,8 +441,6 @@
 
 .pa-newsletter-form {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
@@ -486,8 +474,6 @@
 
 #pa-general-settings .pa-news-grid {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: justify;
 	-webkit-justify-content: space-between;
@@ -566,8 +552,6 @@
 	border-radius: 15px;
 	background-color: #f7f7f7;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: justify;
 	-webkit-justify-content: space-between;
@@ -617,8 +601,6 @@
 	position: relative;
 	z-index: 3;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
@@ -715,8 +697,6 @@
 }
 
 .pa-inline-flex {
-	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -782,15 +762,11 @@
 .pa-elements-settings {
 	position: relative;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	margin-top: 16px;
 }
 
 .pa-typed-search {
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -802,8 +778,6 @@
 	top: 10px;
 	inset-inline-end: 16px;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
@@ -902,8 +876,6 @@
 
 .pa-elements-tab .pa-elements-tab-link {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: center;
 	-webkit-justify-content: center;
@@ -943,8 +915,6 @@
 .pa-switchers,
 #pa-features-settings {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
@@ -982,10 +952,7 @@
 	background-color: #f7f7f7;
 	position: relative;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
-	width: -webkit-calc(50% - 56px);
 	width: calc(50% - 56px);
 	-ms-flex-pack: justify;
 	-webkit-justify-content: space-between;
@@ -1001,8 +968,6 @@
 
 .pa-element-info {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
@@ -1019,8 +984,6 @@
 	-webkit-margin-end: 8px;
 	margin-inline-end: 8px;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: center;
 	-webkit-justify-content: center;
@@ -1037,8 +1000,6 @@
 	font-family: "Red Hat Display", sans-serif;
 	margin: 0;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 
@@ -1094,7 +1055,6 @@
 }
 
 #pa-features-settings .pa-section-outer-wrap {
-	width: -webkit-calc(50% - 20px);
 	width: calc(50% - 20px);
 	margin-top: 20px;
 	margin-right: 20px;
@@ -1331,8 +1291,6 @@
 	background: rgba(200, 200, 200, 0.8);
 	border-radius: 15px;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: center;
 	-webkit-justify-content: center;
@@ -1414,14 +1372,12 @@
 	text-decoration: none;
 	outline: none;
 	border: none;
-	background-image: -webkit-linear-gradient(120deg, #fe6300 0%, #fe9f00 100%);
 	background-image: linear-gradient(-30deg, #fe6300 0%, #fe9f00 100%);
 	-webkit-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 }
 
 .pa-white-label-notice-content a.pa-get-pro:hover {
-	background-image: -webkit-linear-gradient(60deg, #fe6300 0%, #fe9f00 100%);
 	background-image: linear-gradient(30deg, #fe6300 0%, #fe9f00 100%);
 }
 
@@ -1520,7 +1476,6 @@
 .papro-admin-notice {
 	-webkit-display: flex;
 	-js-display: flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: end;
 	-webkit-justify-content: flex-end;
@@ -1573,7 +1528,6 @@
 .papro-admin-notice-logo {
 	-webkit-display: flex;
 	-js-display: flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: justify;
 	-webkit-justify-content: space-between;
@@ -1602,7 +1556,6 @@
 .papro-admin-notice-right {
 	-webkit-display: flex;
 	-js-display: flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
@@ -2082,7 +2035,7 @@
 	content: "\e95e";
 }
 
-@-webkit-keyframes spin {
+@keyframes spin {
 	0% {
 		-webkit-transform: rotateZ(-180deg) rotateY(180deg);
 		transform: rotateZ(-180deg) rotateY(180deg);
@@ -2138,8 +2091,6 @@
 
 .elementor-template-pa-live-editor-modal-container {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 
@@ -2150,8 +2101,6 @@
 
 .premium-dynamic-content-modal {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
@@ -2184,9 +2133,7 @@
 
 .premium-dynamic-content-modal .dialog-widget-content {
 	position: static !important;
-	max-width: -webkit-calc(100vw - 70px) !important;
 	max-width: calc(100vw - 70px) !important;
-	width: -webkit-calc(100vw - 70px) !important;
 	width: calc(100vw - 70px) !important;
 	border-radius: 0;
 }
@@ -2251,7 +2198,6 @@
 }
 
 .premium-modal-expanded #pa-live-editor-control-iframe {
-	height: -webkit-calc(100vh - 50px);
 	height: calc(100vh - 50px);
 }
 
@@ -2265,9 +2211,7 @@
 
 .premium-live-editor-iframe-modal .dialog-message {
 	position: relative;
-	height: -webkit-calc(100vh - 50px) !important;
 	height: calc(100vh - 50px) !important;
-	max-height: -webkit-calc(100vh - 50px) !important;
 	max-height: calc(100vh - 50px) !important;
 }
 
@@ -2293,8 +2237,6 @@
 
 .menu-item:hover .premium-menu-item-settings {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 
@@ -2329,8 +2271,6 @@
 
 .premium-setting-container {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	width: 100%;
 	min-height: 50px;
@@ -2346,8 +2286,6 @@
 .premium-menu-control-meta,
 .premium-menu-control {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-pack: start;
 	-webkit-justify-content: flex-start;
@@ -2393,8 +2331,6 @@
 	background-color: #fff;
 	height: 50px;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
@@ -2487,8 +2423,6 @@
 
 .premium-menu-control .wp-picker-container {
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	width: 100%;
 	-ms-flex-wrap: wrap;
@@ -2502,8 +2436,6 @@
 .premium-menu-control .wp-picker-open + .wp-picker-input-wrap {
 	width: 68%;
 	-js-display: flex;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 
@@ -2539,8 +2471,6 @@
 
 .pa-deactivation-popup {
 	position: fixed;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
@@ -2581,8 +2511,6 @@
 .pa-deactivation-popup .close {
 	cursor: pointer;
 	position: absolute;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
@@ -2610,8 +2538,6 @@
 
 .pa-deactivation-popup .body .title-wrap {
 	position: relative;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -2709,8 +2635,6 @@
 }
 
 #pa-dash-pro-popup-cta.pa-feature-element img {
-	display: -webkit-flex !important;
-	display: -ms-flexbox !important;
 	display: flex !important;
 	width: 60px;
 	height: 60px;
@@ -2724,8 +2648,6 @@
 .pa-popup-outer-body {
 	width: 100%;
 	height: 100%;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -2738,8 +2660,6 @@
 .popup-body {
 	width: 400px;
 	height: 275px;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-flex-direction: column;
 	-ms-flex-direction: column;
@@ -2779,8 +2699,6 @@
 }
 
 .pa-popup-widget-icon {
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
@@ -2835,8 +2753,6 @@
 	height: 6px;
 	width: 150%;
 	background: #ff9000;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -2848,8 +2764,6 @@
 
 .pa-popup-desc {
 	margin: auto 0;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-flex-direction: column;
 	-ms-flex-direction: column;
@@ -2875,8 +2789,6 @@
 	margin-top: auto;
 	border-top: 1px solid #ddd;
 	padding: 15px 10px;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -2903,7 +2815,6 @@
 	padding: 0;
 	margin: 0;
 	outline: 0;
-	width: -webkit-calc(50% - 30px);
 	width: calc(50% - 30px);
 	-webkit-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
@@ -2934,16 +2845,6 @@
 
 /* End of PRO Popup - CTA */
 
-@-webkit-keyframes fade {
-	0% {
-		opacity: 1;
-	}
-
-	100% {
-		opacity: 0.3;
-	}
-}
-
 @keyframes fade {
 	0% {
 		opacity: 1;
@@ -2974,25 +2875,13 @@
 	}
 }
 
-@-webkit-keyframes swal2-show {
+@keyframes fade {
 	0% {
-		-webkit-transform: scale(0.7);
-		transform: scale(0.7);
-	}
-
-	45% {
-		-webkit-transform: scale(1.05);
-		transform: scale(1.05);
-	}
-
-	80% {
-		-webkit-transform: scale(0.95);
-		transform: scale(0.95);
+		opacity: 1;
 	}
 
 	100% {
-		-webkit-transform: scale(1);
-		transform: scale(1);
+		opacity: 0.3;
 	}
 }
 
@@ -3062,7 +2951,29 @@
 	}
 }
 
-@-webkit-keyframes swal2-hide {
+@keyframes swal2-show {
+	0% {
+		-webkit-transform: scale(0.7);
+		transform: scale(0.7);
+	}
+
+	45% {
+		-webkit-transform: scale(1.05);
+		transform: scale(1.05);
+	}
+
+	80% {
+		-webkit-transform: scale(0.95);
+		transform: scale(0.95);
+	}
+
+	100% {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+}
+
+@keyframes swal2-hide {
 	0% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -3125,7 +3036,6 @@
 
 .rtl .slider.round,
 .rtl .pro-slider.round {
-	background-image: -webkit-linear-gradient(top, #cfcfcf 0%, #dbdbdb 100%);
 	background-image: linear-gradient(-180deg, #cfcfcf 0%, #dbdbdb 100%);
 }
 
@@ -3167,7 +3077,6 @@
 }
 
 .rtl .pa-white-label-notice-content a.pa-get-pro {
-	background-image: -webkit-linear-gradient(60deg, #fe6300 0%, #fe9f00 100%);
 	background-image: linear-gradient(30deg, #fe6300 0%, #fe9f00 100%);
 }
 

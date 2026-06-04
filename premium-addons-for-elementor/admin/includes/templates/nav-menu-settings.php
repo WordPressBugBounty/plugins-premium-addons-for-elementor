@@ -82,7 +82,7 @@
 								</div>
 								<div class="premium-menu-control" id="pa-megamenu-content-pos">
 									<select id="pa-megamenu-position">
-										<option value="default">Default</option>
+										<option value="default">Centered</option>
 										<option value="relative">Relative</option>
 									</select>
 								</div>

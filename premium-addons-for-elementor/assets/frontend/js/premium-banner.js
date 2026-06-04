@@ -9,8 +9,7 @@
 
 				return {
 					selectors: {
-						bannerImgWrap: '.premium-banner-ib',
-						bannerImg: 'img',
+						bannerImgWrap: '.premium-banner-ib'
 					}
 				}
 
@@ -21,8 +20,7 @@
 				var selectors = this.getSettings('selectors');
 
 				return {
-					$bannerImgWrap: this.$element.find(selectors.bannerImgWrap),
-					$bannerImg: this.$element.find(selectors.bannerImg)
+					$bannerImgWrap: this.$element.find(selectors.bannerImgWrap)
 				}
 
 			},
@@ -32,9 +30,9 @@
 				var _this = this;
 
 				_this.elements.$bannerImgWrap.hover(function () {
-					_this.elements.$bannerImg.addClass("active");
+					_this.elements.$bannerImgWrap.find('> img').addClass("active");
 				}, function () {
-					_this.elements.$bannerImg.removeClass("active");
+					_this.elements.$bannerImgWrap.find('> img').removeClass("active");
 				});
 
 				this.run();

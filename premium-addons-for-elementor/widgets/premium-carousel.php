@@ -508,13 +508,13 @@ class Premium_Carousel extends Widget_Base {
 						'title' => __( 'Center', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-center',
 					),
-					'justify' => array(
-						'title' => __( 'Justify', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-justify',
-					),
 					'end'     => array(
 						'title' => __( 'End', 'premium-addons-for-elementor' ),
 						'icon'  => is_rtl() ? 'eicon-text-align-left' : 'eicon-text-align-right',
+					),
+					'justify' => array(
+						'title' => __( 'Justify', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-justify',
 					),
 				),
 				'default'    => 'center',
@@ -1437,6 +1437,7 @@ class Premium_Carousel extends Widget_Base {
 
 		$docs = array(
 			'https://premiumaddons.com/docs/carousel-widget-tutorial/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
+			'https://www.youtube.com/watch?v=OiiN0WJbzng' => __( 'Video tutorial »', 'premium-addons-for-elementor' ),
 			'https://premiumaddons.com/docs/i-can-see-the-first-slide-only-in-carousel-widget' => __( 'Issue: I can see the first slide only »', 'premium-addons-for-elementor' ),
 			'https://premiumaddons.com/docs/how-to-create-elementor-template-to-be-used-with-premium-addons' => __( 'How to create an Elementor template to be used in Carousel widget »', 'premium-addons-for-elementor' ),
 			'https://premiumaddons.com/docs/why-im-not-able-to-see-elementor-font-awesome-5-icons-in-premium-add-ons/' => __( 'I\'m not able to see Font Awesome icons in the widget »', 'premium-addons-for-elementor' ),

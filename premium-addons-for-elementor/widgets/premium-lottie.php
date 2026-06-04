@@ -63,7 +63,7 @@ class Premium_Lottie extends Widget_Base {
 		$is_edit = Helper_Functions::is_edit_mode();
 
 		$scripts = array();
-		if ( $is_edit || ( ! $is_edit && 'yes' === $this->get_settings( 'mouse_tilt' ) ) ) {
+		if ( $is_edit || ( ! $is_edit && 'true' === $this->get_settings( 'mouse_tilt' ) ) ) {
 			$scripts[] = 'pa-tilt';
 		}
 
@@ -205,6 +205,21 @@ class Premium_Lottie extends Widget_Base {
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'true',
 				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'lottie_loop_times',
+			array(
+				'label'       => __( 'Times', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => __( 'Total number of times the animation plays before it pauses. Leave empty to loop forever.', 'premium-addons-for-elementor' ),
+				'min'         => 1,
+				'step'        => 1,
+				'condition'   => array(
+					'lottie_loop' => 'true',
+					'trigger!'    => 'scroll',
+				),
 			)
 		);
 
@@ -751,14 +766,15 @@ class Premium_Lottie extends Widget_Base {
 		$this->add_render_attribute(
 			'lottie',
 			array(
-				'class'               => 'premium-lottie-animation',
-				'data-lottie-url'     => $anim_url,
-				'data-lottie-loop'    => $settings['lottie_loop'],
-				'data-lottie-reverse' => $settings['lottie_reverse'],
-				'data-lottie-hover'   => $settings['lottie_hover'] || 'hover' === $settings['trigger'],
-				'data-lottie-speed'   => $settings['lottie_speed'],
-				'data-lottie-render'  => $settings['lottie_renderer'],
-				'data-lottie-delay'   => $settings['lottie_delay'],
+				'class'                  => 'premium-lottie-animation',
+				'data-lottie-url'        => $anim_url,
+				'data-lottie-loop'       => $settings['lottie_loop'],
+				'data-lottie-loop-times' => $settings['lottie_loop_times'],
+				'data-lottie-reverse'    => $settings['lottie_reverse'],
+				'data-lottie-hover'      => $settings['lottie_hover'] || 'hover' === $settings['trigger'],
+				'data-lottie-speed'      => $settings['lottie_speed'],
+				'data-lottie-render'     => $settings['lottie_renderer'],
+				'data-lottie-delay'      => $settings['lottie_delay'],
 			)
 		);
 
@@ -858,6 +874,7 @@ class Premium_Lottie extends Widget_Base {
 			'class': 'premium-lottie-animation',
 			'data-lottie-url': anim_url,
 			'data-lottie-loop': settings.lottie_loop,
+			'data-lottie-loop-times': settings.lottie_loop_times,
 			'data-lottie-reverse': settings.lottie_reverse,
 			'data-lottie-hover': settings.lottie_hover || 'hover' === settings.trigger,
 			'data-lottie-speed': settings.lottie_speed,

@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.78
+Stable Tag: 4.11.79
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -255,6 +255,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.79 - 4/6/2026 =
+
+- Tweak: Added Max Value option in Progress Bar widget to allow values above 100.
+- Tweak: Added Icon option in Banner widget.
+- Tweak: Added Loop Times option in Lottie Animations widget.
+- Tweak: Added File Source for Lottie Animation icon in Progress Bar widget.
+- Tweak: Image Caption option now always available when source is set to Image Gallery in Carousel widget.
+- Fixed: Lottie Animations not working when Loop is disabled and Reverse is enabled.
 
 = 4.11.78 - 25/5/2026 =
 

@@ -50,7 +50,7 @@ function refresh_pinterest_token( $refresh_token ) {
 
 
 /**
- * Get Pinterset Data
+ * Get Pinterest Data
  *
  * @param string $id         widget id.
  * @param array  $settings    widget settings.

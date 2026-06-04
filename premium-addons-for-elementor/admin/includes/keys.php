@@ -163,7 +163,8 @@ $elements = array(
 		'key' => 'premium-countdown',
 	),
 	array(
-		'key' => 'premium-banner',
+		'key'      => 'premium-banner',
+		'draw_svg' => true,
 	),
 	array(
 		'key'      => 'premium-button',
