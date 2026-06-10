@@ -6,6 +6,7 @@
  */
 
 use PremiumAddons\Modules\Woocommerce\Module as Woocommerce;
+use PremiumAddons\Includes\Helper_Functions;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -34,7 +35,13 @@ $out_of_stock    = 'outofstock' === get_post_meta( $product_id, '_stock_status',
 $image_size      = $settings['featured_image_size'];
 ?>
 <li class=" <?php echo esc_attr( $wc_classes ); ?>">
-	<div class="premium-woo-product-wrapper <?php echo esc_attr( 'premium-con-lq__' . $this->get_option_value( 'product_lq_effect' ) ); ?>">
+	<?php
+	$pa_badge_per_item_text = Helper_Functions::get_per_item_badge_text( $product_id, self::$settings );
+	$pa_badge_attr          = ( false !== $pa_badge_per_item_text )
+		? ' data-pa-badge-text="' . esc_attr( $pa_badge_per_item_text ) . '"'
+		: '';
+	?>
+	<div class="premium-woo-product-wrapper <?php echo esc_attr( 'premium-con-lq__' . $this->get_option_value( 'product_lq_effect' ) ); ?>"<?php echo $pa_badge_attr; ?>>
 		<?php
 
 		echo '<div class="premium-woo-product-thumbnail">';

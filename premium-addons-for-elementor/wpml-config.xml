@@ -78,7 +78,6 @@
                 <field type="Animated Text: Prefix" editor_type="LINE">premium_fancy_prefix_text</field>
                 <field type="Animated Text: Highlighted Text" editor_type="LINE">text</field>
                 <field type="Animated Text: Suffix" editor_type="LINE">premium_fancy_suffix_text</field>
-                <field type="Animated Text: Cursor Text" editor_type="LINE">premium_fancy_text_cursor_text</field>
             </fields>
             <fields-in-item items_of="premium_fancy_text_strings">
                 <field type="Animated Text: String" editor_type="LINE">premium_text_strings_text_field</field>

@@ -1016,3 +1016,9 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 .elementor-control-premium_testimonial_layout .elementor-choices label {
 	font-size: 18px;
 }
+
+/* global badge */
+.elementor-control-pa_badge_per_item:not(.papro-badge-listing-widget),
+.elementor-control-pa_badge_per_item_source:not(.papro-badge-listing-widget) {
+    display: none !important;
+}

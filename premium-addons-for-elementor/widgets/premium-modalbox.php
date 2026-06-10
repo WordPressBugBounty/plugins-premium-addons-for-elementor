@@ -168,7 +168,7 @@ class Premium_Modalbox extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium modal box', 'popup', 'lightbox', 'advanced', 'embed' );
@@ -2416,17 +2416,17 @@ class Premium_Modalbox extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param boolean $new new icon.
+	 * @param boolean $is_new new icon.
 	 * @param boolean $migrate icon migrated.
 	 */
-	protected function render_header_icon( $new, $migrate ) {
+	protected function render_header_icon( $is_new, $migrate ) {
 
 		$settings = $this->get_settings_for_display();
 
 		$header_icon = $settings['premium_modal_box_icon_selection'];
 
 		if ( 'fonticon' === $header_icon ) {
-			if ( $new || $migrate ) :
+			if ( $is_new || $migrate ) :
 				Icons_Manager::render_icon( $settings['premium_modal_box_font_icon_updated'], array( 'aria-hidden' => 'true' ) );
 			else : ?>
 				<i <?php $this->print_render_attribute_string( 'title_icon' ); ?>></i>
@@ -2675,15 +2675,12 @@ class Premium_Modalbox extends Widget_Base {
 						if ( 'yes' === $settings['premium_modal_box_icon_switcher'] && 'before' === $settings['premium_modal_box_icon_position'] ) :
 							if ( 'icon' === $icon_type ) :
 
-								echo Helper_Functions::get_svg_by_icon(
-									$settings['premium_modal_box_button_icon_selection_updated'],
-									$this->get_render_attribute_string( 'icon' )
-								);
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_modal_box_button_icon_selection_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							else :
 								?>
 								<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
-									<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
+									<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist. ?>
 								</div>
 								<?php
 							endif;
@@ -2698,15 +2695,12 @@ class Premium_Modalbox extends Widget_Base {
 						if ( 'yes' === $settings['premium_modal_box_icon_switcher'] && 'after' === $settings['premium_modal_box_icon_position'] ) :
 							if ( 'icon' === $icon_type ) :
 
-								echo Helper_Functions::get_svg_by_icon(
-									$settings['premium_modal_box_button_icon_selection_updated'],
-									$this->get_render_attribute_string( 'icon' )
-								);
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_modal_box_button_icon_selection_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							else :
 								?>
 								<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
-									<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
+									<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist. ?>
 								</div>
 								<?php
 							endif;
@@ -2766,12 +2760,12 @@ class Premium_Modalbox extends Widget_Base {
 						<?php elseif ( 'template' === $settings['premium_modal_box_content_type'] && ! empty( $template ) ) : ?>
 
 							<?php
-								echo Helper_Functions::render_elementor_template( $template );
+								echo Helper_Functions::render_elementor_template( $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_elementor_template() returns Elementor-rendered template HTML.
 							?>
 
 						<?php elseif ( 'id' === $settings['premium_modal_box_content_type'] && ! empty( $settings['container_id'] ) ) : ?>
 							<div class="premium-modalbox-template"
-								data-template-src="<?php echo esc_attr( $settings['container_id'] ); ?>">
+								data-template-src="<?php echo esc_attr( $settings['container_id'] ); // phpcs:ignore WordPressVIPMinimum.Security.ProperEscapingFunction.hrefSrcEscUrl -- Holds a container ID/CSS selector read by JS, not a URL. ?>">
 							</div>
 
 						<?php endif; ?>

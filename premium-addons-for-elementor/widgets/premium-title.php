@@ -1674,7 +1674,6 @@ class Premium_Title extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
 				'selectors'  => array(
-					// '{{WRAPPER}} .premium-title-text, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .premium-title-header, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
@@ -2729,17 +2728,14 @@ class Premium_Title extends Widget_Base {
 								);
 							else :
 
-								echo Helper_Functions::get_svg_by_icon(
-									$settings['premium_title_icon_updated'],
-									$this->get_render_attribute_string( 'icon' )
-								);
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_title_icon_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							endif;
 							?>
 
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
-								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
+								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist. ?>
 							</div>
 						<?php elseif ( 'animation' === $icon_type ) : ?>
 							<div <?php $this->print_render_attribute_string( 'title_lottie' ); ?>></div>
@@ -2788,7 +2784,7 @@ class Premium_Title extends Widget_Base {
 					<?php endif; ?>
 
 					<?php if ( 'none' !== $settings['hover_effect'] ) : ?>
-						<?php echo Helper_Functions::get_btn_svgs( $settings['hover_effect'] ); ?>
+						<?php echo Helper_Functions::get_btn_svgs( $settings['hover_effect'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_btn_svgs() returns sanitized inline SVG markup. ?>
 					<?php endif; ?>
 				</<?php echo wp_kses_post( $title_tag ); ?>>
 

@@ -146,7 +146,7 @@ class Premium_Counter extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium counter', 'time', 'number' );
@@ -1485,31 +1485,7 @@ class Premium_Counter extends Widget_Base {
 
 			$this->add_render_attribute( 'icon', 'class', 'premium-drawable-icon' );
 
-			// if ( 'icon' === $icon_type ) {
-
-			// if ( ! empty( $settings['premium_counter_icon'] ) ) {
-			// $this->add_render_attribute(
-			// 'icon',
-			// array(
-			// 'class'       => $settings['premium_counter_icon'],
-			// 'aria-hidden' => 'true',
-			// )
-			// );
-
-			// }
-
-			// $migrated = isset( $settings['__fa4_migrated']['premium_counter_icon_updated'] );
-			// $is_new   = empty( $settings['premium_counter_icon'] ) && Icons_Manager::is_migration_allowed();
-
-			// }
-
 			if ( 'yes' === $settings['draw_svg'] ) {
-
-				// if ( 'icon' === $icon_type ) {
-
-				// $this->add_render_attribute( 'icon', 'class', $settings['premium_counter_icon_updated']['value'] );
-
-				// }
 
 				$this->add_render_attribute(
 					'icon',
@@ -1577,17 +1553,14 @@ class Premium_Counter extends Widget_Base {
 						);
 					else :
 
-						echo Helper_Functions::get_svg_by_icon(
-							$settings['premium_counter_icon_updated'],
-							$this->get_render_attribute_string( 'icon' )
-						);
+						echo Helper_Functions::get_svg_by_icon( $settings['premium_counter_icon_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 					endif;
 					?>
 
 				<?php elseif ( 'svg' === $icon_type ) : ?>
 					<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
-						<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
+						<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg() returns wp_kses-sanitized SVG markup. ?>
 					</div>
 				<?php elseif ( 'custom' === $icon_type && ! empty( $settings['premium_counter_image_upload']['url'] ) ) : ?>
 					<img <?php $this->print_render_attribute_string( 'image' ); ?>>

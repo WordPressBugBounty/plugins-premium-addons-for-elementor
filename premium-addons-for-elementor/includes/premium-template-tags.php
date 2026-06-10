@@ -637,6 +637,11 @@ class Premium_Template_Tags {
 			)
 		);
 
+		$per_item_text = Helper_Functions::get_per_item_badge_text( $post_id, $settings );
+		if ( false !== $per_item_text ) {
+			$this->add_render_attribute( $tax_key, 'data-pa-badge-text', $per_item_text );
+		}
+
 		$this->add_render_attribute(
 			$wrap_key,
 			'class',
@@ -733,8 +738,15 @@ class Premium_Template_Tags {
 							</div>
 						<?php } ?>
 						<?php
+							$meta_position = $settings['premium_blog_meta_position'] ?? 'below';
+
+						if ( 'cards' !== $skin && 'above' === $meta_position ) {
+							$this->get_post_meta( $target );
+						}
+
 							$this->render_post_title( $target, $key, 'premium-blog-entry-title' );
-						if ( 'cards' !== $skin ) {
+
+						if ( 'cards' !== $skin && 'above' !== $meta_position ) {
 							$this->get_post_meta( $target );
 						}
 
@@ -1862,6 +1874,11 @@ class Premium_Template_Tags {
 			)
 		);
 
+		$per_item_text = Helper_Functions::get_per_item_badge_text( $post_id, $settings );
+		if ( false !== $per_item_text ) {
+			$this->add_render_attribute( $wrap_key, 'data-pa-badge-text', $per_item_text );
+		}
+
 		?>
 		<div class="premium-smart-listing__featured-posts-wrapper">
 			<<?php echo wp_kses_post( $post_tag . ' ' . $this->get_render_attribute_string( $wrap_key ) ); ?>>
@@ -1944,6 +1961,11 @@ class Premium_Template_Tags {
 				'data-total' => $total,
 			)
 		);
+
+		$per_item_text = Helper_Functions::get_per_item_badge_text( $post_id, $settings );
+		if ( false !== $per_item_text ) {
+			$this->add_render_attribute( $wrap_key, 'data-pa-badge-text', $per_item_text );
+		}
 		?>
 			<<?php echo wp_kses_post( $post_tag . ' ' . $this->get_render_attribute_string( $wrap_key ) ); ?>>
 				<?php

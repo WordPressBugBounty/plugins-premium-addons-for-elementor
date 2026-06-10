@@ -183,7 +183,7 @@ class Premium_Icon_List extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium bullet list', 'icon', 'feature', 'list' );
@@ -2776,14 +2776,14 @@ class Premium_Icon_List extends Widget_Base {
 												} else {
 													?>
 														<div <?php $this->print_render_attribute_string( $animation_key ); ?>>
-														<?php echo Helper_Functions::get_svg_by_icon( $item['premium_icon_list_font_updated'] ); ?>
+														<?php echo Helper_Functions::get_svg_by_icon( $item['premium_icon_list_font_updated'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup. ?>
 														</div>
 														<?php
 												}
 											} elseif ( 'svg' === $item['icon_type'] ) {
 												?>
 													<div <?php $this->print_render_attribute_string( $animation_key ); ?>>
-													<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); ?>
+													<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg() returns wp_kses-sanitized SVG markup. ?>
 													</div>
 													<?php
 											} elseif ( 'text' === $item['icon_type'] ) {

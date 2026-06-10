@@ -79,7 +79,7 @@ class Premium_Vscroll extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium vertical scroll', 'full', 'section', 'navigation', 'one', 'page' );
@@ -1161,7 +1161,7 @@ class Premium_Vscroll extends Widget_Base {
 			)
 		);
 
-		if ( 'default' !== $settings['scroll_effect'] && ! wp_is_mobile() ) {
+		if ( 'default' !== $settings['scroll_effect'] && ! wp_is_mobile() ) { // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile -- Core wp_is_mobile(); plugin is not VIP-hosted and does not depend on Jetpack.
 
 			$this->add_render_attribute(
 				'vscroll_sections_wrap',

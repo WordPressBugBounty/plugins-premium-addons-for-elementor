@@ -126,7 +126,7 @@ class Premium_Maps extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium google maps', 'marker', 'pin', 'tooltip', 'location' );
@@ -167,7 +167,7 @@ class Premium_Maps extends Widget_Base {
 
 		$settings = Admin_Helper::get_integrations_settings();
 
-		if ( empty( $settings['premium-map-api'] ) || '1' == $settings['premium-map-api'] ) { // phpcs:ignore WordPress.PHP.StrictComparisons
+		if ( empty( $settings['premium-map-api'] ) || '1' === $settings['premium-map-api'] ) { // phpcs:ignore WordPress.PHP.StrictComparisons
 			$this->add_control(
 				'premium_maps_api_url',
 				array(
@@ -480,6 +480,7 @@ class Premium_Maps extends Widget_Base {
 				'label'       => __( 'Map ID', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'description' => sprintf(
+					/* translators: %s: Google Maps "Map ID" documentation link. */
 					esc_html__( 'Get the Google Map ID from %s. You can leave it empty, but this will use the old Google Maps API.', 'premium-addons-for-elementor' ),
 					'<a href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" target="_blank">' . esc_html__( 'here', 'premium-addons-for-elementor' ) . '</a>'
 				),
@@ -1400,14 +1401,14 @@ class Premium_Maps extends Widget_Base {
 						<?php endif; ?>
 
 						<div class='premium-maps-info-img'>
-							<img src='<?php echo esc_attr( $pin['pin_img']['url'] ); ?>' alt='<?php echo esc_attr( isset( $pin['pin_img']['alt'] ) ? $pin['pin_img']['alt'] : '' ); ?>'>
+							<img src='<?php echo esc_url( $pin['pin_img']['url'] ); ?>' alt='<?php echo esc_attr( isset( $pin['pin_img']['alt'] ) ? $pin['pin_img']['alt'] : '' ); ?>'>
 						</div>
 
 
 						<div class='premium-maps-title-wrap'>
 							<p class='premium-maps-info-title'><?php echo wp_kses_post( $pin['pin_title'] ); ?></p>
 
-							<?php if ( in_array( $pin['marker_skin'], array( 'skin1', 'skin3' ) ) ) : ?>
+							<?php if ( in_array( $pin['marker_skin'], array( 'skin1', 'skin3' ), true ) ) : ?>
 								<?php if ( 'skin1' === $pin['marker_skin'] ) : ?>
 								<div class='premium-maps-location-directions'>
 								<?php endif; ?>

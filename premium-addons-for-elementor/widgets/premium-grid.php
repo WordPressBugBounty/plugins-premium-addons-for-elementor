@@ -41,7 +41,7 @@ class Premium_Grid extends Widget_Base {
 	/**
 	 * Check for Self Hosted Videos
 	 *
-	 * @var is_self_hosted
+	 * @var bool
 	 */
 	private static $check_self_hosted = false;
 
@@ -157,7 +157,7 @@ class Premium_Grid extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium media grid', 'layout', 'gallery', 'image', 'video', 'portfolio', 'visual', 'masonry', 'youtube', 'vimeo' );
@@ -2566,13 +2566,13 @@ class Premium_Grid extends Widget_Base {
 	 * @since 2.1.0
 	 * @access public
 	 *
-	 * @param string $string category slug.
+	 * @param string $slug category slug.
 	 *
 	 * @return string $cat_filtered slug filtered.
 	 */
-	public function filter_cats( $string ) {
+	public function filter_cats( $slug ) {
 
-		$cat_filtered = trim( $string );
+		$cat_filtered = trim( $slug );
 
 		$cat_filtered = extension_loaded( 'mbstring' ) ? mb_strtolower( $cat_filtered ) : strtolower( $cat_filtered );
 
@@ -2835,11 +2835,6 @@ class Premium_Grid extends Widget_Base {
 
 				$image_id = apply_filters( 'wpml_object_id', $image['premium_gallery_img']['id'], 'attachment', true );
 
-				// Check for Image ID, but not for the default Elementor placeholder.
-				// if ( false === strpos( $image['premium_gallery_img']['url'], 'placeholder.png' ) && ! $image['premium_gallery_video'] && ! $image_id && empty( $image['premium_gallery_img']['url'] ) ) {
-				// continue;
-				// }
-
 				$image_by_id = get_post( $image_id );
 
 				$alt = $image_by_id ? $this->get_lightbox_title( $image_by_id ) : '';
@@ -3041,7 +3036,7 @@ class Premium_Grid extends Widget_Base {
 	/**
 	 * Gets lightbox Title according to the Global Lightbox Settings.
 	 *
-	 * @param object $attachment  image(post) object.
+	 * @param \WP_Post|null $attachment  image(post) object.
 	 *
 	 * @since 4.10.62
 	 *
@@ -3050,7 +3045,7 @@ class Premium_Grid extends Widget_Base {
 	protected function get_lightbox_title( $attachment ) {
 		$title = '';
 
-		if ( ! $attachment || ! is_a( $attachment, 'WP_Post' ) ) {
+		if ( ! is_a( $attachment, 'WP_Post' ) ) {
 			return $title;
 		}
 
@@ -3090,11 +3085,15 @@ class Premium_Grid extends Widget_Base {
 
 		$image_id = apply_filters( 'wpml_object_id', $item['premium_gallery_img']['id'], 'attachment', true );
 
-		$image_src = $image_url = wp_get_attachment_image_url( $image_id, 'full' );
+		$image_src = wp_get_attachment_image_url( $image_id, 'full' );
 
 		$is_video = $item['premium_gallery_video'];
 
 		$key = 'image_' . $index;
+
+		$image_html   = '';
+		$link         = '';
+		$video_params = array();
 
 		if ( ! empty( $item['premium_gallery_img']['url'] ) ) {
 			$settings['image_data'] = Helper_Functions::get_image_data( $image_id, $item['premium_gallery_img']['url'], $settings['thumbnail_size'] );
@@ -3107,7 +3106,7 @@ class Premium_Grid extends Widget_Base {
 
 			if ( 'hosted' !== $type ) {
 				$embed_params = $this->get_embed_params( $item );
-				$link         = Embed::get_embed_url( $item['premium_gallery_video_url'], $embed_params );
+				$link         = (string) Embed::get_embed_url( $item['premium_gallery_video_url'], $embed_params ); // Stub mistypes Embed::get_embed_url() as array|null; it returns the embed URL string.
 
 				if ( 'youtube' === $type && 'yes' === $item['privacy_mode'] ) {
 					$link = str_replace( '.com', '-nocookie.com', $link );
@@ -3439,7 +3438,7 @@ class Premium_Grid extends Widget_Base {
 	}
 
 	/**
-	 * Get embeded videos parameters
+	 * Get embedded videos parameters
 	 *
 	 * @since 3.7.0
 	 * @access private
@@ -3459,8 +3458,6 @@ class Premium_Grid extends Widget_Base {
 		$video_params['controls'] = $item['premium_gallery_video_controls'] ? '1' : '0';
 
 		$key = 'youtube' === $item['premium_gallery_video_type'] ? 'mute' : 'muted';
-
-		// $video_params['playlist'] = $props['video_id'];
 
 		$video_params[ $key ] = $item['premium_gallery_video_mute'] ? '1' : '0';
 

@@ -1030,7 +1030,7 @@ class Premium_Image_Button extends Widget_Base {
 		);
 
 		// Allow admins only to add JS.
-		if ( current_user_can( 'administrator' ) ) {
+		if ( current_user_can( 'manage_options' ) ) {
 			$this->add_control(
 				'premium_image_button_event_switcher',
 				array(
@@ -1078,7 +1078,7 @@ class Premium_Image_Button extends Widget_Base {
 				'doc_' . $doc_index,
 				array(
 					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => sprintf( '<a href="%s" target="_blank">%s</a>', $doc_url, $title, 'premium-addons-for-elementor' ),
+					'raw'             => sprintf( '<a href="%s" target="_blank">%s</a>', $doc_url, $title ),
 					'content_classes' => 'editor-pa-doc',
 				)
 			);
@@ -1692,24 +1692,6 @@ class Premium_Image_Button extends Widget_Base {
 
 				$this->add_render_attribute( 'icon', 'class', 'premium-drawable-icon' );
 
-				// if ( 'icon' === $icon_type ) {
-
-				// if ( ! empty( $settings['premium_image_button_icon_selection'] ) ) {
-				// $this->add_render_attribute(
-				// 'icon',
-				// array(
-				// 'class'       => $settings['premium_image_button_icon_selection'],
-				// 'aria-hidden' => 'true',
-				// )
-				// );
-
-				// }
-
-				// $migrated = isset( $settings['__fa4_migrated']['premium_image_button_icon_selection_updated'] );
-				// $is_new   = empty( $settings['premium_image_button_icon_selection'] ) && Icons_Manager::is_migration_allowed();
-
-				// }
-
 				if ( 'yes' === $settings['draw_svg'] ) {
 
 					$this->add_render_attribute(
@@ -1720,12 +1702,6 @@ class Premium_Image_Button extends Widget_Base {
 							'premium-drawer-hover',
 						)
 					);
-
-					// if ( 'icon' === $icon_type ) {
-
-					// $this->add_render_attribute( 'icon', 'class', $settings['premium_image_button_icon_selection_updated']['value'] );
-
-					// }
 
 					$this->add_render_attribute(
 						'icon',
@@ -1853,16 +1829,13 @@ class Premium_Image_Button extends Widget_Base {
 
 							else :
 
-								echo Helper_Functions::get_svg_by_icon(
-									$settings['premium_image_button_icon_selection_updated'],
-									$this->get_render_attribute_string( 'icon' )
-								);
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_image_button_icon_selection_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							endif;
 							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
-								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
+								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg() returns wp_kses-sanitized SVG markup. ?>
 							</div>
 						<?php else : ?>
 							<div <?php $this->print_render_attribute_string( 'lottie' ); ?>></div>

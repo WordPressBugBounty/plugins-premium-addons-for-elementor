@@ -978,7 +978,6 @@ class Premium_Button extends Widget_Base {
 				'type'      => Controls_Manager::SLIDER,
 				'condition' => array(
 					'premium_button_icon_switcher' => 'yes',
-					// 'premium_button_icon_position' => 'before',
 					'premium_button_hover_effect'  => 'style3',
 				),
 				'range'     => array(
@@ -1068,7 +1067,7 @@ class Premium_Button extends Widget_Base {
 		);
 
 		// Allow admins only to add JS.
-		if ( current_user_can( 'administrator' ) ) {
+		if ( current_user_can( 'manage_options' ) ) {
 			$this->add_control(
 				'premium_button_event_switcher',
 				array(
@@ -1851,15 +1850,12 @@ class Premium_Button extends Widget_Base {
 						<?php if ( 'icon' === $icon_type ) : ?>
 							<?php
 
-								echo Helper_Functions::get_svg_by_icon(
-									$settings['premium_button_icon_selection_updated'],
-									$this->get_render_attribute_string( 'icon' )
-								);// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_button_icon_selection_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
 							<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
-								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist ?>
+								<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg() returns wp_kses-sanitized SVG markup. ?>
 							</div>
 						<?php else : ?>
 							<div <?php $this->print_render_attribute_string( 'lottie' ); ?>></div>

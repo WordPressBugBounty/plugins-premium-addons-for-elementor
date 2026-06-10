@@ -139,7 +139,7 @@ class Premium_Blog extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium blog', 'posts', 'grid', 'item', 'loop', 'query', 'portfolio', 'cpt', 'custom' );
@@ -501,7 +501,7 @@ class Premium_Blog extends Widget_Base {
 				'label_block' => true,
 				'options'     => array(
 					'post__in'     => __( 'Match Post', 'premium-addons-for-elementor' ),
-					'post__not_in' => __( 'Exclude Post', 'premium-addons-for-elementor' ),
+					'post__not_in' => __( 'Exclude Post', 'premium-addons-for-elementor' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- Control option value, not a query argument.
 				),
 				'condition'   => array(
 					'post_type_filter!' => 'main',
@@ -1163,6 +1163,22 @@ class Premium_Blog extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'premium_blog_meta_position',
+			array(
+				'label'     => __( 'Meta Position', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'below',
+				'options'   => array(
+					'below' => __( 'Below Title', 'premium-addons-for-elementor' ),
+					'above' => __( 'Above Title', 'premium-addons-for-elementor' ),
+				),
+				'condition' => array(
+					'premium_blog_skin!' => 'cards',
+				),
+			)
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1789,7 +1805,6 @@ class Premium_Blog extends Widget_Base {
 
 		$docs = array(
 			'https://premiumaddons.com/docs/elementor-blog-widget-tutorial/' => __( 'Getting started »', 'premium-addons-for-elementor' ),
-			// 'https://premiumaddons.com/docs/link-filter-tabs-elementor-blog-widget/' => __( 'How to link filter tabs in Blog widget »', 'premium-addons-for-elementor' ),
 		);
 
 		$doc_index = 1;
@@ -3432,7 +3447,7 @@ class Premium_Blog extends Widget_Base {
 
 		$settings = $this->get_settings();
 
-		$current_language = apply_filters( 'wpml_current_language', '-' );
+		$current_language = apply_filters( 'wpml_current_language', '-' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		$post_type = $settings['post_type_filter'];
 
@@ -3444,13 +3459,18 @@ class Premium_Blog extends Widget_Base {
 
 		// Fix: Make sure there is a value set for the current tax control.
 		if ( empty( $filter_rule ) ) {
-			return;
+			return array();
 		}
 
 		$filters = $settings[ 'tax_' . $filter . '_' . $post_type . '_filter' ];
 
 		// Get the categories based on filter source.
-		$taxs = get_terms( $filter );
+		$taxs = get_terms(
+			array(
+				'taxonomy'   => $filter,
+				'hide_empty' => false,
+			)
+		);
 
 		$tabs_array = array();
 
@@ -3458,7 +3478,7 @@ class Premium_Blog extends Widget_Base {
 			return array();
 		}
 
-		if ( empty( $filters ) || '' === $filters ) {
+		if ( empty( $filters ) ) {
 
 			$tabs_array = $taxs;
 
@@ -3549,6 +3569,7 @@ class Premium_Blog extends Widget_Base {
 
 		$blog_helper = Blog_Helper::getInstance();
 
+		$filters = array();
 		if ( 'yes' === $settings['premium_blog_cat_tabs'] && 'yes' !== $settings['premium_blog_carousel'] && 'marquee' !== $settings['premium_blog_layout'] ) {
 
 			$filter_rule = $settings['filter_tabs_type'];

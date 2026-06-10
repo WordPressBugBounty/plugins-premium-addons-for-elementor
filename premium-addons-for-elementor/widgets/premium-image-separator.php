@@ -156,7 +156,7 @@ class Premium_Image_Separator extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium image separator', 'divider', 'section', 'shape' );
@@ -1075,16 +1075,13 @@ class Premium_Image_Separator extends Widget_Base {
 				);
 			else :
 
-				echo Helper_Functions::get_svg_by_icon(
-					$settings['separator_icon'],
-					$this->get_render_attribute_string( 'icon' )
-				);
+				echo Helper_Functions::get_svg_by_icon( $settings['separator_icon'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 			endif;
 			?>
 		<?php elseif ( 'svg' === $type ) : ?>
 			<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
-				<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
+				<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg() returns wp_kses-sanitized SVG markup. ?>
 			</div>
 		<?php else : ?>
 			<div <?php $this->print_render_attribute_string( 'separator_lottie' ); ?>></div>

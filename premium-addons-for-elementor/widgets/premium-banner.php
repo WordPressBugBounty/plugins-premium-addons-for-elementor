@@ -99,7 +99,7 @@ class Premium_Banner extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium banner', 'image', 'box', 'info', 'cta' );
@@ -153,7 +153,7 @@ class Premium_Banner extends Widget_Base {
 		$is_edit = Helper_Functions::is_edit_mode();
 
 		$scripts = array();
-		if ( $is_edit || ( ! $is_edit && 'yes' === $this->get_settings( 'mouse_tilt' ) ) ) {
+		if ( $is_edit || 'yes' === $this->get_settings( 'mouse_tilt' ) ) {
 			$scripts[] = 'pa-tilt';
 		}
 
@@ -1792,14 +1792,14 @@ class Premium_Banner extends Widget_Base {
 		?>
 		<div <?php $this->print_render_attribute_string( 'banner_inner' ); ?>>
 			<?php if ( 'animation7' === $settings['premium_banner_image_animation'] || 'animation8' === $settings['premium_banner_image_animation'] ) : ?>
-				<div class="premium-banner-border">
-					<div class="premium-banner-br premium-banner-bleft premium-banner-brlr"></div>
-					<div class="premium-banner-br premium-banner-bright premium-banner-brlr"></div>
-					<div class="premium-banner-br premium-banner-btop premium-banner-brtb"></div>
-					<div class="premium-banner-br premium-banner-bottom premium-banner-brtb"></div>
-				</div>
+				
+				<div class="premium-banner-br premium-banner-bleft premium-banner-brlr"></div>
+				<div class="premium-banner-br premium-banner-bright premium-banner-brlr"></div>
+				<div class="premium-banner-br premium-banner-btop premium-banner-brtb"></div>
+				<div class="premium-banner-br premium-banner-bottom premium-banner-brtb"></div>
+				
 			<?php endif; ?>
-			<?php if ( ! empty( $settings['premium_banner_image']['url'] ) ) : ?>
+			<?php if ( $image_html ) : ?>
 				<?php echo wp_kses_post( $image_html ); ?>
 			<?php endif; ?>
 			<?php if ( 'animation11' === $settings['premium_banner_image_animation'] ) : ?>
@@ -1817,9 +1817,10 @@ class Premium_Banner extends Widget_Base {
 				?>
 
 				<?php if ( ! empty( $settings['premium_banner_title'] ) ) : ?>
-					<<?php echo wp_kses_post( Helper_Functions::validate_html_tag( $settings['premium_banner_title_tag'] ) . ' ' . $this->get_render_attribute_string( 'premium_banner_title' ) ); ?>>
+					<?php $title_tag = Helper_Functions::validate_html_tag( $settings['premium_banner_title_tag'] ); ?>
+					<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( 'premium_banner_title' ) ); ?>>
 						<?php echo wp_kses_post( $settings['premium_banner_title'] ); ?>
-					</<?php echo wp_kses_post( Helper_Functions::validate_html_tag( $settings['premium_banner_title_tag'] ) ); ?>>
+					</<?php echo wp_kses_post( $title_tag ); ?>>
 				<?php endif; ?>
 
 				<?php
@@ -1842,7 +1843,7 @@ class Premium_Banner extends Widget_Base {
 							<?php endif; ?>
 
 							<?php if ( 'style8' === $settings['premium_button_hover_effect'] ) : ?>
-								<?php echo Helper_Functions::get_btn_svgs( $settings['underline_style'] ); ?>
+								<?php echo Helper_Functions::get_btn_svgs( $settings['underline_style'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_btn_svgs() returns sanitized inline SVG markup. ?>
 							<?php endif; ?>
 
 						</a>
@@ -1918,10 +1919,7 @@ class Premium_Banner extends Widget_Base {
 						)
 					);
 
-					echo Helper_Functions::get_svg_by_icon(
-						$settings['premium_banner_selected_icon'],
-						$this->get_render_attribute_string( 'banner_drawable_icon' )
-					);
+					echo Helper_Functions::get_svg_by_icon( $settings['premium_banner_selected_icon'], $this->get_render_attribute_string( 'banner_drawable_icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 				else :
 

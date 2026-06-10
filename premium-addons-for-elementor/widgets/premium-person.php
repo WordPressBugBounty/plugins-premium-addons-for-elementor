@@ -136,7 +136,7 @@ class Premium_Person extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium team members', 'person', 'carousel', 'slider', 'group' );
@@ -1934,7 +1934,7 @@ class Premium_Person extends Widget_Base {
 
 		if ( $carousel ) {
 
-			$this->add_render_attribute( 'persons_container', 'data-carousel', $carousel );
+			$this->add_render_attribute( 'persons_container', 'data-carousel', 'true' );
 
 			$this->add_render_attribute(
 				'persons_container',
@@ -1992,7 +1992,7 @@ class Premium_Person extends Widget_Base {
 					if ( ! empty( $person['multiple_image']['url'] ) ) {
 
 						$image_src = $person['multiple_image']['url'];
-						$image_id  = attachment_url_to_postid( $image_src );
+						$image_id  = attachment_url_to_postid( $image_src ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.attachment_url_to_postid_attachment_url_to_postid -- Core function; plugin is not VIP-hosted.
 
 						$settings['image_data'] = Helper_Functions::get_image_data( $image_id, $person['multiple_image']['url'], $settings['thumbnail_size'] );
 						$person_image_html      = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image_data' );
@@ -2032,7 +2032,7 @@ class Premium_Person extends Widget_Base {
 	 * @since 3.8.4
 	 * @access protected
 	 *
-	 * @param object $person current person.
+	 * @param array|string $person current person array, or '' for the single-person source.
 	 */
 	private function get_social_icons( $person = '' ) {
 
@@ -2063,7 +2063,7 @@ class Premium_Person extends Widget_Base {
 		foreach ( $social_sites as $site => $icon ) {
 
 			if ( ! \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
-				if ( 'number' === $site && ! wp_is_mobile() ) {
+				if ( 'number' === $site && ! wp_is_mobile() ) { // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile -- Core wp_is_mobile(); plugin is not VIP-hosted and does not depend on Jetpack.
 					continue;
 				}
 			}
@@ -2093,8 +2093,8 @@ class Premium_Person extends Widget_Base {
 	 * @since 3.12.0
 	 * @access protected
 	 *
-	 * @param object  $person current person.
-	 * @param integer $index person index.
+	 * @param array|string $person current person array, or '' for the single-person source.
+	 * @param int|string   $index  person index, or '' for the single person.
 	 */
 	protected function render_person_info( $person = '', $index = '' ) {
 

@@ -233,7 +233,7 @@ class Assets_Manager {
 			'pafe' . $dynamic_asset_id,
 			Helper_Functions::get_safe_url( PREMIUM_ASSETS_URL . '/' . 'pafe' . $dynamic_asset_id . '.css' ),
 			array(),
-			time()
+			get_post_modified_time()
 		);
 
 		// If no JS file found, then generate it.
@@ -247,7 +247,7 @@ class Assets_Manager {
 				'pafe' . $dynamic_asset_id,
 				Helper_Functions::get_safe_url( PREMIUM_ASSETS_URL . '/' . 'pafe' . $dynamic_asset_id . '.js' ),
 				array(),
-				time(),
+				get_post_modified_time(),
 				true
 			);
 		}

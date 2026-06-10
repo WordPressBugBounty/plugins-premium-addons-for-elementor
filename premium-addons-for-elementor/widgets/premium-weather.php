@@ -44,14 +44,14 @@ class Premium_Weather extends Widget_Base {
 	/**
 	 * Options
 	 *
-	 * @var options
+	 * @var array
 	 */
 	private $options = null;
 
 	/**
 	 * Settings
 	 *
-	 * @var settings
+	 * @var array
 	 */
 	public $settings = null;
 
@@ -115,7 +115,7 @@ class Premium_Weather extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium weather', 'magazine', 'news', 'weather', 'forecast' );
@@ -443,7 +443,7 @@ class Premium_Weather extends Widget_Base {
 					'nl'    => __( 'Dutch', 'premium-addons-for-elementor' ),
 					'pl'    => __( 'Polish', 'premium-addons-for-elementor' ),
 					'pt'    => __( 'Portuguese', 'premium-addons-for-elementor' ),
-					'pt'    => __( 'br Português Brasil', 'premium-addons-for-elementor' ),
+					'pt_br' => __( 'Português Brasil', 'premium-addons-for-elementor' ),
 					'ro'    => __( 'Romanian', 'premium-addons-for-elementor' ),
 					'ru'    => __( 'Russian', 'premium-addons-for-elementor' ),
 					'se'    => __( 'Swedish', 'premium-addons-for-elementor' ),
@@ -1195,7 +1195,6 @@ class Premium_Weather extends Widget_Base {
 				array(
 					'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 					'type'        => Controls_Manager::SWITCHER,
-					'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 					'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
 					'description' => __( 'Use this option to draw your Font Awesome Custom Icons.', 'premium-addons-for-elementor' ),
 					'condition'   => array(
@@ -3870,7 +3869,6 @@ class Premium_Weather extends Widget_Base {
 
 				$weather_data = $api_handler::get_weather_data();
 
-				// if ( isset( $weather_data['status'] ) && ! $weather_data['status'] ) {
 				if ( isset( $weather_data['cod'] ) || ( isset( $weather_data['status'] ) && empty( $weather_data['status'] ) ) ) {
 
 					$notice = __( 'Something Went Wrong, Please make sure you\'ve entered valid data, CODE:', 'premium-addons-for-elementor' ) . $weather_data['cod'];
@@ -3893,7 +3891,6 @@ class Premium_Weather extends Widget_Base {
 
 			$weather_data = $api_handler::get_weather_data();
 
-			// if ( isset( $weather_data['status'] ) && ! $weather_data['status'] ) {
 			if ( isset( $weather_data['cod'] ) || ( isset( $weather_data['status'] ) && empty( $weather_data['status'] ) ) ) {
 
 				$notice = __( 'Something Went Wrong, Please make sure you\'ve entered valid data, CODE:', 'premium-addons-for-elementor' ) . $weather_data['cod'];
@@ -4069,7 +4066,7 @@ class Premium_Weather extends Widget_Base {
 						</div>
 					<?php endif; ?>
 					<?php if ( ( $show_current_weather && count( $extra_weather ) ) || ( false !== $hourly_forecast ) ) : ?>
-					<div class="premium-weather__extra-outer-wrapper" <?php // echo $hourly_forecast_css; ?>>
+					<div class="premium-weather__extra-outer-wrapper">
 						<?php if ( $show_current_weather && count( $extra_weather ) ) { ?>
 							<div class="premium-weather__extra-weather">
 								<?php $this->render_extra_weather( $extra_weather, $current ); ?>
@@ -4160,9 +4157,10 @@ class Premium_Weather extends Widget_Base {
 	 * @access private
 	 * @since 2.8.23
 	 *
-	 * @param array  $data  forecast data.
-	 * @param int    $days_num  number of days to display.
-	 * @param string $layout  wideget layout.
+	 * @param array $data  forecast data.
+	 * @param int   $days_num  number of days to display.
+	 * @param bool  $forecast_icon  whether to render the forecast weather icon.
+	 * @param bool  $show_temp_icon  whether to render the temperature icon.
 	 */
 	private function render_forecast_days( $data, $days_num, $forecast_icon, $show_temp_icon ) {
 
@@ -4464,7 +4462,8 @@ class Premium_Weather extends Widget_Base {
 	 * @access private
 	 * @since 2.8.23
 	 *
-	 * @param array $icon_data icon data.
+	 * @param array  $icon  icon data.
+	 * @param string $code  weather condition code.
 	 */
 	private function render_custom_icon( $icon, $code ) {
 
@@ -4492,12 +4491,12 @@ class Premium_Weather extends Widget_Base {
 					);
 			} else {
 
-					echo Helper_Functions::get_svg_by_icon(
+					echo Helper_Functions::get_svg_by_icon( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 						$icon,
 						array(
 							'class'           => 'premium-drawable-icon premium-svg-drawer',
 							'data-svg-loop'   => 'false',
-							'data-svg-fill'   => $draw_fill,
+							'data-svg-fill'   => esc_attr( $draw_fill ),
 							'data-svg-sync'   => 'yes',
 							'data-svg-frames' => '5',
 							'data-svg-point'  => '0',
@@ -4596,6 +4595,8 @@ class Premium_Weather extends Widget_Base {
 
 				$icon_code    = $condition_codes[ $icon['weather_desc'] ];
 				$is_dual_icon = in_array( $icon_code, $dual_icons, true ) ? true : false;
+
+				$night_custom_icon = array();
 
 				$icon_type = $icon['pa_icon_type'];
 
@@ -4697,7 +4698,7 @@ class Premium_Weather extends Widget_Base {
 			if ( isset( $headers[ $i ] ) ) {
 				$date = gmdate( $date_format, strtotime( $headers[ $i ] ) );
 				?>
-					<li class='premium-weather__tab-header <?php echo $i === 0 ? ' current' : ''; ?>' data-content-id="#premium-tab-content-<?php echo esc_attr( $i ); ?>" aria-label='<?php echo esc_attr__( $date, 'premium-addons-for-elementor' ); ?>' title='<?php echo esc_attr__( $date, 'premium-addons-for-elementor' ); ?>'> <?php echo esc_html( $date ); ?></li>
+					<li class='premium-weather__tab-header <?php echo 0 === $i ? ' current' : ''; ?>' data-content-id="#premium-tab-content-<?php echo esc_attr( $i ); ?>" aria-label='<?php echo esc_attr( $date ); ?>' title='<?php echo esc_attr( $date ); ?>'> <?php echo esc_html( $date ); ?></li>
 					<?php
 			}
 		}
@@ -4782,7 +4783,7 @@ class Premium_Weather extends Widget_Base {
 		<?php
 		foreach ( $headers as $date ) {
 			?>
-				<div id ='premium-tab-content-<?php echo esc_attr( $i ); ?>' class='premium-weather__tab-content <?php echo $i === 0 ? ' current' : ''; ?>'>
+				<div id ='premium-tab-content-<?php echo esc_attr( $i ); ?>' class='premium-weather__tab-content <?php echo 0 === $i ? ' current' : ''; ?>'>
 				<?php
 				if ( isset( $forecast_data[ $date ] ) ) {
 					$this->render_tabs_hourly_forecast( $forecast_data[ $date ], $conditions_arr );
@@ -4807,7 +4808,7 @@ class Premium_Weather extends Widget_Base {
 	 * @access public
 	 * @since 2.8.23
 	 *
-	 * @param string $symbol_str symbols strings.
+	 * @param string $dates_str comma-separated dates string.
 	 *
 	 * @return array
 	 */

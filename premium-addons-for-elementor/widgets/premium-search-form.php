@@ -73,7 +73,7 @@ class Premium_Search_Form extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium search form', 'ajax' );
@@ -490,7 +490,7 @@ class Premium_Search_Form extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'options'     => array(
 					'post__in'     => __( 'Match Post', 'premium-addons-for-elementor' ),
-					'post__not_in' => __( 'Exclude Post', 'premium-addons-for-elementor' ),
+					'post__not_in' => __( 'Exclude Post', 'premium-addons-for-elementor' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- Elementor SELECT option key (filter-rule label), not a get_posts() query arg.
 				),
 				'default'     => 'post__not_in',
 				'separator'   => 'before',
@@ -923,7 +923,6 @@ class Premium_Search_Form extends Widget_Base {
 						'search-plus',
 					),
 				),
-				// 'exclude_inline_options' => array( 'svg' ),
 				'condition'   => array(
 					'search_button' => 'yes',
 					'search_icon'   => 'yes',
@@ -1569,7 +1568,6 @@ class Premium_Search_Form extends Widget_Base {
 					'carousel_arrows' => 'yes',
 				),
 				'selectors'  => array(
-					// '{{WRAPPER}} .premium-blog-wrap a.carousel-arrow.carousel-next' => 'right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .premium-search__query-wrap a.carousel-arrow.carousel-prev' => 'left: {{SIZE}}{{UNIT}};',
 				),
 			)
@@ -1597,7 +1595,6 @@ class Premium_Search_Form extends Widget_Base {
 				),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-search__query-wrap a.carousel-arrow.carousel-next' => 'right: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .premium-blog-wrap a.carousel-arrow.carousel-prev' => 'left: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -3336,7 +3333,7 @@ class Premium_Search_Form extends Widget_Base {
 						<div class="premium-search__type-filter">
 							<select class="premium-search__type-select">
 
-								<option value="any"><?php echo __( 'All Posts', 'premium-addons-for-elementor' ); ?></option>
+								<option value="any"><?php echo esc_html__( 'All Posts', 'premium-addons-for-elementor' ); ?></option>
 								<?php
 								foreach ( $post_types as $id => $label ) :
 									$count = wp_count_posts( $id )->publish;
@@ -3346,7 +3343,7 @@ class Premium_Search_Form extends Widget_Base {
 									}
 									?>
 									<?php
-									if ( ! in_array( $id, $settings['post_types_excluded'] ) ) :
+									if ( ! in_array( $id, $settings['post_types_excluded'], true ) ) :
 										if ( 'yes' === $settings['show_posts_number'] ) {
 											$label = $label . ' (' . $count . ')';
 										}

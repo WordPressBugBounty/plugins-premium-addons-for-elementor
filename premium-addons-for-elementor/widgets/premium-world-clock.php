@@ -34,7 +34,9 @@ class Premium_World_Clock extends Widget_Base {
 	/**
 	 * Options
 	 *
-	 * @var options
+	 * Clock options array, filterable via `pa_clock_options`.
+	 *
+	 * @var mixed
 	 */
 	private $options = null;
 

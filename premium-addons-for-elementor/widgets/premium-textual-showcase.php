@@ -429,7 +429,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 			array(
 				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
 				'description' => __( 'Use this option to draw your Font Awesome/SVG Icons.', 'premium-addons-for-elementor' ),
 				'conditions'  => $svg_draw_conds,
@@ -1058,7 +1057,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 			array(
 				'label'       => __( 'Draw Icon', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Enable this option to make the icon drawable. See ', 'premium-addons-for-elementor' ) . '<a href="https://www.youtube.com/watch?v=ZLr0bRe0RAY" target="_blank">tutorial</a>',
 				'classes'     => $draw_icon ? '' : 'editor-pa-control-disabled',
 				'description' => __( 'Use this option to draw your Font Awesome/SVG Icons.', 'premium-addons-for-elementor' ),
 				'conditions'  => $svg_draw_conds_hov,
@@ -2492,20 +2490,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 			$this->add_render_attribute( 'item-content-' . $item['_id'] . $elem_type, 'class', 'premium-drawable-icon pa-txt-sc__item-' . $type );
 
-			// if ( 'icon' === $type ) {
-			// $icon = $item[ 'icon' . $elem_type ];
-
-			// if ( ! empty( $icon ) ) {
-			// $this->add_render_attribute(
-			// 'item-content-icon' . $item['_id'] . $elem_type,
-			// array(
-			// 'class'       => $icon['value'],
-			// 'aria-hidden' => 'true',
-			// )
-			// );
-			// }
-			// }
-
 			if ( $draw_svg ) {
 				$hov_drawer_cls = ! empty( $elem_type ) ? ' premium-drawer-hover' : '';
 				$this->add_render_attribute(
@@ -2569,11 +2553,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		if ( $svg_draw ) {
 			?>
 			<div <?php $this->print_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ); ?>>
-				<?php
-				echo Helper_Functions::get_svg_by_icon(
-					$item[ 'icon' . $elem_type ]
-				);
-				?>
+				<?php echo Helper_Functions::get_svg_by_icon( $item[ 'icon' . $elem_type ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup. ?>
 			</div>
 			<?php
 		} else {
@@ -2605,7 +2585,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 	private function render_item_svg( $item, $index, $elem_type ) {
 		?>
 		<div <?php $this->print_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ); ?>>
-			<?php echo Helper_Functions::sanitize_svg( $item[ 'custom_svg' . $elem_type ] ); ?>
+			<?php echo Helper_Functions::sanitize_svg( $item[ 'custom_svg' . $elem_type ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist. ?>
 		</div>
 		<?php
 	}
@@ -2628,7 +2608,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		$min_mask_cls = empty( $elem_type ) && 'min-mask' === $effect ? 'premium-mask-' . $item['mask_dir'] : '';
 
 		if ( empty( $elem_type ) && ! in_array( $effect, array( 'none', 'min-mask', 'underline' ), true ) ) {
-			echo $this->get_effect_svg( $effect );
+			echo $this->get_effect_svg( $effect ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_effect_svg() returns a hard-coded inline SVG from a fixed allowlist.
 		}
 
 		$this->add_render_attribute( 'item-content-' . $item['_id'] . $elem_type, 'class', 'pa-txt-sc__item-text ' . $min_mask_cls );
@@ -2662,7 +2642,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 	private function render_item_image( $item, $settings, $elem_type ) {
 
 		$image_src  = $item[ 'content_image' . $elem_type ]['url'];
-		$image_id   = attachment_url_to_postid( $image_src );
+		$image_id   = attachment_url_to_postid( $image_src ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.attachment_url_to_postid_attachment_url_to_postid -- Core fn; wpcom_vip_attachment_url_to_postid() only exists on WP VIP.
 		$item_cls   = empty( $elem_type ) ? ' pa-txt-sc__main-item' : ' pa-txt-sc__hov-item';
 		$item_style = empty( $elem_type ) ? '' : 'visibility:hidden;';
 
@@ -2670,7 +2650,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 			$image_html = wp_get_attachment_image(
 				$image_id,
 				$item[ 'thumbnail' . $elem_type . '_size' ],
-				'',
+				false,
 				array(
 					'class'      => 'pa-txt-sc__item-img' . $item_cls,
 					'visibility' => 'hidden',

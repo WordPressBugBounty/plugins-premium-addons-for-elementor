@@ -113,7 +113,7 @@ class Premium_Dual_Header extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium dual heading', 'advanced', 'title', 'heading', 'multi', 'text' );
@@ -1679,16 +1679,6 @@ class Premium_Dual_Header extends Widget_Base {
 		}
 
 		$this->add_render_attribute( 'container', 'class', 'premium-dual-header-wrapper' );
-
-		// if ( 'yes' === $settings['background_text_switcher'] ) {
-		// $this->add_render_attribute(
-		// 'container',
-		// array(
-		// 'class'           => 'premium-title-bg-text',
-		// 'data-background' => $settings['background_text'],
-		// )
-		// );
-		// }
 
 		$show_desc = 'yes' === $settings['premium_dual_header_desc_switcher'] && ! empty( $settings['premium_dual_header_desc_text'] );
 

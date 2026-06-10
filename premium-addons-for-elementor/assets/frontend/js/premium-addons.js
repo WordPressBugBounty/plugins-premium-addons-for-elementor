@@ -1132,7 +1132,7 @@
 				var itemCount = $elem.find(".premium-fancy-list-items").length,
 					loopCount =
 						"" === settings.count &&
-							!["typing", "slide", "autofade"].includes(settings.effect)
+							!["typing", "slide"].includes(settings.effect)
 							? "infinite"
 							: settings.count * itemCount;
 
@@ -1277,9 +1277,7 @@
 									//Hide inactive items
 									$inactiveItems
 										.addClass("premium-fancy-item-hidden")
-										.removeClass(
-											"premium-fancy-item-visible " + animationClass,
-										);
+										.removeClass("premium-fancy-item-visible " + animationClass);
 
 									var visibleTextWidth = $stringsWrap
 										.find(".premium-fancy-item-visible")
@@ -1341,8 +1339,6 @@
 				if (["tilt", "flip", "wave", "pop"].includes(highlightEffect)) {
 					var textArray = $animatedText.text().trim().split("");
 
-					// element.firstChild.remove();
-
 					var elArray = textArray.map(function (letter, index) {
 						if (letter == " ") letter = "&nbsp;";
 
@@ -1364,15 +1360,24 @@
 						animationDelay =
 							computedStyle.getPropertyValue("--pa-animation-delay") || 4,
 						animationSpeed =
-							computedStyle.getPropertyValue("--pa-animation-duration") || 1.2;
+							computedStyle.getPropertyValue("--pa-animation-duration") || 1.2,
+						loopCount = settings.count, // '' = infinite
+						currentLoop = 1; // initial draw-shape counts as loop 1
 
 					var eleObserver = new IntersectionObserver(function (entries) {
 						entries.forEach(function (entry) {
 							if (entry.isIntersecting) {
 								$elem.addClass("draw-shape");
 
-								setInterval(
+								var shapeInterval = setInterval(
 									function () {
+										if (loopCount && currentLoop >= loopCount) {
+											clearInterval(shapeInterval);
+											return;
+										}
+
+										currentLoop++;
+
 										$elem.addClass("hide-shape");
 
 										setTimeout(function () {

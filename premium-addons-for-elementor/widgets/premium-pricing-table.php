@@ -178,7 +178,7 @@ class Premium_Pricing_Table extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget Categories.
+	 * @return array Widget categories.
 	 */
 	public function get_categories() {
 		return array( 'premium-elements' );
@@ -190,7 +190,7 @@ class Premium_Pricing_Table extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium pricing table', 'price', 'feature', 'list', 'bullet', 'cta' );
@@ -3554,10 +3554,6 @@ class Premium_Pricing_Table extends Widget_Base {
 			$badge_style    = 'premium-badge-' . $settings['ribbon_type'];
 
 			$this->add_inline_editing_attributes( 'premium_pricing_table_badge_text' );
-
-			// if ( 'premium-badge-flag' === $badge_style ) {
-			// $badge_position = '';
-			// }
 		}
 
 		$link_type = $settings['premium_pricing_table_button_url_type'];
@@ -3701,17 +3697,14 @@ class Premium_Pricing_Table extends Widget_Base {
 								)
 							);
 						else :
-							echo Helper_Functions::get_svg_by_icon(
-								$settings['premium_pricing_table_icon_selection_updated'],
-								$this->get_render_attribute_string( 'icon' )
-							);
+							echo Helper_Functions::get_svg_by_icon( $settings['premium_pricing_table_icon_selection_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 						endif;
 						?>
 
 					<?php elseif ( 'svg' === $icon_type ) : ?>
 						<div <?php $this->print_render_attribute_string( 'icon' ); ?>>
-							<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); ?>
+							<?php echo Helper_Functions::sanitize_svg( $this->get_settings_for_display( 'custom_svg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist. ?>
 						</div>
 					<?php elseif ( 'animation' === $icon_type ) : ?>
 						<div <?php $this->print_render_attribute_string( 'pricing_lottie' ); ?>></div>
@@ -3830,17 +3823,12 @@ class Premium_Pricing_Table extends Widget_Base {
 										)
 									);
 								else :
-									echo Helper_Functions::get_svg_by_icon(
-										$item['premium_pricing_list_item_icon_updated'],
-										array(
-											'class' => 'premium-pricing-feature-icon',
-										)
-									);
+									echo Helper_Functions::get_svg_by_icon( $item['premium_pricing_list_item_icon_updated'], array( 'class' => 'premium-pricing-feature-icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 								endif;
 								?>
 							<?php elseif ( 'svg' === $item['icon_type'] ) : ?>
-								<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); ?>
+								<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist. ?>
 								<?php
 							elseif ( 'animation' === $item['icon_type'] ) :
 								$lottie_key = 'pricing_item_lottie_' . $index;
@@ -3907,7 +3895,7 @@ class Premium_Pricing_Table extends Widget_Base {
 				<?php endif; ?>
 
 				<?php if ( 'style8' === $settings['premium_button_hover_effect'] ) : ?>
-					<?php echo Helper_Functions::get_btn_svgs( $settings['underline_style'] ); ?>
+					<?php echo Helper_Functions::get_btn_svgs( $settings['underline_style'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_btn_svgs() returns sanitized inline SVG markup. ?>
 				<?php endif; ?>
 
 			</a>

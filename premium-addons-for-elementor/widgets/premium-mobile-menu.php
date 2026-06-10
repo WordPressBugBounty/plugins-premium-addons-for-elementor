@@ -98,7 +98,7 @@ class Premium_Mobile_Menu extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium mobile menu', 'nav', 'navigation', 'header' );
@@ -1911,14 +1911,14 @@ class Premium_Mobile_Menu extends Widget_Base {
 													} else {
 														?>
 															<div <?php $this->print_render_attribute_string( $animation_key ); ?>>
-																<?php echo Helper_Functions::get_svg_by_icon( $item['icon'] ); ?>
+																<?php echo Helper_Functions::get_svg_by_icon( $item['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup. ?>
 															</div>
 														<?php
 													}
 												} elseif ( 'svg' === $item['icon_type'] ) {
 													?>
 														<div <?php $this->print_render_attribute_string( $animation_key ); ?>>
-														<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); ?>
+														<?php echo Helper_Functions::sanitize_svg( $item['custom_svg'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_svg passes through wp_kses with a strict SVG allowlist. ?>
 														</div>
 														<?php
 												} elseif ( 'image' === $item['icon_type'] ) {

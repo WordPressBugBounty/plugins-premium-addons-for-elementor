@@ -660,7 +660,7 @@ class Helper_Functions {
 	 *
 	 * @param string $period transient expiration period.
 	 *
-	 * @return string $expire_time expire time in seconds.
+	 * @return int $expire_time expire time in seconds.
 	 */
 	public static function transient_expire( $period ) {
 
@@ -792,9 +792,9 @@ class Helper_Functions {
 	 * @since 0.0.1
 	 * @access public
 	 *
-	 * @param int    $image_id Image ID.
-	 * @param string $image_url Image URL.
-	 * @param array  $image_size Image sizes array.
+	 * @param int          $image_id Image ID.
+	 * @param string       $image_url Image URL.
+	 * @param string|array $image_size Image size name or [ width, height ] array.
 	 *
 	 * @return array $data image data.
 	 */
@@ -2276,5 +2276,38 @@ class Helper_Functions {
 		);
 
 		return wp_kses( $svg, $allowed_tags );
+	}
+
+	/**
+	 * Resolve the per-item badge text for a given post.
+	 *
+	 * @since 4.11.78
+	 * @param int   $post_id  Post ID to resolve terms for.
+	 * @param array $settings Parent widget's settings array.
+	 * @return false|string
+	 */
+	public static function get_per_item_badge_text( $post_id, $settings ) {
+
+		if ( 'yes' !== ( $settings['premium_global_badge_switcher'] ?? '' ) ) {
+			return false;
+		}
+
+		if ( 'yes' !== ( $settings['pa_badge_per_item'] ?? '' ) ) {
+			return false;
+		}
+
+		$taxonomy = isset( $settings['pa_badge_per_item_source'] ) && '' !== $settings['pa_badge_per_item_source']
+			? $settings['pa_badge_per_item_source']
+			: 'category';
+
+		$terms = get_the_terms( $post_id, $taxonomy );
+
+		if ( ! $terms || is_wp_error( $terms ) ) {
+			return '';
+		}
+
+		$names = wp_list_pluck( $terms, 'name' );
+
+		return implode( ', ', $names );
 	}
 }

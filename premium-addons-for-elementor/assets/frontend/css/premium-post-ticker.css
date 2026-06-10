@@ -1,13 +1,13 @@
 /************* Premium Post Ticker *************/
-/***********************************************/
-/**Basic CSS*/
+/**********************************************  */
+/** Basic CSS */
 .premium-post-ticker {
-	/**Stock*/
-	/**Layouts*/
-	/**Layout 1 */
-	/**Layout 2 */
-	/**Layout 3*/
-	/**Layout 4 - vertical ticker */
+	/** Stock */
+	/** Layouts */
+	/** Layout 1 */
+	/** Layout 2 */
+	/** Layout 3 */
+	/** Layout 4 - vertical ticker */
 }
 .premium-post-ticker__outer-wrapper,
 .premium-post-ticker__header-wrapper,
@@ -182,10 +182,9 @@
 	-webkit-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
 	-webkit-appearance: inherit;
-	border: none;
 	box-shadow: none;
 	padding: 0 5px;
-	border: 1px solid currentColor;
+	border: 1px solid currentcolor;
 	border-radius: 0;
 }
 .premium-post-ticker__hidden {
@@ -341,7 +340,7 @@
 	border-style: solid;
 }
 
-/**Typing Effect*/
+/** Typing Effect */
 .premium-typing-yes .premium-post-ticker__post-wrapper > div:first-child {
 	-webkit-order: 1;
 	-ms-flex-order: 1;
@@ -357,8 +356,8 @@
 	opacity: 1;
 }
 
-/**End of Typing Effect*/
-/**Reverse Effect*/
+/** End of Typing Effect */
+/** Reverse Effect */
 .premium-reversed-yes .premium-post-ticker__content {
 	-webkit-flex-direction: row-reverse;
 	-ms-flex-direction: row-reverse;
@@ -401,9 +400,9 @@
 	flex-direction: row-reverse;
 }
 
-/**End of Reverse Effect*/
-/*RTL Compatibility*/
-/*Layout Title Style*/
+/** End of Reverse Effect */
+/* RTL Compatibility */
+/* Layout Title Style */
 .rtl
 	.premium-post-ticker__layout-2.premium-reversed-yes
 	.premium-post-ticker__title-wrapper::after,
@@ -450,8 +449,8 @@ body:not(.rtl)
 	clip-path: polygon(34% 0%, 100% 0%, 100% 100%, 34% 100%, 0% 50%);
 }
 
-/*End of Layout Title Style*/
-/*Title Pointer*/
+/* End of Layout Title Style */
+/* Title Pointer */
 .rtl
 	.premium-reversed-yes.premium-ticker-pointer-yes:not(
 		.premium-post-ticker__layout-3
@@ -459,18 +458,20 @@ body:not(.rtl)
 	.premium-post-ticker__content
 	> div:first-child::after,
 body:not(.rtl)
-	.premium-ticker-pointer-yes:not(.premium-post-ticker__layout-3):not(
+	.premium-ticker-pointer-yes:not(
+		.premium-post-ticker__layout-3,
 		.premium-reversed-yes
 	)
 	.premium-post-ticker__content
 	> div:first-child::after {
 	left: 100%;
 	border-width: 8px 0 8px 7px;
-	border-color: transparent transparent transparent currentColor;
+	border-color: transparent transparent transparent currentcolor;
 }
 
 .rtl
-	.premium-ticker-pointer-yes:not(.premium-post-ticker__layout-3):not(
+	.premium-ticker-pointer-yes:not(
+		.premium-post-ticker__layout-3,
 		.premium-reversed-yes
 	)
 	.premium-post-ticker__content
@@ -483,10 +484,10 @@ body:not(.rtl)
 	> div:first-child::after {
 	left: -7px;
 	border-width: 8px 8px 7px 0;
-	border-color: transparent currentColor transparent transparent;
+	border-color: transparent currentcolor transparent transparent;
 }
 
-/*End of Title Pointer*/
+/* End of Title Pointer */
 .rtl
 	.elementor-widget-premium-post-ticker:not(.premium-post-ticker__layout-4)
 	.premium-post-ticker__arrows {
@@ -524,14 +525,14 @@ body:not(.rtl)
 	float: right;
 }
 
-/*LTR Compatibility for Post Title and Date when reverse option is enabled.*/
+/* LTR Compatibility for Post Title and Date when reverse option is enabled. */
 body:not(.rtl) .premium-reversed-yes .premium-post-ticker__post-title,
 body:not(.rtl) .premium-reversed-yes .premium-post-ticker__post-date {
 	direction: ltr;
 }
 
-/*End of RTL Compatibility*/
-/**Fade Color - Marquee Effect*/
+/* End of RTL Compatibility */
+/** Fade Color - Marquee Effect */
 .pa-infinite-ticker-yes.premium-post-ticker__layout-1
 	.premium-post-ticker__posts-wrapper,
 .pa-infinite-ticker-yes.premium-post-ticker__layout-2
@@ -573,4 +574,4 @@ body:not(.rtl) .premium-reversed-yes .premium-post-ticker__post-date {
 	z-index: 10;
 }
 
-/*End of Fade Color*/
+/* End of Fade Color */

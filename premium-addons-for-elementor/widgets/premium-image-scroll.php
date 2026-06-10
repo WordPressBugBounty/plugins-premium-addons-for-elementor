@@ -79,7 +79,7 @@ class Premium_Image_Scroll extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium image scroll', 'link', 'cta', 'animation' );
@@ -99,7 +99,7 @@ class Premium_Image_Scroll extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget Categories.
+	 * @return array Widget categories.
 	 */
 	public function get_categories() {
 		return array( 'premium-elements' );

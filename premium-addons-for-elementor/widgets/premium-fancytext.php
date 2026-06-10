@@ -122,7 +122,7 @@ class Premium_Fancytext extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium animated text', 'fancy', 'typing', 'headline', 'heading', 'animation' );
@@ -667,6 +667,22 @@ class Premium_Fancytext extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'highlight_loop_count',
+			array(
+				'label'       => __( 'Loop Count', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => __( 'Set how many times the animation loops. Leave empty for infinite.', 'premium-addons-for-elementor' ),
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-atext__text, {{WRAPPER}} .premium-atext__text::after, {{WRAPPER}} .premium-atext__letter, {{WRAPPER}} .text' => 'animation-iteration-count: {{VALUE}};',
+				),
+				'render_type' => 'template',
+				'condition'   => array(
+					'highlight_effect!' => 'underline',
+				),
+			)
+		);
+
 		do_action( 'pa_atext_highlight_controls', $this );
 
 		$this->add_control(
@@ -733,7 +749,7 @@ class Premium_Fancytext extends Widget_Base {
 			array(
 				'name'     => 'fancy_text_typography',
 				'label'    => __( 'Headline Typography', 'premium-addons-for-elementor' ),
-				'selector' => '{{WRAPPER}} .premium-atext__headline, {{WRAPPER}} .premium-atext__text svg g > text',
+				'selector' => '{{WRAPPER}} .premium-atext__headline',
 				'global'   => array(
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				),
@@ -750,7 +766,7 @@ class Premium_Fancytext extends Widget_Base {
 				),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-atext__text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .premium-fancy-svg-text .premium-fancy-list-items, {{WRAPPER}} .text' => 'fill : {{VALUE}};',
+					'{{WRAPPER}} .text'                => 'fill : {{VALUE}};',
 				),
 				'conditions' => array(
 					'relation' => 'or',
@@ -1125,7 +1141,6 @@ class Premium_Fancytext extends Widget_Base {
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'style'                     => 'switch',
-					// 'premium_fancy_text_cursor_text!' => '',
 					'premium_fancy_text_effect' => 'typing',
 				),
 			)
@@ -1210,7 +1225,7 @@ class Premium_Fancytext extends Widget_Base {
 				'global'   => array(
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				),
-				'exclude'  => array( 'font_size' ),
+				'exclude'  => array( 'font_size' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor group-control key excluding the font_size control, not a get_posts() query arg.
 			)
 		);
 
@@ -1312,8 +1327,6 @@ class Premium_Fancytext extends Widget_Base {
 
 				$show_cursor = ( ! empty( $settings['premium_fancy_text_show_cursor'] ) ) ? true : false;
 
-				// $cursor_text = addslashes( $settings['premium_fancy_text_cursor_text'] );
-
 				$loop = ! empty( $settings['premium_fancy_text_type_loop'] ) ? true : false;
 
 				$strings = array();
@@ -1324,7 +1337,6 @@ class Premium_Fancytext extends Widget_Base {
 					}
 				}
 
-				// $cursor_text    = html_entity_decode( $cursor_text );
 				$atext_settings = array(
 					'effect'     => $effect,
 					'strings'    => $strings,
@@ -1381,13 +1393,12 @@ class Premium_Fancytext extends Widget_Base {
 
 		} else {
 
-			$this->add_render_attribute( 'wrapper', 'class', 'premium-atext' );
-
 			$effect = $settings['highlight_effect'];
 
 			$atext_settings = array(
 				'effect' => $effect,
 				'style'  => $settings['style'],
+				'count'  => $settings['highlight_loop_count'],
 			);
 
 			$this->add_render_attribute(
@@ -1412,7 +1423,7 @@ class Premium_Fancytext extends Widget_Base {
 			<<?php echo wp_kses_post( $title_tag ); ?> class="premium-atext__headline">
 			<?php if ( ! empty( $settings['premium_fancy_prefix_text'] ) ) : ?>
 				<span class="premium-prefix-text">
-					<span <?php $this->print_render_attribute_string( 'prefix' ); ?>><?php echo wp_kses( ( $settings['premium_fancy_prefix_text'] ), true ); ?></span>
+					<span <?php $this->print_render_attribute_string( 'prefix' ); ?>><?php echo wp_kses_post( $settings['premium_fancy_prefix_text'] ); ?></span>
 				</span>
 			<?php endif; ?>
 
@@ -1426,7 +1437,7 @@ class Premium_Fancytext extends Widget_Base {
 
 			<?php if ( ! empty( $settings['premium_fancy_suffix_text'] ) ) : ?>
 				<span class="premium-suffix-text">
-					<span <?php $this->print_render_attribute_string( 'suffix' ); ?>><?php echo wp_kses( ( $settings['premium_fancy_suffix_text'] ), true ); ?></span>
+					<span <?php $this->print_render_attribute_string( 'suffix' ); ?>><?php echo wp_kses_post( $settings['premium_fancy_suffix_text'] ); ?></span>
 				</span>
 			<?php endif; ?>
 
@@ -1461,14 +1472,14 @@ class Premium_Fancytext extends Widget_Base {
 			?>
 			<span <?php $this->print_render_attribute_string( 'switch_text' ); ?>></span>
 		<?php else : ?>
-			<div <?php $this->print_render_attribute_string( 'switch_text' ); ?> style='display: inline-block; text-align: center'>
+			<div <?php $this->print_render_attribute_string( 'switch_text' ); ?>>
 				<ul class="premium-atext__items-wrapper">
 			<?php
 			foreach ( $settings['premium_fancy_text_strings'] as $index => $item ) :
 				if ( ! empty( $item['premium_text_strings_text_field'] ) ) :
 					$this->add_render_attribute( 'text_' . $item['_id'], 'class', 'premium-fancy-list-items' );
 
-					if ( ( 'typing' !== $effect && 'slide' !== $effect ) && 0 !== $index ) {
+					if ( 'slide' !== $effect && 0 !== $index ) {
 						$this->add_render_attribute( 'text_' . $item['_id'], 'class', 'premium-fancy-item-hidden' );
 					} else {
 						$this->add_render_attribute( 'text_' . $item['_id'], 'class', 'premium-fancy-item-visible' );

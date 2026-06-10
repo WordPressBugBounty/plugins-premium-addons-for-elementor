@@ -116,7 +116,7 @@ class Premium_Videobox extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium video box', 'youtube', 'vimeo', 'self', 'hosted', 'media', 'list', 'embed', 'dailymotion' );
@@ -648,10 +648,6 @@ class Premium_Videobox extends Widget_Base {
 				'label'     => esc_html__( 'Captions', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'condition' => array(
-					'video_type' => array( 'youtube' ),
-					'controls'   => 'yes',
-				),
-				'condition' => array(
 					'premium_video_box_controls'   => 'yes',
 					'premium_video_box_video_type' => 'youtube',
 				),
@@ -815,11 +811,17 @@ class Premium_Videobox extends Widget_Base {
 				'label'        => __( 'Position', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SELECT,
 				'options'      => array(
+					/* translators: %s: horizontal direction (Left/Right). */
 					'top-left'     => sprintf( __( 'Top %s', 'premium-addons-for-elementor' ), ucfirst( $left_direction ) ),
+					/* translators: %s: horizontal direction (Left/Right). */
 					'top-right'    => sprintf( __( 'Top %s', 'premium-addons-for-elementor' ), ucfirst( $right_direction ) ),
+					/* translators: %s: horizontal direction (Left/Right). */
 					'bottom-left'  => sprintf( __( 'Bottom %s', 'premium-addons-for-elementor' ), ucfirst( $left_direction ) ),
+					/* translators: %s: horizontal direction (Left/Right). */
 					'bottom-right' => sprintf( __( 'Bottom %s', 'premium-addons-for-elementor' ), ucfirst( $right_direction ) ),
+					/* translators: %s: horizontal direction (Left/Right). */
 					'center-left'  => sprintf( __( 'Center %s', 'premium-addons-for-elementor' ), ucfirst( $left_direction ) ),
+					/* translators: %s: horizontal direction (Left/Right). */
 					'center-right' => sprintf( __( 'Center %s', 'premium-addons-for-elementor' ), ucfirst( $right_direction ) ),
 				),
 				'default'      => 'bottom-left',
@@ -1500,9 +1502,6 @@ class Premium_Videobox extends Widget_Base {
 				'description' => __( 'Choose an image for the video box', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::MEDIA,
 				'dynamic'     => array( 'active' => true ),
-				// 'default'     => array(
-				// 'url' => Utils::get_placeholder_image_src(),
-				// ),
 				'label_block' => true,
 			)
 		);
@@ -2010,9 +2009,6 @@ class Premium_Videobox extends Widget_Base {
 			array(
 				'label'     => __( 'Hover Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				// 'global'    => array(
-				// 'default' => Global_Colors::COLOR_SECONDARY,
-				// ),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-video-box-play-icon-container:hover i'  => 'color: {{VALUE}};',
 					'{{WRAPPER}} .premium-video-box-play-icon-container:hover svg'  => 'fill: {{VALUE}};',
@@ -2795,6 +2791,10 @@ class Premium_Videobox extends Widget_Base {
 		$loop = $settings['premium_video_box_loop'];
 
 		$controls = $settings['premium_video_box_controls'];
+
+		$hosted_url = '';
+		$link       = '';
+		$options    = '';
 
 		if ( 'self' === $video_type ) {
 
@@ -3723,7 +3723,7 @@ class Premium_Videobox extends Widget_Base {
 			return false;
 		}
 
-		if ( empty( $api_key ) || ( empty( $settings['playlist_id'] ) && empty( $settings['channel_id'] ) ) ) {
+		if ( empty( $settings['playlist_id'] ) && empty( $settings['channel_id'] ) ) {
 			?>
 			<div class="premium-error-notice">
 				<?php echo esc_html__( 'Please Enter a Valid API Key & Channel/Playlist ID', 'premium-addons-for-elementor' ); ?>
@@ -3747,7 +3747,7 @@ class Premium_Videobox extends Widget_Base {
 
 		if ( false === $response_json ) {
 
-			$api_response = wp_remote_get( $api_url );
+			$api_response = wp_remote_get( $api_url ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_remote_get_wp_remote_get -- Core HTTP API; plugin is not VIP-hosted and vip_safe_wp_remote_get() is unavailable.
 
 			$response_json = wp_remote_retrieve_body( $api_response );
 			$response_json = json_decode( $response_json );

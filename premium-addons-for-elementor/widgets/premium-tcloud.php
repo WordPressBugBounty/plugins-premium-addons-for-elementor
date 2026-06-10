@@ -137,7 +137,7 @@ class Premium_Tcloud extends Widget_Base {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return string Widget keywords.
+	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
 		return array( 'pa', 'premium', 'premium tags cloud', 'tag', 'cat', 'product', 'woo', 'query', 'cpt' );
@@ -1048,7 +1048,7 @@ class Premium_Tcloud extends Widget_Base {
 	 *
 	 * @access private
 	 *
-	 * @return object $taxs taxonomies.
+	 * @return array $taxs taxonomies.
 	 */
 	private function get_taxs( $term ) {
 

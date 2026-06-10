@@ -1321,11 +1321,6 @@ class Premium_Testimonials extends Widget_Base {
 				'label'      => __( 'Top Icon Position', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
-				// 'default'    => array(
-				// 'top'  => 0,
-				// 'left' => 12,
-				// 'unit' => 'px',
-				// ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-testimonial-upper-quote' => 'top: {{TOP}}{{UNIT}}; left:{{LEFT}}{{UNIT}};',
 				),
@@ -1341,11 +1336,6 @@ class Premium_Testimonials extends Widget_Base {
 				'label'      => __( 'Bottom Icon Position', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
-				// 'default'    => array(
-				// 'bottom' => 3,
-				// 'right'  => 12,
-				// 'unit'   => 'px',
-				// ),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-testimonial-lower-quote' => 'right: {{RIGHT}}{{UNIT}}; bottom: {{BOTTOM}}{{UNIT}};',
 				),
@@ -1362,10 +1352,6 @@ class Premium_Testimonials extends Widget_Base {
 			array(
 				'label'      => __( 'Carousel Arrows', 'premium-addons-for-elementor' ),
 				'tab'        => Controls_Manager::TAB_STYLE,
-				// 'condition' => array(
-				// 'carousel' => 'yes',
-				// 'skin!'    => 'skin4',
-				// ),
 				'conditions' => array(
 					'terms' => array(
 						array(
@@ -1821,9 +1807,10 @@ class Premium_Testimonials extends Widget_Base {
 			$this->add_inline_editing_attributes( 'heading' );
 			$this->add_inline_editing_attributes( 'premium_testimonial_content', 'advanced' );
 
-			if ( 'yes' === $show_image ) {
+			$image_src = '';
+			$alt       = '';
 
-				$image_src = '';
+			if ( 'yes' === $show_image ) {
 
 				if ( ! empty( $settings['premium_testimonial_person_image']['url'] ) ) {
 					$image_src = $settings['premium_testimonial_person_image']['url'];
@@ -1842,7 +1829,6 @@ class Premium_Testimonials extends Widget_Base {
 			$testimonials = $settings['multiple_testimonials'];
 
 			$this->add_render_attribute( 'testimonials_container', 'class', 'multiple-testimonials' );
-			// $this->add_render_attribute( 'testimonials_container', 'data-testimonials-equal', $settings['multiple_equal_height'] );
 
 		}
 
@@ -1854,7 +1840,7 @@ class Premium_Testimonials extends Widget_Base {
 
 		if ( $carousel ) {
 
-			$this->add_render_attribute( 'testimonials_container', 'data-carousel', $carousel );
+			$this->add_render_attribute( 'testimonials_container', 'data-carousel', 'true' );
 
 			$this->add_render_attribute(
 				'testimonials_container',
@@ -1874,8 +1860,8 @@ class Premium_Testimonials extends Widget_Base {
 
 			foreach ( $testimonials as $index => $testimonial ) {
 
-				$testionial_image_html = $this->get_author_image( $testimonial );
-				$images_markup        .= '<div class="premium-testimonial__carousel-img premium-testimonial-img-wrapper" data-index="' . $index . '">' . $testionial_image_html . '</div>';
+				$testimonial_image_html = $this->get_author_image( $testimonial );
+				$images_markup         .= '<div class="premium-testimonial__carousel-img premium-testimonial-img-wrapper" data-index="' . $index . '">' . $testimonial_image_html . '</div>';
 			}
 
 			echo '<div class="premium-testimonial__carousel">' . wp_kses_post( $images_markup ) . '</div>';
@@ -1912,7 +1898,7 @@ class Premium_Testimonials extends Widget_Base {
 
 						<?php if ( ! empty( $settings['rating'] ) ) : ?>
 							<div class="premium-testimonial__rating-wrapper">
-								<?php echo Helper_Functions::render_rating_stars( $settings['rating'], $settings['fill'], $settings['empty'], $settings['star_size'] ); ?>
+								<?php Helper_Functions::render_rating_stars( $settings['rating'], $settings['fill'], $settings['empty'], $settings['star_size'] ); ?>
 							</div>
 						<?php endif; ?>
 
@@ -1977,7 +1963,7 @@ class Premium_Testimonials extends Widget_Base {
 				foreach ( $testimonials as $index => $testimonial ) :
 
 					if ( 'yes' === $show_image ) {
-						$testionial_image_html = $this->get_author_image( $testimonial );
+						$testimonial_image_html = $this->get_author_image( $testimonial );
 					}
 
 					if ( 'yes' === $testimonial['link_switcher'] ) {
@@ -2014,7 +2000,7 @@ class Premium_Testimonials extends Widget_Base {
 
 							<?php if ( ! empty( $testimonial['rating'] ) ) : ?>
 								<div class="premium-testimonial__rating-wrapper">
-									<?php echo Helper_Functions::render_rating_stars( $testimonial['rating'], $settings['fill'], $settings['empty'], $settings['star_size'] ); ?>
+									<?php Helper_Functions::render_rating_stars( $testimonial['rating'], $settings['fill'], $settings['empty'], $settings['star_size'] ); ?>
 								</div>
 							<?php endif; ?>
 
@@ -2023,9 +2009,9 @@ class Premium_Testimonials extends Widget_Base {
 							<?php endif; ?>
 
 								<?php if ( 'skin4' !== $settings['skin'] ) : ?>
-									<?php if ( ! empty( $testionial_image_html ) ) : ?>
+									<?php if ( ! empty( $testimonial_image_html ) ) : ?>
 										<div <?php $this->print_render_attribute_string( 'img_wrap' ); ?>>
-											<?php echo wp_kses_post( $testionial_image_html ); ?>
+											<?php echo wp_kses_post( $testimonial_image_html ); ?>
 										</div>
 									<?php endif; ?>
 								<?php endif; ?>
@@ -2114,18 +2100,18 @@ class Premium_Testimonials extends Widget_Base {
 	 */
 	protected function get_author_image( $testimonial ) {
 
-		$testionial_image_html = '';
+		$testimonial_image_html = '';
 		if ( ! empty( $testimonial['person_image']['url'] ) ) {
 
 			$image_src = $testimonial['person_image']['url'];
-			$image_id  = attachment_url_to_postid( $image_src );
+			$image_id  = attachment_url_to_postid( $image_src ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.attachment_url_to_postid_attachment_url_to_postid -- Core fn; wpcom_vip_attachment_url_to_postid() only exists on WP VIP.
 
 			$settings['image_data'] = Helper_Functions::get_image_data( $image_id, $testimonial['person_image']['url'], 'thumbnail' );
-			$testionial_image_html  = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image_data' );
+			$testimonial_image_html = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image_data' );
 
 		}
 
-		return $testionial_image_html;
+		return $testimonial_image_html;
 	}
 
 	/**
