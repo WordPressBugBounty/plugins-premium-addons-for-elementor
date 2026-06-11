@@ -31,14 +31,14 @@ class Display_Conditions {
 	/**
 	 * Load Script
 	 *
-	 * @var $load_script
+	 * @var bool|null
 	 */
 	private static $load_script = null;
 
 	/**
 	 * Class object
 	 *
-	 * @var instance
+	 * @var self|null
 	 */
 	private static $instance = null;
 
@@ -362,8 +362,6 @@ class Display_Conditions {
 			$this->enqueue_scripts();
 
 			self::$load_script = true;
-
-			// remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 		}
 	}
 

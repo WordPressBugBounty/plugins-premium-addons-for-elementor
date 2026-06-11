@@ -39,14 +39,14 @@ class Tooltips {
 	/**
 	 * Load Script
 	 *
-	 * @var $load_script
+	 * @var bool|null
 	 */
 	private static $load_script = null;
 
 	/**
 	 * Class object
 	 *
-	 * @var instance
+	 * @var self|null
 	 */
 	private static $instance = null;
 
@@ -136,7 +136,7 @@ class Tooltips {
 	 */
 	public function register_controls( $element ) {
 
-		$tab = ! in_array( $element->get_name(), array( 'common', 'common-optimized' ) ) ? Controls_Manager::TAB_LAYOUT : Controls_Manager::TAB_CONTENT;
+		$tab = ! in_array( $element->get_name(), array( 'common', 'common-optimized' ), true ) ? Controls_Manager::TAB_LAYOUT : Controls_Manager::TAB_CONTENT;
 
 		$element->start_controls_section(
 			'section_premium_global_tooltip',
@@ -935,7 +935,7 @@ class Tooltips {
 	 * @since 2.2.8
 	 * @access public
 	 *
-	 * @param object $template for current template.
+	 * @param string $template for current template.
 	 * @param object $element for current element.
 	 */
 	public function print_template( $template, $element ) {
@@ -1109,7 +1109,7 @@ class Tooltips {
 
 		$elem_id = $element->get_id();
 
-		$id = apply_filters( 'pa_tooltips_dynamic', false ) ? rand( 0, 1000 ) : $elem_id;
+		$id = apply_filters( 'pa_tooltips_dynamic', false ) ? wp_rand( 0, 1000 ) : $elem_id;
 
 		$settings = $element->get_settings_for_display();
 
@@ -1168,13 +1168,13 @@ class Tooltips {
 
 							case 'lottie':
 								$lottie = array(
-									'url'     => esc_url( $settings['premium_tooltip_lottie_url'] ),
+									'url'     => $settings['premium_tooltip_lottie_url'],
 									'loop'    => $settings['premium_tooltip_lottie_loop'],
 									'reverse' => $settings['premium_tooltip_lottie_reverse'],
 								);
 
 								?>
-									<div class="premium-lottie-animation premium-tooltip-lottie" data-lottie-url="<?php echo esc_attr( $lottie['url'] ); ?>" data-lottie-loop="<?php echo esc_attr( $lottie['loop'] ); ?>" data-lottie-reverse="<?php echo esc_attr( $lottie['reverse'] ); ?>"></div>
+									<div class="premium-lottie-animation premium-tooltip-lottie" data-lottie-url="<?php echo esc_url( $lottie['url'] ); ?>" data-lottie-loop="<?php echo esc_attr( $lottie['loop'] ); ?>" data-lottie-reverse="<?php echo esc_attr( $lottie['reverse'] ); ?>"></div>
 									<?php
 								break;
 

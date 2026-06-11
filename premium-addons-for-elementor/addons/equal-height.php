@@ -33,14 +33,14 @@ class Equal_Height {
 	/**
 	 * Load Script
 	 *
-	 * @var $load_script
+	 * @var bool|null
 	 */
 	private static $load_script = null;
 
 	/**
 	 * Class object
 	 *
-	 * @var instance
+	 * @var self|null
 	 */
 	private static $instance = null;
 
@@ -55,7 +55,7 @@ class Equal_Height {
 		// Create Premium Equal Height tab at the end of section layout tab.
 		add_action( 'elementor/element/section/section_advanced/after_section_end', array( $this, 'register_controls' ), 10 );
 
-		add_action( 'elementor/section/print_template', array( $this, '_print_template' ), 10, 2 );
+		add_action( 'elementor/section/print_template', array( $this, 'print_template' ), 10, 1 );
 
 		// Insert data before section rendering.
 		add_action( 'elementor/frontend/section/before_render', array( $this, 'before_render' ), 10, 1 );
@@ -64,7 +64,7 @@ class Equal_Height {
 		add_action( 'elementor/frontend/section/before_render', array( $this, 'check_script_enqueue' ) );
 
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-		add_action( 'elementor/container/print_template', array( $this, '_print_template' ), 10, 2 );
+		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 1 );
 		add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ), 100, 1 );
 		add_action( 'elementor/frontend/container/before_render', array( $this, 'check_script_enqueue' ) );
 	}
@@ -231,10 +231,9 @@ class Equal_Height {
 	 *
 	 * @since 4.2.5
 	 * @access public
-	 * @param object $template for current template.
-	 * @param object $element for current element.
+	 * @param string $template for current template.
 	 */
-	public function _print_template( $template, $element ) {
+	public function print_template( $template ) {
 
 		$old_template = $template;
 		ob_start();

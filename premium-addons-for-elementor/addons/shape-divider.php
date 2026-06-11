@@ -38,16 +38,9 @@ class Shape_Divider {
 	/**
 	 * Holds the singleton instance of this class.
 	 *
-	 * @var Module|null
+	 * @var self|null
 	 */
 	private static $instance = null;
-
-	/**
-	 * Holds the SVG shapes data for the module.
-	 *
-	 * @var mixed|null $svg_shapes Stores SVG shapes, initialized as null.
-	 */
-	private $svg_shapes = null;
 
 	/**
 	 * Check if Premium Addons Pro is activated.
@@ -72,8 +65,8 @@ class Shape_Divider {
 		add_action( 'elementor/element/column/section_advanced/after_section_end', array( $this, 'register_controls' ), 10 );
 
 		// Editor Hooks.
-		add_action( 'elementor/section/print_template', array( $this, 'print_template' ), 10, 2 );
-		add_action( 'elementor/column/print_template', array( $this, 'print_template' ), 10, 2 );
+		add_action( 'elementor/section/print_template', array( $this, 'print_template' ), 10, 1 );
+		add_action( 'elementor/column/print_template', array( $this, 'print_template' ), 10, 1 );
 
 		// Frontend Hooks.
 		add_action( 'elementor/frontend/section/before_render', array( $this, 'before_render' ) );
@@ -82,7 +75,7 @@ class Shape_Divider {
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
-		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 2 );
+		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 1 );
 		add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
 
 		add_action( 'wp_ajax_get_shape_divider_svg', array( $this, 'get_shape_divider_svg' ) );
@@ -425,7 +418,6 @@ class Shape_Divider {
 				),
 				'condition' => array(
 					'premium_global_divider_sw' => 'yes',
-					// 'premium_gdivider_animate!' => 'yes',
 				),
 			)
 		);
@@ -733,10 +725,9 @@ class Shape_Divider {
 	 * @since 2.2.8
 	 * @access public
 	 *
-	 * @param object $template for current template.
-	 * @param object $element for current element.
+	 * @param string $template for current template.
 	 */
-	public function print_template( $template, $element ) {
+	public function print_template( $template ) {
 
 		$old_template = $template;
 		ob_start();
@@ -1063,7 +1054,7 @@ class Shape_Divider {
 			wp_send_json_error( 'No shape selected' );
 		}
 
-		$shape = isset( $_POST['shape'] ) ? sanitize_text_field( wp_unslash( $_POST['shape'] ) ) : '';
+		$shape = sanitize_text_field( wp_unslash( $_POST['shape'] ) );
 
 		$svg_shape = Helper_Functions::get_svg_shapes( $shape );
 
