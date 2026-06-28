@@ -144,7 +144,7 @@ class Query_Helper {
 
 		if ( ! empty( $settings['premium_blog_posts_exclude'] ) && 'post' === $post_type ) {
 
-			if ( 'post__in' === $settings['posts_filter_rule'] ) {
+			if ( 'premium-search-form' !== $settings['widget_type'] && 'post__in' === $settings['posts_filter_rule'] ) {
 				$post_args['post__in'] = $settings['premium_blog_posts_exclude'];
 			} else {
 				$excluded_posts = $settings['premium_blog_posts_exclude'];

@@ -1005,7 +1005,7 @@ class Helper_Functions {
 			if ( false === $location_data ) {
 
 				$response = wp_remote_get(
-					'https://api.findip.net/' . $ip_address . '/?token=e21d68c353324af0af206c907e77ff97',
+					'https://api.findip.net/' . $ip_address . '/?token=e6624afe9983128700bc94e55d5227cb',
 					array(
 						'timeout'   => 15,
 						'sslverify' => true,
@@ -2244,10 +2244,28 @@ class Helper_Functions {
 				'class'     => array(),
 				'id'        => array(),
 				'style'     => array(),
+				'clip-path' => array(),
 			),
 			'defs'     => array(
 				'class' => array(),
 				'id'    => array(),
+			),
+			'clippath' => array(
+				'class' => array(),
+				'id'    => array(),
+			),
+			'image'    => array(
+				'x'                   => array(),
+				'y'                   => array(),
+				'width'               => array(),
+				'height'              => array(),
+				'href'                => array(),
+				'xlink:href'          => array(),
+				'preserveaspectratio' => array(),
+				'opacity'             => array(),
+				'class'               => array(),
+				'id'                  => array(),
+				'style'               => array(),
 			),
 			'text'     => array(
 				'x'           => array(),
@@ -2275,7 +2293,44 @@ class Helper_Functions {
 			'desc'     => array(),
 		);
 
-		return wp_kses( $svg, $allowed_tags );
+		// SVG presentation properties are not on WordPress' safe_style_css
+		// allow-list, so wp_kses() would strip them out of inline style
+		// attributes (e.g. fill:none, stroke-width) and break SVGs exported
+		// by Illustrator/Affinity/Boxy SVG. Allow them for this call only.
+		$svg_css_props = array(
+			'fill',
+			'fill-rule',
+			'fill-opacity',
+			'stroke',
+			'stroke-width',
+			'stroke-linecap',
+			'stroke-linejoin',
+			'stroke-miterlimit',
+			'stroke-dasharray',
+			'stroke-dashoffset',
+			'stroke-opacity',
+			'clip-rule',
+			'color',
+			'opacity',
+			'stop-color',
+			'stop-opacity',
+			'vector-effect',
+			'paint-order',
+			'transform',
+			'transform-origin',
+		);
+
+		$allow_svg_css = function ( $styles ) use ( $svg_css_props ) {
+			return array_merge( $styles, $svg_css_props );
+		};
+
+		add_filter( 'safe_style_css', $allow_svg_css );
+
+		$sanitized = wp_kses( $svg, $allowed_tags );
+
+		remove_filter( 'safe_style_css', $allow_svg_css );
+
+		return $sanitized;
 	}
 
 	/**

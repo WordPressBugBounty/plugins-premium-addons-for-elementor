@@ -29,6 +29,8 @@
 					}
 				});
 			}
+		} else {
+			var searchTarget = settings.target || ".e-con";
 		}
 
 		if ("onpage" === buttonAction) {
@@ -37,18 +39,18 @@
 			$search.on("keyup", function () {
 				var searchQuery = $search.val();
 
-				//Hide the current query everytime a keyboard is clicked. But only if query string is changed.
+				//Hide the current query every time a keyboard is clicked. But only if query string is changed.
 				if (searchQuery !== lastSearchQuery && "post" === queryType)
 					$resultsContainer.html("").addClass("query-hidden");
 
 				if ("" === searchQuery) {
-					var $textElems = $(settings.target).find(
-						"li,h1,h2,h3,h4,h5,h6,p,span,i",
-					);
+					var $textElems = $(searchTarget)
+						.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
+						.not(".elementor-element-overlay *");
 					$textElems.css("filter", "blur(0px)");
 
 					var $fadeElems = $(settings.fadeout_target).find(
-						"li,h1,h2,h3,h4,h5,h6,p,span,i",
+						"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
 					);
 					$fadeElems.css("opacity", "1");
 				}
@@ -200,19 +202,21 @@
 							});
 						}
 					} else {
-						var $textElems = $(settings.target).find(
-								"li,h1,h2,h3,h4,h5,h6,p,span,i",
-							),
+						var effect = settings.effect || "blur_highlight";
+
+						// Restore the previous query's highlights before re-scanning.
+						clearHighlights();
+
+						var $textElems = $(searchTarget)
+								.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
+								.not(".elementor-element-overlay *"),
 							$fadeElems = $(settings.fadeout_target).find(
-								"li,h1,h2,h3,h4,h5,h6,p,span,i",
+								"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
 							);
 
 						$textElems.css("transition", "filter 0.3s ease-in-out");
 						$fadeElems.css("transition", "opacity 0.3s ease-in-out");
 
-						$textElems
-							.find(".pa-highlighted-text-" + widgetID)
-							.removeClass("pa-highlighted-text-" + widgetID);
 						$textElems.css("filter", "blur(0px)");
 						$fadeElems.css("opacity", "1");
 
@@ -224,43 +228,27 @@
 								return $(this).text().toLowerCase().indexOf(searchQuery) == -1;
 							});
 
-							$queriedElems.css("filter", "blur(3px)");
-							$fadeElems.css("opacity", "0.4");
+							if ("blur" === effect || "blur_highlight" === effect) {
+								$queriedElems.css("filter", "blur(3px)");
+								$fadeElems.css("opacity", "0.4");
+							}
 
-							if (highlightColor) {
+							if (
+								("highlight" === effect || "blur_highlight" === effect) &&
+								highlightColor
+							) {
 								var $matchedElems = $textElems.filter(function () {
 									return (
 										$(this).text().toLowerCase().indexOf(searchQuery) !== -1
 									);
 								});
 
-								$matchedElems.map(function (index, textElem) {
-									if (
-										$(this).is(":visible") &&
-										"LI" !== $(this).prop("tagName")
-									) {
-										textElem = $(this).text().toLowerCase();
-
-										textElem = textElem.replace(
-											new RegExp(searchQuery, "g"),
-											'<span class="pa-highlighted-text pa-highlighted-text-' +
-												widgetID +
-												'">' +
-												searchQuery +
-												"</span>",
-										);
-
-										$(this).html(textElem);
+								$matchedElems.each(function () {
+									if ($(this).is(":visible") && "LI" !== this.tagName) {
+										highlightMatches(this, searchQuery);
 									}
 								});
 							}
-						} else {
-							$textElems.css("filter", "blur(0px)");
-
-							$textElems
-								.find(".pa-highlighted-text-" + widgetID)
-								.removeClass("pa-highlighted-text-" + widgetID);
-							$fadeElems.css("opacity", "1");
 						}
 					}
 
@@ -282,6 +270,71 @@
 			var maxHeight = Math.max.apply(null, heights);
 
 			$contentWrapper.css("height", maxHeight + "px");
+		}
+
+		function clearHighlights() {
+			$(searchTarget)
+				.find(".pa-highlighted-text-" + widgetID)
+				.each(function () {
+					var parent = this.parentNode;
+
+					parent.replaceChild(document.createTextNode(this.textContent), this);
+					parent.normalize();
+				});
+		}
+
+		function highlightMatches(elem, query) {
+			if ("" === query) {
+				return;
+			}
+
+			var nodes = elem.childNodes;
+
+			for (var i = 0; i < nodes.length; i++) {
+				var node = nodes[i];
+
+				if (3 !== node.nodeType) {
+					continue;
+				}
+
+				var text = node.nodeValue,
+					lower = text.toLowerCase(),
+					index = lower.indexOf(query);
+
+				if (-1 === index) {
+					continue;
+				}
+
+				var frag = document.createDocumentFragment(),
+					cursor = 0;
+
+				while (-1 !== index) {
+					if (index > cursor) {
+						frag.appendChild(
+							document.createTextNode(text.slice(cursor, index)),
+						);
+					}
+
+					var span = document.createElement("span");
+
+					span.className =
+						"pa-highlighted-text pa-highlighted-text-" + widgetID;
+					span.textContent = text.slice(index, index + query.length);
+					frag.appendChild(span);
+
+					cursor = index + query.length;
+					index = lower.indexOf(query, cursor);
+				}
+
+				if (cursor < text.length) {
+					frag.appendChild(document.createTextNode(text.slice(cursor)));
+				}
+
+				var inserted = frag.childNodes.length;
+
+				elem.replaceChild(frag, node);
+				i += inserted - 1;
+			}
 		}
 
 		function getSlickSettings() {
@@ -399,6 +452,13 @@
 	};
 
 	$(window).on("elementor/frontend/init", function () {
+		if (
+			"undefined" !== typeof paElementsHandler &&
+			paElementsHandler.isElementAlreadyExists("paSearch")
+		) {
+			return false;
+		}
+
 		elementorFrontend.hooks.addAction(
 			"frontend/element_ready/premium-search-form.default",
 			PremiumSearchHandler,

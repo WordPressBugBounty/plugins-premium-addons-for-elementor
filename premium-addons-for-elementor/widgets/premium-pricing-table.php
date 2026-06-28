@@ -1094,6 +1094,32 @@ class Premium_Pricing_Table extends Widget_Base {
 			)
 		);
 
+		$repeater->add_responsive_control(
+			'tooltip_pos',
+			array(
+				'label'     => __( 'Position', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'bottom: calc(100% + 1px); top: unset;' => array(
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-arrow-up',
+					),
+					'top:calc(100% + 1px); bottom:unset;' => array(
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-arrow-down',
+					),
+				),
+				'default'   => 'top:calc(100% + 1px); bottom:unset;',
+				'toggle'    => false,
+				'selectors' => array(
+					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-pricing-list-tooltip' => '{{VALUE}}',
+				),
+				'condition' => array(
+					'premium_pricing_table_item_tooltip' => 'yes',
+				),
+			)
+		);
+
 		$repeater->add_control(
 			'list_item_icon_color',
 			array(
@@ -1268,6 +1294,33 @@ class Premium_Pricing_Table extends Widget_Base {
 					'{{WRAPPER}} .premium-pricing-list .premium-pricing-list-item' => 'justify-content: {{VALUE}}',
 				),
 				'default'              => 'center',
+			)
+		);
+
+		$this->add_responsive_control(
+			'featured_list_v_align',
+			array(
+				'label'     => __( 'Vertical Alignment', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'flex-start' => array(
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-arrow-up',
+					),
+					'center'     => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-middle',
+					),
+					'flex-end'   => array(
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-arrow-down',
+					),
+				),
+				'default'   => 'center',
+				'toggle'    => false,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-pricing-list-item' => 'align-items: {{VALUE}}',
+				),
 			)
 		);
 

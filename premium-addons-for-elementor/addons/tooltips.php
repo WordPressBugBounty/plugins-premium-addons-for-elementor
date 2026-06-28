@@ -981,7 +981,8 @@ class Tooltips {
 									case 'text':
 										#>
 										<span class="premium-tootltip-text">
-											{{{settings.premium_tooltip_text}}}
+											
+											{{{ elementor.helpers.sanitize( settings.premium_tooltip_text ) }}}
 											<#
 												if ( 'yes' === settings.premium_tooltip_icon_switcher ) {
 													var tooltipIconHTML = elementor.helpers.renderIcon( view, settings.premium_tooltip_icon, { 'aria-hidden': true }, 'i' , 'object');

@@ -179,6 +179,31 @@ class Premium_Maps extends Widget_Base {
 		}
 
 		$this->add_control(
+			'map_id_notice',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => sprintf(
+					/* translators: %s: Google Maps "Map ID" documentation link. */
+					esc_html__( 'To prevent having console errors/warnings, get the Google Map ID from %s. You can leave it empty, but this will use the old Google Maps API.', 'premium-addons-for-elementor' ),
+					'<a href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" target="_blank">' . esc_html__( 'here', 'premium-addons-for-elementor' ) . '</a>'
+				),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			)
+		);
+
+		$this->add_control(
+			'premium_map_id',
+			array(
+				'label'       => __( 'Map ID', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'label_block' => true,
+				'ai'          => array(
+					'active' => false,
+				),
+			)
+		);
+
+		$this->add_control(
 			'premium_map_ip_location',
 			array(
 				'label'        => __( 'Get User Location', 'premium-addons-for-elementor' ),
@@ -471,22 +496,6 @@ class Premium_Maps extends Widget_Base {
 			'premium_maps_controls_section',
 			array(
 				'label' => __( 'Controls', 'premium-addons-for-elementor' ),
-			)
-		);
-
-		$this->add_control(
-			'premium_map_id',
-			array(
-				'label'       => __( 'Map ID', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::TEXT,
-				'description' => sprintf(
-					/* translators: %s: Google Maps "Map ID" documentation link. */
-					esc_html__( 'Get the Google Map ID from %s. You can leave it empty, but this will use the old Google Maps API.', 'premium-addons-for-elementor' ),
-					'<a href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" target="_blank">' . esc_html__( 'here', 'premium-addons-for-elementor' ) . '</a>'
-				),
-				'ai'          => array(
-					'active' => false,
-				),
 			)
 		);
 

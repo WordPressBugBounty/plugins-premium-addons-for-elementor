@@ -15,6 +15,10 @@
   transform: none !important;
   opacity: 1;
 }
+.premium-search__spinner {
+  position: absolute;
+  inset-inline-end: 5px;
+}
 .premium-search__spinner .premium-loading-feed {
   display: block !important;
   position: relative !important;
@@ -70,10 +74,6 @@
 .premium-search__btn-wrap {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-}
-.premium-search__spinner {
-  position: absolute;
-  inset-inline-end: 5px;
 }
 .premium-search__remove-wrap {
   position: absolute;
@@ -172,7 +172,6 @@
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   width: 100%;
-  overflow-y: scroll;
 }
 .premium-search__results-number {
   width: 100%;
@@ -314,19 +313,20 @@
   padding: 30px;
 }
 .premium-search__skin-banner .premium-search__post-wrap:hover .premium-search__post-content {
-  bottom: 0px;
+  bottom: 0;
 }
-.premium-search__arrow-top a.carousel-arrow {
+.premium-search__arrow-top .premium-search__query-wrap a.carousel-arrow {
   top: 0;
 }
-.premium-search__arrow-middle a.carousel-arrow {
+.premium-search__arrow-middle .premium-search__query-wrap a.carousel-arrow {
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   text-decoration: none;
 }
-.premium-search__arrow-bottom a.carousel-arrow {
+.premium-search__arrow-bottom .premium-search__query-wrap a.carousel-arrow {
+  top: auto;
   bottom: 0;
 }
 .premium-search__effect-zoomout img, .premium-search__effect-scale img {
@@ -356,9 +356,9 @@
   transform: translateX(-15px) scale(1.1);
 }
 .premium-search__effect-trans .premium-search__post-wrap:hover img {
-  -webkit-transform: translateX(0px) scale(1.1);
-  -ms-transform: translateX(0px) scale(1.1);
-  transform: translateX(0px) scale(1.1);
+  -webkit-transform: translateX(0) scale(1.1);
+  -ms-transform: translateX(0) scale(1.1);
+  transform: translateX(0) scale(1.1);
 }
 .premium-search__effect-zoomin .premium-search__post-wrap:hover img {
   -webkit-transform: scale(1.2);
@@ -409,10 +409,10 @@
 .premium-search-anim-yes .premium-search__input-wrap::after {
   display: block;
   position: absolute;
-  width: 0px;
+  width: 0;
   height: 2px;
   content: "";
-  bottom: 0px;
+  bottom: 0;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 }
@@ -460,6 +460,7 @@
 }
 
 .pa-highlighted-text {
+  display: inline !important;
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -467,7 +468,7 @@
 /**
 * Responsive Style
 */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .premium-search__container:not(.premium-search__skin-banner) .premium-search__post-content {
     top: 0;
     margin: 0;

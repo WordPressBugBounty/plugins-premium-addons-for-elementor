@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.82
+Stable Tag: 4.11.83
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -255,6 +255,24 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.83 - 28/6/2026 =
+
+- Tweak: Added blur/highlight text effect option in Search Form widget.
+- Tweak: Added Navigation Arrows Custom Vertical Position option in Search Form widget.
+- Tweak: Search now applies on the entire page when CSS Selector is not set in Search Form widget.
+- Tweak: Added Vertical Alignment and Tooltip Position options in Pricing Table widget.
+- Tweak: Improved Map ID control placement in Maps widget.
+- Tweak: Global addons code refactored for better performance and security.
+- Fixed: IP Location Display Condition not working.
+- Fixed: Google Maps not working when Get User Location is enabled.
+- Fixed: Custom SVGs containing image and clip-path tags not rendered.
+- Fixed: Animated SVG line height not working in Modal Box widget.
+- Fixed: Feature list icon size decreasing in small spaces in Pricing Table widget.
+- Fixed: Minimal Mask effect overriding focused word styling in Heading widget.
+- Fixed: Glitch effect not working correctly on focused word in Heading widget.
+- Fixed: Improved code security enforcement in Global Tooltips.
+- Deprecated: Filter By Post Rule option in Search Form widget.
 
 = 4.11.82 - 11/6/2026 =
 

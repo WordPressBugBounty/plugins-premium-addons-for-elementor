@@ -615,7 +615,7 @@ class Premium_Modalbox extends Widget_Base {
 				'type'      => Controls_Manager::SLIDER,
 				'selectors' => array(
 					'{{WRAPPER}} .premium-modal-trigger-btn i' => 'font-size: {{SIZE}}px',
-					'{{WRAPPER}} .premium-modal-trigger-btn svg' => 'width: {{SIZE}}px !important; height: {{SIZE}}px !important',
+					'{{WRAPPER}} .premium-modal-trigger-btn svg:not(.premium-btn-svg)' => 'width: {{SIZE}}px !important; height: {{SIZE}}px !important',
 				),
 				'condition' => array(
 					'premium_modal_box_display_on'    => 'button',
@@ -651,7 +651,7 @@ class Premium_Modalbox extends Widget_Base {
 					'icon_type'                       => 'svg',
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-modal-trigger-btn svg' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-modal-trigger-btn svg:not(.premium-btn-svg)' => 'width: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -678,7 +678,7 @@ class Premium_Modalbox extends Widget_Base {
 					'icon_type'                       => 'svg',
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-modal-trigger-btn svg' => 'height: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .premium-modal-trigger-btn svg:not(.premium-btn-svg)' => 'height: {{SIZE}}{{UNIT}}',
 				),
 			)
 		);
@@ -698,7 +698,7 @@ class Premium_Modalbox extends Widget_Base {
 						'size' => 15,
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-modal-trigger-btn i, {{WRAPPER}} .premium-modal-trigger-btn svg' => 'margin-right: {{SIZE}}px',
+						'{{WRAPPER}} .premium-modal-trigger-btn i, {{WRAPPER}} .premium-modal-trigger-btn svg:not(.premium-btn-svg)' => 'margin-right: {{SIZE}}px',
 						'{{WRAPPER}} .premium-modal-trigger-btn' => '--pa-btn-line6-translate-x: {{SIZE}}px',
 					),
 					'separator' => 'after',
@@ -714,7 +714,7 @@ class Premium_Modalbox extends Widget_Base {
 						'size' => 15,
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-modal-trigger-btn i, {{WRAPPER}} .premium-modal-trigger-btn svg' => 'margin-left: {{SIZE}}px;',
+						'{{WRAPPER}} .premium-modal-trigger-btn i, {{WRAPPER}} .premium-modal-trigger-btn svg:not(.premium-btn-svg)' => 'margin-left: {{SIZE}}px;',
 						'{{WRAPPER}} .premium-modal-trigger-btn' => '--pa-btn-line6-translate-x: -{{SIZE}}px;',
 					),
 					'separator' => 'after',
@@ -742,7 +742,7 @@ class Premium_Modalbox extends Widget_Base {
 						'size' => 15,
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-modal-trigger-btn i, {{WRAPPER}} .premium-modal-trigger-btn svg' => 'margin-left: {{SIZE}}px',
+						'{{WRAPPER}} .premium-modal-trigger-btn i, {{WRAPPER}} .premium-modal-trigger-btn svg:not(.premium-btn-svg)' => 'margin-left: {{SIZE}}px',
 						'{{WRAPPER}} .premium-modal-trigger-btn' => '--pa-btn-line6-translate-x: -{{SIZE}}px',
 					),
 					'separator' => 'after',
@@ -758,7 +758,7 @@ class Premium_Modalbox extends Widget_Base {
 						'size' => 15,
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-modal-trigger-btn i, {{WRAPPER}} .premium-modal-trigger-btn svg' => 'margin-right: {{SIZE}}px',
+						'{{WRAPPER}} .premium-modal-trigger-btn i, {{WRAPPER}} .premium-modal-trigger-btn svg:not(.premium-btn-svg)' => 'margin-right: {{SIZE}}px',
 						'{{WRAPPER}} .premium-modal-trigger-btn'  => '--pa-btn-line6-translate-x: {{SIZE}}px',
 					),
 					'separator' => 'after',

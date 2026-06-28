@@ -193,6 +193,18 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_control(
+			'css_selector_notice',
+			array(
+				'raw'             => __( 'By default, the widget searches the elements on the entire page if CSS Selector value is not specified.', 'premium-addons-for-elementor' ),
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition'       => array(
+					'query_type' => 'elements',
+				),
+			)
+		);
+
+		$this->add_control(
 			'selector',
 			array(
 				'label'       => __( 'CSS Selector', 'premium-addons-for-elementor' ),
@@ -209,6 +221,24 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_control(
+			'elements_effect',
+			array(
+				'label'       => __( 'Effect', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => array(
+					'blur'           => __( 'Blur', 'premium-addons-for-elementor' ),
+					'highlight'      => __( 'Highlight Text', 'premium-addons-for-elementor' ),
+					'blur_highlight' => __( 'Blur + Highlight Text', 'premium-addons-for-elementor' ),
+				),
+				'default'     => 'blur',
+				'label_block' => true,
+				'condition'   => array(
+					'query_type' => 'elements',
+				),
+			)
+		);
+
+		$this->add_control(
 			'fadeout_selector',
 			array(
 				'label'       => __( 'Elements to Fade Out Selector', 'premium-addons-for-elementor' ),
@@ -216,7 +246,8 @@ class Premium_Search_Form extends Widget_Base {
 				'description' => __( 'Add the CSS selector of the elements to fade out.', 'premium-addons-for-elementor' ),
 				'label_block' => true,
 				'condition'   => array(
-					'query_type' => 'elements',
+					'query_type'      => 'elements',
+					'elements_effect' => array( 'blur', 'blur_highlight' ),
 				),
 				'ai'          => array(
 					'active' => false,
@@ -229,12 +260,14 @@ class Premium_Search_Form extends Widget_Base {
 			array(
 				'label'     => __( 'Highlighted Text Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
+				'default'   => '#FFEB3B',
 				'selectors' => array(
 					'.pa-highlighted-text-{{ID}}' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}}'                 => '--pa-search-hightlight: {{VALUE}}',
 				),
 				'condition' => array(
-					'query_type' => 'elements',
+					'query_type'      => 'elements',
+					'elements_effect' => array( 'highlight', 'blur_highlight' ),
 				),
 			)
 		);
@@ -484,28 +517,9 @@ class Premium_Search_Form extends Widget_Base {
 		);
 
 		$this->add_control(
-			'posts_filter_rule',
-			array(
-				'label'       => __( 'Filter By Post Rule', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
-					'post__in'     => __( 'Match Post', 'premium-addons-for-elementor' ),
-					'post__not_in' => __( 'Exclude Post', 'premium-addons-for-elementor' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- Elementor SELECT option key (filter-rule label), not a get_posts() query arg.
-				),
-				'default'     => 'post__not_in',
-				'separator'   => 'before',
-				'label_block' => true,
-				'condition'   => array(
-					'query_type'          => 'post',
-					'custom_search_query' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
 			'premium_blog_posts_exclude',
 			array(
-				'label'       => __( 'Posts', 'premium-addons-for-elementor' ),
+				'label'       => __( 'Exclude Posts', 'premium-addons-for-elementor' ),
 				'type'        => Premium_Post_Filter::TYPE,
 				'label_block' => true,
 				'multiple'    => true,
@@ -566,7 +580,7 @@ class Premium_Search_Form extends Widget_Base {
 			array(
 				'label'       => __( 'Results Number Text', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
-				'default'     => 'Results: {{number}}',
+				'default'     => '{{number}} Results',
 				'description' => __( 'This helps to control number of results string. {{number}} will be repalced with the number of results', 'premium-addons-for-elementor' ),
 				'condition'   => array(
 					'query_type'          => 'post',
@@ -853,7 +867,7 @@ class Premium_Search_Form extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'options'     => array(
 					'onpage'   => __( 'On Page Search', 'premium-addons-for-elementor' ),
-					'redirect' => __( 'Go to Search Page', 'premium-addons-for-elementor' ),
+					'redirect' => __( 'Go to Search Result', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'onpage',
 				'label_block' => true,
@@ -1514,87 +1528,6 @@ class Premium_Search_Form extends Widget_Base {
 				'default'   => 'yes',
 				'condition' => array(
 					'carousel' => 'yes',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
-			'arrows_vposition',
-			array(
-				'label'        => __( 'Vertical Position', 'premium-addons-for-elementor' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'options'      => array(
-					'top'    => array(
-						'title' => __( 'Top', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-arrow-up',
-					),
-					'middle' => array(
-						'title' => __( 'Center', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-text-align-justify',
-					),
-					'bottom' => array(
-						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
-						'icon'  => 'eicon-arrow-down',
-					),
-				),
-				'default'      => 'middle',
-				'toggle'       => false,
-				'prefix_class' => 'premium-search__arrow-',
-				'condition'    => array(
-					'carousel'        => 'yes',
-					'carousel_arrows' => 'yes',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
-			'carousel_prev_arrow_pos',
-			array(
-				'label'      => __( 'Previous Arrow Position', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em', '%' ),
-				'range'      => array(
-					'px' => array(
-						'min' => -100,
-						'max' => 100,
-					),
-					'em' => array(
-						'min' => -10,
-						'max' => 10,
-					),
-				),
-				'condition'  => array(
-					'carousel'        => 'yes',
-					'carousel_arrows' => 'yes',
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-search__query-wrap a.carousel-arrow.carousel-prev' => 'left: {{SIZE}}{{UNIT}};',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
-			'carousel_next_arrow_pos',
-			array(
-				'label'      => __( 'Next Arrow Position', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em', '%' ),
-				'range'      => array(
-					'px' => array(
-						'min' => -100,
-						'max' => 100,
-					),
-					'em' => array(
-						'min' => -10,
-						'max' => 10,
-					),
-				),
-				'condition'  => array(
-					'carousel'        => 'yes',
-					'carousel_arrows' => 'yes',
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-search__query-wrap a.carousel-arrow.carousel-next' => 'right: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -3089,6 +3022,122 @@ class Premium_Search_Form extends Widget_Base {
 			)
 		);
 
+		$this->add_responsive_control(
+			'arrows_vposition',
+			array(
+				'label'        => __( 'Vertical Position', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::CHOOSE,
+				'options'      => array(
+					'top'    => array(
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-arrow-up',
+					),
+					'middle' => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-justify',
+					),
+					'bottom' => array(
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-arrow-down',
+					),
+					'custom' => array(
+						'title' => __( 'Custom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-cog',
+					),
+				),
+				'default'      => 'middle',
+				'toggle'       => false,
+				'prefix_class' => 'premium-search__arrow-',
+				'condition'    => array(
+					'carousel'        => 'yes',
+					'carousel_arrows' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'arrow_custom_vpos',
+			array(
+				'label'      => __( 'Vertical Position', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', '%' ),
+				'range'      => array(
+					'px' => array(
+						'min' => -500,
+						'max' => 500,
+					),
+					'%'  => array(
+						'min' => -100,
+						'max' => 100,
+					),
+					'em' => array(
+						'min' => -10,
+						'max' => 10,
+					),
+				),
+				'condition'  => array(
+					'carousel'         => 'yes',
+					'carousel_arrows'  => 'yes',
+					'arrows_vposition' => 'custom',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-search__query-wrap a.carousel-arrow' => 'top: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'carousel_prev_arrow_pos',
+			array(
+				'label'      => __( 'Previous Arrow Position', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', '%' ),
+				'range'      => array(
+					'px' => array(
+						'min' => -100,
+						'max' => 100,
+					),
+					'em' => array(
+						'min' => -10,
+						'max' => 10,
+					),
+				),
+				'condition'  => array(
+					'carousel'        => 'yes',
+					'carousel_arrows' => 'yes',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-search__query-wrap a.carousel-arrow.carousel-prev' => 'left: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'carousel_next_arrow_pos',
+			array(
+				'label'      => __( 'Next Arrow Position', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', '%' ),
+				'range'      => array(
+					'px' => array(
+						'min' => -100,
+						'max' => 100,
+					),
+					'em' => array(
+						'min' => -10,
+						'max' => 10,
+					),
+				),
+				'condition'  => array(
+					'carousel'        => 'yes',
+					'carousel_arrows' => 'yes',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-search__query-wrap a.carousel-arrow.carousel-next' => 'right: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
 		$this->add_control(
 			'arrow_color',
 			array(
@@ -3277,6 +3326,7 @@ class Premium_Search_Form extends Widget_Base {
 		if ( 'elements' === $settings['query_type'] ) {
 			$search_settings['target']         = esc_attr( $settings['selector'] );
 			$search_settings['fadeout_target'] = esc_attr( $settings['fadeout_selector'] );
+			$search_settings['effect']         = $settings['elements_effect'];
 		} else {
 
 			$search_settings['hideOnClick']    = 'yes' === $settings['hide_on_click'];

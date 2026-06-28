@@ -1,51 +1,49 @@
 (function ($) {
+	var PremiumMaskHandler = function ($scope, $) {
+		var mask = $scope.hasClass("premium-mask-yes");
 
-    var PremiumMaskHandler = function ($scope, $) {
+		if (!mask) return;
 
-        var mask = $scope.hasClass('premium-mask-yes');
+		var target = ".premium-dual-header-first-header";
 
-        if (!mask) return;
+		$scope
+			.find(target)
+			.find(
+				"span:not(.premium-title-style7-stripe-wrap):not(.premium-title-img):not(.pa-txt-sc__hov-item)",
+			)
+			.each(function (index, span) {
+				var html = "";
 
-        if ('premium-addon-title.default' === $scope.data('widget_type')) {
-            var target = '.premium-title-header';
-            $scope.find(target).find('.premium-title-icon, .premium-title-img').addClass('premium-mask-span');
+				$(this)
+					.text()
+					.split(" ")
+					.forEach(function (item) {
+						if ("" !== item) {
+							html += ' <span class="premium-mask-span">' + item + "</span>";
+						}
+					});
 
-        } else if ('premium-textual-showcase.default' === $scope.data('widget_type')) {
-            var target = '.pa-txt-sc__effect-min-mask';
+				$(this).text("").append(html);
+			});
 
-        } else {
-            var target = '.premium-dual-header-first-header';
-        }
+		// Using IntersectionObserverAPI.
+		var eleObserver = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (entry.isIntersecting) {
+					$($scope).addClass("premium-mask-active");
 
-        $scope.find(target).find('span:not(.premium-title-style7-stripe-wrap):not(.premium-title-img):not(.pa-txt-sc__hov-item)').each(function (index, span) {
-            var html = '';
+					eleObserver.unobserve(entry.target); // to only execute the callback func once.
+				}
+			});
+		});
 
-            $(this).text().split(' ').forEach(function (item) {
-                if ('' !== item) {
-                    html += ' <span class="premium-mask-span">' + item + '</span>';
-                }
-            });
+		eleObserver.observe($scope[0]);
+	};
 
-            $(this).text('').append(html);
-        });
-
-        // Using IntersectionObserverAPI.
-        var eleObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-
-                    $($scope).addClass('premium-mask-active');
-
-                    eleObserver.unobserve(entry.target); // to only execute the callback func once.
-                }
-            });
-        });
-
-        eleObserver.observe($scope[0]);
-    };
-
-    $(window).on('elementor/frontend/init', function () {
-        elementorFrontend.hooks.addAction('frontend/element_ready/premium-addon-dual-header.default', PremiumMaskHandler);
-    });
+	$(window).on("elementor/frontend/init", function () {
+		elementorFrontend.hooks.addAction(
+			"frontend/element_ready/premium-addon-dual-header.default",
+			PremiumMaskHandler,
+		);
+	});
 })(jQuery);
-

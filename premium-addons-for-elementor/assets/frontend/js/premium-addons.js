@@ -4,7 +4,6 @@
 
 		/****** Premium Progress Bar Handler ******/
 		var PremiumProgressBarWidgetHandler = function ($scope, trigger) {
-
 			var $progressbarElem = $scope.find(".premium-progressbar-container"),
 				settings = $progressbarElem.data("settings"),
 				length = settings.progress_length,
@@ -15,69 +14,84 @@
 				displayFormat = settings.displayFormat;
 
 			if ("line" === type) {
-
 				var $progressbar = $progressbarElem.find(".premium-progressbar-bar");
 
 				if (settings.gradient)
-					$progressbar.css("background", "linear-gradient(-45deg, " + settings.gradient + ")");
+					$progressbar.css(
+						"background",
+						"linear-gradient(-45deg, " + settings.gradient + ")",
+					);
 
-				if ('yes' !== mScroll) {
-					$progressbar.animate({
-						width: length + "%"
-					}, speed);
+				if ("yes" !== mScroll) {
+					$progressbar.animate(
+						{
+							width: length + "%",
+						},
+						speed,
+					);
 				}
-
 			} else if ("circle" === type || "half-circle" === type) {
-				if (length > 100)
-					length = 100;
+				if (length > 100) length = 100;
 
 				var degreesFactor = 1.8 * (elementorFrontend.config.is_rtl ? -1 : 1);
 
-				if ('yes' !== mScroll) {
+				if ("yes" !== mScroll) {
 					$progressbarElem.find(".premium-progressbar-hf-circle-progress").css({
 						transform: "rotate(" + length * degreesFactor + "deg)",
 					});
 				}
 
-				$progressbarElem.prop({
-					'counter': 0
-				}).animate({
-					counter: length
-				}, {
-					duration: speed,
-					easing: 'linear',
-					step: function (counter) {
-						var rotate = (counter * 3.6);
+				$progressbarElem
+					.prop({
+						counter: 0,
+					})
+					.animate(
+						{
+							counter: length,
+						},
+						{
+							duration: speed,
+							easing: "linear",
+							step: function (counter) {
+								var rotate = counter * 3.6;
 
-						if ('yes' !== mScroll) {
+								if ("yes" !== mScroll) {
+									var displayText = Math.ceil(counter) + "%";
 
-							var displayText = Math.ceil(counter) + "%";
+									if (maxVal && "percentage" !== displayFormat) {
+										var absVal = Math.ceil((counter / 100) * maxVal);
+										displayText =
+											"value_max" === displayFormat
+												? absVal + "/" + maxVal
+												: "" + absVal;
+									}
 
-							if (maxVal && 'percentage' !== displayFormat) {
-								var absVal = Math.ceil(counter / 100 * maxVal);
-								displayText = ('value_max' === displayFormat) ? absVal + '/' + maxVal : '' + absVal;
-							}
+									$progressbarElem
+										.find(".premium-progressbar-right-label")
+										.text(displayText);
 
-							$progressbarElem.find(".premium-progressbar-right-label").text(displayText);
+									$progressbarElem
+										.find(".premium-progressbar-circle-left")
+										.css("transform", "rotate(" + rotate + "deg)");
+								}
 
-							$progressbarElem.find(".premium-progressbar-circle-left").css('transform', "rotate(" + rotate + "deg)");
-						}
+								if ("circle" === type && rotate > 180) {
+									$progressbarElem.find(".premium-progressbar-circle").css({
+										"-webkit-clip-path": "inset(0)",
+										"clip-path": "inset(0)",
+									});
 
-						if ('circle' === type && rotate > 180) {
-
-							$progressbarElem.find(".premium-progressbar-circle").css({
-								'-webkit-clip-path': 'inset(0)',
-								'clip-path': 'inset(0)',
-							});
-
-							$progressbarElem.find(".premium-progressbar-circle-right").css('visibility', 'visible');
-						}
-					}
-				});
-
+									$progressbarElem
+										.find(".premium-progressbar-circle-right")
+										.css("visibility", "visible");
+								}
+							},
+						},
+					);
 			} else {
-
-				var $progressbar = $progressbarElem.find(".premium-progressbar-bar-wrap"),
+				var $progressbar = $progressbarElem.find(
+						".premium-progressbar-bar-wrap",
+					),
 					width = $progressbarElem.outerWidth(),
 					dotSize = settings.dot || 25,
 					dotSpacing = settings.spacing || 10,
@@ -86,32 +100,30 @@
 					numberOfTotalFill = Math.floor(circlesToFill),
 					fillPercent = 100 * (circlesToFill - numberOfTotalFill);
 
-				$progressbar.attr('data-circles', numberOfCircles);
-				$progressbar.attr('data-total-fill', numberOfTotalFill);
-				$progressbar.attr('data-partial-fill', fillPercent);
+				$progressbar.attr("data-circles", numberOfCircles);
+				$progressbar.attr("data-total-fill", numberOfTotalFill);
+				$progressbar.attr("data-partial-fill", fillPercent);
 
 				var className = "progress-segment";
 				for (var i = 0; i < numberOfCircles; i++) {
 					className = "progress-segment";
-					var innerHTML = '';
+					var innerHTML = "";
 
 					if (i < numberOfTotalFill) {
 						innerHTML = "<div class='segment-inner'></div>";
 					} else if (i === numberOfTotalFill) {
-
 						innerHTML = "<div class='segment-inner'></div>";
 					}
 
-					$progressbar.append("<div class='" + className + "'>" + innerHTML + "</div>");
-
+					$progressbar.append(
+						"<div class='" + className + "'>" + innerHTML + "</div>",
+					);
 				}
 
 				if ("frontend" !== trigger) {
 					PremiumProgressDotsHandler($scope);
 				}
-
 			}
-
 		};
 
 		var PremiumProgressDotsHandler = function ($scope) {
@@ -388,9 +400,9 @@
 					var stickyTarget = e.target.className;
 					if (
 						stickyTarget.toString().indexOf("premium-video-box-sticky-close") >=
-						0 ||
+							0 ||
 						stickyTarget.toString().indexOf("premium-video-box-sticky-close") >=
-						0
+							0
 					) {
 						return false;
 					}
@@ -451,7 +463,7 @@
 												.css("opacity", "1")
 												.addClass(
 													"animated " +
-													$videoInnerContainer.data("video-animation"),
+														$videoInnerContainer.data("video-animation"),
 												);
 										}, animationDelay * 1000);
 									}
@@ -1052,7 +1064,7 @@
 						//should be added to selectors and elements
 
 						var cells =
-							repeater[index]["premium_gallery_image_cell" + suffix].size,
+								repeater[index]["premium_gallery_image_cell" + suffix].size,
 							vCells =
 								repeater[index]["premium_gallery_image_vcell" + suffix].size;
 
@@ -1132,7 +1144,7 @@
 				var itemCount = $elem.find(".premium-fancy-list-items").length,
 					loopCount =
 						"" === settings.count &&
-							!["typing", "slide"].includes(settings.effect)
+						!["typing", "slide"].includes(settings.effect)
 							? "infinite"
 							: settings.count * itemCount;
 
@@ -1277,7 +1289,9 @@
 									//Hide inactive items
 									$inactiveItems
 										.addClass("premium-fancy-item-hidden")
-										.removeClass("premium-fancy-item-visible " + animationClass);
+										.removeClass(
+											"premium-fancy-item-visible " + animationClass,
+										);
 
 									var visibleTextWidth = $stringsWrap
 										.find(".premium-fancy-item-visible")
@@ -1653,8 +1667,8 @@
 						if (!$templateContent.length) {
 							$(this).html(
 								'<div class="premium-error-notice"><span>Container with ID <b>' +
-								containerID +
-								"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
+									containerID +
+									"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
 							);
 
 							return;
@@ -1913,8 +1927,8 @@
 						if (!settings._animation && !settings.animation) return;
 
 						var delay = settings._animation_delay
-							? settings._animation_delay
-							: 0,
+								? settings._animation_delay
+								: 0,
 							animation = settings._animation || settings.animation;
 
 						setTimeout(function () {
@@ -2069,64 +2083,64 @@
 		};
 
 		var PremiumBannerHandler = ModuleHandler.extend({
-
 			getDefaultSettings: function () {
-
 				return {
 					selectors: {
-						bannerImgWrap: '.premium-banner-ib'
-					}
-				}
-
+						bannerImgWrap: ".premium-banner-ib",
+					},
+				};
 			},
 
 			getDefaultElements: function () {
-
-				var selectors = this.getSettings('selectors');
+				var selectors = this.getSettings("selectors");
 
 				return {
-					$bannerImgWrap: this.$element.find(selectors.bannerImgWrap)
-				}
-
+					$bannerImgWrap: this.$element.find(selectors.bannerImgWrap),
+				};
 			},
 
 			bindEvents: function () {
-
 				var _this = this;
 
-				_this.elements.$bannerImgWrap.hover(function () {
-					_this.elements.$bannerImgWrap.find('> img').addClass("active");
-				}, function () {
-					_this.elements.$bannerImgWrap.find('> img').removeClass("active");
-				});
+				_this.elements.$bannerImgWrap.hover(
+					function () {
+						_this.elements.$bannerImgWrap.find("> img").addClass("active");
+					},
+					function () {
+						_this.elements.$bannerImgWrap.find("> img").removeClass("active");
+					},
+				);
 
 				this.run();
 			},
 
 			run: function () {
-
 				var $bannerElement = this.$element;
 
 				//Button grow hover effect.
-				var $btnGrow = $bannerElement.find('.premium-button-style6-bg');
+				var $btnGrow = $bannerElement.find(".premium-button-style6-bg");
 
-				if ($btnGrow.length !== 0 && $bannerElement.hasClass('premium-mouse-detect-yes')) {
-					$bannerElement.on('mouseenter mouseleave', '.premium-button-style6', function (e) {
+				if (
+					$btnGrow.length !== 0 &&
+					$bannerElement.hasClass("premium-mouse-detect-yes")
+				) {
+					$bannerElement.on(
+						"mouseenter mouseleave",
+						".premium-button-style6",
+						function (e) {
+							var parentOffset = $(this).offset(),
+								left = e.pageX - parentOffset.left,
+								top = e.pageY - parentOffset.top;
 
-						var parentOffset = $(this).offset(),
-							left = e.pageX - parentOffset.left,
-							top = e.pageY - parentOffset.top;
-
-						$btnGrow.css({
-							top: top,
-							left: left,
-						});
-
-					});
+							$btnGrow.css({
+								top: top,
+								left: left,
+							});
+						},
+					);
 				}
 
 				if ($bannerElement.hasClass("premium-banner-tilt-yes")) {
-
 					UniversalTilt.init({
 						elements: $bannerElement.closest(".elementor-widget"),
 						callbacks: {
@@ -2135,13 +2149,11 @@
 							},
 							onDeviceMove: function (el) {
 								el.style.boxShadow = "0 45px 100px rgba(255, 255, 255, 0.3)";
-							}
-						}
+							},
+						},
 					});
-
 				}
-			}
-
+			},
 		});
 
 		/****** Premium Modal Box Handler ******/
@@ -2177,8 +2189,8 @@
 				if (!$templateContent.length) {
 					$(this).html(
 						'<div class="premium-error-notice"><span>Container with ID <b>' +
-						containerID +
-						"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.</span></div>",
+							containerID +
+							"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.</span></div>",
 					);
 					return;
 				}
@@ -2526,11 +2538,11 @@
 
 			setHorizontalWidth: function () {
 				var slidesSpacing =
-					parseFloat(
-						getComputedStyle(
-							this.elements.$marqueeWrapper[0],
-						).getPropertyValue("--pa-marquee-spacing"),
-					) || 0,
+						parseFloat(
+							getComputedStyle(
+								this.elements.$marqueeWrapper[0],
+							).getPropertyValue("--pa-marquee-spacing"),
+						) || 0,
 					fullWidth = 0,
 					$posts = this.$element.find(".premium-blog-post-outer-container"),
 					slideWidth = $posts[0].offsetWidth;
@@ -2859,10 +2871,10 @@
 				$imageScroll.css(
 					"transform",
 					(direction === "vertical" ? "translateY" : "translateX") +
-					"( " +
-					transformDirection +
-					transformOffset +
-					"px)",
+						"( " +
+						transformDirection +
+						transformOffset +
+						"px)",
 				);
 			}
 
@@ -3080,7 +3092,7 @@
 
 				$persons.each(function (index, person) {
 					$(person)
-						.imagesLoaded(function () { })
+						.imagesLoaded(function () {})
 						.done(function () {
 							var imageHeight = $(person)
 								.find(selectors.personImg)
@@ -3091,7 +3103,7 @@
 				});
 
 				$persons
-					.imagesLoaded(function () { })
+					.imagesLoaded(function () {})
 					.done(function () {
 						var maxHeight = Math.max.apply(null, heights);
 						$personImg.css("height", maxHeight + "px");
@@ -3119,9 +3131,9 @@
 			var $titleContainer = $scope.find(".premium-title-container"),
 				$titleElement = $titleContainer.find(".premium-title-text");
 
-			if ($titleContainer.hasClass("style9")) {
-				var $style9 = $scope.find(".premium-title-style9");
+			var $style9 = $scope.find(".premium-title-style9");
 
+			if ($style9.length) {
 				$style9.each(function () {
 					var elm = $(this);
 					var holdTime = elm.attr("data-blur-delay") * 1000;
@@ -3150,7 +3162,7 @@
 				});
 			}
 
-			if ($titleContainer.hasClass("style8")) {
+			if ($titleContainer.find(".premium-title-style8").length) {
 				var shinyDelay = $titleElement.attr("data-shiny-delay") * 1000,
 					shinyDuration = $titleElement.attr("data-shiny-dur") * 1000;
 
@@ -3366,8 +3378,8 @@
 							// notBadgedItems = $(badge.rbadge_selector).find('.premium-bullet-list-text').filter(':not(:has(+ .premium-bullet-list-badge))');
 
 							var randomIndex = Math.floor(
-								Math.random() * notBadgedItems.length,
-							),
+									Math.random() * notBadgedItems.length,
+								),
 								wasBadgedBefore =
 									$(notBadgedItems[randomIndex]).siblings(
 										".premium-bullet-list-badge",
@@ -3479,8 +3491,8 @@
 
 		var PremiumMaskHandler = function ($scope, $) {
 			var txtShowcaseElem = $scope.find(
-				".pa-txt-sc__effect-min-mask .pa-txt-sc__main-item.pa-txt-sc__item-text",
-			),
+					".pa-txt-sc__effect-min-mask .pa-txt-sc__main-item.pa-txt-sc__item-text",
+				),
 				mask = $scope.hasClass("premium-mask-yes") || txtShowcaseElem.length;
 
 			if (!mask) return;
@@ -3502,21 +3514,33 @@
 			$scope
 				.find(target)
 				.find(
-					"span:not(.premium-title-style7-stripe-wrap):not(.premium-title-img):not(.pa-txt-sc__hov-item)",
+					"span:not(.premium-title-style7-stripe-wrap):not(.premium-title-img):not(.pa-txt-sc__hov-item):not(.premium-title__focused-word)",
 				)
 				.each(function (index, span) {
 					var html = "";
 
 					$(this)
-						.text()
-						.split(" ")
-						.forEach(function (item) {
-							if ("" !== item) {
-								html += ' <span class="premium-mask-span">' + item + "</span>";
-							}
+						.contents()
+						.each(function () {
+							var focusedClass =
+								1 === this.nodeType &&
+								this.classList.contains("premium-title__focused-word")
+									? " premium-title__focused-word"
+									: "";
+
+							(this.textContent || "").split(" ").forEach(function (item) {
+								if ("" !== item) {
+									html +=
+										' <span class="premium-mask-span' +
+										focusedClass +
+										'">' +
+										item +
+										"</span>";
+								}
+							});
 						});
 
-					$(this).text("").append(html);
+					$(this).empty().append(html);
 				});
 
 			// Using IntersectionObserverAPI.
@@ -3591,8 +3615,8 @@
 				}
 
 				var fromOrTo = !$scope.hasClass("premium-svg-anim-rev-yes")
-					? "from"
-					: "to",
+						? "from"
+						: "to",
 					$paths = $scope.find(
 						"path, circle, rect, square, ellipse, polyline, polygon, line",
 					),
@@ -3845,7 +3869,7 @@
 						fontSize =
 							parseFloat(fontSize) +
 							$(term).find(".premium-tcloud-term-link").data("weight") *
-							widgetSettings.fsize_scale.size;
+								widgetSettings.fsize_scale.size;
 
 					if ("custom" !== colorScheme) {
 						generatedColor = _this.genRandomColor(colorScheme, "grid");
@@ -4118,9 +4142,9 @@
 							$scope.find(".premium-world-clock__meridiem").text(time.meridiem);
 						} else {
 							var meridiemIcons = {
-								AM: '<svg id="Weather_Icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#333;}</style></defs><g id="Clear_Sky"><circle class="cls-1" cx="12" cy="12" r="5.5"/><path class="cls-1" d="m21.76,12.74h-1.95c-.98,0-.98-1.47,0-1.47h1.95c.98,0,.98,1.47,0,1.47Z"/><path class="cls-1" d="m19.39,5.62l-1.38,1.38c-.29.29-.75.29-1.04,0-.29-.29-.29-.75,0-1.04l1.38-1.38c.29-.28.75-.28,1.04,0,.28.29.28.75,0,1.04Z"/><path class="cls-1" d="m12.74,2.24v1.95c0,.4-.33.73-.73.73s-.74-.33-.74-.73v-1.95c0-.41.33-.74.74-.74s.73.33.73.74Z"/><path class="cls-1" d="m5.96,7.03l-1.38-1.38c-.32-.31-.29-.75,0-1.04s.72-.31,1.03,0l1.38,1.38c.69.69-.34,1.73-1.03,1.04Z"/><path class="cls-1" d="m4.19,12.74h-1.95c-.98,0-.98-1.47,0-1.47h1.95c.98,0,.98,1.47,0,1.47Z"/><path class="cls-1" d="m7.02,18.04l-1.38,1.38c-.31.31-.75.29-1.04,0s-.31-.72,0-1.03l1.38-1.38c.32-.31.75-.29,1.04,0,.29.28.31.72,0,1.03Z"/><path class="cls-1" d="m12.74,19.82v1.95c0,.98-1.47.98-1.47,0v-1.95c0-.98,1.47-.98,1.47,0Z"/><path class="cls-1" d="m19.43,19.4c-.29.28-.73.31-1.04,0l-1.38-1.39c-.31-.31-.29-.75,0-1.03.28-.29.72-.31,1.03,0l1.39,1.38c.31.31.28.75,0,1.04Z"/></g></svg>',
-								PM: '<svg id="Weather_Icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#333;}</style></defs><path id="Moon" class="cls-1" d="m21.93,17.23c-1.89,3.24-5.4,5.27-9.26,5.27-5.89,0-10.67-4.7-10.67-10.51S6.37,1.87,11.95,1.5c.4-.02.67.41.46.76-.83,1.42-1.28,3.04-1.28,4.73,0,5.25,4.33,9.51,9.68,9.51.22,0,.44,0,.65-.02.4-.03.67.4.47.75Z"/></svg>',
-							},
+									AM: '<svg id="Weather_Icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#333;}</style></defs><g id="Clear_Sky"><circle class="cls-1" cx="12" cy="12" r="5.5"/><path class="cls-1" d="m21.76,12.74h-1.95c-.98,0-.98-1.47,0-1.47h1.95c.98,0,.98,1.47,0,1.47Z"/><path class="cls-1" d="m19.39,5.62l-1.38,1.38c-.29.29-.75.29-1.04,0-.29-.29-.29-.75,0-1.04l1.38-1.38c.29-.28.75-.28,1.04,0,.28.29.28.75,0,1.04Z"/><path class="cls-1" d="m12.74,2.24v1.95c0,.4-.33.73-.73.73s-.74-.33-.74-.73v-1.95c0-.41.33-.74.74-.74s.73.33.73.74Z"/><path class="cls-1" d="m5.96,7.03l-1.38-1.38c-.32-.31-.29-.75,0-1.04s.72-.31,1.03,0l1.38,1.38c.69.69-.34,1.73-1.03,1.04Z"/><path class="cls-1" d="m4.19,12.74h-1.95c-.98,0-.98-1.47,0-1.47h1.95c.98,0,.98,1.47,0,1.47Z"/><path class="cls-1" d="m7.02,18.04l-1.38,1.38c-.31.31-.75.29-1.04,0s-.31-.72,0-1.03l1.38-1.38c.32-.31.75-.29,1.04,0,.29.28.31.72,0,1.03Z"/><path class="cls-1" d="m12.74,19.82v1.95c0,.98-1.47.98-1.47,0v-1.95c0-.98,1.47-.98,1.47,0Z"/><path class="cls-1" d="m19.43,19.4c-.29.28-.73.31-1.04,0l-1.38-1.39c-.31-.31-.29-.75,0-1.03.28-.29.72-.31,1.03,0l1.39,1.38c.31.31.28.75,0,1.04Z"/></g></svg>',
+									PM: '<svg id="Weather_Icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#333;}</style></defs><path id="Moon" class="cls-1" d="m21.93,17.23c-1.89,3.24-5.4,5.27-9.26,5.27-5.89,0-10.67-4.7-10.67-10.51S6.37,1.87,11.95,1.5c.4-.02.67.41.46.76-.83,1.42-1.28,3.04-1.28,4.73,0,5.25,4.33,9.51,9.68,9.51.22,0,.44,0,.65-.02.4-.03.67.4.47.75Z"/></svg>',
+								},
 								currentIcon =
 									6 <= time.hoursNotPadded && time.hoursNotPadded <= 17
 										? meridiemIcons["AM"]
@@ -4153,8 +4177,8 @@
 
 						$daysWrapper.html(
 							'<span class="premium-world-clock__day-name current-day">' +
-							currentDay +
-							"</span>",
+								currentDay +
+								"</span>",
 						);
 
 						for (var i = 1; i <= parseInt(daysNum); i++) {
@@ -4171,13 +4195,13 @@
 
 							$daysWrapper.prepend(
 								'<span class="premium-world-clock__day-name">' +
-								daysMap[dayBefore] +
-								"</span>",
+									daysMap[dayBefore] +
+									"</span>",
 							);
 							$daysWrapper.append(
 								'<span class="premium-world-clock__day-name">' +
-								daysMap[dayAfter] +
-								"</span>",
+									daysMap[dayAfter] +
+									"</span>",
 							);
 						}
 
@@ -4319,8 +4343,8 @@
 				$postsWrapper.on("init", function (event, slick) {
 					var $currentTyping = $postsWrapper.find(
 						'[data-slick-index="' +
-						slick.currentSlide +
-						'"] .premium-post-ticker__post-title a',
+							slick.currentSlide +
+							'"] .premium-post-ticker__post-title a',
 					);
 
 					typeTitle($currentTyping);
@@ -4330,19 +4354,19 @@
 					"beforeChange",
 					function (event, slick, currentSlide, nextSlide) {
 						var $typedItem = $postsWrapper.find(
-							'[data-slick-index="' +
-							currentSlide +
-							'"] .premium-post-ticker__post-title',
-						),
+								'[data-slick-index="' +
+									currentSlide +
+									'"] .premium-post-ticker__post-title',
+							),
 							$currentTyping = $postsWrapper.find(
 								'[data-slick-index="' +
-								currentSlide +
-								'"] .premium-post-ticker__post-title a',
+									currentSlide +
+									'"] .premium-post-ticker__post-title a',
 							),
 							$nextTyping = $postsWrapper.find(
 								'[data-slick-index="' +
-								nextSlide +
-								'"] .premium-post-ticker__post-title a',
+									nextSlide +
+									'"] .premium-post-ticker__post-title a',
 							),
 							speed = slick.options.speed,
 							typingDelay = Math.floor(speed / 3);
@@ -4518,8 +4542,8 @@
 			}
 
 			var forecastHeight = $scope
-				.find(".premium-weather__outer-wrapper")
-				.data("pa-height"),
+					.find(".premium-weather__outer-wrapper")
+					.data("pa-height"),
 				$forecastSlider =
 					"layout-2" === settings.layout
 						? $scope.find(".premium-weather__extra-outer-wrapper")
@@ -4532,7 +4556,7 @@
 					: false,
 				dailyEqWidth =
 					!forecastTabs &&
-						!dailyForecastCarousel &
+					!dailyForecastCarousel &
 						!$scope.hasClass("premium-daily-forecast__style-4")
 						? true
 						: false;
@@ -4559,7 +4583,7 @@
 				"vertical" === settings.hourlyLayout
 			) {
 				var prevArrow =
-					'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-chevron-left" aria-hidden="true"></i></a>',
+						'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-chevron-left" aria-hidden="true"></i></a>',
 					nextArrow =
 						'<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-chevron-right" aria-hidden="true"></i></a>';
 
@@ -4650,7 +4674,7 @@
 					];
 				} else {
 					var prevArrow =
-						'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-chevron-left" aria-hidden="true"></i></a>',
+							'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-chevron-left" aria-hidden="true"></i></a>',
 						nextArrow =
 							'<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-chevron-right" aria-hidden="true"></i></a>';
 
@@ -4827,8 +4851,8 @@
 
 			function getSlickSettings(settings) {
 				var prevArrow = settings.arrows
-					? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
-					: "",
+						? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
+						: "",
 					nextArrow = settings.arrows
 						? '<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>'
 						: "";
@@ -4907,8 +4931,8 @@
 						setTimeout(function () {
 							$(
 								"#premium-board-content-" +
-								id +
-								" .premium-pinterest-feed__pins-wrapper",
+									id +
+									" .premium-pinterest-feed__pins-wrapper",
 							).isotope(getIsoTopeSettings());
 						}, 100);
 					}
@@ -4925,7 +4949,7 @@
 			if (!isBoardQuery) {
 				if ("masonry" === settings.layout && !settings.carousel) {
 					$pinsWrapper
-						.imagesLoaded(function () { })
+						.imagesLoaded(function () {})
 						.done(function () {
 							$pinsWrapper.isotope(getIsoTopeSettings());
 						});
@@ -4999,8 +5023,8 @@
 
 			function getSlickSettings(settings) {
 				var prevArrow = settings.arrows
-					? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
-					: "",
+						? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
+						: "",
 					nextArrow = settings.arrows
 						? '<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>'
 						: "";
@@ -5070,8 +5094,8 @@
 
 			if ("infinite" === animationType) {
 				var $mediaItemsContainer = $outerContainer.find(
-					".premium-adv-carousel__items",
-				),
+						".premium-adv-carousel__items",
+					),
 					lightbox_type = settings.lightbox_type;
 
 				if ("load" === settings.renderEvent) {
@@ -5228,8 +5252,8 @@
 						if (!$templateContent.length) {
 							$(this).html(
 								'<div class="premium-error-notice"><span>Container with ID <b>' +
-								containerID +
-								"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
+									containerID +
+									"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
 							);
 
 							return;
@@ -5367,9 +5391,9 @@
 					}
 
 					var slidesSpacing =
-						getComputedStyle($scope[0]).getPropertyValue(
-							"--pa-wheel-spacing",
-						) || 0,
+							getComputedStyle($scope[0]).getPropertyValue(
+								"--pa-wheel-spacing",
+							) || 0,
 						factor = "normal" === scrollDir ? -1 : 1,
 						accumlativeWidth = 0;
 
@@ -5403,7 +5427,7 @@
 					var fullWidth =
 						horAlignWidth +
 						$scope.find(".premium-adv-carousel__item").length *
-						parseFloat(slidesSpacing);
+							parseFloat(slidesSpacing);
 					var animation = gsap.to(
 						$scope.find(".premium-adv-carousel__item-outer-wrapper"),
 						{
@@ -5447,9 +5471,9 @@
 					}
 
 					var slidesSpacing =
-						getComputedStyle($scope[0]).getPropertyValue(
-							"--pa-wheel-spacing",
-						) || 0,
+							getComputedStyle($scope[0]).getPropertyValue(
+								"--pa-wheel-spacing",
+							) || 0,
 						factor = "normal" === scrollDir ? -1 : 1,
 						accumlativeHeight = 0;
 
@@ -5473,7 +5497,7 @@
 					var fullHeight =
 						verAlignWidth +
 						$scope.find(".premium-adv-carousel__item").length *
-						parseFloat(slidesSpacing);
+							parseFloat(slidesSpacing);
 
 					var animation = gsap.to(
 						$scope.find(".premium-adv-carousel__item-outer-wrapper"),
@@ -5577,32 +5601,32 @@
 					colsNumber =
 						"skin4" !== settings.skin
 							? parseInt(
-								100 /
-								settings.testimonials_per_row.substr(
-									0,
-									settings.testimonials_per_row.indexOf("%"),
-								),
-							)
+									100 /
+										settings.testimonials_per_row.substr(
+											0,
+											settings.testimonials_per_row.indexOf("%"),
+										),
+								)
 							: 1,
 					colsTablet =
 						"skin4" !== settings.skin
 							? parseInt(
-								100 /
-								settings.testimonials_per_row_tablet.substr(
-									0,
-									settings.testimonials_per_row_tablet.indexOf("%"),
-								),
-							)
+									100 /
+										settings.testimonials_per_row_tablet.substr(
+											0,
+											settings.testimonials_per_row_tablet.indexOf("%"),
+										),
+								)
 							: 1,
 					colsMobile =
 						"skin4" !== settings.skin
 							? parseInt(
-								100 /
-								settings.testimonials_per_row_mobile.substr(
-									0,
-									settings.testimonials_per_row_mobile.indexOf("%"),
-								),
-							)
+									100 /
+										settings.testimonials_per_row_mobile.substr(
+											0,
+											settings.testimonials_per_row_mobile.indexOf("%"),
+										),
+								)
 							: 1,
 					slidesToScroll = parseFloat(
 						getComputedStyle(this.$element[0]).getPropertyValue(
@@ -5764,10 +5788,10 @@
 
 		var PremiumTextualShowcaseHandler = function ($scope, $) {
 			var trigger = $scope
-				.find(".pa-txt-sc__outer-container")
-				.hasClass("pa-trigger-on-viewport")
-				? "viewport"
-				: "hover",
+					.find(".pa-txt-sc__outer-container")
+					.hasClass("pa-trigger-on-viewport")
+					? "viewport"
+					: "hover",
 				hasGrowEffect = $scope.find(".pa-txt-sc__effect-grow").length,
 				entranceAnimation = $scope
 					.find(".pa-txt-sc__outer-container")
@@ -5886,6 +5910,8 @@
 						}
 					});
 				}
+			} else {
+				var searchTarget = settings.target || ".e-con";
 			}
 
 			if ("onpage" === buttonAction) {
@@ -5894,18 +5920,18 @@
 				$search.on("keyup", function () {
 					var searchQuery = $search.val();
 
-					//Hide the current query everytime a keyboard is clicked. But only if query string is changed.
+					//Hide the current query every time a keyboard is clicked. But only if query string is changed.
 					if (searchQuery !== lastSearchQuery && "post" === queryType)
 						$resultsContainer.html("").addClass("query-hidden");
 
 					if ("" === searchQuery) {
-						var $textElems = $(settings.target).find(
-							"li,h1,h2,h3,h4,h5,h6,p,span,i",
-						);
+						var $textElems = $(searchTarget)
+							.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
+							.not(".elementor-element-overlay *");
 						$textElems.css("filter", "blur(0px)");
 
 						var $fadeElems = $(settings.fadeout_target).find(
-							"li,h1,h2,h3,h4,h5,h6,p,span,i",
+							"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
 						);
 						$fadeElems.css("opacity", "1");
 					}
@@ -6061,19 +6087,21 @@
 								});
 							}
 						} else {
-							var $textElems = $(settings.target).find(
-								"li,h1,h2,h3,h4,h5,h6,p,span,i",
-							),
+							var effect = settings.effect || "blur_highlight";
+
+							// Restore the previous query's highlights before re-scanning.
+							clearHighlights();
+
+							var $textElems = $(searchTarget)
+									.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
+									.not(".elementor-element-overlay *"),
 								$fadeElems = $(settings.fadeout_target).find(
-									"li,h1,h2,h3,h4,h5,h6,p,span,i",
+									"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
 								);
 
 							$textElems.css("transition", "filter 0.3s ease-in-out");
 							$fadeElems.css("transition", "opacity 0.3s ease-in-out");
 
-							$textElems
-								.find(".pa-highlighted-text-" + widgetID)
-								.removeClass("pa-highlighted-text-" + widgetID);
 							$textElems.css("filter", "blur(0px)");
 							$fadeElems.css("opacity", "1");
 
@@ -6087,43 +6115,27 @@
 									);
 								});
 
-								$queriedElems.css("filter", "blur(3px)");
-								$fadeElems.css("opacity", "0.4");
+								if ("blur" === effect || "blur_highlight" === effect) {
+									$queriedElems.css("filter", "blur(3px)");
+									$fadeElems.css("opacity", "0.4");
+								}
 
-								if (highlightColor) {
+								if (
+									("highlight" === effect || "blur_highlight" === effect) &&
+									highlightColor
+								) {
 									var $matchedElems = $textElems.filter(function () {
 										return (
 											$(this).text().toLowerCase().indexOf(searchQuery) !== -1
 										);
 									});
 
-									$matchedElems.map(function (index, textElem) {
-										if (
-											$(this).is(":visible") &&
-											"LI" !== $(this).prop("tagName")
-										) {
-											textElem = $(this).text().toLowerCase();
-
-											textElem = textElem.replace(
-												new RegExp(searchQuery, "g"),
-												'<span class="pa-highlighted-text pa-highlighted-text-' +
-												widgetID +
-												'">' +
-												searchQuery +
-												"</span>",
-											);
-
-											$(this).html(textElem);
+									$matchedElems.each(function () {
+										if ($(this).is(":visible") && "LI" !== this.tagName) {
+											highlightMatches(this, searchQuery);
 										}
 									});
 								}
-							} else {
-								$textElems.css("filter", "blur(0px)");
-
-								$textElems
-									.find(".pa-highlighted-text-" + widgetID)
-									.removeClass("pa-highlighted-text-" + widgetID);
-								$fadeElems.css("opacity", "1");
 							}
 						}
 
@@ -6147,10 +6159,78 @@
 				$contentWrapper.css("height", maxHeight + "px");
 			}
 
+			function clearHighlights() {
+				$(searchTarget)
+					.find(".pa-highlighted-text-" + widgetID)
+					.each(function () {
+						var parent = this.parentNode;
+
+						parent.replaceChild(
+							document.createTextNode(this.textContent),
+							this,
+						);
+						parent.normalize();
+					});
+			}
+
+			function highlightMatches(elem, query) {
+				if ("" === query) {
+					return;
+				}
+
+				var nodes = elem.childNodes;
+
+				for (var i = 0; i < nodes.length; i++) {
+					var node = nodes[i];
+
+					if (3 !== node.nodeType) {
+						continue;
+					}
+
+					var text = node.nodeValue,
+						lower = text.toLowerCase(),
+						index = lower.indexOf(query);
+
+					if (-1 === index) {
+						continue;
+					}
+
+					var frag = document.createDocumentFragment(),
+						cursor = 0;
+
+					while (-1 !== index) {
+						if (index > cursor) {
+							frag.appendChild(
+								document.createTextNode(text.slice(cursor, index)),
+							);
+						}
+
+						var span = document.createElement("span");
+
+						span.className =
+							"pa-highlighted-text pa-highlighted-text-" + widgetID;
+						span.textContent = text.slice(index, index + query.length);
+						frag.appendChild(span);
+
+						cursor = index + query.length;
+						index = lower.indexOf(query, cursor);
+					}
+
+					if (cursor < text.length) {
+						frag.appendChild(document.createTextNode(text.slice(cursor)));
+					}
+
+					var inserted = frag.childNodes.length;
+
+					elem.replaceChild(frag, node);
+					i += inserted - 1;
+				}
+			}
+
 			function getSlickSettings() {
 				var cols = getComputedStyle($scope[0]).getPropertyValue(
-					"--pa-search-carousel-slides",
-				),
+						"--pa-search-carousel-slides",
+					),
 					prevArrow = settings.arrows
 						? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
 						: "",

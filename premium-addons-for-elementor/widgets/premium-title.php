@@ -265,6 +265,18 @@ class Premium_Title extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'style_notice',
+			array(
+				'raw'             => __( 'Please note that this style removes any styling given to focused word.', 'premium-addons-for-elementor' ),
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition'       => array(
+					'premium_title_style' => 'style9',
+				),
+			)
+		);
+
 		$inline_flex = array( 'style1', 'style2', 'style5', 'style6', 'style7', 'style8', 'style9' );
 
 		$this->add_responsive_control(
@@ -1092,7 +1104,8 @@ class Premium_Title extends Widget_Base {
 				'render_type'  => 'template',
 				'prefix_class' => 'premium-mask-',
 				'condition'    => array(
-					'premium_title_style!' => 'style9',
+					'premium_title_style!'    => array( 'style8', 'style9' ),
+					'gradient_text_switcher!' => 'yes',
 				),
 			)
 		);
@@ -1107,8 +1120,9 @@ class Premium_Title extends Widget_Base {
 					'{{WRAPPER}}.premium-mask-yes .premium-mask-span::after'   => 'background: {{VALUE}};',
 				),
 				'condition'   => array(
-					'mask_switcher'        => 'yes',
-					'premium_title_style!' => 'style9',
+					'mask_switcher'           => 'yes',
+					'premium_title_style!'    => array( 'style8', 'style9' ),
+					'gradient_text_switcher!' => 'yes',
 				),
 			)
 		);
@@ -1140,8 +1154,9 @@ class Premium_Title extends Widget_Base {
 				'prefix_class' => 'premium-mask-',
 				'render_type'  => 'template',
 				'condition'    => array(
-					'mask_switcher'        => 'yes',
-					'premium_title_style!' => 'style9',
+					'mask_switcher'           => 'yes',
+					'premium_title_style!'    => array( 'style8', 'style9' ),
+					'gradient_text_switcher!' => 'yes',
 				),
 			)
 		);
@@ -1156,8 +1171,9 @@ class Premium_Title extends Widget_Base {
 					'{{WRAPPER}} .premium-mask-span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 				'condition'  => array(
-					'mask_switcher'        => 'yes',
-					'premium_title_style!' => 'style9',
+					'mask_switcher'           => 'yes',
+					'premium_title_style!'    => array( 'style8', 'style9' ),
+					'gradient_text_switcher!' => 'yes',
 				),
 			)
 		);
@@ -1171,7 +1187,7 @@ class Premium_Title extends Widget_Base {
 				'separator'    => 'before',
 				'render_type'  => 'template',
 				'condition'    => array(
-					'premium_title_style!'    => 'style9',
+					'premium_title_style!'    => array( 'style8', 'style9' ),
 					'mask_switcher!'          => 'yes',
 					'gradient_text_switcher!' => 'yes',
 					'background_style'        => 'color',
@@ -1374,7 +1390,7 @@ class Premium_Title extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-title-header, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::after' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .premium-title-header, {{WRAPPER}}.premium-title-noise-yes .premium-title-noise-word:not(.premium-title__focused-word)::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-noise-word:not(.premium-title__focused-word)::after' => 'color: {{VALUE}}',
 					'{{WRAPPER}}.premium-title-stroke-yes .premium-title-text' => '-webkit-text-fill-color: {{VALUE}}',
 					'{{WRAPPER}} .premium-title-style8 .premium-title-text[data-animation="shiny"]' => '--base-color: {{VALUE}}',
 				),
@@ -1674,7 +1690,7 @@ class Premium_Title extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%', 'vw', 'custom' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-title-header, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-text::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .premium-title-header, {{WRAPPER}}.premium-title-noise-yes .premium-title-noise-word::before, {{WRAPPER}}.premium-title-noise-yes .premium-title-noise-word::after' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -1742,7 +1758,11 @@ class Premium_Title extends Widget_Base {
 				'label'     => __( 'Glitch Effect', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
-					'noise' => 'yes',
+					'noise'                   => 'yes',
+					'premium_title_style!'    => array( 'style8', 'style9' ),
+					'mask_switcher!'          => 'yes',
+					'gradient_text_switcher!' => 'yes',
+					'background_style'        => 'color',
 				),
 			)
 		);
@@ -1753,10 +1773,14 @@ class Premium_Title extends Widget_Base {
 				'label'     => __( 'Color #1', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => array(
-					'noise' => 'yes',
+					'noise'                   => 'yes',
+					'premium_title_style!'    => array( 'style8', 'style9' ),
+					'mask_switcher!'          => 'yes',
+					'gradient_text_switcher!' => 'yes',
+					'background_style'        => 'color',
 				),
 				'selectors' => array(
-					'{{WRAPPER}}.premium-title-noise-yes .premium-title-text::before' => 'text-shadow: 1px 0 {{VALUE}};',
+					'{{WRAPPER}}.premium-title-noise-yes .premium-title-noise-word::before' => 'text-shadow: 1px 0 {{VALUE}};',
 				),
 			)
 		);
@@ -1767,10 +1791,14 @@ class Premium_Title extends Widget_Base {
 				'label'     => __( 'Color #2', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => array(
-					'noise' => 'yes',
+					'noise'                   => 'yes',
+					'premium_title_style!'    => array( 'style8', 'style9' ),
+					'mask_switcher!'          => 'yes',
+					'gradient_text_switcher!' => 'yes',
+					'background_style'        => 'color',
 				),
 				'selectors' => array(
-					'{{WRAPPER}}.premium-title-noise-yes .premium-title-text::after' => 'text-shadow: -1px 0 {{VALUE}};',
+					'{{WRAPPER}}.premium-title-noise-yes .premium-title-noise-word::after' => 'text-shadow: -1px 0 {{VALUE}};',
 				),
 			)
 		);
@@ -1833,18 +1861,6 @@ class Premium_Title extends Widget_Base {
 		);
 
 		$this->add_control(
-			'minimal_mask_notice',
-			array(
-				'raw'             => __( 'Please note that focused word styling does not work with minimal mask effect', 'premium-addons-for-elementor' ),
-				'type'            => Controls_Manager::RAW_HTML,
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-				'condition'       => array(
-					'mask_switcher' => 'yes',
-				),
-			)
-		);
-
-		$this->add_control(
 			'focused_word_color',
 			array(
 				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
@@ -1854,6 +1870,7 @@ class Premium_Title extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-title-text .premium-title__focused-word' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.premium-title-noise-yes .premium-title__focused-word::before, {{WRAPPER}}.premium-title-noise-yes .premium-title__focused-word::after' => 'color: {{VALUE}}',
 					'{{WRAPPER}}.premium-title-stroke-yes .premium-title__focused-word' => '-webkit-text-fill-color: {{VALUE}}',
 				),
 			)
@@ -2564,7 +2581,7 @@ class Premium_Title extends Widget_Base {
 
 		$selected_style = $settings['premium_title_style'];
 
-		$this->add_render_attribute( 'container', 'class', array( 'premium-title-container', $selected_style ) );
+		$this->add_render_attribute( 'container', 'class', 'premium-title-container' );
 
 		$this->add_render_attribute( 'title', 'class', array( 'premium-title-header', 'premium-title-' . $selected_style ) );
 
@@ -2589,12 +2606,6 @@ class Premium_Title extends Widget_Base {
 		} elseif ( 'style9' === $selected_style ) {
 
 			$this->add_render_attribute( 'title', 'data-blur-delay', $settings['premium_title_delay'] );
-
-		}
-
-		if ( 'yes' === $settings['noise'] ) {
-
-			$this->add_render_attribute( 'premium_title_text', 'data-text', str_replace( array( '{{', '}}' ), '', $settings['premium_title_text'] ) );
 
 		}
 
@@ -2759,7 +2770,28 @@ class Premium_Title extends Widget_Base {
 					<?php endif; ?>
 					<?php
 					if ( 'style9' !== $selected_style ) :
-						$text = str_replace( array( '{{', '}}' ), array( '<span class="premium-title__focused-word">', '</span>' ), $settings['premium_title_text'] );
+						if ( 'yes' === $settings['noise'] ) :
+							$segments = preg_split( '/(\{\{.+?\}\})/u', $settings['premium_title_text'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
+							$text     = '';
+							foreach ( $segments as $segment ) :
+								$is_focused = preg_match( '/^\{\{(.+)\}\}$/u', $segment, $matches );
+								$content    = $is_focused ? $matches[1] : $segment;
+
+								// Keep connective whitespace outside the glitch span so each ghost aligns tightly to its word.
+								preg_match( '/^(\s*)(.*?)(\s*)$/su', $content, $pieces );
+
+								$text .= esc_html( $pieces[1] );
+
+								if ( '' !== $pieces[2] ) :
+									$word_class = $is_focused ? 'premium-title__focused-word premium-title-noise-word' : 'premium-title-noise-word';
+									$text      .= '<span class="' . $word_class . '" data-text="' . esc_attr( $pieces[2] ) . '">' . esc_html( $pieces[2] ) . '</span>';
+								endif;
+
+								$text .= esc_html( $pieces[3] );
+							endforeach;
+						else :
+							$text = str_replace( array( '{{', '}}' ), array( '<span class="premium-title__focused-word">', '</span>' ), $settings['premium_title_text'] );
+						endif;
 						?>
 					<span <?php $this->print_render_attribute_string( 'premium_title_text' ); ?>>
 						<?php echo wp_kses_post( $text ); ?>
