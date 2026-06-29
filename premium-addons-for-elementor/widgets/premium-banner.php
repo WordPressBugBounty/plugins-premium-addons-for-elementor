@@ -793,9 +793,9 @@ class Premium_Banner extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-banner-ib > img' => 'object-fit: {{VALUE}}',
 				),
-				'condition' => array(
-					'premium_banner_custom_height[size]!' => '',
-				),
+				// 'condition' => array(
+				// 'premium_banner_custom_height[size]!' => '',
+				// ),
 			)
 		);
 
@@ -1792,12 +1792,12 @@ class Premium_Banner extends Widget_Base {
 		?>
 		<div <?php $this->print_render_attribute_string( 'banner_inner' ); ?>>
 			<?php if ( 'animation7' === $settings['premium_banner_image_animation'] || 'animation8' === $settings['premium_banner_image_animation'] ) : ?>
-				
+
 				<div class="premium-banner-br premium-banner-bleft premium-banner-brlr"></div>
 				<div class="premium-banner-br premium-banner-bright premium-banner-brlr"></div>
 				<div class="premium-banner-br premium-banner-btop premium-banner-brtb"></div>
 				<div class="premium-banner-br premium-banner-bottom premium-banner-brtb"></div>
-				
+
 			<?php endif; ?>
 			<?php if ( $image_html ) : ?>
 				<?php echo wp_kses_post( $image_html ); ?>

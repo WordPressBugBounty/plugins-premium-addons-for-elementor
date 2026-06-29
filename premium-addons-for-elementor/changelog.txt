@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.11.84 - 29/6/2026 =
+
+- Fixed: Improved code security enforcement in widgets have Mask effect.
+- Fixed: Object Fit option not visible unless Minimum Height is set on desktop in Banner widget.
+
 = 4.11.83 - 28/6/2026 =
 
 - Tweak: Added blur/highlight text effect option in Search Form widget.

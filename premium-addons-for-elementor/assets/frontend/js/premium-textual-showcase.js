@@ -109,18 +109,24 @@
 				"span:not(.premium-title-style7-stripe-wrap):not(.premium-title-img):not(.pa-txt-sc__hov-item)",
 			)
 			.each(function (index, span) {
-				var html = "";
+				var frag = document.createDocumentFragment();
 
 				$(this)
 					.text()
 					.split(" ")
 					.forEach(function (item) {
 						if ("" !== item) {
-							html += ' <span class="premium-mask-span">' + item + "</span>";
+							// Build the word span via textContent so attacker-controlled
+							// characters can never be reparsed as live markup (DOM XSS).
+							frag.appendChild(document.createTextNode(" "));
+							var wordSpan = document.createElement("span");
+							wordSpan.className = "premium-mask-span";
+							wordSpan.textContent = item;
+							frag.appendChild(wordSpan);
 						}
 					});
 
-				$(this).text("").append(html);
+				$(this).text("").append(frag);
 			});
 
 		// Using IntersectionObserverAPI.

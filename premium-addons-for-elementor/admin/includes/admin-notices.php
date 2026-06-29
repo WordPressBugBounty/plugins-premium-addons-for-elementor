@@ -314,14 +314,14 @@ class Admin_Notices {
 
 		if ( 'upgrade' === $type ) {
 			return array(
-				'message' => __( 'Get a <b>FLAT 35% OFF</b> when you upgrade to <b>Premium Addons Pro Lifetime</b>. Use code <b>BFUL2025</b> at checkout – <b>expires soon!</b>', 'premium-addons-for-elementor' ),
+				'message' => __( 'Get a <b>FLAT 30% OFF</b> when you upgrade to <b>Premium Addons Pro Lifetime</b>. Use code <b>BFUL2025</b> at checkout – <b>expires soon!</b>', 'premium-addons-for-elementor' ),
 				'cta'     => __( 'Upgrade Now', 'premium-addons-for-elementor' ),
 			);
 
 		}
 
 		return array(
-			'message' => __( '<b>Cyber Monday – Save Up To $105 on Premium Addons Pro</b>.', 'premium-addons-for-elementor' ),
+			'message' => __( '<b>Cyber Monday – Save Up To 30% on Premium Addons Pro</b>.', 'premium-addons-for-elementor' ),
 			'cta'     => __( 'Catch The Deal', 'premium-addons-for-elementor' ),
 		);
 	}
@@ -571,7 +571,7 @@ class Admin_Notices {
 				array_unshift(
 					$stories['posts'],
 					array(
-						'title' => 'Switch to Premium Addons Pro Lifetime, Pay the Difference & Save 20% Today!',
+						'title' => 'Switch to Premium Addons Pro Lifetime, Pay the Difference & Save 30% Today!',
 						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'summer26-dash-widget', 'summer26' ),
 					)
 				);
