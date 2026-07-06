@@ -57,7 +57,33 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			Addons_Integration::get_instance();
 
+			$this->load_abilities();
+
 			include_once PREMIUM_ADDONS_PATH . 'includes/promotion-pointer.php';
+		}
+
+		/**
+		 * Load AI Abilities
+		 *
+		 * Stands up the bundled MCP server. Gated by the premium-ai-abilities
+		 * switcher and a WordPress 6.9 minimum (Abilities API requirement).
+		 *
+		 * @since 4.11.74
+		 * @access public
+		 *
+		 * @return void
+		 */
+		public function load_abilities() {
+
+			global $wp_version;
+
+			$enabled_elements = \PremiumAddons\Admin\Includes\Admin_Helper::get_enabled_elements();
+
+			if ( empty( $enabled_elements['premium-ai-abilities'] ) || version_compare( $wp_version, '6.9', '<' ) ) {
+				return;
+			}
+
+			Abilities\Bootstrap::get_instance();
 		}
 
 		/**

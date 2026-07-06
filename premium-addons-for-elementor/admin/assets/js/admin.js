@@ -63,6 +63,40 @@
 
 			self.handleWhiteLabelingAction()
 
+			self.initMcpConfig();
+
+			self.initAiAbilities();
+
+		};
+
+		// AI Abilities tab: categories collapse/expand as an accordion.
+		self.initAiAbilities = function () {
+
+			var $section = $('#pa-section-ai-abilities');
+
+			if (!$section.length) {
+				return;
+			}
+
+			$section.on('click', '.pa-mcp-ability-cat-toggle', function () {
+
+				var $btn = $(this),
+					$body = $('#' + $btn.attr('aria-controls')),
+					expanded = 'true' === $btn.attr('aria-expanded');
+
+				if (expanded) {
+					$btn.attr('aria-expanded', 'false');
+					$body.attr('hidden', 'hidden');
+					return;
+				}
+
+				// Accordion: collapse every other category first.
+				$section.find('.pa-mcp-ability-cat-toggle').attr('aria-expanded', 'false');
+				$section.find('.pa-mcp-ability-cat-body').attr('hidden', 'hidden');
+
+				$btn.attr('aria-expanded', 'true');
+				$body.removeAttr('hidden');
+			});
 		};
 
 		// Handle settings form submission
@@ -78,9 +112,22 @@
 							$("#pa_mc_temp").prop("checked", true);
 							self.saveElementsSettings('elements', 'default', true);
 						}
+					} else if ('premium-ai-abilities' === $(this).attr('id')) {
+						$('.pa-ai-mcp-notice').toggle($(this).prop('checked'));
+						self.saveElementsSettings('elements', 'default');
 					} else {
 						self.saveElementsSettings('elements', 'default');
 					}
+				}
+			)
+
+			// Save the enabled state, then reload into the MCP Configuration tab (only registered server-side once the feature is on).
+			$("#pa-features").on(
+				'click',
+				'.pa-ai-mcp-link',
+				function (e) {
+					e.preventDefault();
+					self.saveElementsSettings('elements', 'default', false, settings.mcpConfigURL);
 				}
 			)
 
@@ -441,6 +488,104 @@
 
 		};
 
+		// MCP Configuration tab: copy the connect prompt + switch AI-client tabs.
+		self.initMcpConfig = function () {
+
+			var $section = $('#pa-section-mcp-config');
+
+			if (!$section.length) {
+				return;
+			}
+
+			// Copy text to the clipboard. Uses the async Clipboard API when the page
+			// is a secure context, and falls back to execCommand for admin pages
+			// served over plain http:// (where navigator.clipboard is unavailable).
+			function paMcpCopyToClipboard(text) {
+
+				if (navigator.clipboard && window.isSecureContext) {
+					return navigator.clipboard.writeText(text);
+				}
+
+				return new Promise(function (resolve, reject) {
+
+					var textarea = document.createElement('textarea');
+
+					textarea.value = text;
+					textarea.setAttribute('readonly', '');
+					textarea.style.position = 'fixed';
+					textarea.style.top = '0';
+					textarea.style.left = '0';
+					textarea.style.opacity = '0';
+
+					document.body.appendChild(textarea);
+					textarea.focus();
+					textarea.select();
+
+					var succeeded = false;
+
+					try {
+						succeeded = document.execCommand('copy');
+					} catch (err) {
+						succeeded = false;
+					}
+
+					document.body.removeChild(textarea);
+
+					if (succeeded) {
+						resolve();
+					} else {
+						reject();
+					}
+				});
+			}
+
+			// Copy the connect prompt to the clipboard.
+			$section.on('click', '.pa-mcp-copy', function (e) {
+
+				e.preventDefault();
+
+				var $btn = $(this),
+					target = document.getElementById($btn.attr('data-pa-mcp-copy'));
+
+				if (!target) {
+					return;
+				}
+
+				paMcpCopyToClipboard(target.innerText).then(function () {
+
+					var label = $btn.text();
+
+					$btn.text($btn.attr('data-pa-mcp-copied') || 'Copied!');
+
+					setTimeout(function () {
+						$btn.text(label);
+					}, 1500);
+				}).catch(function () {
+
+					// Last resort: select the text so the user can copy it manually.
+					var range = document.createRange();
+
+					range.selectNodeContents(target);
+
+					var selection = window.getSelection();
+
+					selection.removeAllRanges();
+					selection.addRange(range);
+				});
+			});
+
+			// Swap the connect prompt's client name when an AI-client tab is selected.
+			$section.on('click', '.pa-mcp-client-tab', function () {
+
+				var $tab = $(this);
+
+				$section.find('.pa-mcp-client-tab').removeClass('is-active').attr('aria-selected', 'false');
+				$tab.addClass('is-active').attr('aria-selected', 'true');
+
+				$section.find('.pa-mcp-client-name').text($tab.attr('data-pa-mcp-client'));
+			});
+		};
+
 		self.handleRollBack = function () {
 
 			// Rollback button
@@ -547,7 +692,8 @@
 					},
 					complete: function () {
 						if (redirectURL) {
-							$(location).attr('href', redirectURL);
+							window.location.href = redirectURL;
+							window.location.reload();
 						}
 					}
 

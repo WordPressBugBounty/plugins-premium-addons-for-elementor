@@ -7,6 +7,9 @@ use PremiumAddons\Includes\Helper_Functions;
 
 $elements = array(
 	array(
+		'key' => 'premium-ai-abilities',
+	),
+	array(
 		'key'      => 'premium-mobile-menu',
 		'draw_svg' => true,
 	),

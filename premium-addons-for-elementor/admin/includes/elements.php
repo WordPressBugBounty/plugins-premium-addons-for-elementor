@@ -1463,6 +1463,14 @@ $elements = array(
 				'key'  => 'premium-glassmorphism',
 				'demo' => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-liquid-glass-addon/', 'liquid', 'wp-dash', 'dashboard' ),
 			),
+			array(
+				'key'       => 'premium-ai-abilities',
+				'name'      => 'premium-ai-abilities',
+				'title'     => __( 'AI Abilities', 'premium-addons-for-elementor' ),
+				'demo'      => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/', 'ai-abilities', 'wp-dash', 'dashboard' ),
+				'doc'       => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/', 'ai-abilities', 'wp-dash', 'dashboard' ),
+				'is_global' => true,
+			),
 		),
 	),
 );

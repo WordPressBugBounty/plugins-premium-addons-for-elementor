@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.84
+Stable Tag: 4.11.85
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -44,6 +44,9 @@ It has Elementor elements like **Carousel, Blog Posts List/Slider, Mega Menu Bui
 
 ### Performance and Speed Improvements
 Premium Addons for Elementor is now much faster than ever. Only the required JS files will be loaded on your page to boost your page loading speed and site performance. All the editor loading issues have been fixed to make your site faster and minimize the time it takes for Elementor editor to load.
+
+### New: AI Abilities
+Connect AI assistants like Claude and ChatGPT to your website using Premium Addons AI Abilities. Built on the WordPress Abilities API and the Model Context Protocol (MCP), it exposes a set of secure, permission-based abilities that let AI agents discover your Elementor pages and templates, read global settings, create new pages, manage the plugin's widgets and settings, and more. New abilities are added regularly with every release, expanding what AI agents can do on your website over time. Requires WordPress 6.9 or higher.
 
 ### New: Liquid Glass Addon
 Select between 6 attractive liquid glass and glassmorphism effects to be applied on any Elementor widget or container. It has also been added to be applied on specific parts inside our elements. [Check it out now!](https://premiumaddons.com/elementor-liquid-glass-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=glass).
@@ -255,6 +258,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.85 - 6/7/2026 =
+
+- New: Introducing AI Abilities integration to allow AI assistants to connect your site and perform actions - requires WordPress v6.9 or higher.
+- Fixed: On Side skin not displayed as column on mobile extra breakpoints in Blog widget.
 
 = 4.11.84 - 29/6/2026 =
 

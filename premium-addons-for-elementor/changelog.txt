@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.11.85 - 6/7/2026 =
+
+- New: Added AI Abilities integration using the WordPress Abilities API - requires WordPress v6.9 or higher.
+- Fixed: On Side skin not displayed as column on mobile extra breakpoints in Blog widget.
+
 = 4.11.84 - 29/6/2026 =
 
 - Fixed: Improved code security enforcement in widgets have Mask effect.

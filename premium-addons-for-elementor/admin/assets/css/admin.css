@@ -78,7 +78,8 @@
 }
 
 .pa-control.slider,
-.pa-control.pro-slider {
+.pa-control.pro-slider,
+.pa-control.pa-wp-ver-slider {
 	position: absolute;
 	cursor: pointer;
 	top: 0;
@@ -92,7 +93,8 @@
 }
 
 .pa-control.slider::before,
-.pa-control.pro-slider::before {
+.pa-control.pro-slider::before,
+.pa-control.pa-wp-ver-slider::before {
 	position: absolute;
 	content: "";
 	inset-inline-start: 3px;
@@ -129,19 +131,22 @@
 }
 
 .pa-control.slider.round,
-.pa-control.pro-slider.round {
+.pa-control.pro-slider.round,
+.pa-control.pa-wp-ver-slider.round {
 	border-radius: 34px;
 	background-image: -webkit-linear-gradient(top, #cfcfcf 0%, #dbdbdb 100%);
 	background-image: linear-gradient(180deg, #cfcfcf 0%, #dbdbdb 100%);
 }
 
 .pa-control.slider.round::before,
-.pa-control.pro-slider.round::before {
+.pa-control.pro-slider.round::before,
+.pa-control.pa-wp-ver-slider.round::before {
 	border-radius: 50%;
 }
 
 #pa-settings .switch input:disabled + .pro-slider::after,
-#pa-features-settings .switch input:disabled + .pro-slider::after {
+#pa-features-settings .switch input:disabled + .pro-slider::after,
+#pa-features-settings .switch input:disabled + .pa-wp-ver-slider::after {
 	position: absolute;
 	font-family: Dashicons, sans-serif;
 	content: "\f160";
@@ -317,7 +322,7 @@
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	align-items: center;
-	font-size: 14px;
+	font-size: 13px;
 	line-height: 1.8em;
 	position: relative;
 	color: #252c59;
@@ -1116,6 +1121,13 @@
 	box-shadow: none;
 }
 
+/* The MCP notice link flows inline in the card body, not as the full-card demo overlay above. */
+.pa-section-outer-wrap .pa-ai-mcp-link {
+	position: static;
+	width: auto;
+	height: auto;
+}
+
 /*
 * Integrations
 */
@@ -1707,6 +1719,19 @@
 
 .pa-dash-addons::before {
 	content: "\e952";
+}
+
+.pa-settings-tabs-list .pa-dash-mcp-config::before,
+.pa-settings-tabs-list .pa-dash-ai-abilities::before {
+	font-family: dashicons;
+}
+
+.pa-settings-tabs-list .pa-dash-mcp-config::before {
+	content: "\f112";
+}
+
+.pa-settings-tabs-list .pa-dash-ai-abilities::before {
+	content: "\f339";
 }
 
 /*
@@ -3415,8 +3440,8 @@
 }
 
 .rtl .slider.round,
-.rtl .pro-slider.round {
-	background-image: -webkit-linear-gradient(top, #cfcfcf 0%, #dbdbdb 100%);
+.rtl .pro-slider.round,
+.rtl .pa-wp-ver-slider.round {
 	background-image: linear-gradient(-180deg, #cfcfcf 0%, #dbdbdb 100%);
 }
 
@@ -3468,4 +3493,298 @@
 
 .rtl #papro-license-key {
 	border-radius: 0 10px 10px 0;
+}
+
+/*
+* MCP Configuration Tab
+*/
+.pa-mcp-config {
+	max-width: 920px;
+}
+
+.pa-mcp-step-heading {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 12px;
+	margin: 0 0 12px;
+	font-size: 20px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.pa-mcp-step-badge {
+	-js-display: flex;
+	display: -webkit-inline-box;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex: 0 0 auto;
+	flex: 0 0 auto;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: #1d2327;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.pa-mcp-step-desc {
+	margin: 0 0 16px;
+	max-width: 640px;
+	color: #50575e;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.pa-mcp-steps {
+	margin: 0 0 14px 18px;
+	max-width: 640px;
+	color: #50575e;
+	font-size: 14px;
+	line-height: 1.7;
+}
+
+.pa-mcp-steps li {
+	margin-bottom: 6px;
+}
+
+.pa-mcp-config .pa-mcp-field-label {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 600;
+}
+
+.pa-mcp-config input.regular-text {
+	max-width: 340px;
+}
+
+/* Align the paste-form result notices with the input field's left edge. */
+.pa-mcp-config form .notice {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.pa-mcp-config .description {
+	margin-top: 4px;
+	color: #646970;
+}
+
+.pa-mcp-divider {
+	margin: 28px 0 18px;
+	border: 0;
+	border-top: 1px solid #dcdcde;
+}
+
+/*
+* MCP Configuration — Connect Your AI Client
+*/
+.pa-mcp-connect {
+	margin-top: 4px;
+}
+
+.pa-mcp-clients-nav {
+	-js-display: flex;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0 0 16px;
+}
+
+.pa-mcp-client-tab {
+	padding: 6px 14px;
+	border: 1px solid #c3c4c7;
+	border-radius: 16px;
+	background: #fff;
+	color: #50575e;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	cursor: pointer;
+	-webkit-transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+	transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.pa-mcp-client-tab:hover {
+	border-color: #2271b1;
+	color: #2271b1;
+}
+
+.pa-mcp-client-tab:focus {
+	outline: 2px solid #2271b1;
+	outline-offset: 1px;
+}
+
+.pa-mcp-client-tab.is-active {
+	border-color: #1d2327;
+	background: #1d2327;
+	color: #fff;
+}
+
+.pa-mcp-connect-prompt {
+	margin: 0 0 12px;
+	padding: 16px;
+	max-height: 320px;
+	overflow: auto;
+	background: #1d2327;
+	border-radius: 6px;
+	color: #f0f0f1;
+	font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+	font-size: 13px;
+	line-height: 1.6;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.pa-mcp-connect-prompt .pa-mcp-client-name {
+	color: #72aee6;
+	font-weight: 600;
+}
+
+.pa-mcp-connect-note {
+	margin-top: 10px;
+}
+
+/* AI Abilities tab: abilities grouped by category (accordion). */
+.pa-mcp-ability-cat {
+	margin-top: 16px;
+	border: 1px solid #ededed;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.pa-mcp-ability-cat-title {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.pa-mcp-ability-cat-toggle {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	gap: 12px;
+	width: 100%;
+	margin: 0;
+	padding: 16px 18px;
+	background: #f7f7f7;
+	border: 0;
+	font: inherit;
+	color: inherit;
+	text-align: left;
+	cursor: pointer;
+}
+
+.pa-mcp-ability-cat-toggle:hover,
+.pa-mcp-ability-cat-toggle:focus {
+	background: #f0f0f0;
+}
+
+.pa-mcp-ability-cat-icon {
+	-ms-flex-negative: 0;
+	flex-shrink: 0;
+	width: 8px;
+	height: 8px;
+	border-right: 2px solid #50575e;
+	border-bottom: 2px solid #50575e;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	-webkit-transition: -webkit-transform 0.15s ease;
+	transition: transform 0.15s ease;
+}
+
+.pa-mcp-ability-cat-toggle[aria-expanded="true"] .pa-mcp-ability-cat-icon {
+	-webkit-transform: rotate(-135deg);
+	-ms-transform: rotate(-135deg);
+	transform: rotate(-135deg);
+}
+
+.pa-mcp-ability-cat-body {
+	padding: 16px 18px;
+}
+
+.pa-mcp-ability-cat-body[hidden] {
+	display: none;
+}
+
+.pa-mcp-ability-cat-desc {
+	margin: 0 0 14px;
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.pa-mcp-ability-list {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+@media (max-width: 782px) {
+	.pa-mcp-ability-list {
+		grid-template-columns: 1fr;
+	}
+}
+
+.pa-mcp-ability {
+	padding: 16px 18px;
+	border-radius: 10px;
+	background: #f7f7f7;
+	border: 1px solid #ededed;
+}
+
+.pa-mcp-ability-head {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 6px;
+}
+
+.pa-mcp-ability-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.pa-mcp-ability-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 10px;
+	background: #e5f1e5;
+	color: #2c7a2c;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.pa-mcp-ability-desc {
+	margin: 0;
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.6;
 }

@@ -1,0 +1,150 @@
+<?php
+/**
+ * Ability: Create an Elementor-enabled page or post.
+ *
+ * A write ability in the "page-post-management" category. Creates a new
+ * WordPress page or post with Elementor enabled. A thin adapter over core
+ * WordPress + Elementor: there is no reusable Premium Addons creation service —
+ * the live-editor insert path is AJAX-coupled and elementor_library-only — so
+ * this inserts the post via wp_insert_post (seeding the _elementor_edit_mode and
+ * _elementor_template_type meta) and then initializes the Elementor document
+ * with an empty element tree. The document save is what writes _elementor_data /
+ * _elementor_version and triggers CSS regeneration; raw meta alone does not fully
+ * enable Elementor. Registered from PremiumAddons\Includes\Abilities\Bootstrap on
+ * the wp_abilities_api_init hook.
+ *
+ * @package PremiumAddons
+ */
+
+namespace PremiumAddons\Includes\Abilities\PagePostManagement;
+
+use PremiumAddons\Admin\Includes\Admin_Helper;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
+wp_register_ability(
+	'premium-addons/create-page',
+	array(
+		'label'               => __( 'Create Elementor Page', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Creates a new WordPress page or post with Elementor enabled, then initializes it as an empty Elementor document (ready to edit in the Elementor editor). Returns the new post ID plus its Elementor edit URL and preview URL. Each call creates a new post.', 'premium-addons-for-elementor' ),
+		'category'            => 'pa-page-post-management',
+		'input_schema'        => array(
+			'type'                 => 'object',
+			'additionalProperties' => false,
+			'required'             => array( 'title' ),
+			'properties'           => array(
+				'title'     => array(
+					'type'        => 'string',
+					'description' => __( 'The title of the new page or post.', 'premium-addons-for-elementor' ),
+				),
+				'status'    => array(
+					'type'        => 'string',
+					'enum'        => array( 'draft', 'publish' ),
+					'default'     => 'draft',
+					'description' => __( 'The post status. Defaults to draft.', 'premium-addons-for-elementor' ),
+				),
+				'post_type' => array(
+					'type'        => 'string',
+					'enum'        => array( 'page', 'post' ),
+					'default'     => 'page',
+					'description' => __( 'The post type to create. Defaults to page.', 'premium-addons-for-elementor' ),
+				),
+				'template'  => array(
+					'type'        => 'string',
+					'description' => __( 'Optional page-template slug to assign (e.g. elementor_canvas, elementor_header_footer). Omit to use the theme default.', 'premium-addons-for-elementor' ),
+				),
+			),
+		),
+		'output_schema'       => array(
+			'type'        => 'object',
+			'description' => __( 'The created post and its Elementor URLs.', 'premium-addons-for-elementor' ),
+			'properties'  => array(
+				'post_id'     => array(
+					'type'        => 'integer',
+					'description' => __( 'The ID of the created post.', 'premium-addons-for-elementor' ),
+				),
+				'title'       => array(
+					'type'        => 'string',
+					'description' => __( 'The title of the created post.', 'premium-addons-for-elementor' ),
+				),
+				'edit_url'    => array(
+					'type'        => 'string',
+					'description' => __( 'The Elementor editor URL for the new post.', 'premium-addons-for-elementor' ),
+				),
+				'preview_url' => array(
+					'type'        => 'string',
+					'description' => __( 'The preview URL for the new post.', 'premium-addons-for-elementor' ),
+				),
+			),
+		),
+		'execute_callback'    => function ( $input = null ) {
+
+			if ( ! class_exists( '\Elementor\Plugin' ) ) {
+				return new \WP_Error(
+					'premium_addons_elementor_missing',
+					__( 'Elementor is not active.', 'premium-addons-for-elementor' )
+				);
+			}
+
+			$title = isset( $input['title'] ) ? trim( $input['title'] ) : '';
+
+			if ( '' === $title ) {
+				return new \WP_Error(
+					'premium_addons_missing_title',
+					__( 'A title is required to create a page.', 'premium-addons-for-elementor' )
+				);
+			}
+
+			$status    = ! empty( $input['status'] ) ? $input['status'] : 'draft';
+			$post_type = ! empty( $input['post_type'] ) ? $input['post_type'] : 'page';
+
+			$post_args = array(
+				'post_title'  => $title,
+				'post_status' => $status,
+				'post_type'   => $post_type,
+				'meta_input'  => array(
+					'_elementor_edit_mode'     => 'builder',
+					'_elementor_template_type' => 'wp-' . $post_type,
+				),
+			);
+
+			if ( ! empty( $input['template'] ) ) {
+				$post_args['page_template'] = $input['template'];
+			}
+
+			$post_id = wp_insert_post( $post_args, true );
+
+			if ( is_wp_error( $post_id ) ) {
+				return $post_id;
+			}
+
+			// Initialize the Elementor document with an empty element tree so
+			// _elementor_data / _elementor_version are written and CSS regenerates.
+			$document = \Elementor\Plugin::$instance->documents->get( $post_id );
+
+			if ( $document ) {
+				$document->save( array( 'elements' => array() ) );
+			}
+
+			return array(
+				'post_id'     => $post_id,
+				'title'       => get_the_title( $post_id ),
+				'edit_url'    => $document ? $document->get_edit_url() : '',
+				'preview_url' => 'publish' === $status ? get_permalink( $post_id ) : get_preview_post_link( $post_id ),
+			);
+		},
+		'permission_callback' => function () {
+			return Admin_Helper::check_user_can( 'edit_pages' );
+		},
+		'meta'                => array(
+			'show_in_rest' => true,
+			'annotations'  => array(
+				'readonly'    => false,
+				'destructive' => false,
+				'idempotent'  => false,
+			),
+		),
+	)
+);

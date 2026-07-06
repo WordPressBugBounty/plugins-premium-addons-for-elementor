@@ -152,11 +152,12 @@ class Admin_Helper {
 	 * @since 2.6.8
 	 *
 	 * @param string $action action.
+	 * @param mixed  ...$args optional further parameters, typically an object ID (for meta capabilities like edit_post).
 	 *
 	 * @return boolean
 	 */
-	public static function check_user_can( $action ) {
-		return current_user_can( $action );
+	public static function check_user_can( $action, ...$args ) {
+		return current_user_can( $action, ...$args );
 	}
 
 	/**
@@ -311,6 +312,7 @@ class Admin_Helper {
 				'settings'               => array(
 					'ajaxurl'           => admin_url( 'admin-ajax.php' ),
 					'nonce'             => wp_create_nonce( 'pa-settings-tab' ),
+					'mcpConfigURL'      => admin_url( 'admin.php?page=' . self::$page_slug . '#tab=mcp-config' ),
 					'unused_nonce'      => wp_create_nonce( 'pa-disable-unused' ),
 					'generate_nonce'    => wp_create_nonce( 'pa-generate-nonce' ),
 					'site_cursor_nonce' => wp_create_nonce( 'pa-site-cursor-nonce' ),
@@ -657,7 +659,7 @@ class Admin_Helper {
 			'addons'          => array(
 				'id'       => 'addons',
 				'slug'     => $slug . '#tab=addons',
-				'title'    => __( 'Global Addons', 'premium-addons-for-elementor' ),
+				'title'    => __( 'Features', 'premium-addons-for-elementor' ),
 				'href'     => '#tab=addons',
 				'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/addons',
 			),
@@ -690,6 +692,35 @@ class Admin_Helper {
 				'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/info',
 			),
 		);
+
+		// AI Abilities dashboard tabs — only when the feature is enabled. Inserted
+		// right after the Integrations tab so they sit with the other connectivity
+		// settings instead of after System Info / License.
+		if ( ! empty( self::get_enabled_elements()['premium-ai-abilities'] ) ) {
+
+			$position = array_search( 'integrations', array_keys( self::$tabs ), true ) + 1;
+
+			self::$tabs = array_merge(
+				array_slice( self::$tabs, 0, $position, true ),
+				array(
+					'mcp-config'   => array(
+						'id'       => 'mcp-config',
+						'slug'     => $slug . '#tab=mcp-config',
+						'title'    => __( 'MCP Configuration', 'premium-addons-for-elementor' ),
+						'href'     => '#tab=mcp-config',
+						'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp-config',
+					),
+					'ai-abilities' => array(
+						'id'       => 'ai-abilities',
+						'slug'     => $slug . '#tab=ai-abilities',
+						'title'    => __( 'AI Abilities', 'premium-addons-for-elementor' ),
+						'href'     => '#tab=ai-abilities',
+						'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/ai-abilities',
+					),
+				),
+				array_slice( self::$tabs, $position, null, true )
+			);
+		}
 
 		if ( ! Helper_Functions::check_papro_version() ) {
 
@@ -945,13 +976,14 @@ class Admin_Helper {
 
 		$defaults = self::get_default_keys();
 
-		$elements = array_fill_keys( array_keys( array_intersect_key( $settings, $defaults ) ), true );
+		// Full-replace semantics: a key present in the posted form is enabled,
+		// every other known key is disabled.
+		$enabled_map = array();
+		foreach ( $defaults as $key => $value ) {
+			$enabled_map[ $key ] = isset( $settings[ $key ] );
+		}
 
-		update_option( 'pa_save_settings', $elements );
-
-		// Clear cache and static property.
-		wp_cache_delete( 'pa_elements', 'premium_addons' );
-		self::$enabled_elements = null;
+		self::persist_elements_settings( $enabled_map );
 
 		// Save the global addons only if it's the second run.
 		$is_second_run = get_option( 'pa_complete_wizard' ) ? false : true;
@@ -961,8 +993,6 @@ class Admin_Helper {
 			update_option( 'pa_complete_wizard', false );
 		}
 
-		// Remove all files in the dynamic assets folder.
-		Assets_Manager::delete_assets_files();
 		wp_send_json_success();
 	}
 
@@ -986,12 +1016,161 @@ class Admin_Helper {
 
 		$features = array();
 		foreach ( $global_addons as $feature ) {
-			if ( isset( $settings[ $feature ] ) && 'on' === $settings[ $feature ] ) {
+			if ( ! empty( $settings[ $feature ] ) ) {
 				$features[] = $feature;
 			}
 		}
 
 		update_option( 'pa_saved_features', $features );
+	}
+
+	/**
+	 * Persist the elements settings option.
+	 *
+	 * Shared low-level writer for the enabled-elements store (pa_save_settings):
+	 * stores the option in its canonical shape (only enabled keys, each => true),
+	 * clears the cache, and purges the generated dynamic assets. Both the AJAX
+	 * save handler and the update_elements_settings() service funnel through here
+	 * so the stored shape and its side-effects never drift.
+	 *
+	 * @since 4.11.74
+	 * @access private
+	 *
+	 * @param array $enabled_map full key => bool map of every known elements key.
+	 */
+	private static function persist_elements_settings( $enabled_map ) {
+
+		$elements = array_fill_keys( array_keys( array_filter( $enabled_map ) ), true );
+
+		update_option( 'pa_save_settings', $elements );
+
+		// Clear cache and static property.
+		wp_cache_delete( 'pa_elements', 'premium_addons' );
+		self::$enabled_elements = null;
+
+		// Remove all files in the dynamic assets folder.
+		Assets_Manager::delete_assets_files();
+	}
+
+	/**
+	 * Update elements settings.
+	 *
+	 * Read-merge-write service for the enabled-elements store (widgets, addons,
+	 * global features). Reads the current normalized state, overlays the passed
+	 * partial change set (keys it does not own are ignored and reported back),
+	 * persists the result, and recomputes the saved global-features option.
+	 * Untouched keys keep their current values.
+	 *
+	 * @since 4.11.74
+	 * @access public
+	 *
+	 * @param array $changes key => bool partial change set.
+	 *
+	 * @return array {
+	 *     @type array $updated List of { key, value, previous_value } for owned keys.
+	 *     @type array $unknown Keys this store does not own.
+	 * }
+	 */
+	public static function update_elements_settings( $changes ) {
+
+		$current = self::get_enabled_elements();
+
+		$owned   = array_intersect_key( $changes, $current );
+		$unknown = array_keys( array_diff_key( $changes, $current ) );
+
+		if ( empty( $owned ) ) {
+			return array(
+				'updated' => array(),
+				'unknown' => $unknown,
+			);
+		}
+
+		$updated = array();
+		$merged  = $current;
+
+		foreach ( $owned as $key => $value ) {
+
+			$value = is_bool( $value ) ? $value : filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+
+			$updated[]      = array(
+				'key'            => $key,
+				'value'          => $value,
+				'previous_value' => $current[ $key ],
+			);
+			$merged[ $key ] = $value;
+		}
+
+		self::persist_elements_settings( $merged );
+
+		self::update_global_addons_option( $merged );
+
+		return array(
+			'updated' => $updated,
+			'unknown' => $unknown,
+		);
+	}
+
+	/**
+	 * Update integrations settings.
+	 *
+	 * Read-merge-write service for the maps/integrations store
+	 * (pa_maps_save_settings). Overlays the passed partial change set onto the
+	 * current settings — whitelisting and type-sanitizing each key — then writes
+	 * the result and clears the cache. Keys outside the whitelist are ignored and
+	 * reported back. Untouched keys keep their current values.
+	 *
+	 * @since 4.11.74
+	 * @access public
+	 *
+	 * @param array $changes key => value partial change set.
+	 *
+	 * @return array {
+	 *     @type array $updated List of { key, value, previous_value } for owned keys.
+	 *     @type array $unknown Keys this store does not own.
+	 * }
+	 */
+	public static function update_integrations_settings( $changes ) {
+
+		$int_keys  = array( 'premium-map-disable-api', 'premium-map-cluster', 'premium-wp-optimize-exclude', 'is-beta-tester' );
+		$whitelist = array_merge( $int_keys, array( 'premium-map-api', 'premium-youtube-api', 'premium-map-locale' ) );
+
+		$current = self::get_integrations_settings();
+
+		$owned   = array_intersect_key( $changes, array_flip( $whitelist ) );
+		$unknown = array_keys( array_diff_key( $changes, array_flip( $whitelist ) ) );
+
+		if ( empty( $owned ) ) {
+			return array(
+				'updated' => array(),
+				'unknown' => $unknown,
+			);
+		}
+
+		$updated = array();
+		$merged  = $current;
+
+		foreach ( $owned as $key => $value ) {
+
+			$value = in_array( $key, $int_keys, true ) ? (int) (bool) $value : sanitize_text_field( $value );
+
+			$updated[]      = array(
+				'key'            => $key,
+				'value'          => $value,
+				'previous_value' => $current[ $key ],
+			);
+			$merged[ $key ] = $value;
+		}
+
+		update_option( 'pa_maps_save_settings', $merged );
+
+		// Clear cache and static property.
+		wp_cache_delete( 'pa_integrations', 'premium_addons' );
+		self::$integrations_settings = null;
+
+		return array(
+			'updated' => $updated,
+			'unknown' => $unknown,
+		);
 	}
 
 	/**
@@ -1016,21 +1195,19 @@ class Admin_Helper {
 
 		parse_str( sanitize_text_field( wp_unslash( $_POST['fields'] ) ), $settings );
 
-		$new_settings = array(
-			'premium-map-api'             => sanitize_text_field( $settings['premium-map-api'] ),
-			'premium-youtube-api'         => sanitize_text_field( $settings['premium-youtube-api'] ),
-			'premium-map-disable-api'     => intval( $settings['premium-map-disable-api'] ? 1 : 0 ),
-			'premium-map-cluster'         => intval( $settings['premium-map-cluster'] ? 1 : 0 ),
-			'premium-wp-optimize-exclude' => intval( $settings['premium-wp-optimize-exclude'] ? 1 : 0 ),
-			'premium-map-locale'          => sanitize_text_field( $settings['premium-map-locale'] ),
-			'is-beta-tester'              => intval( $settings['is-beta-tester'] ? 1 : 0 ),
+		// Pass the full whitelist as a change set; the service whitelists,
+		// type-sanitizes and persists. Absent checkbox keys resolve to 0.
+		$changes = array(
+			'premium-map-api'             => $settings['premium-map-api'] ?? '',
+			'premium-youtube-api'         => $settings['premium-youtube-api'] ?? '',
+			'premium-map-disable-api'     => $settings['premium-map-disable-api'] ?? '',
+			'premium-map-cluster'         => $settings['premium-map-cluster'] ?? '',
+			'premium-wp-optimize-exclude' => $settings['premium-wp-optimize-exclude'] ?? '',
+			'premium-map-locale'          => $settings['premium-map-locale'] ?? '',
+			'is-beta-tester'              => $settings['is-beta-tester'] ?? '',
 		);
 
-		update_option( 'pa_maps_save_settings', $new_settings );
-
-		// Clear cache and static property.
-		wp_cache_delete( 'pa_integrations', 'premium_addons' );
-		self::$integrations_settings = null;
+		self::update_integrations_settings( $changes );
 
 		wp_send_json_success( $settings );
 	}
@@ -1090,6 +1267,9 @@ class Admin_Helper {
 		$default_keys = array_fill_keys( $keys, true );
 
 		$default_keys['pa_mc_temp'] = false;
+
+		// AI Abilities is opt-in: it must stay OFF until the user enables it.
+		$default_keys['premium-ai-abilities'] = false;
 
 		return $default_keys;
 	}
@@ -1244,7 +1424,7 @@ class Admin_Helper {
 	 * @since 3.20.9
 	 * @access public
 	 *
-	 * @return array $enabled_keys enabled elements
+	 * @return array $enabled_keys enabled elements as a key => bool map (true = enabled, false = disabled).
 	 */
 	public static function get_enabled_elements() {
 
@@ -1265,12 +1445,15 @@ class Admin_Helper {
 
 		$enabled_keys = get_option( 'pa_save_settings', $defaults );
 
+		// Keys that default to OFF and must only turn on when the saved option says so.
+		$opt_in_keys = array( 'pa_mc_temp', 'premium-ai-abilities' );
+
 		foreach ( $defaults as $key => $value ) {
 
-			if ( 'pa_mc_temp' !== $key && ! isset( $enabled_keys[ $key ] ) ) {
-				$defaults[ $key ] = 0;
-			} elseif ( 'pa_mc_temp' === $key && isset( $enabled_keys[ $key ] ) && $enabled_keys[ $key ] ) {
-				$defaults[ $key ] = 1;
+			if ( ! in_array( $key, $opt_in_keys, true ) && ! isset( $enabled_keys[ $key ] ) ) {
+				$defaults[ $key ] = false;
+			} elseif ( in_array( $key, $opt_in_keys, true ) ) {
+				$defaults[ $key ] = ( isset( $enabled_keys[ $key ] ) && $enabled_keys[ $key ] ) ? true : false;
 			}
 		}
 
@@ -1674,6 +1857,31 @@ class Admin_Helper {
 
 		$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
 
+		$result = self::subscribe_newsletter_request( $email );
+
+		wp_send_json_success( $result['response'] );
+	}
+
+	/**
+	 * Subscribe Newsletter Request.
+	 *
+	 * Pure newsletter-subscribe service: sends the email to the Premium Addons
+	 * MailChimp endpoint and returns the decoded response. Shared by the AJAX
+	 * handler and the premium-addons/subscribe-newsletter ability so both hit
+	 * the exact same remote call and never drift.
+	 *
+	 * @since 4.11.74
+	 * @access public
+	 *
+	 * @param string $email subscriber email address.
+	 *
+	 * @return array {
+	 *     @type bool  $success  Whether the request reached the endpoint with an HTTP 200.
+	 *     @type array $response Decoded remote response body ( [] when unavailable ).
+	 * }
+	 */
+	public static function subscribe_newsletter_request( $email ) {
+
 		$api_url = 'https://premiumaddons.com/wp-json/mailchimp/v2/add';
 
 		$request = add_query_arg(
@@ -1694,7 +1902,10 @@ class Admin_Helper {
 		$body = wp_remote_retrieve_body( $response );
 		$body = json_decode( $body, true );
 
-		wp_send_json_success( $body );
+		return array(
+			'success'  => ! is_wp_error( $response ) && 200 === (int) wp_remote_retrieve_response_code( $response ),
+			'response' => is_array( $body ) ? $body : array(),
+		);
 	}
 
 	/**

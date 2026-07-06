@@ -722,6 +722,26 @@ class Assets_Manager {
 			wp_send_json_error( __( 'You are not allowed to do this action', 'premium-addons-for-elementor' ) );
 		}
 
+		self::clear_dynamic_assets( $id );
+	}
+
+	/**
+	 * Clear Dynamic Assets.
+	 *
+	 * Pure dynamic-assets clearer: clears Elementor's file cache, deletes the
+	 * generated asset files (site-wide when $id is empty, otherwise for a single
+	 * post) and purges the LiteSpeed cache. Shared by clear_dynamic_assets_data()
+	 * (AJAX, permission-checked) and the premium-addons/clear-dynamic-assets
+	 * ability (permission-gated via its permission_callback) so the two never
+	 * drift.
+	 *
+	 * @since 4.11.74
+	 * @access public
+	 *
+	 * @param string $id post ID. Empty clears the assets site-wide.
+	 */
+	public static function clear_dynamic_assets( $id = '' ) {
+
 		if ( Helper_Functions::check_elementor_version() ) {
 			Plugin::$instance->files_manager->clear_cache();
 		}
@@ -730,10 +750,10 @@ class Assets_Manager {
 			delete_post_meta( $id, self::ASSETS_KEY );
 		}
 
-		// Purge All LS Cache
+		// Purge All LS Cache.
 		do_action( 'litespeed_purge_all', 'Premium Addons for Elementor' );
 
-		$this->delete_assets_files( $id );
+		self::delete_assets_files( $id );
 	}
 
 	/**
