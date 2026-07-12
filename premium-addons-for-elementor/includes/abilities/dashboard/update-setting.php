@@ -1,15 +1,8 @@
 <?php
 /**
- * Ability: Update Premium Addons settings.
+ * Update Setting.
  *
- * A write ability in the "dashboard" category. Enables/disables widgets, addons
- * and global features, and/or changes maps & integration settings, in a single
- * batched call. Thin adapter over the read-merge-write services on Admin_Helper
- * (update_elements_settings / update_integrations_settings) — the same services
- * the dashboard's save AJAX handlers use, so the ability, REST and UI never
- * drift. Untouched keys keep their current values. White-label settings (Pro)
- * are out of scope. Registered from PremiumAddons\Includes\Abilities\Bootstrap
- * on the wp_abilities_api_init hook.
+ * Enables or disables Premium Addons widgets, addons and features.
  *
  * @package PremiumAddons
  */
@@ -26,7 +19,7 @@ wp_register_ability(
 	'premium-addons/update-setting',
 	array(
 		'label'               => __( 'Update Premium Addons Settings', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Enables or disables one or more Premium Addons widgets, addons or global features, and/or changes maps & integration settings, in a single batched call. Untouched keys keep their current values. Widget/addon/feature keys take a boolean value; integration keys take their typed value. White-label settings are not writable here.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Enables or disables Premium Addons widgets and features, or updates integration settings.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-dashboard',
 		'input_schema'        => array(
 			'type'                 => 'object',

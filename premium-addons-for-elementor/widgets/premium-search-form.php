@@ -535,7 +535,7 @@ class Premium_Search_Form extends Widget_Base {
 		$this->add_control(
 			'custom_posts_filter',
 			array(
-				'label'              => __( 'Posts', 'premium-addons-for-elementor' ),
+				'label'              => __( 'Exclude Items', 'premium-addons-for-elementor' ),
 				'type'               => Premium_Post_Filter::TYPE,
 				'render_type'        => 'template',
 				'label_block'        => true,

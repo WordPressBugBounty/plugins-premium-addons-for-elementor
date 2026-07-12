@@ -1,13 +1,8 @@
 <?php
 /**
- * Ability: Get Premium Addons settings.
+ * Get Settings.
  *
- * A read-only ability in the "dashboard" category. Aggregates the plugin's
- * dashboard settings — widget/addon/global-feature toggles, maps & integration
- * settings, and (when Premium Addons Pro is active) white-label settings — into
- * a single typed response. Thin adapter over the existing cache-aware getters;
- * it never reads the raw options directly. Registered from
- * PremiumAddons\Includes\Abilities\Bootstrap on the wp_abilities_api_init hook.
+ * Lists the Premium Addons dashboard settings and their current values.
  *
  * @package PremiumAddons
  */
@@ -25,7 +20,7 @@ wp_register_ability(
 	'premium-addons/get-settings',
 	array(
 		'label'               => __( 'Get Premium Addons Settings', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Lists all Premium Addons dashboard settings and their values: widget/addon/global-feature toggles, maps & integration settings, and white-label settings (white-label is empty unless Premium Addons Pro is active).', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Lists all Premium Addons settings and their current values.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-dashboard',
 		'output_schema'       => array(
 			'type'        => 'object',

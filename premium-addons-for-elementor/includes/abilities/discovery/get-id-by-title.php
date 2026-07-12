@@ -1,14 +1,8 @@
 <?php
 /**
- * Ability: Get post/page ID by title.
+ * Get ID by Title.
  *
- * A read-only ability in the "discovery" category. Resolves any post or page to
- * its ID by its title. A thin adapter over core WordPress: there is no reusable
- * Premium Addons resolver — Premium_Template_Tags::get_id_by_title() is hardwired
- * to the elementor_library post type and AJAX_Helper::get_posts_list() is
- * AJAX-coupled and returns whole lists — so this queries WP_Query directly.
- * Never get_page_by_title(): deprecated since WordPress 6.2. Registered from
- * PremiumAddons\Includes\Abilities\Bootstrap on the wp_abilities_api_init hook.
+ * Finds the ID of a page or post from its title.
  *
  * @package PremiumAddons
  */
@@ -25,7 +19,7 @@ wp_register_ability(
 	'premium-addons/get-id-by-title',
 	array(
 		'label'               => __( 'Get Post/Page ID by Title', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Resolves any post or page to its ID by its title. Titles are not unique — especially across post types — so the first match is returned; pass post_type to disambiguate. Returns null when nothing matches.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Finds the ID of a page or post by its title.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-discovery',
 		'input_schema'        => array(
 			'type'                 => 'object',

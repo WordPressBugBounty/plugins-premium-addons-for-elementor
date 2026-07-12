@@ -1,14 +1,8 @@
 <?php
 /**
- * Ability: List Elementor-built pages and posts.
+ * List Pages.
  *
- * A read-only ability in the "discovery" category. Lists WordPress pages and
- * posts that were built with Elementor. A thin adapter over core WordPress:
- * there is no reusable Premium Addons page-listing service — the
- * _elementor_edit_mode meta is only touched by the duplicator and live editor —
- * so this queries WP_Query directly and filters to Elementor-built content via
- * the _elementor_edit_mode = builder meta. Registered from
- * PremiumAddons\Includes\Abilities\Bootstrap on the wp_abilities_api_init hook.
+ * Lists the pages and posts on the site that are built with Elementor.
  *
  * @package PremiumAddons
  */
@@ -25,7 +19,7 @@ wp_register_ability(
 	'premium-addons/list-pages',
 	array(
 		'label'               => __( 'List Elementor Pages', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Lists WordPress pages and posts built with Elementor, newest edited first. Filters to Elementor-built content via the _elementor_edit_mode = builder meta. Capped at 100 results.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Lists the pages and posts built with Elementor.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-discovery',
 		'input_schema'        => array(
 			'type'                 => 'object',

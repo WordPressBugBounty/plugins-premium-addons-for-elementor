@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.11.86 - 12/7/2026 =
+
+- Tweak: Added AI abilities to add Elementor Container/Flexbox element, insert an Elementor widget to a page, post or template, get Elementor page structure and more.
+
 = 4.11.85 - 6/7/2026 =
 
 - New: Added AI Abilities integration using the WordPress Abilities API - requires WordPress v6.9 or higher.

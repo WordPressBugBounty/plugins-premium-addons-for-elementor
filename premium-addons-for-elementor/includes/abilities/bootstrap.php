@@ -44,7 +44,16 @@ class Bootstrap {
 		'premium-addons/list-templates',
 		'premium-addons/get-global-settings',
 		'premium-addons/get-page-structure',
+		'premium-addons/get-element-settings',
+		'premium-addons/get-widget-schema',
+		'premium-addons/detect-atomic-support',
+		'premium-addons/check-elementor-element',
 		'premium-addons/create-page',
+		'premium-addons/create-elementor-template',
+		'premium-addons/add-flexbox',
+		'premium-addons/add-container',
+		'premium-addons/update-element-settings',
+		'premium-addons/insert-widget',
 		'premium-addons/get-settings',
 		'premium-addons/update-setting',
 		'premium-addons/scan-usage',
@@ -161,6 +170,14 @@ class Bootstrap {
 		);
 
 		wp_register_ability_category(
+			'pa-build',
+			array(
+				'label'       => __( 'Build', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities that create and edit Elementor elements on a page — containers, atomic flexbox, and element settings.', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		wp_register_ability_category(
 			'pa-dashboard',
 			array(
 				'label'       => __( 'Dashboard', 'premium-addons-for-elementor' ),
@@ -180,6 +197,7 @@ class Bootstrap {
 
 		$this->register_discovery_abilities();
 		$this->register_page_post_management_abilities();
+		$this->register_build_abilities();
 		$this->register_dashboard_abilities();
 	}
 
@@ -193,6 +211,24 @@ class Bootstrap {
 		require_once $this->abilities_path . 'discovery/list-templates.php';
 		require_once $this->abilities_path . 'discovery/get-global-settings.php';
 		require_once $this->abilities_path . 'discovery/get-page-structure.php';
+		require_once $this->abilities_path . 'discovery/get-element-settings.php';
+		require_once $this->abilities_path . 'discovery/get-widget-schema.php';
+		require_once $this->abilities_path . 'discovery/detect-atomic-support.php';
+		require_once $this->abilities_path . 'discovery/check-elementor-element.php';
+	}
+
+	/**
+	 * Register build abilities.
+	 *
+	 * The shared Helpers class the ability callbacks use resolves through the
+	 * plugin autoloader.
+	 */
+	public function register_build_abilities() {
+
+		require_once $this->abilities_path . 'build/add-flexbox.php';
+		require_once $this->abilities_path . 'build/add-container.php';
+		require_once $this->abilities_path . 'build/update-element-settings.php';
+		require_once $this->abilities_path . 'build/insert-widget.php';
 	}
 
 	/**
@@ -201,6 +237,7 @@ class Bootstrap {
 	public function register_page_post_management_abilities() {
 
 		require_once $this->abilities_path . 'page-post-management/create-page.php';
+		require_once $this->abilities_path . 'page-post-management/create-elementor-template.php';
 	}
 
 	/**

@@ -1,19 +1,8 @@
 <?php
 /**
- * Ability: Clear Premium Addons dynamic assets.
+ * Clear Dynamic Assets.
  *
- * A write ability in the "dashboard" category. Clears generated dynamic CSS/JS
- * asset files — site-wide by default, or for a single page when post_id is
- * passed — and purges the related caches. Thin adapter over the
- * Assets_Manager::clear_dynamic_assets() service — the same clearing logic the
- * dashboard's AJAX "clear cached assets" action runs — so the ability, REST and
- * UI never drift. Side-effects are broader than Premium Addons files: it also
- * clears Elementor's file cache and fires litespeed_purge_all. Guarded to the
- * premium-assets-generator feature; returns an error when it is disabled, since
- * the feature is what generates the assets in the first place. Resolve a page's
- * title to its post_id first with the premium-addons/get-id-by-title ability.
- * Registered from PremiumAddons\Includes\Abilities\Bootstrap on the
- * wp_abilities_api_init hook.
+ * Clears the generated CSS and JS asset files across the site.
  *
  * @package PremiumAddons
  */
@@ -31,7 +20,7 @@ wp_register_ability(
 	'premium-addons/clear-dynamic-assets',
 	array(
 		'label'               => __( 'Clear Premium Addons Dynamic Assets', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Clears generated dynamic CSS/JS asset files and purges the related caches (Elementor file cache and LiteSpeed). Clears every page site-wide by default, or a single page when post_id is given. Requires the Premium Addons Assets Generator feature to be enabled; returns an error when it is disabled. The files regenerate automatically on the next page load.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Clears the generated CSS/JS files and related caches.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-dashboard',
 		'input_schema'        => array(
 			'type'                 => 'object',

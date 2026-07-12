@@ -1,15 +1,8 @@
 <?php
 /**
- * Ability: Read the active Elementor kit's global design tokens.
+ * Get Global Settings.
  *
- * A read-only ability in the "discovery" category. Returns the active Elementor
- * kit's global colors, global typography and key layout tokens. A thin adapter
- * over Elementor: there is no Premium Addons wrapper — the plugin calls
- * Plugin::$instance->kits_manager->get_active_kit() inline in
- * widgets/premium-grid.php — so this reads the active kit's settings directly.
- * These are Elementor kit tokens, not Premium Addons' own global features.
- * Returns a WP_Error when there is no active kit. Registered from
- * PremiumAddons\Includes\Abilities\Bootstrap on the wp_abilities_api_init hook.
+ * Reads the site's global design settings — colors, fonts and spacing.
  *
  * @package PremiumAddons
  */
@@ -17,6 +10,7 @@
 namespace PremiumAddons\Includes\Abilities\Discovery;
 
 use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Includes\Abilities\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
@@ -26,7 +20,7 @@ wp_register_ability(
 	'premium-addons/get-global-settings',
 	array(
 		'label'               => __( 'Get Elementor Global Settings', 'premium-addons-for-elementor' ),
-		'description'         => __( "Reads the active Elementor kit's global design tokens: global colors (system and custom), global typography (system and custom) and key layout settings (content width, space between widgets). These are Elementor kit tokens, not Premium Addons global features. Returns an error when there is no active kit.", 'premium-addons-for-elementor' ),
+		'description'         => __( "Reads the site's global colors, fonts and layout settings.", 'premium-addons-for-elementor' ),
 		'category'            => 'pa-discovery',
 		'output_schema'       => array(
 			'type'        => 'object',
@@ -81,11 +75,10 @@ wp_register_ability(
 		),
 		'execute_callback'    => function () {
 
-			if ( ! class_exists( '\Elementor\Plugin' ) ) {
-				return new \WP_Error(
-					'premium_addons_elementor_missing',
-					__( 'Elementor is not active.', 'premium-addons-for-elementor' )
-				);
+			$error = Helpers::guard_elementor();
+
+			if ( $error ) {
+				return $error;
 			}
 
 			$kit = \Elementor\Plugin::$instance->kits_manager->get_active_kit();

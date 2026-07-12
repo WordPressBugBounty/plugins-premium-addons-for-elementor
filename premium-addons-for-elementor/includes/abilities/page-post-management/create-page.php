@@ -1,17 +1,8 @@
 <?php
 /**
- * Ability: Create an Elementor-enabled page or post.
+ * Create Page.
  *
- * A write ability in the "page-post-management" category. Creates a new
- * WordPress page or post with Elementor enabled. A thin adapter over core
- * WordPress + Elementor: there is no reusable Premium Addons creation service —
- * the live-editor insert path is AJAX-coupled and elementor_library-only — so
- * this inserts the post via wp_insert_post (seeding the _elementor_edit_mode and
- * _elementor_template_type meta) and then initializes the Elementor document
- * with an empty element tree. The document save is what writes _elementor_data /
- * _elementor_version and triggers CSS regeneration; raw meta alone does not fully
- * enable Elementor. Registered from PremiumAddons\Includes\Abilities\Bootstrap on
- * the wp_abilities_api_init hook.
+ * Creates a new Elementor-ready page or post.
  *
  * @package PremiumAddons
  */
@@ -19,6 +10,7 @@
 namespace PremiumAddons\Includes\Abilities\PagePostManagement;
 
 use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Includes\Abilities\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
@@ -28,7 +20,7 @@ wp_register_ability(
 	'premium-addons/create-page',
 	array(
 		'label'               => __( 'Create Elementor Page', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Creates a new WordPress page or post with Elementor enabled, then initializes it as an empty Elementor document (ready to edit in the Elementor editor). Returns the new post ID plus its Elementor edit URL and preview URL. Each call creates a new post.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Creates a new page or post ready to edit with Elementor.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-page-post-management',
 		'input_schema'        => array(
 			'type'                 => 'object',
@@ -81,11 +73,10 @@ wp_register_ability(
 		),
 		'execute_callback'    => function ( $input = null ) {
 
-			if ( ! class_exists( '\Elementor\Plugin' ) ) {
-				return new \WP_Error(
-					'premium_addons_elementor_missing',
-					__( 'Elementor is not active.', 'premium-addons-for-elementor' )
-				);
+			$error = Helpers::guard_elementor();
+
+			if ( $error ) {
+				return $error;
 			}
 
 			$title = isset( $input['title'] ) ? trim( $input['title'] ) : '';

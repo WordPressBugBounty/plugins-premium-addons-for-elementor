@@ -1,14 +1,8 @@
 <?php
 /**
- * Ability: List saved Elementor templates.
+ * List Templates.
  *
- * A read-only ability in the "discovery" category. Lists saved Elementor
- * templates from the template library. A thin adapter over core WordPress:
- * Premium Addons' AJAX_Helper::get_posts_list() also queries elementor_library
- * but is AJAX-coupled (check_ajax_referer / wp_send_json) and excludes some
- * types, so this queries WP_Query directly. The template type is read from the
- * _elementor_template_type post meta. Registered from
- * PremiumAddons\Includes\Abilities\Bootstrap on the wp_abilities_api_init hook.
+ * Lists the saved templates in the Elementor template library.
  *
  * @package PremiumAddons
  */
@@ -25,7 +19,7 @@ wp_register_ability(
 	'premium-addons/list-templates',
 	array(
 		'label'               => __( 'List Elementor Templates', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Lists saved Elementor templates from the template library, newest first. Optionally filters by template type (e.g. page, section, container). Capped at 100 results.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Lists the saved Elementor templates.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-discovery',
 		'input_schema'        => array(
 			'type'                 => 'object',

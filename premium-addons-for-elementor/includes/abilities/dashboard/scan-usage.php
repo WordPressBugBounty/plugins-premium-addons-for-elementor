@@ -1,16 +1,8 @@
 <?php
 /**
- * Ability: Scan Premium Addons widget usage.
+ * Scan Usage.
  *
- * A "dashboard" category ability. Reports which Premium Addons widgets are in
- * use across the site and how many times each is used. Thin adapter over
- * Admin_Helper::get_used_widgets(), which runs Elementor's Usage module
- * re-scan and filters the result to Premium Addons widgets. The re-scan
- * rebuilds Elementor's derived usage cache on every call (deletes and rewrites
- * the elementor_elements_usage option and per-post usage meta), so the ability
- * is not readonly — it is annotated non-destructive and idempotent (a recompute
- * yields the same derived data). Registered from
- * PremiumAddons\Includes\Abilities\Bootstrap on the wp_abilities_api_init hook.
+ * Reports which Premium Addons widgets are used on the site and how often.
  *
  * @package PremiumAddons
  */
@@ -27,7 +19,7 @@ wp_register_ability(
 	'premium-addons/scan-usage',
 	array(
 		'label'               => __( 'Scan Premium Addons Widget Usage', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Reports which Premium Addons widgets are in use across the site and how many times each is used. Widgets only — global features and addons are excluded. Returns an empty object when Elementor\'s Usage module is unavailable.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Shows which Premium Addons widgets are used on the site and how often.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-dashboard',
 		'output_schema'       => array(
 			'type'        => 'object',

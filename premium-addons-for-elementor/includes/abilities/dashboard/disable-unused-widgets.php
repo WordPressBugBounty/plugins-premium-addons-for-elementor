@@ -1,19 +1,8 @@
 <?php
 /**
- * Ability: Disable unused Premium Addons widgets.
+ * Disable Unused Widgets.
  *
- * A write ability in the "dashboard" category. Finds every Premium Addons
- * widget that is not used anywhere on the site and disables it in a single
- * call, or — with dry_run — just previews that unused list without changing
- * anything. Thin adapter: the unused list is the same diff the legacy
- * unused-widgets scan computes (Admin_Helper::get_pa_elements_names() minus the
- * keys of Admin_Helper::get_used_widgets()), and the disable write funnels
- * through the Admin_Helper::update_elements_settings() service the dashboard
- * save and the premium-addons/update-setting ability also use, so nothing
- * drifts. Resolving usage runs Elementor's Usage module re-scan (see
- * premium-addons/scan-usage), so even a dry run rebuilds Elementor's derived
- * usage cache. Registered from PremiumAddons\Includes\Abilities\Bootstrap on
- * the wp_abilities_api_init hook.
+ * Disables the Premium Addons widgets that are not used anywhere on the site.
  *
  * @package PremiumAddons
  */
@@ -30,7 +19,7 @@ wp_register_ability(
 	'premium-addons/disable-unused-widgets',
 	array(
 		'label'               => __( 'Disable Unused Premium Addons Widgets', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Disables every Premium Addons widget that is not used anywhere on the site, in a single call. Set dry_run to true to preview the unused-widgets list without changing anything. Widgets only — global features and addons are never disabled. Resolving usage triggers an Elementor usage re-scan, which can be costly on large sites.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Disables all Premium Addons widgets that are not used on the site.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-dashboard',
 		'input_schema'        => array(
 			'type'                 => 'object',

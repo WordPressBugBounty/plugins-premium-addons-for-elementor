@@ -1,28 +1,15 @@
 <?php
 /**
- * Ability: Get the Elementor element tree of a page, post or template.
+ * Get Page Structure.
  *
- * A read-only ability in the "discovery" category. Returns the Elementor
- * element tree for any Elementor document — page, post or elementor_library
- * template. A thin adapter over Elementor's document API: there is no single
- * Premium Addons service — the plugin already calls
- * Plugin::$instance->documents->get($id)->get_elements_data() inline in the
- * WooCommerce products module, the assets manager and Premium_Template_Tags —
- * so this reads the document directly, falling back to the raw _elementor_data
- * meta. Read-only in this context: get_elements_data()'s lazy convert-to-
- * Elementor write path only runs when editor->is_edit_mode() is true, which is
- * never the case for a REST/MCP invocation. By default each element is
- * summarized (id, elType, widgetType, a short settings summary); pass
- * include_settings to get the full per-element settings instead. Registered
- * from PremiumAddons\Includes\Abilities\Bootstrap on the wp_abilities_api_init
- * hook.
+ * Shows the structure of an Elementor page, post or template.
  *
  * @package PremiumAddons
  */
 
 namespace PremiumAddons\Includes\Abilities\Discovery;
 
-use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Includes\Abilities\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
@@ -32,7 +19,7 @@ wp_register_ability(
 	'premium-addons/get-page-structure',
 	array(
 		'label'               => __( 'Get Page Structure', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Returns the Elementor element tree for a page, post or template. Each node carries its id, element type, widget type and a short settings summary, nested as on the page. Pass include_settings to get the full per-element settings instead of the summary. Use premium-addons/get-id-by-title to resolve a title to its post_id first.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Shows the structure of an Elementor page, post or template.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-discovery',
 		'input_schema'        => array(
 			'type'                 => 'object',
@@ -78,11 +65,10 @@ wp_register_ability(
 		),
 		'execute_callback'    => function ( $input = null ) {
 
-			if ( ! class_exists( '\Elementor\Plugin' ) ) {
-				return new \WP_Error(
-					'premium_addons_elementor_missing',
-					__( 'Elementor is not active.', 'premium-addons-for-elementor' )
-				);
+			$error = Helpers::guard_elementor();
+
+			if ( $error ) {
+				return $error;
 			}
 
 			$post_id = ! empty( $input['post_id'] ) ? absint( $input['post_id'] ) : 0;
@@ -94,37 +80,13 @@ wp_register_ability(
 				);
 			}
 
-			$post = get_post( $post_id );
+			$resolved = Helpers::resolve_document( $post_id );
 
-			if ( ! $post ) {
-				return new \WP_Error(
-					'premium_addons_post_not_found',
-					/* translators: %d: post ID. */
-					sprintf( __( 'No page/post found with ID %d.', 'premium-addons-for-elementor' ), $post_id )
-				);
+			if ( is_wp_error( $resolved ) ) {
+				return $resolved;
 			}
 
-			$edit_mode = get_post_meta( $post_id, '_elementor_edit_mode', true );
-
-			if ( 'builder' !== $edit_mode && 'elementor_library' !== $post->post_type ) {
-				return new \WP_Error(
-					'premium_addons_not_elementor_document',
-					/* translators: %d: post ID. */
-					sprintf( __( 'The post with ID %d is not built with Elementor.', 'premium-addons-for-elementor' ), $post_id )
-				);
-			}
-
-			$document = \Elementor\Plugin::$instance->documents->get( $post_id );
-			$elements = $document ? $document->get_elements_data() : null;
-
-			if ( empty( $elements ) ) {
-				$raw      = get_post_meta( $post_id, '_elementor_data', true );
-				$elements = is_string( $raw ) && '' !== $raw ? json_decode( $raw, true ) : $raw;
-			}
-
-			if ( ! is_array( $elements ) ) {
-				$elements = array();
-			}
+				list( , $elements ) = $resolved;
 
 			$include_settings = ! empty( $input['include_settings'] );
 
@@ -184,22 +146,13 @@ wp_register_ability(
 
 			return array(
 				'post_id'   => $post_id,
-				'title'     => get_the_title( $post ),
-				'type'      => $type ? $type : $post->post_type,
+				'title'     => get_the_title( $post_id ),
+				'type'      => $type ? $type : get_post_type( $post_id ),
 				'structure' => $build_tree( $elements ),
 			);
 		},
 		'permission_callback' => function ( $input = null ) {
-
-			$post_id = ! empty( $input['post_id'] ) ? absint( $input['post_id'] ) : 0;
-
-			// map_meta_cap() fires _doing_it_wrong for edit_post on a missing post,
-			// so deny nonexistent IDs here — this also avoids leaking which IDs exist.
-			if ( ! $post_id || ! get_post( $post_id ) ) {
-				return false;
-			}
-
-			return Admin_Helper::check_user_can( 'edit_post', $post_id );
+				return Helpers::can_edit_input_post( $input );
 		},
 		'meta'                => array(
 			'show_in_rest' => true,

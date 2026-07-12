@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.85
+Stable Tag: 4.11.86
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -258,6 +258,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.86 - 6/7/2026 =
+
+- Tweak: Added AI abilities to add Elementor Container/Flexbox element, insert an Elementor widget to a page, post or template, get Elementor page structure and more.
 
 = 4.11.85 - 6/7/2026 =
 

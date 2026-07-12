@@ -1,15 +1,8 @@
 <?php
 /**
- * Ability: Subscribe to the Premium Addons newsletter.
+ * Subscribe to Newsletter.
  *
- * A write ability in the "dashboard" category. Subscribes an email address to
- * the Premium Addons newsletter — the same list the dashboard's General-tab
- * form feeds. Thin adapter over the Admin_Helper::subscribe_newsletter_request()
- * service the AJAX handler also calls, so the two never drift. The service makes
- * an external HTTP request to premiumaddons.com, so it can fail for network
- * reasons unrelated to WordPress, and it is not idempotent — re-submitting the
- * same email re-hits the subscribe endpoint. Registered from
- * PremiumAddons\Includes\Abilities\Bootstrap on the wp_abilities_api_init hook.
+ * Subscribes an email address to the Premium Addons newsletter.
  *
  * @package PremiumAddons
  */
@@ -26,7 +19,7 @@ wp_register_ability(
 	'premium-addons/subscribe-newsletter',
 	array(
 		'label'               => __( 'Subscribe to Premium Addons Newsletter', 'premium-addons-for-elementor' ),
-		'description'         => __( 'Subscribes an email address to the Premium Addons newsletter. Makes an external request to premiumaddons.com, so it can fail for network reasons; not idempotent — re-submitting the same email re-hits the subscribe endpoint.', 'premium-addons-for-elementor' ),
+		'description'         => __( 'Subscribes an email address to the Premium Addons newsletter.', 'premium-addons-for-elementor' ),
 		'category'            => 'pa-dashboard',
 		'input_schema'        => array(
 			'type'                 => 'object',
