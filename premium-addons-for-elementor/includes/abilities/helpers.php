@@ -39,12 +39,74 @@ class Helpers {
 
 		if ( ! Helper_Functions::check_elementor_version() ) {
 			return new \WP_Error(
-				'premium_addons_elementor_missing',
+				'premium_addons_not_initialized',
 				__( 'Elementor is not active.', 'premium-addons-for-elementor' )
 			);
 		}
 
 		return null;
+	}
+
+	/**
+	 * Whether an Elementor core or Premium Addons widget.
+	 *
+	 * @param object $type_object Elementor widget type object.
+	 * @return bool
+	 */
+	public static function is_core_or_pa_widget( $type_object ) {
+
+		if ( ! is_object( $type_object ) ) {
+			return false;
+		}
+
+		$class = get_class( $type_object );
+
+		// For our widgets.
+		if ( 0 === strpos( $class, 'PremiumAddons\\' ) ) {
+			return true;
+		}
+
+		// For widgets with no Elementor\ namespace.
+		if ( 0 !== strpos( $class, 'Elementor\\' ) ) {
+			return false;
+		}
+
+		// For third-party plugins with Elementor\ namespace.
+		static $cache = array();
+
+		if ( ! isset( $cache[ $class ] ) ) {
+			$file            = wp_normalize_path( ( new \ReflectionClass( $type_object ) )->getFileName() );
+			$core_path       = defined( 'ELEMENTOR_PATH' ) ? wp_normalize_path( ELEMENTOR_PATH ) : '';
+			$cache[ $class ] = '' !== $core_path && 0 === strpos( $file, $core_path );
+		}
+
+		return $cache[ $class ];
+	}
+
+	/**
+	 * Guard: reject a third-party widget when Premium Addons Pro is inactive.
+	 *
+	 * @param object $type_object Elementor widget type object.
+	 * @param string $name        Widget type name.
+	 * @return \WP_Error|null Error when the widget is locked, null otherwise.
+	 */
+	public static function guard_widget_source( $type_object, $name ) {
+
+		if ( Helper_Functions::check_papro_version() || self::is_core_or_pa_widget( $type_object ) ) {
+			return null;
+		}
+
+		$pro_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'ai-abilities', 'mcp', 'get-pro' );
+
+		return new \WP_Error(
+			'premium_addons_widget_source_locked',
+			sprintf(
+				/* translators: 1: widget type name, 2: Premium Addons Pro URL. */
+				__( 'The widget type %1$s is a third-party widget. Premium Addons free supports Elementor and Premium Addons widgets. Upgrade to Premium Addons Pro to build with third-party widgets: %2$s', 'premium-addons-for-elementor' ),
+				$name,
+				$pro_link
+			)
+		);
 	}
 
 	/**
@@ -63,7 +125,7 @@ class Helpers {
 
 		if ( ! $post ) {
 			return new \WP_Error(
-				'premium_addons_post_not_found',
+				'premium_addons_invalid_post_id',
 				/* translators: %d: post ID. */
 				sprintf( __( 'No page/post found with ID %d.', 'premium-addons-for-elementor' ), $post_id )
 			);
@@ -73,7 +135,7 @@ class Helpers {
 
 		if ( 'builder' !== $edit_mode && 'elementor_library' !== $post->post_type ) {
 			return new \WP_Error(
-				'premium_addons_not_elementor_document',
+				'premium_addons_invalid_post_id',
 				/* translators: %d: post ID. */
 				sprintf( __( 'The post with ID %d is not built with Elementor. Use premium-addons/create-page to create an Elementor document first.', 'premium-addons-for-elementor' ), $post_id )
 			);
@@ -227,6 +289,50 @@ class Helpers {
 			if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) ) {
 
 				$elements[ $index ]['elements'] = self::insert_element( $element['elements'], $parent_id, $position, $node, $found );
+
+				if ( $found ) {
+					return $elements;
+				}
+			}
+		}
+
+		return $elements;
+	}
+
+	/**
+	 * Remove an element node from a tree by id.
+	 *
+	 * Splices the matching node out of its parent's children, so removing a
+	 * container drops every element nested inside it. Walks by index like
+	 * insert_element() rather than locate_element_ref(), which returns the node
+	 * itself and so cannot unset it from its parent. Stops at the first match.
+	 *
+	 * @param array  $elements   The element tree.
+	 * @param string $element_id The element id to remove.
+	 * @param bool   $found      Set to true when the element was found.
+	 *
+	 * @return array The modified tree.
+	 */
+	public static function remove_element( $elements, $element_id, &$found ) {
+
+		foreach ( $elements as $index => $element ) {
+
+			if ( ! is_array( $element ) ) {
+				continue;
+			}
+
+			if ( isset( $element['id'] ) && (string) $element['id'] === $element_id ) {
+
+				array_splice( $elements, $index, 1 );
+
+				$found = true;
+
+				return $elements;
+			}
+
+			if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) ) {
+
+				$elements[ $index ]['elements'] = self::remove_element( $element['elements'], $element_id, $found );
 
 				if ( $found ) {
 					return $elements;

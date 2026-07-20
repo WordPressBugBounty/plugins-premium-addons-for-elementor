@@ -205,12 +205,24 @@ class Premium_Image_Separator extends Widget_Base {
 			'separator_type',
 			array(
 				'label'   => __( 'Separator Type', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SELECT,
+				'type'    => Controls_Manager::CHOOSE,
 				'options' => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default' => 'image',
 			)
@@ -219,13 +231,16 @@ class Premium_Image_Separator extends Widget_Base {
 		$this->add_control(
 			'separator_icon',
 			array(
-				'label'     => __( 'Select an Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::ICONS,
-				'default'   => array(
+				'label'                  => __( 'Select an Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'condition' => array(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array(
 					'separator_type' => 'icon',
 				),
 			)

@@ -517,36 +517,46 @@ class Premium_Image_Button extends Widget_Base {
 		$this->add_control(
 			'icon_type',
 			array(
-				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Icon Type', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
-				'default'     => 'icon',
-				'label_block' => true,
-				'condition'   => $common_conditions,
+				'default'   => 'icon',
+				'condition' => $common_conditions,
 			)
 		);
 
 		$this->add_control(
 			'premium_image_button_icon_selection_updated',
 			array(
-				'label'            => __( 'Icon', 'premium-addons-for-elementor' ),
-				'type'             => Controls_Manager::ICONS,
-				'fa4compatibility' => 'premium_image_button_icon_selection',
-				'default'          => array(
+				'label'                  => __( 'Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'fa4compatibility'       => 'premium_image_button_icon_selection',
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'condition'        => array_merge(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array_merge(
 					$common_conditions,
 					array(
 						'icon_type' => 'icon',
 					)
 				),
-				'label_block'      => true,
 			)
 		);
 
@@ -819,15 +829,20 @@ class Premium_Image_Button extends Widget_Base {
 		$this->add_control(
 			'slide_icon_type',
 			array(
-				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Icon Type', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
 				),
-				'default'     => 'icon',
-				'label_block' => true,
-				'condition'   => array(
+				'default'   => 'icon',
+				'condition' => array(
 					'premium_image_button_hover_effect' => 'style4',
 				),
 			)
@@ -836,15 +851,17 @@ class Premium_Image_Button extends Widget_Base {
 		$this->add_control(
 			'premium_image_button_style4_icon_selection_updated',
 			array(
-				'label'            => __( 'Icon', 'premium-addons-for-elementor' ),
-				'type'             => Controls_Manager::ICONS,
-				'fa4compatibility' => 'premium_image_button_style4_icon_selection',
-				'default'          => array(
+				'label'                  => __( 'Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'fa4compatibility'       => 'premium_image_button_style4_icon_selection',
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'label_block'      => true,
-				'condition'        => array(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array(
 					'slide_icon_type'                   => 'icon',
 					'premium_image_button_hover_effect' => 'style4',
 				),

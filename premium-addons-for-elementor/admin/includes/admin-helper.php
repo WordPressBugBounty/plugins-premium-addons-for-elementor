@@ -5,6 +5,7 @@
 
 namespace PremiumAddons\Admin\Includes;
 
+use PremiumAddons\Includes\Abilities\Bootstrap;
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Assets_Manager;
 use Elementor\Modules\Usage\Module;
@@ -69,6 +70,13 @@ class Admin_Helper {
 	public static $integrations_settings = null;
 
 	/**
+	 * AI abilities settings.
+	 *
+	 * @var array|null
+	 */
+	public static $ai_abilities_settings = null;
+
+	/**
 	 * Elements Names
 	 *
 	 * @var elements_names
@@ -102,6 +110,7 @@ class Admin_Helper {
 		add_action( 'wp_ajax_pa_save_elements_settings', array( $this, 'pa_save_elements_settings' ) );
 		add_action( 'wp_ajax_pa_disable_elementor_mc_template', array( $this, 'pa_disable_elementor_mc_template' ) );
 		add_action( 'wp_ajax_pa_save_additional_settings', array( $this, 'pa_save_additional_settings' ) );
+		add_action( 'wp_ajax_pa_save_ai_abilities', array( $this, 'pa_save_ai_abilities' ) );
 		add_action( 'wp_ajax_pa_get_unused_widgets', array( $this, 'pa_get_unused_widgets' ) );
 		add_action( 'wp_ajax_pa_get_menu_item_settings', array( $this, 'pa_get_menu_item_settings' ) );
 		add_action( 'wp_ajax_pa_save_menu_item_settings', array( $this, 'pa_save_menu_item_settings' ) );
@@ -319,8 +328,10 @@ class Admin_Helper {
 					'isSecondRun'       => $is_second_run,
 					'theme'             => $theme_slug,
 					'i18n'              => array(
-						'successMsg' => __( 'Your submission was successful.', 'premium-addons-for-elementor' ),
-						'failMsg'    => __( 'Your submission failed because of an error', 'premium-addons-for-elementor' ),
+						'successMsg'            => __( 'Your submission was successful.', 'premium-addons-for-elementor' ),
+						'failMsg'               => __( 'Your submission failed because of an error', 'premium-addons-for-elementor' ),
+						'aiAbilitiesSaving'     => __( 'Saving AI ability settings…', 'premium-addons-for-elementor' ),
+						'aiAbilitiesSaveFailed' => __( 'AI ability settings could not be saved.', 'premium-addons-for-elementor' ),
 					),
 				),
 				'premiumRollBackConfirm' => array(
@@ -696,7 +707,8 @@ class Admin_Helper {
 		// AI Abilities dashboard tabs — only when the feature is enabled. Inserted
 		// right after the Integrations tab so they sit with the other connectivity
 		// settings instead of after System Info / License.
-		if ( ! empty( self::get_enabled_elements()['premium-ai-abilities'] ) ) {
+		if ( ! empty( self::get_enabled_elements()['premium-ai-abilities'] )
+			&& function_exists( 'wp_register_ability' ) ) {
 
 			$position = array_search( 'integrations', array_keys( self::$tabs ), true ) + 1;
 
@@ -1174,6 +1186,87 @@ class Admin_Helper {
 	}
 
 	/**
+	 * Replace the disabled AI abilities set.
+	 *
+	 * @param array $disabled Full ability names to disable.
+	 * @return array
+	 */
+	public static function save_ai_abilities_settings( array $disabled ) {
+		$abilities_list  = Bootstrap::get_instance()->get_abilities_catalog();
+		$abilities_names = wp_list_pluck( $abilities_list, 'full_name' );
+
+		$clean_disabled = array();
+		foreach ( wp_unslash( $disabled ) as $full_name ) {
+
+			$full_name = sanitize_text_field( $full_name );
+
+			if ( in_array( $full_name, $abilities_names, true ) ) {
+				$clean_disabled[] = $full_name;
+			}
+		}
+
+		$clean_disabled = array_values( array_unique( $clean_disabled ) );
+
+		update_option(
+			'pa_ai_abilities',
+			array(
+				'disabled_abilities' => $clean_disabled,
+			)
+		);
+
+		wp_cache_delete( 'pa_ai_abilities', 'premium_addons' );
+		self::$ai_abilities_settings = null;
+
+		return $clean_disabled;
+	}
+
+	/**
+	 * Save AI ability switcher settings.
+	 *
+	 * @return void
+	 */
+	public function pa_save_ai_abilities() {
+
+		check_ajax_referer( 'pa-settings-tab', 'security' );
+
+		if ( ! self::check_user_can( 'manage_options' ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'You are not allowed to do this action.', 'premium-addons-for-elementor' ),
+				)
+			);
+		}
+
+		if ( ! isset( $_POST['disabled'] ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'No AI ability settings were provided.', 'premium-addons-for-elementor' ),
+				)
+			);
+		}
+
+		$disabled_abilities = wp_unslash( $_POST['disabled'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Decoded values are sanitized and catalog-whitelisted before storage.
+		$disabled           = is_array( $disabled_abilities ) ? $disabled_abilities : json_decode( $disabled_abilities, true );
+
+		if ( ! is_array( $disabled ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'The AI ability settings could not be saved.', 'premium-addons-for-elementor' ),
+				)
+			);
+		}
+
+		$disabled = self::save_ai_abilities_settings( $disabled );
+
+		wp_send_json_success(
+			array(
+				'message'            => __( 'AI ability settings saved.', 'premium-addons-for-elementor' ),
+				'disabled_abilities' => $disabled,
+			)
+		);
+	}
+
+	/**
 	 * Save Integrations Control Settings
 	 *
 	 * Stores integration and version control settings
@@ -1608,6 +1701,51 @@ class Admin_Helper {
 		wp_cache_set( $cache_key, $defaults, 'premium_addons', HOUR_IN_SECONDS );
 
 		return self::$integrations_settings;
+	}
+
+	/**
+	 * Get normalized AI abilities settings.
+	 *
+	 * @return array
+	 */
+	public static function get_ai_abilities_settings() {
+
+		$cached_settings = wp_cache_get( 'pa_ai_abilities', 'premium_addons' );
+
+		if ( false !== $cached_settings ) {
+			self::$ai_abilities_settings = $cached_settings;
+			return self::$ai_abilities_settings;
+		}
+
+		if ( null !== self::$ai_abilities_settings ) {
+			return self::$ai_abilities_settings;
+		}
+
+		$stored_settings = get_option( 'pa_ai_abilities', array( 'disabled_abilities' => array() ) );
+
+		$disabled = is_array( $stored_settings ) && isset( $stored_settings['disabled_abilities'] ) && is_array( $stored_settings['disabled_abilities'] )
+			? array_values( array_filter( $stored_settings['disabled_abilities'], 'is_string' ) )
+			: array();
+
+		self::$ai_abilities_settings = array(
+			'disabled_abilities' => $disabled,
+		);
+
+		wp_cache_set( 'pa_ai_abilities', self::$ai_abilities_settings, 'premium_addons' );
+
+		return self::$ai_abilities_settings;
+	}
+
+	/**
+	 * Check whether an ability is enabled.
+	 *
+	 * @param string $full_name Full ability name.
+	 * @return bool
+	 */
+	public static function is_ability_enabled( $full_name ) {
+		$settings = self::get_ai_abilities_settings();
+
+		return ! in_array( $full_name, $settings['disabled_abilities'], true );
 	}
 
 	/**

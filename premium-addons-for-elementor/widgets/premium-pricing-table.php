@@ -302,12 +302,24 @@ class Premium_Pricing_Table extends Widget_Base {
 			'icon_type',
 			array(
 				'label'   => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SELECT,
+				'type'    => Controls_Manager::CHOOSE,
 				'options' => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default' => 'icon',
 			)
@@ -316,14 +328,17 @@ class Premium_Pricing_Table extends Widget_Base {
 		$this->add_control(
 			'premium_pricing_table_icon_selection_updated',
 			array(
-				'label'            => __( 'Select an Icon', 'premium-addons-for-elementor' ),
-				'type'             => Controls_Manager::ICONS,
-				'fa4compatibility' => 'premium_pricing_table_icon_selection',
-				'default'          => array(
+				'label'                  => __( 'Select an Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'fa4compatibility'       => 'premium_pricing_table_icon_selection',
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'condition'        => array(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array(
 					'icon_type' => 'icon',
 				),
 			)
@@ -819,12 +834,24 @@ class Premium_Pricing_Table extends Widget_Base {
 			'icon_type',
 			array(
 				'label'   => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'    => Controls_Manager::SELECT,
+				'type'    => Controls_Manager::CHOOSE,
 				'options' => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default' => 'icon',
 			)
@@ -840,6 +867,8 @@ class Premium_Pricing_Table extends Widget_Base {
 					'value'   => 'fas fa-check',
 					'library' => 'fa-solid',
 				),
+				'skin'             => 'inline',
+				'label_block'      => false,
 				'condition'        => array(
 					'icon_type' => 'icon',
 				),

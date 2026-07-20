@@ -425,7 +425,7 @@ class Premium_Template_Tags {
 			$skin = $settings['premium_blog_skin'];
 
 			if ( in_array( $skin, array( 'modern', 'cards' ), true ) ) { ?>
-				<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
+				<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" aria-label="<?php the_title_attribute(); ?>">
 				<?php
 			}
 
@@ -461,7 +461,7 @@ class Premium_Template_Tags {
 		?>
 		<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( $key . '_title' ) ); ?>>
 			<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-				<?php esc_html( the_title() ); ?>
+				<?php echo esc_html( get_the_title() ); ?>
 			</a>
 		</<?php echo wp_kses_post( $title_tag ); ?>>
 		<?php
@@ -695,14 +695,14 @@ class Premium_Template_Tags {
 						</div>
 						<?php if ( in_array( $skin, array( 'modern', 'cards' ), true ) ) : ?>
 							<div class="premium-blog-effect-container <?php echo esc_attr( 'premium-blog-' . $post_effect . '-effect' ); ?>">
-								<a class="premium-blog-post-link" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>"><span><?php esc_html( the_title() ); ?></span></a>
+								<a class="premium-blog-post-link" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>"><span><?php echo esc_html( get_the_title() ); ?></span></a>
 								<?php if ( 'squares' === $settings['premium_blog_hover_color_effect'] ) { ?>
 									<div class="premium-blog-squares-square-container"></div>
 								<?php } ?>
 							</div>
 						<?php else : ?>
 							<div class="premium-blog-thumbnail-overlay">
-								<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>"></a>
+								<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" aria-label="<?php the_title_attribute(); ?>"></a>
 							</div>
 
 							<?php do_action( 'pa_blog_after_thumbnail' ); ?>
@@ -1259,7 +1259,7 @@ class Premium_Template_Tags {
 
 						<div class="premium-search__overlay">
 							<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
-								<span><?php esc_html( the_title() ); ?></span>
+								<span><?php echo esc_html( get_the_title() ); ?></span>
 							</a>
 						</div>
 

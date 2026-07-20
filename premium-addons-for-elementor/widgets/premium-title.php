@@ -539,12 +539,24 @@ class Premium_Title extends Widget_Base {
 			'icon_type',
 			array(
 				'label'     => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
+				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default'   => 'icon',
 				'condition' => array(
@@ -617,15 +629,17 @@ class Premium_Title extends Widget_Base {
 		$this->add_control(
 			'premium_title_icon_updated',
 			array(
-				'label'            => __( 'Font Awesome Icon', 'premium-addons-for-elementor' ),
-				'type'             => Controls_Manager::ICONS,
-				'fa4compatibility' => 'premium_title_icon',
-				'default'          => array(
+				'label'                  => __( 'Font Awesome Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'fa4compatibility'       => 'premium_title_icon',
+				'default'                => array(
 					'value'   => 'fas fa-bars',
 					'library' => 'fa-solid',
 				),
-				'label_block'      => true,
-				'condition'        => array_merge(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array_merge(
 					$common_conditions,
 					array(
 						'icon_type' => 'icon',

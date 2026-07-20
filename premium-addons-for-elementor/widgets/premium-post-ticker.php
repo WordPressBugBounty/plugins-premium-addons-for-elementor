@@ -393,13 +393,25 @@ class Premium_Post_Ticker extends Widget_Base {
 			'icon_type',
 			array(
 				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
+				'type'        => Controls_Manager::CHOOSE,
 				'render_type' => 'template',
 				'options'     => array(
-					'icon'   => __( 'Icon', 'premium-addons-for-elementor' ),
-					'lottie' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'image'  => __( 'Image', 'premium-addons-for-elementor' ),
-					'svg'    => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'   => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'lottie' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'image'  => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'svg'    => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default'     => 'icon',
 				'condition'   => array(
@@ -417,15 +429,16 @@ class Premium_Post_Ticker extends Widget_Base {
 		$this->add_control(
 			'pa_ticker_icon',
 			array(
-				'label'       => __( 'Choose Icon', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin'        => 'inline',
-				'default'     => array(
+				'label'                  => __( 'Choose Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'label_block'            => false,
+				'skin'                   => 'inline',
+				'exclude_inline_options' => 'none',
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'condition'   => array(
+				'condition'              => array(
 					'ticker_icon_sw' => 'yes',
 					'ticker_title!'  => '',
 					'icon_type'      => 'icon',
@@ -1587,13 +1600,25 @@ class Premium_Post_Ticker extends Widget_Base {
 			'icon_type',
 			array(
 				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
+				'type'        => Controls_Manager::CHOOSE,
 				'render_type' => 'template',
 				'options'     => array(
-					'icon'   => __( 'Icon', 'premium-addons-for-elementor' ),
-					'lottie' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'image'  => __( 'Image', 'premium-addons-for-elementor' ),
-					'svg'    => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'   => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'lottie' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'image'  => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'svg'    => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default'     => 'icon',
 				'condition'   => array(
@@ -1609,15 +1634,16 @@ class Premium_Post_Ticker extends Widget_Base {
 		$text_repeater->add_control(
 			'pa_ticker_icon',
 			array(
-				'label'       => __( 'Choose Icon', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin'        => 'inline',
-				'default'     => array(
+				'label'                  => __( 'Choose Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'label_block'            => false,
+				'skin'                   => 'inline',
+				'exclude_inline_options' => 'none',
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'condition'   => array(
+				'condition'              => array(
 					'txt_icon_sw' => 'yes',
 					'icon_type'   => 'icon',
 				),

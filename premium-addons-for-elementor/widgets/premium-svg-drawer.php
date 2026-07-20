@@ -169,14 +169,19 @@ class Premium_SVG_Drawer extends Widget_Base {
 		$this->add_control(
 			'icon_type',
 			array(
-				'label'       => __( 'SVG Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
-					'icon'   => __( 'Font Awesome Icon', 'premium-addons-for-elementor' ),
-					'custom' => __( 'Custom SVG', 'premium-addons-for-elementor' ),
+				'label'   => __( 'SVG Type', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::CHOOSE,
+				'options' => array(
+					'icon'   => array(
+						'title' => __( 'Font Awesome Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'custom' => array(
+						'title' => __( 'Custom SVG', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
-				'default'     => 'icon',
-				'label_block' => true,
+				'default' => 'icon',
 			)
 		);
 

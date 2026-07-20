@@ -29,9 +29,9 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-							<h4><?php echo esc_html( __( 'AI Abilities', 'premium-addons-for-elementor' ) ); ?></h4>
+							<h4><?php echo esc_html( $features[13]['title'] ); ?></h4>
 							<p>
-								<?php echo esc_html( __( 'Let AI assistants read and build your Elementor content through WordPress Abilities and MCP.', 'premium-addons-for-elementor' ) ); ?>
+								<?php echo esc_html( $features[13]['desc'] ); ?>
 								<?php if ( ! $ai_wp_supported ) : ?>
 									<strong><?php esc_html_e( 'Requires WordPress v6.9+', 'premium-addons-for-elementor' ); ?></strong>
 								<?php endif; ?>
@@ -55,8 +55,31 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-							<h4><?php printf( '%1$s %2$s', esc_html( $prefix ), esc_html( __( 'Templates', 'premium-addons-for-elementor' ) ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Build Professional Website in Minutes Using Our Pre-Made Premium Elementor Templates.', 'premium-addons-for-elementor' ) ); ?></p>
+							<h4><?php echo esc_html( $features[14]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[14]['desc'] ); ?></p>
+						</div>
+						<?php
+
+						$status         = ( isset( $features[14]['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'disabled' : checked( 1, $enabled_elements['premium-mscroll'], false );
+						$class          = ( isset( $features[14]['is_pro'] ) && ! Helper_Functions::check_papro_version() ) ? 'pro-' : '';
+						$switcher_class = $class . 'slider round pa-control';
+
+						?>
+						<div class="pa-section-info-cta">
+							<label class="switch">
+								<input type="checkbox" id="premium-mscroll" pa-element="feature" name="premium-mscroll" <?php echo esc_attr( $status ); ?>>
+									<span class="<?php echo esc_attr( $switcher_class ); ?>"></span>
+								</label>
+						</div>
+					</div>
+					<a href="<?php echo esc_url( $features[14]['demo'] ); ?>" target="_blank"></a>
+				</div>
+
+				<div class="pa-section-outer-wrap">
+					<div class="pa-section-info-wrap">
+						<div class="pa-section-info">
+							<h4><?php printf( '%1$s %2$s', esc_html( $prefix ), esc_html( $features[0]['title'] ) ); ?></h4>
+							<p><?php echo esc_html( $features[0]['desc'] ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">
@@ -72,8 +95,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-						<h4><?php echo esc_html( __( 'Display Conditions', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Show/hide content dynamically based on location, browser, operating system, user role, device type, Woocommerce, ACF, etc.', 'premium-addons-for-elementor' ) ); ?></p>
+						<h4><?php echo esc_html( $features[2]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[2]['desc'] ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">
@@ -89,8 +112,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-						<h4><?php echo esc_html( __( 'Equal Height', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Make your widgets the same height with just ONE click.', 'premium-addons-for-elementor' ) ); ?></p>
+						<h4><?php echo esc_html( $features[1]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[1]['desc'] ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">
@@ -106,12 +129,12 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-						<h4 class = "pa-inline-flex"><?php echo esc_html( __( 'Custom Mouse Cursor', 'premium-addons-for-elementor' ) ); ?>
+						<h4 class = "pa-inline-flex"><?php echo esc_html( $features[3]['title'] ); ?>
 							<button type="button" class="pa-btn-clear-cursor pa-inline-flex" title="<?php esc_html_e( 'Clear Site Cursor Settings', 'premium-addons-for-elementor' ); ?>">
 								<i class="dashicons dashicons-image-rotate"></i>
 							</button>
 						</h4>
-							<p><?php echo esc_html( __( 'Change the default mouse cursor with icon, image, or Lottie animation for any Elementor container or widget.', 'premium-addons-for-elementor' ) ); ?></p>
+							<p><?php echo esc_html( $features[3]['desc'] ); ?></p>
 						</div>
 						<?php
 
@@ -133,8 +156,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-							<h4><?php echo esc_html( __( 'Global Badge', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Add icon, image, Lottie, or SVG blob shape badge to any Elementor container or widget.', 'premium-addons-for-elementor' ) ); ?></p>
+							<h4><?php echo esc_html( $features[4]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[4]['desc'] ); ?></p>
 						</div>
 						<?php
 
@@ -156,8 +179,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-							<h4><?php echo esc_html( __( 'Animated Shape Divider', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Add icon, image, Lottie, or SVG blob shape badge to any Elementor container or widget.', 'premium-addons-for-elementor' ) ); ?></p>
+							<h4><?php echo esc_html( $features[5]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[5]['desc'] ); ?></p>
 						</div>
 												<div class="pa-section-info-cta">
 							<label class="switch">
@@ -172,8 +195,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-							<h4><?php echo esc_html( __( 'Global Tooltips', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Add icon, text, Lottie or Elementor template tooltip to any Elementor container or widget.', 'premium-addons-for-elementor' ) ); ?></p>
+							<h4><?php echo esc_html( $features[10]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[10]['desc'] ); ?></p>
 						</div>
 												<div class="pa-section-info-cta">
 							<label class="switch">
@@ -188,8 +211,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-						<h4><?php echo esc_html( __( 'Floating Effects', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Apply advanced floating effects on any Elementor element or a custom CSS selector.', 'premium-addons-for-elementor' ) ); ?></p>
+						<h4><?php echo esc_html( $features[6]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[6]['desc'] ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">
@@ -205,8 +228,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-						<h4><?php echo esc_html( __( 'Cross-Domain Copy N’ Paste', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Copy any Elementor content from site to another in just ONE click.', 'premium-addons-for-elementor' ) ); ?></p>
+						<h4><?php echo esc_html( $features[7]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[7]['desc'] ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">
@@ -222,8 +245,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-							<h4><?php echo esc_html( __( 'Duplicator', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Duplicate any post, page or template on your website.', 'premium-addons-for-elementor' ) ); ?></p>
+							<h4><?php echo esc_html( $features[8]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[8]['desc'] ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">
@@ -238,8 +261,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-						<h4><?php echo esc_html( __( 'Wrapper Link', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Add links to Elementor flexbox containers or widgets.', 'premium-addons-for-elementor' ) ); ?></p>
+						<h4><?php echo esc_html( $features[11]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[11]['desc'] ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">
@@ -255,8 +278,8 @@ $features = $elements['cat-13']['elements'];
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">
 						<div class="pa-section-info">
-						<h4><?php echo esc_html( __( 'Liquid Glass', 'premium-addons-for-elementor' ) ); ?></h4>
-							<p><?php echo esc_html( __( 'Apply glassmorphism and liquid glass effects to Elementor containers and widgets.', 'premium-addons-for-elementor' ) ); ?></p>
+						<h4><?php echo esc_html( $features[12]['title'] ); ?></h4>
+							<p><?php echo esc_html( $features[12]['desc'] ); ?></p>
 						</div>
 
 						<div class="pa-section-info-cta">

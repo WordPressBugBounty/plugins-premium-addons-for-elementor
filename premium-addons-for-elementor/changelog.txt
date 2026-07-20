@@ -1,5 +1,15 @@
 == Changelog ==
 
+= 4.11.87 - 19/7/2026 =
+
+- Tweak: Added new AI abilities to apply/customize all addons in the plugin (wrapper link, floating effects, tooltips, etc.), creating an Elementor template, duplicating a page/post, changing a post status, removing an Elementor element and more.
+- Tweak: Improved AI Abilities loading to prevent loading abilities files on the dashboard.
+- Tweak: Improved AI Abilities and MCP Configuration dashboard pages.
+- Tweak: Added Skip & Deactivate button in the plugin deactivation form.
+- Tweak: Show play icon by default in Advanced Carousel widget.
+- Fixed: Slider conflict with JetEngine Slider.
+- Fixed: Empty links appearing in post rendering widgets (Blog, AJAX Search, Recent Posts Notifications).
+
 = 4.11.86 - 12/7/2026 =
 
 - Tweak: Added AI abilities to add Elementor Container/Flexbox element, insert an Elementor widget to a page, post or template, get Elementor page structure and more.

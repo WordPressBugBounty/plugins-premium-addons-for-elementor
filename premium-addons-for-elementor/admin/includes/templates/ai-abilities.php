@@ -2,35 +2,27 @@
 /**
  * AI Abilities tab.
  *
- * Lists the Premium Addons abilities exposed to AI agents through the MCP
- * server, grouped by ability category. Both lists are pulled live from the
- * WordPress Abilities API registry, so they stay in sync as abilities ship.
+ * Lists and controls the Premium Addons abilities exposed to AI agents.
  */
+
+use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Includes\Abilities\Bootstrap;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Abilities/categories the AI Abilities feature registers are namespaced under this prefix.
-$pa_ability_prefix = 'premium-addons/';
+$abilities_list       = Bootstrap::get_instance()->get_abilities_catalog();
+$abilities_categories = Bootstrap::get_categories();
 
-// The Abilities API ships with WordPress 6.9. This tab is only reachable when the
-// feature is enabled (which itself requires 6.9+), but guard in case core is older.
-$pa_categories = function_exists( 'wp_get_ability_categories' ) ? wp_get_ability_categories() : array();
-$pa_abilities  = function_exists( 'wp_get_abilities' ) ? wp_get_abilities() : array();
+$abilities_settings = Admin_Helper::get_ai_abilities_settings();
+$disabled_abilities = array_fill_keys( $abilities_settings['disabled_abilities'], true );
+$abilities_by_cat   = array();
 
-// Bucket Premium Addons abilities by their category slug. Other plugins' abilities
-// live in the same registry, so scope to our prefix.
-$pa_abilities_by_cat = array();
-
-foreach ( $pa_abilities as $pa_ability ) {
-
-	if ( 0 !== strpos( $pa_ability->get_name(), $pa_ability_prefix ) ) {
-		continue;
-	}
-
-	$pa_abilities_by_cat[ $pa_ability->get_category() ][] = $pa_ability;
+foreach ( $abilities_list as $ability ) {
+	$abilities_by_cat[ $ability['category'] ][] = $ability;
 }
+
 ?>
 
 <div class="pa-section-content">
@@ -41,67 +33,120 @@ foreach ( $pa_abilities as $pa_ability ) {
 		</h2>
 
 		<p class="pa-mcp-step-desc">
-			<?php esc_html_e( 'Premium Addons exposes a set of abilities that AI agents can call through the MCP server — each one a typed, permission-gated action over your site.', 'premium-addons-for-elementor' ); ?>
+			<?php esc_html_e( 'Choose which Premium Addons abilities AI agents can call through REST and the MCP server.', 'premium-addons-for-elementor' ); ?>
 		</p>
 
-		<?php if ( empty( $pa_abilities_by_cat ) ) : ?>
+		<div class="pa-ai-abilities-status" role="status"></div>
 
-			<p class="pa-mcp-step-desc">
-				<?php esc_html_e( 'No abilities are available yet. As abilities are added, each will be listed here with a description of what it does and the permission it requires.', 'premium-addons-for-elementor' ); ?>
-			</p>
+			<?php $cat_open = true; ?>
 
-		<?php else : ?>
-
-			<?php $pa_cat_open = true; // First category with abilities starts expanded. ?>
-
-			<?php foreach ( $pa_categories as $pa_category ) : ?>
+			<?php foreach ( $abilities_categories as $cat_slug => $category ) : ?>
 
 				<?php
-				$pa_cat_slug = $pa_category->get_slug();
-
-				// Skip categories that hold no Premium Addons abilities.
-				if ( empty( $pa_abilities_by_cat[ $pa_cat_slug ] ) ) {
+				if ( empty( $abilities_by_cat[ $cat_slug ] ) ) {
 					continue;
 				}
 
-				$pa_cat_desc  = $pa_category->get_description();
-				$pa_panel_id  = 'pa-ability-cat-' . $pa_cat_slug;
-				$pa_expanded  = $pa_cat_open ? 'true' : 'false';
-				$pa_cat_open  = false;
+				$category_abilities = $abilities_by_cat[ $cat_slug ];
+				$enabled_count      = 0;
+
+				foreach ( $category_abilities as $ability ) {
+					if ( ! isset( $disabled_abilities[ $ability['full_name'] ] ) ) {
+						++$enabled_count;
+					}
+				}
+
+				$all_enabled     = count( $category_abilities ) === $enabled_count;
+				$some_enabled    = 0 < $enabled_count && ! $all_enabled;
+				$total_count     = count( $category_abilities );
+
+				if ( $all_enabled ) {
+					$count_state = 'is-all';
+				} elseif ( 0 === $enabled_count ) {
+					$count_state = 'is-none';
+				} else {
+					$count_state = 'is-some';
+				}
+
+				$panel_id        = 'pa-ability-cat-' . $cat_slug;
+				$expanded        = $cat_open ? 'true' : 'false';
+				$cat_open        = false;
+				$category_toggle = sprintf(
+					/* translators: %s: ability category label. */
+					__( 'Enable all %s abilities', 'premium-addons-for-elementor' ),
+					$category['label']
+				);
 				?>
 
 				<div class="pa-mcp-ability-cat">
 
-					<h3 class="pa-mcp-ability-cat-title">
-						<button type="button" class="pa-mcp-ability-cat-toggle" aria-expanded="<?php echo esc_attr( $pa_expanded ); ?>" aria-controls="<?php echo esc_attr( $pa_panel_id ); ?>">
-							<span class="pa-mcp-ability-cat-label"><?php echo esc_html( $pa_category->get_label() ); ?></span>
-							<span class="pa-mcp-ability-cat-icon" aria-hidden="true"></span>
-						</button>
-					</h3>
+					<div class="pa-mcp-ability-cat-header">
 
-					<div id="<?php echo esc_attr( $pa_panel_id ); ?>" class="pa-mcp-ability-cat-body"<?php echo 'true' === $pa_expanded ? '' : ' hidden'; ?>>
+						<div class="pa-mcp-ability-cat-heading">
+							<h3 class="pa-mcp-ability-cat-title">
+								<button type="button" class="pa-mcp-ability-cat-toggle" aria-expanded="<?php echo esc_attr( $expanded ); ?>" aria-controls="<?php echo esc_attr( $panel_id ); ?>"<?php echo '' !== $category['description'] ? ' aria-describedby="' . esc_attr( $panel_id . '-desc' ) . '"' : ''; ?>>
+									<span class="pa-mcp-ability-cat-icon" aria-hidden="true"></span>
+									<?php echo esc_html( $category['label'] ); ?>
+								</button>
+							</h3>
 
-						<?php if ( '' !== $pa_cat_desc ) : ?>
-							<p class="pa-mcp-ability-cat-desc"><?php echo esc_html( $pa_cat_desc ); ?></p>
-						<?php endif; ?>
+							<?php if ( '' !== $category['description'] ) : ?>
+								<p id="<?php echo esc_attr( $panel_id . '-desc' ); ?>" class="pa-mcp-ability-cat-desc"><?php echo esc_html( $category['description'] ); ?></p>
+							<?php endif; ?>
+						</div>
+
+						<span class="pa-mcp-ability-cat-count <?php echo esc_attr( $count_state ); ?>" data-cat="<?php echo esc_attr( $cat_slug ); ?>">
+							<span aria-hidden="true">
+								<?php
+								printf(
+									/* translators: 1: number of enabled abilities, 2: total number of abilities. */
+									esc_html__( '%1$s/%2$s on', 'premium-addons-for-elementor' ),
+									'<span class="pa-count-enabled">' . esc_html( $enabled_count ) . '</span>',
+									esc_html( $total_count )
+								);
+								?>
+							</span>
+							<span class="screen-reader-text">
+								<?php
+								printf(
+									/* translators: 1: number of enabled abilities, 2: total number of abilities. */
+									esc_html( _n( '%1$s of %2$s ability enabled', '%1$s of %2$s abilities enabled', $total_count, 'premium-addons-for-elementor' ) ),
+									'<span class="pa-count-enabled-sr">' . esc_html( $enabled_count ) . '</span>',
+									esc_html( $total_count )
+								);
+								?>
+							</span>
+						</span>
+
+						<label class="switch pa-ai-ability-cat-switch">
+							<input type="checkbox" data-cat="<?php echo esc_attr( $cat_slug ); ?>" data-indeterminate="<?php echo esc_attr( $some_enabled ? '1' : '0' ); ?>" aria-label="<?php echo esc_attr( $category_toggle ); ?>" <?php checked( $all_enabled ); ?>>
+							<span class="slider round pa-control"></span>
+						</label>
+					</div>
+
+					<div id="<?php echo esc_attr( $panel_id ); ?>" class="pa-mcp-ability-cat-body"<?php echo 'true' === $expanded ? '' : ' hidden'; ?>>
 
 						<ul class="pa-mcp-ability-list">
 
-							<?php foreach ( $pa_abilities_by_cat[ $pa_cat_slug ] as $pa_ability ) : ?>
+							<?php foreach ( $category_abilities as $ability ) : ?>
 
-								<?php
-								$pa_annotations = $pa_ability->get_meta_item( 'annotations', array() );
-								$pa_readonly    = ! empty( $pa_annotations['readonly'] );
-								?>
+								<?php $enabled = ! isset( $disabled_abilities[ $ability['full_name'] ] ); ?>
 
 								<li class="pa-mcp-ability">
-									<div class="pa-mcp-ability-head">
-										<span class="pa-mcp-ability-name"><?php echo esc_html( $pa_ability->get_label() ); ?></span>
-										<?php if ( $pa_readonly ) : ?>
-											<span class="pa-mcp-ability-badge"><?php esc_html_e( 'Read-only', 'premium-addons-for-elementor' ); ?></span>
-										<?php endif; ?>
+									<label class="switch pa-ai-ability-switch">
+										<input type="checkbox" data-ability="<?php echo esc_attr( $ability['full_name'] ); ?>" data-cat="<?php echo esc_attr( $cat_slug ); ?>" aria-label="<?php echo esc_attr( $ability['label'] ); ?>" <?php checked( $enabled ); ?>>
+										<span class="slider round pa-control"></span>
+									</label>
+
+									<div class="pa-mcp-ability-content">
+										<div class="pa-mcp-ability-head">
+											<span class="pa-mcp-ability-name"><?php echo esc_html( $ability['label'] ); ?></span>
+											<?php if ( $ability['readonly'] ) : ?>
+												<span class="pa-mcp-ability-badge"><?php esc_html_e( 'Read-only', 'premium-addons-for-elementor' ); ?></span>
+											<?php endif; ?>
+										</div>
+										<p class="pa-mcp-ability-desc"><?php echo esc_html( $ability['description'] ); ?></p>
 									</div>
-									<p class="pa-mcp-ability-desc"><?php echo esc_html( $pa_ability->get_description() ); ?></p>
 								</li>
 
 							<?php endforeach; ?>
@@ -113,8 +158,6 @@ foreach ( $pa_abilities as $pa_ability ) {
 				</div>
 
 			<?php endforeach; ?>
-
-		<?php endif; ?>
 
 	</div>
 </div>

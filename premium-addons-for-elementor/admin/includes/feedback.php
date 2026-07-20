@@ -203,7 +203,8 @@ class Feedback {
 						</section>
 
 						<section class="buttons-wrap clearfix">
-							<button class="pa-deactivate-btn" data-action="deactivation"><?php echo esc_html( __( 'Deactivate', 'premium-addons-for-elementor' ) ); ?></button>
+							<button class="pa-deactivate-btn pa-submit-btn" data-action="deactivation"><?php echo esc_html( __( 'Submit & Deactivate', 'premium-addons-for-elementor' ) ); ?></button>
+							<button class="pa-deactivate-btn pa-skip-btn" data-action="skip"><?php echo esc_html( __( 'Skip & Deactivate', 'premium-addons-for-elementor' ) ); ?></button>
 						</section>
 					</div>
 

@@ -122,9 +122,7 @@ class Duplicator {
 			return;
 		}
 
-		$post = sanitize_post( $post, 'db' );
-
-		$duplicated_post_id = self::insert_post( $post );
+		self::duplicate( $post_id );
 
 		$redirect = add_query_arg(
 			array(
@@ -134,18 +132,54 @@ class Duplicator {
 			admin_url( 'edit.php' )
 		);
 
-		if ( ! is_wp_error( $duplicated_post_id ) ) {
-
-			self::duplicate_post_taxonomies( $post, $duplicated_post_id );
-			self::duplicate_post_meta_data( $post_id, $duplicated_post_id );
-
-			$css = Post_CSS::create( $duplicated_post_id );
-			$css->update();
-
-		}
-
 		wp_safe_redirect( $redirect );
 		die();
+	}
+
+	/**
+	 * Duplicate a post/page and return the new ID.
+	 *
+	 * @access public
+	 * @since 4.11.86
+	 *
+	 * @param integer $post_id source post ID.
+	 * @return integer|\WP_Error new post ID, or WP_Error on failure.
+	 */
+	public static function duplicate( $post_id ) {
+
+		$post = get_post( $post_id );
+
+		if ( is_null( $post ) ) {
+			return new \WP_Error(
+				'premium_addons_post_not_found',
+				__( 'The requested post could not be found.', 'premium-addons-for-elementor' )
+			);
+		}
+
+		$post = sanitize_post( $post, 'db' );
+
+		$duplicated_post_id = self::insert_post( $post );
+
+		if ( is_wp_error( $duplicated_post_id ) ) {
+			return $duplicated_post_id;
+		}
+
+		if ( ! $duplicated_post_id ) {
+			return new \WP_Error(
+				'premium_addons_duplicate_failed',
+				__( 'Could not duplicate the post.', 'premium-addons-for-elementor' )
+			);
+		}
+
+		self::duplicate_post_taxonomies( $post, $duplicated_post_id );
+		self::duplicate_post_meta_data( $post->ID, $duplicated_post_id );
+
+		if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+			$css = Post_CSS::create( $duplicated_post_id );
+			$css->update();
+		}
+
+		return $duplicated_post_id;
 	}
 
 	/**

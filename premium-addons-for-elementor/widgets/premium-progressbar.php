@@ -363,12 +363,24 @@ class Premium_Progressbar extends Widget_Base {
 			'icon_type',
 			array(
 				'label'     => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
+				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Custom Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Custom Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default'   => 'icon',
 				'separator' => 'before',
@@ -379,9 +391,11 @@ class Premium_Progressbar extends Widget_Base {
 		$this->add_control(
 			'icon_select',
 			array(
-				'label'     => __( 'Select an Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::ICONS,
-				'condition' => array_merge(
+				'label'       => __( 'Select an Icon', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::ICONS,
+				'skin'        => 'inline',
+				'label_block' => false,
+				'condition'   => array_merge(
 					$common_conditions,
 					array(
 						'icon_type' => 'icon',

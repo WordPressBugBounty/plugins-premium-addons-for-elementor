@@ -66,7 +66,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 * Load AI Abilities
 		 *
 		 * Stands up the bundled MCP server. Gated by the premium-ai-abilities
-		 * switcher and a WordPress 6.9 minimum (Abilities API requirement).
+		 * switcher; the Abilities API capability check (in core since 6.9) lives
+		 * in Abilities\Bootstrap, so it is not repeated here.
 		 *
 		 * @since 4.11.74
 		 * @access public
@@ -75,11 +76,9 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 */
 		public function load_abilities() {
 
-			global $wp_version;
-
 			$enabled_elements = \PremiumAddons\Admin\Includes\Admin_Helper::get_enabled_elements();
 
-			if ( empty( $enabled_elements['premium-ai-abilities'] ) || version_compare( $wp_version, '6.9', '<' ) ) {
+			if ( empty( $enabled_elements['premium-ai-abilities'] ) ) {
 				return;
 			}
 

@@ -69,7 +69,7 @@
 
 		};
 
-		// AI Abilities tab: categories collapse/expand as an accordion.
+		// AI Abilities tab: accordion and per-category/per-ability persistence.
 		self.initAiAbilities = function () {
 
 			var $section = $('#pa-section-ai-abilities');
@@ -77,6 +77,136 @@
 			if (!$section.length) {
 				return;
 			}
+
+			var $abilitySwitches = $section.find('.pa-ai-ability-switch input[data-ability]'),
+				$categorySwitches = $section.find('.pa-ai-ability-cat-switch input[data-cat]'),
+				$allSwitches = $abilitySwitches.add($categorySwitches),
+				$status = $section.find('.pa-ai-abilities-status'),
+				saveTimer = null,
+				requestInFlight = false,
+				saveQueued = false,
+				lastSavedDisabled = [];
+
+			function collectDisabled() {
+				return $abilitySwitches.filter(':not(:checked)').map(function () {
+					return $(this).attr('data-ability');
+				}).get();
+			}
+
+			function updateCategory(category) {
+				var sel = '[data-cat="' + category + '"]',
+					$members = $abilitySwitches.filter(sel),
+					$categorySwitch = $categorySwitches.filter(sel),
+					$count = $section.find('.pa-mcp-ability-cat-count' + sel),
+					total = $members.length,
+					enabledCount = $members.filter(':checked').length;
+
+				$categorySwitch.prop('checked', total === enabledCount)
+					.prop('indeterminate', 0 < enabledCount && enabledCount < total);
+
+				$count.find('.pa-count-enabled, .pa-count-enabled-sr').text(enabledCount);
+				$count.removeClass('is-all is-some is-none')
+					.addClass(total === enabledCount ? 'is-all' : (0 === enabledCount ? 'is-none' : 'is-some'));
+			}
+
+			function updateAllCategories() {
+				$categorySwitches.each(function () {
+					updateCategory($(this).attr('data-cat'));
+				});
+			}
+
+			function applyDisabled(disabledIds) {
+				$abilitySwitches.each(function () {
+					$(this).prop('checked', -1 === disabledIds.indexOf($(this).attr('data-ability')));
+				});
+				updateAllCategories();
+			}
+
+			function setSaving(isSaving) {
+				requestInFlight = isSaving;
+				$section.toggleClass('is-saving', isSaving);
+				$allSwitches.prop('disabled', isSaving);
+				if (isSaving) {
+					$status.text(settings.i18n.aiAbilitiesSaving);
+				}
+			}
+
+			function saveFailed(message) {
+				saveQueued = false;
+				applyDisabled(lastSavedDisabled);
+				$status.text(message || settings.i18n.aiAbilitiesSaveFailed).addClass('is-error');
+			}
+
+			function saveAbilities() {
+				var disabledIds;
+
+				if (requestInFlight) {
+					saveQueued = true;
+					return;
+				}
+
+				disabledIds = collectDisabled();
+				setSaving(true);
+				$status.removeClass('is-error');
+
+				$.ajax({
+					url: settings.ajaxurl,
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						action: 'pa_save_ai_abilities',
+						security: settings.nonce,
+						disabled: JSON.stringify(disabledIds)
+					}
+				}).done(function (response) {
+					if (!response.success) {
+						saveFailed(response.data && response.data.message);
+						return;
+					}
+
+					lastSavedDisabled = response.data.disabled_abilities || disabledIds;
+					$status.text(response.data.message || '').removeClass('is-error');
+				}).fail(function () {
+					saveFailed(settings.i18n.aiAbilitiesSaveFailed);
+				}).always(function () {
+					setSaving(false);
+
+					if (saveQueued) {
+						saveQueued = false;
+						saveAbilities();
+					}
+				});
+			}
+
+			function queueSave() {
+				if (requestInFlight) {
+					saveQueued = true;
+					return;
+				}
+
+				clearTimeout(saveTimer);
+				saveTimer = setTimeout(saveAbilities, 400);
+			}
+
+			lastSavedDisabled = collectDisabled();
+
+			$categorySwitches.filter('[data-indeterminate="1"]').each(function () {
+				this.indeterminate = true;
+			});
+
+			$section.on('change', '.pa-ai-ability-switch input[data-ability]', function () {
+				updateCategory($(this).attr('data-cat'));
+				queueSave();
+			});
+
+			$section.on('change', '.pa-ai-ability-cat-switch input[data-cat]', function () {
+				var category = $(this).attr('data-cat'),
+					checked = $(this).prop('checked');
+
+				$abilitySwitches.filter('[data-cat="' + category + '"]').prop('checked', checked);
+				updateCategory(category);
+				queueSave();
+			});
 
 			$section.on('click', '.pa-mcp-ability-cat-toggle', function () {
 
@@ -488,7 +618,7 @@
 
 		};
 
-		// MCP Configuration tab: copy the connect prompt + switch AI-client tabs.
+		// MCP Configuration tab: copy connection details + switch AI-client panels.
 		self.initMcpConfig = function () {
 
 			var $section = $('#pa-section-mcp-config');
@@ -539,7 +669,7 @@
 				});
 			}
 
-			// Copy the connect prompt to the clipboard.
+			// Copy the requested field or preformatted text to the clipboard.
 			$section.on('click', '.pa-mcp-copy', function (e) {
 
 				e.preventDefault();
@@ -551,7 +681,10 @@
 					return;
 				}
 
-				paMcpCopyToClipboard(target.innerText).then(function () {
+				var isField = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA',
+					text = isField ? target.value : target.textContent;
+
+				paMcpCopyToClipboard(text).then(function () {
 
 					var label = $btn.text();
 
@@ -563,26 +696,49 @@
 				}).catch(function () {
 
 					// Last resort: select the text so the user can copy it manually.
-					var range = document.createRange();
+					if (isField) {
+						target.select();
+					} else {
+						var range = document.createRange();
 
-					range.selectNodeContents(target);
+						range.selectNodeContents(target);
 
-					var selection = window.getSelection();
+						var selection = window.getSelection();
 
-					selection.removeAllRanges();
-					selection.addRange(range);
+						selection.removeAllRanges();
+						selection.addRange(range);
+					}
 				});
 			});
 
-			// Swap the connect prompt's client name when an AI-client tab is selected.
+			var $clientTabs = $section.find('.pa-mcp-client-tab'),
+				$clientPanels = $section.find('.pa-mcp-client-panel');
+
+			function selectMcpClient($tab) {
+
+				var panelId = $tab.attr('data-pa-mcp-panel');
+
+				$clientTabs.removeClass('is-active');
+				$tab.addClass('is-active');
+				$clientPanels.prop('hidden', true);
+				$section.find('#' + panelId).prop('hidden', false);
+			}
+
 			$section.on('click', '.pa-mcp-client-tab', function () {
+				selectMcpClient($(this));
+			});
 
-				var $tab = $(this);
+			$section.on('input', '#pa-mcp-alias', function () {
 
-				$section.find('.pa-mcp-client-tab').removeClass('is-active').attr('aria-selected', 'false');
-				$tab.addClass('is-active').attr('aria-selected', 'true');
+				var $alias = $(this),
+					cleanAlias = $alias.val().replace(/[^A-Za-z0-9_-]/g, '');
 
-				$section.find('.pa-mcp-client-name').text($tab.attr('data-pa-mcp-client'));
+				if (!cleanAlias) {
+					cleanAlias = 'premium-addons';
+				}
+
+				$alias.val(cleanAlias);
+				$section.find('.pa-mcp-alias').text(cleanAlias);
 			});
 		};
 

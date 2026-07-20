@@ -240,33 +240,49 @@ class Premium_Mobile_Menu extends Widget_Base {
 		$repeater->add_control(
 			'icon_type',
 			array(
-				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => array(
-					'none'      => __( 'None', 'premium-addons-for-elementor' ),
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+				'label'   => __( 'Icon Type', 'premium-addons-for-elementor' ),
+				'type'    => Controls_Manager::CHOOSE,
+				'options' => array(
+					'none'      => array(
+						'title' => __( 'None', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-ban',
+					),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
-				'default'     => 'icon',
-				'label_block' => true,
+				'default' => 'icon',
 			)
 		);
 
 		$repeater->add_control(
 			'icon',
 			array(
-				'label'       => __( 'Icon', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::ICONS,
-				'default'     => array(
+				'label'                  => __( 'Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'condition'   => array(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array(
 					'icon_type' => 'icon',
 				),
-				'label_block' => true,
 			)
 		);
 

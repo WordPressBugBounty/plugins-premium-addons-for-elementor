@@ -302,15 +302,30 @@ class Premium_Icon_List extends Widget_Base {
 			'icon_type',
 			array(
 				'label'       => __( 'Bullet Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
+				'type'        => Controls_Manager::CHOOSE,
 				'default'     => 'icon',
 				'render_type' => 'template',
 				'options'     => array(
-					'icon'   => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'  => __( 'Image', 'premium-addons-for-elementor' ),
-					'lottie' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'text'   => __( 'Text', 'premium-addons-for-elementor' ),
-					'svg'    => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'   => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'  => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'lottie' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'text'   => array(
+						'title' => __( 'Text', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-t-letter',
+					),
+					'svg'    => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'condition'   => $common_conditions,
 			)
@@ -319,13 +334,16 @@ class Premium_Icon_List extends Widget_Base {
 		$repeater_list->add_control(
 			'premium_icon_list_font_updated',
 			array(
-				'label'     => __( 'Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::ICONS,
-				'default'   => array(
+				'label'                  => __( 'Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'condition' => array_merge(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array_merge(
 					$common_conditions,
 					array(
 						'icon_type' => 'icon',

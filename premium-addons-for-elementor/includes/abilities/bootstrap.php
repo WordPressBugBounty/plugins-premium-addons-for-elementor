@@ -8,6 +8,8 @@
 
 namespace PremiumAddons\Includes\Abilities;
 
+use PremiumAddons\Includes\Abilities\Registry\Ability_Registry;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
@@ -20,68 +22,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Bootstrap {
 
 	/**
-	 * Class instance
+	 * Class instance.
 	 *
-	 * @var instance
+	 * @var Bootstrap|null
 	 */
 	private static $instance = null;
 
 	/**
-	 * Ability names exposed as the MCP server's tools.
+	 * Ability handler registry.
 	 *
-	 * Must be known statically. register_server() reads this list on the
-	 * mcp_adapter_init hook (rest_api_init priority 15), which runs *before*
-	 * wp_abilities_api_init fires — so it cannot be populated from
-	 * register_abilities(). The abilities are still registered on
-	 * wp_abilities_api_init and resolved just-in-time when the server reads its
-	 * tools (the adapter calls wp_get_ability(), which boots the registry).
-	 *
-	 * @var array
+	 * @var Ability_Registry
 	 */
-	private $ability_names = array(
-		'premium-addons/get-id-by-title',
-		'premium-addons/list-pages',
-		'premium-addons/list-templates',
-		'premium-addons/get-global-settings',
-		'premium-addons/get-page-structure',
-		'premium-addons/get-element-settings',
-		'premium-addons/get-widget-schema',
-		'premium-addons/detect-atomic-support',
-		'premium-addons/check-elementor-element',
-		'premium-addons/create-page',
-		'premium-addons/create-elementor-template',
-		'premium-addons/add-flexbox',
-		'premium-addons/add-container',
-		'premium-addons/update-element-settings',
-		'premium-addons/insert-widget',
-		'premium-addons/get-settings',
-		'premium-addons/update-setting',
-		'premium-addons/scan-usage',
-		'premium-addons/disable-unused-widgets',
-		'premium-addons/clear-dynamic-assets',
-		'premium-addons/subscribe-newsletter',
-	);
-
-	/**
-	 * Filesystem path to the abilities directory.
-	 *
-	 * @var string
-	 */
-	private $abilities_path;
+	private $registry;
 
 	/**
 	 * Get class instance.
 	 *
-	 * Instantiates the bootstrap (and the MCP server) once.
-	 *
 	 * @return Bootstrap
 	 */
 	public static function get_instance() {
-
 		if ( ! isset( self::$instance ) ) {
-
 			self::$instance = new self();
-
 		}
 
 		return self::$instance;
@@ -89,44 +50,118 @@ class Bootstrap {
 
 	/**
 	 * Bootstrap constructor.
-	 *
-	 * Loads the bundled dependencies, registers the ability categories and
-	 * abilities, and — only when the bundled MCP Adapter is present — stands up
-	 * the Premium Addons MCP server.
 	 */
 	public function __construct() {
 
-		$this->abilities_path = PREMIUM_ADDONS_PATH . 'includes/abilities/';
+		$this->registry = new Ability_Registry();
 
-		require_once $this->abilities_path . 'vendor/autoload_packages.php';
-
-		// The Abilities API is the only hard dependency; bail if it is unavailable.
 		if ( ! function_exists( 'wp_register_ability' ) ) {
 			return;
 		}
 
-		// Register categories then abilities unconditionally so they stay reachable
-		// over REST at /wp-json/wp-abilities/v1/ even without the MCP Adapter.
+		// Register PA abilities with core as soon as the Abilities API boots.
+		// These listeners are cheap and must be in place before anything first
+		// accesses the abilities registry, so they stay on the early path.
 		add_action( 'wp_abilities_api_categories_init', array( $this, 'register_categories' ) );
-
 		add_action( 'wp_abilities_api_init', array( $this, 'register_abilities' ) );
 
-		// Stand up the MCP server only when the bundled adapter is present.
+		// The MCP adapter is only needed while serving a REST request (or WP-CLI),
+		// so defer its vendor autoloader and class graph to that point instead of
+		// loading them on every front-end and admin page.
+		add_action( 'rest_api_init', array( $this, 'boot_mcp_adapter' ), 5 );
+
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			add_action( 'init', array( $this, 'boot_mcp_adapter' ), 5 );
+		}
+	}
+
+	/**
+	 * Boot the MCP adapter and hook server registration.
+	 *
+	 * Deferred to rest_api_init / WP-CLI so the vendor autoloader and adapter
+	 * class graph never load on ordinary front-end or admin requests.
+	 *
+	 * @return void
+	 */
+	public function boot_mcp_adapter() {
+
+		require_once PREMIUM_ADDONS_PATH . 'includes/abilities/vendor/autoload_packages.php';
+
 		if ( ! class_exists( \WP\MCP\Core\McpAdapter::class ) ) {
 			return;
 		}
 
 		\WP\MCP\Core\McpAdapter::instance();
 
-		add_action( 'mcp_adapter_init', array( $this, 'register_server' ) );
+		add_action( 'mcp_adapter_init', array( $this, 'register_server' ), 20 );
+	}
+
+	/**
+	 * Get category definitions.
+	 *
+	 * @return array
+	 */
+	public static function get_categories() {
+		return array(
+			'pa-discovery'            => array(
+				'label'       => __( 'Discovery', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities that read site and content state without changing anything.', 'premium-addons-for-elementor' ),
+			),
+			'pa-page-post-management' => array(
+				'label'       => __( 'Page/Post Management', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities that create and manage WordPress pages and posts as Elementor documents.', 'premium-addons-for-elementor' ),
+			),
+			'pa-build'                => array(
+				'label'       => __( 'Build', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities that create, edit, and remove Elementor elements on a page — containers, atomic flexbox, element settings, and deletion.', 'premium-addons-for-elementor' ),
+			),
+			'pa-dashboard'            => array(
+				'label'       => __( 'Dashboard', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities for managing the Premium Addons dashboard.', 'premium-addons-for-elementor' ),
+			),
+		);
+	}
+
+	/**
+	 * Register ability categories.
+	 *
+	 * @return void
+	 */
+	public function register_categories() {
+		foreach ( self::get_categories() as $slug => $category ) {
+			wp_register_ability_category( $slug, $category );
+		}
+	}
+
+	/**
+	 * Register enabled abilities.
+	 *
+	 * @return void
+	 */
+	public function register_abilities() {
+		$this->load_abilities_classes();
+		$this->registry->register_enabled_abilities();
 	}
 
 	/**
 	 * Register the Premium Addons MCP server.
 	 *
 	 * @param \WP\MCP\Core\McpAdapter $mcp_adapter MCP adapter instance.
+	 * @return void
 	 */
 	public function register_server( $mcp_adapter ) {
+		if ( ! did_action( 'init' ) ) {
+			return;
+		}
+
+		$this->load_abilities_classes();
+
+		$tools = array_values(
+			array_intersect(
+				$this->get_registered_ability_names(),
+				$this->registry->get_enabled_names()
+			)
+		);
 
 		$mcp_adapter->create_server(
 			'premium-addons',
@@ -138,7 +173,7 @@ class Bootstrap {
 			array( \WP\MCP\Transport\HttpTransport::class ),
 			\WP\MCP\Infrastructure\ErrorHandling\ErrorLogMcpErrorHandler::class,
 			\WP\MCP\Infrastructure\Observability\NullMcpObservabilityHandler::class,
-			$this->ability_names,
+			$tools,
 			array(),
 			array(),
 			null
@@ -146,110 +181,108 @@ class Bootstrap {
 	}
 
 	/**
-	 * Register ability categories.
+	 * Get the cached ability catalog for the settings UI.
 	 *
-	 * Runs before any ability registers, since a category is a required argument
-	 * of wp_register_ability and must reference an already-registered slug.
+	 * @return array
 	 */
-	public function register_categories() {
+	public function get_abilities_catalog() {
+		$hash               = md5( implode( ',', $this->ability_classes() ) . '|' . PREMIUM_ADDONS_VERSION );
+		$catalog            = get_transient( 'pa_ai_abilities_catalog' );
+		$is_current_catalog = is_array( $catalog )
+			&& isset( $catalog['hash'], $catalog['items'] )
+			&& is_array( $catalog['items'] )
+			&& $hash === $catalog['hash'];
 
-		wp_register_ability_category(
-			'pa-discovery',
+		if ( $is_current_catalog ) {
+			return $catalog['items'];
+		}
+
+		$this->load_abilities_classes();
+
+		$ability_items = $this->registry->get_abilities_meta();
+
+		set_transient(
+			'pa_ai_abilities_catalog',
 			array(
-				'label'       => __( 'Discovery', 'premium-addons-for-elementor' ),
-				'description' => __( 'Abilities that read site and content state without changing anything.', 'premium-addons-for-elementor' ),
+				'hash'  => $hash,
+				'items' => $ability_items,
 			)
 		);
 
-		wp_register_ability_category(
-			'pa-page-post-management',
-			array(
-				'label'       => __( 'Page/Post Management', 'premium-addons-for-elementor' ),
-				'description' => __( 'Abilities that create and manage WordPress pages and posts as Elementor documents.', 'premium-addons-for-elementor' ),
-			)
-		);
-
-		wp_register_ability_category(
-			'pa-build',
-			array(
-				'label'       => __( 'Build', 'premium-addons-for-elementor' ),
-				'description' => __( 'Abilities that create and edit Elementor elements on a page — containers, atomic flexbox, and element settings.', 'premium-addons-for-elementor' ),
-			)
-		);
-
-		wp_register_ability_category(
-			'pa-dashboard',
-			array(
-				'label'       => __( 'Dashboard', 'premium-addons-for-elementor' ),
-				'description' => __( 'Abilities for managing the Premium Addons dashboard.', 'premium-addons-for-elementor' ),
-			)
-		);
+		return $ability_items;
 	}
 
 	/**
-	 * Register abilities.
+	 * Get handler class names.
 	 *
-	 * Dispatcher that delegates to one registration method per ability group, so
-	 * each group's files are loaded in isolation. Add a register_<group>_abilities()
-	 * method and a call here when introducing a new group.
+	 * @return array
 	 */
-	public function register_abilities() {
-
-		$this->register_discovery_abilities();
-		$this->register_page_post_management_abilities();
-		$this->register_build_abilities();
-		$this->register_dashboard_abilities();
+	private function ability_classes() {
+		return array(
+			Discovery\Check_Elementor_Element::class,
+			Discovery\Detect_Atomic_Support::class,
+			Discovery\Get_Addon_Schema::class,
+			Discovery\Get_Element_Settings::class,
+			Discovery\Get_Global_Settings::class,
+			Discovery\Get_Id_By_Title::class,
+			Discovery\Get_Page_Structure::class,
+			Discovery\Get_Widget_Schema::class,
+			Discovery\List_Available_Elements::class,
+			Discovery\List_Pa_Addons::class,
+			Discovery\List_Pages::class,
+			Discovery\List_Templates::class,
+			Build\Add_Container::class,
+			Build\Add_Flexbox::class,
+			Build\Insert_Widget::class,
+			Build\Remove_Element::class,
+			Build\Update_Element_Settings::class,
+			Dashboard\Clear_Dynamic_Assets::class,
+			Dashboard\Disable_Unused_Widgets::class,
+			Dashboard\Get_Settings::class,
+			Dashboard\Scan_Usage::class,
+			Dashboard\Subscribe_Newsletter::class,
+			Dashboard\Update_Setting::class,
+			PagePostManagement\Change_Post_Status::class,
+			PagePostManagement\Create_Elementor_Template::class,
+			PagePostManagement\Create_Page::class,
+			PagePostManagement\Duplicate_Post::class,
+		);
 	}
 
 	/**
-	 * Register discovery abilities.
-	 */
-	public function register_discovery_abilities() {
-
-		require_once $this->abilities_path . 'discovery/get-id-by-title.php';
-		require_once $this->abilities_path . 'discovery/list-pages.php';
-		require_once $this->abilities_path . 'discovery/list-templates.php';
-		require_once $this->abilities_path . 'discovery/get-global-settings.php';
-		require_once $this->abilities_path . 'discovery/get-page-structure.php';
-		require_once $this->abilities_path . 'discovery/get-element-settings.php';
-		require_once $this->abilities_path . 'discovery/get-widget-schema.php';
-		require_once $this->abilities_path . 'discovery/detect-atomic-support.php';
-		require_once $this->abilities_path . 'discovery/check-elementor-element.php';
-	}
-
-	/**
-	 * Register build abilities.
+	 * Populate the handler registry once.
 	 *
-	 * The shared Helpers class the ability callbacks use resolves through the
-	 * plugin autoloader.
+	 * @return void
 	 */
-	public function register_build_abilities() {
+	private function load_abilities_classes() {
 
-		require_once $this->abilities_path . 'build/add-flexbox.php';
-		require_once $this->abilities_path . 'build/add-container.php';
-		require_once $this->abilities_path . 'build/update-element-settings.php';
-		require_once $this->abilities_path . 'build/insert-widget.php';
+		if ( ! empty( $this->registry->get_abilities_names() ) ) {
+			return;
+		}
+
+		foreach ( $this->ability_classes() as $ability_class ) {
+			$this->registry->register( new $ability_class() );
+		}
+
+		do_action( 'pa_abilities_register_handlers', $this->registry );
 	}
 
 	/**
-	 * Register page/post management abilities.
+	 * Get registered Premium Addons ability names from WordPress.
+	 *
+	 * @return array
 	 */
-	public function register_page_post_management_abilities() {
+	private function get_registered_ability_names() {
+		$names = array();
 
-		require_once $this->abilities_path . 'page-post-management/create-page.php';
-		require_once $this->abilities_path . 'page-post-management/create-elementor-template.php';
-	}
+		foreach ( wp_get_abilities() as $ability ) {
+			$name = $ability->get_name();
 
-	/**
-	 * Register dashboard abilities.
-	 */
-	public function register_dashboard_abilities() {
+			if ( 0 === strpos( $name, Ability_Registry::PREFIX ) ) {
+				$names[] = $name;
+			}
+		}
 
-		require_once $this->abilities_path . 'dashboard/get-settings.php';
-		require_once $this->abilities_path . 'dashboard/update-setting.php';
-		require_once $this->abilities_path . 'dashboard/scan-usage.php';
-		require_once $this->abilities_path . 'dashboard/disable-unused-widgets.php';
-		require_once $this->abilities_path . 'dashboard/clear-dynamic-assets.php';
-		require_once $this->abilities_path . 'dashboard/subscribe-newsletter.php';
+		return $names;
 	}
 }

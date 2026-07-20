@@ -249,14 +249,29 @@ class Premium_Notifications extends Widget_Base {
 			'icon_type',
 			array(
 				'label'              => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'               => Controls_Manager::SELECT,
+				'type'               => Controls_Manager::CHOOSE,
 				'default'            => 'icon',
 				'options'            => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
-					'text'      => __( 'Text', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'text'      => array(
+						'title' => __( 'Text', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-t-letter',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'frontend_available' => true,
 			)
@@ -265,13 +280,16 @@ class Premium_Notifications extends Widget_Base {
 		$this->add_control(
 			'icon',
 			array(
-				'label'     => __( 'Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::ICONS,
-				'default'   => array(
+				'label'                  => __( 'Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'default'                => array(
 					'value'   => 'far fa-bell',
 					'library' => 'fa-regular',
 				),
-				'condition' => array(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array(
 					'icon_type' => 'icon',
 				),
 			)
@@ -941,13 +959,25 @@ class Premium_Notifications extends Widget_Base {
 			'header_icon_type',
 			array(
 				'label'     => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
+				'type'      => Controls_Manager::CHOOSE,
 				'default'   => 'icon',
 				'options'   => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'image'     => __( 'Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'image'     => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'condition' => array(
 					'header_icon_sw' => 'yes',
@@ -958,13 +988,16 @@ class Premium_Notifications extends Widget_Base {
 		$this->add_control(
 			'header_icon',
 			array(
-				'label'     => __( 'Icon', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::ICONS,
-				'default'   => array(
+				'label'                  => __( 'Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'default'                => array(
 					'value'   => 'far fa-bell',
 					'library' => 'fa-regular',
 				),
-				'condition' => array(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array(
 					'header_icon_sw'   => 'yes',
 					'header_icon_type' => 'icon',
 				),

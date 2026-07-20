@@ -337,10 +337,16 @@ class Premium_Modalbox extends Widget_Base {
 			'icon_type',
 			array(
 				'label'     => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
+				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
-					'icon' => __( 'Font Awesome Icon', 'premium-addons-for-elementor' ),
-					'svg'  => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon' => array(
+						'title' => __( 'Font Awesome Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'svg'  => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default'   => 'icon',
 				'condition' => array(
@@ -353,15 +359,17 @@ class Premium_Modalbox extends Widget_Base {
 		$this->add_control(
 			'premium_modal_box_button_icon_selection_updated',
 			array(
-				'label'            => __( 'Icon', 'premium-addons-for-elementor' ),
-				'type'             => Controls_Manager::ICONS,
-				'fa4compatibility' => 'premium_modal_box_button_icon_selection',
-				'default'          => array(
+				'label'                  => __( 'Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'fa4compatibility'       => 'premium_modal_box_button_icon_selection',
+				'default'                => array(
 					'value'   => 'fas fa-star',
 					'library' => 'fa-solid',
 				),
-				'label_block'      => true,
-				'condition'        => array(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array(
 					'premium_modal_box_display_on'    => 'button',
 					'premium_modal_box_icon_switcher' => 'yes',
 					'icon_type'                       => 'icon',

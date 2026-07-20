@@ -349,15 +349,29 @@ class Premium_Counter extends Widget_Base {
 			'premium_counter_icon_image',
 			array(
 				'label'       => __( 'Icon Type', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::SELECT,
+				'type'        => Controls_Manager::CHOOSE,
 				'description' => __( 'Use a font awesome icon or upload a custom image', 'premium-addons-for-elementor' ),
 				'options'     => array(
-					'icon'      => __( 'Icon', 'premium-addons-for-elementor' ),
-					'custom'    => __( 'Image', 'premium-addons-for-elementor' ),
-					'animation' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
-					'svg'       => __( 'SVG Code', 'premium-addons-for-elementor' ),
+					'icon'      => array(
+						'title' => __( 'Icon', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-icon',
+					),
+					'custom'    => array(
+						'title' => __( 'Image', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-image',
+					),
+					'animation' => array(
+						'title' => __( 'Lottie Animation', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-lottie',
+					),
+					'svg'       => array(
+						'title' => __( 'SVG Code', 'premium-addons-for-elementor' ),
+						'icon'  => 'divider-type-code',
+					),
 				),
 				'default'     => 'icon',
+				'skin'        => 'inline',
+				'label_block' => false,
 				'condition'   => array(
 					'icon_switcher' => 'yes',
 				),
@@ -371,14 +385,17 @@ class Premium_Counter extends Widget_Base {
 		$this->add_control(
 			'premium_counter_icon_updated',
 			array(
-				'label'            => __( 'Select an Icon', 'premium-addons-for-elementor' ),
-				'type'             => Controls_Manager::ICONS,
-				'fa4compatibility' => 'premium_counter_icon',
-				'default'          => array(
+				'label'                  => __( 'Select an Icon', 'premium-addons-for-elementor' ),
+				'type'                   => Controls_Manager::ICONS,
+				'fa4compatibility'       => 'premium_counter_icon',
+				'default'                => array(
 					'value'   => 'fas fa-clock',
 					'library' => 'fa-solid',
 				),
-				'condition'        => array_merge(
+				'exclude_inline_options' => 'none',
+				'skin'                   => 'inline',
+				'label_block'            => false,
+				'condition'              => array_merge(
 					$common_conditions,
 					array(
 						'premium_counter_icon_image' => 'icon',
