@@ -8,6 +8,7 @@
 
 namespace PremiumAddons\Includes\Abilities;
 
+use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Abilities\Registry\Ability_Registry;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -55,20 +56,25 @@ class Bootstrap {
 
 		$this->registry = new Ability_Registry();
 
-		if ( ! function_exists( 'wp_register_ability' ) ) {
+		// Check if the AI Abilities feature is enabled.
+		$is_enabled = ! empty( Admin_Helper::get_enabled_elements()['premium-ai-abilities'] );
+
+		if ( ! $is_enabled || ! function_exists( 'wp_register_ability' ) ) {
 			return;
 		}
 
-		// Register PA abilities with core as soon as the Abilities API boots.
-		// These listeners are cheap and must be in place before anything first
-		// accesses the abilities registry, so they stay on the early path.
+		// Track MCP connections and clear them on application password revoke.
+		Connection_Log::init();
+
+		// Register ability categories and abilities.
 		add_action( 'wp_abilities_api_categories_init', array( $this, 'register_categories' ) );
 		add_action( 'wp_abilities_api_init', array( $this, 'register_abilities' ) );
 
-		// The MCP adapter is only needed while serving a REST request (or WP-CLI),
-		// so defer its vendor autoloader and class graph to that point instead of
-		// loading them on every front-end and admin page.
+		// Boot the MCP adapter on REST requests and WP-CLI only.
 		add_action( 'rest_api_init', array( $this, 'boot_mcp_adapter' ), 5 );
+
+		// Serve copy payloads to Destination sites. Signature authorized, no WordPress auth.
+		add_action( 'rest_api_init', array( Transfer\Transfer_Controller::class, 'register_routes' ) );
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			add_action( 'init', array( $this, 'boot_mcp_adapter' ), 5 );
@@ -77,9 +83,6 @@ class Bootstrap {
 
 	/**
 	 * Boot the MCP adapter and hook server registration.
-	 *
-	 * Deferred to rest_api_init / WP-CLI so the vendor autoloader and adapter
-	 * class graph never load on ordinary front-end or admin requests.
 	 *
 	 * @return void
 	 */
@@ -94,6 +97,9 @@ class Bootstrap {
 		\WP\MCP\Core\McpAdapter::instance();
 
 		add_action( 'mcp_adapter_init', array( $this, 'register_server' ), 20 );
+
+		// Remind the build tools of the design rules in their own results.
+		add_filter( 'mcp_adapter_tool_call_result', array( Design\Design_Guide::class, 'filter_tool_result' ), 10, 3 );
 	}
 
 	/**
@@ -115,9 +121,17 @@ class Bootstrap {
 				'label'       => __( 'Build', 'premium-addons-for-elementor' ),
 				'description' => __( 'Abilities that create, edit, and remove Elementor elements on a page — containers, atomic flexbox, element settings, and deletion.', 'premium-addons-for-elementor' ),
 			),
+			'pa-media'                => array(
+				'label'       => __( 'Media', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities that read and add images in the WordPress media library.', 'premium-addons-for-elementor' ),
+			),
 			'pa-dashboard'            => array(
 				'label'       => __( 'Dashboard', 'premium-addons-for-elementor' ),
 				'description' => __( 'Abilities for managing the Premium Addons dashboard.', 'premium-addons-for-elementor' ),
+			),
+			'pa-copy-paste'           => array(
+				'label'       => __( 'Cross Domain Copy & Paste', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities that copy Elementor elements from one site to another without the content passing through the AI client.', 'premium-addons-for-elementor' ),
 			),
 		);
 	}
@@ -163,6 +177,8 @@ class Bootstrap {
 			)
 		);
 
+		$design_prompt = Design\Design_Guide::get_prompt();
+
 		$mcp_adapter->create_server(
 			'premium-addons',
 			'premium-addons',
@@ -175,7 +191,7 @@ class Bootstrap {
 			\WP\MCP\Infrastructure\Observability\NullMcpObservabilityHandler::class,
 			$tools,
 			array(),
-			array(),
+			$design_prompt ? array( $design_prompt ) : array(),
 			null
 		);
 	}
@@ -226,16 +242,21 @@ class Bootstrap {
 			Discovery\Get_Global_Settings::class,
 			Discovery\Get_Id_By_Title::class,
 			Discovery\Get_Page_Structure::class,
+			Discovery\Get_Theme_Info::class,
+			Discovery\Get_Theme_Styles::class,
 			Discovery\Get_Widget_Schema::class,
 			Discovery\List_Available_Elements::class,
 			Discovery\List_Pa_Addons::class,
 			Discovery\List_Pages::class,
 			Discovery\List_Templates::class,
+			Design\Get_Design_Guide::class,
 			Build\Add_Container::class,
 			Build\Add_Flexbox::class,
 			Build\Insert_Widget::class,
 			Build\Remove_Element::class,
 			Build\Update_Element_Settings::class,
+			Media\List_Media::class,
+			Media\Upload_Media::class,
 			Dashboard\Clear_Dynamic_Assets::class,
 			Dashboard\Disable_Unused_Widgets::class,
 			Dashboard\Get_Settings::class,
@@ -246,6 +267,9 @@ class Bootstrap {
 			PagePostManagement\Create_Elementor_Template::class,
 			PagePostManagement\Create_Page::class,
 			PagePostManagement\Duplicate_Post::class,
+			Transfer\Check_Import_Compatibility::class,
+			Transfer\Export_Elements::class,
+			Transfer\Import_Elements::class,
 		);
 	}
 

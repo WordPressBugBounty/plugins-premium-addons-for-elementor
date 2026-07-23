@@ -68,7 +68,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'content-toggle-not',
+			'abilities-not',
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -138,7 +138,7 @@ class Admin_Notices {
 			return;
 		}
 
-		$this->get_content_toggle_notice();
+		// $this->get_abilities_notice();
 	}
 
 	/**
@@ -271,15 +271,15 @@ class Admin_Notices {
 		<?php
 	}
 
-	public function get_content_toggle_notice() {
+	public function get_abilities_notice() {
 
-		$option = get_option( 'content-toggle-not' );
+		$option = get_option( 'abilities-not' );
 
 		if ( '1' === $option ) {
 			return;
 		}
 
-		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-content-toggle-widget/', 'content-toggle-notification', 'wp-dash', 'content-toggle' );
+		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mcp-and-ai-abilities/', 'abilities-notification', 'wp-dash', 'abilities' );
 
 		?>
 
@@ -289,11 +289,11 @@ class Admin_Notices {
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<strong><?php echo __( 'Elementor Content Toggle Widget', 'premium-addons-for-elementor' ); ?></strong>
-					<?php printf( __( 'has been rebuilt. <a href="%s" target="_blank">Check it out now!</a>', 'premium-addons-for-elementor' ), $link ); ?>
+					<strong><?php echo __( 'Introducing Elementor MCP and AI Abilities', 'premium-addons-for-elementor' ); ?></strong>
+					<?php printf( __( 'in Premium Addons. Connect your AI Assistant to build and customize your Elementor pages. <a href="%s" target="_blank">Check it out now!</a>', 'premium-addons-for-elementor' ), $link ); ?>
 				</p>
 			</div>
-			<div class="pa-notice-close" data-notice="content-toggle-not">
+			<div class="pa-notice-close" data-notice="abilities-not">
 				<span class="dashicons dashicons-dismiss"></span>
 			</div>
 		</div>

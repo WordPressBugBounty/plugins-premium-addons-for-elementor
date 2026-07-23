@@ -22,15 +22,6 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 	class Premium_Templates_Core_Config {
 
 		/*
-		 * Instance of the class
-		 *
-		 * @access private
-		 * @since 3.6.0
-		 *
-		 */
-		private static $instance = null;
-
-		/*
 		 * Holds config data
 		 *
 		 * @access private
@@ -69,13 +60,10 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 					'enabled'   => true,
 					'base'      => 'https://premiumtemplates.io/',
 					'path'      => 'wp-json/patemp/v2',
-					'id'        => 9,
 					'endpoints' => array(
 						'templates'  => '/templates/',
 						'keywords'   => '/keywords/',
 						'categories' => '/categories/',
-						'template'   => '/template/',
-						'info'       => '/info/',
 						'template'   => '/template/',
 					),
 				),
@@ -95,7 +83,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 		public function get_license_key() {
 
 			if ( ! Helper_Functions::check_papro_version() ) {
-				return;
+				return false;
 			}
 
 			$key = Admin_Helper::get_license_key();
@@ -116,7 +104,7 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 		public function get_license_status() {
 
 			if ( ! Helper_Functions::check_papro_version() ) {
-				return;
+				return false;
 			}
 
 			$status = Admin_Helper::get_license_status();
@@ -199,26 +187,6 @@ if ( ! class_exists( 'Premium_Templates_Core_Config' ) ) {
 		public function get( $key = '' ) {
 
 			return isset( $this->config[ $key ] ) ? $this->config[ $key ] : false;
-		}
-
-
-		/**
-		 * Creates and returns an instance of the class
-		 *
-		 * @since 3.6.0
-		 * @access public
-		 *
-		 * @return object
-		 */
-		public static function get_instance() {
-
-			if ( null === self::$instance ) {
-
-				self::$instance = new self();
-
-			}
-
-			return self::$instance;
 		}
 	}
 

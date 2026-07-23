@@ -5,11 +5,11 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.87
+Stable Tag: 4.11.88
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
-Elementor Carousel, Mega Menu, Posts List/Slider, Media Gallery, WooCommerce Widgets, Display Conditions, Premade Templates & more.
+Elementor Carousel, Mega Menu, Posts List/Slider, WooCommerce Widgets, Display Conditions, AI Abilities, Premade Templates & more.
 
 == Description ==
 
@@ -258,6 +258,16 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.88 - 23/7/2026 =
+
+- Tweak: Improved the AI abilities to improve the quality of designs built by AI.
+- Tweak: Added new AI abilities to export/import Elementor sections and pages between different sites, list and upload images to media.
+- Tweak: Added new AI abilities to get information about active theme and its style variation to build more consistent designs.
+- Tweak: MCP Configuration and AI Abilities dashboard tabs merged into one for a better UX.
+- Tweak: Show MCP Connection status for a better UX.
+- Fixed: Hover background outline with Grow effect in Button widget.
+- Fixed: Text Shadow not working in Heading widget when gradient background is enabled.
 
 = 4.11.87 - 19/7/2026 =
 
@@ -996,57 +1006,5 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Vertical Scroll widget causing scroll issues on touch devices.
 - Fixed: Media Grid lightbox always show the first image since v4.10.55.
 - Fixed: TikTok Feed widget throws PHP warning.
-
-= 4.10.56 - 09/10/2024 =
-
-- Tweak: Dashboard settings tab loading speed improved.
-- Tweak: Improve layout rendering in Mini Cart widget for better loading speed.
-- Fixed: Compatibility issues with WPML translation plugin.
-
-= 4.10.55 - 01/10/2024 =
-
-- Fixed: Issues with Slide-in WooCommerce cart and Mini Cart layout after v4.10.54.
-
-= 4.10.54 - 30/09/2024 =
-
-- Tweak: Plugin performance and loading speed improved.
-- Fixed: WooCommerce mini-cart template broken after v4.10.53.
-
-= 4.10.53 - 26/09/2024 =
-
-- New: Added WooCommerce Mini Cart widget - [here](https://premiumaddons.com/elementor-woocommerce-mini-cart-widget/).
-- Tweak: Compatibility with Elementor Elements Caching feature.
-- Tweak: Added "Load Animation on Page Load/Scroll" for Animated Text widget.
-- Fixed: Carousel arrows not showing in Mobile Menu widget.
-- Fixed: Layout break when Load More Products button clicked in Woo Products Listing widget.
-
-= 4.10.52 - 24/09/2024 =
-
-- Tweak: Added Highlighted Text Color control in AJAX Search widget.
-- Tweak: Remove any unwanted generated files after plugin deactivation.
-- Fixed: Links not working in Mobile Menu widget.
-- Fixed: Skin #4 not working on RTL sites in Testimonials widget.
-- Fixed: Social icons not showing in Team Members widget.
-
-= 4.10.51 - 12/09/2024 =
-
-- Tweak: Added Play Inline option in Video Box widget.
-- Tweak: Added Cluster Icon size control in Google Maps widget.
-- Fixed: Conflict in Dynamic Assets Generate feature.
-- Fixed: Items links not working in Advanced Carousel widget.
-
-= 4.10.50 - 04/09/2024 =
-
-- Tweak: Added control to apply Excerpt Length option on posts with defined excerpt.
-- Fixed: PHP warning for Display condition in Display Conditions feature.
-- Fixed: Conflict between Stretch Section option and Carousel widget.
-- Fixed: Layout broken in some cases with Dynamic Assets feature.
-- Fixed: PHP warning in Global Tooltip addon.
-
-= 4.10.49 - 27/08/2024 =
-
-- Tweak: Added option to control typography, border and background for quantity field in Woo CTA widget.
-- Tweak: Added option to automatically redirect to cart page after product is added to cart in Woo CTA widget.
-- Tweak: Handle errors when inserting a template including a disabled element.
 
 [See changelog for all versions.](https://gitlab.com/Leap13/Elementor/premium-addons/-/raw/master/changelog.txt)

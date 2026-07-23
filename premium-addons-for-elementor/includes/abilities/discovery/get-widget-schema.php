@@ -89,7 +89,7 @@ class Get_Widget_Schema implements Ability_Handler {
 					'schema'    => array(
 						'type'                 => 'object',
 						'additionalProperties' => true,
-						'description'          => __( 'A JSON Schema object. Its properties map each control/prop key to its type, and — where relevant — enum, default and depends_on (the control\'s visibility prerequisite). depends_on is one of two shapes: a flat { key: value, "key!": value } map (implicit AND; "!" suffix means not-equal, an array value means in/not-in), or a nested { relation, terms } tree with explicit per-term operators (===, !==, in, <, contains). Filtered to the type\'s own settings: internal (_-prefixed) controls, Elementor-injected common sections (motion effects, transform, background, responsive, custom CSS) and the Premium Addons global-addon sections (Floating Effects, Tooltips, Display Conditions, …) are all removed.', 'premium-addons-for-elementor' ),
+						'description'          => __( 'A JSON Schema object. Its properties map each control/prop key to its type, and — where relevant — enum, default and depends_on (the control\'s visibility prerequisite). depends_on is one of two shapes: a flat { key: value, "key!": value } map (implicit AND; "!" suffix means not-equal, an array value means in/not-in), or a nested { relation, terms } tree with explicit per-term operators (===, !==, in, <, contains). Filtered to the type\'s own settings: internal (_-prefixed) controls, editor-hidden controls, Elementor-injected common sections (motion effects, transform, background, responsive, custom CSS) and the Premium Addons global-addon sections (Floating Effects, Tooltips, Display Conditions, …) are all removed.', 'premium-addons-for-elementor' ),
 					),
 				),
 			),

@@ -105,18 +105,7 @@ abstract class Premium_Templates_Source_Base {
 	 */
 	public function get_templates_cache() {
 
-		// if ( $this->is_debug_active() ) {
-		// return false;
-		// }
-
 		return get_transient( $this->templates_key() );
-	}
-
-	/**
-	 * Delete templates cache
-	 */
-	public function delete_templates_cache() {
-		delete_transient( $this->templates_key() );
 	}
 
 	/**
@@ -127,26 +116,11 @@ abstract class Premium_Templates_Source_Base {
 	}
 
 	/**
-	 * Set categories cache.
-	 *
-	 * @param array $value
+	 * Get categories cache.
 	 */
 	public function get_categories_cache() {
 
-		// if ( $this->is_debug_active() ) {
-		// return false;
-		// }
-
 		return get_transient( $this->categories_key() );
-	}
-
-	/**
-	 * Delete categories cache
-	 *
-	 * @return [type] [description]
-	 */
-	public function delete_categories_cache() {
-		delete_transient( $this->categories_key() );
 	}
 
 	/**
@@ -159,40 +133,11 @@ abstract class Premium_Templates_Source_Base {
 	}
 
 	/**
-	 * Set categories cache.
-	 *
-	 * @param array $value cached value.
+	 * Get keywords cache.
 	 */
 	public function get_keywords_cache() {
 
-		// if ( $this->is_debug_active() ) {
-		// return false;
-		// }
-
 		return get_transient( $this->keywords_key() );
-	}
-
-	/**
-	 * Delete categories cache
-	 *
-	 * @return [type] [description]
-	 */
-	public function delete_keywords_cache() {
-		delete_transient( $this->keywords_key() );
-	}
-
-	/**
-	 * Check if debug is active
-	 *
-	 * @return boolean
-	 */
-	public function is_debug_active() {
-
-		if ( defined( 'PREMIUM_API_DEBUG' ) && true === PREMIUM_API_DEBUG ) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	/**
@@ -205,6 +150,11 @@ abstract class Premium_Templates_Source_Base {
 	}
 
 	/**
+	 * TODO(cross-domain-copy): consolidate engine — this and the on_import glue
+	 * below are duplicated in includes/helpers/element-transfer.php and
+	 * includes/extras/cross-copy-paste.php. Delegate to Element_Transfer once the
+	 * copy/paste abilities are verified.
+	 *
 	 * @since 3.6.0
 	 * @access protected
 	 */
@@ -259,9 +209,9 @@ abstract class Premium_Templates_Source_Base {
 	 * @since 3.6.0
 	 * @access protected
 	 *
-	 * @param Controls_Stack $element
-	 * @param string         $method
-	 * @param string         $with_media include templates media.
+	 * @param \Elementor\Element_Base $element
+	 * @param string                  $method
+	 * @param string                  $with_media include templates media.
 	 *
 	 * @return array Processed element data.
 	 */

@@ -17,10 +17,6 @@ if ( ! class_exists( 'Premium_Structure_Container' ) ) {
 			return 'premium_container';
 		}
 
-		public function get_single_label() {
-			return __( 'Container', 'premium-addons-for-elementor' );
-		}
-
 		public function get_plural_label() {
 			return __( 'Containers', 'premium-addons-for-elementor' );
 		}
@@ -29,17 +25,10 @@ if ( ! class_exists( 'Premium_Structure_Container' ) ) {
 			return array( 'premium-api' );
 		}
 
-		public function get_document_type() {
-			return array(
-				'class' => 'Premium_Container_Document',
-				'file'  => PREMIUM_ADDONS_PATH . 'includes/templates/documents/container.php',
-			);
-		}
-
 		/**
 		 * Library settings for current structure
 		 *
-		 * @return void
+		 * @return array
 		 */
 		public function library_settings() {
 

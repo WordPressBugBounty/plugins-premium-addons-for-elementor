@@ -40,7 +40,7 @@ class Insert_Widget implements Ability_Handler {
 	public function get_registration_args() {
 		return array(
 			'label'               => __( 'Insert Widget', 'premium-addons-for-elementor' ),
-			'description'         => __( 'Inserts an Elementor widget into a page, post or template with its settings.', 'premium-addons-for-elementor' ),
+			'description'         => __( 'Inserts an Elementor widget into a page, post or template with its settings. If inserting a Premium Addons widget that uses templates, saved templates go in by title, never by id.', 'premium-addons-for-elementor' ),
 			'category'            => 'pa-build',
 			'input_schema'        => array(
 				'type'                 => 'object',

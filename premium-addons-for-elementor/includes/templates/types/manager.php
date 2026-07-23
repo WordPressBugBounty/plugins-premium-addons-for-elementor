@@ -48,70 +48,15 @@ if ( ! class_exists( 'Premium_Templates_Types' ) ) {
 			$base_path = PREMIUM_ADDONS_PATH . 'includes/templates/types/';
 
 			require $base_path . 'base.php';
+			require $base_path . 'container.php';
+			require $base_path . 'page.php';
 
-			$temp_types = array(
-				__NAMESPACE__ . '\Premium_Structure_Container' => $base_path . 'container.php',
-				__NAMESPACE__ . '\Premium_Structure_Page' => $base_path . 'page.php',
-			);
+			$types = array( new Premium_Structure_Container(), new Premium_Structure_Page() );
 
-			array_walk(
-				$temp_types,
-				function ( $file, $class ) {
-					require $file;
-					$this->register_type( $class );
-				}
-			);
-
-			do_action( 'premium-templates/types/register', $this );
-		}
-
-		/**
-		 * Register templates type
-		 *
-		 * @since 3.6.0
-		 * @access public
-		 *
-		 * @return void
-		 */
-		public function register_type( $class ) {
-
-			$instance = new $class();
-
-			$this->types[ $instance->get_id() ] = $instance;
-
-			if ( true === $instance->is_location() ) {
-
-				register_structure()->locations->register_location( $instance->location_name(), $instance );
-
+			foreach ( $types as $type ) {
+				$this->types[ $type->get_id() ] = $type;
 			}
 		}
-
-		/**
-		 * Returns all templates types data
-		 *
-		 * @since 3.6.0
-		 * @access public
-		 *
-		 * @return array
-		 */
-		public function get_types() {
-
-			return $this->types;
-		}
-
-		/**
-		 * Returns all templates types data
-		 *
-		 * @since 3.6.0
-		 * @access public
-		 *
-		 * @return object
-		 */
-		public function get_type( $id ) {
-
-			return isset( $this->types[ $id ] ) ? $this->types[ $id ] : false;
-		}
-
 
 		/**
 		 * Return types prepared for templates library tabs

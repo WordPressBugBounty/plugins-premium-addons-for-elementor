@@ -704,6 +704,8 @@
 
 						$currentProducts.append(html);
 
+						self.handleTitlePos();
+
 						if ($elem.hasClass("premium-woo-products-masonry")) {
 							$currentProducts.isotope("reloadItems");
 

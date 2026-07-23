@@ -4,9 +4,10 @@
  *
  * The single helper bag for every ability group: the Elementor-active guard,
  * Elementor document resolution (with raw _elementor_data fallback), the shared
- * per-post edit permission check, and the build-group tree/atomic utilities
- * (element-id generation, tree insert/modify, document save, and Elementor
- * control-value formatters). Resolved through the plugin autoloader.
+ * per-post edit permission check, the media-group attachment payload, and the
+ * build-group tree/atomic utilities (element-id generation, tree insert/modify,
+ * document save, and Elementor control-value formatters). Resolved through the
+ * plugin autoloader.
  *
  * @package PremiumAddons
  */
@@ -23,12 +24,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Helpers.
  *
- * The single helper bag for every ability group — the group-neutral guards plus
- * the build-group tree/atomic utilities.
+ * The single helper bag for every ability group — the group-neutral guards, the
+ * media-group attachment payload, plus the build-group tree/atomic utilities.
  *
  * @since 4.11.75
  */
 class Helpers {
+
+	/**
+	 * Cross-domain copy payload format version.
+	 */
+	const TRANSFER_VERSION = 1;
 
 	/**
 	 * Guard: Elementor active.
@@ -187,6 +193,36 @@ class Helpers {
 	}
 
 	/**
+	 * Format an attachment as the payload the media abilities return.
+	 *
+	 * These are the fields a text-only client picks an image by. Shared so
+	 * list-media and upload-media hand back the same shape and either result can
+	 * be passed straight to a build ability as a media control value.
+	 *
+	 * @param int $attachment_id The attachment ID.
+	 *
+	 * @return array { id, url, width, height, alt, mime_type }.
+	 */
+	public static function format_attachment( $attachment_id ) {
+
+		// SVGs and other vector files store no dimensions.
+		$metadata = wp_get_attachment_metadata( $attachment_id );
+
+		// Both URL and MIME come back as false for an attachment whose file is
+		// missing. The abilities declare them as strings and the Abilities API
+		// validates output, so an uncast false would fail the whole call — for
+		// list-media, losing every other image over one broken row.
+		return array(
+			'id'        => (int) $attachment_id,
+			'url'       => (string) wp_get_attachment_url( $attachment_id ),
+			'width'     => isset( $metadata['width'] ) ? (int) $metadata['width'] : 0,
+			'height'    => isset( $metadata['height'] ) ? (int) $metadata['height'] : 0,
+			'alt'       => (string) get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ),
+			'mime_type' => (string) get_post_mime_type( $attachment_id ),
+		);
+	}
+
+	/**
 	 * Collect every element id in a tree.
 	 *
 	 * @param array $elements The element tree.
@@ -213,6 +249,207 @@ class Helpers {
 		}
 
 		return $ids;
+	}
+
+	/**
+	 * Collect the distinct widget types used in a tree.
+	 *
+	 * Feeds the export manifest and the Destination-side availability scan, so it
+	 * lists widget type keys only — structural elements carry no widgetType.
+	 *
+	 * @param array $elements The element tree.
+	 *
+	 * @return array Flat list of widget type keys.
+	 */
+	public static function collect_widget_types( $elements ) {
+
+		$types = array();
+
+		foreach ( $elements as $element ) {
+
+			if ( ! is_array( $element ) ) {
+				continue;
+			}
+
+			if ( ! empty( $element['widgetType'] ) ) {
+				$types[] = (string) $element['widgetType'];
+			}
+
+			if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) ) {
+				$types = array_merge( $types, self::collect_widget_types( $element['elements'] ) );
+			}
+		}
+
+		return array_values( array_unique( $types ) );
+	}
+
+	/**
+	 * Check a URL resolves to an address only this server can reach.
+	 *
+	 * wp_http_validate_url() — the whole of what wp_safe_remote_get() enforces —
+	 * blocks 127/8, 10/8, 0/8, 172.16/12 and 192.168/16 and treats every other
+	 * address as public. So http://169.254.169.254/, the instance metadata service
+	 * on every major host, passes it, as do the CGNAT and container ranges. Any
+	 * ability that fetches a caller-supplied URL server-side runs this on top.
+	 *
+	 * IPv6 needs no handling: core rejects bracketed literals on the ':' in its
+	 * host check, and gethostbyname() fails closed for AAAA-only names.
+	 *
+	 * Two residuals are deliberate. Core skips its address check entirely when the
+	 * host matches this site's own, and this does not re-add it — an image URL on
+	 * the site's own domain is a legitimate upload source. And resolution here is
+	 * separate from the transport's, so a name re-pointed between the two calls
+	 * (DNS rebinding) is not covered; that needs connect-time IP pinning.
+	 *
+	 * @param string $url The URL about to be requested.
+	 *
+	 * @return bool
+	 */
+	public static function is_internal_address( $url ) {
+
+		$host = (string) wp_parse_url( $url, PHP_URL_HOST );
+
+		// A name that does not resolve comes back unchanged; padding keeps a host
+		// that splits into fewer than four parts reading as 0.0.0.0.
+		$ip    = filter_var( $host, FILTER_VALIDATE_IP ) ? $host : gethostbyname( $host );
+		$parts = array_pad( array_map( 'intval', explode( '.', $ip ) ), 4, 0 );
+
+		return ( 169 === $parts[0] && 254 === $parts[1] )                   // 169.254/16 link-local, incl. instance metadata.
+			|| ( 100 === $parts[0] && 64 <= $parts[1] && 127 >= $parts[1] ) // 100.64/10 CGNAT and container networks.
+			|| ( 198 === $parts[0] && 18 <= $parts[1] && 19 >= $parts[1] )  // 198.18/15 benchmarking.
+			|| ( 192 === $parts[0] && 0 === $parts[1] && 0 === $parts[2] ); // 192.0.0/24 IETF protocol assignments.
+	}
+
+	/**
+	 * Run a remote fetch with internal addresses rejected on every hop.
+	 *
+	 * Hooks pre_http_request rather than checking the URL once up front because
+	 * core re-validates each redirect with the same permissive wp_http_validate_url()
+	 * — a one-off pre-check is bypassed by a 302. pre_http_request fires again for
+	 * every hop WP_Http::handle_redirects() issues, and returning a WP_Error there
+	 * short-circuits the request before it leaves the box.
+	 *
+	 * @param string   $error_code The WP_Error code to return when a hop is internal.
+	 * @param callable $fetch      The fetch to run.
+	 *
+	 * @return mixed The fetch result, or a WP_Error when a hop was rejected.
+	 */
+	public static function fetch_public_url( $error_code, $fetch ) {
+
+		$block_internal = function ( $response, $args, $url ) use ( $error_code ) {
+
+			if ( ! self::is_internal_address( $url ) ) {
+				return $response;
+			}
+
+			return new \WP_Error(
+				$error_code,
+				__( 'The URL must be a public http(s) address. Local, private and internal addresses are not allowed.', 'premium-addons-for-elementor' )
+			);
+		};
+
+		add_filter( 'pre_http_request', $block_internal, 10, 3 );
+
+		$result = call_user_func( $fetch );
+
+		remove_filter( 'pre_http_request', $block_internal, 10 );
+
+		return $result;
+	}
+
+	/**
+	 * Fetch and validate a cross-domain copy payload from the Source site.
+	 *
+	 * Runs server to server so the content never passes through the AI client.
+	 * wp_safe_remote_get() rejects non-http(s) and the private ranges core knows
+	 * about; is_internal_address() covers the ones it does not.
+	 *
+	 * @param string $transfer_url The signed transfer URL.
+	 * @param bool   $consume      Whether to consume the single-use token.
+	 *
+	 * @return array|\WP_Error The payload, or an error.
+	 */
+	public static function fetch_transfer_payload( $transfer_url, $consume = false ) {
+
+		// Set the consume flag from the caller's intent, never from the URL —
+		// a pasted URL that already carried consume=1 would otherwise let the
+		// read-only pre-flight burn the token.
+		$url = $consume
+			? add_query_arg( 'consume', 1, $transfer_url )
+			: remove_query_arg( 'consume', $transfer_url );
+
+		// A whole page's elements is a large body coming off another site's REST
+		// API, so the usual 3s ceiling is not enough. This runs from an ability
+		// call, not a page render, so the wait costs a visitor nothing.
+		$response = self::fetch_public_url(
+			'premium_addons_invalid_transfer_url',
+			function () use ( $url ) {
+				return wp_safe_remote_get( $url, array( 'timeout' => 15 ) ); // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+			}
+		);
+
+		// Surfaced on its own rather than folded into the generic failure below:
+		// the caller pointed at an address this site will not fetch, which is a
+		// bad input to correct, not a source site that might come back.
+		if ( is_wp_error( $response ) && 'premium_addons_invalid_transfer_url' === $response->get_error_code() ) {
+			return $response;
+		}
+
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			return new \WP_Error(
+				'premium_addons_transfer_data_unavailable',
+				__( 'The transfer could not be fetched from the source site. The link may have expired, may have already been imported, or the source site may be unreachable.', 'premium-addons-for-elementor' )
+			);
+		}
+
+		$payload = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		$is_valid = is_array( $payload )
+			&& isset( $payload['pa_transfer_version'] )
+			&& self::TRANSFER_VERSION === (int) $payload['pa_transfer_version']
+			&& ! empty( $payload['content'] )
+			&& is_array( $payload['content'] );
+
+		if ( ! $is_valid ) {
+			return new \WP_Error(
+				'premium_addons_invalid_manifest',
+				__( 'The transfer payload is empty or was produced by an unsupported version of Premium Addons.', 'premium-addons-for-elementor' )
+			);
+		}
+
+		return $payload;
+	}
+
+	/**
+	 * Check which of the given widget types this site can render.
+	 *
+	 * @param array $widget_keys Widget type keys.
+	 *
+	 * @return array { missing: array, pro_gated: array }.
+	 */
+	public static function scan_widget_availability( $widget_keys ) {
+
+		$missing   = array();
+		$pro_gated = array();
+
+		foreach ( $widget_keys as $key ) {
+
+			$type_object = \Elementor\Plugin::$instance->widgets_manager->get_widget_types( $key );
+
+			if ( ! $type_object ) {
+				$missing[] = $key;
+				continue;
+			}
+
+			if ( is_wp_error( self::guard_widget_source( $type_object, $key ) ) ) {
+				$pro_gated[] = $key;
+			}
+		}
+
+		return array(
+			'missing'   => $missing,
+			'pro_gated' => $pro_gated,
+		);
 	}
 
 	/**
@@ -471,6 +708,65 @@ class Helpers {
 	}
 
 	/**
+	 * Create an Elementor library template holding the given element tree.
+	 *
+	 * The three steps a saved template needs — the post with its Elementor meta,
+	 * the library-type term, and the document save that writes _elementor_data and
+	 * generates CSS — shared by the create-elementor-template ability and the
+	 * template bundling a cross-site copy installs.
+	 *
+	 * @param string $title         The template title.
+	 * @param string $template_type The Elementor template type (container, section, page, …).
+	 * @param array  $elements      The element tree to save into it.
+	 * @param string $status        The post status.
+	 *
+	 * @return int|\WP_Error The new template post id, or an error.
+	 */
+	public static function create_library_template( $title, $template_type, $elements = array(), $status = 'publish' ) {
+
+		$post_id = wp_insert_post(
+			array(
+				'post_title'  => $title,
+				'post_status' => $status,
+				'post_type'   => 'elementor_library',
+				'meta_input'  => array(
+					'_elementor_edit_mode'     => 'builder',
+					'_elementor_template_type' => $template_type,
+				),
+			),
+			true
+		);
+
+		if ( is_wp_error( $post_id ) ) {
+			return $post_id;
+		}
+
+		// Register the template type as a term so it shows under the matching
+		// Templates library filter, mirroring Elementor's own save flow.
+		wp_set_object_terms( $post_id, $template_type, 'elementor_library_type' );
+
+		$document = \Elementor\Plugin::$instance->documents->get( $post_id );
+
+		$saved = $document
+			? self::save_document( $document, $elements )
+			: new \WP_Error(
+				'premium_addons_document_not_found',
+				__( 'Elementor could not resolve a document for the new template.', 'premium-addons-for-elementor' )
+			);
+
+		// A template that exists but holds no content would be matched by title
+		// from then on and quietly render nothing, so take the failed one back out.
+		if ( is_wp_error( $saved ) ) {
+
+			wp_delete_post( $post_id, true );
+
+			return $saved;
+		}
+
+		return $post_id;
+	}
+
+	/**
 	 * Format a 4-side value as an Elementor dimensions control value.
 	 *
 	 * @param array $value { top?, right?, bottom?, left?, unit? } sides as numbers or strings.
@@ -582,14 +878,18 @@ class Helpers {
 	 * Pure per-control mapper for the get-widget-schema ability: turns a control's
 	 * type into the JSON-Schema shape its stored value takes, carries the label as
 	 * the description, the control default, and the control condition as depends_on.
-	 * Returns null for structural/presentational controls that hold no settable
-	 * value, so callers can skip them.
+	 * Returns null for structural/presentational and editor-hidden controls that
+	 * hold no settable value, so callers can skip them.
 	 *
 	 * @param array $control One entry from Controls_Stack::get_controls().
 	 *
 	 * @return array|null JSON Schema property, or null when the control holds no value.
 	 */
 	public static function control_to_schema( $control ) {
+
+		if ( isset( $control['classes'] ) && false !== strpos( $control['classes'], 'control-hidden' ) ) {
+			return null;
+		}
 
 		$type  = isset( $control['type'] ) ? $control['type'] : '';
 		$label = isset( $control['label'] ) ? $control['label'] : '';

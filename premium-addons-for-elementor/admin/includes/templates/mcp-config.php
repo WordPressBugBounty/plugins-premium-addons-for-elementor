@@ -1,12 +1,7 @@
 <?php
 /**
- * MCP Configuration tab.
+ * Configure MCP Server — first accordion item of the AI Abilities tab.
  *
- * Feeds an AI client the connection details for the Premium Addons MCP server.
- * The application password itself is created by the user on their WordPress
- * profile page (Users → Profile → Application Passwords); this tab only takes
- * the pasted value and builds one-time connection details. Rendered by
- * Admin_Helper::render_setting_tabs(), so `self` resolves to Admin_Helper here.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use PremiumAddons\Admin\Includes\MCP_Settings;
+use PremiumAddons\Includes\Abilities\Connection_Log;
 
 $mcp = MCP_Settings::get_instance();
 
@@ -30,66 +26,52 @@ $mcp_scheme        = MCP_Settings::endpoint_scheme( $mcp_endpoint );
 $mcp_is_local      = MCP_Settings::is_local_host( $mcp_endpoint_host );
 
 // Keep the form on this tab after submitting (tabs are routed by URL hash).
-$form_action = esc_url( admin_url( 'admin.php?page=' . self::$page_slug . '#tab=mcp-config' ) );
+$form_action = esc_url( admin_url( 'admin.php?page=' . self::$page_slug . '#tab=ai-abilities' ) );
+
+// A client this user already connected turns the setup steps into a reference
+// they open on purpose, instead of a wall of instructions on every visit.
+// $mcp_state and $is_configured come from ai-abilities.php, which includes this
+// file into its own scope after reading the connection state once.
+$state_ago   = $is_configured ? human_time_diff( $mcp_state['time'] ) : '';
+$setup_steps = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp-setup-steps.php';
 ?>
 
-<div class="pa-section-content">
-	<div class="pa-mcp-config">
-
-		<h2 class="pa-mcp-step-heading">
-			<span class="pa-mcp-step-badge">1</span>
-			<?php esc_html_e( 'Create an Application Password', 'premium-addons-for-elementor' ); ?>
-		</h2>
-
-		<p class="pa-mcp-step-desc">
-			<?php esc_html_e( 'Your AI client authenticates with a WordPress application password. Create one on your profile page, then paste it below to build the connection details.', 'premium-addons-for-elementor' ); ?>
-		</p>
-
-		<?php if ( ! $pw_status['available'] ) : ?>
-			<div class="notice notice-error inline">
-				<p><strong><?php echo esc_html( $pw_status['message'] ); ?></strong></p>
-			</div>
-		<?php else : ?>
-
-			<ol class="pa-mcp-steps">
-				<li>
-					<?php
-					printf(
-						/* translators: 1: opening <a> tag linking to the profile page, 2: closing </a> tag. */
-						esc_html__( 'Open your %1$sprofile page%2$s and scroll to the “Application Passwords” section.', 'premium-addons-for-elementor' ),
-						'<a href="' . esc_url( $profile_url ) . '" target="_blank" rel="noopener noreferrer">', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- URL is escaped with esc_url().
-						'</a>'
-					);
-					?>
-				</li>
-				<li><?php esc_html_e( 'Enter a name you will recognize (e.g. “Claude on laptop”) in the “New Application Password Name” field.', 'premium-addons-for-elementor' ); ?></li>
-				<li><?php esc_html_e( 'Click “Add New Application Password”.', 'premium-addons-for-elementor' ); ?></li>
-				<li><?php esc_html_e( 'Copy the generated password — WordPress shows it only once.', 'premium-addons-for-elementor' ); ?></li>
-				<li><?php esc_html_e( 'Come back here and paste it below.', 'premium-addons-for-elementor' ); ?></li>
-			</ol>
-
-			<form method="post" action="<?php echo $form_action; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped above. ?>">
-				<?php wp_nonce_field( 'pa_mcp_use_existing_password' ); ?>
-				<label class="pa-mcp-field-label" for="pa-mcp-existing-password">
-					<?php esc_html_e( 'Paste the password value', 'premium-addons-for-elementor' ); ?>
-				</label>
-				<input type="text" id="pa-mcp-existing-password" name="pa_mcp_existing_password" class="regular-text" autocomplete="off" placeholder="xxxx xxxx xxxx xxxx xxxx xxxx">
-				<button type="submit" name="pa_mcp_use_existing_password" class="button button-primary">
-					<?php esc_html_e( 'Use this password', 'premium-addons-for-elementor' ); ?>
-				</button>
-				<?php if ( null !== $used_error ) : ?>
-					<div class="notice notice-error inline">
-						<p><?php echo esc_html( $used_error->get_error_message() ); ?></p>
-					</div>
-				<?php elseif ( null !== $used_password ) : ?>
-					<div class="notice notice-success inline">
-						<p><?php esc_html_e( 'Connection details generated below.', 'premium-addons-for-elementor' ); ?></p>
-					</div>
-				<?php endif; ?>
-				<p class="description">
-					<?php esc_html_e( 'The password is used only to fill the connection details below and is never stored on this site.', 'premium-addons-for-elementor' ); ?>
+		<?php if ( $is_configured ) : ?>
+			<div class="notice notice-success inline pa-mcp-connected-notice">
+				<p>
+					<strong>
+						<?php
+						if ( Connection_Log::STATE_ACTIVE === $mcp_state['state'] ) {
+							printf(
+								/* translators: 1: number of open sessions, 2: human-readable time difference. */
+								esc_html( _n( 'Active now — %1$s session · last activity %2$s ago', 'Active now — %1$s sessions · last activity %2$s ago', $mcp_state['count'], 'premium-addons-for-elementor' ) ),
+								esc_html( number_format_i18n( $mcp_state['count'] ) ),
+								esc_html( $state_ago )
+							);
+						} else {
+							printf(
+								/* translators: %s: human-readable time difference. */
+								esc_html__( 'Connected — last connected %s ago.', 'premium-addons-for-elementor' ),
+								esc_html( $state_ago )
+							);
+						}
+						?>
+					</strong>
 				</p>
-			</form>
+				<p>
+					<a href="<?php echo esc_url( $profile_url ); ?>" target="_blank" rel="noopener noreferrer">
+						<?php esc_html_e( 'Manage or revoke access', 'premium-addons-for-elementor' ); ?>
+					</a>
+				</p>
+			</div>
+
+			<?php // Stays open after a submission so the form's own result is not hidden. ?>
+			<details class="pa-mcp-setup-fold"<?php echo null !== $used_password || null !== $used_error ? ' open' : ''; ?>>
+				<summary><?php esc_html_e( 'Connect another client or reconnect', 'premium-addons-for-elementor' ); ?></summary>
+				<?php include $setup_steps; ?>
+			</details>
+		<?php else : ?>
+			<?php include $setup_steps; ?>
 		<?php endif; ?>
 
 		<div class="pa-mcp-endpoint">
@@ -130,10 +112,10 @@ $form_action = esc_url( admin_url( 'admin.php?page=' . self::$page_slug . '#tab=
 
 			<div class="pa-mcp-connect">
 
-				<h2 class="pa-mcp-step-heading">
+				<h4 class="pa-mcp-step-heading">
 					<span class="pa-mcp-step-badge">2</span>
 					<?php esc_html_e( 'Connect Your AI Client', 'premium-addons-for-elementor' ); ?>
-				</h2>
+				</h4>
 
 				<p class="pa-mcp-step-desc">
 					<?php esc_html_e( 'Pick your AI client and copy its configuration. Every client also includes a plain-English prompt you can give to its agent.', 'premium-addons-for-elementor' ); ?>
@@ -245,6 +227,3 @@ $form_action = esc_url( admin_url( 'admin.php?page=' . self::$page_slug . '#tab=
 
 			</div>
 		<?php endif; ?>
-
-	</div>
-</div>

@@ -11,8 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 
-	private $_object_cache = array();
-
 	/**
 	 * Return source slug.
 	 *
@@ -65,7 +63,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 	 *
 	 * @param  string $tab tab slug.
 	 *
-	 * @return array
+	 * @return array|false
 	 */
 	public function remote_get_templates( $tab ) {
 
@@ -107,7 +105,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 	 *
 	 * @param  string $tab tab slug.
 	 *
-	 * @return array
+	 * @return array|false
 	 */
 	public function remote_get_categories( $tab ) {
 
@@ -149,7 +147,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 	 *
 	 * @param string $tab tab slug.
 	 *
-	 * @return array
+	 * @return array|false
 	 */
 	public function remote_get_keywords( $tab ) {
 
@@ -224,7 +222,7 @@ class Premium_Templates_Source_Api extends Premium_Templates_Source_Base {
 	/**
 	 * Prepare categories for response
 	 *
-	 * @return [type] [description]
+	 * @return array
 	 */
 	public function prepare_categories( $categories ) {
 

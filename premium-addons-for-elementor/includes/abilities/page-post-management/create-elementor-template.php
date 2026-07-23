@@ -131,34 +131,15 @@ class Create_Elementor_Template implements Ability_Handler {
 		$status        = ! empty( $input['status'] ) ? $input['status'] : 'publish';
 		$template_type = ! empty( $input['template_type'] ) ? $input['template_type'] : 'container';
 
-		$post_id = wp_insert_post(
-			array(
-				'post_title'  => $title,
-				'post_status' => $status,
-				'post_type'   => 'elementor_library',
-				'meta_input'  => array(
-					'_elementor_edit_mode'     => 'builder',
-					'_elementor_template_type' => $template_type,
-				),
-			),
-			true
-		);
+		// Created with an empty element tree so _elementor_data / _elementor_version
+		// are written and the template opens straight into the editor.
+		$post_id = Helpers::create_library_template( $title, $template_type, array(), $status );
 
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}
 
-		// Register the template type as a term so it shows under the matching
-		// Templates library filter, mirroring Elementor's own save flow.
-		wp_set_object_terms( $post_id, $template_type, 'elementor_library_type' );
-
-		// Initialize the Elementor document with an empty element tree so
-		// _elementor_data / _elementor_version are written and CSS regenerates.
 		$document = \Elementor\Plugin::$instance->documents->get( $post_id );
-
-		if ( $document ) {
-			$document->save( array( 'elements' => array() ) );
-		}
 
 		return array(
 			'post_id'       => $post_id,

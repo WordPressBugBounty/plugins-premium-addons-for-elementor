@@ -119,12 +119,12 @@
   order: 3;
 }
 .premium-testimonial__skin1 .premium-testimonial-upper-quote {
-  top: 0;
-  left: 12px;
+  top: 15px;
+  left: 15px;
 }
 .premium-testimonial__skin1 .premium-testimonial-lower-quote {
-  bottom: 3px;
-  right: 12px;
+  bottom: 15px;
+  right: 15px;
 }
 .premium-testimonial__skin1 .premium-testimonial__rating-wrapper {
   -webkit-order: 4;

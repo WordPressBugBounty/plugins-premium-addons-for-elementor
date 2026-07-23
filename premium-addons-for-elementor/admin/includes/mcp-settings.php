@@ -2,7 +2,7 @@
 /**
  * MCP Settings.
  *
- * Admin controller backing the MCP Configuration tab. Reports whether WordPress
+ * Admin controller backing the Configure MCP Server step. Reports whether WordPress
  * Application Passwords are available, validates the password the user pastes in
  * (created on their profile page) and lists the AI clients shown in the connect
  * step. The dashboard tabs themselves are registered in
@@ -88,7 +88,7 @@ class MCP_Settings {
 	/**
 	 * Process the use-existing password submission.
 	 *
-	 * Called once at the top of the MCP Configuration template. The pasted value
+	 * Called once at the top of the MCP config template. The pasted value
 	 * is only echoed back into the connection details, never stored on the site.
 	 *
 	 * @return array {

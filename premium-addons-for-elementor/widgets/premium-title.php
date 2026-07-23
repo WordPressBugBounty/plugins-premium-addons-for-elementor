@@ -1451,14 +1451,9 @@ class Premium_Title extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
-				'name'           => 'style_one_border',
-				'fields_options' => array(
-					'border' => array(
-						'default' => 'solid',
-					),
-				),
-				'selector'       => '{{WRAPPER}} .premium-title-style1',
-				'condition'      => array(
+				'name'      => 'style_one_border',
+				'selector'  => '{{WRAPPER}} .premium-title-style1',
+				'condition' => array(
 					'premium_title_style' => 'style1',
 				),
 			)
@@ -1627,9 +1622,17 @@ class Premium_Title extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
-				'name'     => 'premium_title_text_shadow',
-				'selector' => '{{WRAPPER}} .premium-title-header',
+				'label'          => __( 'Shadow', 'premium-addons-for-elementor' ),
+				'name'           => 'premium_title_text_shadow',
+				// 'selector' => '{{WRAPPER}} .premium-title-header',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}}:not(.premium-title-gradient-yes) .premium-title-header' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}} {{text_shadow_position.VALUE}};',
+							'{{WRAPPER}}.premium-title-gradient-yes .premium-title-header' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+						),
+					),
+				),
 			)
 		);
 

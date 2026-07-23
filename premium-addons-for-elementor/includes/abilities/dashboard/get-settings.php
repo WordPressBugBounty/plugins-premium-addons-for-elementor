@@ -71,7 +71,9 @@ class Get_Settings implements Ability_Handler {
 			'meta'                => array(
 				'show_in_rest' => true,
 				'annotations'  => array(
-					'readonly' => true,
+					'readonly'    => true,
+					'destructive' => false,
+					'idempotent'  => true,
 				),
 			),
 		);

@@ -3043,15 +3043,20 @@
 					rtl = this.elements.$multiplePersons.data("rtl"),
 					colsNumber = settings.persons_per_row,
 					colsTablet = settings.persons_per_row_tablet,
-					colsMobile = settings.persons_per_row_mobile;
+					colsMobile = settings.persons_per_row_mobile,
+					slidesToScroll = parseFloat(
+						getComputedStyle(this.$element[0]).getPropertyValue(
+							"--pa-carousel-slides",
+						),
+					);
 
 				return Object.assign(this.getSettings("slick"), {
 					slidesToShow: parseInt(
 						100 / colsNumber.substr(0, colsNumber.indexOf("%")),
 					),
-					slidesToScroll: parseInt(
-						100 / colsNumber.substr(0, colsNumber.indexOf("%")),
-					),
+					slidesToScroll:
+						slidesToScroll ||
+						parseInt(100 / colsNumber.substr(0, colsNumber.indexOf("%"))),
 					responsive: [
 						{
 							breakpoint: 1025,
@@ -3059,7 +3064,7 @@
 								slidesToShow: parseInt(
 									100 / colsTablet.substr(0, colsTablet.indexOf("%")),
 								),
-								slidesToScroll: 1,
+								slidesToScroll: slidesToScroll || 1,
 							},
 						},
 						{
@@ -3068,7 +3073,7 @@
 								slidesToShow: parseInt(
 									100 / colsMobile.substr(0, colsMobile.indexOf("%")),
 								),
-								slidesToScroll: 1,
+								slidesToScroll: slidesToScroll || 1,
 							},
 						},
 					],

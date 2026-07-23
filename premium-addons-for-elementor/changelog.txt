@@ -1,5 +1,15 @@
 == Changelog ==
 
+= 4.11.88 - 23/7/2026 =
+
+- Tweak: Improved the AI abilities to improve the quality of designs built by AI.
+- Tweak: Added new AI abilities to export/import Elementor sections and pages between different sites, list and upload images to media.
+- Tweak: Added new AI abilities to get information about active theme and its style variation to build more consistent designs.
+- Tweak: MCP Configuration and AI Abilities dashboard tabs merged into one for a better UX.
+- Tweak: Show MCP Connection status for a better UX.
+- Fixed: Hover background outline with Grow effect in Button widget.
+- Fixed: Text Shadow not working in Heading widget when gradient background is enabled.
+
 = 4.11.87 - 19/7/2026 =
 
 - Tweak: Added new AI abilities to apply/customize all addons in the plugin (wrapper link, floating effects, tooltips, etc.), creating an Elementor template, duplicating a page/post, changing a post status, removing an Elementor element and more.

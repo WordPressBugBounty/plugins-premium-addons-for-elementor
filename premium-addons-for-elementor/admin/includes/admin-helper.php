@@ -275,7 +275,7 @@ class Admin_Helper {
 			'pa-admin',
 			PREMIUM_ADDONS_URL . 'admin/assets/css/admin.css',
 			array(),
-			PREMIUM_ADDONS_VERSION,
+			time(),
 			'all'
 		);
 
@@ -293,7 +293,7 @@ class Admin_Helper {
 				'pa-admin',
 				PREMIUM_ADDONS_URL . 'admin/assets/js/admin.js',
 				array( 'jquery' ),
-				PREMIUM_ADDONS_VERSION,
+				time(),
 				true
 			);
 
@@ -321,7 +321,6 @@ class Admin_Helper {
 				'settings'               => array(
 					'ajaxurl'           => admin_url( 'admin-ajax.php' ),
 					'nonce'             => wp_create_nonce( 'pa-settings-tab' ),
-					'mcpConfigURL'      => admin_url( 'admin.php?page=' . self::$page_slug . '#tab=mcp-config' ),
 					'unused_nonce'      => wp_create_nonce( 'pa-disable-unused' ),
 					'generate_nonce'    => wp_create_nonce( 'pa-generate-nonce' ),
 					'site_cursor_nonce' => wp_create_nonce( 'pa-site-cursor-nonce' ),
@@ -704,35 +703,25 @@ class Admin_Helper {
 			),
 		);
 
-		// AI Abilities dashboard tabs — only when the feature is enabled. Inserted
-		// right after the Integrations tab so they sit with the other connectivity
-		// settings instead of after System Info / License.
-		if ( ! empty( self::get_enabled_elements()['premium-ai-abilities'] )
-			&& function_exists( 'wp_register_ability' ) ) {
+		// AI Abilities dashboard tab. Always registered — it owns the feature
+		// switcher, so it has to be reachable while the feature is off. Inserted right
+		// after the Features tab so it sits with the other feature settings instead of
+		// after System Info / License.
+		$position = array_search( 'addons', array_keys( self::$tabs ), true ) + 1;
 
-			$position = array_search( 'integrations', array_keys( self::$tabs ), true ) + 1;
-
-			self::$tabs = array_merge(
-				array_slice( self::$tabs, 0, $position, true ),
-				array(
-					'mcp-config'   => array(
-						'id'       => 'mcp-config',
-						'slug'     => $slug . '#tab=mcp-config',
-						'title'    => __( 'MCP Configuration', 'premium-addons-for-elementor' ),
-						'href'     => '#tab=mcp-config',
-						'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp-config',
-					),
-					'ai-abilities' => array(
-						'id'       => 'ai-abilities',
-						'slug'     => $slug . '#tab=ai-abilities',
-						'title'    => __( 'AI Abilities', 'premium-addons-for-elementor' ),
-						'href'     => '#tab=ai-abilities',
-						'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/ai-abilities',
-					),
+		self::$tabs = array_merge(
+			array_slice( self::$tabs, 0, $position, true ),
+			array(
+				'ai-abilities' => array(
+					'id'       => 'ai-abilities',
+					'slug'     => $slug . '#tab=ai-abilities',
+					'title'    => __( 'AI Abilities & MCP Config', 'premium-addons-for-elementor' ),
+					'href'     => '#tab=ai-abilities',
+					'template' => PREMIUM_ADDONS_PATH . 'admin/includes/templates/ai-abilities',
 				),
-				array_slice( self::$tabs, $position, null, true )
-			);
-		}
+			),
+			array_slice( self::$tabs, $position, null, true )
+		);
 
 		if ( ! Helper_Functions::check_papro_version() ) {
 

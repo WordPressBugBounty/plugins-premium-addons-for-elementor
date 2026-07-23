@@ -18,39 +18,7 @@ $features = $elements['cat-13']['elements'];
 			<form action="" method="POST" id="pa-features" name="pa-features" class="pa-settings-form">
 			<div id="pa-features-settings" class="pa-settings-tab">
 
-				<?php
-
-				// AI Abilities requires WordPress 6.9+. On older WP the switcher is locked (same lock styling as pro features) and a bold note prompts updating WordPress — no popup.
-				$ai_wp_supported   = version_compare( get_bloginfo( 'version' ), '6.9', '>=' );
-				$ai_status         = $ai_wp_supported ? checked( 1, $enabled_elements['premium-ai-abilities'], false ) : 'disabled';
-				$ai_switcher_class = ( $ai_wp_supported ? '' : 'pa-wp-ver-slider ' ) . 'slider round pa-control';
-
-				?>
-				<div class="pa-section-outer-wrap">
-					<div class="pa-section-info-wrap">
-						<div class="pa-section-info">
-							<h4><?php echo esc_html( $features[13]['title'] ); ?></h4>
-							<p>
-								<?php echo esc_html( $features[13]['desc'] ); ?>
-								<?php if ( ! $ai_wp_supported ) : ?>
-									<strong><?php esc_html_e( 'Requires WordPress v6.9+', 'premium-addons-for-elementor' ); ?></strong>
-								<?php endif; ?>
-							</p>
-							<?php if ( $ai_wp_supported ) : ?>
-								<p class="pa-ai-mcp-notice"<?php echo $enabled_elements['premium-ai-abilities'] ? '' : ' style="display:none;"'; ?>>
-									<a href="#tab=mcp-config" class="pa-ai-mcp-link"><?php esc_html_e( 'Configure MCP to connect your AI client.', 'premium-addons-for-elementor' ); ?></a>
-								</p>
-							<?php endif; ?>
-						</div>
-
-						<div class="pa-section-info-cta">
-							<label class="switch">
-								<input type="checkbox" id="premium-ai-abilities" pa-element="feature" name="premium-ai-abilities" <?php echo esc_attr( $ai_status ); ?>>
-									<span class="<?php echo esc_attr( $ai_switcher_class ); ?>"></span>
-								</label>
-						</div>
-					</div>
-				</div>
+				<?php // AI Abilities lives in its own dashboard tab (templates/ai-abilities.php), which owns its switcher. ?>
 
 				<div class="pa-section-outer-wrap">
 					<div class="pa-section-info-wrap">

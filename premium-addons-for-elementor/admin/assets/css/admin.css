@@ -146,7 +146,8 @@
 
 #pa-settings .switch input:disabled + .pro-slider::after,
 #pa-features-settings .switch input:disabled + .pro-slider::after,
-#pa-features-settings .switch input:disabled + .pa-wp-ver-slider::after {
+#pa-features-settings .switch input:disabled + .pa-wp-ver-slider::after,
+#pa-ai-settings .switch input:disabled + .pa-wp-ver-slider::after {
 	position: absolute;
 	font-family: Dashicons, sans-serif;
 	content: "\f160";
@@ -1121,13 +1122,6 @@
 	box-shadow: none;
 }
 
-/* The MCP notice link flows inline in the card body, not as the full-card demo overlay above. */
-.pa-section-outer-wrap .pa-ai-mcp-link {
-	position: static;
-	width: auto;
-	height: auto;
-}
-
 /*
 * Integrations
 */
@@ -1721,16 +1715,8 @@
 	content: "\e952";
 }
 
-.pa-settings-tabs-list .pa-dash-mcp-config::before,
 .pa-settings-tabs-list .pa-dash-ai-abilities::before {
 	font-family: dashicons;
-}
-
-.pa-settings-tabs-list .pa-dash-mcp-config::before {
-	content: "\f112";
-}
-
-.pa-settings-tabs-list .pa-dash-ai-abilities::before {
 	content: "\f339";
 }
 
@@ -2766,8 +2752,14 @@
 }
 
 .pa-deactivation-popup .buttons-wrap {
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
 	justify-content: space-between;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
 	align-items: center;
 }
 
@@ -3456,6 +3448,7 @@
 .rtl .slider.round,
 .rtl .pro-slider.round,
 .rtl .pa-wp-ver-slider.round {
+	background-image: -webkit-linear-gradient(top, #cfcfcf 0%, #dbdbdb 100%);
 	background-image: linear-gradient(-180deg, #cfcfcf 0%, #dbdbdb 100%);
 }
 
@@ -3518,6 +3511,8 @@
 
 .pa-mcp-step-heading {
 	-js-display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -3531,16 +3526,17 @@
 
 .pa-mcp-step-badge {
 	-js-display: flex;
-	display: -webkit-inline-box;
 	display: -ms-inline-flexbox;
+	display: -webkit-inline-flex;
 	display: inline-flex;
-	-webkit-box-pack: center;
 	-ms-flex-pack: center;
+	-webkit-justify-content: center;
 	justify-content: center;
-	-webkit-box-align: center;
 	-ms-flex-align: center;
+	-webkit-align-items: center;
 	align-items: center;
 	-ms-flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;
 	flex: 0 0 auto;
 	width: 30px;
 	height: 30px;
@@ -3549,6 +3545,25 @@
 	color: #fff;
 	font-size: 15px;
 	font-weight: 600;
+}
+
+.pa-mcp-connected-notice {
+	margin: 0 0 18px;
+}
+
+.pa-mcp-connected-notice p {
+	margin: 6px 0;
+}
+
+.pa-mcp-setup-fold {
+	margin-bottom: 6px;
+}
+
+.pa-mcp-setup-fold summary {
+	margin-bottom: 18px;
+	color: #2271b1;
+	font-weight: 600;
+	cursor: pointer;
 }
 
 .pa-mcp-step-desc {
@@ -3583,11 +3598,11 @@
 
 .pa-mcp-endpoint {
 	-js-display: flex;
-	display: -webkit-box;
 	display: -ms-flexbox;
+	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: end;
 	-ms-flex-align: end;
+	-webkit-align-items: flex-end;
 	align-items: flex-end;
 	gap: 8px;
 	margin-top: 18px;
@@ -3595,6 +3610,7 @@
 
 .pa-mcp-endpoint-field {
 	-ms-flex: 1;
+	-webkit-flex: 1;
 	flex: 1;
 }
 
@@ -3646,10 +3662,11 @@
 
 .pa-mcp-clients-nav {
 	-js-display: flex;
-	display: -webkit-box;
 	display: -ms-flexbox;
+	display: -webkit-flex;
 	display: flex;
 	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
 	flex-wrap: wrap;
 	gap: 8px;
 	margin: 0 0 16px;
@@ -3745,6 +3762,138 @@
 	margin-top: 10px;
 }
 
+/* AI Abilities tab: outer accordion (MCP setup / abilities), shown once the feature is on. */
+.pa-ai-accordion {
+	margin-top: 30px;
+}
+
+/* The .pa-mcp-config scope is what styles the fields and switches inside the panels;
+   its 920px cap would make the accordion narrower than the card above it. */
+.pa-ai-accordion.pa-mcp-config {
+	max-width: none;
+}
+
+.pa-ai-accordion[hidden] {
+	display: none;
+}
+
+.pa-ai-accordion-item {
+	margin-top: 16px;
+	border: 1px solid #ededed;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.pa-ai-accordion-title {
+	-js-display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	margin: 0;
+	background: #f7f7f7;
+}
+
+.pa-ai-accordion-toggle {
+	-js-display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 10px;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	min-width: 0;
+	margin: 0;
+	padding: 18px;
+	background: transparent;
+	border: 0;
+	font-family: "Red Hat Display", sans-serif;
+	font-size: 17px;
+	font-weight: 700;
+	color: #252c59;
+	text-align: start;
+	cursor: pointer;
+}
+
+.pa-ai-accordion-toggle:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: -2px;
+}
+
+/* Connection state shown on the MCP accordion header. */
+.pa-mcp-status-pill {
+	-js-display: inline-flex;
+	display: -webkit-inline-box;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
+	flex-shrink: 0;
+	margin-inline-end: 18px;
+	padding: 3px 10px;
+	border-radius: 11px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.6;
+	white-space: nowrap;
+}
+
+.pa-mcp-status-pill.is-active {
+	background: #e3f0fa;
+	color: #1c5f96;
+}
+
+.pa-mcp-status-pill.is-connected {
+	background: #e5f1e5;
+	color: #2c7a2c;
+}
+
+.pa-mcp-status-pill.is-idle {
+	background: #f0f0f1;
+	color: #50575e;
+}
+
+.pa-ai-accordion-icon {
+	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
+	flex-shrink: 0;
+	width: 6px;
+	height: 6px;
+	border-right: 2px solid #252c59;
+	border-bottom: 2px solid #252c59;
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	-webkit-transition: -webkit-transform 0.15s ease;
+	transition: -webkit-transform 0.15s ease;
+	transition: transform 0.15s ease;
+	transition: transform 0.15s ease, -webkit-transform 0.15s ease;
+}
+
+.pa-ai-accordion-toggle[aria-expanded="true"] .pa-ai-accordion-icon {
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.pa-ai-accordion-body {
+	padding: 24px 18px;
+}
+
+.pa-ai-accordion-body[hidden] {
+	display: none;
+}
+
 /* AI Abilities tab: abilities grouped by category (accordion). */
 .pa-mcp-ability-cat {
 	margin-top: 16px;
@@ -3754,8 +3903,8 @@
 }
 
 .pa-mcp-ability-cat-heading {
-	-webkit-box-flex: 1;
 	-ms-flex: 1;
+	-webkit-flex: 1;
 	flex: 1;
 	min-width: 0;
 	padding: 10px;
@@ -3770,6 +3919,8 @@
 
 .pa-mcp-ability-cat-header {
 	-js-display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -3779,14 +3930,16 @@
 
 .pa-mcp-ability-cat-count {
 	-js-display: inline-flex;
-	display: -webkit-inline-box;
 	display: -ms-inline-flexbox;
+	display: -webkit-inline-flex;
 	display: inline-flex;
-	-webkit-box-align: center;
 	-ms-flex-align: center;
+	-webkit-align-items: center;
 	align-items: center;
 	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
+	-webkit-margin-end: 12px;
 	margin-inline-end: 12px;
 	padding: 3px 10px;
 	border-radius: 11px;
@@ -3813,6 +3966,8 @@
 
 .pa-mcp-ability-cat-toggle {
 	-js-display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -3844,7 +3999,9 @@
 
 .pa-ai-ability-cat-switch {
 	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
+	-webkit-margin-end: 18px;
 	margin-inline-end: 18px;
 }
 
@@ -3854,6 +4011,7 @@
 
 .pa-mcp-ability-cat-icon {
 	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
 	width: 5px;
 	height: 5px;
@@ -3863,7 +4021,9 @@
 	-ms-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 	-webkit-transition: -webkit-transform 0.15s ease;
+	transition: -webkit-transform 0.15s ease;
 	transition: transform 0.15s ease;
+	transition: transform 0.15s ease, -webkit-transform 0.15s ease;
 }
 
 .pa-mcp-ability-cat-toggle[aria-expanded="true"] .pa-mcp-ability-cat-icon {
@@ -3907,6 +4067,8 @@
 
 .pa-mcp-ability {
 	-js-display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: flex-start;
 	-ms-flex-align: start;
@@ -3920,6 +4082,7 @@
 
 .pa-ai-ability-switch {
 	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
 	margin-top: 1px;
 }
@@ -3930,6 +4093,8 @@
 
 .pa-mcp-ability-head {
 	-js-display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -3979,6 +4144,7 @@
 	opacity: 0.72;
 }
 
-#pa-section-ai-abilities.is-saving .switch .slider {
+/* Scoped to the ability panels: the feature switcher above them saves separately. */
+#pa-section-ai-abilities.is-saving .pa-ai-accordion .switch .slider {
 	cursor: wait;
 }
