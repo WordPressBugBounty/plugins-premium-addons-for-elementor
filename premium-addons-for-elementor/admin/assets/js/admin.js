@@ -149,15 +149,22 @@
 				setSaving(true);
 				$status.removeClass('is-error');
 
+				var data = {
+					action: 'pa_save_ai_abilities',
+					security: settings.nonce,
+					disabled: JSON.stringify(disabledIds)
+				};
+
+				var $option = $section.find('.pa-ai-option-switch input[data-ai-option="third_party_widgets"]');
+				if ($option.length && !$option.prop('disabled')) {
+					data.third_party = $option.prop('checked') ? '1' : '0';
+				}
+
 				$.ajax({
 					url: settings.ajaxurl,
 					type: 'POST',
 					dataType: 'json',
-					data: {
-						action: 'pa_save_ai_abilities',
-						security: settings.nonce,
-						disabled: JSON.stringify(disabledIds)
-					}
+					data: data
 				}).done(function (response) {
 					if (!response.success) {
 						saveFailed(response.data && response.data.message);
@@ -205,6 +212,10 @@
 
 				$abilitySwitches.filter('[data-cat="' + category + '"]').prop('checked', checked);
 				updateCategory(category);
+				queueSave();
+			});
+
+			$section.on('change', '.pa-ai-option-switch input[data-ai-option]', function () {
 				queueSave();
 			});
 

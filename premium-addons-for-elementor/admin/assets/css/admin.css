@@ -145,6 +145,7 @@
 }
 
 #pa-settings .switch input:disabled + .pro-slider::after,
+#pa-section-ai-abilities .switch input:disabled + .pro-slider::after,
 #pa-features-settings .switch input:disabled + .pro-slider::after,
 #pa-features-settings .switch input:disabled + .pa-wp-ver-slider::after,
 #pa-ai-settings .switch input:disabled + .pa-wp-ver-slider::after {

@@ -11,6 +11,7 @@
 namespace PremiumAddons\Includes\Abilities\Design;
 
 use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Includes\Abilities\Registry\Ability_Registry;
 
 use WP\MCP\Domain\Prompts\McpPrompt;
 
@@ -84,6 +85,18 @@ class Design_Guide {
 		$guide = self::get_guide();
 
 		return $guide ? $guide['body'] : '';
+	}
+
+	/**
+	 * Pre-build hint appended to the build abilities' descriptions.
+	 *
+	 * The MCP tool exposes the whole description; the dashboard strips it from
+	 * the delimiter on. Keep it to a single line.
+	 *
+	 * @return string
+	 */
+	public static function build_hint() {
+		return Ability_Registry::AGENT_HINT_DELIMITER . __( 'Before your first build or restyle call on this page, call premium-addons/get-design-guide and follow it for the whole build.', 'premium-addons-for-elementor' );
 	}
 
 	/**

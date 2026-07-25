@@ -11,6 +11,7 @@
 namespace PremiumAddons\Includes\Abilities\Build;
 
 use PremiumAddons\Includes\Abilities\Helpers;
+use PremiumAddons\Includes\Abilities\Design\Design_Guide;
 
 use PremiumAddons\Includes\Abilities\Contracts\Ability_Handler;
 
@@ -39,8 +40,8 @@ class Insert_Widget implements Ability_Handler {
 	 */
 	public function get_registration_args() {
 		return array(
-			'label'               => __( 'Insert Widget', 'premium-addons-for-elementor' ),
-			'description'         => __( 'Inserts an Elementor widget into a page, post or template with its settings. If inserting a Premium Addons widget that uses templates, saved templates go in by title, never by id.', 'premium-addons-for-elementor' ),
+			'label'               => __( 'Use Premium Addons Widgets', 'premium-addons-for-elementor' ),
+			'description'         => __( 'Inserts a widget from Elementor core or Premium Addons into a page, post or template with its settings.', 'premium-addons-for-elementor' ) . Design_Guide::build_hint(),
 			'category'            => 'pa-build',
 			'input_schema'        => array(
 				'type'                 => 'object',

@@ -24,6 +24,12 @@ class Ability_Registry {
 	const PREFIX = 'premium-addons/';
 
 	/**
+	 * Separator between an ability's human description and an agent-only hint
+	 * appended to it.
+	 */
+	const AGENT_HINT_DELIMITER = "\n\n";
+
+	/**
 	 * Ability handlers keyed by short name.
 	 *
 	 * @var array
@@ -115,12 +121,14 @@ class Ability_Registry {
 		foreach ( $this->handlers as $name => $handler ) {
 			$registration_args = $handler->get_registration_args();
 			$annotations       = isset( $registration_args['meta']['annotations'] ) ? $registration_args['meta']['annotations'] : array();
+			$description        = isset( $registration_args['description'] ) ? $registration_args['description'] : '';
+			$hint_pos           = strpos( $description, self::AGENT_HINT_DELIMITER );
 
 			$ability_metadata[] = array(
 				'name'        => $name,
 				'full_name'   => self::PREFIX . $name,
 				'label'       => isset( $registration_args['label'] ) ? $registration_args['label'] : '',
-				'description' => isset( $registration_args['description'] ) ? $registration_args['description'] : '',
+				'description' => false === $hint_pos ? $description : rtrim( substr( $description, 0, $hint_pos ) ),
 				'category'    => isset( $registration_args['category'] ) ? $registration_args['category'] : '',
 				'readonly'    => ! empty( $annotations['readonly'] ),
 			);

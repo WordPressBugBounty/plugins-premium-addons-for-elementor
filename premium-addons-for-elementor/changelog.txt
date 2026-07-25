@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.11.89 - 25/7/2026 =
+
+- Tweak: Improved AI abilities to guide AI models to fetch the design guide for more consistent designs.
+
 = 4.11.88 - 23/7/2026 =
 
 - Tweak: Improved the AI abilities to improve the quality of designs built by AI.

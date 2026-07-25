@@ -10,6 +10,7 @@
 namespace PremiumAddons\Includes\Abilities\Build;
 
 use PremiumAddons\Includes\Abilities\Helpers;
+use PremiumAddons\Includes\Abilities\Design\Design_Guide;
 
 use PremiumAddons\Includes\Abilities\Contracts\Ability_Handler;
 
@@ -39,7 +40,7 @@ class Add_Container implements Ability_Handler {
 	public function get_registration_args() {
 		return array(
 			'label'               => __( 'Add Container (Elementor v3)', 'premium-addons-for-elementor' ),
-			'description'         => __( 'Adds an Elementor container to a page.', 'premium-addons-for-elementor' ),
+			'description'         => __( 'Adds an Elementor container to a page.', 'premium-addons-for-elementor' ) . Design_Guide::build_hint(),
 			'category'            => 'pa-build',
 			'input_schema'        => array(
 				'type'                 => 'object',

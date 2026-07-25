@@ -138,7 +138,7 @@ class Admin_Notices {
 			return;
 		}
 
-		// $this->get_abilities_notice();
+		$this->get_abilities_notice();
 	}
 
 	/**
@@ -289,8 +289,8 @@ class Admin_Notices {
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<strong><?php echo __( 'Introducing Elementor MCP and AI Abilities', 'premium-addons-for-elementor' ); ?></strong>
-					<?php printf( __( 'in Premium Addons. Connect your AI Assistant to build and customize your Elementor pages. <a href="%s" target="_blank">Check it out now!</a>', 'premium-addons-for-elementor' ), $link ); ?>
+					<strong><?php echo __( 'AI Just Landed to Premium Addons for Elementor', 'premium-addons-for-elementor' ); ?></strong>
+					<?php printf( __( '<a href="%s" target="_blank">Watch Use Cases!</a>', 'premium-addons-for-elementor' ), $link ); ?>
 				</p>
 			</div>
 			<div class="pa-notice-close" data-notice="abilities-not">

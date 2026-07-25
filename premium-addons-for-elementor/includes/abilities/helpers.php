@@ -98,8 +98,28 @@ class Helpers {
 	 */
 	public static function guard_widget_source( $type_object, $name ) {
 
-		if ( Helper_Functions::check_papro_version() || self::is_core_or_pa_widget( $type_object ) ) {
+		if ( self::is_core_or_pa_widget( $type_object ) ) {
 			return null;
+		}
+
+		$has_pro   = Helper_Functions::check_papro_version();
+		$settings  = Admin_Helper::get_ai_abilities_settings();
+		$switch_on = ! isset( $settings['third_party_widgets'] ) || ! empty( $settings['third_party_widgets'] );
+
+		// If the user has Pro and the switch is on, allow third-party widgets.
+		if ( $has_pro && $switch_on ) {
+			return null;
+		}
+
+		if ( $has_pro ) {
+			return new \WP_Error(
+				'premium_addons_widget_source_disabled',
+				sprintf(
+					/* translators: %s: widget type name. */
+					__( 'The widget type %s is a third-party widget. Building with third-party widgets is turned off in Premium Addons → AI Abilities → Build. Enable it there to allow this.', 'premium-addons-for-elementor' ),
+					$name
+				)
+			);
 		}
 
 		$pro_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'ai-abilities', 'mcp', 'get-pro' );

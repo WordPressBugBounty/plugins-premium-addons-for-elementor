@@ -7,6 +7,7 @@
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Abilities\Bootstrap;
 use PremiumAddons\Includes\Abilities\Connection_Log;
+use PremiumAddons\Includes\Helper_Functions;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -242,6 +243,29 @@ if ( $abilities_ready ) {
 										</li>
 
 									<?php endforeach; ?>
+
+									<?php if ( 'pa-build' === $cat_slug ) : ?>
+										<?php
+										$tp_value  = ! empty( $abilities_settings['third_party_widgets'] );
+										$tp_locked = ! Helper_Functions::check_papro_version();
+										$tp_status = $tp_locked ? 'disabled' : checked( 1, $tp_value, false );
+										$tp_slider = ( $tp_locked ? 'pro-' : '' ) . 'slider round pa-control';
+										?>
+										<li class="pa-mcp-ability pa-mcp-ability-option">
+											<label class="switch pa-ai-option-switch">
+												<input type="checkbox" data-ai-option="third_party_widgets" pa-element="feature" name="premium-third-party-widgets" title="<?php esc_attr_e( 'Use Elementor 3rd Party Plugins Widgets', 'premium-addons-for-elementor' ); ?>" aria-label="<?php esc_attr_e( 'Use Elementor 3rd Party Plugins Widgets', 'premium-addons-for-elementor' ); ?>" <?php echo esc_attr( $tp_status ); ?>>
+												<span class="<?php echo esc_attr( $tp_slider ); ?>"></span>
+											</label>
+
+											<div class="pa-mcp-ability-content">
+												<div class="pa-mcp-ability-head">
+													<span class="pa-mcp-ability-name"><?php esc_html_e( 'Use Elementor 3rd Party Plugins Widgets', 'premium-addons-for-elementor' ); ?></span>
+													<span class="pa-mcp-ability-badge"><?php esc_html_e( 'Pro', 'premium-addons-for-elementor' ); ?></span>
+												</div>
+												<p class="pa-mcp-ability-desc"><?php esc_html_e( 'Allow AI assistants to insert and edit widgets from Elementor third-party plugins.', 'premium-addons-for-elementor' ); ?></p>
+											</div>
+										</li>
+									<?php endif; ?>
 
 								</ul>
 
