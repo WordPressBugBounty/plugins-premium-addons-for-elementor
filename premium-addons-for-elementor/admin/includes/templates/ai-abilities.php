@@ -78,6 +78,16 @@ if ( $abilities_ready ) {
 							<strong><?php esc_html_e( 'Requires WordPress v6.9+', 'premium-addons-for-elementor' ); ?></strong>
 						<?php endif; ?>
 					</p>
+
+					<div class="pa-ai-links">
+						<a class="pa-element-link" href="<?php echo esc_url( $ai_feature['demo'] ); ?>" target="_blank">
+							<?php esc_html_e( 'Live Demo', 'premium-addons-for-elementor' ); ?>
+							<span class="pa-element-link-separator"></span>
+						</a>
+						<a class="pa-element-link" href="<?php echo esc_url( $ai_feature['doc'] ); ?>" target="_blank">
+							<?php esc_html_e( 'Docs', 'premium-addons-for-elementor' ); ?>
+						</a>
+					</div>
 				</div>
 
 				<div class="pa-section-info-cta">
@@ -113,7 +123,7 @@ if ( $abilities_ready ) {
 				</h3>
 
 				<div id="pa-ai-panel-mcp" class="pa-ai-accordion-body" hidden>
-					<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp-config.php'; ?>
+					<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-config.php'; ?>
 				</div>
 			</div>
 

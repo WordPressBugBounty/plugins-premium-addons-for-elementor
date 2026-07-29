@@ -1,5 +1,23 @@
 == Changelog ==
 
+= 4.11.91 - 29/7/2026 =
+
+- Fixed: AI Abilities OAuth connection not working on sites using Redis object cache.
+
+= 4.11.90 - 29/7/2026 =
+
+- New: Added OAuth connection method for AI Abilities to make connecting AI clients easier and more secure.
+- Tweak: Added Animated Gradient option for custom menu items in Mega Menu widget.
+- Tweak: Added Preload and Poster options in Video Box widget.
+- Tweak: Improved Display Conditions loading by loading condition files on demand for better performance.
+- Tweak: Improved admin notices code for better performance.
+- Tweak: Added demo page and documentation links in AI Abilities dashboard tab.
+- Tweak: Removed Shadow Position option from Text Shadow control in Heading widget.
+- Fixed: Autoplay on Viewport conflict with Elementor Sticky effect in Video Box widget.
+- Fixed: AI abilities catalog saved as an autoloaded option affecting performance.
+- Fixed: Dashboard assets not being cached.
+- Fixed: Tooltip text alignment in Global Tooltips addon.
+
 = 4.11.89 - 25/7/2026 =
 
 - Tweak: Improved AI abilities to guide AI models to fetch the design guide for more consistent designs.

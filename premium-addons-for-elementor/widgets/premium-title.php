@@ -1628,7 +1628,7 @@ class Premium_Title extends Widget_Base {
 				'fields_options' => array(
 					'text_shadow' => array(
 						'selectors' => array(
-							'{{WRAPPER}}:not(.premium-title-gradient-yes) .premium-title-header' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}} {{text_shadow_position.VALUE}};',
+							'{{WRAPPER}}:not(.premium-title-gradient-yes) .premium-title-header' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
 							'{{WRAPPER}}.premium-title-gradient-yes .premium-title-header' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
 						),
 					),

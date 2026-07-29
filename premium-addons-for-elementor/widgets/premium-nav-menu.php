@@ -738,6 +738,67 @@ class Premium_Nav_Menu extends Widget_Base {
 			)
 		);
 
+		$repeater->add_control(
+			'item_gradient_switcher',
+			array(
+				'label'       => __( 'Animated Gradient', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'separator'   => 'before',
+				'conditions'  => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'     => 'item_type',
+							'operator' => '==',
+							'value'    => 'menu',
+						),
+						array(
+							'name'     => 'menu_content_type',
+							'operator' => '==',
+							'value'    => 'link',
+						),
+					),
+				),
+			)
+		);
+
+		$repeater->add_control(
+			'item_gradient_speed',
+			array(
+				'label'     => __( 'Animation Speed (sec)', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SLIDER,
+				'range'     => array(
+					'px' => array(
+						'min'  => 0,
+						'max'  => 10,
+						'step' => .1,
+					),
+				),
+				'default'   => array(
+					'size' => 8,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-menu-text' => 'animation-duration: {{SIZE}}s;',
+				),
+				'condition' => array(
+					'item_gradient_switcher' => 'yes',
+				),
+			)
+		);
+
+		$repeater->add_group_control(
+			Premium_Background::get_type(),
+			array(
+				'name'      => 'item_text_gradient',
+				'types'     => array( 'gradient' ),
+				'selector'  => '{{WRAPPER}} {{CURRENT_ITEM}} .premium-menu-text',
+				'condition' => array(
+					'item_gradient_switcher' => 'yes',
+				),
+			)
+		);
+
 		if ( $papro_activated ) {
 
 			do_action( 'pa_custom_menu_controls', $this, $repeater );
@@ -3570,8 +3631,15 @@ class Premium_Nav_Menu extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'name'     => 'pa_nav_item_shadow',
-				'selector' => '{{WRAPPER}} .premium-main-nav-menu > .premium-nav-menu-item > .premium-menu-link',
+				'name'           => 'pa_nav_item_shadow',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}} .premium-main-nav-menu > .premium-nav-menu-item:not(.pa-item-gradient) > .premium-menu-link' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} .premium-main-nav-menu > .premium-nav-menu-item.pa-item-gradient > .premium-menu-link > .premium-item-text-wrapper' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}});',
+						),
+					),
+				),
 			)
 		);
 
@@ -5187,6 +5255,10 @@ class Premium_Nav_Menu extends Widget_Base {
 				)
 			);
 
+			if ( isset( $item['item_gradient_switcher'] ) && 'yes' === $item['item_gradient_switcher'] ) {
+				$this->add_render_attribute( 'menu-item-' . $index, 'class', 'pa-item-gradient' );
+			}
+
 			if ( 'submenu' === $item['item_type'] ) {
 
 				if ( 'link' === $item['menu_content_type'] ) {
@@ -5213,7 +5285,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 					$html_output .= $this->get_icon_html( $item, 'sub-' );
 
-					$html_output .= esc_html( $item['text'] );
+					$html_output .= $this->get_menu_item_text_html( $item );
 
 					$html_output .= $this->get_badge_html( $item, 'sub-' );
 
@@ -5302,7 +5374,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 				$html_output .= $this->get_icon_html( $item );
 
-				$html_output .= esc_html( $item['text'] );
+				$html_output .= $this->get_menu_item_text_html( $item );
 
 				if ( array_key_exists( $index + 1, $menu_items ) ) {
 					$has_icon = ! empty( $settings['submenu_icon']['value'] );
@@ -5326,6 +5398,32 @@ class Premium_Nav_Menu extends Widget_Base {
 		}
 
 		return $html_output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Get Menu Item Text HTML.
+	 *
+	 * Wraps the item text in a `.premium-menu-text` span. When the item's
+	 * Animated Gradient option is enabled, an extra `.premium-item-text-wrapper`
+	 * span is added to carry the drop-shadow filter (the gradient clip and its
+	 * hue-rotate animation live on the inner span).
+	 *
+	 * @access private
+	 * @since 4.11.90
+	 *
+	 * @param array $item repeater item.
+	 *
+	 * @return string
+	 */
+	private function get_menu_item_text_html( $item ) {
+
+		$text = esc_html( $item['text'] );
+
+		if ( isset( $item['item_gradient_switcher'] ) && 'yes' === $item['item_gradient_switcher'] ) {
+			$text = '<span class="premium-item-text-wrapper"><span class="premium-menu-text">' . $text . '</span></span>';
+		}
+
+		return $text;
 	}
 
 	/**

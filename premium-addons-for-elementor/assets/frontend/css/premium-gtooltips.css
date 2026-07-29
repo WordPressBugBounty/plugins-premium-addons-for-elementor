@@ -9,7 +9,9 @@
 .premium-global-tooltip-content .premium-tootltip-icon {
   vertical-align: middle;
 }
-.premium-global-tooltip-content .premium-tootltip-text,
+.premium-global-tooltip-content .premium-tootltip-text {
+  display: block;
+}
 .premium-global-tooltip-content .premium-tooltip-gallery,
 .premium-global-tooltip-content .premium-tootltip-icon {
   display: inline-block;

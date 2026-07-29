@@ -3763,6 +3763,159 @@
 	margin-top: 10px;
 }
 
+/* OAuth setup walkthrough inside an AI-client panel. */
+.pa-mcp-oauth-steps {
+	margin: 0;
+	padding-left: 20px;
+}
+
+.pa-mcp-oauth-steps li {
+	margin: 0 0 18px;
+	padding-left: 4px;
+}
+
+.pa-mcp-oauth-steps li:last-child {
+	margin-bottom: 0;
+}
+
+.pa-mcp-oauth-step {
+	margin: 0 0 4px;
+	font-size: 14px;
+	color: #1d2327;
+}
+
+.pa-mcp-oauth-desc {
+	margin: 0 0 8px;
+}
+
+.pa-mcp-oauth-steps .pa-mcp-connect-prompt {
+	margin-bottom: 8px;
+}
+
+/* Connection method chooser: Application Password vs OAuth. */
+.pa-mcp-method-chooser {
+	margin: 0 0 22px;
+}
+
+.pa-mcp-method-cards {
+	-js-display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 8px;
+}
+
+.pa-mcp-method-card {
+	-ms-flex: 1 1 260px;
+	-webkit-flex: 1 1 260px;
+	flex: 1 1 260px;
+	position: relative;
+	padding: 14px 16px;
+	border: 1px solid #c3c4c7;
+	border-radius: 8px;
+	background: #fff;
+	cursor: pointer;
+	-webkit-transition: border-color 0.15s ease, box-shadow 0.15s ease;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pa-mcp-method-card:hover {
+	border-color: #2271b1;
+}
+
+.pa-mcp-method-card.is-active {
+	border-color: #1d2327;
+	-webkit-box-shadow: inset 0 0 0 1px #1d2327;
+	box-shadow: inset 0 0 0 1px #1d2327;
+}
+
+.pa-mcp-method-card.is-locked {
+	background: #f6f7f7;
+	cursor: not-allowed;
+	opacity: 0.75;
+}
+
+.pa-mcp-method-card.is-locked:hover {
+	border-color: #c3c4c7;
+}
+
+.pa-mcp-method-card input {
+	margin: 0 8px 0 0;
+}
+
+.pa-mcp-method-title {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 600;
+	color: #1d2327;
+	vertical-align: middle;
+}
+
+.pa-mcp-method-badge {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 8px;
+	border-radius: 10px;
+	background: #1d2327;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.pa-mcp-method-desc {
+	display: block;
+	margin-top: 6px;
+	padding-left: 22px;
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.pa-mcp-method-status {
+	margin-top: 10px;
+	min-height: 20px;
+	color: #50575e;
+	font-size: 13px;
+}
+
+.pa-mcp-method-status.is-error {
+	color: #d63638;
+}
+
+.pa-mcp-branch[hidden] {
+	display: none;
+}
+
+.pa-mcp-oauth-disconnect-row {
+	margin-top: 18px;
+	padding-top: 16px;
+	border-top: 1px solid #dcdcde;
+}
+
+.pa-mcp-oauth-disconnect-row[hidden] {
+	display: none;
+}
+
+.pa-mcp-oauth-disconnect-row .description {
+	margin-top: 6px;
+}
+
+.pa-ai-links {
+	margin-top: 10px;
+}
+
+.pa-section-outer-wrap .pa-ai-links a {
+	position: static;
+	width: auto;
+	height: auto;
+}
+
 /* AI Abilities tab: outer accordion (MCP setup / abilities), shown once the feature is on. */
 .pa-ai-accordion {
 	margin-top: 30px;

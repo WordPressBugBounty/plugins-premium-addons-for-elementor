@@ -23,6 +23,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Bootstrap {
 
 	/**
+	 * REST namespace the MCP server is registered under.
+	 *
+	 * @var string
+	 */
+	const SERVER_NAMESPACE = 'premium-addons';
+
+	/**
+	 * REST route the MCP server answers on, within SERVER_NAMESPACE.
+	 *
+	 * @var string
+	 */
+	const SERVER_ROUTE = 'mcp';
+
+	/**
 	 * Class instance.
 	 *
 	 * @var Bootstrap|null
@@ -35,6 +49,16 @@ class Bootstrap {
 	 * @var Ability_Registry
 	 */
 	private $registry;
+
+	/**
+	 * The MCP server's REST route, namespace included. Shared with the OAuth
+	 * layer, which advertises this endpoint and scopes its challenge to it.
+	 *
+	 * @return string
+	 */
+	public static function server_route() {
+		return self::SERVER_NAMESPACE . '/' . self::SERVER_ROUTE;
+	}
 
 	/**
 	 * Get class instance.
@@ -66,12 +90,15 @@ class Bootstrap {
 		// Track MCP connections and clear them on application password revoke.
 		Connection_Log::init();
 
+		// OAuth connect method. Hooks only here; its gates run on init.
+		OAuth\Bootstrap::get_instance();
+
 		// Register ability categories and abilities.
 		add_action( 'wp_abilities_api_categories_init', array( $this, 'register_categories' ) );
 		add_action( 'wp_abilities_api_init', array( $this, 'register_abilities' ) );
 
-		// Boot the MCP adapter on REST requests and WP-CLI only.
-		add_action( 'rest_api_init', array( $this, 'boot_mcp_adapter' ), 5 );
+		// Boot the MCP adapter on the MCP endpoint and WP-CLI only.
+		add_action( 'rest_api_init', array( $this, 'maybe_boot_mcp_adapter' ), 5 );
 
 		// Serve copy payloads to Destination sites. Signature authorized, no WordPress auth.
 		add_action( 'rest_api_init', array( Transfer\Transfer_Controller::class, 'register_routes' ) );
@@ -79,6 +106,38 @@ class Bootstrap {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			add_action( 'init', array( $this, 'boot_mcp_adapter' ), 5 );
 		}
+	}
+
+	/**
+	 * Boot the adapter only when the request is for the MCP endpoint itself.
+	 *
+	 * rest_api_init fires for every REST request on the site, so booting there
+	 * unconditionally makes an editor autosave — or any other plugin's endpoint
+	 * — pay for the Jetpack autoloader, the adapter singleton and every ability
+	 * handler. The endpoint is a fixed URL that clients are handed verbatim, so
+	 * matching it is enough; nothing discovers the server through the /wp-json/
+	 * route index.
+	 *
+	 * The route is read from the query var rather than the request URI because
+	 * WordPress populates it for both the pretty and the ?rest_route= form, and
+	 * leaves it empty for internal rest_do_request() calls such as the block
+	 * editor's preloading — which should not boot the adapter either.
+	 *
+	 * @return void
+	 */
+	public function maybe_boot_mcp_adapter() {
+
+		$route = isset( $GLOBALS['wp']->query_vars['rest_route'] ) ? $GLOBALS['wp']->query_vars['rest_route'] : '';
+
+		if ( ! is_string( $route ) ) {
+			return;
+		}
+
+		if ( 0 !== strpos( trim( $route, '/' ), self::server_route() ) ) {
+			return;
+		}
+
+		$this->boot_mcp_adapter();
 	}
 
 	/**
@@ -177,12 +236,17 @@ class Bootstrap {
 			)
 		);
 
+		// Return if no enabled abilities.
+		if ( empty( $tools ) ) {
+			return;
+		}
+
 		$design_prompt = Design\Design_Guide::get_prompt();
 
 		$mcp_adapter->create_server(
 			'premium-addons',
-			'premium-addons',
-			'mcp',
+			self::SERVER_NAMESPACE,
+			self::SERVER_ROUTE,
 			__( 'Premium Addons MCP Server', 'premium-addons-for-elementor' ),
 			__( 'Exposes Premium Addons widgets, templates and site data as MCP tools for AI agents.', 'premium-addons-for-elementor' ),
 			'v' . PREMIUM_ADDONS_VERSION,
@@ -192,7 +256,7 @@ class Bootstrap {
 			$tools,
 			array(),
 			$design_prompt ? array( $design_prompt ) : array(),
-			null
+			OAuth\Bootstrap::is_registered() ? array( OAuth\Bearer::class, 'permission_callback' ) : null
 		);
 	}
 
@@ -222,7 +286,8 @@ class Bootstrap {
 			array(
 				'hash'  => $hash,
 				'items' => $ability_items,
-			)
+			),
+			WEEK_IN_SECONDS
 		);
 
 		return $ability_items;

@@ -734,24 +734,21 @@
 				});
 			});
 
-			var $clientTabs = $section.find('.pa-mcp-client-tab'),
-				$clientPanels = $section.find('.pa-mcp-client-panel');
-
-			function selectMcpClient($tab) {
-
-				var panelId = $tab.attr('data-pa-mcp-panel');
-
-				$clientTabs.removeClass('is-active');
-				$tab.addClass('is-active');
-				$clientPanels.prop('hidden', true);
-				$section.find('#' + panelId).prop('hidden', false);
-			}
-
+			// Tab, panel and alias handlers are scoped to the enclosing
+			// .pa-mcp-connect container: the password and OAuth branches both
+			// render a full set of client tabs into the DOM at once.
 			$section.on('click', '.pa-mcp-client-tab', function () {
-				selectMcpClient($(this));
+
+				var $tab = $(this),
+					$connect = $tab.closest('.pa-mcp-connect');
+
+				$connect.find('.pa-mcp-client-tab').removeClass('is-active');
+				$tab.addClass('is-active');
+				$connect.find('.pa-mcp-client-panel').prop('hidden', true);
+				$connect.find('#' + $tab.attr('data-pa-mcp-panel')).prop('hidden', false);
 			});
 
-			$section.on('input', '#pa-mcp-alias', function () {
+			$section.on('input', '.pa-mcp-alias-input', function () {
 
 				var $alias = $(this),
 					cleanAlias = $alias.val().replace(/[^A-Za-z0-9_-]/g, '');
@@ -761,8 +758,165 @@
 				}
 
 				$alias.val(cleanAlias);
-				$section.find('.pa-mcp-alias').text(cleanAlias);
+				$alias.closest('.pa-mcp-connect').find('.pa-mcp-alias').text(cleanAlias);
 			});
+
+			// Connection-method chooser. Both branches are server-rendered (the
+			// OAuth snippets embed no secret), so switching is visibility —
+			// except the first OAuth selection, which runs the opt-in AJAX that
+			// creates the tables and sets the flag.
+			var $methodStatus = $section.find('.pa-mcp-method-status');
+
+			function showMcpBranch(method) {
+
+				$section.find('#pa-mcp-branch-password').prop('hidden', 'oauth' === method);
+				$section.find('#pa-mcp-branch-oauth').prop('hidden', 'oauth' !== method);
+
+				$section.find('.pa-mcp-method-card').each(function () {
+					var $card = $(this);
+					$card.toggleClass('is-active', $card.find('input').val() === method);
+				});
+			}
+
+			// The chosen method is a view preference, not site state: both methods
+			// keep working regardless. Kept client-side so reading it costs nothing.
+			var METHOD_KEY = 'paMcpConnectMethod';
+
+			function storedMcpMethod() {
+				try {
+					return window.localStorage.getItem(METHOD_KEY);
+				} catch (e) {
+					return null;
+				}
+			}
+
+			function storeMcpMethod(method) {
+				try {
+					window.localStorage.setItem(METHOD_KEY, method);
+				} catch (e) {
+					// Storage unavailable (private mode, disabled) — the default stands.
+				}
+			}
+
+			function oauthFailed(response) {
+				$methodStatus.text((response && response.data && response.data.message) || settings.i18n.oauthRequestFailed).addClass('is-error');
+			}
+
+			function revertToPassword(response) {
+				oauthFailed(response);
+				$section.find('input[name="pa-mcp-method"][value="password"]').prop('checked', true);
+				storeMcpMethod('password');
+				showMcpBranch('password');
+			}
+
+			$section.on('change', 'input[name="pa-mcp-method"]', function () {
+
+				var $radio = $(this),
+					method = $radio.val();
+
+				$methodStatus.text('').removeClass('is-error');
+
+				if ('oauth' !== method || '1' === $radio.attr('data-pa-oauth-enabled')) {
+					storeMcpMethod(method);
+					showMcpBranch(method);
+					return;
+				}
+
+				$radio.prop('disabled', true);
+				$methodStatus.text(settings.i18n.oauthEnabling);
+
+				$.ajax({
+					url: settings.ajaxurl,
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						action: 'pa_enable_oauth_connect',
+						security: settings.nonce
+					}
+				}).done(function (response) {
+
+					if (!response.success) {
+						revertToPassword(response);
+						return;
+					}
+
+					$radio.attr('data-pa-oauth-enabled', '1');
+					$methodStatus.text((response.data && response.data.message) || '');
+					$section.find('.pa-mcp-oauth-disconnect-row').prop('hidden', false);
+					storeMcpMethod('oauth');
+					showMcpBranch('oauth');
+				}).fail(function () {
+					revertToPassword();
+				}).always(function () {
+					$radio.prop('disabled', false);
+				});
+			});
+
+			// "Manage or revoke access" in the connected notice: bring the
+			// disconnect control into view rather than acting on it.
+			$section.on('click', '.pa-mcp-oauth-manage', function () {
+
+				var $row = $section.find('.pa-mcp-oauth-disconnect-row'),
+					$btn = $section.find('#pa-mcp-oauth-disconnect');
+
+				if (!$row.length || $row.prop('hidden')) {
+					return;
+				}
+
+				if ($row.get(0).scrollIntoView) {
+					$row.get(0).scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+
+				$btn.trigger('focus');
+			});
+
+			$section.on('click', '#pa-mcp-oauth-disconnect', function () {
+
+				var $btn = $(this);
+
+				if (!window.confirm($btn.attr('data-pa-confirm'))) {
+					return;
+				}
+
+				$btn.prop('disabled', true);
+
+				$.ajax({
+					url: settings.ajaxurl,
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						action: 'pa_disable_oauth_connect',
+						security: settings.nonce
+					}
+				}).done(function (response) {
+
+					if (!response.success) {
+						oauthFailed(response);
+						$btn.prop('disabled', false);
+						return;
+					}
+
+					// The chooser state and connection pill are server-rendered.
+					window.location.reload();
+				}).fail(function () {
+					oauthFailed();
+					$btn.prop('disabled', false);
+				});
+			});
+
+			// Restore the branch this admin last looked at. OAuth is only restored
+			// when it is already enabled — selecting it otherwise would fire the
+			// opt-in request on page load. The panel starts collapsed, so the
+			// server-rendered default is never visible before this runs.
+			if ('oauth' === storedMcpMethod()) {
+
+				var $oauthRadio = $section.find('input[name="pa-mcp-method"][value="oauth"]');
+
+				if ($oauthRadio.length && !$oauthRadio.prop('disabled') && '1' === $oauthRadio.attr('data-pa-oauth-enabled')) {
+					$oauthRadio.prop('checked', true);
+					showMcpBranch('oauth');
+				}
+			}
 		};
 
 		self.handleRollBack = function () {
@@ -874,7 +1028,6 @@
 					complete: function () {
 						if (redirectURL) {
 							window.location.href = redirectURL;
-							window.location.reload();
 						}
 					}
 

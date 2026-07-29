@@ -164,6 +164,7 @@ class MCP_Settings {
 		return array(
 			'claude-code'    => 'Claude Code',
 			'claude-desktop' => 'Claude Desktop',
+			'claude-ai'      => 'Claude (claude.ai)',
 			'cursor'         => 'Cursor',
 			'vs-code'        => 'VS Code',
 			'codex'          => 'Codex',
@@ -181,35 +182,91 @@ class MCP_Settings {
 	}
 
 	/**
-	 * Build connection details for every supported AI client.
+	 * Whether the OAuth connect method may be offered on this site: HTTPS, or a
+	 * local host in an environment explicitly marked local. Derived from
+	 * home_url() so it stays safe to call before $wp_rewrite exists.
+	 *
+	 * @return bool
+	 */
+	public static function oauth_transport_allowed() {
+
+		$url = home_url();
+
+		return 'https' === self::endpoint_scheme( $url )
+			|| ( 'local' === wp_get_environment_type() && self::is_local_host( self::get_endpoint_host( $url ) ) );
+	}
+
+	/**
+	 * Build connection details for every supported AI client. An empty password
+	 * builds the OAuth variant, where every snippet omits the Authorization
+	 * header and the client runs the OAuth flow itself.
 	 *
 	 * @param string $endpoint_url MCP endpoint URL.
-	 * @param string $username     WordPress username.
-	 * @param string $password     WordPress application password.
+	 * @param string $username     WordPress username. Unused when $password is ''.
+	 * @param string $password     WordPress application password. Omit for OAuth.
 	 * @param string $alias        Local client alias.
 	 * @return array<string,array<string,string|null>> Client configuration map.
 	 */
-	public function build_client_configs( $endpoint_url, $username, $password, $alias = self::DEFAULT_SERVER_NAME ) {
+	public function build_client_configs( $endpoint_url, $username = '', $password = '', $alias = self::DEFAULT_SERVER_NAME ) {
 
 		$clients            = self::get_supported_clients();
 		$shape_map          = self::client_shape_map();
-		$auth_token         = self::basic_auth_token( $username, $password );
+		$auth_header        = '' === $password ? '' : 'Basic ' . self::basic_auth_token( $username, $password );
+		$is_oauth           = '' === $auth_header;
+		$oauth_map          = $is_oauth ? self::client_oauth_map( $endpoint_url ) : array();
 		$clean_alias        = (string) preg_replace( '/[^A-Za-z0-9_-]/', '', $alias );
 		$deeplink_alias     = '' !== $clean_alias ? $clean_alias : self::DEFAULT_SERVER_NAME;
 		$connection_context = array(
 			'endpoint_url'   => $endpoint_url,
-			'auth_token'     => $auth_token,
+			'auth_header'    => $auth_header,
 			'deeplink_alias' => $deeplink_alias,
 		);
 		$configs            = array();
 
 		foreach ( $clients as $client_key => $client_label ) {
+
+			if ( ! $is_oauth && in_array( $client_key, self::oauth_only_clients(), true ) ) {
+				continue;
+			}
+
+			// OAuth mode is not the password entry minus a header: its instructions
+			// come from their own per-client descriptor, so none of the password
+			// snippet shapes are built for it.
+			if ( $is_oauth ) {
+				$configs[ $client_key ] = array(
+					'label' => $client_label,
+					'oauth' => $this->build_oauth_setup( $client_key, $oauth_map, $connection_context ),
+				);
+
+				continue;
+			}
+
 			$client_shape = isset( $shape_map[ $client_key ] ) ? $shape_map[ $client_key ] : null;
 
 			$configs[ $client_key ] = $this->build_client_config( $client_key, $client_label, $client_shape, $connection_context );
 		}
 
 		return $configs;
+	}
+
+	/**
+	 * Resolve one client's OAuth setup block, filling in its deeplink. Clients
+	 * with no entry get the generic "paste the URL, then sign in" shape.
+	 *
+	 * @param string               $client_key         Client key.
+	 * @param array                $oauth_map          OAuth setup map.
+	 * @param array<string,string> $connection_context Endpoint and alias context.
+	 * @return array<string,mixed> OAuth setup block.
+	 */
+	private function build_oauth_setup( $client_key, $oauth_map, $connection_context ) {
+
+		$setup = isset( $oauth_map[ $client_key ] ) ? $oauth_map[ $client_key ] : array( 'type' => 'url' );
+
+		$setup['deeplink'] = isset( $setup['deeplink'] )
+			? self::build_oauth_deeplink( $setup['deeplink'], $connection_context['deeplink_alias'], $connection_context['endpoint_url'] )
+			: null;
+
+		return $setup;
 	}
 
 	/**
@@ -227,10 +284,10 @@ class MCP_Settings {
 		$deeplink = null;
 
 		if ( null !== $client_shape ) {
-			$code = $this->build_client_snippet( $client_shape, $connection_context['endpoint_url'], $connection_context['auth_token'] );
+			$code = $this->build_client_snippet( $client_shape, $connection_context['endpoint_url'], $connection_context['auth_header'] );
 
 			if ( 'cursor' === $client_key ) {
-				$deeplink = $this->build_cursor_deeplink( $connection_context['deeplink_alias'], $connection_context['endpoint_url'], $connection_context['auth_token'] );
+				$deeplink = $this->build_cursor_deeplink( $connection_context['deeplink_alias'], $connection_context['endpoint_url'], $connection_context['auth_header'] );
 			}
 		}
 
@@ -241,8 +298,103 @@ class MCP_Settings {
 			'hint'     => null !== $client_shape ? $client_shape['hint'] : null,
 			'code'     => $code,
 			'deeplink' => $deeplink,
-			'prompt'   => $this->build_agent_prompt( $client_label, $connection_context['endpoint_url'], $connection_context['auth_token'] ),
+			'prompt'   => $this->build_agent_prompt( $client_label, $connection_context['endpoint_url'], $connection_context['auth_header'] ),
 		);
+	}
+
+	/**
+	 * Clients that can only be connected with OAuth, so they are hidden from the
+	 * Application Password branch rather than shown with instructions that
+	 * cannot work.
+	 *
+	 * @return array<int,string> Client keys.
+	 */
+	private static function oauth_only_clients() {
+		return array( 'claude-ai' );
+	}
+
+	/**
+	 * How each client is set up in OAuth mode. This is not the password shape
+	 * with the header removed: several clients are configured somewhere else
+	 * entirely once there is no credential to paste.
+	 *
+	 * Types: cmd (one terminal command), connector (the client's own Connectors
+	 * UI), config (a config-file snippet), steps (an ordered walkthrough).
+	 * Anything without an entry falls back to "paste the URL, then sign in".
+	 *
+	 * @param string $endpoint_url MCP endpoint URL.
+	 * @return array<string,array<string,mixed>> OAuth setup map keyed by client.
+	 */
+	private static function client_oauth_map( $endpoint_url ) {
+
+		$name = self::NAME_TOKEN;
+
+		return array(
+			'claude-code'    => array(
+				'type' => 'cmd',
+				'cmd'  => sprintf( 'claude mcp add --transport http %1$s "%2$s"', $name, $endpoint_url ),
+			),
+			'claude-desktop' => array(
+				'type' => 'connector',
+				'app'  => __( 'Claude Desktop', 'premium-addons-for-elementor' ),
+			),
+			'claude-ai'      => array(
+				'type'     => 'connector',
+				'app'      => 'claude.ai',
+				'deeplink' => 'claude-ai',
+				'note'     => __( 'Custom connectors need a paid Claude plan. On Team and Enterprise an administrator may have to allow them first.', 'premium-addons-for-elementor' ),
+			),
+			'cursor'         => array(
+				'type'     => 'config',
+				'paths'    => array( '~/.cursor/mcp.json', '.cursor/mcp.json' ),
+				'template' => sprintf( "{\n    \"mcpServers\": {\n        \"%1\$s\": {\n            \"url\": \"%2\$s\"\n        }\n    }\n}", $name, $endpoint_url ),
+				'deeplink' => 'cursor',
+			),
+			'vs-code'        => array(
+				'type'     => 'config',
+				'paths'    => array( '.vscode/mcp.json' ),
+				'template' => sprintf( "{\n    \"servers\": {\n        \"%1\$s\": {\n            \"type\": \"http\",\n            \"url\": \"%2\$s\"\n        }\n    }\n}", $name, $endpoint_url ),
+			),
+			// Codex reads the URL from config.toml but never starts the OAuth
+			// flow from it, so the login command is part of the setup, not a note.
+			'codex'          => array(
+				'type'  => 'steps',
+				'steps' => array(
+					array(
+						'title' => __( 'Add the server to ~/.codex/config.toml', 'premium-addons-for-elementor' ),
+						'copy'  => sprintf( "[mcp_servers.%1\$s]\nurl = \"%2\$s\"", $name, $endpoint_url ),
+					),
+					array(
+						'title' => __( 'Authorize it from your terminal', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Codex does not open the sign-in on its own, so this step is required.', 'premium-addons-for-elementor' ),
+						'copy'  => sprintf( 'codex mcp login %s', $name ),
+					),
+				),
+			),
+		);
+	}
+
+	/**
+	 * Build the one-click install URL for a client that accepts one.
+	 *
+	 * @param string $kind         Deeplink kind: cursor or claude-ai.
+	 * @param string $alias        Local client alias.
+	 * @param string $endpoint_url MCP endpoint URL.
+	 * @return string|null Deeplink, or null when the client has none.
+	 */
+	private static function build_oauth_deeplink( $kind, $alias, $endpoint_url ) {
+
+		if ( 'cursor' === $kind ) {
+			$json = (string) wp_json_encode( array( 'url' => $endpoint_url ), JSON_UNESCAPED_SLASHES );
+
+			return 'cursor://anysphere.cursor-deeplink/mcp/install?name=' . rawurlencode( $alias ) . '&config=' . rawurlencode( base64_encode( $json ) );
+		}
+
+		if ( 'claude-ai' === $kind ) {
+			return 'https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=' . rawurlencode( $alias ) . '&connectorUrl=' . rawurlencode( $endpoint_url );
+		}
+
+		return null;
 	}
 
 	/**
@@ -305,20 +457,20 @@ class MCP_Settings {
 	 *
 	 * @param array<string,string> $client_shape Client shape definition.
 	 * @param string               $endpoint_url MCP endpoint URL.
-	 * @param string               $auth_token   Base64-encoded HTTP Basic token.
+	 * @param string               $auth_header  Authorization header value, or '' for OAuth.
 	 * @return string Client configuration snippet.
 	 */
-	private function build_client_snippet( $client_shape, $endpoint_url, $auth_token ) {
+	private function build_client_snippet( $client_shape, $endpoint_url, $auth_header ) {
 
 		switch ( $client_shape['shape'] ) {
 			case 'shell':
-				return $this->build_shell_snippet( $endpoint_url, $auth_token );
+				return $this->build_shell_snippet( $endpoint_url, $auth_header );
 			case 'native':
-				return $this->build_native_json_snippet( $client_shape['variant'], $endpoint_url, $auth_token );
+				return $this->build_native_json_snippet( $client_shape['variant'], $endpoint_url, $auth_header );
 			case 'bridge':
-				return $this->build_bridge_snippet( $endpoint_url, $auth_token, self::MCP_REMOTE_VERSION );
+				return $this->build_bridge_snippet( $endpoint_url, $auth_header, self::MCP_REMOTE_VERSION );
 			case 'toml':
-				return $this->build_toml_snippet( $endpoint_url, $auth_token );
+				return $this->build_toml_snippet( $endpoint_url, $auth_header );
 		}
 
 		throw new \InvalidArgumentException( 'Unsupported MCP client shape.' );
@@ -328,16 +480,16 @@ class MCP_Settings {
 	 * Build the Claude Code shell command.
 	 *
 	 * @param string $endpoint_url MCP endpoint URL.
-	 * @param string $auth_token   Base64-encoded HTTP Basic token.
+	 * @param string $auth_header  Authorization header value.
 	 * @return string Shell command.
 	 */
-	private function build_shell_snippet( $endpoint_url, $auth_token ) {
+	private function build_shell_snippet( $endpoint_url, $auth_header ) {
 
 		return sprintf(
-			'claude mcp add --transport http %1$s "%2$s" --header "Authorization: Basic %3$s"',
+			'claude mcp add --transport http %1$s "%2$s" --header "Authorization: %3$s"',
 			self::NAME_TOKEN,
 			$endpoint_url,
-			$auth_token
+			$auth_header
 		);
 	}
 
@@ -346,15 +498,15 @@ class MCP_Settings {
 	 *
 	 * @param string $variant      Native JSON variant.
 	 * @param string $endpoint_url MCP endpoint URL.
-	 * @param string $auth_token   Base64-encoded HTTP Basic token.
+	 * @param string $auth_header  Authorization header value.
 	 * @return string JSON configuration.
 	 */
-	private function build_native_json_snippet( $variant, $endpoint_url, $auth_token ) {
+	private function build_native_json_snippet( $variant, $endpoint_url, $auth_header ) {
 
 		$server = array(
 			'url'     => $endpoint_url,
 			'headers' => array(
-				'Authorization' => 'Basic ' . $auth_token,
+				'Authorization' => $auth_header,
 			),
 		);
 
@@ -375,23 +527,25 @@ class MCP_Settings {
 	 * Build a Claude Desktop mcp-remote bridge configuration.
 	 *
 	 * @param string $endpoint_url         MCP endpoint URL.
-	 * @param string $auth_token           Base64-encoded HTTP Basic token.
+	 * @param string $auth_header          Authorization header value.
 	 * @param string $pinned_remote_version Pinned mcp-remote package version.
 	 * @return string JSON configuration.
 	 */
-	private function build_bridge_snippet( $endpoint_url, $auth_token, $pinned_remote_version ) {
+	private function build_bridge_snippet( $endpoint_url, $auth_header, $pinned_remote_version ) {
+
+		$args = array(
+			'-y',
+			'mcp-remote@' . $pinned_remote_version,
+			$endpoint_url,
+			'--header',
+			'Authorization: ' . $auth_header,
+		);
 
 		$config = array(
 			'mcpServers' => array(
 				self::NAME_TOKEN => array(
 					'command' => 'npx',
-					'args'    => array(
-						'-y',
-						'mcp-remote@' . $pinned_remote_version,
-						$endpoint_url,
-						'--header',
-						'Authorization: Basic ' . $auth_token,
-					),
+					'args'    => $args,
 				),
 			),
 		);
@@ -403,19 +557,18 @@ class MCP_Settings {
 	 * Build a native Codex Streamable HTTP configuration.
 	 *
 	 * @param string $endpoint_url MCP endpoint URL.
-	 * @param string $auth_token   Base64-encoded HTTP Basic token.
+	 * @param string $auth_header  Authorization header value.
 	 * @return string TOML configuration.
 	 */
-	private function build_toml_snippet( $endpoint_url, $auth_token ) {
+	private function build_toml_snippet( $endpoint_url, $auth_header ) {
 
 		$endpoint_url = str_replace( array( '\\', '"' ), array( '\\\\', '\\"' ), $endpoint_url );
-		$auth_header  = str_replace( array( '\\', '"' ), array( '\\\\', '\\"' ), 'Basic ' . $auth_token );
 
 		return sprintf(
 			"[mcp_servers.%1\$s]\nurl = \"%2\$s\"\nhttp_headers = { \"Authorization\" = \"%3\$s\" }",
 			self::NAME_TOKEN,
 			$endpoint_url,
-			$auth_header
+			str_replace( array( '\\', '"' ), array( '\\\\', '\\"' ), $auth_header )
 		);
 	}
 
@@ -424,18 +577,19 @@ class MCP_Settings {
 	 *
 	 * @param string $alias        Local client alias.
 	 * @param string $endpoint_url MCP endpoint URL.
-	 * @param string $auth_token   Base64-encoded HTTP Basic token.
+	 * @param string $auth_header  Authorization header value.
 	 * @return string Cursor deeplink.
 	 */
-	private function build_cursor_deeplink( $alias, $endpoint_url, $auth_token ) {
+	private function build_cursor_deeplink( $alias, $endpoint_url, $auth_header ) {
 
 		$config = array(
 			'url'     => $endpoint_url,
 			'headers' => array(
-				'Authorization' => 'Basic ' . $auth_token,
+				'Authorization' => $auth_header,
 			),
 		);
-		$json   = (string) wp_json_encode( $config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+
+		$json = (string) wp_json_encode( $config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
 
 		return 'cursor://anysphere.cursor-deeplink/mcp/install?name=' . rawurlencode( $alias ) . '&config=' . rawurlencode( base64_encode( $json ) );
 	}
@@ -445,10 +599,10 @@ class MCP_Settings {
 	 *
 	 * @param string $client_label Client display label.
 	 * @param string $endpoint_url MCP endpoint URL.
-	 * @param string $auth_token   Base64-encoded HTTP Basic token.
+	 * @param string $auth_header  Authorization header value.
 	 * @return string Agent prompt.
 	 */
-	private function build_agent_prompt( $client_label, $endpoint_url, $auth_token ) {
+	private function build_agent_prompt( $client_label, $endpoint_url, $auth_header ) {
 
 		return sprintf(
 			/* translators: 1: AI client name, 2: local server alias, 3: MCP endpoint URL, 4: HTTP Basic authorization value. */
@@ -465,7 +619,7 @@ class MCP_Settings {
 			$client_label,
 			self::NAME_TOKEN,
 			$endpoint_url,
-			'Basic ' . $auth_token
+			$auth_header
 		);
 	}
 

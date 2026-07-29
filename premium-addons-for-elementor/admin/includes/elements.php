@@ -1478,7 +1478,8 @@ $elements = array(
 				'key'   => 'premium-ai-abilities',
 				'title' => __( 'AI Abilities', 'premium-addons-for-elementor' ),
 				'desc'  => __( 'Let AI assistants read and build your Elementor content through WordPress Abilities and MCP.', 'premium-addons-for-elementor' ),
-				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/', 'ai-abilities', 'wp-dash', 'dashboard' ),
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mcp-and-ai-abilities/', 'ai-abilities', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-ai-abilities-mcp-tools-tutorial/', 'ai-abilities', 'wp-dash', 'dashboard' ),
 			),
 			array(
 				'key'    => 'premium-mscroll',

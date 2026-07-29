@@ -59,8 +59,12 @@ class PA_Controls_Handler {
 	 */
 	public function __construct() {
 
-		$this->init_conditions();
-		$this->init_conditions_classes();
+		// Only the key list is built here. This constructor runs on every request
+		// — front end, admin, AJAX and cron — so the translated label array and
+		// the condition objects are resolved on demand instead: the labels are
+		// only ever read while registering controls, and at most a handful of
+		// condition classes are needed to render a page.
+		$this->init_conditions_keys();
 
 		$is_edit_mode = \Elementor\Plugin::$instance->editor->is_edit_mode();
 
@@ -71,12 +75,31 @@ class PA_Controls_Handler {
 	}
 
 	/**
+	 * The grouped condition labels shown in the control dropdown, built on first
+	 * use. Roughly sixty translated strings that are only needed while Elementor
+	 * registers controls, so they are not built during the constructor.
+	 *
+	 * @access public
+	 * @since 4.11.90
+	 *
+	 * @return array
+	 */
+	public static function get_conditions() {
+
+		if ( empty( static::$conditions ) ) {
+			self::init_conditions();
+		}
+
+		return static::$conditions;
+	}
+
+	/**
 	 * Initialize condition classes.
 	 *
 	 * @access public
 	 * @since 4.7.0
 	 */
-	public function init_conditions() {
+	public static function init_conditions() {
 
 		static::$conditions = array(
 			'system'    => array(
@@ -151,7 +174,7 @@ class PA_Controls_Handler {
 	 * @access public
 	 * @since 4.7.0
 	 */
-	public function init_conditions_classes() {
+	public function init_conditions_keys() {
 
 		self::$conditions_keys = apply_filters(
 			'pa_display_conditions_keys',
@@ -176,24 +199,69 @@ class PA_Controls_Handler {
 				'user_role',
 			)
 		);
+	}
 
-		include_once PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/conditions/condition.php';
+	/**
+	 * Resolve a single condition object, including its file on first use.
+	 *
+	 * Loading every condition up front cost one file_exists plus one include_once
+	 * per key — eighteen by default, up to thirty-four once PRO, ACF and
+	 * WooCommerce extend the list — on every request, admin, AJAX and cron
+	 * included. A page only needs the conditions its own elements use.
+	 *
+	 * @access public
+	 * @since 4.11.90
+	 *
+	 * @param string $condition_key Condition key.
+	 * @return object|null Condition object, or null when the key has no class.
+	 */
+	public static function get_condition_class( $condition_key ) {
+
+		if ( isset( static::$conditions_classes[ $condition_key ] ) ) {
+			return static::$conditions_classes[ $condition_key ];
+		}
+
+		if ( ! in_array( $condition_key, self::$conditions_keys, true ) ) {
+			return null;
+		}
+
+		$base = __NAMESPACE__ . '\PA_Display_Conditions\Conditions\Condition';
+
+		if ( ! class_exists( $base ) ) {
+			include_once PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/conditions/condition.php';
+		}
+
+		$file_name = str_replace( '_', '-', strtolower( $condition_key ) );
+		$file_path = PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/conditions/' . $file_name . '.php';
+
+		if ( file_exists( $file_path ) ) {
+			include_once $file_path;
+		}
+
+		$class_name = str_replace( '-', ' ', $condition_key );
+		$class_name = str_replace( ' ', '', ucwords( $class_name ) );
+		$class_name = __NAMESPACE__ . '\PA_Display_Conditions\Conditions\\' . $class_name;
+
+		if ( ! class_exists( $class_name ) ) {
+			return null;
+		}
+
+		static::$conditions_classes[ $condition_key ] = new $class_name();
+
+		return static::$conditions_classes[ $condition_key ];
+	}
+
+	/**
+	 * Resolve every registered condition object. Only the control builders need
+	 * the whole set; the front end resolves them one at a time.
+	 *
+	 * @access public
+	 * @since 4.7.0
+	 */
+	public function init_conditions_classes() {
 
 		foreach ( self::$conditions_keys as $condition_key ) {
-
-			$file_name = str_replace( '_', '-', strtolower( $condition_key ) );
-
-			if ( file_exists( PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/conditions/' . $file_name . '.php' ) ) {
-				include_once PREMIUM_ADDONS_PATH . 'includes/pa-display-conditions/conditions/' . $file_name . '.php';
-			}
-
-			$class_name = str_replace( '-', ' ', $condition_key );
-			$class_name = str_replace( ' ', '', ucwords( $class_name ) );
-			$class_name = __NAMESPACE__ . '\PA_Display_Conditions\Conditions\\' . $class_name;
-
-			if ( class_exists( $class_name ) ) {
-				static::$conditions_classes[ $condition_key ] = new $class_name();
-			}
+			self::get_condition_class( $condition_key );
 		}
 	}
 
@@ -224,16 +292,24 @@ class PA_Controls_Handler {
 
 		$additional_ids = array( 'pa_condition_shortcode', 'pa_condition_acf_text', 'pa_condition_acf_boolean', 'pa_condition_acf_choice', 'pa_condition_woo_orders', 'pa_condition_woo_category', 'pa_condition_woo_total_price', 'pa_condition_time_range' );
 
-		foreach ( static::$conditions_classes as $condition_class_name => $condition_obj ) {
+		foreach ( self::$conditions_keys as $condition_class_name ) {
 
 			$control_id = 'pa_condition_' . $condition_class_name;
 
-			if ( in_array( $control_id, $additional_ids, true ) ) {
-				$repeater->add_control(
-					'pa_condition_val' . $condition_class_name,
-					$condition_obj->add_value_control()
-				);
+			if ( ! in_array( $control_id, $additional_ids, true ) ) {
+				continue;
 			}
+
+			$condition_obj = self::get_condition_class( $condition_class_name );
+
+			if ( null === $condition_obj ) {
+				continue;
+			}
+
+			$repeater->add_control(
+				'pa_condition_val' . $condition_class_name,
+				$condition_obj->add_value_control()
+			);
 		}
 	}
 
@@ -247,12 +323,16 @@ class PA_Controls_Handler {
 	 */
 	public function add_repeater_compare_controls( $repeater ) {
 
-		foreach ( static::$conditions_classes as $condition_class_name => $condition_obj ) {
+		foreach ( self::$conditions_keys as $condition_class_name ) {
 
-			$control_id = 'pa_condition_' . $condition_class_name;
+			$condition_obj = self::get_condition_class( $condition_class_name );
+
+			if ( null === $condition_obj ) {
+				continue;
+			}
 
 			$repeater->add_control(
-				$control_id,
+				'pa_condition_' . $condition_class_name,
 				$condition_obj->get_control_options()
 			);
 
@@ -309,7 +389,12 @@ class PA_Controls_Handler {
 				continue;
 			}
 
-			$class    = static::$conditions_classes[ $list['pa_condition_key'] ];
+			$class = self::get_condition_class( $list['pa_condition_key'] );
+
+			if ( null === $class ) {
+				continue;
+			}
+
 			$operator = $list['pa_condition_operator'];
 			$item_key = 'pa_condition_' . $list['pa_condition_key'];
 			$value    = isset( $list[ $item_key ] ) ? $list[ $item_key ] : '';

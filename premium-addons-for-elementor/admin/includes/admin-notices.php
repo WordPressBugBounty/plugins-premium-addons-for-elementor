@@ -38,18 +38,37 @@ class Admin_Notices {
 	private static $elementor = 'elementor';
 
 	/**
-	 * PAPRO Slug
-	 *
-	 * @var papro
-	 */
-	private static $papro = 'premium-addons-pro';
-
-	/**
 	 * Notices Keys
 	 *
 	 * @var notices
 	 */
 	private static $notices = null;
+
+	/**
+	 * Review-notice state, held in one autoloaded option so the check costs no
+	 * query. '1' means the user opted out for good; any other numeric value is a
+	 * timestamp to stay quiet until; '0' means show it.
+	 *
+	 * @var string
+	 */
+	const REVIEW_OPTION = 'pa_review_notice';
+
+	/**
+	 * AI abilities notice state. '1' once dismissed.
+	 *
+	 * @var string
+	 */
+	const ABILITIES_OPTION = 'abilities-not';
+
+	/**
+	 * Dashboard news cache. Deliberately not keyed on the plugin version: the
+	 * feed is not version-specific, and including it invalidated the cache on
+	 * every update, so the first Dashboard load after each one blocked on a
+	 * remote request.
+	 *
+	 * @var string
+	 */
+	const STORIES_TRANSIENT = 'pa_stories';
 
 	/**
 	 * Constructor for the class
@@ -90,6 +109,10 @@ class Admin_Notices {
 	 */
 	public function init() {
 
+		if ( wp_doing_ajax() ) {
+			return;
+		}
+
 		$this->handle_review_notice();
 
 		if ( Helper_Functions::check_elementor_version() && get_transient( 'pa_activation_redirect' ) ) {
@@ -121,17 +144,13 @@ class Admin_Notices {
 
 		$this->required_plugins_check();
 
-		// Make sure "Already did" was not clicked before.
-		$show_review = get_option( 'pa_review_notice' );
-		if ( '1' !== $show_review ) {
+		// Make sure "Already did" was not clicked before, and that the notice is
+		// not snoozed. Both live in one autoloaded option: an absent option costs
+		// a lookup on every admin page view, and a transient costs two.
+		$review_state = self::get_notice_state( self::REVIEW_OPTION );
 
-			$cache_key = 'pa_review_notice';
-
-			$response = get_transient( $cache_key );
-
-			if ( false === $response ) {
-				$this->show_review_notice();
-			}
+		if ( '1' !== $review_state && (int) $review_state < time() ) {
+			$this->show_review_notice();
 		}
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -160,7 +179,7 @@ class Admin_Notices {
 		if ( 'opt_out' === $pa_review ) {
 			check_admin_referer( 'opt_out' );
 
-			update_option( 'pa_review_notice', '1' );
+			update_option( self::REVIEW_OPTION, '1', true );
 		}
 
 		wp_safe_redirect( remove_query_arg( 'pa_review' ) );
@@ -271,9 +290,34 @@ class Admin_Notices {
 		<?php
 	}
 
+	/**
+	 * Read a notice-state option, seeding it when absent.
+	 *
+	 * An option that does not exist is not in the autoloaded set, so every read
+	 * costs a query. Writing the default once means every later read is served
+	 * from the options cache.
+	 *
+	 * @since 4.11.90
+	 * @access private
+	 *
+	 * @param string $option Option name.
+	 * @return string Current state.
+	 */
+	private static function get_notice_state( $option ) {
+
+		$state = get_option( $option );
+
+		if ( false === $state ) {
+			add_option( $option, '0', '', true );
+			$state = '0';
+		}
+
+		return (string) $state;
+	}
+
 	public function get_abilities_notice() {
 
-		$option = get_option( 'abilities-not' );
+		$option = self::get_notice_state( self::ABILITIES_OPTION );
 
 		if ( '1' === $option ) {
 			return;
@@ -299,31 +343,6 @@ class Admin_Notices {
 		</div>
 
 		<?php
-	}
-
-	/**
-	 * Get Promotion Message
-	 *
-	 * @since 4.11.43
-	 * @access private
-	 *
-	 * @param string $type promotion type.
-	 * @return array
-	 */
-	private function get_promotion_message( $type = 'new' ) {
-
-		if ( 'upgrade' === $type ) {
-			return array(
-				'message' => __( 'Get a <b>FLAT 30% OFF</b> when you upgrade to <b>Premium Addons Pro Lifetime</b>. Use code <b>BFUL2025</b> at checkout – <b>expires soon!</b>', 'premium-addons-for-elementor' ),
-				'cta'     => __( 'Upgrade Now', 'premium-addons-for-elementor' ),
-			);
-
-		}
-
-		return array(
-			'message' => __( '<b>Cyber Monday – Save Up To 30% on Premium Addons Pro</b>.', 'premium-addons-for-elementor' ),
-			'cta'     => __( 'Catch The Deal', 'premium-addons-for-elementor' ),
-		);
 	}
 
 	/**
@@ -400,9 +419,7 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			$cache_key = 'pa_review_notice';
-
-			set_transient( $cache_key, true, WEEK_IN_SECONDS );
+			update_option( self::REVIEW_OPTION, (string) ( time() + WEEK_IN_SECONDS ), true );
 
 			wp_send_json_success();
 
@@ -435,10 +452,11 @@ class Admin_Notices {
 
 			// Make sure new features notices will not appear again.
 			if ( false !== strpos( $key, 'not' ) ) {
-				update_option( $key, '1' );
+				update_option( $key, '1', true );
 			} else {
-				set_transient( $key, true, 20 * DAY_IN_SECONDS );
-
+				// Was set_transient( 'pa-review', ... ), a key nothing ever read —
+				// the review notice reappeared immediately after dismissal.
+				update_option( self::REVIEW_OPTION, (string) ( time() + 20 * DAY_IN_SECONDS ), true );
 			}
 
 			wp_send_json_success();
@@ -448,46 +466,6 @@ class Admin_Notices {
 			wp_send_json_error();
 
 		}
-	}
-
-	/**
-	 * Check Status
-	 *
-	 * @since 4.10.15
-	 * @access public
-	 */
-	public function check_status( $key ) {
-
-		$status = false;
-
-		$api_params = array(
-			'edd_action' => 'check_license',
-			'license'    => $key,
-			'item_id'    => 361,
-		);
-
-		$response = wp_remote_get(
-			'https://my.leap13.com',
-			array(
-				'timeout'   => 15,
-				'sslverify' => false,
-				'body'      => $api_params,
-			)
-		);
-
-		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			return false;
-		}
-
-		$body = wp_remote_retrieve_body( $response );
-
-		$body = json_decode( $body, true );
-
-		if ( isset( $body['license'] ) && 'valid' === $body['license'] ) {
-			$status = true;
-		}
-
-		return $status;
 	}
 
 	/**
@@ -501,7 +479,7 @@ class Admin_Notices {
 	 */
 	public function get_pa_stories() {
 
-		$stories = get_transient( 'pa_stories_' . PREMIUM_ADDONS_VERSION );
+		$stories = get_transient( self::STORIES_TRANSIENT );
 
 		if ( ! $stories ) {
 
@@ -510,20 +488,20 @@ class Admin_Notices {
 			$response = wp_remote_get(
 				$api_url,
 				array(
-					'timeout'   => 15,
+					'timeout'   => 3,
 					'sslverify' => true,
 				)
 			);
 
 			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				set_transient( 'pa_stories_' . PREMIUM_ADDONS_VERSION, true, WEEK_IN_SECONDS );
+				set_transient( self::STORIES_TRANSIENT, true, DAY_IN_SECONDS );
 				return false;
 			}
 
 			$body    = wp_remote_retrieve_body( $response );
 			$stories = json_decode( $body, true );
 
-			set_transient( 'pa_stories_' . PREMIUM_ADDONS_VERSION, $stories, WEEK_IN_SECONDS );
+			set_transient( self::STORIES_TRANSIENT, $stories, WEEK_IN_SECONDS );
 
 		}
 

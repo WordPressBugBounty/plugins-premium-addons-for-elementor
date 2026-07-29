@@ -104,7 +104,7 @@ class Display_Conditions {
 
 		$controls_obj = new PA_Controls_Handler();
 
-		$options = PA_Controls_Handler::$conditions;
+		$options = PA_Controls_Handler::get_conditions();
 
 		$options['acf'] = array(
 			'label'   => __( 'ACF (PRO)', 'premium-addons-for-elementor' ),

@@ -669,9 +669,15 @@ class Premium_Videobox extends Widget_Base {
 		$this->add_control(
 			'premium_video_box_self_autoplay',
 			array(
-				'label'      => __( 'Autoplay', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SWITCHER,
-				'conditions' => array(
+				'label'       => __( 'Autoplay', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => sprintf(
+					/* translators: 1: `<a>` opening tag, 2: `</a>` closing tag. */
+					esc_html__( 'Note: Autoplay respects %1$s Google\'s Autoplay policy %2$s on Chrome browsers.', 'premium-addons-for-elementor' ),
+					'<a href="https://developers.google.com/web/updates/2017/09/autoplay-policy-changes" target="_blank">',
+					'</a>'
+				),
+				'conditions'  => array(
 					'terms' => array(
 						$playlist_condition,
 
@@ -758,6 +764,39 @@ class Premium_Videobox extends Widget_Base {
 				'type'      => Controls_Manager::SWITCHER,
 				'condition' => array(
 					'premium_video_box_video_type' => 'self',
+				),
+			)
+		);
+
+		$this->add_control(
+			'preload',
+			array(
+				'label'     => __( 'Preload', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => array(
+					'metadata' => __( 'Metadata', 'premium-addons-for-elementor' ),
+					'auto'     => __( 'Auto', 'premium-addons-for-elementor' ),
+					'none'     => __( 'None', 'premium-addons-for-elementor' ),
+				),
+				'default'   => 'metadata',
+				'condition' => array(
+					'premium_video_box_video_type'     => 'self',
+					'premium_video_box_self_autoplay!' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'poster',
+			array(
+				'label'     => __( 'Poster', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::MEDIA,
+				'dynamic'   => array(
+					'active' => true,
+				),
+				'condition' => array(
+					'premium_video_box_video_type'      => 'self',
+					'premium_video_box_image_switcher!' => 'yes',
 				),
 			)
 		);
@@ -2831,9 +2870,9 @@ class Premium_Videobox extends Widget_Base {
 					if ( 'yes' === $settings['autoplay_reset'] ) {
 						$this->add_render_attribute( 'container', 'data-play-reset', 'true' );
 					}
-
-					$video_params .= ' preload="none"';
 				}
+			} else {
+				$video_params .= ' preload="' . $settings['preload'] . '"';
 			}
 
 			if ( $playsinline ) {
@@ -2842,6 +2881,10 @@ class Premium_Videobox extends Widget_Base {
 
 			if ( ! $settings['download_button'] ) {
 				$video_params .= ' controlsList="nodownload"';
+			}
+
+			if ( ! empty( $settings['poster']['url'] ) ) {
+				$video_params .= ' poster="' . esc_url( $settings['poster']['url'] ) . '"';
 			}
 		} else {
 			// youtube - vimeo - dailymotion.
@@ -3069,7 +3112,7 @@ class Premium_Videobox extends Widget_Base {
 			array(
 				'id'             => 'premium-video-box-container-' . $id,
 				'class'          => 'premium-video-box-container',
-				'data-overlay'   => 'yes' === $settings['premium_video_box_image_switcher'] ? 'true' : 'false',
+				'data-overlay'   => 'yes' === $settings['premium_video_box_image_switcher'],
 				'data-type'      => $video_type,
 				'data-thumbnail' => ! empty( $thumbnail ),
 				'data-hover'     => $settings['premium_video_box_img_effect'],
@@ -3246,6 +3289,14 @@ class Premium_Videobox extends Widget_Base {
 
 		if ( ! $item['download_button'] ) {
 			$video_params['controlsList'] = 'nodownload';
+		}
+
+		if ( ! empty( $item['preload'] ) ) {
+			$video_params['preload'] = $item['preload'];
+		}
+
+		if ( ! empty( $item['poster']['url'] ) ) {
+			$video_params['poster'] = $item['poster']['url'];
 		}
 
 		return $video_params;

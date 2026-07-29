@@ -117,7 +117,29 @@ class Connection_Log {
 			return;
 		}
 
+		// A live OAuth token still authenticates this user's clients.
+		if ( self::has_oauth_token( $user_id ) ) {
+			return;
+		}
+
 		delete_user_meta( $user_id, self::META_KEY );
+	}
+
+	/**
+	 * Whether a user holds a live OAuth access or refresh token. Guarded on the
+	 * autoloaded opt-in flag so sites that never enabled OAuth (and have no
+	 * token table) never query it.
+	 *
+	 * @param int $user_id User ID. Defaults to the current user.
+	 * @return bool
+	 */
+	private static function has_oauth_token( $user_id = 0 ) {
+
+		if ( ! get_option( OAuth\Bootstrap::OPTION_ENABLED ) ) {
+			return false;
+		}
+
+		return OAuth\Store::user_has_live_token( $user_id ? $user_id : get_current_user_id() );
 	}
 
 	/**
@@ -128,9 +150,9 @@ class Connection_Log {
 	 * sessions win over the handshake record, since they prove a client is
 	 * talking to the site right now while the record only proves it once did.
 	 *
-	 * A user holding no application password has nothing an AI client could
-	 * authenticate with, so they are back where a new user starts no matter what
-	 * was recorded earlier.
+	 * A user holding no application password and no live OAuth token has
+	 * nothing an AI client could authenticate with, so they are back where a
+	 * new user starts no matter what was recorded earlier.
 	 *
 	 * @return array {
 	 *     @type string $state One of the STATE_* constants.
@@ -146,7 +168,7 @@ class Connection_Log {
 			'count' => 0,
 		);
 
-		if ( empty( \WP_Application_Passwords::get_user_application_passwords( get_current_user_id() ) ) ) {
+		if ( empty( \WP_Application_Passwords::get_user_application_passwords( get_current_user_id() ) ) && ! self::has_oauth_token() ) {
 			return $none;
 		}
 

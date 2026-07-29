@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.89
+Stable Tag: 4.11.91
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -22,12 +22,16 @@ It has Elementor elements like **Carousel, Blog Posts List/Slider, Mega Menu Bui
 ### Useful Links
 [Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=docs) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=upgrade-pro)
 
+### New: AI Abilities (Premium Addons for Elementor MCP)
+Connect AI assistants like Claude and ChatGPT to your website using Premium Addons AI Abilities. Built on the WordPress Abilities API and the Model Context Protocol (MCP), It allows AI agents to build new Elementor pages and templates, duplicate the existing ones, use all the available elements from Premium Addons and other 3rd party Elementor plugins, read global settings, manage the plugin's widgets and settings, and more. New abilities are added regularly with every release, expanding what AI agents can do on your website over time. Requires WordPress 6.9 or higher. [Watch Use Cases!](https://premiumaddons.com/elementor-mcp-and-ai-abilities/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=ai).
+
 ## KEY FEATURES
 
 - Modular & Lightweight
 - 90+ Free and Pro Elementor Widgets
 - 17+ Powerful Elementor Addons
 - 580+ Ready made Elementor Container & Full Page Templates
+- 35 AI Abilities (MCP Tools) to build/customize Elementor pages
 - Carousel & Advanced Media Carousel Widgets
 - Advanced Mega Menu Builder
 - Mobile Menu Builder Widget
@@ -44,9 +48,6 @@ It has Elementor elements like **Carousel, Blog Posts List/Slider, Mega Menu Bui
 
 ### Performance and Speed Improvements
 Premium Addons for Elementor is now much faster than ever. Only the required JS files will be loaded on your page to boost your page loading speed and site performance. All the editor loading issues have been fixed to make your site faster and minimize the time it takes for Elementor editor to load.
-
-### New: AI Abilities (Premium Addons for Elementor MCP)
-Connect AI assistants like Claude and ChatGPT to your website using Premium Addons AI Abilities. Built on the WordPress Abilities API and the Model Context Protocol (MCP), It allows AI agents to build new Elementor pages and templates, duplicate the existing ones, use all the available elements from Premium Addons and other 3rd party Elementor plugins, read global settings, manage the plugin's widgets and settings, and more. New abilities are added regularly with every release, expanding what AI agents can do on your website over time. Requires WordPress 6.9 or higher. [Watch Use Cases!](https://premiumaddons.com/elementor-mcp-and-ai-abilities/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=ai).
 
 ### New: Liquid Glass Addon
 Select between 6 attractive liquid glass and glassmorphism effects to be applied on any Elementor widget or container. It has also been added to be applied on specific parts inside our elements. [Check it out now!](https://premiumaddons.com/elementor-liquid-glass-addon/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=glass).
@@ -258,6 +259,21 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.91 - 29/7/2026 =
+
+- Fixed: AI Abilities OAuth connection not working on sites using Redis object cache.
+
+= 4.11.90 - 29/7/2026 =
+
+- New: Added OAuth connection method for AI Abilities to make connecting AI clients easier and more secure.
+- Tweak: Added Animated Gradient option for custom menu items in Mega Menu widget.
+- Tweak: Added Preload and Poster options in Video Box widget.
+- Tweak: Improved Display Conditions loading by loading condition files on demand for better performance.
+- Tweak: Improved admin notices code for better performance.
+- Tweak: Removed Shadow Position option from Text Shadow control in Heading widget.
+- Fixed: Autoplay on Viewport conflict with Elementor Sticky effect in Video Box widget.
+- Fixed: Tooltip text alignment in Global Tooltips addon.
 
 = 4.11.89 - 25/7/2026 =
 

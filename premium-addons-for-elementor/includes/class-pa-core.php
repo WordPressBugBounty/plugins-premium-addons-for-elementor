@@ -5,6 +5,10 @@
 
 namespace PremiumAddons\Includes;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 if ( ! class_exists( 'PA_Core' ) ) {
 
 	/**
@@ -15,7 +19,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		/**
 		 * Member Variable
 		 *
-		 * @var instance
+		 * @var PA_Core|null
 		 */
 		private static $instance = null;
 
@@ -39,6 +43,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			// Register Activation hooks.
 			register_activation_hook( PREMIUM_ADDONS_FILE, array( $this, 'handle_activation' ) );
+			register_deactivation_hook( PREMIUM_ADDONS_FILE, array( $this, 'handle_deactivation' ) );
 			register_uninstall_hook( PREMIUM_ADDONS_FILE, array( __CLASS__, 'uninstall' ) );
 		}
 
@@ -76,6 +81,11 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 */
 		public function load_abilities() {
 
+			// Bound before the switcher gate: the scheduled OAuth cleanup must keep
+			// a callback even while the feature is switched off, or the daily event
+			// fires into nothing and expired tokens are never cleared.
+			add_action( 'pa_oauth_gc', array( Abilities\OAuth\Store::class, 'gc' ) );
+
 			$enabled_elements = \PremiumAddons\Admin\Includes\Admin_Helper::get_enabled_elements();
 
 			if ( empty( $enabled_elements['premium-ai-abilities'] ) ) {
@@ -112,7 +122,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 				$api_url = 'https://feedbackpa.leap13.com/wp-json/install/v2/add';
 
-				$response = wp_safe_remote_request(
+				wp_safe_remote_request(
 					$api_url,
 					array(
 						'headers'     => array(
@@ -123,7 +133,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 								'time' => $current_time,
 							)
 						),
-						'timeout'     => 20,
+						'blocking'    => false,
+						'timeout'     => 3,
 						'method'      => 'POST',
 						'httpversion' => '1.1',
 					)
@@ -131,6 +142,28 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 				set_transient( 'pa_activation_redirect', true, 30 );
 			}
+		}
+
+		/**
+		 * Plugin Deactivation Hook.
+		 *
+		 * Drops the OAuth garbage-collection event. A recurring event outlives
+		 * deactivation and keeps rescheduling itself against a hook nothing
+		 * listens on, so leaving it behind orphans an entry in the cron array
+		 * for good if the plugin is later deleted without uninstalling.
+		 *
+		 * OAuth data itself survives — deactivation is reversible, so the tables,
+		 * the opt-in flag and issued tokens stay. Bootstrap::register() re-arms
+		 * this event on the next request once the plugin is active again.
+		 *
+		 * @since 4.11.90
+		 * @access public
+		 *
+		 * @return void
+		 */
+		public function handle_deactivation() {
+
+			wp_clear_scheduled_hook( Abilities\OAuth\Bootstrap::CRON_HOOK );
 		}
 
 		/**
@@ -147,11 +180,30 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			delete_option( 'pa_install_time' );
 			delete_option( 'pa_review_notice' );
 
+			if ( is_multisite() ) {
+				// 'number' => 0 overrides WP_Site_Query's default of 100; without it
+				// a larger network keeps its tables, options and live tokens.
+				$site_ids = get_sites(
+					array(
+						'fields' => 'ids',
+						'number' => 0,
+					)
+				);
+
+				foreach ( $site_ids as $site_id ) {
+					switch_to_blog( $site_id ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog -- only the database context is needed to drop per-site tables and options.
+					self::uninstall_oauth();
+					restore_current_blog();
+				}
+			} else {
+				self::uninstall_oauth();
+			}
+
 			$api_url = 'https://feedbackpa.leap13.com/wp-json/uninstall/v2/add';
 
 			$current_time = gmdate( 'j F, Y', time() );
 
-			$response = wp_safe_remote_request(
+			wp_safe_remote_request(
 				$api_url,
 				array(
 					'headers'     => array(
@@ -162,15 +214,37 @@ if ( ! class_exists( 'PA_Core' ) ) {
 							'time' => $current_time,
 						)
 					),
-					'timeout'     => 20,
+					'blocking'    => false,
+					'timeout'     => 3,
 					'method'      => 'POST',
 					'httpversion' => '1.1',
 				)
 			);
+		}
 
-			if ( is_wp_error( $response ) ) {
-				return;
-			}
+		/**
+		 * Remove the current site's OAuth data. The tables are per-site, so on
+		 * multisite this runs once per site.
+		 *
+		 * @since 4.11.90
+		 * @access private
+		 *
+		 * @return void
+		 */
+		private static function uninstall_oauth() {
+
+			global $wpdb;
+
+			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.NotPrepared -- uninstall cleanup of plugin tables.
+			$wpdb->query( 'DROP TABLE IF EXISTS ' . Abilities\OAuth\Store::tokens_table() );
+			$wpdb->query( 'DROP TABLE IF EXISTS ' . Abilities\OAuth\Store::clients_table() );
+			// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.NotPrepared
+
+			delete_option( Abilities\OAuth\Bootstrap::OPTION_ENABLED );
+			delete_option( Abilities\OAuth\Bootstrap::DCR_WINDOW );
+			delete_option( Abilities\OAuth\Store::DB_VERSION_OPTION );
+
+			wp_clear_scheduled_hook( Abilities\OAuth\Bootstrap::CRON_HOOK );
 		}
 
 		/**

@@ -345,10 +345,13 @@
 				if ("self" === type) {
 					$(video).get(0).play();
 
-					$videoContainer.css({
-						opacity: "1",
-						visibility: "visible",
-					});
+					// This forces the video to show. Causes conflict with Elementor sticky that duplicates the sticky element and hides the original element.
+					if ($videoBoxElement.data("overlay")) {
+						$videoContainer.css({
+							opacity: "1",
+							visibility: "visible",
+						});
+					}
 				} else {
 					var $iframe = $("<iframe/>");
 
