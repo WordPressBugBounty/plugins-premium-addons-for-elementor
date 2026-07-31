@@ -17,5 +17,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Skin_Grid_1
  */
 class Skin_Grid_1 extends Skin_Style {
-	// Skin 1 uses Skin_Style::render_product_template() as-is — product-1.php.
+
+	/**
+	 * Member Variable
+	 *
+	 * @var instance
+	 */
+	private static $instance;
+
+	/**
+	 *  Initiator
+	 */
+	public static function get_instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
 }

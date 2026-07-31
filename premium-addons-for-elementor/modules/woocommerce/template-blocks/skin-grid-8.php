@@ -19,6 +19,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Skin_Grid_8 extends Skin_Style {
 
 	/**
+	 * Member Variable
+	 *
+	 * @var instance
+	 */
+	private static $instance;
+
+	/**
+	 *  Initiator
+	 */
+	public static function get_instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
 	 * Loop Template.
 	 *
 	 * @since 4.7.0

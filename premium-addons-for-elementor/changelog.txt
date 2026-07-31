@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.11.93 - 31/7/2026 =
+
+- Fixed: PHP error in Woo Products Listing widget after v4.11.92.
+
 = 4.11.92 - 31/7/2026 =
 
 - Tweak: Improved Premium Templates loading by loading templates classes in the editor only for better performance.

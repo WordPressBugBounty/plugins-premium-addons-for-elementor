@@ -1042,6 +1042,7 @@ abstract class Skin_Style {
 
 		if ( 'yes' === $quick_view ) {
 			wp_enqueue_script( 'wc-add-to-cart-variation' );
+			// wp_enqueue_script( 'flexslider' );
 
 			$widget_id = self::$node_id;
 

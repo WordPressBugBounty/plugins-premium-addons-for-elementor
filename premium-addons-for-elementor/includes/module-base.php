@@ -24,11 +24,47 @@ abstract class Module_Base {
 	private $reflection;
 
 	/**
+	 * Modules
+	 *
+	 * @var array|null
+	 */
+	private static $modules = null;
+
+	/**
+	 * Instances
+	 *
+	 * @var array
+	 */
+	protected static $instances = array();
+
+	/**
 	 * Get Name
 	 *
 	 * @since 0.0.1
 	 */
 	abstract public function get_name();
+
+	/**
+	 * Class name to Call
+	 *
+	 * @since 0.0.1
+	 */
+	public static function class_name() {
+		return static::class;
+	}
+
+	/**
+	 * Check if this is a widget.
+	 *
+	 * @since 1.12.0
+	 * @access public
+	 *
+	 * @return bool true|false.
+	 */
+	public function is_widget() {
+		return true;
+	}
+
 
 	/**
 	 * Constructor
