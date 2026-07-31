@@ -30,14 +30,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Premium_Template_Tags {
 
 	/**
-	 * Elementor Templates List
-	 *
-	 * @since 4.10.15
-	 * @var e_temps_list
-	 */
-	private static $e_temps_list = null;
-
-	/**
 	 * Class instance
 	 *
 	 * @var instance
@@ -1146,9 +1138,7 @@ class Premium_Template_Tags {
 
 				$post_title = strtolower( $post->post_title );
 
-				// if( false !== strpos( $post_title, $query_string ) ) {
-					$this->render_search_posts_layout( $search_string );
-				// }
+				$this->render_search_posts_layout( $search_string );
 
 			}
 

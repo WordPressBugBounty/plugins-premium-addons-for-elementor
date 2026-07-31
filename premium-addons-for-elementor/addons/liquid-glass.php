@@ -8,9 +8,6 @@
 namespace PremiumAddons\Addons;
 
 // Elementor Classes.
-use Elementor\Utils;
-use Elementor\Icons_Manager;
-use Elementor\Control_Media;
 use Elementor\Controls_Manager;
 
 

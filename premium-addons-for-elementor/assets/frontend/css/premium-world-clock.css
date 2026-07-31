@@ -83,7 +83,7 @@
   position: relative;
   width: 200px;
   height: 200px;
-  box-shadow: -6px -6px 16px #fff, 6px 6px 16px #d1d1e6, inset 6px 6px 16px #d1d1e6, inset -6px -6px 16px #fff;
+  box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   justify-self: center;
   display: -webkit-flex;

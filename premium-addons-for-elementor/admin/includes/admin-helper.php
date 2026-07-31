@@ -574,9 +574,6 @@ class Admin_Helper {
 		// Create the Settings link that points to the plugin's settings page.
 		$settings_link = sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=' . self::$page_slug . '#tab=elements' ), __( 'Settings', 'premium-addons-for-elementor' ) );
 
-		// Create the Rollback link with nonce for security (currently not used in the final array).
-		$rollback_link = sprintf( '<a href="%1$s">%2$s%3$s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=premium_addons_rollback' ), 'premium_addons_rollback' ), __( 'Rollback to v', 'premium-addons-for-elementor' ), PREMIUM_ADDONS_STABLE_VERSION );
-
 		// Initialize the new links array with the Settings link.
 		$new_links = array( $settings_link );
 
@@ -1577,34 +1574,6 @@ class Admin_Helper {
 		}
 
 		return $element;
-	}
-
-	/**
-	 * Get Global Elements Switchers.
-	 * Construct an associative array of addon_switcher => 'yes' pairs
-	 * Example :
-	 *      + array( 'premium_gradient_switcher' => yes').
-	 *
-	 * @since 4.6.1
-	 * @access public
-	 *
-	 * @return array
-	 */
-	public static function get_global_elements_switchers() {
-
-		$elements = self::get_elements_list()['cat-4'];
-
-		$global_elems = array();
-
-		if ( count( $elements['elements'] ) ) {
-			foreach ( $elements['elements'] as $elem ) {
-				if ( isset( $elem['is_pro'] ) && isset( $elem['is_global'] ) ) {
-					$global_elems[ str_replace( '-', '_', $elem['key'] ) . '_switcher' ] = 'yes';
-				}
-			}
-		}
-
-		return $global_elems;
 	}
 
 	/**

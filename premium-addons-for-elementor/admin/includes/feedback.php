@@ -254,7 +254,6 @@ class Feedback {
 			include ABSPATH . '/wp-admin/includes/plugin.php';
 		}
 
-		// $plugins   = get_plugins();
 		$option = get_option( 'active_plugins', array() );
 		$active = array();
 
@@ -281,34 +280,10 @@ class Feedback {
 		$theme = wp_get_theme();
 
 		return array(
-			// 'installed' => self::get_installed_themes(),
 			'active' => array(
 				'name' => $theme->get( 'Name' ),
 			),
 		);
-	}
-
-	/**
-	 * Get an array of installed themes
-	 *
-	 * @return array
-	 */
-	private static function get_installed_themes() {
-		$installed = wp_get_themes();
-		$theme     = get_stylesheet();
-		$data      = array();
-
-		foreach ( $installed as $slug => $info ) {
-			if ( $slug === $theme ) {
-				continue;
-			}
-
-			$data[ $slug ] = array(
-				'name' => $info->get( 'Name' ),
-			);
-		}
-
-		return $data;
 	}
 
 	/**

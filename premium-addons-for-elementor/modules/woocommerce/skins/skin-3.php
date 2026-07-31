@@ -740,6 +740,6 @@ class Skin_3 extends Skin_Base {
 
 		$skin = Skin_Init::get_instance( $this->get_id() );
 
-		echo wp_kses_post( sanitize_text_field( $skin->render( $this->get_id(), $settings, $this->parent->get_id() ) ) );
+		$skin->render( $this->get_id(), $settings, $this->parent->get_id() );
 	}
 }

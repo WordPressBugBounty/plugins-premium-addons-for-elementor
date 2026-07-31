@@ -11,8 +11,6 @@ namespace PremiumAddons\Addons;
 use Elementor\Controls_Manager;
 
 // Premium Addons Classes.
-use PremiumAddons\Admin\Includes\Admin_Helper;
-use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 
 if ( ! defined( 'ABSPATH' ) ) {

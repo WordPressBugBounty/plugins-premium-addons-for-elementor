@@ -412,25 +412,6 @@ class Helper_Functions {
 	}
 
 	/**
-	 * Check Plugin Active
-	 *
-	 * @since 4.2.5
-	 * @access public
-	 *
-	 * @param string $slug plugin slug.
-	 *
-	 * @return boolean $is_active plugin active.
-	 */
-	public static function check_plugin_active( $slug = '' ) {
-
-		include_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-		$is_active = in_array( $slug, (array) get_option( 'active_plugins', array() ), true );
-
-		return $is_active;
-	}
-
-	/**
 	 * Check if script debug mode enabled.
 	 *
 	 * @since 3.11.1

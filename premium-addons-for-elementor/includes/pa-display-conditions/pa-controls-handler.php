@@ -252,20 +252,6 @@ class PA_Controls_Handler {
 	}
 
 	/**
-	 * Resolve every registered condition object. Only the control builders need
-	 * the whole set; the front end resolves them one at a time.
-	 *
-	 * @access public
-	 * @since 4.7.0
-	 */
-	public function init_conditions_classes() {
-
-		foreach ( self::$conditions_keys as $condition_key ) {
-			self::get_condition_class( $condition_key );
-		}
-	}
-
-	/**
 	 * Set render function to action filter.
 	 *
 	 * @access public

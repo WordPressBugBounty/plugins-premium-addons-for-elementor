@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.11.92 - 31/7/2026 =
+
+- Tweak: Improved Premium Templates loading by loading templates classes in the editor only for better performance.
+- Tweak: Modified default shadow style for Analog skin in World Clock widget.
+- Tweak: Code refactored for better performance and security.
+- Fixed: Tooltip animation wiggle when the tooltip content is updated in Global Tooltips addon.
+
 = 4.11.91 - 29/7/2026 =
 
 - Fixed: AI Abilities OAuth connection not working on sites using Redis object cache.

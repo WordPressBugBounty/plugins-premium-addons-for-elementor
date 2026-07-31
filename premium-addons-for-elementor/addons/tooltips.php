@@ -8,10 +8,7 @@
 namespace PremiumAddons\Addons;
 
 // Elementor Classes.
-use Elementor\Utils;
-use Elementor\Repeater;
 use Elementor\Icons_Manager;
-use Elementor\Control_Media;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
@@ -19,7 +16,6 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 
 // Premium Addons Classes.
-use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Controls\Premium_Background;
 

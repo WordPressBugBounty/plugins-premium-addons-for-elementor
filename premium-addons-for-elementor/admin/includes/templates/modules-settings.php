@@ -123,12 +123,6 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 												<div class="pa-element-meta-wrap">
 													<p class="pa-element-name <?php echo isset( $elem['is_freemium'] ) ? esc_attr( 'freemium' ) : ''; ?>">
 														<?php echo esc_html( $elem['title'] ); ?>
-														<span class="pa-total-use" title="Total Use">
-															<?php
-															// if ( ! isset( $elem['is_global'] ) && is_array( $used_widgets ) ) {
-															// echo esc_html__( in_array( $elem['name'], array_keys( $used_widgets ) ) ? '(' . $used_widgets[ $elem['name'] ] . ')' : '(0)' );}
-															?>
-														</span>
 														<?php if ( isset( $elem['is_pro'] ) || isset( $elem['is_freemium'] ) ) : ?>
 															<span><?php echo isset( $elem['is_pro'] ) ? esc_html_e( 'pro', 'premium-addons-for-elementor' ) : esc_html_e( 'freemium', 'premium-addons-for-elementor' ); ?></span>
 														<?php endif; ?>

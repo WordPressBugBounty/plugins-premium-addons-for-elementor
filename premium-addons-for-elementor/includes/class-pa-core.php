@@ -270,9 +270,52 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 */
 		public function init() {
 
+			if ( ! $this->is_templates_request() ) {
+				return;
+			}
+
 			if ( is_user_logged_in() && \PremiumAddons\Admin\Includes\Admin_Helper::check_premium_templates() ) {
 				require_once PREMIUM_ADDONS_PATH . 'includes/templates/templates.php';
 			}
+		}
+
+		/**
+		 * Is Templates Request
+		 *
+		 * Make sure templates are only loaded on editor.
+		 *
+		 * @since 4.11.92
+		 * @access private
+		 *
+		 * @return boolean
+		 */
+		private function is_templates_request() {
+
+			if ( ! is_admin() ) {
+				return false;
+			}
+
+			$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+			// Editor page: wp-admin/post.php?post=ID&action=elementor.
+			if ( 'elementor' === $action ) {
+				return true;
+			}
+
+			if ( ! wp_doing_ajax() ) {
+				return false;
+			}
+
+			return in_array(
+				$action,
+				array(
+					'premium_get_templates',
+					'premium_inner_template',
+					'get_pa_element_data',
+					'elementor_ajax',
+				),
+				true
+			);
 		}
 
 

@@ -12,7 +12,6 @@ use Elementor\Controls_Manager;
 
 // Premium Addons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Controls\Premium_Image_Choose;
 
 if ( ! defined( 'ABSPATH' ) ) {

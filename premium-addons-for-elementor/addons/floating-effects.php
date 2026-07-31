@@ -8,11 +8,9 @@
 namespace PremiumAddons\Addons;
 
 // PremiumAddons Classes.
-use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Helper_Functions;
 
 // Elementor Classes.
-use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 

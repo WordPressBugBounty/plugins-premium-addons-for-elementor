@@ -91,6 +91,10 @@ class Assets_Manager {
 
 			add_action( 'elementor/frontend/before_enqueue_styles', array( $this, 'before_enqueue_styles' ) );
 
+			if ( $this->integrations['premium-wp-optimize-exclude'] ) {
+				add_filter( 'wp-optimize-minify-default-exclusions', array( $this, 'exclude_pa_assets_from_wp_optimize' ) );
+			}
+
 			// Add admin bar tools for dynamic assets clear.
 			$row_meta = Helper_Functions::is_hide_row_meta();
 
@@ -923,16 +927,23 @@ class Assets_Manager {
 	}
 
 	/**
-	 * Exclude PA assets from WP Optimize
+	 * Exclude the generated dynamic assets from WP-Optimize minification.
+	 *
+	 * WP-Optimize matches each entry as a case-insensitive substring of the asset URL,
+	 * so the uploads directory fragment covers every pafe[-{postID}].css/js.
 	 *
 	 * @since 4.10.73
 	 * @access public
+	 *
+	 * @param array $exclusions WP-Optimize minify exclusions.
+	 *
+	 * @return array
 	 */
-	function exclude_pa_assets_from_wp_optimize( $excluded_handles ) {
+	public function exclude_pa_assets_from_wp_optimize( $exclusions ) {
 
-		$excluded_handles[] = 'pa-frontend';
+		$exclusions[] = '/premium-addons-elementor/';
 
-		return $excluded_handles;
+		return $exclusions;
 	}
 
 	/**
