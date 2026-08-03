@@ -4882,15 +4882,6 @@ class Premium_Nav_Menu extends Widget_Base {
 
 		$is_hover = 'hover' === $settings['pa_ver_toggle_event'];
 
-		if ( 'wordpress_menu' === $menu_type ) {
-
-			$menu_list = $this->get_menu_list();
-
-			if ( ! $menu_list ) {
-				return;
-			}
-		}
-
 		$div_end = '';
 
 		$menu_settings = array(

@@ -102,7 +102,7 @@ class Display_Conditions {
 			)
 		);
 
-		$controls_obj = new PA_Controls_Handler();
+		$controls_obj = PA_Controls_Handler::get_instance();
 
 		$options = PA_Controls_Handler::get_conditions();
 
@@ -362,6 +362,8 @@ class Display_Conditions {
 			$this->enqueue_scripts();
 
 			self::$load_script = true;
+
+			remove_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 		}
 	}
 

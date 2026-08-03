@@ -961,6 +961,7 @@ class Helper_Functions {
 	 * Get IP location data.
 	 *
 	 * Uses multi-layered caching (object cache + transients) to optimize performance.
+	 * A failed lookup is cached as an empty array so a down endpoint is not retried on every call.
 	 *
 	 * @access public
 	 * @since 4.11.54
@@ -973,6 +974,12 @@ class Helper_Functions {
 
 		if ( '127.0.0.1' === $ip_address || empty( $ip_address ) ) {
 			return false;
+		}
+
+		static $request_memo = array();
+
+		if ( isset( $request_memo[ $ip_address ] ) ) {
+			return $request_memo[ $ip_address ];
 		}
 
 		$cache_key = 'pa_ip_loc_' . md5( $ip_address );
@@ -988,24 +995,27 @@ class Helper_Functions {
 				$response = wp_remote_get(
 					'https://api.findip.net/' . $ip_address . '/?token=e6624afe9983128700bc94e55d5227cb',
 					array(
-						'timeout'   => 15,
+						'timeout'   => 3,
 						'sslverify' => true,
 					)
 				);
 
 				if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-					return false;
+					$location_data = array();
+
+					set_transient( $cache_key, $location_data, 5 * MINUTE_IN_SECONDS );
+				} else {
+					$location_data = json_decode( wp_remote_retrieve_body( $response ), true );
+
+					set_transient( $cache_key, $location_data, 24 * HOUR_IN_SECONDS );
 				}
-
-				$location_data = json_decode( wp_remote_retrieve_body( $response ), true );
-
-				set_transient( $cache_key, $location_data, 24 * HOUR_IN_SECONDS );
-
 			}
 
 			wp_cache_set( $cache_key, $location_data, 'premium_addons' );
 
 		}
+
+		$request_memo[ $ip_address ] = $location_data;
 
 		return $location_data;
 	}

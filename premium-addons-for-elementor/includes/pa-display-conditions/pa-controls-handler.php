@@ -55,6 +55,13 @@ class PA_Controls_Handler {
 	protected $conditions_results_holder = array();
 
 	/**
+	 * Class object
+	 *
+	 * @var self|null
+	 */
+	private static $instance = null;
+
+	/**
 	 * Class Constructor.
 	 */
 	public function __construct() {
@@ -420,10 +427,12 @@ class PA_Controls_Handler {
 	 * @return bool
 	 */
 	public function check_visiblity( $element_id, $relation, $action ) {
-		$result = true;
+		$result        = true;
+		$should_render = true;
 
+		// Nothing was evaluated for this element, so there is no reason to hide it.
 		if ( ! array_key_exists( $element_id, $this->conditions_results_holder ) ) {
-			return;
+			return $should_render;
 		}
 
 		if ( 'all' === $relation ) {
@@ -442,5 +451,22 @@ class PA_Controls_Handler {
 		}
 
 		return $should_render;
+	}
+
+	/**
+	 * Returns an instance of this class.
+	 *
+	 * @since 4.11.94
+	 * @access public
+	 *
+	 * @return object
+	 */
+	public static function get_instance() {
+
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
 	}
 }

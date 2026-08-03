@@ -1102,148 +1102,145 @@ class Tooltips {
 	 */
 	public function before_render( $element ) {
 
-		$element_type = $element->get_type();
+		if ( 'yes' !== $element->get_settings( 'premium_tooltip_switcher' ) ) {
+			return;
+		}
+
+		$settings = $element->get_settings_for_display();
+
+		if ( ! Helper_Functions::check_papro_version() && ( 'gallery' === $settings['premium_tooltip_type'] || 'template' === $settings['premium_tooltip_type'] || 'yes' === $settings['premium_tooltip_mouse_follow'] ) ) {
+			return;
+		}
 
 		$elem_id = $element->get_id();
 
 		$id = apply_filters( 'pa_tooltips_dynamic', false ) ? wp_rand( 0, 1000 ) : $elem_id;
 
-		$settings = $element->get_settings_for_display();
+		$type    = $settings['premium_tooltip_type'];
+		$content = '';
 
-		$papro_activated = Helper_Functions::check_papro_version();
+		?>
+			<div class="premium-gtooltips-temp premium-global-tooltips-wrapper-temp-<?php echo esc_attr( $id ); ?>" style="display: none;">
+				<div id="tooltip_content-<?php echo esc_attr( $id ); ?>" class="premium-global-tooltip-content premium-tooltip-content-wrapper-<?php echo esc_attr( $id ); ?>">
+					<?php
+					switch ( $type ) {
 
-		$tooltips_enabled = $element->get_settings_for_display( 'premium_tooltip_switcher' );
+						case 'text':
+							?>
+								<span class="premium-tootltip-text">
+								<?php
+									echo wp_kses_post( $settings['premium_tooltip_text'] );
 
-		if ( 'yes' === $tooltips_enabled ) {
-
-			if ( ! $papro_activated && ( 'gallery' === $settings['premium_tooltip_type'] || 'template' === $settings['premium_tooltip_type'] || 'yes' === $settings['premium_tooltip_mouse_follow'] ) ) {
-				return;
-			}
-
-			$type    = $settings['premium_tooltip_type'];
-			$content = '';
-
-			?>
-				<div class="premium-gtooltips-temp premium-global-tooltips-wrapper-temp-<?php echo esc_attr( $id ); ?>" style="display: none;">
-					<div id="tooltip_content-<?php echo esc_attr( $id ); ?>" class="premium-global-tooltip-content premium-tooltip-content-wrapper-<?php echo esc_attr( $id ); ?>">
-						<?php
-						switch ( $type ) {
-
-							case 'text':
-								?>
-									<span class="premium-tootltip-text">
-									<?php
-										echo wp_kses_post( $settings['premium_tooltip_text'] );
-
-									if ( 'yes' === $settings['premium_tooltip_icon_switcher'] ) {
-										$icon = $settings['premium_tooltip_icon'];
-										?>
-												<span class="premium-tootltip-icon">
-											<?php
-												Icons_Manager::render_icon(
-													$icon,
-													array(
-														'aria-hidden' => 'true',
-													)
-												);
-											?>
-												</span>
-											<?php
-									}
+								if ( 'yes' === $settings['premium_tooltip_icon_switcher'] ) {
+									$icon = $settings['premium_tooltip_icon'];
 									?>
-									</span>
-									<?php
-								break;
-
-							case 'gallery':
-								$gallery = $settings['premium_tooltip_gallery'];
-								$content = $gallery;
+											<span class="premium-tootltip-icon">
+										<?php
+											Icons_Manager::render_icon(
+												$icon,
+												array(
+													'aria-hidden' => 'true',
+												)
+											);
+										?>
+											</span>
+										<?php
+								}
 								?>
-									<span class="premium-tooltip-gallery"><img src="<?php echo esc_url( $gallery[0]['url'] ); ?>"></span>
-									<?php
-								break;
+								</span>
+								<?php
+							break;
 
-							case 'lottie':
-								$lottie = array(
-									'url'     => $settings['premium_tooltip_lottie_url'],
-									'loop'    => $settings['premium_tooltip_lottie_loop'],
-									'reverse' => $settings['premium_tooltip_lottie_reverse'],
-								);
+						case 'gallery':
+							$gallery = $settings['premium_tooltip_gallery'];
+							$content = $gallery;
+							?>
+								<span class="premium-tooltip-gallery"><img src="<?php echo esc_url( $gallery[0]['url'] ); ?>"></span>
+								<?php
+							break;
 
-								?>
-									<div class="premium-lottie-animation premium-tooltip-lottie" data-lottie-url="<?php echo esc_url( $lottie['url'] ); ?>" data-lottie-loop="<?php echo esc_attr( $lottie['loop'] ); ?>" data-lottie-reverse="<?php echo esc_attr( $lottie['reverse'] ); ?>"></div>
-									<?php
-								break;
+						case 'lottie':
+							$lottie = array(
+								'url'     => $settings['premium_tooltip_lottie_url'],
+								'loop'    => $settings['premium_tooltip_lottie_loop'],
+								'reverse' => $settings['premium_tooltip_lottie_reverse'],
+							);
 
-							default:
-								$content = empty( $settings['premium_tooltip_template'] ) ? $settings['live_temp_content'] : $settings['premium_tooltip_template'];
-								echo Helper_Functions::render_elementor_template( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						}
-						?>
-					</div>
+							?>
+								<div class="premium-lottie-animation premium-tooltip-lottie" data-lottie-url="<?php echo esc_url( $lottie['url'] ); ?>" data-lottie-loop="<?php echo esc_attr( $lottie['loop'] ); ?>" data-lottie-reverse="<?php echo esc_attr( $lottie['reverse'] ); ?>"></div>
+								<?php
+							break;
+
+						default:
+							$content = empty( $settings['premium_tooltip_template'] ) ? $settings['live_temp_content'] : $settings['premium_tooltip_template'];
+							echo Helper_Functions::render_elementor_template( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					}
+					?>
 				</div>
-			<?php
+			</div>
+		<?php
 
-			$min_width = array(
-				'desktop' => ! empty( $settings['premium_tooltip_min_width']['size'] ) ? $settings['premium_tooltip_min_width']['size'] : 0,
-				'mobile'  => ! empty( $settings['premium_tooltip_min_width_mobile']['size'] ) ? $settings['premium_tooltip_min_width_mobile']['size'] : 0,
-				'tablet'  => ! empty( $settings['premium_tooltip_min_width_tablet']['size'] ) ? $settings['premium_tooltip_min_width_tablet']['size'] : 0,
-			);
+		$min_width = array(
+			'desktop' => ! empty( $settings['premium_tooltip_min_width']['size'] ) ? $settings['premium_tooltip_min_width']['size'] : 0,
+			'mobile'  => ! empty( $settings['premium_tooltip_min_width_mobile']['size'] ) ? $settings['premium_tooltip_min_width_mobile']['size'] : 0,
+			'tablet'  => ! empty( $settings['premium_tooltip_min_width_tablet']['size'] ) ? $settings['premium_tooltip_min_width_tablet']['size'] : 0,
+		);
 
-			$max_width = array(
-				'desktop' => ! empty( $settings['premium_tooltip_max_width']['size'] ) ? $settings['premium_tooltip_max_width']['size'] : null,
-				'mobile'  => ! empty( $settings['premium_tooltip_max_width_mobile']['size'] ) ? $settings['premium_tooltip_max_width_mobile']['size'] : null,
-				'tablet'  => ! empty( $settings['premium_tooltip_max_width_tablet']['size'] ) ? $settings['premium_tooltip_max_width_tablet']['size'] : null,
-			);
+		$max_width = array(
+			'desktop' => ! empty( $settings['premium_tooltip_max_width']['size'] ) ? $settings['premium_tooltip_max_width']['size'] : null,
+			'mobile'  => ! empty( $settings['premium_tooltip_max_width_mobile']['size'] ) ? $settings['premium_tooltip_max_width_mobile']['size'] : null,
+			'tablet'  => ! empty( $settings['premium_tooltip_max_width_tablet']['size'] ) ? $settings['premium_tooltip_max_width_tablet']['size'] : null,
+		);
 
-			$tooltip_settings = array( // escape it all
-				'type'     => $type,
-				'content'  => $content, // needs escaping
-				'minWidth' => $min_width,
-				'maxWidth' => $max_width,
-				'zindex'   => $settings['pa_tooltip_zindex'],
-				'target'   => $settings['pa_tooltip_target'],
-				'anime'    => $settings['premium_tooltip_anime'],
-				'trigger'  => $settings['premium_tooltip_trigger'],
-				'side'     => $settings['premium_tooltip_position'],
-				'arrow'    => 'yes' === $settings['premium_tooltip_arrow'],
-				'distance' => ! empty( $settings['premium_tooltip_distance_position'] ) ? $settings['premium_tooltip_distance_position'] : 6,
-				'duration' => ! empty( $settings['premium_tooltip_anime_dur'] ) ? $settings['premium_tooltip_anime_dur'] : 350,
-				'delay'    => ! empty( $settings['premium_tooltip_anime_delay'] ) ? $settings['premium_tooltip_anime_delay'] : 10,
-				'hideOn'   => $settings['hide_tooltip_on'],
-				'elemID'   => $elem_id,
-			);
+		$tooltip_settings = array( // escape it all
+			'type'     => $type,
+			'content'  => $content, // needs escaping
+			'minWidth' => $min_width,
+			'maxWidth' => $max_width,
+			'zindex'   => $settings['pa_tooltip_zindex'],
+			'target'   => $settings['pa_tooltip_target'],
+			'anime'    => $settings['premium_tooltip_anime'],
+			'trigger'  => $settings['premium_tooltip_trigger'],
+			'side'     => $settings['premium_tooltip_position'],
+			'arrow'    => 'yes' === $settings['premium_tooltip_arrow'],
+			'distance' => ! empty( $settings['premium_tooltip_distance_position'] ) ? $settings['premium_tooltip_distance_position'] : 6,
+			'duration' => ! empty( $settings['premium_tooltip_anime_dur'] ) ? $settings['premium_tooltip_anime_dur'] : 350,
+			'delay'    => ! empty( $settings['premium_tooltip_anime_delay'] ) ? $settings['premium_tooltip_anime_delay'] : 10,
+			'hideOn'   => $settings['hide_tooltip_on'],
+			'elemID'   => $elem_id,
+		);
 
-			if ( isset( $settings['pa_tooltip_class'] ) ) {
+		if ( isset( $settings['pa_tooltip_class'] ) ) {
 
-				$tooltip_settings['uniqueClass']  = $settings['pa_tooltip_class'];
-				$tooltip_settings['follow_mouse'] = empty( $settings['pa_tooltip_class'] ) && 'yes' === $settings['premium_tooltip_mouse_follow'];
+			$tooltip_settings['uniqueClass']  = $settings['pa_tooltip_class'];
+			$tooltip_settings['follow_mouse'] = empty( $settings['pa_tooltip_class'] ) && 'yes' === $settings['premium_tooltip_mouse_follow'];
 
-				if ( ! empty( $settings['pa_tooltip_class'] ) ) {
-					$tooltip_settings['isTourStarter'] = 'yes' === $settings['is_tour_starter'];
-				}
-			} else {
-
-				$tooltip_settings['follow_mouse'] = 'yes' === $settings['premium_tooltip_mouse_follow'];
+			if ( ! empty( $settings['pa_tooltip_class'] ) ) {
+				$tooltip_settings['isTourStarter'] = 'yes' === $settings['is_tour_starter'];
 			}
+		} else {
 
-			$element->add_render_attribute( '_wrapper', 'data-tooltip-id', $id );
+			$tooltip_settings['follow_mouse'] = 'yes' === $settings['premium_tooltip_mouse_follow'];
+		}
 
-			$element->add_render_attribute( '_wrapper', 'data-tooltip_settings', wp_json_encode( $tooltip_settings ) );
+		$encoded_settings = wp_json_encode( $tooltip_settings );
+
+		$element->add_render_attribute( '_wrapper', 'data-tooltip-id', $id );
+
+		$element->add_render_attribute( '_wrapper', 'data-tooltip_settings', $encoded_settings );
+
+		if ( 'widget' === $element->get_type() && \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
 
 			$element->add_render_attribute(
 				'gTooltips_temps' . $id,
 				array(
 					'id'                    => 'premium-global-tooltips-temp-' . esc_attr( $id ),
-					'data-tooltip_settings' => wp_json_encode( $tooltip_settings ),
+					'data-tooltip_settings' => $encoded_settings,
 				)
 			);
-
-			if ( 'widget' === $element_type && \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
-				?>
-				<div <?php $element->print_render_attribute_string( 'gTooltips_temps' . $id ); ?>></div>
-				<?php
-			}
+			?>
+			<div <?php $element->print_render_attribute_string( 'gTooltips_temps' . $id ); ?>></div>
+			<?php
 		}
 	}
 

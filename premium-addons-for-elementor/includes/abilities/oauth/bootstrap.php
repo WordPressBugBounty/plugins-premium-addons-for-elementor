@@ -235,7 +235,7 @@ class Bootstrap {
 	public static function unavailable_reason() {
 
 		if ( empty( Admin_Helper::get_enabled_elements()['premium-ai-abilities'] ) || ! function_exists( 'wp_register_ability' ) ) {
-			return __( 'OAuth requires the AI Abilities feature, which needs WordPress 6.9 or later.', 'premium-addons-for-elementor' );
+			return __( 'OAuth requires the AI Abilities feature, which needs WordPress 7.0 or later.', 'premium-addons-for-elementor' );
 		}
 
 		if ( ! MCP_Settings::oauth_transport_allowed() ) {

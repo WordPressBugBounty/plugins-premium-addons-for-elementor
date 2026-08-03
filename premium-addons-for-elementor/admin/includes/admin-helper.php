@@ -274,13 +274,21 @@ class Admin_Helper {
 			'all'
 		);
 
-		wp_enqueue_style(
-			'pa-admin',
-			PREMIUM_ADDONS_URL . 'admin/assets/css/admin.css',
-			array(),
-			PREMIUM_ADDONS_VERSION,
-			'all'
-		);
+		// admin.css only styles the PA pages, the nav-menu mega menu modal and the
+		// deactivation popup on plugins.php. Everywhere else it is dead weight.
+		$is_pa_admin_screen = false !== strpos( $hook, 'premium-addons' )
+			|| 'nav-menus.php' === $hook
+			|| 'plugins.php' === $hook;
+
+		if ( $is_pa_admin_screen ) {
+			wp_enqueue_style(
+				'pa-admin',
+				PREMIUM_ADDONS_URL . 'admin/assets/css/admin.css',
+				array(),
+				PREMIUM_ADDONS_VERSION,
+				'all'
+			);
+		}
 
 		if ( false !== strpos( $hook, 'premium-addons' ) ) {
 

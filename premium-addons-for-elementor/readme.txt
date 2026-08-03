@@ -1,11 +1,11 @@
-=== Premium Addons for Elementor - Powerful Elementor Templates & Widgets ===
+=== Premium Addons for Elementor - Elementor Templates, Widgets & MCP Tools ===
 Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, elementor widgets, elementor mega menu, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.93
+Stable Tag: 4.11.94
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -23,7 +23,7 @@ It has Elementor elements like **Carousel, Blog Posts List/Slider, Mega Menu Bui
 [Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=docs) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=upgrade-pro)
 
 ### New: AI Abilities (Premium Addons for Elementor MCP)
-Connect AI assistants like Claude and ChatGPT to your website using Premium Addons AI Abilities. Built on the WordPress Abilities API and the Model Context Protocol (MCP), It allows AI agents to build new Elementor pages and templates, duplicate the existing ones, use all the available elements from Premium Addons and other 3rd party Elementor plugins, read global settings, manage the plugin's widgets and settings, and more. New abilities are added regularly with every release, expanding what AI agents can do on your website over time. Requires WordPress 6.9 or higher. [Watch Use Cases!](https://premiumaddons.com/elementor-mcp-and-ai-abilities/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=ai).
+Connect AI assistants like Claude and ChatGPT to your website using Premium Addons AI Abilities. Built on the WordPress Abilities API and the Model Context Protocol (MCP), It allows AI agents to build new Elementor pages and templates, duplicate the existing ones, use all the available elements from Premium Addons and other 3rd party Elementor plugins, read global settings, manage the plugin's widgets and settings, and more. New abilities are added regularly with every release, expanding what AI agents can do on your website over time. Requires WordPress 7.0 or higher. [Watch Use Cases!](https://premiumaddons.com/elementor-mcp-and-ai-abilities/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=ai).
 
 ## KEY FEATURES
 
@@ -259,6 +259,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.94 - 3/8/2026 =
+
+- Tweak: Code refactored for better performance and loading speed.
+- Fixed: False security warning reported by security plugins on the AI Abilities dashboard tab.
 
 = 4.11.93 - 31/7/2026 =
 

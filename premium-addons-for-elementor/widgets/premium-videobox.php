@@ -771,17 +771,35 @@ class Premium_Videobox extends Widget_Base {
 		$this->add_control(
 			'preload',
 			array(
-				'label'     => __( 'Preload', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'options'   => array(
+				'label'      => __( 'Preload', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SELECT,
+				'options'    => array(
 					'metadata' => __( 'Metadata', 'premium-addons-for-elementor' ),
 					'auto'     => __( 'Auto', 'premium-addons-for-elementor' ),
 					'none'     => __( 'None', 'premium-addons-for-elementor' ),
 				),
-				'default'   => 'metadata',
-				'condition' => array(
-					'premium_video_box_video_type'     => 'self',
-					'premium_video_box_self_autoplay!' => 'yes',
+				'default'    => 'metadata',
+				'conditions' => array(
+					'terms' => array(
+						array(
+							'name'  => 'premium_video_box_video_type',
+							'value' => 'self',
+						),
+						array(
+							'relation' => 'or',
+							'terms'    => array(
+								array(
+									'name'     => 'premium_video_box_self_autoplay',
+									'operator' => '!==',
+									'value'    => 'yes',
+								),
+								array(
+									'name'  => 'autoplay_viewport',
+									'value' => 'yes',
+								),
+							),
+						),
+					),
 				),
 			)
 		);
@@ -2860,18 +2878,25 @@ class Premium_Videobox extends Widget_Base {
 			if ( $loop ) {
 				$video_params .= 'loop ';
 			}
-			if ( $autoplay ) {
+			$viewport_autoplay = 'yes' === $settings['autoplay_viewport'];
 
-				$video_params .= 'playsinline ';
-				if ( 'yes' !== $settings['autoplay_viewport'] ) {
-					$video_params .= 'autoplay ';
-				} else {
+			if ( $autoplay && ! $viewport_autoplay ) {
+
+				$video_params .= 'playsinline autoplay ';
+
+			} else {
+
+				if ( $autoplay ) {
+
+					$video_params .= 'playsinline ';
+
 					$this->add_render_attribute( 'container', 'data-play-viewport', 'true' );
+
 					if ( 'yes' === $settings['autoplay_reset'] ) {
 						$this->add_render_attribute( 'container', 'data-play-reset', 'true' );
 					}
 				}
-			} else {
+
 				$video_params .= ' preload="' . $settings['preload'] . '"';
 			}
 
@@ -3798,32 +3823,63 @@ class Premium_Videobox extends Widget_Base {
 
 		if ( false === $response_json ) {
 
-			$api_response = wp_remote_get( $api_url ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_remote_get_wp_remote_get -- Core HTTP API; plugin is not VIP-hosted and vip_safe_wp_remote_get() is unavailable.
+			$api_response = wp_remote_get( $api_url, array( 'timeout' => 5 ) ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_remote_get_wp_remote_get -- Core HTTP API; plugin is not VIP-hosted and vip_safe_wp_remote_get() is unavailable.
 
-			$response_json = wp_remote_retrieve_body( $api_response );
-			$response_json = json_decode( $response_json );
-
-			$transient = $settings['reload'];
-
-			$expire_time = Helper_Functions::transient_expire( $transient );
+			if ( is_wp_error( $api_response ) ) {
+				$response_json = (object) array(
+					'error' => (object) array( 'message' => $api_response->get_error_message() ),
+				);
+			} else {
+				$response_json = json_decode( wp_remote_retrieve_body( $api_response ) );
+			}
 
 			if ( isset( $response_json->items ) ) {
+
+				$expire_time = Helper_Functions::transient_expire( $settings['reload'] );
+
 				set_transient( $transient_name, $response_json, $expire_time );
+
+			} else {
+				set_transient( $transient_name, $response_json, 5 * MINUTE_IN_SECONDS );
 			}
 		}
 
 		$playlist_videos = isset( $response_json->items ) ? $response_json->items : '';
 
 		if ( empty( $playlist_videos ) ) {
-			?>
-			<div class="premium-error-notice">
-				<?php echo esc_html__( 'Something went wrong. It seems like the playlist you selected does not have any videos', 'premium-addons-for-elementor' ); ?>
-			</div>
-			<?php
+
+			$this->render_playlist_error_notice( $response_json );
+
 			return false;
 		}
 
 		$this->render_grid_youtube_playlist( $playlist_videos );
+	}
+
+	/**
+	 * Render Playlist Error Notice
+	 *
+	 * The API message carries the site's Google Cloud project number, so it is only
+	 * shown to users who can act on it.
+	 *
+	 * @since 4.11.94
+	 * @access private
+	 *
+	 * @param object|null $response_json decoded Youtube API response.
+	 */
+	private function render_playlist_error_notice( $response_json ) {
+
+		if ( ! isset( $response_json->error->message ) ) {
+			Helper_Functions::render_empty_query_message( __( 'Something went wrong. It seems like the playlist you selected does not have any videos', 'premium-addons-for-elementor' ) );
+			return;
+		}
+
+		if ( ! Admin_Helper::check_user_can( 'edit_posts' ) ) {
+			Helper_Functions::render_empty_query_message( __( 'This video content is currently unavailable.', 'premium-addons-for-elementor' ) );
+			return;
+		}
+
+		Helper_Functions::render_empty_query_message( make_clickable( esc_html( $response_json->error->message ) ) );
 	}
 
 	/**
