@@ -768,6 +768,11 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 	height: 50px;
 }
 
+.elementor-control-premium_gdivider_defaults .pa-shape-thumb {
+	display: block;
+	height: 100%;
+}
+
 .elementor-control-premium_gdivider_defaults .elementor-image-choices-label svg {
 	height: 100%;
 	width: 100%;

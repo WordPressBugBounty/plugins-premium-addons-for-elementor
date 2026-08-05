@@ -562,7 +562,7 @@ class Premium_Person extends Widget_Base {
 		$this->add_control(
 			'premium_person_twitter',
 			array(
-				'label'       => __( 'Twitter', 'premium-addons-for-elementor' ),
+				'label'       => __( 'X (Twitter)', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'dynamic'     => array( 'active' => true ),
 				'default'     => '#',
@@ -631,6 +631,23 @@ class Premium_Person extends Widget_Base {
 				'type'        => Controls_Manager::TEXT,
 				'dynamic'     => array( 'active' => true ),
 				'default'     => '#',
+				'label_block' => true,
+				'condition'   => array(
+					'premium_person_social_enable' => 'yes',
+				),
+				'ai'          => array(
+					'active' => false,
+				),
+			)
+		);
+
+		// No default value, otherwise a TikTok icon would show up on every already-saved widget.
+		$this->add_control(
+			'premium_person_tiktok',
+			array(
+				'label'       => __( 'TikTok', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
 				'label_block' => true,
 				'condition'   => array(
 					'premium_person_social_enable' => 'yes',
@@ -898,7 +915,7 @@ class Premium_Person extends Widget_Base {
 		$repeater->add_control(
 			'multiple_twitter',
 			array(
-				'label'       => __( 'Twitter', 'premium-addons-for-elementor' ),
+				'label'       => __( 'X (Twitter)', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'dynamic'     => array( 'active' => true ),
 				'default'     => '#',
@@ -955,6 +972,20 @@ class Premium_Person extends Widget_Base {
 				'type'        => Controls_Manager::TEXT,
 				'dynamic'     => array( 'active' => true ),
 				'default'     => '#',
+				'label_block' => true,
+				'condition'   => array(
+					'multiple_social_enable' => 'yes',
+				),
+			)
+		);
+
+		// No default value, otherwise a TikTok icon would show up on every already-saved widget.
+		$repeater->add_control(
+			'multiple_tiktok',
+			array(
+				'label'       => __( 'TikTok', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
 				'label_block' => true,
 				'condition'   => array(
 					'multiple_social_enable' => 'yes',
@@ -1512,6 +1543,21 @@ class Premium_Person extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
+			'description_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'condition'  => array(
+					'premium_person_style!' => 'style3',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-person-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
 			'description_padding',
 			array(
 				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
@@ -2053,13 +2099,15 @@ class Premium_Person extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
+		// Font Awesome 5's all.min.css has no class for the X glyph, so premium-person.scss maps premium-person-x-icon to the codepoint shipped in the brands webfont.
 		$social_sites = array(
 			'facebook'  => 'fab fa-facebook-f',
-			'twitter'   => 'fab fa-twitter',
+			'twitter'   => 'fab premium-person-x-icon',
 			'linkedin'  => 'fab fa-linkedin',
 			'google'    => 'fab fa-google-plus',
 			'youtube'   => 'fab fa-youtube',
 			'instagram' => 'fab fa-instagram',
+			'tiktok'    => 'fab fa-tiktok',
 			'skype'     => 'fab fa-skype',
 			'pinterest' => 'fab fa-pinterest',
 			'dribbble'  => 'fab fa-dribbble',
@@ -2400,6 +2448,7 @@ class Premium_Person extends Widget_Base {
 					google:  settings.premium_person_google,
 					youtube: settings.premium_person_youtube,
 					instagram: settings.premium_person_instagram,
+					tiktok: settings.premium_person_tiktok,
 					skype: settings.premium_person_skype,
 					pinterest: settings.premium_person_pinterest,
 					dribbble: settings.premium_person_dribbble,
@@ -2419,6 +2468,7 @@ class Premium_Person extends Widget_Base {
 					google:  person.multiple_google,
 					youtube: person.multiple_youtube,
 					instagram: person.multiple_instagram,
+					tiktok: person.multiple_tiktok,
 					skype: person.multiple_skype,
 					pinterest: person.multiple_pinterest,
 					dribbble: person.multiple_dribbble,
@@ -2438,7 +2488,7 @@ class Premium_Person extends Widget_Base {
 				<# } #>
 
 				<# if( '' != socialIcons.twitter ) { #>
-					<li class="elementor-icon premium-person-list-item premium-person-twitter"><a href="{{ socialIcons.twitter }}" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+					<li class="elementor-icon premium-person-list-item premium-person-twitter"><a href="{{ socialIcons.twitter }}" target="_blank"><i class="fab premium-person-x-icon" aria-hidden="true"></i></a></li>
 				<# } #>
 
 				<# if( '' != socialIcons.linkedin ) { #>
@@ -2455,6 +2505,10 @@ class Premium_Person extends Widget_Base {
 
 				<# if( '' != socialIcons.instagram ) { #>
 					<li class="elementor-icon premium-person-list-item premium-person-instagram"><a href="{{ socialIcons.instagram }}" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+				<# } #>
+
+				<# if( '' != socialIcons.tiktok ) { #>
+					<li class="elementor-icon premium-person-list-item premium-person-tiktok"><a href="{{ socialIcons.tiktok }}" target="_blank"><i class="fab fa-tiktok" aria-hidden="true"></i></a></li>
 				<# } #>
 
 				<# if( '' != socialIcons.skype ) { #>
@@ -2478,7 +2532,7 @@ class Premium_Person extends Widget_Base {
 				<# } #>
 
 				<# if( '' != socialIcons.telegram ) { #>
-					<li class="elementor-icon premium-person-list-item premium-person-telegram"><a href="{{ socialIcons.mail }}" target="_blank"><i class="fab fa-telegram" aria-hidden="true"></i></a></li>
+					<li class="elementor-icon premium-person-list-item premium-person-telegram"><a href="{{ socialIcons.telegram }}" target="_blank"><i class="fab fa-telegram" aria-hidden="true"></i></a></li>
 				<# } #>
 
 				<# if( '' != socialIcons.mail ) { #>

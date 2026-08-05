@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.94
+Stable Tag: 4.11.95
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -259,6 +259,17 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.95 - 5/8/2026 =
+
+- Tweak: Added TikTok social icon in Team Members widget.
+- Tweak: Updated Twitter icon to X in Team Members widget.
+- Tweak: Added responsive Margin option for Description in Team Members widget.
+- Tweak: Code refactored for better performance and loading speed.
+- Fixed: HTML tags in post title rendered as plain text in Blog widget.
+- Fixed: Empty links with no anchor text in post rendering widgets (Blog, AJAX Search, Smart Post Listing).
+- Fixed: Background Image option conflict with ShortPixel Adaptive Images plugin's Generate noscript Tag option in Video Box widget.
+- Fixed: Loader not showing in Mega Menu live content editor.
 
 = 4.11.94 - 3/8/2026 =
 

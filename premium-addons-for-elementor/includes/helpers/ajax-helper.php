@@ -29,6 +29,10 @@ trait AJAX_Helper {
 		add_action( 'wp_ajax_premium_update_tax', array( $this, 'get_related_tax' ) );
 		add_action( 'wp_ajax_pa_acf_options', array( $this, 'get_acf_options' ) );
 
+		// Shape Divider AJAX Handlers.
+		add_action( 'wp_ajax_pa_get_shape_svgs', array( $this, 'get_shape_svgs' ) );
+		add_action( 'wp_ajax_get_shape_divider_svg', array( $this, 'get_shape_divider_svg' ) );
+
 		// Template Content AJAX Handlers.
 		add_action( 'wp_ajax_get_elementor_template_content', array( $this, 'get_template_content' ) );
 		add_action( 'wp_ajax_nopriv_get_elementor_template_content', array( $this, 'get_template_content' ) );
@@ -165,6 +169,52 @@ trait AJAX_Helper {
 		$results = ACF_Helper::format_acf_query_result( $query->posts, $query_options );
 
 		wp_send_json_success( wp_json_encode( $results ) );
+	}
+
+	/**
+	 * Get Shape SVGs.
+	 *
+	 * Get the whole SVG shapes library for the shapes picker.
+	 *
+	 * @since 4.11.95
+	 * @access public
+	 */
+	public function get_shape_svgs() {
+
+		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( __( 'Unauthorized', 'premium-addons-for-elementor' ), 403 );
+		}
+
+		wp_send_json_success( array( 'shapes' => Helper_Functions::get_svg_shapes() ) );
+	}
+
+	/**
+	 * Get Shape Divider SVG
+	 *
+	 * Get a single shape SVG for the editor preview.
+	 *
+	 * @since 4.11.32
+	 * @access public
+	 */
+	public function get_shape_divider_svg() {
+
+		check_ajax_referer( 'pa-shape-nonce', 'nonce' );
+
+		if ( ! isset( $_POST['shape'] ) ) {
+			wp_send_json_error( 'No shape selected' );
+		}
+
+		$shape = sanitize_text_field( wp_unslash( $_POST['shape'] ) );
+
+		$svg_shape = Helper_Functions::get_svg_shapes( $shape );
+
+		if ( empty( $svg_shape ) ) {
+			wp_send_json_error( 'Invalid shape' );
+		}
+
+		wp_send_json_success( array( 'shape' => $svg_shape ) );
 	}
 
 	/**

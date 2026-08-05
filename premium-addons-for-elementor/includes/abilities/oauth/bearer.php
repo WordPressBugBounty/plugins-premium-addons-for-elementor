@@ -58,7 +58,7 @@ class Bearer {
 		// not the WP_REST_Request — third-party filters type-hint it.
 		//
 		// Guarded because the adapter has relocated transport classes before, and
-		// a fatal here would 500 the auth path. See docs/gotchas/abilities/gotchas.md.
+		// a fatal here would 500 the auth path.
 		if ( ! class_exists( \WP\MCP\Transport\Infrastructure\HttpRequestContext::class ) ) {
 			return Admin_Helper::check_user_can( 'read' );
 		}

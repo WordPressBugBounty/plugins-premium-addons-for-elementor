@@ -95,31 +95,19 @@ class Disable_Unused_Widgets implements Ability_Handler {
 	 */
 	public function execute( $input = null ) {
 
+		// Without usage data every widget reads as unused, which would switch off the
+		// whole plugin. Refuse rather than guess.
+		if ( ! Admin_Helper::has_usage_data() ) {
+			return new \WP_Error(
+				'premium_addons_usage_data_unavailable',
+				__( 'No widget usage data yet. Run the scan-usage ability with rescan set to true, then call this again.', 'premium-addons-for-elementor' ),
+				array( 'status' => 409 )
+			);
+		}
+
 		$dry_run = is_array( $input ) && ! empty( $input['dry_run'] );
 
-		// Elementor reports usage by widget *name*; the settings store keys by
-		// settings *key* (they differ for the premium-addon-* family). Diff in
-		// name-space, then translate to keys so every id this ability returns
-		// matches get-settings / update-setting.
-		$name_to_key = array();
-		foreach ( Admin_Helper::get_elements_list()['cat-1']['elements'] as $elem ) {
-			if ( isset( $elem['name'], $elem['key'] ) && 'global' !== $elem['name'] ) {
-				$name_to_key[ $elem['name'] ] = $elem['key'];
-			}
-		}
-
-		$unused_names = array_diff(
-			Admin_Helper::get_pa_elements_names(),
-			array_keys( Admin_Helper::get_used_widgets() )
-		);
-
-		$unused = array();
-		foreach ( $unused_names as $name ) {
-			if ( isset( $name_to_key[ $name ] ) ) {
-				$unused[] = $name_to_key[ $name ];
-			}
-		}
-
+		$unused   = Admin_Helper::get_unused_element_keys();
 		$disabled = array();
 
 		if ( ! $dry_run && ! empty( $unused ) ) {

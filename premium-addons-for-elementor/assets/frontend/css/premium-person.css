@@ -176,11 +176,16 @@ ul.premium-person-social-list {
   transition: all 0.2s ease-in-out;
 }
 
+/* Font Awesome 5 ships the X glyph in its brands webfont but declares no class for it. */
+.premium-person-x-icon:before {
+  content: "\e9ca";
+}
+
 .premium-person-defaults-yes li.premium-person-facebook:hover a {
   background-color: #3b5998 !important;
 }
 .premium-person-defaults-yes li.premium-person-twitter:hover a {
-  background-color: #55acee !important;
+  background-color: #000000 !important;
 }
 .premium-person-defaults-yes li.premium-person-linkedin:hover a {
   background-color: #0077b5 !important;
@@ -193,6 +198,9 @@ ul.premium-person-social-list {
 }
 .premium-person-defaults-yes li.premium-person-instagram:hover a {
   background-color: #e4405f !important;
+}
+.premium-person-defaults-yes li.premium-person-tiktok:hover a {
+  background-color: #000000 !important;
 }
 .premium-person-defaults-yes li.premium-person-skype:hover a {
   background-color: #00aff0 !important;

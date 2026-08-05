@@ -54,12 +54,15 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 					</div>
 
 					<div class="pa-btn-group">
-						<button type="button" class="pa-btn pa-btn-enable <?php echo esc_attr( $enable_btn ); ?>"><?php echo esc_html_e( 'Switch On', 'premium-addons-for-elementor' ); ?></button>
-						<button type="button" class="pa-btn pa-btn-disable <?php echo esc_attr( $disable_btn ); ?>"><?php echo esc_html_e( 'Switch Off', 'premium-addons-for-elementor' ); ?></button>
+						<div class="pa-btn-switch">
+							<button type="button" class="pa-btn pa-btn-enable <?php echo esc_attr( $enable_btn ); ?>"><?php echo esc_html_e( 'Switch On', 'premium-addons-for-elementor' ); ?></button>
+							<button type="button" class="pa-btn pa-btn-disable <?php echo esc_attr( $disable_btn ); ?>"><?php echo esc_html_e( 'Switch Off', 'premium-addons-for-elementor' ); ?></button>
+						</div>
 
-						<button type="button" class="pa-btn-unused dimmed">
-							<span><?php echo esc_html_e( 'Disable Unused Widgets', 'premium-addons-for-elementor' ); ?></span>
+						<button type="button" class="pa-btn-unused">
+							<span><?php echo esc_html_e( 'Scan & Disable Unused Widgets', 'premium-addons-for-elementor' ); ?></span>
 							<i class="dashicons dashicons-image-rotate"></i>
+							<span class="pa-scan-progress"><span class="pa-scan-progress-fill"></span></span>
 						</button>
 
 					</div>

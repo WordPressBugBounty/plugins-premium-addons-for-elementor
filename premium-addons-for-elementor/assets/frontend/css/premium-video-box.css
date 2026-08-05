@@ -404,7 +404,7 @@
   width: 100%;
 }
 
-.premium-video-box-background + div {
+.premium-video-box-background ~ div {
   position: absolute;
   width: 80%;
   height: 80%;

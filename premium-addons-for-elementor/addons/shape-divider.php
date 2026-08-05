@@ -28,6 +28,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Shape_Divider {
 
 	/**
+	 * Number of shapes in `addons/shapes.php`. Keep both in sync.
+	 */
+	const SHAPES_COUNT = 51;
+
+	/**
 	 * Check whether the scripts should be loaded.
 	 *
 	 * @var boolean|null $load_script, initialized as null.
@@ -76,8 +81,6 @@ class Shape_Divider {
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
 		add_action( 'elementor/container/print_template', array( $this, 'print_template' ), 10, 1 );
 		add_action( 'elementor/frontend/container/before_render', array( $this, 'before_render' ) );
-
-		add_action( 'wp_ajax_get_shape_divider_svg', array( $this, 'get_shape_divider_svg' ) );
 	}
 
 	/**
@@ -155,6 +158,32 @@ class Shape_Divider {
 	}
 
 	/**
+	 * Get shape options.
+	 *
+	 * Builds the shapes control options without loading `addons/shapes.php`.
+	 * The SVG markup is fetched later over AJAX, only when the picker renders.
+	 *
+	 * @access private
+	 * @since 4.11.95
+	 *
+	 * @return array shape key => control option.
+	 */
+	private function get_shape_options() {
+
+		$options = array();
+
+		for ( $index = 1; $index <= self::SHAPES_COUNT; $index++ ) {
+
+			$options[ 'shape' . $index ] = array(
+				/* translators: %d: shape number. */
+				'title' => sprintf( __( 'Shape %d', 'premium-addons-for-elementor' ), $index ),
+			);
+		}
+
+		return $options;
+	}
+
+	/**
 	 * Add divider content controls.
 	 *
 	 * @access private
@@ -197,7 +226,8 @@ class Shape_Divider {
 			array(
 				'label'        => __( 'Shapes', 'premium-addons-for-elementor' ),
 				'type'         => Premium_Image_Choose::TYPE,
-				'options'      => Helper_Functions::get_svg_shapes(),
+				'options'      => $this->get_shape_options(),
+				'lazy_shapes'  => true,
 				'render_type'  => 'template',
 				'prefix_class' => 'premium-',
 				'default'      => 'shape22',
@@ -1037,31 +1067,6 @@ class Shape_Divider {
 
 		$svg_html .= '</defs></svg>';
 		echo $svg_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Get Shape Divider SVG
-	 *
-	 * @since 4.11.32
-	 * @access public
-	 */
-	public function get_shape_divider_svg() {
-
-		check_ajax_referer( 'pa-shape-nonce', 'nonce' );
-
-		if ( ! isset( $_POST['shape'] ) ) {
-			wp_send_json_error( 'No shape selected' );
-		}
-
-		$shape = sanitize_text_field( wp_unslash( $_POST['shape'] ) );
-
-		$svg_shape = Helper_Functions::get_svg_shapes( $shape );
-
-		if ( empty( $svg_shape ) ) {
-			wp_send_json_error( 'Invalid shape' );
-		}
-
-		wp_send_json_success( array( 'shape' => $svg_shape ) );
 	}
 
 	/**

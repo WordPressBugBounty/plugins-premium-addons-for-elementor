@@ -1807,7 +1807,7 @@ class Premium_Videobox extends Widget_Base {
 					'background_image[url]!' => '',
 				),
 				'selectors'   => array(
-					'{{WRAPPER}} .premium-video-box-background + div' => $left_direction . ': {{SIZE}}%; width: calc( 100% - 2 * {{SIZE}}% );',
+					'{{WRAPPER}} .premium-video-box-background ~ div' => $left_direction . ': {{SIZE}}%; width: calc( 100% - 2 * {{SIZE}}% );',
 				),
 			)
 		);
@@ -1826,7 +1826,7 @@ class Premium_Videobox extends Widget_Base {
 					'background_image[url]!' => '',
 				),
 				'selectors'   => array(
-					'{{WRAPPER}} .premium-video-box-background + div' => 'top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-video-box-background ~ div' => 'top: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);

@@ -214,20 +214,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="dialog-loading dialog-lightbox-loading" style="display: block;">
-					<div id="elementor-template-library-loading">
-						<div class="elementor-loader-wrapper">
-							<div class="elementor-loader">
-								<div class="elementor-loader-boxes">
-									<div class="elementor-loader-box"></div>
-									<div class="elementor-loader-box"></div>
-									<div class="elementor-loader-box"></div>
-									<div class="elementor-loader-box"></div>
-								</div>
-							</div>
-							<div class="elementor-loading-title"><?php esc_html_e( 'Loading', 'premium-addons-for-elementor' ); ?></div>
-						</div>
-					</div>
+				<div class="pa-dialog-loading  pa-dialog-lightbox-loading" style="display: block;">
+					<div class="premium-loader"></div>
 				</div>
 			</div>
 			<div class="dialog-buttons-wrapper dialog-lightbox-buttons-wrapper"></div>

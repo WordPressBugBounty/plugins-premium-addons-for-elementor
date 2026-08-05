@@ -453,7 +453,7 @@ class Premium_Template_Tags {
 		?>
 		<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( $key . '_title' ) ); ?>>
 			<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-				<?php echo esc_html( get_the_title() ); ?>
+				<?php echo wp_kses_post( get_the_title() ); ?>
 			</a>
 		</<?php echo wp_kses_post( $title_tag ); ?>>
 		<?php
@@ -687,14 +687,18 @@ class Premium_Template_Tags {
 						</div>
 						<?php if ( in_array( $skin, array( 'modern', 'cards' ), true ) ) : ?>
 							<div class="premium-blog-effect-container <?php echo esc_attr( 'premium-blog-' . $post_effect . '-effect' ); ?>">
-								<a class="premium-blog-post-link" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>"><span><?php echo esc_html( get_the_title() ); ?></span></a>
+								<a class="premium-blog-post-link" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
+									<span class="elementor-screen-only"><?php echo esc_html( get_the_title() ); ?></span>
+								</a>
 								<?php if ( 'squares' === $settings['premium_blog_hover_color_effect'] ) { ?>
 									<div class="premium-blog-squares-square-container"></div>
 								<?php } ?>
 							</div>
 						<?php else : ?>
 							<div class="premium-blog-thumbnail-overlay">
-								<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" aria-label="<?php the_title_attribute(); ?>"></a>
+								<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
+									<span class="elementor-screen-only"><?php echo esc_html( get_the_title() ); ?></span>
+								</a>
 							</div>
 
 							<?php do_action( 'pa_blog_after_thumbnail' ); ?>
@@ -1303,7 +1307,9 @@ class Premium_Template_Tags {
 				</div>
 
 				<?php if ( 'yes' === $settings['link_box'] ) : ?>
-					<a class="premium-search__link" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" aria-hidden="true"></a>
+					<a class="premium-search__link" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
+						<span class="elementor-screen-only"><?php echo esc_html( get_the_title() ); ?></span>
+					</a>
 				<?php endif; ?>
 			</div>
 
@@ -1882,7 +1888,9 @@ class Premium_Template_Tags {
 					<?php // $this->get_post_thumbnail( $target, 'magazine' ); ?>
 					</div>
 					<div class="premium-smart-listing__thumbnail-overlay">
-						<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" aria-hidden="true"></a>
+						<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
+							<span class="elementor-screen-only"><?php echo esc_html( get_the_title() ); ?></span>
+						</a>
 					</div>
 				</div>
 				<div class="premium-smart-listing__post-content-wrapper">
@@ -1967,7 +1975,9 @@ class Premium_Template_Tags {
 						<?php // $this->get_post_thumbnail( '_blank', 'magazine' ); ?>
 						</div>
 						<div class="premium-smart-listing__thumbnail-overlay">
-							<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" aria-hidden="true"></a>
+							<a class="elementor-icon" href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
+								<span class="elementor-screen-only"><?php echo esc_html( get_the_title() ); ?></span>
+							</a>
 						</div>
 					</div>
 					<?php endif; ?>

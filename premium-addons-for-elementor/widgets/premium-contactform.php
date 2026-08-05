@@ -16,7 +16,6 @@ use Elementor\Group_Control_Text_Shadow;
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Controls\Premium_Image_Choose;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
