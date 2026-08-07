@@ -90,20 +90,6 @@ class Premium_SVG_Drawer extends Widget_Base {
 	}
 
 	/**
-	 * Retrieve Widget Dependent CSS.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return array CSS script handles.
-	 */
-	public function get_style_depends() {
-		return array(
-			'premium-pro',
-		);
-	}
-
-	/**
 	 * Retrieve Widget Dependent JS.
 	 *
 	 * @since 1.0.0

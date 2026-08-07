@@ -19,6 +19,11 @@
 						);
 						var icon = widgets[i].querySelector(".icon > i");
 
+						// Elementor 4.0 replaced this dialog with a React card built from `v4Promotions`.
+						if (!dialog || !icon) {
+							break;
+						}
+
 						if (icon.classList.toString().indexOf("pa-pro") >= 0) {
 							var proElement = icon.classList[0].replace("pa-pro-", "");
 

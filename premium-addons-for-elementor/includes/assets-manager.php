@@ -958,6 +958,14 @@ class Assets_Manager {
 		$suffix = Helper_Functions::get_assets_suffix();
 
 		wp_register_style(
+			'pa-common',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/common' . $suffix . '.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
+		wp_register_style(
 			'font-awesome-5-all',
 			ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all.min.css',
 			false,
@@ -1069,7 +1077,10 @@ class Assets_Manager {
 
 		if ( ! $this->enabled_elements['premium-assets-generator'] ) {
 
-			wp_enqueue_style(
+			// Registered, not enqueued: every widget lists this handle in get_style_depends(), and Elementor
+			// enqueues it from the _elementor_page_assets meta before wp_head. Pages carrying no PA widget
+			// therefore skip the bundle entirely.
+			wp_register_style(
 				'premium-addons',
 				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-addons' . $suffix . '.css',
 				array(),

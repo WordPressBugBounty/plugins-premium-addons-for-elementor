@@ -82,6 +82,7 @@ class Premium_World_Clock extends Widget_Base {
 	 */
 	public function get_style_depends() {
 		return array(
+			'pa-common',
 			'pa-glass',
 			'pa-world-clock',
 		);

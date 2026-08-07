@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.11.96 - 7/8/2026 =
+
+- Tweak: Improved assets loading by preventing Premium Addons main CSS file from loading on pages that don't include Premium Addons widgets.
+- Fixed: Page freezing caused by an infinite loop in Premium Pinterest Feed widget carousel.
+
 = 4.11.95 - 5/8/2026 =
 
 - Tweak: Added TikTok social icon in Team Members widget.

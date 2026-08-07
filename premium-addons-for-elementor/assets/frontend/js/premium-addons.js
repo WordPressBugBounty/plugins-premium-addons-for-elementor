@@ -5036,26 +5036,28 @@
 						: "",
 					nextArrow = settings.arrows
 						? '<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>'
-						: "";
+						: "",
+					slidesToShow = parseInt(settings.slidesToShow, 10) || 1,
+					slidesToScroll = parseInt(settings.slidesToScroll, 10) || 1;
 
 				return {
 					infinite: true,
 					draggable: true,
 					rows: 0,
-					slidesToShow: settings.slidesToShow,
-					slidesToScroll: settings.slidesToScroll || 1,
+					slidesToShow: slidesToShow,
+					slidesToScroll: slidesToScroll,
 					responsive: [
 						{
 							breakpoint: 1025,
 							settings: {
-								slidesToShow: settings.slidesToShowTab,
+								slidesToShow: parseInt(settings.slidesToShowTab, 10) || 1,
 								slidesToScroll: 1,
 							},
 						},
 						{
 							breakpoint: 768,
 							settings: {
-								slidesToShow: settings.slidesToShowMobile,
+								slidesToShow: parseInt(settings.slidesToShowMobile, 10) || 1,
 								slidesToScroll: 1,
 							},
 						},

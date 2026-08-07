@@ -70,8 +70,8 @@ class Addons_Integration {
 
 		$this->load_extensions();
 
-		// Promote PAPRO Elements.
-		add_filter( 'elementor/editor/localize_settings', array( $this, 'add_papro_elements' ) );
+		// Promote PAPRO Elements. Runs late because Elementor overwrites `v4Promotions` at priority 10.
+		add_filter( 'elementor/editor/localize_settings', array( $this, 'add_papro_elements' ), 20 );
 
 		// Handle everything related to widgets assets.
 		Assets_Manager::get_instance( self::$modules, self::$integrations );
@@ -494,21 +494,47 @@ class Addons_Integration {
 
 		$pro_elements = Admin_Helper::get_pro_elements();
 
-		$pro_elements = array_merge( $promotion_widgets, $pro_elements );
+		$config['promotionWidgets'] = array_merge( $promotion_widgets, $pro_elements );
 
-		$config['promotionWidgets'] = $pro_elements;
+		$v4_promotions = isset( $config['v4Promotions'] ) ? $config['v4Promotions'] : array();
 
-		// Fix promotion box not showing when Elementor Pro is active.
-		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-			$config['promotion']['elements']['action_button'] = array(
-				'text' => 'Connect & Activate',
-				'url'  => 'https://go.elementor.com/',
-			);
-		}
+		$config['v4Promotions'] = array_merge( $v4_promotions, $this->get_papro_promotion_cards( $pro_elements ) );
 
 		return $config;
 	}
 
+	/**
+	 * Get PAPRO Promotion Cards
+	 *
+	 * Builds the panel promotion card shown when a free user clicks a PAPRO widget.
+	 * Elementor matches `v4Promotions` keys against the widget name with dashes and
+	 * underscores stripped, and falls back to its own Elementor Pro card when no key matches.
+	 *
+	 * @since 4.11.97
+	 * @access private
+	 *
+	 * @param array $elements PAPRO elements.
+	 *
+	 * @return array
+	 */
+	private function get_papro_promotion_cards( $elements ) {
+
+		$cards = array();
+
+		foreach ( $elements as $element ) {
+
+			$cards[ $element['name'] ] = array(
+				/* translators: %s: Widget title. */
+				'title'   => sprintf( __( 'Premium %s', 'premium-addons-for-elementor' ), $element['title'] ),
+				/* translators: %s: Widget title. */
+				'content' => sprintf( __( 'Get Premium %s widget and more pro widgets and addons to build better sites, faster.', 'premium-addons-for-elementor' ), $element['title'] ),
+				'ctaText' => __( 'Get PRO (30% OFF)', 'premium-addons-for-elementor' ),
+				'ctaUrl'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#pro-pricing-section', 'panel-' . $element['key'], 'wp-editor', 'get-pro' ),
+			);
+		}
+
+		return $cards;
+	}
 
 	/**
 	 *

@@ -2637,10 +2637,10 @@ class Premium_Pinterest_Feed extends Widget_Base {
 				if ( $carousel ) {
 
 					$carousel_settings = array(
-						'slidesToScroll'     => $settings['slides_to_scroll'],
-						'slidesToShow'       => empty( $settings['pa_pinterest_cols'] ) ? 4 : $settings['pa_pinterest_cols'],
-						'slidesToShowTab'    => isset( $settings['pa_pinterest_cols_tablet'] ) ? $settings['pa_pinterest_cols_tablet'] : 1,
-						'slidesToShowMobile' => isset( $settings['pa_pinterest_cols_mobile'] ) ? $settings['pa_pinterest_cols_mobile'] : 1,
+						'slidesToScroll'     => intval( $settings['slides_to_scroll'] ),
+						'slidesToShow'       => empty( $settings['pa_pinterest_cols'] ) ? 4 : intval( $settings['pa_pinterest_cols'] ),
+						'slidesToShowTab'    => isset( $settings['pa_pinterest_cols_tablet'] ) ? intval( $settings['pa_pinterest_cols_tablet'] ) : 1,
+						'slidesToShowMobile' => isset( $settings['pa_pinterest_cols_mobile'] ) ? intval( $settings['pa_pinterest_cols_mobile'] ) : 1,
 						'fade'               => 'yes' === $settings['fade'],
 						'autoPlay'           => 'yes' === $settings['auto_play'],
 						'autoplaySpeed'      => $settings['autoplay_speed'],
