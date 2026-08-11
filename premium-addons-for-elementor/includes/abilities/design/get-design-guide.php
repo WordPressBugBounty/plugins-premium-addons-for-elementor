@@ -40,15 +40,36 @@ class Get_Design_Guide implements Ability_Handler {
 	public function get_registration_args() {
 		return array(
 			'label'               => __( 'Get Design Guide', 'premium-addons-for-elementor' ),
-			'description'         => __( 'Returns the Premium Addons page design guide.', 'premium-addons-for-elementor' ),
+			'description'         => __( 'Returns the Premium Addons design skill and its design references, in Markdown. Defaults to the build workflow; pass part to request any of workflow, design-guide, widget-selection, global-addons, page-patterns, troubleshooting.', 'premium-addons-for-elementor' ),
 			'category'            => 'pa-discovery',
+			'input_schema'        => array(
+				'type'                 => 'object',
+				'additionalProperties' => false,
+				'properties'           => array(
+					'part' => array(
+						'type'        => 'array',
+						'uniqueItems' => true,
+						'items'       => array(
+							'type' => 'string',
+							'enum' => array_keys( Design_Guide::PARTS ),
+						),
+						'description' => __( 'Which parts to return, in the order you want them. Omit for the build workflow alone. Ask for several at once — design-guide rules every design decision, widget-selection maps an intent to a widget, global-addons covers effects, page-patterns covers section and page composition, troubleshooting covers connection and rendering failures.', 'premium-addons-for-elementor' ),
+					),
+				),
+			),
 			'output_schema'       => array(
 				'type'        => 'object',
-				'description' => __( 'The design guide.', 'premium-addons-for-elementor' ),
+				'description' => __( 'The requested parts of the design guide.', 'premium-addons-for-elementor' ),
 				'properties'  => array(
-					'guide' => array(
-						'type'        => 'string',
-						'description' => __( 'The full design guide, in Markdown. Read it before building or restyling any page or section, and follow it for the whole build.', 'premium-addons-for-elementor' ),
+					'parts'     => array(
+						'type'                 => 'object',
+						'description'          => __( 'The Markdown body of each requested part, keyed by part name, in the order requested. Read a part fully before acting on it, and follow it for the whole build.', 'premium-addons-for-elementor' ),
+						'additionalProperties' => array( 'type' => 'string' ),
+					),
+					'available' => array(
+						'type'        => 'array',
+						'items'       => array( 'type' => 'string' ),
+						'description' => __( 'Every part value this ability accepts.', 'premium-addons-for-elementor' ),
 					),
 				),
 			),
@@ -74,15 +95,43 @@ class Get_Design_Guide implements Ability_Handler {
 	 */
 	public function execute( $input = null ) {
 
-		$guide = Design_Guide::get_body();
+		$available = array_keys( Design_Guide::PARTS );
+		$requested = ! empty( $input['part'] ) && is_array( $input['part'] ) ? $input['part'] : array( Design_Guide::DEFAULT_PART );
+		$parts     = array();
 
-		if ( '' === $guide ) {
-			return new \WP_Error(
-				'premium_addons_design_guide_unreadable',
-				__( 'The design guide file could not be read.', 'premium-addons-for-elementor' )
-			);
+		foreach ( $requested as $part ) {
+
+			if ( ! in_array( $part, $available, true ) ) {
+				return new \WP_Error(
+					'premium_addons_invalid_part',
+					sprintf(
+						/* translators: 1: the requested part, 2: comma-separated list of the accepted parts. */
+						__( 'There is no %1$s part of the design guide. Valid parts are: %2$s.', 'premium-addons-for-elementor' ),
+						$part,
+						implode( ', ', $available )
+					)
+				);
+			}
+
+			$body = Design_Guide::get_body( $part );
+
+			if ( false === $body ) {
+				return new \WP_Error(
+					'premium_addons_design_guide_unreadable',
+					sprintf(
+						/* translators: %s: the requested part. */
+						__( 'The %s part of the design guide could not be read.', 'premium-addons-for-elementor' ),
+						$part
+					)
+				);
+			}
+
+			$parts[ $part ] = $body;
 		}
 
-		return array( 'guide' => $guide );
+		return array(
+			'parts'     => $parts,
+			'available' => $available,
+		);
 	}
 }

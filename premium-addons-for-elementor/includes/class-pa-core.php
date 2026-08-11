@@ -5,6 +5,8 @@
 
 namespace PremiumAddons\Includes;
 
+use PremiumAddons\Admin\Includes\Admin_Notices;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -96,7 +98,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		}
 
 		/**
-		 * Set transient for admin review notice
+		 * Seeds the first-install state: review-notice quiet period, setup wizard
+		 * and the install timestamp.
 		 *
 		 * @since 3.1.7
 		 * @access public
@@ -105,43 +108,38 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 */
 		public function handle_activation() {
 
-			$cache_key = 'pa_review_notice';
-
-			$expiration = DAY_IN_SECONDS * 7;
-
-			set_transient( $cache_key, true, $expiration );
-
-			$install_time = get_option( 'pa_install_time' );
-
-			if ( ! $install_time ) {
-
-				$current_time = gmdate( 'j F, Y', time() );
-
-				update_option( 'pa_complete_wizard', true );
-				update_option( 'pa_install_time', $current_time );
-
-				$api_url = 'https://feedbackpa.leap13.com/wp-json/install/v2/add';
-
-				wp_safe_remote_request(
-					$api_url,
-					array(
-						'headers'     => array(
-							'Content-Type' => 'application/json',
-						),
-						'body'        => wp_json_encode(
-							array(
-								'time' => $current_time,
-							)
-						),
-						'blocking'    => false,
-						'timeout'     => 3,
-						'method'      => 'POST',
-						'httpversion' => '1.1',
-					)
-				);
-
-				set_transient( 'pa_activation_redirect', true, 30 );
+			if ( get_option( 'pa_install_time' ) ) {
+				return;
 			}
+
+			Admin_Notices::snooze_review_notice( DAY_IN_SECONDS * 7 );
+
+			$current_time = gmdate( 'j F, Y', time() );
+
+			update_option( 'pa_complete_wizard', true );
+			update_option( 'pa_install_time', $current_time );
+
+			$api_url = 'https://feedbackpa.leap13.com/wp-json/install/v2/add';
+
+			wp_safe_remote_request(
+				$api_url,
+				array(
+					'headers'     => array(
+						'Content-Type' => 'application/json',
+					),
+					'body'        => wp_json_encode(
+						array(
+							'time' => $current_time,
+						)
+					),
+					'blocking'    => false,
+					'timeout'     => 3,
+					'method'      => 'POST',
+					'httpversion' => '1.1',
+				)
+			);
+
+			set_transient( 'pa_activation_redirect', true, 30 );
 		}
 
 		/**

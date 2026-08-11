@@ -333,11 +333,14 @@ $cart_items = WC()->cart->get_cart();
 		<?php
 		if ( empty( $cart_items ) ) {
 			$image_url = PREMIUM_ADDONS_URL . 'modules/woocommerce/icons/empty-cart-icon.png';
+			$image_url = apply_filters( 'pa_woo_mc_empty_cart_image', $image_url );
+			$empty_msg = apply_filters( 'pa_woo_mc_empty_cart_message', __( 'Your cart is currently empty!', 'woocommerce' ) );
+			$btn_msg   = apply_filters( 'pa_woo_mc_empty_cart_btn_message', __( 'Return to Shop', 'premium-addons-for-elementor' ) );
 			?>
 		<div class="pa-woo-mc__empty-msg-wrapper">
 			<img src="<?php echo esc_url( $image_url ); ?>" alt="empty cart" class="pa-woo-mc__empty-msg-img">
-			<span class="pa-woo-mc__empty-msg"><?php echo __( 'Your cart is currently empty!', 'woocommerce' ); ?></span>
-			<a class="pa-woo-mc__empty-msg-btn" href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" aria-label="<?php echo __( 'Return to Shop', 'premium-addons-for-elementor' ); ?>"><?php echo __( 'Return to Shop', 'premium-addons-for-elementor' ); ?></a>
+			<span class="pa-woo-mc__empty-msg"><?php echo esc_html( $empty_msg ); ?></span>
+			<a class="pa-woo-mc__empty-msg-btn" href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" aria-label="<?php echo esc_html( $btn_msg ); ?>"><?php echo esc_html( $btn_msg ); ?></a>
 		</div>
 			<?php
 		} else {

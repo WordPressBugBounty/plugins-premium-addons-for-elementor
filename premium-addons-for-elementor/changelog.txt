@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.11.97 - 11/8/2026 =
+
+- Tweak: Improved design guidelines used by AI agents when building Elementor pages through AI Abilities.
+- Tweak: Code refactored for better performance and loading speed.
+- Fixed: Review notice showing right after installing the plugin on a fresh site.
+
 = 4.11.96 - 7/8/2026 =
 
 - Tweak: Improved assets loading by preventing Premium Addons main CSS file from loading on pages that don't include Premium Addons widgets.

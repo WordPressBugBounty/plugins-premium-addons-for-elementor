@@ -1,11 +1,11 @@
 === Premium Addons for Elementor - Elementor Templates, Widgets & MCP Tools ===
 Contributors: Leap13, Rimoun
-Tags: elementor, elementor addons, elementor widgets, elementor mcp, elementor templates
+Tags: elementor, elementor addons, elementor widgets, elementor ai, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 6.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable Tag: 4.11.96
+Stable Tag: 4.11.97
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -261,6 +261,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.97 - 11/8/2026 =
+
+- Tweak: Improved design guidelines used by AI agents when building Elementor pages through AI Abilities.
+- Tweak: Code refactored for better performance and loading speed.
+- Fixed: Review notice showing right after installing the plugin on a fresh site.
 
 = 4.11.96 - 7/8/2026 =
 

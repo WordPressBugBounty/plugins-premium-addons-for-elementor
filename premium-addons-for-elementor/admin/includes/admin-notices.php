@@ -315,6 +315,20 @@ class Admin_Notices {
 		return (string) $state;
 	}
 
+	/**
+	 * Keep the review notice quiet until $seconds from now.
+	 *
+	 * @since 4.11.97
+	 * @access public
+	 *
+	 * @param int $seconds Quiet period length.
+	 * @return void
+	 */
+	public static function snooze_review_notice( $seconds ) {
+
+		update_option( self::REVIEW_OPTION, (string) ( time() + $seconds ), true );
+	}
+
 	public function get_abilities_notice() {
 
 		$option = self::get_notice_state( self::ABILITIES_OPTION );
@@ -419,7 +433,7 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			update_option( self::REVIEW_OPTION, (string) ( time() + WEEK_IN_SECONDS ), true );
+			self::snooze_review_notice( WEEK_IN_SECONDS );
 
 			wp_send_json_success();
 
@@ -456,7 +470,7 @@ class Admin_Notices {
 			} else {
 				// Was set_transient( 'pa-review', ... ), a key nothing ever read —
 				// the review notice reappeared immediately after dismissal.
-				update_option( self::REVIEW_OPTION, (string) ( time() + 20 * DAY_IN_SECONDS ), true );
+				self::snooze_review_notice( 20 * DAY_IN_SECONDS );
 			}
 
 			wp_send_json_success();

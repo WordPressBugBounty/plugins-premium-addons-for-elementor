@@ -30,20 +30,40 @@ class Design_Guide {
 	const PROMPT_NAME = 'pafe-design';
 
 	/**
+	 * The part served when the caller asks for none.
+	 */
+	const DEFAULT_PART = 'workflow';
+
+	/**
+	 * Part name => skill file, relative to PREMIUM_ADDONS_PATH.
+	 *
+	 * The only place a skill file path is written.
+	 */
+	const PARTS = array(
+		'workflow'         => 'includes/abilities/skills/pafe-design/SKILL.md',
+		'design-guide'     => 'includes/abilities/skills/pafe-design/references/design-guide.md',
+		'widget-selection' => 'includes/abilities/skills/pafe-design/references/widget-selection.md',
+		'global-addons'    => 'includes/abilities/skills/pafe-design/references/global-addons.md',
+		'page-patterns'    => 'includes/abilities/skills/pafe-design/references/page-patterns.md',
+		'troubleshooting'  => 'includes/abilities/skills/pafe-design/references/troubleshooting.md',
+	);
+
+	/**
 	 * MCP tool names that carry the design note in their result.
 	 */
 	const BUILD_TOOLS = array(
 		'premium-addons-insert-widget',
 		'premium-addons-add-container',
 		'premium-addons-add-flexbox',
+		'premium-addons-update-element-settings',
 	);
 
 	/**
-	 * Parsed guide file, or false when it could not be read.
+	 * Parsed part files, keyed by part. False when the part could not be read.
 	 *
-	 * @var array|bool|null
+	 * @var array<string, array|bool>
 	 */
-	private static $guide = null;
+	private static $guides = array();
 
 	/**
 	 * Get the design guide as an MCP prompt.
@@ -52,7 +72,7 @@ class Design_Guide {
 	 */
 	public static function get_prompt() {
 
-		$guide = self::get_guide();
+		$guide = self::get_guide( self::DEFAULT_PART );
 
 		if ( ! $guide ) {
 			return null;
@@ -61,7 +81,7 @@ class Design_Guide {
 		$prompt = McpPrompt::fromArray(
 			array(
 				'name'        => self::PROMPT_NAME,
-				'title'       => __( 'Premium Addons Design Guide', 'premium-addons-for-elementor' ),
+				'title'       => __( 'Premium Addons Design Skill', 'premium-addons-for-elementor' ),
 				'description' => $guide['description'],
 				'handler'     => function () use ( $guide ) {
 					return array( 'text' => $guide['body'] );
@@ -76,15 +96,16 @@ class Design_Guide {
 	}
 
 	/**
-	 * Get the guide text without its front matter.
+	 * Get a part's text without its front matter.
 	 *
-	 * @return string
+	 * @param string $part Part name, one of the PARTS keys.
+	 * @return string|bool The markdown body, or false when the part is unknown or unreadable.
 	 */
-	public static function get_body() {
+	public static function get_body( $part ) {
 
-		$guide = self::get_guide();
+		$guide = self::get_guide( $part );
 
-		return $guide ? $guide['body'] : '';
+		return $guide ? $guide['body'] : false;
 	}
 
 	/**
@@ -96,7 +117,7 @@ class Design_Guide {
 	 * @return string
 	 */
 	public static function build_hint() {
-		return Ability_Registry::AGENT_HINT_DELIMITER . __( 'Before your first build or restyle call on this page, call premium-addons/get-design-guide and follow it for the whole build.', 'premium-addons-for-elementor' );
+		return Ability_Registry::AGENT_HINT_DELIMITER . __( 'Before your first build or restyle call on this page, call premium-addons/get-design-guide with part: ["workflow", "design-guide"] and follow both for the whole build.', 'premium-addons-for-elementor' );
 	}
 
 	/**
@@ -126,32 +147,37 @@ class Design_Guide {
 	 * @return string
 	 */
 	private static function get_note() {
-		return __( 'NEVER ignore calling premium-addons/get-design-guide. Design check: build every color, font and size from the values premium-addons/get-global-settings and premium-addons/get-theme-styles returned — reuse those exact values across the page and never introduce a new palette, font or off-scale spacing mid-build. Read premium-addons/get-widget-schema (and get-addon-schema) before writing a widget\'s keys. Use containers, never sections or columns, and declare the mobile collapse on every multi-column container. Native Elementor only: no injected script, no external CSS or animation libraries. Keep the layout varied — no row of three identical cards. When the section is done, judge the rendered front end, not the stored settings, and fix off-token values, contrast below AA, an over-long headline, and unset critical controls. Call premium-addons/get-design-guide for the full guide.', 'premium-addons-for-elementor' );
+		return __( 'Design check: reuse the exact color, font and size values from premium-addons/get-global-settings and premium-addons/get-theme-styles — never introduce a new palette, font or off-scale spacing mid-build. Use containers, never sections or columns, and declare the mobile collapse on every multi-column container. Native Elementor only: no injected script, no external CSS or animation libraries. When the section is done, judge the rendered front end, not the stored settings. NEVER skip the full rules — call premium-addons-get-design-guide with part: ["design-guide"].', 'premium-addons-for-elementor' );
 	}
 
 	/**
-	 * Read and parse the guide file once.
+	 * Read and parse a part file once.
 	 *
+	 * @param string $part Part name, one of the PARTS keys.
 	 * @return array|bool
 	 */
-	private static function get_guide() {
+	private static function get_guide( $part ) {
 
-		if ( null !== self::$guide ) {
-			return self::$guide;
+		if ( array_key_exists( $part, self::$guides ) ) {
+			return self::$guides[ $part ];
 		}
 
-		self::$guide = false;
+		self::$guides[ $part ] = false;
 
-		$path = PREMIUM_ADDONS_PATH . 'includes/abilities/design/pafe-design.md';
+		if ( ! isset( self::PARTS[ $part ] ) ) {
+			return self::$guides[ $part ];
+		}
+
+		$path = PREMIUM_ADDONS_PATH . self::PARTS[ $part ];
 
 		if ( ! is_readable( $path ) ) {
-			return self::$guide;
+			return self::$guides[ $part ];
 		}
 
 		$contents = file_get_contents( $path );
 
-		if ( ! $contents ) {
-			return self::$guide;
+		if ( false === $contents ) {
+			return self::$guides[ $part ];
 		}
 
 		$body        = trim( $contents );
@@ -159,6 +185,7 @@ class Design_Guide {
 
 		// The front matter is skill metadata, not prompt text: its description
 		// becomes the prompt description, the rest becomes the prompt message.
+		// Only the workflow part carries it — a part without it is served whole.
 		if ( preg_match( '/^---\R(.*?)\R---\R(.*)$/s', $body, $matches ) ) {
 			$body = trim( $matches[2] );
 
@@ -167,11 +194,11 @@ class Design_Guide {
 			}
 		}
 
-		self::$guide = array(
+		self::$guides[ $part ] = array(
 			'description' => $description,
 			'body'        => $body,
 		);
 
-		return self::$guide;
+		return self::$guides[ $part ];
 	}
 }
