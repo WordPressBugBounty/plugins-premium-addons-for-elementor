@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.11.98 - 13/8/2026 =
+
+- Tweak: Added Label option to show a text label above, below or over the image in Image Scroll widget.
+- Tweak: Added Tilt Effect option in Image Gallery, Pinterest Feed, Team Members and Testimonials widgets.
+- Tweak: AI Abilities can now be used by any MCP client or MCP plugin, not only the Premium Addons MCP.
+
 = 4.11.97 - 11/8/2026 =
 
 - Tweak: Improved design guidelines used by AI agents when building Elementor pages through AI Abilities.

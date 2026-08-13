@@ -245,3 +245,28 @@
 .elementor-widget-premium-addon-testimonials {
   width: 100%;
 }
+
+/**
+* Tilt Effect
+*/
+.premium-testimonial__tilt-yes .premium-testimonial-container,
+.premium-testimonial__tilt-hover .premium-testimonial-container {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+.premium-testimonial__tilt-yes .premium-testimonial-container,
+.premium-testimonial__tilt-hover .premium-testimonial-container:hover {
+  -webkit-transform: rotate(-1.2deg) translateY(-3px);
+  -ms-transform: rotate(-1.2deg) translateY(-3px);
+  transform: rotate(-1.2deg) translateY(-3px);
+}
+
+.premium-testimonial__tilt-yes .premium-testimonial-container:nth-child(even),
+.premium-testimonial__tilt-hover .premium-testimonial-container:nth-child(even):hover {
+  -webkit-transform: rotate(1.2deg) translateY(-3px);
+  -ms-transform: rotate(1.2deg) translateY(-3px);
+  transform: rotate(1.2deg) translateY(-3px);
+}

@@ -127,6 +127,7 @@ class Upload_Media implements Ability_Handler {
 			// attachment already stored for it rather than adding a second copy.
 			'meta'                => array(
 				'show_in_rest' => true,
+				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => false,
 					'destructive' => false,

@@ -447,3 +447,28 @@ ul.premium-person-social-list {
   -ms-transform: translateX(0) rotate(90deg);
   transform: translateX(0) rotate(90deg);
 }
+
+/**
+* Tilt Effect
+*/
+.premium-person-tilt-yes .premium-person-container,
+.premium-person-tilt-hover .premium-person-container {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+.premium-person-tilt-yes .premium-person-container,
+.premium-person-tilt-hover .premium-person-container:hover {
+  -webkit-transform: rotate(-1.2deg) translateY(-3px);
+  -ms-transform: rotate(-1.2deg) translateY(-3px);
+  transform: rotate(-1.2deg) translateY(-3px);
+}
+
+.premium-person-tilt-yes .premium-person-container:nth-child(even),
+.premium-person-tilt-hover .premium-person-container:nth-child(even):hover {
+  -webkit-transform: rotate(1.2deg) translateY(-3px);
+  -ms-transform: rotate(1.2deg) translateY(-3px);
+  transform: rotate(1.2deg) translateY(-3px);
+}

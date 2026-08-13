@@ -16,10 +16,13 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
+use PremiumAddons\Includes\Controls\Premium_Background;
 use PremiumAddons\Includes\Helper_Functions;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -444,6 +447,177 @@ class Premium_Image_Scroll extends Widget_Base {
 		);
 
 		$this->end_popover();
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'label_settings',
+			array(
+				'label' => __( 'Label', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			'label_switcher',
+			array(
+				'label' => __( 'Enable Label', 'premium-addons-for-elementor' ),
+				'type'  => Controls_Manager::SWITCHER,
+			)
+		);
+
+		$this->add_control(
+			'label_text',
+			array(
+				'label'       => __( 'Text', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
+				'default'     => __( 'Click to View', 'premium-addons-for-elementor' ),
+				'label_block' => true,
+				'condition'   => array(
+					'label_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'label_position',
+			array(
+				'label'     => __( 'Position', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => array(
+					'above' => __( 'Above Image', 'premium-addons-for-elementor' ),
+					'below' => __( 'Below Image', 'premium-addons-for-elementor' ),
+					'over'  => __( 'Over Image', 'premium-addons-for-elementor' ),
+				),
+				'default'   => 'over',
+				'condition' => array(
+					'label_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'label_h_align',
+			array(
+				'label'                => __( 'Horizontal Alignment', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'options'              => array(
+					'left'   => array(
+						'title' => __( 'Left', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-left',
+					),
+					'center' => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'right'  => array(
+						'title' => __( 'Right', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-right',
+					),
+				),
+				'selectors_dictionary' => array(
+					'left'   => 'start',
+					'center' => 'center',
+					'right'  => 'end',
+				),
+				'toggle'               => false,
+				'default'              => 'center',
+				'selectors'            => array(
+					'{{WRAPPER}} .premium-image-scroll-label' => 'justify-self: {{VALUE}};',
+				),
+				'condition'            => array(
+					'label_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'label_v_align',
+			array(
+				'label'                => __( 'Vertical Alignment', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'options'              => array(
+					'top'    => array(
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-top',
+					),
+					'middle' => array(
+						'title' => __( 'Middle', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-middle',
+					),
+					'bottom' => array(
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-bottom',
+					),
+				),
+				'selectors_dictionary' => array(
+					'top'    => 'start',
+					'middle' => 'center',
+					'bottom' => 'end',
+				),
+				'toggle'               => false,
+				'default'              => 'top',
+				'selectors'            => array(
+					'{{WRAPPER}} .premium-image-scroll-label' => 'align-self: {{VALUE}};',
+				),
+				'condition'            => array(
+					'label_switcher' => 'yes',
+					'label_position' => 'over',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'label_offset_x',
+			array(
+				'label'      => __( 'Offset X', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', '%', 'em' ),
+				'range'      => array(
+					'px' => array(
+						'min' => -200,
+						'max' => 200,
+					),
+					'%'  => array(
+						'min' => -100,
+						'max' => 100,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-image-scroll-label' => '--pa-scroll-label-x: {{SIZE}}{{UNIT}};',
+				),
+				'condition'  => array(
+					'label_switcher' => 'yes',
+					'label_position' => 'over',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'label_offset_y',
+			array(
+				'label'      => __( 'Offset Y', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', '%', 'em' ),
+				'range'      => array(
+					'px' => array(
+						'min' => -200,
+						'max' => 200,
+					),
+					'%'  => array(
+						'min' => -100,
+						'max' => 100,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-image-scroll-label' => '--pa-scroll-label-y: {{SIZE}}{{UNIT}};',
+				),
+				'condition'  => array(
+					'label_switcher' => 'yes',
+					'label_position' => 'over',
+				),
+			)
+		);
 
 		$this->end_controls_section();
 
@@ -879,6 +1053,94 @@ class Premium_Image_Scroll extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'label_style',
+			array(
+				'label'     => __( 'Label', 'premium-addons-for-elementor' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'label_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'label_color',
+			array(
+				'label'     => __( 'Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-image-scroll-label' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'label_typography',
+				'global'   => array(
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				),
+				'selector' => '{{WRAPPER}} .premium-image-scroll-label',
+			)
+		);
+
+		$this->add_group_control(
+			Premium_Background::get_type(),
+			array(
+				'name'     => 'label_background',
+				'types'    => array( 'classic', 'gradient' ),
+				'selector' => '{{WRAPPER}} .premium-image-scroll-label',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'label_border',
+				'selector' => '{{WRAPPER}} .premium-image-scroll-label',
+			)
+		);
+
+		$this->add_responsive_control(
+			'label_border_radius',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%', 'em' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-image-scroll-label' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'label_padding',
+			array(
+				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-image-scroll-label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'label_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-image-scroll-label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
 	}
 
 	/**
@@ -965,6 +1227,23 @@ class Premium_Image_Scroll extends Widget_Base {
 			$this->add_render_attribute( 'shadow', 'style', 'filter: drop-shadow(' . $settings['image_scroll_shadow_color'] . ' ' . $settings['image_scroll_shadow_h']['size'] . 'px ' . $settings['image_scroll_shadow_v']['size'] . 'px ' . $settings['image_scroll_shadow_blur']['size'] . 'px )' );
 		}
 
+		$has_label = 'yes' === $settings['label_switcher'] && '' !== trim( $settings['label_text'] );
+
+		if ( $has_label ) :
+
+			$this->add_render_attribute(
+				'label_wrapper',
+				'class',
+				array(
+					'premium-image-scroll-wrapper',
+					'premium-image-scroll-label-' . $settings['label_position'],
+				)
+			);
+			?>
+			<div <?php $this->print_render_attribute_string( 'label_wrapper' ); ?>>
+				<div class="premium-image-scroll-label"><?php echo wp_kses_post( $settings['label_text'] ); ?></div>
+			<?php
+		endif;
 		?>
 			<div class="premium-image-scroll-section" <?php $this->print_render_attribute_string( 'shadow' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'container' ); ?>>
@@ -993,7 +1272,12 @@ class Premium_Image_Scroll extends Widget_Base {
 					</div>
 				</div>
 			</div>
-		<?php
+			<?php
+			if ( $has_label ) :
+				?>
+			</div>
+				<?php
+			endif;
 	}
 
 	/**
@@ -1060,7 +1344,20 @@ class Premium_Image_Scroll extends Widget_Base {
 			view.addRenderAttribute( 'shadow', 'style', 'filter: drop-shadow('+settings.image_scroll_shadow_color +' '+ settings.image_scroll_shadow_h.size +'px '+ settings.image_scroll_shadow_v.size +'px '+ settings.image_scroll_shadow_blur.size+'px '+')' );
 		}
 
+		var hasLabel = 'yes' === settings.label_switcher && '' !== settings.label_text.trim();
+
+		if ( hasLabel ) {
+			view.addRenderAttribute( 'label_wrapper', 'class', [
+				'premium-image-scroll-wrapper',
+				'premium-image-scroll-label-' + settings.label_position
+			] );
+		}
+
 		#>
+		<# if ( hasLabel ) { #>
+			<div {{{ view.getRenderAttributeString('label_wrapper') }}}>
+				<div class="premium-image-scroll-label">{{{ settings.label_text }}}</div>
+		<# } #>
 		<div class="premium-image-scroll-section" {{{ view.getRenderAttributeString('shadow') }}}>
 			<div {{{ view.getRenderAttributeString('container') }}}>
 				<# if (  'yes' == settings.icon_switcher ) { #>
@@ -1088,6 +1385,9 @@ class Premium_Image_Scroll extends Widget_Base {
 				</div>
 			</div>
 		</div>
+		<# if ( hasLabel ) { #>
+			</div>
+		<# } #>
 		<?php
 	}
 }

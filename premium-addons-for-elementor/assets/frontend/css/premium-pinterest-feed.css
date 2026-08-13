@@ -8,6 +8,8 @@
   /*End Pin Box Skins**/
   /*Profile Header**/
   /*End of Profile Header**/
+  /*Tilt Effect**/
+  /*End of Tilt Effect**/
   /*Boards Layout**/
   /*End of Boards Layout**/
 }
@@ -354,6 +356,22 @@
   font-weight: 400;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.premium-pinterest-feed__tilt-yes .premium-pinterest-feed__pin-outer-wrapper, .premium-pinterest-feed__tilt-hover .premium-pinterest-feed__pin-outer-wrapper {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+.premium-pinterest-feed__tilt-yes .premium-pinterest-feed__pin-outer-wrapper, .premium-pinterest-feed__tilt-hover .premium-pinterest-feed__pin-outer-wrapper:hover {
+  -webkit-transform: rotate(-1.2deg) translateY(-3px);
+  -ms-transform: rotate(-1.2deg) translateY(-3px);
+  transform: rotate(-1.2deg) translateY(-3px);
+}
+.premium-pinterest-feed__tilt-yes .premium-pinterest-feed__pin-outer-wrapper:nth-child(even), .premium-pinterest-feed__tilt-hover .premium-pinterest-feed__pin-outer-wrapper:nth-child(even):hover {
+  -webkit-transform: rotate(1.2deg) translateY(-3px);
+  -ms-transform: rotate(1.2deg) translateY(-3px);
+  transform: rotate(1.2deg) translateY(-3px);
 }
 .premium-pinterest-feed__board-trigger-wrapper, .premium-pinterest-feed__load-more-wrapper {
   width: 100%;

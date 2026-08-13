@@ -297,6 +297,46 @@
   object-fit: fill;
 }
 
+/**
+* Tilt Effect
+*/
+.premium-gallery-tilt-yes .pa-gallery-img,
+.premium-gallery-tilt-hover .pa-gallery-img {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+.premium-gallery-tilt-yes .pa-gallery-img,
+.premium-gallery-tilt-hover .pa-gallery-img:hover {
+  -webkit-transform: rotate(-1.2deg) translateY(-3px);
+  -ms-transform: rotate(-1.2deg) translateY(-3px);
+  transform: rotate(-1.2deg) translateY(-3px);
+}
+
+.premium-gallery-tilt-yes .premium-gallery-item:nth-child(even) .pa-gallery-img,
+.premium-gallery-tilt-hover .premium-gallery-item:nth-child(even):hover .pa-gallery-img {
+  -webkit-transform: rotate(1.2deg) translateY(-3px);
+  -ms-transform: rotate(1.2deg) translateY(-3px);
+  transform: rotate(1.2deg) translateY(-3px);
+}
+
+/* Metro adds .grid-sizer as first child, so nth-child parity flips. */
+.premium-gallery-tilt-yes .premium-img-gallery-metro .premium-gallery-item:nth-child(even) .pa-gallery-img,
+.premium-gallery-tilt-hover .premium-img-gallery-metro .premium-gallery-item:nth-child(even):hover .pa-gallery-img {
+  -webkit-transform: rotate(-1.2deg) translateY(-3px);
+  -ms-transform: rotate(-1.2deg) translateY(-3px);
+  transform: rotate(-1.2deg) translateY(-3px);
+}
+
+.premium-gallery-tilt-yes .premium-img-gallery-metro .premium-gallery-item:nth-child(odd) .pa-gallery-img,
+.premium-gallery-tilt-hover .premium-img-gallery-metro .premium-gallery-item:nth-child(odd):hover .pa-gallery-img {
+  -webkit-transform: rotate(1.2deg) translateY(-3px);
+  -ms-transform: rotate(1.2deg) translateY(-3px);
+  transform: rotate(1.2deg) translateY(-3px);
+}
+
 .premium-img-gallery .premium-gallery-item-hidden {
   visibility: hidden;
   width: 0 !important;

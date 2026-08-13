@@ -72,6 +72,7 @@ class Get_Id_By_Title implements Ability_Handler {
 			},
 			'meta'                => array(
 				'show_in_rest' => true,
+				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => true,
 					'destructive' => false,

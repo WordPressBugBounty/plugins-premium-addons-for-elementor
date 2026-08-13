@@ -897,6 +897,34 @@ class Premium_Pinterest_Feed extends Widget_Base {
 		);
 
 		$this->add_control(
+			'pin_tilt_effect',
+			array(
+				'label'        => __( 'Tilt Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::CHOOSE,
+				'toggle'       => false,
+				'prefix_class' => 'premium-pinterest-feed__tilt-',
+				'options'      => array(
+					'disabled' => array(
+						'title' => __( 'Disabled', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-ban',
+					),
+					'yes'      => array(
+						'title' => __( 'Enabled', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-check',
+					),
+					'hover'    => array(
+						'title' => __( 'On Hover', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-copy',
+					),
+				),
+				'default'      => 'disabled',
+				'condition'    => array(
+					'pin_layout!' => 'layout-4',
+				),
+			)
+		);
+
+		$this->add_control(
 			'loading_animation',
 			array(
 				'label'        => __( 'Loading Animation', 'premium-addons-for-elementor' ),

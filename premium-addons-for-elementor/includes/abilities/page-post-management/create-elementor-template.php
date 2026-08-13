@@ -96,6 +96,7 @@ class Create_Elementor_Template implements Ability_Handler {
 			},
 			'meta'                => array(
 				'show_in_rest' => true,
+				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => false,
 					'destructive' => false,

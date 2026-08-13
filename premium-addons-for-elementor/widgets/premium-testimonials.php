@@ -874,6 +874,35 @@ class Premium_Testimonials extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'testimonial_tilt_effect',
+			array(
+				'label'        => __( 'Tilt Effect', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::CHOOSE,
+				'toggle'       => false,
+				'prefix_class' => 'premium-testimonial__tilt-',
+				'options'      => array(
+					'disabled' => array(
+						'title' => __( 'Disabled', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-ban',
+					),
+					'yes'      => array(
+						'title' => __( 'Enabled', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-check',
+					),
+					'hover'    => array(
+						'title' => __( 'On Hover', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-copy',
+					),
+				),
+				'default'      => 'disabled',
+				'condition'    => array(
+					'multiple' => 'yes',
+					'skin!'    => 'skin4',
+				),
+			)
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(

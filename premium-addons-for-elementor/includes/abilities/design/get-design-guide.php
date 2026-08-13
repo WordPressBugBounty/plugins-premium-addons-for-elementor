@@ -78,6 +78,7 @@ class Get_Design_Guide implements Ability_Handler {
 			},
 			'meta'                => array(
 				'show_in_rest' => true,
+				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => true,
 					'destructive' => false,
