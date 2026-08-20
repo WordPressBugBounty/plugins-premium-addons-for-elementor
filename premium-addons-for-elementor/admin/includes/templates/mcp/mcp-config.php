@@ -1,7 +1,6 @@
 <?php
 /**
  * Configure MCP Server — first accordion item of the AI Abilities tab.
- *
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,13 +11,6 @@ use PremiumAddons\Admin\Includes\MCP_Settings;
 use PremiumAddons\Includes\Abilities\Bootstrap as Abilities_Bootstrap;
 use PremiumAddons\Includes\Abilities\Connection_Log;
 use PremiumAddons\Includes\Abilities\OAuth;
-
-$mcp = MCP_Settings::get_instance();
-
-// Process a pasted password first so the connection details can be shown inline.
-$password_state = $mcp->maybe_handle_password_forms();
-$used_password  = $password_state['existing_password'];
-$used_error     = $password_state['existing_error'];
 
 $pw_status         = MCP_Settings::app_passwords_status();
 $profile_url       = admin_url( 'profile.php#application-passwords-section' );
@@ -43,8 +35,8 @@ $form_action = esc_url( admin_url( 'admin.php?page=' . self::$page_slug . '#tab=
 
 // A client this user already connected turns the setup steps into a reference
 // they open on purpose, instead of a wall of instructions on every visit.
-// $mcp_state and $is_configured come from ai-abilities.php, which includes this
-// file into its own scope after reading the connection state once.
+// $mcp, $mcp_state, $is_configured, $used_password and $used_error come from
+// ai-abilities.php, which includes this file into its own scope.
 $state_ago   = $is_configured ? human_time_diff( $mcp_state['time'] ) : '';
 $setup_steps = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-setup-steps.php';
 $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-tabs.php';
@@ -132,30 +124,6 @@ $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-ta
 				<?php include $setup_steps; ?>
 			<?php endif; ?>
 
-			<div class="pa-mcp-endpoint">
-				<div class="pa-mcp-endpoint-field">
-					<label class="pa-mcp-field-label" for="pa-mcp-endpoint-url">
-						<?php esc_html_e( 'MCP endpoint', 'premium-addons-for-elementor' ); ?>
-					</label>
-					<input type="text" id="pa-mcp-endpoint-url" class="regular-text" value="<?php echo esc_attr( $mcp_endpoint ); ?>" readonly>
-				</div>
-				<button type="button" class="button pa-mcp-copy" data-pa-mcp-copy="pa-mcp-endpoint-url" data-pa-mcp-copied="<?php esc_attr_e( 'Copied!', 'premium-addons-for-elementor' ); ?>">
-					<?php esc_html_e( 'Copy endpoint', 'premium-addons-for-elementor' ); ?>
-				</button>
-			</div>
-
-			<?php if ( MCP_Settings::looks_like_production( $mcp_endpoint ) ) : ?>
-				<div class="pa-mcp-advisory notice notice-warning inline">
-					<p><?php esc_html_e( 'This endpoint appears to be a production site. The application password acts as your administrator account, so use a dedicated password and revoke it if it is exposed.', 'premium-addons-for-elementor' ); ?></p>
-				</div>
-			<?php endif; ?>
-
-			<?php if ( 'http' === $mcp_scheme ) : ?>
-				<div class="pa-mcp-advisory pa-mcp-http-warning notice notice-error inline">
-					<p><?php esc_html_e( 'Basic credentials travel in clear over HTTP. Use an HTTPS endpoint before connecting an AI client.', 'premium-addons-for-elementor' ); ?></p>
-				</div>
-			<?php endif; ?>
-
 			<?php
 			// "Connect Your AI Client" — shown only right after a password is pasted,
 			// never on a normal page load, since the connection details embed the secret.
@@ -177,7 +145,7 @@ $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-ta
 					</h4>
 
 					<p class="pa-mcp-step-desc">
-						<?php esc_html_e( 'Pick your AI client and copy its configuration. Every client also includes a plain-English prompt you can give to its agent.', 'premium-addons-for-elementor' ); ?>
+						<?php esc_html_e( 'Pick your AI client and copy its configuration or click the prompt below it.', 'premium-addons-for-elementor' ); ?>
 					</p>
 
 					<?php include $client_tabs; ?>
@@ -196,7 +164,7 @@ $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-ta
 				<div class="pa-mcp-connect">
 
 					<p class="pa-mcp-step-desc">
-						<?php esc_html_e( 'Pick your AI client and copy its configuration. The client discovers OAuth from the endpoint and opens your browser to approve the connection — no password is copied anywhere.', 'premium-addons-for-elementor' ); ?>
+						<?php esc_html_e( 'Pick your AI client and copy its configuration.', 'premium-addons-for-elementor' ); ?>
 					</p>
 
 					<?php

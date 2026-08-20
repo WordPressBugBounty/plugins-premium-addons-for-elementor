@@ -54,13 +54,6 @@ class Admin_Notices {
 	const REVIEW_OPTION = 'pa_review_notice';
 
 	/**
-	 * AI abilities notice state. '1' once dismissed.
-	 *
-	 * @var string
-	 */
-	const ABILITIES_OPTION = 'abilities-not';
-
-	/**
 	 * Dashboard news cache. Deliberately not keyed on the plugin version: the
 	 * feed is not version-specific, and including it invalidated the cache on
 	 * every update, so the first Dashboard load after each one blocked on a
@@ -87,7 +80,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'abilities-not',
+			'pa-connect-ai-not',
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -157,7 +150,7 @@ class Admin_Notices {
 			return;
 		}
 
-		$this->get_abilities_notice();
+		$this->get_connect_ai_notice();
 	}
 
 	/**
@@ -329,29 +322,49 @@ class Admin_Notices {
 		update_option( self::REVIEW_OPTION, (string) ( time() + $seconds ), true );
 	}
 
-	public function get_abilities_notice() {
+	/**
+	 * Points users to the ChatGPT/Claude connection guides.
+	 *
+	 * Keyed separately from the older AI notice, so users who dismissed that one
+	 * still get this.
+	 *
+	 * @since 4.11.100
+	 * @access private
+	 *
+	 * @return void
+	 */
+	private function get_connect_ai_notice() {
 
-		$option = self::get_notice_state( self::ABILITIES_OPTION );
-
-		if ( '1' === $option ) {
+		if ( '1' === self::get_notice_state( 'pa-connect-ai-not' ) ) {
 			return;
 		}
 
-		$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mcp-and-ai-abilities/', 'abilities-notification', 'wp-dash', 'abilities' );
+		$chatgpt_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website', 'connect-ai-notification', 'wp-dash', 'connect-ai' );
+		$claude_link  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages', 'connect-ai-notification', 'wp-dash', 'connect-ai' );
+		$mcp_link     = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mcp-and-ai-abilities/', 'connect-ai-notification', 'wp-dash', 'connect-ai' );
 
 		?>
 
-		<div class="error pa-notice-wrap pa-new-feature-notice">
+		<div class="error pa-notice-wrap pa-new-feature-notice pa-connect-ai-notice">
 			<div class="pa-img-wrap">
-				<img src="<?php echo PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png'; ?>">
+				<img src="<?php echo esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>" alt="">
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<strong><?php echo __( 'AI Just Landed to Premium Addons for Elementor', 'premium-addons-for-elementor' ); ?></strong>
-					<?php printf( __( '<a href="%s" target="_blank">Watch Use Cases!</a>', 'premium-addons-for-elementor' ), $link ); ?>
+					<strong><?php esc_html_e( 'New:', 'premium-addons-for-elementor' ); ?></strong>
+					<?php
+						printf(
+							/* translators: 1: ChatGPT link opening tag, 2: Claude link opening tag, 3: Elementor MCP page link opening tag, 4: link closing tag. */
+							esc_html__( 'Connect %1$sChatGPT%4$s/%2$sClaude%4$s to your website and make them build Elementor pages for you. %3$sCheck it Out!%4$s', 'premium-addons-for-elementor' ),
+							'<a href="' . esc_url( $chatgpt_link ) . '" target="_blank">',
+							'<a href="' . esc_url( $claude_link ) . '" target="_blank">',
+							'<a href="' . esc_url( $mcp_link ) . '" target="_blank">',
+							'</a>'
+						);
+					?>
 				</p>
 			</div>
-			<div class="pa-notice-close" data-notice="abilities-not">
+			<div class="pa-notice-close" data-notice="pa-connect-ai-not">
 				<span class="dashicons dashicons-dismiss"></span>
 			</div>
 		</div>

@@ -21,10 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php esc_html_e( 'Create an Application Password', 'premium-addons-for-elementor' ); ?>
 		</h4>
 
-		<p class="pa-mcp-step-desc">
-			<?php esc_html_e( 'Your AI client authenticates with a WordPress application password. Create one on your profile page, then paste it below to build the connection details.', 'premium-addons-for-elementor' ); ?>
-		</p>
-
 		<?php if ( ! $pw_status['available'] ) : ?>
 			<div class="notice notice-error inline">
 				<p><strong><?php echo esc_html( $pw_status['message'] ); ?></strong></p>
@@ -36,19 +32,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php
 					printf(
 						/* translators: 1: opening <a> tag linking to the profile page, 2: closing </a> tag. */
-						esc_html__( 'Open your %1$sprofile page%2$s and scroll to the “Application Passwords” section.', 'premium-addons-for-elementor' ),
+						esc_html__( 'Open your %1$sprofile page%2$s.', 'premium-addons-for-elementor' ),
 						'<a href="' . esc_url( $profile_url ) . '" target="_blank" rel="noopener noreferrer">', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- URL is escaped with esc_url().
 						'</a>'
 					);
 					?>
 				</li>
 				<li><?php esc_html_e( 'Enter a name you will recognize (e.g. “Claude on laptop”) in the “New Application Password Name” field.', 'premium-addons-for-elementor' ); ?></li>
-				<li><?php esc_html_e( 'Click “Add New Application Password”.', 'premium-addons-for-elementor' ); ?></li>
-				<li><?php esc_html_e( 'Copy the generated password — WordPress shows it only once.', 'premium-addons-for-elementor' ); ?></li>
-				<li><?php esc_html_e( 'Come back here and paste it below.', 'premium-addons-for-elementor' ); ?></li>
+				<li><?php esc_html_e( 'Click “Add Application Password”.', 'premium-addons-for-elementor' ); ?></li>
+				<li><?php esc_html_e( 'Copy the generated password.', 'premium-addons-for-elementor' ); ?></li>
+				<li><?php esc_html_e( 'Paste it below.', 'premium-addons-for-elementor' ); ?></li>
 			</ol>
 
-			<form method="post" action="<?php echo $form_action; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped above. ?>">
+			<form method="post" class="pa-mcp-password-form" action="<?php echo $form_action; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped above. ?>">
 				<?php wp_nonce_field( 'pa_mcp_use_existing_password' ); ?>
 				<label class="pa-mcp-field-label" for="pa-mcp-existing-password">
 					<?php esc_html_e( 'Paste the password value', 'premium-addons-for-elementor' ); ?>
@@ -66,8 +62,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<p><?php esc_html_e( 'Connection details generated below.', 'premium-addons-for-elementor' ); ?></p>
 					</div>
 				<?php endif; ?>
-				<p class="description">
-					<?php esc_html_e( 'The password is used only to fill the connection details below and is never stored on this site.', 'premium-addons-for-elementor' ); ?>
-				</p>
 			</form>
 		<?php endif; ?>

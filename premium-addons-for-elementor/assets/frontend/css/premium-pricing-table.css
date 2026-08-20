@@ -1,5 +1,5 @@
 /**************** Premium Pricing Table ****************/
-/*******************************************************/
+/******************************************************  */
 .premium-pricing-table-container {
 	position: relative;
 	text-align: center;
@@ -263,7 +263,7 @@
 
 @-moz-document url-prefix() {
 	.premium-pricing-description-container li {
-		text-indent: 0px;
+		text-indent: 0;
 	}
 }
 .premium-pricing-button-container .premium-pricing-price-button {

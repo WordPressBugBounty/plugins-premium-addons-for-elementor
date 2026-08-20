@@ -824,7 +824,6 @@ class Shape_Divider {
 					} else if( settings.premium_gdivider_grad_xpos ) {
 						var gradType = settings.premium_gdivider_grad_type,
 							gradPos = 'linear' === gradType ? settings.premium_gdivider_grad_angle.size : [settings.premium_gdivider_grad_xpos.size, settings.premium_gdivider_grad_ypos.size ],
-							gradUnit = 'linear' === gradType ? 'deg' : '',
 							gradOptions = {
 								'gradType'  : gradType,
 								'firstColor': settings.premium_gdivider_grad_firstcolor,
@@ -855,7 +854,7 @@ class Shape_Divider {
 									<#
 										if ( 'linear' === gradOptions.gradType ) {
 											view.addRenderAttribute( 'grad_data', {
-												'gradientTransform': 'rotate(' + gradOptions.pos + gradUnit + ')'
+												'gradientTransform': 'rotate(' + gradOptions.pos + ' 0.5 0.5)'
 											});
 											#>
 											<linearGradient {{{view.getRenderAttributeString( 'grad_data' ) }}}>
@@ -1040,7 +1039,6 @@ class Shape_Divider {
 			// gradient.
 			$gradient_type = $settings['premium_gdivider_grad_type'];
 			$grad_pos      = 'linear' === $gradient_type ? $settings['premium_gdivider_grad_angle']['size'] : array( $settings['premium_gdivider_grad_xpos']['size'], $settings['premium_gdivider_grad_ypos']['size'] );
-			$grad_unit     = 'linear' === $gradient_type ? 'deg' : '';
 
 			$grad_options = array(
 				'gradType'   => $gradient_type,
@@ -1053,7 +1051,7 @@ class Shape_Divider {
 
 			if ( 'linear' === $grad_options['gradType'] ) {
 				$tag_close = '</linearGradient>';
-				$svg_html .= '<linearGradient id="pa-shape-divider-fill-' . $id . '" gradientUnits="objectBoundingBox"  gradientTransform="rotate(' . $grad_options['pos'] . $grad_unit . ')">';
+				$svg_html .= '<linearGradient id="pa-shape-divider-fill-' . $id . '" gradientUnits="objectBoundingBox" gradientTransform="rotate(' . $grad_options['pos'] . ' 0.5 0.5)">';
 			} else {
 				$tag_close = '</radialGradient>';
 				$svg_html .= '<radialGradient id="pa-shape-divider-fill-' . $id . '" gradientUnits="objectBoundingBox" cx="' . $grad_options['pos'][0] . '%" cy="' . $grad_options['pos'][1] . '%">';

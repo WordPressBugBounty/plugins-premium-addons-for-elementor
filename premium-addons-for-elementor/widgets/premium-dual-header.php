@@ -337,21 +337,7 @@ class Premium_Dual_Header extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'second_rotate',
-			array(
-				'label'     => __( 'Second Heading Rotation (deg)', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::NUMBER,
-				'min'       => -180,
-				'max'       => 180,
-				'selectors' => array(
-					'{{WRAPPER}}.premium-header-inline .premium-dual-header-second-header' => 'display:inline-block !important; transform: rotate({{VALUE}}deg);',
-					'{{WRAPPER}}.premium-header-block .premium-dual-header-second-header' => 'transform: rotate({{VALUE}}deg);',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
-			'transform_origin_x',
+			'first_transform_origin_x',
 			array(
 				'label'       => __( 'X Anchor Point', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::CHOOSE,
@@ -374,7 +360,112 @@ class Premium_Dual_Header extends Widget_Base {
 				'toggle'      => false,
 				'render_type' => 'ui',
 				'condition'   => array(
-					'rotate!' => '',
+					'first_rotate!' => '',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'first_transform_origin_y',
+			array(
+				'label'       => __( 'Y Anchor Point', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::CHOOSE,
+				'default'     => 'center',
+				'options'     => array(
+					'top'    => array(
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-top',
+					),
+					'center' => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-middle',
+					),
+					'bottom' => array(
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-bottom',
+					),
+				),
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-dual-header-first-span' => 'transform-origin: {{first_transform_origin_x.VALUE}} {{VALUE}}',
+				),
+				'label_block' => false,
+				'toggle'      => false,
+				'condition'   => array(
+					'first_rotate!' => '',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'second_rotate',
+			array(
+				'label'     => __( 'Second Heading Rotation (deg)', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::NUMBER,
+				'min'       => -180,
+				'max'       => 180,
+				'selectors' => array(
+					'{{WRAPPER}}.premium-header-inline .premium-dual-header-second-header' => 'display:inline-block !important; transform: rotate({{VALUE}}deg);',
+					'{{WRAPPER}}.premium-header-block .premium-dual-header-second-header' => 'transform: rotate({{VALUE}}deg);',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'second_transform_origin_x',
+			array(
+				'label'       => __( 'X Anchor Point', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::CHOOSE,
+				'default'     => 'center',
+				'options'     => array(
+					'left'   => array(
+						'title' => __( 'Left', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-h-align-left',
+					),
+					'center' => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-h-align-center',
+					),
+					'right'  => array(
+						'title' => __( 'Right', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-h-align-right',
+					),
+				),
+				'label_block' => false,
+				'toggle'      => false,
+				'render_type' => 'ui',
+				'condition'   => array(
+					'second_rotate!' => '',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'second_transform_origin_y',
+			array(
+				'label'       => __( 'Y Anchor Point', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::CHOOSE,
+				'default'     => 'center',
+				'options'     => array(
+					'top'    => array(
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-top',
+					),
+					'center' => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-middle',
+					),
+					'bottom' => array(
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-bottom',
+					),
+				),
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-dual-header-second-header' => 'transform-origin: {{second_transform_origin_x.VALUE}} {{VALUE}}',
+				),
+				'label_block' => false,
+				'toggle'      => false,
+				'condition'   => array(
+					'second_rotate!' => '',
 				),
 			)
 		);

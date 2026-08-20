@@ -795,7 +795,7 @@
 					});
 			});
 
-			// Tab, panel and alias handlers are scoped to the enclosing
+			// Tab and panel handlers are scoped to the enclosing
 			// .pa-mcp-connect container: the password and OAuth branches both
 			// render a full set of client tabs into the DOM at once.
 			$section.on("click", ".pa-mcp-client-tab", function () {
@@ -808,21 +808,6 @@
 				$connect
 					.find("#" + $tab.attr("data-pa-mcp-panel"))
 					.prop("hidden", false);
-			});
-
-			$section.on("input", ".pa-mcp-alias-input", function () {
-				var $alias = $(this),
-					cleanAlias = $alias.val().replace(/[^A-Za-z0-9_-]/g, "");
-
-				if (!cleanAlias) {
-					cleanAlias = "premium-addons";
-				}
-
-				$alias.val(cleanAlias);
-				$alias
-					.closest(".pa-mcp-connect")
-					.find(".pa-mcp-alias")
-					.text(cleanAlias);
 			});
 
 			// Connection-method chooser. Both branches are server-rendered (the
@@ -983,8 +968,8 @@
 
 			// Restore the branch this admin last looked at. OAuth is only restored
 			// when it is already enabled — selecting it otherwise would fire the
-			// opt-in request on page load. The panel starts collapsed, so the
-			// server-rendered default is never visible before this runs.
+			// opt-in request on page load. Nothing flashes: the tab is still
+			// display:none this early, so no branch has been painted yet.
 			if ("oauth" === storedMcpMethod()) {
 				var $oauthRadio = $section.find(
 					'input[name="pa-mcp-method"][value="oauth"]',
@@ -998,6 +983,36 @@
 					$oauthRadio.prop("checked", true);
 					showMcpBranch("oauth");
 				}
+			}
+
+			// The password form posts back to this page: land the reload on the
+			// offset it was submitted from, not at the top of the tab.
+			var SCROLL_KEY = "paMcpSubmitScroll";
+
+			$section.on("submit", ".pa-mcp-password-form", function () {
+				try {
+					window.sessionStorage.setItem(SCROLL_KEY, window.scrollY);
+				} catch (e) {
+					// Storage unavailable (private mode) — the page lands at the top.
+				}
+			});
+
+			var savedScroll = null;
+
+			try {
+				savedScroll = window.sessionStorage.getItem(SCROLL_KEY);
+				window.sessionStorage.removeItem(SCROLL_KEY);
+			} catch (e) {
+				savedScroll = null;
+			}
+
+			// Read once and dropped. The open panel is the server's marker that this
+			// load is the form's own response.
+			if (
+				null !== savedScroll &&
+				!$section.find("#pa-ai-panel-mcp").prop("hidden")
+			) {
+				window.scrollTo(0, parseInt(savedScroll, 10) || 0);
 			}
 		};
 

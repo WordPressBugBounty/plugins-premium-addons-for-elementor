@@ -1,12 +1,6 @@
 <?php
 /**
  * MCP Settings.
- *
- * Admin controller backing the Configure MCP Server step. Reports whether WordPress
- * Application Passwords are available, validates the password the user pastes in
- * (created on their profile page) and lists the AI clients shown in the connect
- * step. The dashboard tabs themselves are registered in
- * Admin_Helper::set_admin_tabs().
  */
 
 namespace PremiumAddons\Admin\Includes;
@@ -17,21 +11,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class MCP_Settings.
+ * Admin controller backing the Configure MCP Server step. The dashboard tabs
+ * themselves are registered in Admin_Helper::set_admin_tabs().
  *
  * @since 4.11.74
  */
 class MCP_Settings {
 
 	/**
-	 * Default local name for the MCP server.
+	 * Connection name used when the site URL yields nothing usable.
 	 *
 	 * @var string
 	 */
 	const DEFAULT_SERVER_NAME = 'premium-addons';
 
 	/**
-	 * Placeholder replaced by the editable client alias in the admin UI.
+	 * Longest connection name derived from the site URL.
+	 *
+	 * @var int
+	 */
+	const MAX_SERVER_NAME_LENGTH = 60;
+
+	/**
+	 * Placeholder replaced by the derived connection name in the admin UI.
 	 *
 	 * @var string
 	 */
@@ -45,9 +47,7 @@ class MCP_Settings {
 	const MCP_REMOTE_VERSION = '0.1.38';
 
 	/**
-	 * Class instance.
-	 *
-	 * @var instance
+	 * @var MCP_Settings|null
 	 */
 	private static $instance = null;
 
@@ -124,9 +124,6 @@ class MCP_Settings {
 	/**
 	 * Validate an application password pasted by the user.
 	 *
-	 * The value is only echoed back into the connection details — it is never
-	 * stored on the site.
-	 *
 	 * @return string|\WP_Error Trimmed value on success, WP_Error otherwise.
 	 */
 	private function validate_existing_password() {
@@ -150,10 +147,10 @@ class MCP_Settings {
 	 * Supported AI clients shown in the "Connect Your AI Client" section.
 	 *
 	 * Every client connects the same way — a streamable-HTTP MCP server
-	 * authenticated with a WordPress application password. The array order is the
-	 * tab display order: the clients that ship a copy-paste config snippet (the
-	 * keys in client_shape_map()) come first, then the prompt-only clients. Keep
-	 * it in sync with the Compatible AI clients list in the product vision.
+	 * authenticated with a WordPress application password or OAuth. The array
+	 * order is the tab display order: the clients with a guided setup (steps or
+	 * a copy-paste snippet) come first, then the prompt-only clients. Keep it in
+	 * sync with the Compatible AI clients list in the product vision.
 	 *
 	 * @since 4.11.74
 	 *
@@ -165,17 +162,16 @@ class MCP_Settings {
 			'claude-code'    => 'Claude Code',
 			'claude-desktop' => 'Claude Desktop',
 			'claude-ai'      => 'Claude (claude.ai)',
+			'chatgpt'        => 'ChatGPT',
+			'codex-chatgpt'  => 'Codex in ChatGPT Desktop',
+			'codex'          => 'Codex CLI',
 			'cursor'         => 'Cursor',
 			'vs-code'        => 'VS Code',
-			'codex'          => 'Codex',
 			'antigravity'    => 'Antigravity',
 			'github-copilot' => 'GitHub Copilot',
 			'windsurf'       => 'Windsurf',
 			'cline'          => 'Cline',
 			'gemini-cli'     => 'Gemini CLI',
-			'roo-code'       => 'Roo Code',
-			'amazon-q'       => 'Amazon Q',
-			'zed'            => 'Zed',
 			'kilo-code'      => 'Kilo Code',
 			'opencode'       => 'OpenCode',
 		);
@@ -204,10 +200,10 @@ class MCP_Settings {
 	 * @param string $endpoint_url MCP endpoint URL.
 	 * @param string $username     WordPress username. Unused when $password is ''.
 	 * @param string $password     WordPress application password. Omit for OAuth.
-	 * @param string $alias        Local client alias.
-	 * @return array<string,array<string,string|null>> Client configuration map.
+	 * @param string $alias        Local client alias. Empty derives it from the site URL.
+	 * @return array<string,array<string,mixed>> Client configuration map.
 	 */
-	public function build_client_configs( $endpoint_url, $username = '', $password = '', $alias = self::DEFAULT_SERVER_NAME ) {
+	public function build_client_configs( $endpoint_url, $username = '', $password = '', $alias = '' ) {
 
 		$clients            = self::get_supported_clients();
 		$shape_map          = self::client_shape_map();
@@ -215,7 +211,7 @@ class MCP_Settings {
 		$is_oauth           = '' === $auth_header;
 		$oauth_map          = $is_oauth ? self::client_oauth_map( $endpoint_url ) : array();
 		$clean_alias        = (string) preg_replace( '/[^A-Za-z0-9_-]/', '', $alias );
-		$deeplink_alias     = '' !== $clean_alias ? $clean_alias : self::DEFAULT_SERVER_NAME;
+		$deeplink_alias     = '' !== $clean_alias ? $clean_alias : self::default_server_name();
 		$connection_context = array(
 			'endpoint_url'   => $endpoint_url,
 			'auth_header'    => $auth_header,
@@ -270,21 +266,24 @@ class MCP_Settings {
 	}
 
 	/**
-	 * Build one supported client's configuration entry.
-	 *
 	 * @param string                    $client_key   Client key.
 	 * @param string                    $client_label Client display label.
 	 * @param array<string,string>|null $client_shape First-class client shape, or null.
 	 * @param array<string,string>      $connection_context Endpoint and authentication context.
-	 * @return array<string,string|null> Client configuration entry.
+	 * @return array<string,mixed> Client configuration entry.
 	 */
 	private function build_client_config( $client_key, $client_label, $client_shape, $connection_context ) {
 
-		$code     = null;
-		$deeplink = null;
+		$code         = null;
+		$windows_code = '';
+		$deeplink     = null;
 
 		if ( null !== $client_shape ) {
 			$code = $this->build_client_snippet( $client_shape, $connection_context['endpoint_url'], $connection_context['auth_header'] );
+
+			if ( 'bridge' === $client_shape['shape'] ) {
+				$windows_code = $this->build_bridge_windows_snippet( $connection_context['endpoint_url'], $connection_context['auth_header'], self::MCP_REMOTE_VERSION );
+			}
 
 			if ( 'cursor' === $client_key ) {
 				$deeplink = $this->build_cursor_deeplink( $connection_context['deeplink_alias'], $connection_context['endpoint_url'], $connection_context['auth_header'] );
@@ -295,22 +294,131 @@ class MCP_Settings {
 			'label'    => $client_label,
 			'shape'    => null !== $client_shape ? $client_shape['shape'] : null,
 			'lang'     => null !== $client_shape ? $client_shape['lang'] : null,
-			'hint'     => null !== $client_shape ? $client_shape['hint'] : null,
+			'hint'     => null !== $client_shape && isset( $client_shape['hint'] ) ? $client_shape['hint'] : null,
 			'code'     => $code,
+			'steps'    => null !== $code ? self::client_setup_steps( $client_key, $code, $windows_code ) : array(),
 			'deeplink' => $deeplink,
 			'prompt'   => $this->build_agent_prompt( $client_label, $connection_context['endpoint_url'], $connection_context['auth_header'] ),
 		);
 	}
 
 	/**
+	 * Numbered Application Password walkthrough for a first-class client: how to
+	 * reach its configuration through the client's own UI, the snippet to paste,
+	 * and a final check. Clients without an entry keep the hint + snippet
+	 * rendering.
+	 *
+	 * Verified against each vendor's setup documentation — when a client
+	 * changes its menus, update the matching case here.
+	 *
+	 * @since 4.11.99
+	 *
+	 * @param string $client_key   Client key.
+	 * @param string $code         Built configuration snippet.
+	 * @param string $windows_code Windows bridge variant, '' for non-bridge clients.
+	 * @return array<int,array<string,mixed>> Step blocks: title, desc, copy — or copies, a list of {badge, desc, copy} variants.
+	 */
+	private static function client_setup_steps( $client_key, $code, $windows_code = '' ) {
+
+		$codex_config_location = __( 'Your home folder is /Users/<you> on Mac and C:\Users\<you> on Windows.', 'premium-addons-for-elementor' );
+
+		switch ( $client_key ) {
+			case 'claude-code':
+				return array(
+					array(
+						'title' => __( 'Paste this command into your terminal and run it', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'It works from any folder and connects every project.', 'premium-addons-for-elementor' ),
+						'copy'  => $code,
+					),
+					array(
+						'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Open Claude Code and type /mcp — the connection should be listed with its tools.', 'premium-addons-for-elementor' ),
+					),
+				);
+
+			case 'claude-desktop':
+				return array(
+					array(
+						'title' => __( 'In Claude Desktop, open the Claude menu → Settings → Developer → Edit Config', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'This creates claude_desktop_config.json if needed and opens its folder — no need to search for it. The connection runs through a small helper started with npx, so Node.js (nodejs.org) must be installed.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title'  => __( 'Open claude_desktop_config.json in any text editor and paste the config for your system', 'premium-addons-for-elementor' ),
+						'desc'   => __( 'If the file already lists other servers, add just this server entry inside the existing "mcpServers" section instead of replacing the file.', 'premium-addons-for-elementor' ),
+						'copies' => array(
+							array(
+								'badge' => __( 'macOS / Linux', 'premium-addons-for-elementor' ),
+								'copy'  => $code,
+							),
+							array(
+								'badge' => __( 'Windows', 'premium-addons-for-elementor' ),
+								'desc'  => __( 'Windows starts the helper through cmd and keeps the password in the "env" entry — the macOS entry does not launch on Windows.', 'premium-addons-for-elementor' ),
+								'copy'  => $windows_code,
+							),
+						),
+					),
+					array(
+						'title' => __( 'Quit Claude Desktop completely, then reopen it', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'The file is read only at launch. On Windows, quit from the system-tray icon — closing the window is not enough.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Click the + button at the bottom of the chat box, then open Connectors → Manage connectors — the connection and its tools should be listed.', 'premium-addons-for-elementor' ),
+					),
+				);
+
+			case 'codex-chatgpt':
+				return array(
+					array(
+						'title' => __( 'Open (or create) config.toml inside the .codex folder in your home folder', 'premium-addons-for-elementor' ),
+						'desc'  => $codex_config_location . ' ' . __( 'The ChatGPT Desktop app, Codex CLI and the IDE extension all read this same file; the app\'s MCP settings screen cannot add the password header, which is why this is a file edit.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Add this to the end of the file and save', 'premium-addons-for-elementor' ),
+						'copy'  => $code,
+					),
+					array(
+						'title' => __( 'Restart the ChatGPT Desktop app', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Settings → MCP servers should then list the connection.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Type /mcp in the composer — the connection should be listed.', 'premium-addons-for-elementor' ),
+					),
+				);
+
+			case 'codex':
+				return array(
+					array(
+						'title' => __( 'Open (or create) config.toml inside the .codex folder in your home folder', 'premium-addons-for-elementor' ),
+						'desc'  => $codex_config_location . ' ' . __( 'The folder exists after running Codex once and may be hidden by the file manager.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Add this to the end of the file and save', 'premium-addons-for-elementor' ),
+						'copy'  => $code,
+					),
+					array(
+						'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Run this in your terminal — the connection should be listed.', 'premium-addons-for-elementor' ),
+						'copy'  => 'codex mcp list',
+					),
+				);
+		}
+
+		return array();
+	}
+
+	/**
 	 * Clients that can only be connected with OAuth, so they are hidden from the
 	 * Application Password branch rather than shown with instructions that
-	 * cannot work.
+	 * cannot work. Both are cloud clients whose connector UI takes no custom
+	 * request header (ChatGPT's New Plugin dialog offers OAuth, No Auth and
+	 * Mixed only — verified against the live UI).
 	 *
 	 * @return array<int,string> Client keys.
 	 */
 	private static function oauth_only_clients() {
-		return array( 'claude-ai' );
+		return array( 'claude-ai', 'chatgpt' );
 	}
 
 	/**
@@ -332,7 +440,7 @@ class MCP_Settings {
 		return array(
 			'claude-code'    => array(
 				'type' => 'cmd',
-				'cmd'  => sprintf( 'claude mcp add --transport http %1$s "%2$s"', $name, $endpoint_url ),
+				'cmd'  => sprintf( 'claude mcp add --scope user --transport http %1$s "%2$s"', $name, $endpoint_url ),
 			),
 			'claude-desktop' => array(
 				'type' => 'connector',
@@ -342,7 +450,59 @@ class MCP_Settings {
 				'type'     => 'connector',
 				'app'      => 'claude.ai',
 				'deeplink' => 'claude-ai',
-				'note'     => __( 'Custom connectors need a paid Claude plan. On Team and Enterprise an administrator may have to allow them first.', 'premium-addons-for-elementor' ),
+				'note'     => __( 'Works on every Claude plan (free plans can add one custom connector). On Team and Enterprise an administrator may have to allow custom connectors first. Claude connects from Anthropic\'s cloud, so your site must be reachable from the internet.', 'premium-addons-for-elementor' ),
+			),
+			'chatgpt'        => array(
+				'type'  => 'steps',
+				'note'  => __( 'ChatGPT connects from OpenAI\'s cloud, so your site must be reachable from the internet. Use ChatGPT on the web; on Business and Enterprise workspaces an administrator may have to allow Developer mode first.', 'premium-addons-for-elementor' ),
+				'steps' => array(
+					array(
+						'title' => __( 'Turn on Developer mode', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'In ChatGPT, open your profile menu → Settings → Plugins → Developer mode and switch it on. ChatGPT marks it "elevated risk" because it allows unverified connectors — this connection is your own site.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Open Plugins in the left sidebar and select Create app', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'The + button next to the search field opens the New Plugin dialog.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Name the plugin', 'premium-addons-for-elementor' ),
+						'copy'  => $name,
+					),
+					array(
+						'title' => __( 'Paste this as the MCP Server URL, then select Create', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Keep Connection on "Server URL" and Authentication on "OAuth", then tick "I understand and want to continue". Your browser opens so you can approve the connection.', 'premium-addons-for-elementor' ),
+						'copy'  => $endpoint_url,
+					),
+					array(
+						'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'The plugin appears in the Plugins page\'s Installed row. Mention it in a chat to use its tools.', 'premium-addons-for-elementor' ),
+					),
+				),
+			),
+			'codex-chatgpt'  => array(
+				'type'  => 'steps',
+				'steps' => array(
+					array(
+						'title' => __( 'In the ChatGPT Desktop app, open Settings → MCP servers → Add server', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Choose Streamable HTTP as the transport.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Use this name', 'premium-addons-for-elementor' ),
+						'copy'  => $name,
+					),
+					array(
+						'title' => __( 'Paste this URL, save, then select Restart', 'premium-addons-for-elementor' ),
+						'copy'  => $endpoint_url,
+					),
+					array(
+						'title' => __( 'Select Authenticate next to the connection', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Your browser opens so you can approve it.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Type /mcp in the composer — the connection should be listed.', 'premium-addons-for-elementor' ),
+					),
+				),
 			),
 			'cursor'         => array(
 				'type'     => 'config',
@@ -352,22 +512,27 @@ class MCP_Settings {
 			),
 			'vs-code'        => array(
 				'type'     => 'config',
-				'paths'    => array( '.vscode/mcp.json' ),
+				'paths'    => array( __( 'the file opened by Command Palette → "MCP: Open User Configuration"', 'premium-addons-for-elementor' ) ),
 				'template' => sprintf( "{\n    \"servers\": {\n        \"%1\$s\": {\n            \"type\": \"http\",\n            \"url\": \"%2\$s\"\n        }\n    }\n}", $name, $endpoint_url ),
 			),
-			// Codex reads the URL from config.toml but never starts the OAuth
-			// flow from it, so the login command is part of the setup, not a note.
+			// Codex never starts the OAuth flow on its own, so the login command
+			// is part of the setup, not a note.
 			'codex'          => array(
 				'type'  => 'steps',
 				'steps' => array(
 					array(
-						'title' => __( 'Add the server to ~/.codex/config.toml', 'premium-addons-for-elementor' ),
-						'copy'  => sprintf( "[mcp_servers.%1\$s]\nurl = \"%2\$s\"", $name, $endpoint_url ),
+						'title' => __( 'Add the connection from your terminal', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Needs a recent Codex version — on an older version, add the URL to ~/.codex/config.toml instead.', 'premium-addons-for-elementor' ),
+						'copy'  => sprintf( 'codex mcp add %1$s --url "%2$s"', $name, $endpoint_url ),
 					),
 					array(
 						'title' => __( 'Authorize it from your terminal', 'premium-addons-for-elementor' ),
 						'desc'  => __( 'Codex does not open the sign-in on its own, so this step is required.', 'premium-addons-for-elementor' ),
 						'copy'  => sprintf( 'codex mcp login %s', $name ),
+					),
+					array(
+						'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+						'copy'  => 'codex mcp list',
 					),
 				),
 			),
@@ -400,6 +565,9 @@ class MCP_Settings {
 	/**
 	 * Get the pinned configuration shape for first-class clients.
 	 *
+	 * A client with an entry in client_setup_steps() renders a numbered
+	 * walkthrough instead of a hint line, so it carries no hint here.
+	 *
 	 * @return array<string,array<string,string>> First-class client shape map.
 	 */
 	private static function client_shape_map() {
@@ -409,13 +577,21 @@ class MCP_Settings {
 				'shape'   => 'shell',
 				'variant' => 'claude-mcp-add',
 				'lang'    => 'shell',
-				'hint'    => __( 'Run this command in your terminal (no config file).', 'premium-addons-for-elementor' ),
 			),
 			'claude-desktop' => array(
 				'shape'   => 'bridge',
 				'variant' => 'mcp-remote',
 				'lang'    => 'json',
-				'hint'    => __( 'Configuration file: claude_desktop_config.json', 'premium-addons-for-elementor' ),
+			),
+			'codex-chatgpt'  => array(
+				'shape'   => 'toml',
+				'variant' => 'mcp_servers',
+				'lang'    => 'toml',
+			),
+			'codex'          => array(
+				'shape'   => 'toml',
+				'variant' => 'mcp_servers',
+				'lang'    => 'toml',
 			),
 			'cursor'         => array(
 				'shape'   => 'native',
@@ -427,19 +603,15 @@ class MCP_Settings {
 				'shape'   => 'native',
 				'variant' => 'servers',
 				'lang'    => 'json',
-				'hint'    => __( 'Configuration file: .vscode/mcp.json', 'premium-addons-for-elementor' ),
-			),
-			'codex'          => array(
-				'shape'   => 'toml',
-				'variant' => 'mcp_servers',
-				'lang'    => 'toml',
-				'hint'    => __( 'Configuration file: ~/.codex/config.toml', 'premium-addons-for-elementor' ),
+				'hint'    => __( 'Command Palette → "MCP: Open User Configuration" (available in all workspaces).', 'premium-addons-for-elementor' ),
 			),
 		);
 	}
 
 	/**
-	 * Build an HTTP Basic authentication token.
+	 * Build an HTTP Basic authentication token. Spaces are stripped because
+	 * WordPress displays application passwords space-separated but does not
+	 * accept them that way.
 	 *
 	 * @param string $username WordPress username.
 	 * @param string $password WordPress application password.
@@ -486,7 +658,7 @@ class MCP_Settings {
 	private function build_shell_snippet( $endpoint_url, $auth_header ) {
 
 		return sprintf(
-			'claude mcp add --transport http %1$s "%2$s" --header "Authorization: %3$s"',
+			'claude mcp add --scope user --transport http %1$s "%2$s" --header "Authorization: %3$s"',
 			self::NAME_TOKEN,
 			$endpoint_url,
 			$auth_header
@@ -546,6 +718,42 @@ class MCP_Settings {
 				self::NAME_TOKEN => array(
 					'command' => 'npx',
 					'args'    => $args,
+				),
+			),
+		);
+
+		return (string) wp_json_encode( $config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+	}
+
+	/**
+	 * Build the Windows bridge variant — launched through cmd with the
+	 * credential in env, because Windows breaks the npx spawn and arg spaces.
+	 *
+	 * @since 4.11.99
+	 *
+	 * @param string $endpoint_url          MCP endpoint URL.
+	 * @param string $auth_header           Authorization header value.
+	 * @param string $pinned_remote_version Pinned mcp-remote package version.
+	 * @return string JSON configuration.
+	 */
+	private function build_bridge_windows_snippet( $endpoint_url, $auth_header, $pinned_remote_version ) {
+
+		$config = array(
+			'mcpServers' => array(
+				self::NAME_TOKEN => array(
+					'command' => 'cmd',
+					'args'    => array(
+						'/c',
+						'npx',
+						'-y',
+						'mcp-remote@' . $pinned_remote_version,
+						$endpoint_url,
+						'--header',
+						'Authorization:${AUTH_HEADER}', // Substituted by mcp-remote at run time, not the shell.
+					),
+					'env'     => array(
+						'AUTH_HEADER' => $auth_header,
+					),
 				),
 			),
 		);
@@ -624,6 +832,35 @@ class MCP_Settings {
 	}
 
 	/**
+	 * Connection name written into every client snippet.
+	 *
+	 * Derived from the site URL so someone connecting a live site, its staging
+	 * copy and a local copy ends up with three distinct servers instead of three
+	 * called "premium-addons". The path is part of it because subdirectory
+	 * installs share a host and would otherwise still collide.
+	 *
+	 * @since 4.11.99
+	 *
+	 * @return string Connection name, matching [A-Za-z0-9_-]+.
+	 */
+	public static function default_server_name() {
+
+		$home = home_url();
+		$host = preg_replace( '/^www\./', '', self::get_endpoint_host( $home ) );
+		$slug = trim( (string) preg_replace( '/[^a-z0-9]+/', '-', strtolower( $host . (string) wp_parse_url( $home, PHP_URL_PATH ) ) ), '-' );
+
+		if ( '' === $slug ) {
+			return self::DEFAULT_SERVER_NAME;
+		}
+
+		$name = 'pa-' . $slug;
+
+		return strlen( $name ) > self::MAX_SERVER_NAME_LENGTH
+			? rtrim( substr( $name, 0, self::MAX_SERVER_NAME_LENGTH ), '-' )
+			: $name;
+	}
+
+	/**
 	 * Get the host used by the actual MCP endpoint.
 	 *
 	 * @param string $endpoint_url MCP endpoint URL.
@@ -678,22 +915,6 @@ class MCP_Settings {
 	}
 
 	/**
-	 * Determine whether an endpoint looks like a production connection.
-	 *
-	 * @param string $endpoint_url MCP endpoint URL.
-	 * @return bool Whether to show the production advisory.
-	 */
-	public static function looks_like_production( $endpoint_url ) {
-
-		$environment = wp_get_environment_type();
-
-		return ! self::is_local_host( self::get_endpoint_host( $endpoint_url ) )
-			&& ! in_array( $environment, array( 'local', 'development' ), true );
-	}
-
-	/**
-	 * Creates and returns an instance of the class.
-	 *
 	 * @return MCP_Settings
 	 */
 	public static function get_instance() {

@@ -1265,6 +1265,16 @@ class Premium_Modalbox extends Widget_Base {
 		);
 
 		$this->add_control(
+			'lock_page_scroll',
+			array(
+				'label'        => __( 'Disable Page Scroll', 'premium-addons-for-elementor' ),
+				'description'  => __( 'Prevents the page behind the modal from scrolling while the modal is open.', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'premium-modal-lock-scroll-',
+			)
+		);
+
+		$this->add_control(
 			'premium_modal_box_upper_close',
 			array(
 				'label'     => __( 'Upper Close Button', 'premium-addons-for-elementor' ),

@@ -1,20 +1,30 @@
 (function () {
 	var $ = jQuery;
 
+	function getParentDocument() {
+		try {
+			return parent.document;
+		} catch (err) {
+			return null;
+		}
+	}
+
 	$(window).on("elementor:init", function () {
-		if (typeof parent.document === "undefined") {
+		var parentDocument = getParentDocument();
+
+		if (!parentDocument) {
 			return false;
 		}
 
-		parent.document.addEventListener("mousedown", function (e) {
-			var widgets = parent.document.querySelectorAll(
+		parentDocument.addEventListener("mousedown", function (e) {
+			var widgets = parentDocument.querySelectorAll(
 				".elementor-element--promotion",
 			);
 
 			if (widgets.length > 0) {
 				for (var i = 0; i < widgets.length; i++) {
 					if (widgets[i].contains(e.target)) {
-						var dialog = parent.document.querySelector(
+						var dialog = parentDocument.querySelector(
 							"#elementor-element--promotion__dialog",
 						);
 						var icon = widgets[i].querySelector(".icon > i");

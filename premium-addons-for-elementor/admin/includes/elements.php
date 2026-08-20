@@ -267,7 +267,7 @@ $elements = array(
 				'name'  => 'premium-image-scroll',
 				'title' => __( 'Image Scroll', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-image-scroll-widget/', 'img-scroll', 'wp-dash', 'dashboard' ),
-				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/image-scroll-widget-tutorial/', 'img-scroll', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-image-scroll-widget-tutorial/', 'img-scroll', 'wp-dash', 'dashboard' ),
 			),
 			array(
 				'key'      => 'premium-image-separator',
@@ -835,7 +835,7 @@ $elements = array(
 				'name'  => 'premium-image-scroll',
 				'title' => __( 'Image Scroll', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-image-scroll-widget/', 'img-scroll', 'wp-dash', 'dashboard' ),
-				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/image-scroll-widget-tutorial/', 'img-scroll', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-image-scroll-widget-tutorial/', 'img-scroll', 'wp-dash', 'dashboard' ),
 			),
 			array(
 				'key'      => 'premium-image-separator',

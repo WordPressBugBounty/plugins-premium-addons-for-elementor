@@ -1,6 +1,6 @@
 <?php
 /**
- * AI-client alias field, tab navigation and config panels.
+ * AI-client tab navigation and config panels.
  *
  * Included from mcp-config.php into its scope, once per connection method.
  * Expects from that scope:
@@ -15,16 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use PremiumAddons\Admin\Includes\MCP_Settings;
-?>
 
-				<div class="pa-mcp-alias-field">
-					<label class="pa-mcp-field-label" for="pa-mcp-alias-<?php echo esc_attr( $tabs_prefix ); ?>">
-						<?php esc_html_e( 'Client alias', 'premium-addons-for-elementor' ); ?>
-						<span><?php esc_html_e( '(local name in your config)', 'premium-addons-for-elementor' ); ?></span>
-					</label>
-					<input type="text" id="pa-mcp-alias-<?php echo esc_attr( $tabs_prefix ); ?>" class="regular-text pa-mcp-alias-input" pattern="[A-Za-z0-9_\-]+" value="<?php echo esc_attr( MCP_Settings::DEFAULT_SERVER_NAME ); ?>">
-					<p class="description"><?php esc_html_e( 'This only names the server inside your client configuration; the Premium Addons server ID is fixed.', 'premium-addons-for-elementor' ); ?></p>
-				</div>
+// Read by every mcp-copy-block.php include below, directly and through
+// mcp-oauth-setup.php, which this file includes into its own scope.
+$copy_alias = MCP_Settings::default_server_name();
+?>
 
 				<div class="pa-mcp-clients-nav">
 					<?php
@@ -52,19 +47,35 @@ use PremiumAddons\Admin\Includes\MCP_Settings;
 							<?php if ( ! empty( $config['oauth'] ) ) : ?>
 								<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-oauth-setup.php'; ?>
 							<?php elseif ( ! empty( $config['code'] ) ) : ?>
-								<p class="pa-mcp-hint"><?php echo esc_html( (string) $config['hint'] ); ?></p>
+								<?php if ( ! empty( $config['steps'] ) ) : ?>
+									<?php
+									$steps_blocks    = $config['steps'];
+									$steps_id_prefix = $panel_prefix . '-steps-' . $client_key;
+									include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-steps.php';
+									?>
+								<?php else : ?>
+									<p class="pa-mcp-hint"><?php echo esc_html( (string) $config['hint'] ); ?></p>
 
-								<?php
-								$copy_id      = $panel_prefix . '-code-' . $client_key;
-								$copy_text    = $config['code'];
-								$copy_label   = __( 'Copy configuration', 'premium-addons-for-elementor' );
-								$copy_primary = true;
-								include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-copy-block.php';
-								?>
+									<?php
+									$copy_id      = $panel_prefix . '-code-' . $client_key;
+									$copy_text    = $config['code'];
+									$copy_label   = __( 'Copy configuration', 'premium-addons-for-elementor' );
+									$copy_primary = true;
+									include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-copy-block.php';
+									?>
+								<?php endif; ?>
 
 								<?php if ( null !== $config['deeplink'] ) : ?>
 									<p><a class="button pa-mcp-deeplink" href="<?php echo esc_url( (string) $config['deeplink'], array( 'cursor' ) ); ?>"><?php esc_html_e( 'Install in Cursor', 'premium-addons-for-elementor' ); ?></a></p>
-									<p class="description pa-mcp-hint"><?php esc_html_e( 'This installs as premium-addons; rename it later in mcp.json if needed.', 'premium-addons-for-elementor' ); ?></p>
+									<p class="description pa-mcp-hint">
+										<?php
+										printf(
+											/* translators: %s: connection name written into the client configuration. */
+											esc_html__( 'This installs as %s; rename it later in mcp.json if needed.', 'premium-addons-for-elementor' ),
+											esc_html( $copy_alias )
+										);
+										?>
+									</p>
 								<?php endif; ?>
 
 								<?php if ( 'bridge' === $config['shape'] && $mcp_is_local && 'https' === $mcp_scheme ) : ?>

@@ -102,3 +102,7 @@
 .error.pa-notice-wrap .pa-text-wrap a:not(:first-of-type) {
 	margin-inline-start: 0.3em;
 }
+
+.error.pa-connect-ai-notice .pa-text-wrap a:not(:first-of-type) {
+	margin-inline-start: 0;
+}

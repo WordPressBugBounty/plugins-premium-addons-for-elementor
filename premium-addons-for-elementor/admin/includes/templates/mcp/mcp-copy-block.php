@@ -5,7 +5,8 @@
  * Included wherever a connection snippet is shown. Expects in scope:
  * - $copy_id      Unique element id for the <pre>, used by the copy button.
  * - $copy_text    Snippet text. Occurrences of MCP_Settings::NAME_TOKEN become
- *                 the live alias span the alias field rewrites.
+ *                 the highlighted connection-name span.
+ * - $copy_alias   Connection name substituted for that token.
  * - $copy_label   Button label.
  * - $copy_primary Whether the button is the panel's primary action.
  *
@@ -23,7 +24,7 @@ $copy_parts = explode( MCP_Settings::NAME_TOKEN, (string) $copy_text );
 ?>
 <pre class="pa-mcp-connect-prompt" id="<?php echo esc_attr( $copy_id ); ?>"><?php
 	echo implode(
-		'<span class="pa-mcp-alias">' . esc_html( MCP_Settings::DEFAULT_SERVER_NAME ) . '</span>',
+		'<span class="pa-mcp-alias">' . esc_html( $copy_alias ) . '</span>',
 		array_map( 'esc_html', $copy_parts )
 	); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- each part escaped above.
 ?></pre>

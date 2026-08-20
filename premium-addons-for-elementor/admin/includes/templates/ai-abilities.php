@@ -4,6 +4,7 @@
  */
 
 use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Admin\Includes\MCP_Settings;
 use PremiumAddons\Includes\Abilities\Bootstrap;
 use PremiumAddons\Includes\Abilities\Connection_Log;
 use PremiumAddons\Includes\Helper_Functions;
@@ -43,6 +44,15 @@ if ( $abilities_ready ) {
 	// reuses both, so the lookup is not repeated on the way down.
 	$mcp_state     = Connection_Log::get_state();
 	$is_configured = Connection_Log::STATE_NONE !== $mcp_state['state'];
+
+	// Handled here, not in mcp-config.php: that file is included into the panel
+	// body, after the header below has already decided whether it is open.
+	$mcp            = MCP_Settings::get_instance();
+	$password_state = $mcp->maybe_handle_password_forms();
+	$used_password  = $password_state['existing_password'];
+	$used_error     = $password_state['existing_error'];
+
+	$mcp_panel_open = null !== $used_password || null !== $used_error;
 
 	$badges = array(
 		Connection_Log::STATE_ACTIVE    => array(
@@ -108,7 +118,7 @@ if ( $abilities_ready ) {
 
 			<div class="pa-ai-accordion-item">
 				<h3 class="pa-ai-accordion-title">
-					<button type="button" class="pa-ai-accordion-toggle" aria-expanded="false" aria-controls="pa-ai-panel-mcp">
+					<button type="button" class="pa-ai-accordion-toggle" aria-expanded="<?php echo $mcp_panel_open ? 'true' : 'false'; ?>" aria-controls="pa-ai-panel-mcp">
 						<span class="pa-ai-accordion-icon" aria-hidden="true"></span>
 						<?php
 						echo $is_configured
@@ -121,7 +131,7 @@ if ( $abilities_ready ) {
 					<span class="pa-mcp-status-pill <?php echo esc_attr( $badge['class'] ); ?>"><?php echo esc_html( $badge['label'] ); ?></span>
 				</h3>
 
-				<div id="pa-ai-panel-mcp" class="pa-ai-accordion-body" hidden>
+				<div id="pa-ai-panel-mcp" class="pa-ai-accordion-body"<?php echo $mcp_panel_open ? '' : ' hidden'; ?>>
 					<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-config.php'; ?>
 				</div>
 			</div>

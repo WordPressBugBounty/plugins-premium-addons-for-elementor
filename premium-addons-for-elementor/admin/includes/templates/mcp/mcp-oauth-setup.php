@@ -18,7 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 use PremiumAddons\Admin\Includes\MCP_Settings;
 
 $setup     = $config['oauth'];
-$copy_seq  = 0;
 $signin_of = __( 'The next time this client connects, your browser opens so you can approve it. Approve once and it stays connected.', 'premium-addons-for-elementor' );
 ?>
 
@@ -36,20 +35,20 @@ $signin_of = __( 'The next time this client connects, your browser opens so you 
 								<?php endif; ?>
 
 								<?php
-								// Every copy block goes through the same alias-token substitution,
-								// so the alias field keeps rewriting them live.
 								$blocks = array();
 
 								if ( 'cmd' === $setup['type'] ) {
 									$blocks[] = array(
 										'title' => __( 'Run this in your terminal', 'premium-addons-for-elementor' ),
-										'desc'  => '',
 										'copy'  => $setup['cmd'],
 									);
 									$blocks[] = array(
-										'title' => __( 'Approve the connection', 'premium-addons-for-elementor' ),
-										'desc'  => $signin_of,
-										'copy'  => '',
+										'title' => __( 'Start Claude Code and run /mcp to sign in', 'premium-addons-for-elementor' ),
+										'desc'  => __( 'Pick the connection in the /mcp panel — your browser opens so you can approve it.', 'premium-addons-for-elementor' ),
+									);
+									$blocks[] = array(
+										'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+										'desc'  => __( 'The same /mcp panel shows the connection with its tools once it is approved.', 'premium-addons-for-elementor' ),
 									);
 								} elseif ( 'connector' === $setup['type'] ) {
 									$blocks[] = array(
@@ -71,6 +70,10 @@ $signin_of = __( 'The next time this client connects, your browser opens so you 
 										'desc'  => __( 'Leave the OAuth Client ID and Client Secret empty. Your browser opens so you can approve the connection.', 'premium-addons-for-elementor' ),
 										'copy'  => $mcp_endpoint,
 									);
+									$blocks[] = array(
+										'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+										'desc'  => __( 'The connection appears in that Connectors list, and its tools show under the + button in the chat box.', 'premium-addons-for-elementor' ),
+									);
 								} elseif ( 'config' === $setup['type'] ) {
 									$blocks[] = array(
 										'title' => sprintf(
@@ -87,13 +90,7 @@ $signin_of = __( 'The next time this client connects, your browser opens so you 
 										'copy'  => '',
 									);
 								} elseif ( 'steps' === $setup['type'] ) {
-									foreach ( $setup['steps'] as $step ) {
-										$blocks[] = array(
-											'title' => $step['title'],
-											'desc'  => isset( $step['desc'] ) ? $step['desc'] : '',
-											'copy'  => isset( $step['copy'] ) ? $step['copy'] : '',
-										);
-									}
+									$blocks = $setup['steps'];
 								} else {
 									$blocks[] = array(
 										'title' => __( 'Add this site as a Streamable HTTP MCP server', 'premium-addons-for-elementor' ),
@@ -108,25 +105,8 @@ $signin_of = __( 'The next time this client connects, your browser opens so you 
 								}
 								?>
 
-								<ol class="pa-mcp-oauth-steps">
-									<?php foreach ( $blocks as $block ) : ?>
-										<li>
-											<p class="pa-mcp-oauth-step"><strong><?php echo esc_html( $block['title'] ); ?></strong></p>
-
-											<?php if ( '' !== $block['desc'] ) : ?>
-												<p class="description pa-mcp-oauth-desc"><?php echo esc_html( $block['desc'] ); ?></p>
-											<?php endif; ?>
-
-											<?php
-											if ( '' !== $block['copy'] ) :
-												++$copy_seq;
-												$copy_id      = $panel_prefix . '-oauth-' . $client_key . '-' . $copy_seq;
-												$copy_text    = $block['copy'];
-												$copy_label   = __( 'Copy', 'premium-addons-for-elementor' );
-												$copy_primary = false;
-												include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-copy-block.php';
-											endif;
-											?>
-										</li>
-									<?php endforeach; ?>
-								</ol>
+								<?php
+								$steps_blocks    = $blocks;
+								$steps_id_prefix = $panel_prefix . '-oauth-' . $client_key;
+								require PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-steps.php';
+								?>

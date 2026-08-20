@@ -1795,8 +1795,7 @@ class Premium_Contactform extends Widget_Base {
 		$result = array();
 
 		foreach ( $forms as $item ) {
-			$key            = sprintf( '%1$s::%2$s', $item->id(), $item->title() );
-			$result[ $key ] = $item->title();
+			$result[ $item->id() ] = $item->title();
 		}
 
 		return $result;
@@ -1835,7 +1834,10 @@ class Premium_Contactform extends Widget_Base {
 			}
 		}
 
-		$form_id = 'existing' === $source ? $settings['premium_wpcf7_form'] : $settings['form_id'];
+		// Values saved before 4.11.99 were "<id>::<title>", which WordPress 7.1 get_post() rejects as a non-numeric ID.
+		$existing_form_id = explode( '::', $settings['premium_wpcf7_form'] )[0];
+
+		$form_id = 'existing' === $source ? $existing_form_id : $settings['form_id'];
 
 		if ( ! empty( $form_id ) ) {
 

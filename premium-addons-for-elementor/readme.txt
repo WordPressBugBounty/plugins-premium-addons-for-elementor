@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, elementor widgets, elementor ai, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 6.6
-Tested Up To: 7.0
+Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.98
+Stable Tag: 4.11.99
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -261,6 +261,19 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.99 - 20/8/2026 =
+
+- New: Added ChatGPT to the AI clients supported by the OAuth connection method in AI Abilities.
+- Tweak: Added Disable Page Scroll option in Premium Modal Box widget.
+- Tweak: Added X Anchor Point and Y Anchor Point options to control the rotation origin in Premium Dual Heading widget.
+- Tweak: Added step by step configuration instructions for each AI client in Premium Addons MCP settings.
+- Fixed: Contact Form 7 widget not showing the selected form on WordPress 7.1.
+- Fixed: Gradient angle option not working in Shape Divider addon.
+- Fixed: Edit Mega Content button not working on Chrome in Premium Mega Menu widget.
+- Fixed: SVG icon hover color not working in Premium Image Button widget.
+- Fixed: Use This Password button reloading the AI Abilities page with all setup steps collapsed.
+- Fixed: Claude Desktop configuration code not working on Windows in Premium Addons MCP settings.
 
 = 4.11.98 - 13/8/2026 =
 

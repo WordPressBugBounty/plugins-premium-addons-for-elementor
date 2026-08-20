@@ -753,7 +753,7 @@ class Premium_Image_Scroll extends Widget_Base {
 			)
 		);
 
-		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/image-scroll-widget-tutorial/', 'img-scroll-widget', 'wp-editor', 'get-support' );
+		$doc1_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-image-scroll-widget-tutorial/', 'img-scroll-widget', 'wp-editor', 'get-support' );
 
 		$this->add_control(
 			'doc_1',
