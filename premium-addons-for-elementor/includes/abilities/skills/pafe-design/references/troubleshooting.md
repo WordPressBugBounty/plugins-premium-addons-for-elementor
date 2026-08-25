@@ -31,12 +31,26 @@ Tool calls succeed but writes fail → the connected WordPress user lacks capabi
 - `premium_addons_widget_source_locked` — third-party widget on a free site; the error includes an upgrade link — relay it (once, per the PRO boundary rules).
 - `premium_addons_widget_source_disabled` — PRO is active but third-party building is off: Premium Addons → AI Abilities → Build → third-party toggle.
 
+## Premium Templates (catalog)
+
+- **Both template tools missing from context** → toggled off in AI Abilities (Toolset states). **Present but erroring:**
+- `premium_addons_templates_disabled` — the Premium Templates feature is off: **Premium Addons → Features → Premium Templates**; offer to enable it via `premium-addons-update-setting` (key `premium-templates`), on a yes.
+- `premium_addons_catalog_data_unavailable` — the _site_ can't reach premiumtemplates.io (outbound HTTP blocked by host/firewall, or the catalog is down). Retry once later; if it persists, say so and scratch-build.
+- `premium_addons_template_data_unavailable` — two causes, read the message: no cached metadata for that id (`premium-addons-list-premium-templates` hasn't returned it — list so the id appears in a result, then retry), or the catalog returned a template with no content (retry later; re-listing won't help).
+- `premium_addons_invalid_template_id` / `premium_addons_missing_template_id` — the id isn't in the catalog or wasn't sent. Never guess ids; re-list.
+- `premium_addons_missing_pro_license` — Pro template on a site without a valid PRO license; nothing was written. PRO boundary path; offer a free template from the same category.
+- `premium_addons_missing_plugin` — the section needs WooCommerce or Contact Form 7 (its `notice`); the insert refused. Name the plugin; don't work around it.
+- **`category` / `keyword` show no enum values in the tool schema** → the catalog was unreachable when the tools registered. Pass plain slugs from the `premium-templates` category table; a filtered query with zero results returns `valid_categories` / `valid_keywords` when the term lists are reachable.
+
 ## "It renders nothing"
 
 - **Template-picker set by id** — the #1 cause. Pickers store the template's post **title**; rewrite the control with the exact `title` string from `premium-addons-list-templates`.
+- **An inserted Premium Template's carousel / modal / scroll section is empty** — check the insert result: a `template_failed` warning means the inner library template wasn't created; `templates[]` shows what was. Offer to build that inner content by hand.
+- **An inserted Premium Template shows a blank spot where a widget should be** — a `missing_widget` (not registered here: disabled, not installed, or PRO absent) or `pro_gated` (third-party widget locked: free site, or PRO's third-party switch off) warning; follow the matching widget availability state.
+- **An inserted section still loads images from premiumtemplates.io** — `failed_media` warning; the sideload failed, so the element hotlinks. Replace via Media policy.
 - **Element built but invisible** — check Display Conditions on it, responsive visibility settings, and whether it landed inside an unexpected parent (`premium-addons-get-page-structure`).
 - **Stale styling after big changes** — `premium-addons-clear-dynamic-assets`, then hard-refresh.
 
 ## Rollback
 
-Duplicate-then-edit is the safety net (`premium-addons-duplicate-post` before risky work). WordPress revisions restore a page's content history (wp-admin → the page → Revisions). `premium-addons-remove-element` surgically removes one mistake. Nothing publishes without approval, so the live site is safe by default.
+Duplicate-then-edit is the safety net (`premium-addons-duplicate-post` before risky work). WordPress revisions restore a page's content history (wp-admin → the page → Revisions). `premium-addons-remove-element` surgically removes one mistake — including a whole inserted Premium Template section (remove each of its `inserted_element_ids`); the library templates that insert created stay under Templates → Saved Templates until the user deletes them. Nothing publishes without approval, so the live site is safe by default.

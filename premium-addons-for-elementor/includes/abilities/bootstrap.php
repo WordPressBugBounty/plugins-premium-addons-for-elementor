@@ -192,6 +192,10 @@ class Bootstrap {
 				'label'       => __( 'Cross Domain Copy & Paste', 'premium-addons-for-elementor' ),
 				'description' => __( 'Abilities that copy Elementor elements from one site to another without the content passing through the AI client.', 'premium-addons-for-elementor' ),
 			),
+			'pa-templates'            => array(
+				'label'       => __( 'Premium Templates', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities that browse the Premium Templates catalog and insert its ready-made sections into pages.', 'premium-addons-for-elementor' ),
+			),
 		);
 	}
 
@@ -335,6 +339,8 @@ class Bootstrap {
 			Transfer\Check_Import_Compatibility::class,
 			Transfer\Export_Elements::class,
 			Transfer\Import_Elements::class,
+			Templates\List_Premium_Templates::class,
+			Templates\Insert_Premium_Template::class,
 		);
 	}
 

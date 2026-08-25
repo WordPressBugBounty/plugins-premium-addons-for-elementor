@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.99
+Stable Tag: 4.11.100
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -26,6 +26,8 @@ It has Elementor elements like **Carousel, Blog Posts List/Slider, Mega Menu Bui
 Connect Claude, ChatGPT, Cursor, or any MCP client to your site in one click with OAuth or use an application password. No API key, no code.
 
 Built on the WordPress Abilities API and the Model Context Protocol (MCP), Premium Addons gives AI agents 35+ tools that work on your real Elementor site: build pages and templates, duplicate existing ones, insert widgets from Premium Addons and other third-party Elementor plugins, read your global colors and fonts, copy sections between sites, and manage plugin settings. New abilities ship with almost every release. [Watch Use Cases!](https://premiumaddons.com/elementor-mcp-and-ai-abilities/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=ai).
+
+Step by step setup guides: [Connect ChatGPT to Your WordPress/Elementor Website](https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=connect-chatgpt) | [Connect Claude to Build WordPress/Elementor Pages](https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=connect-claude).
 
 ## KEY FEATURES
 
@@ -261,6 +263,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.100 - 25/8/2026 =
+
+- New: AI agents can now browse and insert Premium Addons pre-made templates into your pages through AI Abilities.
+- Tweak: AI agents now suggest matching pre-made templates while building pages for higher quality designs.
+- Tweak: Updated ChatGPT connection instructions in Premium Addons MCP settings.
+- Tweak: Added a message in Premium Addons MCP settings when the OAuth connection is blocked by a REST API authentication restriction.
+- Fixed: Text Indent option not applied on list items in Premium Pricing Table widget.
 
 = 4.11.99 - 20/8/2026 =
 

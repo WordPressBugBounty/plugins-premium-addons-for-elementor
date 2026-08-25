@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 4.11.100 - 25/8/2026 =
+
+- New: AI agents can now browse and insert Premium Addons pre-made templates into your pages through AI Abilities.
+- Tweak: AI agents now suggest matching pre-made templates while building pages for higher quality designs.
+- Tweak: Updated ChatGPT connection instructions in Premium Addons MCP settings.
+- Tweak: Added a message in Premium Addons MCP settings when the OAuth connection is blocked by a REST API authentication restriction.
+- Fixed: Text Indent option not applied on list items in Premium Pricing Table widget.
+
 = 4.11.99 - 20/8/2026 =
 
 - New: Added ChatGPT to the AI clients supported by the OAuth connection method in AI Abilities.

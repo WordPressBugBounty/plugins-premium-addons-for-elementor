@@ -1332,17 +1332,15 @@ class Admin_Helper {
 			wp_send_json_error( array( 'message' => $reason ) );
 		}
 
-		// This filter short-circuits authentication before any route's
-		// permission_callback runs, so it would 401 the anonymous OAuth
-		// endpoints mid-handshake.
-		$auth_probe = apply_filters( 'rest_authentication_errors', null );
+		// Check if a plugin blocks unauthenticated REST requests. If so, surface the error.
+		$auth_probe = OAuth\Bootstrap::rest_lock_error();
 
-		if ( is_wp_error( $auth_probe ) ) {
+		if ( null !== $auth_probe ) {
 			wp_send_json_error(
 				array(
 					'message' => sprintf(
 						/* translators: %s: error message from the REST authentication filter. */
-						__( 'A plugin on this site blocks unauthenticated REST API requests, which OAuth needs: %s', 'premium-addons-for-elementor' ),
+						__( 'A password-protection or firewall plugin on this site blocks unauthenticated REST API requests, which OAuth needs: %s', 'premium-addons-for-elementor' ),
 						$auth_probe->get_error_message()
 					),
 				)

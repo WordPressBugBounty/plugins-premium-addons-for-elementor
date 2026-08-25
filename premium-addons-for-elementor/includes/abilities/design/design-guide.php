@@ -40,12 +40,13 @@ class Design_Guide {
 	 * The only place a skill file path is written.
 	 */
 	const PARTS = array(
-		'workflow'         => 'includes/abilities/skills/pafe-design/SKILL.md',
-		'design-guide'     => 'includes/abilities/skills/pafe-design/references/design-guide.md',
-		'widget-selection' => 'includes/abilities/skills/pafe-design/references/widget-selection.md',
-		'global-addons'    => 'includes/abilities/skills/pafe-design/references/global-addons.md',
-		'page-patterns'    => 'includes/abilities/skills/pafe-design/references/page-patterns.md',
-		'troubleshooting'  => 'includes/abilities/skills/pafe-design/references/troubleshooting.md',
+		'workflow'          => 'includes/abilities/skills/pafe-design/SKILL.md',
+		'design-guide'      => 'includes/abilities/skills/pafe-design/references/design-guide.md',
+		'premium-templates' => 'includes/abilities/skills/pafe-design/references/premium-templates.md',
+		'widget-selection'  => 'includes/abilities/skills/pafe-design/references/widget-selection.md',
+		'global-addons'     => 'includes/abilities/skills/pafe-design/references/global-addons.md',
+		'page-patterns'     => 'includes/abilities/skills/pafe-design/references/page-patterns.md',
+		'troubleshooting'   => 'includes/abilities/skills/pafe-design/references/troubleshooting.md',
 	);
 
 	/**

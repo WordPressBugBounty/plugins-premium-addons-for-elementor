@@ -250,6 +250,27 @@ class Bootstrap {
 	}
 
 	/**
+	 * The lock-plugin error an anonymous visitor would get from the REST
+	 * authentication filter chain, or null when anonymous REST is reachable.
+	 *
+	 * Probed with no user set — the plugins that block anonymous REST exempt
+	 * logged-in users. Not a gate: this runs on the opt-in click only.
+	 *
+	 * @since 4.11.100
+	 * @return \WP_Error|null
+	 */
+	public static function rest_lock_error() {
+
+		$restore = get_current_user_id();
+
+		wp_set_current_user( 0 );
+		$probe = apply_filters( 'rest_authentication_errors', null );
+		wp_set_current_user( $restore );
+
+		return is_wp_error( $probe ) ? $probe : null;
+	}
+
+	/**
 	 * Whether the OAuth surface is live: available and opted in (gate 4).
 	 * Gates the bearer callback binding, every endpoint and discovery.
 	 *

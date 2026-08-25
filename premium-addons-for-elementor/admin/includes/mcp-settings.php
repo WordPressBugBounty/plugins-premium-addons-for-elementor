@@ -458,18 +458,18 @@ class MCP_Settings {
 				'steps' => array(
 					array(
 						'title' => __( 'Turn on Developer mode', 'premium-addons-for-elementor' ),
-						'desc'  => __( 'In ChatGPT, open your profile menu → Settings → Plugins → Developer mode and switch it on. ChatGPT marks it "elevated risk" because it allows unverified connectors — this connection is your own site.', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'In ChatGPT, open your profile menu → Settings → Security and login → Developer mode and switch it on. ChatGPT marks it "elevated risk" because it allows unverified connectors — this connection is your own site.', 'premium-addons-for-elementor' ),
 					),
 					array(
-						'title' => __( 'Open Plugins in the left sidebar and select Create app', 'premium-addons-for-elementor' ),
-						'desc'  => __( 'The + button next to the search field opens the New Plugin dialog.', 'premium-addons-for-elementor' ),
+						'title' => __( 'Open Plugins in the left sidebar and click the + button', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'The + next to the "Search plugins" field opens the New Plugin dialog.', 'premium-addons-for-elementor' ),
 					),
 					array(
 						'title' => __( 'Name the plugin', 'premium-addons-for-elementor' ),
 						'copy'  => $name,
 					),
 					array(
-						'title' => __( 'Paste this as the MCP Server URL, then select Create', 'premium-addons-for-elementor' ),
+						'title' => __( 'Paste this URL under Connection, then select Create', 'premium-addons-for-elementor' ),
 						'desc'  => __( 'Keep Connection on "Server URL" and Authentication on "OAuth", then tick "I understand and want to continue". Your browser opens so you can approve the connection.', 'premium-addons-for-elementor' ),
 						'copy'  => $endpoint_url,
 					),

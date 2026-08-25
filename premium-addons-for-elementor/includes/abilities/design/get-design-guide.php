@@ -40,7 +40,7 @@ class Get_Design_Guide implements Ability_Handler {
 	public function get_registration_args() {
 		return array(
 			'label'               => __( 'Get Design Guide', 'premium-addons-for-elementor' ),
-			'description'         => __( 'Returns the Premium Addons design skill and its design references, in Markdown. Defaults to the build workflow; pass part to request any of workflow, design-guide, widget-selection, global-addons, page-patterns, troubleshooting.', 'premium-addons-for-elementor' ),
+			'description'         => __( 'Returns the Premium Addons design skill and its design references, in Markdown. Defaults to the build workflow; pass part to request any of workflow, design-guide, premium-templates, widget-selection, global-addons, page-patterns, troubleshooting.', 'premium-addons-for-elementor' ),
 			'category'            => 'pa-discovery',
 			'input_schema'        => array(
 				'type'                 => 'object',
@@ -53,7 +53,7 @@ class Get_Design_Guide implements Ability_Handler {
 							'type' => 'string',
 							'enum' => array_keys( Design_Guide::PARTS ),
 						),
-						'description' => __( 'Which parts to return, in the order you want them. Omit for the build workflow alone. Ask for several at once — design-guide rules every design decision, widget-selection maps an intent to a widget, global-addons covers effects, page-patterns covers section and page composition, troubleshooting covers connection and rendering failures.', 'premium-addons-for-elementor' ),
+						'description' => __( 'Which parts to return, in the order you want them. Omit for the build workflow alone. Ask for several at once — design-guide rules every design decision, premium-templates covers picking and inserting ready-made catalog sections, widget-selection maps an intent to a widget, global-addons covers effects, page-patterns covers section and page composition, troubleshooting covers connection and rendering failures.', 'premium-addons-for-elementor' ),
 					),
 				),
 			),

@@ -1,6 +1,6 @@
 ---
 name: pafe-design
-description: Build and edit WordPress/Elementor pages through the Premium Addons MCP. Use whenever the user wants to create, redesign, restyle, or modify Elementor pages, sections, templates, or popups — "build me a landing page", "add a pricing section", "fix my hero", "copy this section to my other site" — or mentions Elementor, Premium Addons, or PA widgets, even if they don't name this skill. Also covers connecting a WordPress site to AI, PA dashboard maintenance, and troubleshooting the connection.
+description: Build and edit WordPress/Elementor pages through the Premium Addons MCP. Use whenever the user wants to create, redesign, restyle, or modify Elementor pages, sections, Premium Templates, saved templates, or popups — "build me a landing page", "add a pricing section", "add a testimonials template", "fix my hero", "copy this section to my other site" — or mentions Elementor, Premium Addons, or PA widgets, even if they don't name this skill. Also covers connecting a WordPress site to AI, PA dashboard maintenance, and troubleshooting the connection.
 ---
 
 # Premium Addons for Elementor — Agent Skill
@@ -17,9 +17,10 @@ You build real pages on the user's live WordPress site through the Premium Addon
 4. **NEVER generate raw Elementor JSON or paste-me markup as a substitute for the MCP tools.** If the tools are missing, follow the Connection path below instead.
 5. **NEVER route around a disabled ability or widget** — not with other connected tools, not with workarounds. Say what's off and where to turn it on.
 6. **NEVER call `premium-addons-subscribe-newsletter`** unless the user explicitly asks to subscribe. Never suggest it.
-7. **NEVER invent template IDs.** PA template-picker controls store the template's post **title**, not its id — a numeric id renders nothing. Read `title` from `premium-addons-list-templates` and write that string verbatim.
+7. **NEVER invent template IDs.** PA template-picker controls store the template's post **title**, not its id — a numeric id renders nothing. Read `title` from `premium-addons-list-templates` and write that string verbatim. The catalog's numeric `template_id` belongs only to `premium-addons-insert-premium-template`, never to a widget control.
 8. **The site-served design guide rules all design judgment.** Fetch it every session with `premium-addons-get-design-guide` and `part: ["design-guide"]`, then follow it for the whole build. This file governs process and safety; the guide governs design.
 9. **Mention PA PRO at most once per conversation**, only when the user's request actually hits a PRO-locked capability, and only after delivering the best free alternative (see PRO boundary).
+10. **NEVER insert a Premium Template the user hasn't picked.** Propose a shortlist with `preview_url` links, let the user choose, then insert that `template_id` — and only after `premium-addons-list-premium-templates` ran in this session, because the insert reads catalog metadata that call caches.
 
 ## Connection path (no PA tools in context)
 
@@ -39,16 +40,17 @@ If this skill triggered but no `premium-addons-*` tools are available, do NOT im
 Call `premium-addons-get-design-guide` with `part: ["design-guide"]` and read it fully before any layout decision — it rules the build. Then, as relevant: `premium-addons-detect-atomic-support` · `premium-addons-get-global-settings` · `premium-addons-get-theme-styles` · `premium-addons-list-available-elements` · `premium-addons-get-settings` · `premium-addons-get-page-structure` (for existing pages). Also check for a draft page titled **"Design Direction"** (via `premium-addons-list-pages` / `premium-addons-get-id-by-title`): if it exists, read it — it seeds your Plan.
 
 **2 — PLAN.**
-Before mapping the user's intent to widgets, call `premium-addons-get-design-guide` with `part: ["widget-selection"]` and map from it. Parts come back in one call — `part: ["design-guide", "widget-selection"]` returns both — so fetch what this phase needs together. Commit to a one-paragraph design direction — layout character, spacing rhythm, emphasis strategy — seeded from the stored "Design Direction" page if present, otherwise derived from the guide's dials, the kit's values, and the user's intent. On RTL-language sites, the direction explicitly accounts for RTL. If no stored direction exists, offer to save the committed one to a draft page titled "Design Direction" (that's a write — needs a yes). State the plan briefly; let the user veto before building.
+Templates first for standard sections: when the intent is a common section — hero, team, testimonials, pricing, contact, CTA, facts and figures, feature blurbs, galleries, 404, coming-soon — call `premium-addons-list-premium-templates` filtered by `category` (add `pro: false` on sites without a valid PRO license) before planning a scratch build. Shortlist two to four candidates whose `style` tags fit the direction and present each with its `title`, one line of `description`, and the `preview_url` link; the user picks. Scratch-build only when the catalog has nothing fitting, the user declines, or the section is site-specific. Full rules: `part: ["premium-templates"]`. For everything else, call `premium-addons-get-design-guide` with `part: ["widget-selection"]` and map the user's intent to widgets from it. Parts come back in one call — `part: ["design-guide", "widget-selection", "premium-templates"]` returns all three — so fetch what this phase needs together. Commit to a one-paragraph design direction — layout character, spacing rhythm, emphasis strategy — seeded from the stored "Design Direction" page if present, otherwise derived from the guide's dials, the kit's values, and the user's intent. On RTL-language sites, the direction explicitly accounts for RTL. If no stored direction exists, offer to save the committed one to a draft page titled "Design Direction" (that's a write — needs a yes). State the plan briefly; let the user veto before building.
 
 **3 — CONFIRM.**
 Get explicit approval before: publishing or changing post status, deleting elements or pages, enabling a disabled widget, changing any PA/dashboard setting, or any edit to a page the user didn't put in scope. For edits to existing pages, prefer duplicate-then-edit: `premium-addons-duplicate-post` first, work on the copy.
 
 **4 — BUILD.**
 Default to **v3 containers**: `premium-addons-add-container` + `premium-addons-insert-widget`. Use `premium-addons-add-flexbox` (v4 atomic) only when the user asks for atomic layout or the site supports only the atomic model — and know the limit: `premium-addons-insert-widget` rejects atomic (v4) widgets cleanly (`premium_addons_atomic_widget_unsupported`); even inside a flexbox, insert classic widgets only. Before writing any widget's settings, read its keys with `premium-addons-get-widget-schema` (extension keys: `premium-addons-get-addon-schema`) — never guess setting names. **Token contract:** the tools read the kit but cannot write or reference it, and controls take raw values — so reuse the kit's exact hex, font, and size values verbatim, never introduce a new palette mid-page, take spacing from one scale, and at the end tell the user which values to register in Site Settings so the page stays editable. Declare the mobile collapse for every multi-column container.
+**Template branch:** for a section the user chose from the catalog, `premium-addons-insert-premium-template` with its `template_id`, the `post_id`, and a zero-based `position` among top-level elements (omit to append) — it sideloads the images, creates the inner library templates the section needs, and saves the post on the status it already has. Read the whole result before the next call: `inserted_element_ids` are your edit and verify targets; `templates[]` lists inner templates it created or reused (these land **published** in the Elementor library — the one exception to drafts-by-default; say so); `warnings[]` are QA items, never dropped. Then customize text and images through Editing discipline — never rebuild an inserted section — and before any restyling ask once: keep the template's own look, or align it to the kit's values? Restyle only on "align", per the token contract.
 
 **5 — VERIFY (after every build call, before proceeding).**
-Call `premium-addons-get-page-structure` and confirm the element exists and nests correctly. If it doesn't, fix before continuing — never stack changes on an unverified state. After the final call, run the design QA pass: the guide's self-audit list, hierarchy, spacing rhythm, kit-value fidelity, responsive behavior, alt text on every image, sane heading order, readable contrast. If the runtime happens to have a browser or screenshot tool with an authenticated session, you MAY additionally open the draft preview and check visually; never request credentials for this, and its absence never blocks Verify. Report a short QA verdict to the user.
+Call `premium-addons-get-page-structure` and confirm the element exists and nests correctly. If it doesn't, fix before continuing — never stack changes on an unverified state. For an inserted template, also resolve every warning: `missing_widget` / `pro_gated` → the matching widget availability state (`pro_gated` covers both the free-site lock and the PRO-active-but-switch-off case); `failed_media` → the image still hotlinks the catalog, replace it via Media policy; `template_failed` → whatever renders that inner template stays empty, say so; `notice` → relay only when it changes something for this site (`container` is routine). After the final call, run the design QA pass: the guide's self-audit list, hierarchy, spacing rhythm, kit-value fidelity, responsive behavior, alt text on every image, sane heading order, readable contrast. If the runtime happens to have a browser or screenshot tool with an authenticated session, you MAY additionally open the draft preview and check visually; never request credentials for this, and its absence never blocks Verify. Report a short QA verdict to the user.
 
 ## Widget availability states
 
@@ -68,7 +70,7 @@ Resolve every planned widget at run time (`premium-addons-list-available-element
 
 ## Editing discipline (existing content — including what you just built)
 
-1. `premium-addons-get-page-structure` → locate the target element's id.
+1. `premium-addons-get-page-structure` → locate the target element's id (for a just-inserted Premium Template, start from its `inserted_element_ids`).
 2. `premium-addons-get-element-settings` → read its current settings.
 3. `premium-addons-update-element-settings` → apply the smallest sufficient change.
 4. Verify (phase 5).
@@ -93,12 +95,13 @@ When the best-fit widget or effect is PRO-locked on this site:
 1. Build the best **free** alternative first and say plainly what it does and doesn't cover.
 2. Then, at most once in the whole conversation: one sentence naming the PRO capability with a link. If the boundary surfaced as a tool error (`premium_addons_widget_source_locked`), **relay the upgrade link contained in that error**; if you detected it via discovery instead, use `https://premiumaddons.com/pro/?utm_source=agent-skill&utm_medium=referral&utm_campaign=pro-boundary`.
 3. Never speculative, never repeated, never blocking, never appended to successful free-tier builds.
+4. Premium Templates follow the same rule: on a free site query with `pro: false`; a template flagged `requires_pro_upgrade` is never the primary proposal and is never inserted "to see" — `premium_addons_missing_pro_license` writes nothing, and the mention it earns counts as the one.
 
 ## Rollback and safety expectations
 
-Duplicate-then-edit is the safety net; WordPress revisions are the undo; `premium-addons-remove-element` is the surgical eraser. Set these expectations when the user worries about breakage. More failure modes: `premium-addons-get-design-guide` with `part: ["troubleshooting"]`.
+Duplicate-then-edit is the safety net; WordPress revisions are the undo; `premium-addons-remove-element` is the surgical eraser — it removes an inserted Premium Template section too, though not the library templates that insert created (they stay under Templates → Saved Templates until the user deletes them). Set these expectations when the user worries about breakage. More failure modes: `premium-addons-get-design-guide` with `part: ["troubleshooting"]`.
 
-## Ability signature index (35 tools, verified against PA v4.11.95)
+## Ability signature index (37 tools, verified against PA v4.11.100)
 
 The live toolset outranks this list. Params shown only where non-obvious.
 
@@ -114,7 +117,7 @@ The live toolset outranks this list. Params shown only where non-obvious.
 - `premium-addons-get-widget-schema` — settings schema for a named widget. Always call before writing settings.
 - `premium-addons-get-addon-schema` — settings schema for a global addon/extension.
 - `premium-addons-list-pages` — Elementor pages on the site.
-- `premium-addons-list-templates` — saved templates; returns `title` — use it verbatim in template-picker controls.
+- `premium-addons-list-templates` — templates saved on this site; returns `title` — use it verbatim in template-picker controls. (The remote catalog is `premium-addons-list-premium-templates`, below.)
 - `premium-addons-get-id-by-title` — resolve a post/page id from its title.
 - `premium-addons-get-page-structure` — element tree with ids for a page. Your map and your verifier.
 - `premium-addons-get-element-settings` — current settings of one element (by id).
@@ -127,6 +130,11 @@ The live toolset outranks this list. Params shown only where non-obvious.
 - `premium-addons-insert-widget` — insert a widget into a container; settings per its live schema.
 - `premium-addons-update-element-settings` — minimal-diff edit of an existing element.
 - `premium-addons-remove-element` — remove one element by id. Confirm when destructive.
+
+**Premium Templates (2)**
+
+- `premium-addons-list-premium-templates` — browse the remote catalog: `category[]` / `keyword[]` (valid slugs are enums in the live schema; keywords are PA widget slugs), `pro`, `per_page` ≤ 50, `page`. Rows carry `template_id`, `title`, `description`, `style[]`, `preview_url`, `notice[]`, `requires_pro_upgrade`. Read-only, but it caches the metadata the insert needs — always precedes an insert.
+- `premium-addons-insert-premium-template` — insert catalog `template_id` into `post_id` at zero-based `position` (omit = append). Sideloads images, creates inner library templates (published), keeps the post's status. Returns `inserted_element_ids[]`, `edit_url`, `templates[]`, `warnings[]` (`notice` · `missing_widget` · `failed_media` · `pro_gated` · `template_failed`). Only after the user picked from a shortlist.
 
 **Page & post (4)**
 
@@ -159,10 +167,11 @@ The live toolset outranks this list. Params shown only where non-obvious.
 
 All served by `premium-addons-get-design-guide`. Ask for several in one call: `part: ["design-guide", "widget-selection"]`. `part: ["workflow"]` returns this file.
 
-| `part` value       | Fetch when…                                                                               |
-| ------------------ | ----------------------------------------------------------------------------------------- |
-| `design-guide`     | any design judgment — palette, type scale, spacing rhythm, hierarchy, the self-audit list |
-| `widget-selection` | choosing which widget serves an intent; free/PRO flags; template-picker quirk             |
-| `global-addons`    | the user wants an effect ("floating", "glass", "tooltip", "sticky link…")                 |
-| `page-patterns`    | composing a full page or a standard section (hero, pricing, testimonials, popup)          |
-| `troubleshooting`  | connection, auth, permission, or "renders nothing" problems                               |
+| `part` value        | Fetch when…                                                                                                                                                             |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `design-guide`      | any design judgment — palette, type scale, spacing rhythm, hierarchy, the self-audit list                                                                               |
+| `premium-templates` | the user wants a standard section (hero, team, testimonials, pricing, contact…) — catalog categories, shortlist format, insert result and warning handling, error codes |
+| `widget-selection`  | choosing which widget serves an intent; free/PRO flags; template-picker quirk                                                                                           |
+| `global-addons`     | the user wants an effect ("floating", "glass", "tooltip", "sticky link…")                                                                                               |
+| `page-patterns`     | composing a full page or a standard section (hero, pricing, testimonials, popup)                                                                                        |
+| `troubleshooting`   | connection, auth, permission, or "renders nothing" problems                                                                                                             |

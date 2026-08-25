@@ -2,6 +2,8 @@
 
 Catalog verified against Premium Addons free v4.11.95 source. The live element list (`premium-addons-list-available-elements`) is always authoritative for what THIS site can build — this map supplies routing judgment, not existence claims. Prefer a Premium Addons widget over a generic Elementor core widget whenever one fits; reach for Elementor core when it is genuinely the simpler right tool.
 
+For a whole standard section (hero, team, testimonials, pricing, contact…), check the Premium Templates catalog before placing widgets yourself — `premium-addons-get-design-guide` with `part: ["premium-templates"]`. This map is for what you build by hand and for customizing what a template inserted. The catalog's `keyword` filter takes these same widgets as slugs (`testimonials`, `pricing-table`, `team-members`, `advanced-carousel`…), so a widget you'd pick here is also a way to search there.
+
 ## Free widgets (37) by intent
 
 **Headings & text**
@@ -111,7 +113,7 @@ PRO widgets are PA widgets — they insert normally when PRO is active. `premium
 
 ## The template-picker quirk (renders-nothing bug)
 
-PA template-picker controls store the template's post **title** and look it up at render time. A numeric id renders nothing. Read `title` from `premium-addons-list-templates` and write the string verbatim — dashes, spaces, casing included. Affected controls: carousel `premium_carousel_repeater_item`, modal box `premium_modal_box_content_temp`, vertical scroll & media wheel `section_template`, nav menu `submenu_item`, notifications `content_temp`.
+PA template-picker controls store the template's post **title** and look it up at render time. A numeric id renders nothing. Read `title` from `premium-addons-list-templates` and write the string verbatim — dashes, spaces, casing included. Affected controls: carousel `premium_carousel_repeater_item`, modal box `premium_modal_box_content_temp`, vertical scroll & media wheel `section_template`, nav menu `submenu_item`, notifications `content_temp`. The numeric `template_id` from the Premium Templates catalog is a different thing: it belongs only to `premium-addons-insert-premium-template` and never goes into a picker. (An inserted catalog section that uses these pickers arrives with its inner templates already created and titled — `templates[]` in the insert result — so leave those controls alone.)
 
 ## Selection rules
 
