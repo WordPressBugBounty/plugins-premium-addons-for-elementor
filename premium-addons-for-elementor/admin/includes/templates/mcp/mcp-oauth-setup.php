@@ -34,6 +34,13 @@ $signin_of = __( 'The next time this client connects, your browser opens so you 
 									<p class="description pa-mcp-hint"><?php echo esc_html( $setup['note'] ); ?></p>
 								<?php endif; ?>
 
+								<?php if ( ! empty( $setup['docs'] ) ) : ?>
+									<p class="description pa-mcp-hint pa-mcp-docs-link">
+										<?php esc_html_e( 'Prefer a walkthrough with screenshots?', 'premium-addons-for-elementor' ); ?>
+										<a href="<?php echo esc_url( $setup['docs'] ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Read the step-by-step guide', 'premium-addons-for-elementor' ); ?></a>
+									</p>
+								<?php endif; ?>
+
 								<?php
 								$blocks = array();
 

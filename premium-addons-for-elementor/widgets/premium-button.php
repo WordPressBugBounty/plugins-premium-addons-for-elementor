@@ -900,14 +900,24 @@ class Premium_Button extends Widget_Base {
 			'premium_button_icon_position',
 			array(
 				'label'                => __( 'Icon Position', 'premium-addons-for-elementor' ),
-				'type'                 => Controls_Manager::SELECT,
+				'type'                 => Controls_Manager::CHOOSE,
 				'prefix_class'         => 'pa-icon-pos-',
 				'default'              => 'before',
+				'toggle'               => false,
 				'options'              => array(
-					'before' => __( 'Before', 'premium-addons-for-elementor' ),
-					'after'  => __( 'After', 'premium-addons-for-elementor' ),
+					'before' => array(
+						'title' => __( 'Before', 'premium-addons-for-elementor' ),
+						'icon'  => is_rtl() ? 'eicon-order-end' : 'eicon-order-start',
+					),
+					'after'  => array(
+						'title' => __( 'After', 'premium-addons-for-elementor' ),
+						'icon'  => is_rtl() ? 'eicon-order-start' : 'eicon-order-end',
+					),
+					'top'    => array(
+						'title' => __( 'Above', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-v-align-top',
+					),
 				),
-				'label_block'          => true,
 				'condition'            => array(
 					'premium_button_icon_switcher' => 'yes',
 					'premium_button_hover_effect!' => 'style4',
@@ -915,6 +925,7 @@ class Premium_Button extends Widget_Base {
 				'selectors_dictionary' => array(
 					'before' => 'row',
 					'after'  => 'row-reverse',
+					'top'    => 'column',
 				),
 				'selectors'            => array(
 					'{{WRAPPER}} .premium-button-text-icon-wrapper' => 'flex-direction: {{VALUE}}',
@@ -998,7 +1009,7 @@ class Premium_Button extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-button-style3:hover i, {{WRAPPER}} .premium-button-style3:hover svg' => '-webkit-transform: translateX({{SIZE}}{{UNIT}}); transform: translateX({{SIZE}}{{UNIT}})',
+					'{{WRAPPER}}' => '--pa-btn-style3-translate: {{SIZE}}{{UNIT}}',
 				),
 			)
 		);

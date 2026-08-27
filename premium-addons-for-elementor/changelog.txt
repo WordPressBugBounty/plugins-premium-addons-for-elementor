@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.11.101 - 27/8/2026 =
+
+- Tweak: Added Above option to the Icon Position control in Premium Button and Premium Image Button widgets.
+- Fixed: OAuth connection window not opening on the first load of Premium Addons MCP settings page.
+- Fixed: OAuth connection not working on hosting servers that serve .well-known files statically from disk.
+- Fixed: Overlay image not showing in Premium Video Box widget.
+
 = 4.11.100 - 25/8/2026 =
 
 - New: AI agents can now browse and insert Premium Addons pre-made templates into your pages through AI Abilities.

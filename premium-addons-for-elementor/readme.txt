@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.100
+Stable Tag: 4.11.101
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -263,6 +263,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.101 - 27/8/2026 =
+
+- Tweak: Added Above option to the Icon Position control in Premium Button and Premium Image Button widgets.
+- Fixed: OAuth connection window not opening on the first load of Premium Addons MCP settings page.
+- Fixed: OAuth connection not working on hosting servers that serve .well-known files statically from disk.
+- Fixed: Overlay image not showing in Premium Video Box widget.
 
 = 4.11.100 - 25/8/2026 =
 

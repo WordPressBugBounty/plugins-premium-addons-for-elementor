@@ -3847,8 +3847,25 @@
 }
 
 /* AI Abilities tab: outer accordion (MCP setup / abilities), shown once the feature is on. */
-.pa-ai-accordion {
+.pa-ai-layout {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	gap: 24px;
 	margin-top: 30px;
+}
+
+.pa-ai-layout[hidden] {
+	display: none;
+}
+
+.pa-ai-accordion {
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	min-width: 0;
 }
 
 /* The .pa-mcp-config scope is what styles the fields and switches inside the panels;
@@ -3857,8 +3874,103 @@
 	max-width: none;
 }
 
-.pa-ai-accordion[hidden] {
-	display: none;
+.pa-mcp-news {
+	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
+	flex-shrink: 0;
+	width: 320px;
+	margin-top: 16px;
+	background: #fff;
+	border: 1px solid #ededed;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.pa-mcp-news-title {
+	margin: 0;
+	padding: 18px;
+	background: #f7f7f7;
+	font-family: "Red Hat Display", sans-serif;
+	font-size: 17px;
+	font-weight: 700;
+	color: #252c59;
+}
+
+.pa-mcp-news-list {
+	margin: 0;
+	padding: 0 18px;
+	list-style: none;
+}
+
+.pa-mcp-news-item {
+	padding: 14px 0;
+	border-top: 1px solid #ededed;
+}
+
+.pa-mcp-news-item:first-child {
+	border-top: 0;
+}
+
+.pa-mcp-news-meta {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 4px;
+}
+
+.pa-mcp-news-type {
+	padding: 1px 8px;
+	border-radius: 10px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.6;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.pa-mcp-news-type.is-new {
+	background: #e5f1e5;
+	color: #2c7a2c;
+}
+
+.pa-mcp-news-type.is-improvement {
+	background: #e3f0fa;
+	color: #1c5f96;
+}
+
+.pa-mcp-news-type.is-fix {
+	background: #fcf0e4;
+	color: #8a5700;
+}
+
+.pa-mcp-news-date {
+	color: #646970;
+	font-size: 12px;
+}
+
+.pa-mcp-news-link {
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.pa-mcp-news-desc {
+	margin: 4px 0 0;
+	color: #646970;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+@media (width <= 1200px) {
+	.pa-ai-layout {
+		display: block;
+	}
+
+	.pa-mcp-news {
+		width: auto;
+	}
 }
 
 .pa-ai-accordion-item {

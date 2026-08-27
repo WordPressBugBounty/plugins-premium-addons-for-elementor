@@ -62,6 +62,44 @@
 			self.initMcpConfig();
 
 			self.initAiAbilities();
+
+			self.initMcpNews();
+		};
+
+		// What's New sidebar: opening the AI Abilities tab marks the feed as seen
+		// and clears the submenu dot.
+		self.initMcpNews = function () {
+			var $news = $("#pa-section-ai-abilities .pa-mcp-news[data-unread]");
+
+			if (!$news.length) {
+				return;
+			}
+
+			function markSeen() {
+				if (!$news.attr("data-unread")) {
+					return;
+				}
+
+				$news.removeAttr("data-unread");
+				$("#adminmenu .pa-mcp-news-dot").remove();
+
+				$.ajax({
+					url: settings.ajaxurl,
+					type: "POST",
+					data: {
+						action: "pa_mcp_news_seen",
+						security: settings.nonce,
+					},
+				});
+			}
+
+			$(window)
+				.on("hashchange", function () {
+					if (window.location.hash.indexOf("tab=ai-abilities") > -1) {
+						markSeen();
+					}
+				})
+				.trigger("hashchange");
 		};
 
 		// AI Abilities tab: accordion and per-category/per-ability persistence.
@@ -306,7 +344,7 @@
 						self.saveElementsSettings("elements", "default", true);
 					}
 				} else if ("premium-ai-abilities" === $(this).attr("id")) {
-					$(".pa-ai-accordion").prop("hidden", !$(this).prop("checked"));
+					$(".pa-ai-layout").prop("hidden", !$(this).prop("checked"));
 					self.saveElementsSettings("elements", "default");
 				} else {
 					self.saveElementsSettings("elements", "default");
@@ -753,6 +791,31 @@
 				});
 			}
 
+			// Copying from the OAuth branch means a client is about to register, so
+			// re-open the registration window from this moment rather than from
+			// the page load. Fire-and-forget; the copy itself never waits on it.
+			var oauthWindowExtendedAt = 0;
+
+			function extendOauthWindow() {
+				var now = Date.now();
+
+				if (now - oauthWindowExtendedAt < 60000) {
+					return;
+				}
+
+				oauthWindowExtendedAt = now;
+
+				$.ajax({
+					url: settings.ajaxurl,
+					type: "POST",
+					dataType: "json",
+					data: {
+						action: "pa_extend_oauth_window",
+						security: settings.nonce,
+					},
+				});
+			}
+
 			// Copy the requested field or preformatted text to the clipboard.
 			$section.on("click", ".pa-mcp-copy", function (e) {
 				e.preventDefault();
@@ -762,6 +825,10 @@
 
 				if (!target) {
 					return;
+				}
+
+				if ($btn.closest("#pa-mcp-branch-oauth").length) {
+					extendOauthWindow();
 				}
 
 				var isField =

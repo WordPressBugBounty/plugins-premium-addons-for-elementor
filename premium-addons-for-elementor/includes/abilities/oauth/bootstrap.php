@@ -3,8 +3,8 @@
  * OAuth Bootstrap.
  *
  * Owns the availability gates and wires the OAuth surface — discovery,
- * registration, authorize, token and the 401 challenge — only when the user
- * has opted in. Nothing exists (no tables, no routes, no handlers) until then.
+ * registration, authorize, token, the root fallback endpoints and the 401
+ * challenge — only when the user has opted in. Nothing exists (no tables, no routes, no handlers) until then.
  *
  * @package PremiumAddons
  */
@@ -130,6 +130,11 @@ class Bootstrap {
 
 		add_action( 'parse_request', array( Metadata::class, 'maybe_serve' ), 0 );
 		add_action( 'parse_request', array( Authorize::class, 'maybe_serve' ), 0 );
+
+		// Root /register, /authorize and /token for clients whose discovery was
+		// blocked at the host's edge. template_redirect, not parse_request: the
+		// catcher must know the request would otherwise 404.
+		add_action( 'template_redirect', array( Fallback::class, 'maybe_serve' ), 0 );
 
 		add_action( 'rest_api_init', array( Clients::class, 'register_routes' ) );
 		add_action( 'rest_api_init', array( Token::class, 'register_routes' ) );

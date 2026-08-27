@@ -429,6 +429,8 @@ class MCP_Settings {
 	 * Types: cmd (one terminal command), connector (the client's own Connectors
 	 * UI), config (a config-file snippet), steps (an ordered walkthrough).
 	 * Anything without an entry falls back to "paste the URL, then sign in".
+	 * An optional docs URL links the client's full connection guide above the
+	 * steps.
 	 *
 	 * @param string $endpoint_url MCP endpoint URL.
 	 * @return array<string,array<string,mixed>> OAuth setup map keyed by client.
@@ -451,10 +453,12 @@ class MCP_Settings {
 				'app'      => 'claude.ai',
 				'deeplink' => 'claude-ai',
 				'note'     => __( 'Works on every Claude plan (free plans can add one custom connector). On Team and Enterprise an administrator may have to allow custom connectors first. Claude connects from Anthropic\'s cloud, so your site must be reachable from the internet.', 'premium-addons-for-elementor' ),
+				'docs'     => 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/',
 			),
 			'chatgpt'        => array(
 				'type'  => 'steps',
 				'note'  => __( 'ChatGPT connects from OpenAI\'s cloud, so your site must be reachable from the internet. Use ChatGPT on the web; on Business and Enterprise workspaces an administrator may have to allow Developer mode first.', 'premium-addons-for-elementor' ),
+				'docs'  => 'https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website/',
 				'steps' => array(
 					array(
 						'title' => __( 'Turn on Developer mode', 'premium-addons-for-elementor' ),

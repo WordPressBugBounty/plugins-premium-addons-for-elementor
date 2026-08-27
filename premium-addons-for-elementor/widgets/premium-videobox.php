@@ -3137,7 +3137,7 @@ class Premium_Videobox extends Widget_Base {
 			array(
 				'id'             => 'premium-video-box-container-' . $id,
 				'class'          => 'premium-video-box-container',
-				'data-overlay'   => 'yes' === $settings['premium_video_box_image_switcher'],
+				'data-overlay'   => 'yes' === $settings['premium_video_box_image_switcher'] ? 'true' : 'false',
 				'data-type'      => $video_type,
 				'data-thumbnail' => ! empty( $thumbnail ),
 				'data-hover'     => $settings['premium_video_box_img_effect'],

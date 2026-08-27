@@ -69,9 +69,17 @@ class Design_Guide {
 	/**
 	 * Get the design guide as an MCP prompt.
 	 *
+	 * Null when the loaded MCP Adapter cannot build it. Another plugin may
+	 * bundle an older adapter under the same WP\MCP namespace (Rank Math ships
+	 * 0.4.1).
+	 *
 	 * @return McpPrompt|null
 	 */
 	public static function get_prompt() {
+
+		if ( ! method_exists( McpPrompt::class, 'fromArray' ) ) {
+			return null;
+		}
 
 		$guide = self::get_guide( self::DEFAULT_PART );
 

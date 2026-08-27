@@ -4,6 +4,7 @@
  */
 
 use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Admin\Includes\MCP_News;
 use PremiumAddons\Admin\Includes\MCP_Settings;
 use PremiumAddons\Includes\Abilities\Bootstrap;
 use PremiumAddons\Includes\Abilities\Connection_Log;
@@ -53,6 +54,10 @@ if ( $abilities_ready ) {
 	$used_error     = $password_state['existing_error'];
 
 	$mcp_panel_open = null !== $used_password || null !== $used_error;
+
+	// The refresh (at most once per TTL) rides on the dashboard render; the admin
+	// menu dot never fetches — it reads the cache only.
+	$news_entries = $is_enabled ? MCP_News::get_entries() : array();
 
 	$badges = array(
 		Connection_Log::STATE_ACTIVE    => array(
@@ -114,7 +119,9 @@ if ( $abilities_ready ) {
 		<?php // Kept outside the accordion so save announcements are not trapped in a collapsed panel. ?>
 		<div class="pa-ai-abilities-status" role="status"></div>
 
-		<div class="pa-ai-accordion pa-mcp-config"<?php echo $is_enabled ? '' : ' hidden'; ?>>
+		<div class="pa-ai-layout"<?php echo $is_enabled ? '' : ' hidden'; ?>>
+
+			<div class="pa-ai-accordion pa-mcp-config">
 
 			<div class="pa-ai-accordion-item">
 				<h3 class="pa-ai-accordion-title">
@@ -296,6 +303,12 @@ if ( $abilities_ready ) {
 
 				</div>
 			</div>
+
+			</div>
+
+			<?php if ( ! empty( $news_entries ) ) : ?>
+				<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-news.php'; ?>
+			<?php endif; ?>
 
 		</div>
 

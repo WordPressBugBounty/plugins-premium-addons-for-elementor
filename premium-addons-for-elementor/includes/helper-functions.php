@@ -683,10 +683,11 @@ class Helper_Functions {
 	 * @param string $source source.
 	 * @param string $medium  media.
 	 * @param string $campaign campaign name.
+	 * @param string $content content identifier, becomes utm_content.
 	 *
 	 * @return string $link campaign URL
 	 */
-	public static function get_campaign_link( $link, $source, $medium, $campaign = '' ) {
+	public static function get_campaign_link( $link, $source, $medium, $campaign = '', $content = '' ) {
 
 		if ( null === self::$current_theme ) {
 			self::get_installed_theme();
@@ -697,6 +698,7 @@ class Helper_Functions {
 			'utm_medium'   => $medium,
 			'utm_campaign' => $campaign,
 			'utm_term'     => self::$current_theme,
+			'utm_content'  => $content,
 		);
 
 		$args = array_filter( $args );
