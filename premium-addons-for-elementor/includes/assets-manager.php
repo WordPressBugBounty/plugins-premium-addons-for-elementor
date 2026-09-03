@@ -81,6 +81,10 @@ class Assets_Manager {
 
 			add_action( 'elementor/editor/after_save', array( $this, 'handle_post_save' ), 10, 2 );
 
+			// Elementor data written outside the editor: WPML/Polylang translations, WP-CLI, importers.
+			add_action( 'updated_post_meta', array( $this, 'maybe_invalidate_assets' ), 10, 3 );
+			add_action( 'added_post_meta', array( $this, 'maybe_invalidate_assets' ), 10, 3 );
+
 			add_action( 'elementor/theme/register_locations', array( $this, 'get_asset_per_location' ), 20 );
 			add_filter( 'elementor/files/file_name', array( $this, 'load_asset_per_file' ) );
 
@@ -289,6 +293,53 @@ class Assets_Manager {
 
 		$widget_list = $this->extract_pa_elements( $data );
 		$this->save_pa_widgets_list( $post_id, $widget_list );
+	}
+
+	/**
+	 * Maybe Invalidate Assets.
+	 *
+	 * Drops the cached widgets list and the asset files on writes the editor save
+	 * hook never sees - WPML/Polylang, WP-CLI, importers. Rebuilt on the next
+	 * front-end request by get_pa_elements_list().
+	 *
+	 * @access public
+	 * @since 4.11.102
+	 *
+	 * @param int    $meta_id  meta row ID.
+	 * @param int    $post_id  post ID.
+	 * @param string $meta_key meta key.
+	 *
+	 * @return void
+	 */
+	public function maybe_invalidate_assets( $meta_id, $post_id, $meta_key ) {
+
+		if ( '_elementor_data' !== $meta_key ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		$post_id = intval( $post_id );
+
+		if ( ! $post_id ) {
+			return;
+		}
+
+		// Revisions and autosaves hold their own copy of the data, the parent post is untouched.
+		if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+			return;
+		}
+
+		// Nothing cached yet for this post, get_pa_elements_list() will build it.
+		if ( ! $this->has_assets_data( $post_id ) ) {
+			return;
+		}
+
+		delete_post_meta( $post_id, self::ASSETS_KEY );
+
+		self::delete_assets_files( $post_id );
 	}
 
 	/**
@@ -798,12 +849,15 @@ class Assets_Manager {
 
 				unlink( Helper_Functions::get_safe_path( $file->getPathname() ) );
 			}
-		} else {
 
-			foreach ( glob( PREMIUM_ASSETS_PATH . '/*' . $id . '*' ) as $file ) {
-				if ( is_file( $file ) ) {
-					unlink( Helper_Functions::get_safe_path( $file ) );
-				}
+			return;
+		}
+
+		foreach ( array( 'css', 'js' ) as $ext ) {
+			$file = Helper_Functions::get_safe_path( $path . '/pafe-' . $id . '.' . $ext );
+
+			if ( file_exists( $file ) ) {
+				unlink( $file );
 			}
 		}
 	}

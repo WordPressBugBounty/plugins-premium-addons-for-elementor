@@ -30,9 +30,9 @@
 				var _this = this;
 
 				_this.elements.$bannerImgWrap.hover(function () {
-					_this.elements.$bannerImgWrap.find('> img').addClass("active");
+					_this.elements.$bannerImgWrap.find('.premium-banner-img').addClass("active");
 				}, function () {
-					_this.elements.$bannerImgWrap.find('> img').removeClass("active");
+					_this.elements.$bannerImgWrap.find('.premium-banner-img').removeClass("active");
 				});
 
 				this.run();

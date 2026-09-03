@@ -148,6 +148,12 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 				$tab = 'premium_section';
 			}
 
+			$force_refresh = isset( $_GET['force'] ) && filter_var( wp_unslash( $_GET['force'] ), FILTER_VALIDATE_BOOLEAN ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+			if ( $force_refresh ) {
+				check_ajax_referer( 'pa-templates-nonce', 'nonce' );
+			}
+
 			$result = array(
 				'templates'  => array(),
 				'categories' => array(),
@@ -159,6 +165,11 @@ if ( ! class_exists( 'Premium_Templates_Manager' ) ) {
 				$source = isset( $this->sources[ $source_slug ] ) ? $this->sources[ $source_slug ] : false;
 
 				if ( $source ) {
+
+					if ( $force_refresh ) {
+						$source->clear_tab_cache( $tab );
+					}
+
 					$result['templates']  = array_merge( $result['templates'], $source->get_items( $tab ) );
 					$result['categories'] = array_merge( $result['categories'], $source->get_categories( $tab ) );
 					$result['keywords']   = array_merge( $result['keywords'], $source->get_keywords( $tab ) );

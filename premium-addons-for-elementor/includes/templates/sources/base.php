@@ -141,6 +141,35 @@ abstract class Premium_Templates_Source_Base {
 	}
 
 	/**
+	 * Remove a tab's entries from the templates, categories and keywords caches.
+	 *
+	 * @since 4.11.102
+	 *
+	 * @param string $tab tab slug.
+	 */
+	public function clear_tab_cache( $tab ) {
+
+		$keys = array(
+			$this->templates_key(),
+			$this->categories_key(),
+			$this->keywords_key(),
+		);
+
+		foreach ( $keys as $key ) {
+
+			$cached = get_transient( $key );
+
+			if ( ! is_array( $cached ) || ! isset( $cached[ $tab ] ) ) {
+				continue;
+			}
+
+			unset( $cached[ $tab ] );
+
+			set_transient( $key, $cached, $this->transient_lifetime() );
+		}
+	}
+
+	/**
 	 * Returns template ID prefix for premium templates
 	 *
 	 * @return string

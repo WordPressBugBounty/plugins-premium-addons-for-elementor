@@ -61,7 +61,8 @@ if ( ! class_exists( 'Premium_Templates_Assets' ) ) {
 					'#premium-template-modal-header-logo,
 					#elementor-template-library-filter label,
 					#elementor-template-library-sort label,
-					#premium-template-modal-header-close-modal i {
+					#premium-template-modal-header-close-modal i,
+					#premium-template-modal-header-refresh i {
 						color: #d5d8dc;
 					}
 

@@ -73,7 +73,8 @@ class Scan_Usage implements Ability_Handler {
 				return Admin_Helper::check_user_can( 'manage_options' );
 			},
 			'meta'                => array(
-				'show_in_rest' => true,
+				// Don't want Angie to see this.
+				'show_in_rest' => false,
 				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => false,

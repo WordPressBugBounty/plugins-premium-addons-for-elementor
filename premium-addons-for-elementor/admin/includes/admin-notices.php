@@ -81,6 +81,7 @@ class Admin_Notices {
 		self::$notices = array(
 			'pa-review',
 			'pa-connect-ai-not',
+			'pa-angie-not',
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -150,7 +151,11 @@ class Admin_Notices {
 			return;
 		}
 
-		$this->get_connect_ai_notice();
+		if ( defined( 'ANGIE_VERSION' ) ) {
+			$this->get_angie_notice();
+		} else {
+			$this->get_connect_ai_notice();
+		}
 	}
 
 	/**
@@ -320,6 +325,52 @@ class Admin_Notices {
 	public static function snooze_review_notice( $seconds ) {
 
 		update_option( self::REVIEW_OPTION, (string) ( time() + $seconds ), true );
+	}
+
+	/**
+	 * Announces the Angie compatibility layer on sites running Angie.
+	 *
+	 * Shown instead of the ChatGPT/Claude notice, never alongside it, so the
+	 * dashboard never carries two AI notices at once.
+	 *
+	 * @since 4.11.102
+	 * @access private
+	 *
+	 * @return void
+	 */
+	private function get_angie_notice() {
+
+		if ( '1' === self::get_notice_state( 'pa-angie-not' ) ) {
+			return;
+		}
+
+		$angie_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/angie-premium-addons-elementor', 'angie-notification', 'wp-dash', 'angie' );
+
+		?>
+
+		<div class="error pa-notice-wrap pa-new-feature-notice">
+			<div class="pa-img-wrap">
+				<img src="<?php echo esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>" alt="">
+			</div>
+			<div class="pa-text-wrap">
+				<p>
+					<strong><?php esc_html_e( 'New:', 'premium-addons-for-elementor' ); ?></strong>
+					<?php
+						printf(
+							/* translators: 1: Angie guide link opening tag, 2: link closing tag. */
+							esc_html__( 'Angie can now browse the Premium Templates library and use Premium Addons widgets to build your Elementor pages. %1$sCheck it Out!%2$s', 'premium-addons-for-elementor' ),
+							'<a href="' . esc_url( $angie_link ) . '" target="_blank">',
+							'</a>'
+						);
+					?>
+				</p>
+			</div>
+			<div class="pa-notice-close" data-notice="pa-angie-not">
+				<span class="dashicons dashicons-dismiss"></span>
+			</div>
+		</div>
+
+		<?php
 	}
 
 	/**

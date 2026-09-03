@@ -37,6 +37,13 @@ class Bootstrap {
 	const SERVER_ROUTE = 'mcp';
 
 	/**
+	 * Prefix for category labels handed to the WordPress Abilities API.
+	 *
+	 * @var string
+	 */
+	const CATEGORY_LABEL_PREFIX = 'PA';
+
+	/**
 	 * Class instance.
 	 *
 	 * @var Bootstrap|null
@@ -96,6 +103,9 @@ class Bootstrap {
 		// Register ability categories and abilities.
 		add_action( 'wp_abilities_api_categories_init', array( $this, 'register_categories' ) );
 		add_action( 'wp_abilities_api_init', array( $this, 'register_abilities' ) );
+
+		// Accept ability input that clients such as Angie send as a JSON string.
+		Input_Normalizer::init();
 
 		// Boot the MCP adapter on the MCP endpoint and WP-CLI only.
 		add_action( 'rest_api_init', array( $this, 'maybe_boot_mcp_adapter' ), 5 );
@@ -164,6 +174,8 @@ class Bootstrap {
 	/**
 	 * Get category definitions.
 	 *
+	 * Rendered without prefix in the dashboard.
+	 *
 	 * @return array
 	 */
 	public static function get_categories() {
@@ -206,8 +218,19 @@ class Bootstrap {
 	 */
 	public function register_categories() {
 		foreach ( self::get_categories() as $slug => $category ) {
+			$category['label'] = self::get_agent_category_label( $category['label'] );
 			wp_register_ability_category( $slug, $category );
 		}
+	}
+
+	/**
+	 * Get a category label as AI clients see it.
+	 *
+	 * @param string $label Dashboard label from get_categories().
+	 * @return string
+	 */
+	public static function get_agent_category_label( $label ) {
+		return self::CATEGORY_LABEL_PREFIX . ' ' . $label;
 	}
 
 	/**

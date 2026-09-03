@@ -85,7 +85,8 @@ class Update_Element_Settings implements Ability_Handler {
 				return Helpers::can_edit_input_post( $input );
 			},
 			'meta'                => array(
-				'show_in_rest' => true,
+				// Don't want Angie to see this.
+				'show_in_rest' => false,
 				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => false,

@@ -128,8 +128,6 @@ class Admin_Helper {
 		add_action( 'wp_ajax_pa_get_menu_item_settings', array( $this, 'pa_get_menu_item_settings' ) );
 		add_action( 'wp_ajax_pa_save_menu_item_settings', array( $this, 'pa_save_menu_item_settings' ) );
 		add_action( 'wp_ajax_pa_save_mega_item_content', array( $this, 'pa_save_mega_item_content' ) );
-		add_action( 'wp_ajax_pa_check_unused_widgets', array( $this, 'pa_check_unused_widgets' ) );
-		add_action( 'wp_ajax_pa_hide_unused_widgets_dialog', array( $this, 'pa_hide_unused_widgets_dialog' ) );
 
 		// Used to empty dynamic assets dir on plugin update to make sure new assets are generated.
 		add_action( 'upgrader_process_complete', array( $this, 'pa_handle_upgrade' ), 10, 2 );
@@ -1966,55 +1964,6 @@ class Admin_Helper {
 				'response' => 200,
 			)
 		);
-	}
-
-	public function pa_check_unused_widgets() {
-
-		check_ajax_referer( 'pa-disable-unused', 'security' );
-
-		$did_check = get_option( 'pa_unused_widget_dialog' );
-
-		if ( ! $did_check ) {
-
-			update_option( 'pa_unused_widget_dialog', true );
-
-			// Get days between now and install time.
-			$install_time = get_option( 'pa_install_time' );
-
-			// If install time is not set, set it now and exit.
-			if ( ! $install_time ) {
-				$current_time = gmdate( 'j F, Y', time() );
-				update_option( 'pa_install_time', $current_time );
-				wp_send_json_error( 'Installation time set.' );
-			}
-
-			// Convert to days.
-			$days_diff = ( time() - strtotime( $install_time ) ) / DAY_IN_SECONDS;
-
-			// If 7 days have passed since installation, proceed.
-			if ( $days_diff >= 7 ) {
-				wp_send_json_success();
-			} else {
-				wp_send_json_error( 'Not enough days since installation.' );
-			}
-		}
-
-		wp_send_json_error( 'Already checked, or canceled' );
-	}
-
-	/**
-	 * Hide Unused Widgets Dialog.
-	 *
-	 * @access public
-	 * @since 4.5.8
-	 */
-	public function pa_hide_unused_widgets_dialog() {
-
-		check_ajax_referer( 'pa-disable-unused', 'security' );
-
-		update_option( 'pa_unused_widget_dialog', true );
-
-		wp_send_json_success( 'Option updated.' );
 	}
 
 	/**

@@ -43,8 +43,6 @@
 
 			self.initElementsTabs($elementsTabs);
 
-			self.handleActionField();
-
 			self.handleElementsActions();
 
 			self.handleSearchField();
@@ -665,21 +663,6 @@
 			if (!searchInput) return;
 
 			$(".pa-elements-filter input").val(searchInput).trigger("keyup");
-		};
-
-		self.handleActionField = function () {
-			var action = url.searchParams.get("pa-action");
-
-			if (!action) return;
-
-			$("body,html").animate(
-				{
-					scrollTop: $(".pa-btn-unused").offset().top - 100,
-				},
-				700,
-			);
-
-			self.scanUnusedWidgets();
 		};
 
 		// Handle Tabs Elements

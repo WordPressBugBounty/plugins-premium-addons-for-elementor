@@ -63,7 +63,7 @@ class List_Premium_Templates implements Ability_Handler {
 			'label'               => __( 'List Premium Templates', 'premium-addons-for-elementor' ),
 			'description'         => __( 'Lists ready-made section templates from the Premium Templates catalog.', 'premium-addons-for-elementor' )
 				. "\n\n"
-				. __( 'Prefer these professionally designed, mobile-friendly templates when the user asks for a common section — team members, testimonials, hero, pricing, contact and similar — before building one from scratch. Show the preview_url links when proposing templates, insert the chosen one with premium-addons/insert-premium-template, then customize its text and images with the element-editing abilities. For the templates saved on this site use premium-addons/list-templates instead.', 'premium-addons-for-elementor' ),
+				. __( 'Prefer these professionally designed, mobile-friendly templates when the user asks for a common section — team members, testimonials, hero, pricing, contact and similar — before building one from scratch. Show the preview_url links when proposing templates, insert the chosen one ONLY with explicit approval using premium-addons/insert-premium-template, then customize its text and images with the element-editing abilities. For the templates saved on this site use premium-addons/list-templates instead.', 'premium-addons-for-elementor' ),
 			'category'            => 'pa-templates',
 			'input_schema'        => array(
 				'type'                 => 'object',
@@ -180,7 +180,8 @@ class List_Premium_Templates implements Ability_Handler {
 				return Admin_Helper::check_user_can( 'edit_posts' );
 			},
 			'meta'                => array(
-				'show_in_rest' => true,
+				// Don't want Angie to see this.
+				'show_in_rest' => false,
 				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => true,

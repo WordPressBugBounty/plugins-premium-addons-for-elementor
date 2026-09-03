@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.101
+Stable Tag: 4.11.102
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -263,6 +263,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.102 - 3/9/2026 =
+
+- New: Added compatibility with Angie plugin, Angie can now use Premium Addons widgets and pre-made templates while building your pages - [here](https://premiumaddons.com/docs/angie-premium-addons-elementor/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=angie).
+- Tweak: Added Refresh option in Premium Templates library to reload templates when they are outdated or fail to load.
+- Tweak: Improved dynamic assets compatibility with WPML and Polylang translated pages.
+- Tweak: AI agents now ask for approval before inserting a Premium Addons pre-made template.
+- Fixed: Pagination and Load More showing wrong posts on archive pages when the Main Query source is used in Premium Blog widget.
+- Fixed: Image options not working in Premium Banner widget when an image optimization plugin converts the image tag into a picture tag.
 
 = 4.11.101 - 27/8/2026 =
 

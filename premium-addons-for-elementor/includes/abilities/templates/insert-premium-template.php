@@ -130,7 +130,8 @@ class Insert_Premium_Template implements Ability_Handler {
 				return Helpers::can_edit_input_post( $input ) && Admin_Helper::check_user_can( 'upload_files' );
 			},
 			'meta'                => array(
-				'show_in_rest' => true,
+				// Don't want Angie to see this.
+				'show_in_rest' => false,
 				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => false,

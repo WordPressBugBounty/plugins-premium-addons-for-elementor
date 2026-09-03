@@ -24,6 +24,7 @@ use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Controls\Premium_Background;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 use PremiumAddons\Includes\Controls\Premium_Tax_Filter;
+use PremiumAddons\Includes\Helpers\Query_Helper;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // If this file is called directly, abort.
@@ -352,6 +353,9 @@ class Premium_Blog extends Widget_Base {
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 1,
 				'default'     => 4,
+				'condition'   => array(
+					'post_type_filter!' => 'main',
+				),
 			)
 		);
 
@@ -377,6 +381,22 @@ class Premium_Blog extends Widget_Base {
 				'options'     => $post_types,
 				'default'     => 'post',
 				'separator'   => 'after',
+			)
+		);
+
+		$this->add_control(
+			'main_q_notice',
+			array(
+				/* translators: %s is the URL to the WordPress reading screen in the WordPress Dashboard.*/
+				'raw'             => sprintf(
+					esc_html__( 'This archive uses the "Blog pages show at most" value from your WordPress Reading settings. Adjust it %s.', 'premium-addons-for-elementor' ),
+					'<a target="_blank" href="' . esc_url( admin_url( 'options-reading.php' ) ) . '">' . esc_html__( 'here', 'premium-addons-for-elementor' ) . '</a>'
+				),
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition'       => array(
+					'post_type_filter' => 'main',
+				),
 			)
 		);
 
@@ -3642,6 +3662,26 @@ class Premium_Blog extends Widget_Base {
 
 			$this->add_render_attribute( 'blog', 'data-pagination', 'true' );
 
+		}
+
+		/**
+		 * Fixes: Wrong Pagination/Posts are displayed on the next page when using the "Main Query" source in Archive Pages.
+		 * Reason: The main query source has no real query context inside an admin-ajax.php request (there's no main query to inherit there),
+		 * so pagination/infinite-scroll for it must re-fetch the real, correctly-scoped archive page instead of going through the AJAX handler.
+		 *
+		 * @since 3.20.8
+		 */
+		if ( 'main' === $settings['post_type_filter'] ) {
+
+			$current_page = max( 1, (int) Query_Helper::get_paged() );
+			$this->add_render_attribute(
+				'blog',
+				array(
+					'data-current-page' => $current_page,
+					'data-max-page'     => (int) Blog_Helper::$page_limit,
+					'data-next-page'    => esc_url( get_pagenum_link( $current_page + 1 ) ),
+				)
+			);
 		}
 
 		?>

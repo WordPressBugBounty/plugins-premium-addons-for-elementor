@@ -774,7 +774,7 @@ class Premium_Banner extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-banner-ib > img' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .premium-banner-ib .premium-banner-img' => 'height: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -791,7 +791,7 @@ class Premium_Banner extends Widget_Base {
 				),
 				'default'   => 'fill',
 				'selectors' => array(
-					'{{WRAPPER}} .premium-banner-ib > img' => 'object-fit: {{VALUE}}',
+					'{{WRAPPER}} .premium-banner-ib .premium-banner-img' => 'object-fit: {{VALUE}}',
 				),
 				// 'condition' => array(
 				// 'premium_banner_custom_height[size]!' => '',
@@ -887,7 +887,7 @@ class Premium_Banner extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-banner-ib > img' => 'opacity: {{SIZE}};',
+					'{{WRAPPER}} .premium-banner-ib .premium-banner-img' => 'opacity: {{SIZE}};',
 				),
 			)
 		);
@@ -919,7 +919,7 @@ class Premium_Banner extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}}:hover .premium-banner-ib > img' => 'opacity: {{SIZE}};',
+					'{{WRAPPER}}:hover .premium-banner-ib .premium-banner-img' => 'opacity: {{SIZE}};',
 				),
 			)
 		);
@@ -995,7 +995,7 @@ class Premium_Banner extends Widget_Base {
 			Group_Control_Css_Filter::get_type(),
 			array(
 				'name'     => 'css_filters',
-				'selector' => '{{WRAPPER}} .premium-banner-ib > img',
+				'selector' => '{{WRAPPER}} .premium-banner-ib .premium-banner-img',
 			)
 		);
 
@@ -1004,7 +1004,7 @@ class Premium_Banner extends Widget_Base {
 			array(
 				'name'     => 'hover_css_filters',
 				'label'    => __( 'Hover CSS Filters', 'premium-addons-for-elementor' ),
-				'selector' => '{{WRAPPER}}:hover .premium-banner-ib > img',
+				'selector' => '{{WRAPPER}}:hover .premium-banner-ib .premium-banner-img',
 			)
 		);
 
@@ -1774,7 +1774,7 @@ class Premium_Banner extends Widget_Base {
 
 			$settings['premium_banner_image']['id'] = $image_id;
 
-			$image_html = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'premium_banner_image' );
+			$image_html = Helper_Functions::get_attachment_image_html( $settings, 'thumbnail', 'premium_banner_image', 'premium-banner-img' );
 
 		}
 
@@ -1800,7 +1800,7 @@ class Premium_Banner extends Widget_Base {
 
 			<?php endif; ?>
 			<?php if ( $image_html ) : ?>
-				<?php echo wp_kses_post( $image_html ); ?>
+				<?php Utils::print_wp_kses_extended( $image_html, array( 'image' ) ); ?>
 			<?php endif; ?>
 			<?php if ( 'animation11' === $settings['premium_banner_image_animation'] ) : ?>
 				<div class="premium-banner-gradient"></div>

@@ -300,6 +300,20 @@
 
 						if ($(this).hasClass("current")) return;
 
+						// The 'Main Query' source has no query context to inherit inside an
+						// admin-ajax.php request, so instead of asking the AJAX handler to
+						// rebuild it, fetch the real (already correctly-scoped) archive page
+						// that paginate_links() linked to, and lift this widget's markup out of it.
+						if (_this.isMainQuery()) {
+							var href = $(this).attr("href");
+
+							if (href) {
+								_this.fetchMainQueryPage(href, _this.settings.scrollAfter);
+							}
+
+							return;
+						}
+
 						var currentPage = parseInt(
 							$scope.find(selectors.currentPage).html(),
 						);
@@ -315,6 +329,10 @@
 						_this.getPostsByAjax(_this.settings.scrollAfter);
 					},
 				);
+			},
+
+			isMainQuery: function () {
+				return undefined !== this.elements.$blogElement.attr("data-next-page");
 			},
 
 			forceEqualHeight: function () {
@@ -500,47 +518,102 @@
 
 						$blogElement.find(selectors.loading).remove();
 
-						var posts = res.data.posts,
-							paging = res.data.paging;
-
-						if (_this.settings.infinite) {
-							_this.settings.isLoaded = true;
-							if (
-								_this.settings.filterTabs &&
-								_this.settings.pageNumber === 1
-							) {
-								$blogElement.html(posts);
-							} else {
-								$blogElement.append(posts);
-							}
-						} else {
-							//Render the new markup into the widget
-							$blogElement.html(posts);
-
-							_this.$element.find(".premium-blog-footer").html(paging);
-						}
-
-						_this.removeMetaSeparators();
-
-						//Make sure grid option is enabled.
-						if (_this.settings.layout) {
-							if ("even" === _this.settings.layout) {
-								if (_this.settings.equalHeight) _this.forceEqualHeight();
-							} else {
-								$blogElement.imagesLoaded(function () {
-									$blogElement.isotope("reloadItems");
-									$blogElement.isotope({
-										itemSelector: ".premium-blog-post-outer-container",
-										animate: false,
-									});
-								});
-							}
-						}
+						_this.applyPostsResult(res.data.posts, res.data.paging);
 					},
 					error: function (err) {
 						console.log(err);
 					},
 				});
+			},
+
+			//reinitialize newly loaded posts identically.
+			applyPostsResult: function (posts, paging) {
+				var $blogElement = this.elements.$blogElement;
+
+				if (this.settings.infinite) {
+					this.settings.isLoaded = true;
+					if (this.settings.filterTabs && this.settings.pageNumber === 1) {
+						$blogElement.html(posts);
+					} else {
+						$blogElement.append(posts);
+					}
+				} else {
+					//Render the new markup into the widget
+					$blogElement.html(posts);
+
+					this.$element.find(".premium-blog-footer").html(paging);
+				}
+
+				this.removeMetaSeparators();
+
+				//Make sure grid option is enabled.
+				if (this.settings.layout) {
+					if ("even" === this.settings.layout) {
+						if (this.settings.equalHeight) this.forceEqualHeight();
+					} else {
+						$blogElement.imagesLoaded(function () {
+							$blogElement.isotope("reloadItems");
+							$blogElement.isotope({
+								itemSelector: ".premium-blog-post-outer-container",
+								animate: false,
+							});
+						});
+					}
+				}
+			},
+
+			// Fetch this widget's own markup out of the returned page.
+			fetchMainQueryPage: function (url, shouldScroll) {
+				var _this = this,
+					$blogElement = this.elements.$blogElement,
+					selectors = this.getSettings("selectors"),
+					elementId = this.$element.data("id");
+
+				$blogElement.append(
+					'<div class="premium-loading-feed"><div class="premium-loader"></div></div>',
+				);
+
+				var stickyOffset = 0;
+				if ($(".elementor-sticky").length > 0) stickyOffset = 100;
+
+				if (shouldScroll) {
+					$("html, body").animate(
+						{
+							scrollTop: $blogElement.offset().top - 50 - stickyOffset,
+						},
+						"slow",
+					);
+				}
+
+				fetch(url)
+					.then(function (response) {
+						return response.text();
+					})
+					.then(function (html) {
+						var $remote = $(new DOMParser().parseFromString(html, "text/html")),
+							$remoteWidget = $remote.find('[data-id="' + elementId + '"]'),
+							$remoteBlogElement = $remoteWidget.find(selectors.blogElement),
+							posts = $remoteBlogElement.html(),
+							paging = $remoteWidget.find(".premium-blog-footer").html() || "";
+
+						// Sync pagination attributes.
+						$blogElement.attr(
+							"data-next-page",
+							$remoteBlogElement.attr("data-next-page"),
+						);
+						$blogElement.attr(
+							"data-current-page",
+							$remoteBlogElement.attr("data-current-page"),
+						);
+
+						$blogElement.find(selectors.loading).remove();
+
+						_this.applyPostsResult(posts, paging);
+					})
+					.catch(function (err) {
+						$blogElement.find(selectors.loading).remove();
+						console.log(err);
+					});
 			},
 
 			getInfiniteScrollPosts: function () {
@@ -556,6 +629,36 @@
 					ticking = true;
 					requestAnimationFrame(function () {
 						ticking = false;
+
+						if (_this.isMainQuery()) {
+							var $blogElement = _this.elements.$blogElement,
+								currentPage =
+									parseInt($blogElement.attr("data-current-page"), 10) || 1,
+								maxPage = parseInt($blogElement.attr("data-max-page"), 10) || 1,
+								nextPageUrl = $blogElement.attr("data-next-page");
+
+							if (currentPage >= maxPage || !nextPageUrl) {
+								return;
+							}
+
+							var mainScrollTop = $(window).scrollTop(),
+								mainLastPost = _this.$element.find(
+									".premium-blog-post-outer-container:last",
+								),
+								mainLastPostTop = mainLastPost.length
+									? mainLastPost.offset().top
+									: 0;
+
+							if (
+								mainScrollTop + windowHeight >= mainLastPostTop &&
+								true == _this.settings.isLoaded
+							) {
+								_this.settings.isLoaded = false;
+								_this.fetchMainQueryPage(nextPageUrl, false);
+							}
+
+							return;
+						}
 
 						if (_this.settings.filterTabs) {
 							$blogPost = _this.elements.$blogElement.find(

@@ -308,22 +308,6 @@ class Addons_Integration {
 			true
 		);
 
-		$data = array(
-			'ajaxurl'             => esc_url( admin_url( 'admin-ajax.php' ) ),
-			'nonce'               => wp_create_nonce( 'pa-disable-unused' ),
-			'disable_unused_link' => add_query_arg(
-				array(
-					'page'      => 'premium-addons',
-					'pa-action' => 'unused',
-					'#tab'      => 'elements',
-				),
-				esc_url( admin_url( 'admin.php' ) )
-			),
-
-		);
-
-		wp_localize_script( 'pa-editor-behavior', 'paEditorBehaviorSettings', $data );
-
 		$map_enabled = isset( self::$modules['premium-maps'] ) ? self::$modules['premium-maps'] : 1;
 
 		if ( $map_enabled ) {
@@ -423,6 +407,8 @@ class Addons_Integration {
 	public function load_extensions() {
 
 		Extras\Live_Editor::get_instance();
+
+		Extras\Angie_Integration::get_instance();
 
 		if ( self::$modules['premium-equal-height'] ) {
 			\PremiumAddons\Addons\Equal_Height::get_instance();
