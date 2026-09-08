@@ -449,11 +449,34 @@ class MCP_Settings {
 				'app'  => __( 'Claude Desktop', 'premium-addons-for-elementor' ),
 			),
 			'claude-ai'      => array(
-				'type'     => 'connector',
+				'type'     => 'steps',
 				'app'      => 'claude.ai',
 				'deeplink' => 'claude-ai',
 				'note'     => __( 'Works on every Claude plan (free plans can add one custom connector). On Team and Enterprise an administrator may have to allow custom connectors first. Claude connects from Anthropic\'s cloud, so your site must be reachable from the internet.', 'premium-addons-for-elementor' ),
 				'docs'     => 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/',
+				'steps'    => array(
+					array(
+						'title' => __( 'In claude.ai, open Customize in the left sidebar, go to the Connectors tab and click Add', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Connectors are no longer under Settings. The Add button opens the Add custom connector dialog.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Use this name for the connector', 'premium-addons-for-elementor' ),
+						'copy'  => $name,
+					),
+					array(
+						'title' => __( 'Paste this server URL, click Continue, then Add', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Leave the second step as Claude detects it: sign-in is always required and your site registers the client automatically, so there is no Client ID or Client Secret to enter.', 'premium-addons-for-elementor' ),
+						'copy'  => $endpoint_url,
+					),
+					array(
+						'title' => __( 'Click Connect and approve the connection', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'Adding the connector does not connect it yet. Claude opens the connector page saying you are not connected; click Connect and your browser opens the approval screen on your site. Approve once and it stays connected.', 'premium-addons-for-elementor' ),
+					),
+					array(
+						'title' => __( 'Check it worked', 'premium-addons-for-elementor' ),
+						'desc'  => __( 'The connector page in Customize → Connectors → Yours lists the read-only and write tools it picked up from your site.', 'premium-addons-for-elementor' ),
+					),
+				),
 			),
 			'chatgpt'        => array(
 				'type'  => 'steps',

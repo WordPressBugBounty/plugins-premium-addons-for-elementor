@@ -340,7 +340,7 @@
 					self.isUpdated = false;
 
 					if (0 !== options.length) {
-						self.$el.removeClass("elementor-hidden-control");
+						self.toggleControlVisibility();
 
 						$(".premium-live-temp-title").addClass("control-hidden");
 

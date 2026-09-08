@@ -309,6 +309,15 @@
             </fields>
         </widget>
 
+        <widget name="premium-tcloud">
+            <fields>
+                <fields-in-item items_of="custom_words">
+                    <field type="Tags Cloud: Word" editor_type="LINE">word</field>
+                    <field type="Tags Cloud: Link" editor_type="LINK">link>url</field>
+                </fields-in-item>
+            </fields>
+        </widget>
+
         <widget name="premium-pinterest-feed">
             <fields>
                 <field type="Pinterest Feed: Pin Read More Text" editor_type="LINE">pin_desc_postfix_txt</field>

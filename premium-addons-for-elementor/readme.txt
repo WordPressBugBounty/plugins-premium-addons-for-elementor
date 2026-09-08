@@ -1,11 +1,11 @@
 === Premium Addons for Elementor - Elementor Templates, Widgets & MCP Tools ===
 Contributors: Leap13, Rimoun
-Tags: elementor, elementor addons, elementor widgets, elementor ai, elementor templates
+Tags: elementor addons, elements widgets, elementor templates, elementor AI, mcp
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.102
+Stable Tag: 4.11.103
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -263,6 +263,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.103 - 8/9/2026 =
+
+- New: Added Custom Words source in Premium Tags Cloud widget to show your own words with links and weights instead of taxonomy terms - [here](https://premiumaddons.com/elementor-tags-cloud-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=tcloud).
+- Tweak: Updated claude.ai connection steps in Premium Addons MCP settings to match the new Customize > Connectors location.
 
 = 4.11.102 - 3/9/2026 =
 

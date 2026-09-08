@@ -90,8 +90,8 @@
 					);
 			} else {
 				var $progressbar = $progressbarElem.find(
-					".premium-progressbar-bar-wrap",
-				),
+						".premium-progressbar-bar-wrap",
+					),
 					width = $progressbarElem.outerWidth(),
 					dotSize = settings.dot || 25,
 					dotSpacing = settings.spacing || 10,
@@ -403,9 +403,9 @@
 					var stickyTarget = e.target.className;
 					if (
 						stickyTarget.toString().indexOf("premium-video-box-sticky-close") >=
-						0 ||
+							0 ||
 						stickyTarget.toString().indexOf("premium-video-box-sticky-close") >=
-						0
+							0
 					) {
 						return false;
 					}
@@ -466,7 +466,7 @@
 												.css("opacity", "1")
 												.addClass(
 													"animated " +
-													$videoInnerContainer.data("video-animation"),
+														$videoInnerContainer.data("video-animation"),
 												);
 										}, animationDelay * 1000);
 									}
@@ -1067,7 +1067,7 @@
 						//should be added to selectors and elements
 
 						var cells =
-							repeater[index]["premium_gallery_image_cell" + suffix].size,
+								repeater[index]["premium_gallery_image_cell" + suffix].size,
 							vCells =
 								repeater[index]["premium_gallery_image_vcell" + suffix].size;
 
@@ -1147,7 +1147,7 @@
 				var itemCount = $elem.find(".premium-fancy-list-items").length,
 					loopCount =
 						"" === settings.count &&
-							!["typing", "slide"].includes(settings.effect)
+						!["typing", "slide"].includes(settings.effect)
 							? "infinite"
 							: settings.count * itemCount;
 
@@ -1670,8 +1670,8 @@
 						if (!$templateContent.length) {
 							$(this).html(
 								'<div class="premium-error-notice"><span>Container with ID <b>' +
-								containerID +
-								"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
+									containerID +
+									"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
 							);
 
 							return;
@@ -1930,8 +1930,8 @@
 						if (!settings._animation && !settings.animation) return;
 
 						var delay = settings._animation_delay
-							? settings._animation_delay
-							: 0,
+								? settings._animation_delay
+								: 0,
 							animation = settings._animation || settings.animation;
 
 						setTimeout(function () {
@@ -2105,11 +2105,18 @@
 			bindEvents: function () {
 				var _this = this;
 
-				_this.elements.$bannerImgWrap.hover(function () {
-					_this.elements.$bannerImgWrap.find('.premium-banner-img').addClass("active");
-				}, function () {
-					_this.elements.$bannerImgWrap.find('.premium-banner-img').removeClass("active");
-				});
+				_this.elements.$bannerImgWrap.hover(
+					function () {
+						_this.elements.$bannerImgWrap
+							.find(".premium-banner-img")
+							.addClass("active");
+					},
+					function () {
+						_this.elements.$bannerImgWrap
+							.find(".premium-banner-img")
+							.removeClass("active");
+					},
+				);
 
 				this.run();
 			},
@@ -2189,8 +2196,8 @@
 				if (!$templateContent.length) {
 					$(this).html(
 						'<div class="premium-error-notice"><span>Container with ID <b>' +
-						containerID +
-						"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.</span></div>",
+							containerID +
+							"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.</span></div>",
 					);
 					return;
 				}
@@ -2538,11 +2545,11 @@
 
 			setHorizontalWidth: function () {
 				var slidesSpacing =
-					parseFloat(
-						getComputedStyle(
-							this.elements.$marqueeWrapper[0],
-						).getPropertyValue("--pa-marquee-spacing"),
-					) || 0,
+						parseFloat(
+							getComputedStyle(
+								this.elements.$marqueeWrapper[0],
+							).getPropertyValue("--pa-marquee-spacing"),
+						) || 0,
 					fullWidth = 0,
 					$posts = this.$element.find(".premium-blog-post-outer-container"),
 					slideWidth = $posts[0].offsetWidth;
@@ -2974,10 +2981,10 @@
 				$imageScroll.css(
 					"transform",
 					(direction === "vertical" ? "translateY" : "translateX") +
-					"( " +
-					transformDirection +
-					transformOffset +
-					"px)",
+						"( " +
+						transformDirection +
+						transformOffset +
+						"px)",
 				);
 			}
 
@@ -3200,7 +3207,7 @@
 
 				$persons.each(function (index, person) {
 					$(person)
-						.imagesLoaded(function () { })
+						.imagesLoaded(function () {})
 						.done(function () {
 							var imageHeight = $(person)
 								.find(selectors.personImg)
@@ -3211,7 +3218,7 @@
 				});
 
 				$persons
-					.imagesLoaded(function () { })
+					.imagesLoaded(function () {})
 					.done(function () {
 						var maxHeight = Math.max.apply(null, heights);
 						$personImg.css("height", maxHeight + "px");
@@ -3486,8 +3493,8 @@
 							// notBadgedItems = $(badge.rbadge_selector).find('.premium-bullet-list-text').filter(':not(:has(+ .premium-bullet-list-badge))');
 
 							var randomIndex = Math.floor(
-								Math.random() * notBadgedItems.length,
-							),
+									Math.random() * notBadgedItems.length,
+								),
 								wasBadgedBefore =
 									$(notBadgedItems[randomIndex]).siblings(
 										".premium-bullet-list-badge",
@@ -3599,8 +3606,8 @@
 
 		var PremiumMaskHandler = function ($scope, $) {
 			var txtShowcaseElem = $scope.find(
-				".pa-txt-sc__effect-min-mask .pa-txt-sc__main-item.pa-txt-sc__item-text",
-			),
+					".pa-txt-sc__effect-min-mask .pa-txt-sc__main-item.pa-txt-sc__item-text",
+				),
 				mask = $scope.hasClass("premium-mask-yes") || txtShowcaseElem.length;
 
 			if (!mask) return;
@@ -3632,7 +3639,7 @@
 						.each(function () {
 							var focusedClass =
 								1 === this.nodeType &&
-									this.classList.contains("premium-title__focused-word")
+								this.classList.contains("premium-title__focused-word")
 									? " premium-title__focused-word"
 									: "";
 
@@ -3724,8 +3731,8 @@
 				}
 
 				var fromOrTo = !$scope.hasClass("premium-svg-anim-rev-yes")
-					? "from"
-					: "to",
+						? "from"
+						: "to",
 					$paths = $scope.find(
 						"path, circle, rect, square, ellipse, polyline, polygon, line",
 					),
@@ -3804,354 +3811,6 @@
 						);
 					}
 				}
-			},
-		});
-
-		var PremiumTermsCloud = ModuleHandler.extend({
-			getDefaultSettings: function () {
-				return {
-					selectors: {
-						container: ".premium-tcloud-container",
-						canvas: ".premium-tcloud-canvas",
-						termWrap: ".premium-tcloud-term",
-					},
-				};
-			},
-
-			getDefaultElements: function () {
-				var selectors = this.getSettings("selectors");
-
-				return {
-					$container: this.$element.find(selectors.container),
-					$canvas: this.$element.find(selectors.canvas),
-					$termWrap: this.$element.find(selectors.termWrap),
-				};
-			},
-
-			bindEvents: function () {
-				this.run();
-			},
-
-			run: function () {
-				var widgetSettings = this.getElementSettings(),
-					$container = this.elements.$container,
-					_this = this,
-					$canvas = this.elements.$canvas;
-
-				if (["shape", "sphere"].includes(widgetSettings.words_order)) {
-					var computedStyle = getComputedStyle($canvas[0]);
-
-					$canvas.attr({
-						width: computedStyle.getPropertyValue("--pa-tcloud-width"),
-						height: computedStyle.getPropertyValue("--pa-tcloud-height"),
-					});
-				}
-
-				setTimeout(function () {
-					if ("shape" === widgetSettings.words_order) {
-						// Using IntersectionObserverAPI.
-						var eleObserver = new IntersectionObserver(function (entries) {
-							entries.forEach(function (entry) {
-								if (entry.isIntersecting) {
-									_this.renderWordCloud();
-									eleObserver.unobserve(entry.target); // to only execute the callback func once.
-								}
-							});
-						});
-
-						eleObserver.observe($canvas[0]);
-					} else if ("sphere" === widgetSettings.words_order) {
-						_this.renderWordSphere();
-					} else {
-						_this.handleTermsGrid();
-					}
-
-					$container.removeClass("premium-tcloud-hidden");
-				}, 500);
-			},
-
-			renderWordSphere: function () {
-				var widgetID = this.getID(),
-					widgetSettings = this.getElementSettings(),
-					$termWrap = this.elements.$termWrap,
-					_this = this;
-
-				var colorScheme = widgetSettings.colors_select;
-
-				if ("custom" === colorScheme && widgetSettings.words_colors) {
-					var colors = widgetSettings.words_colors.split("\n");
-				}
-
-				$termWrap.map(function (index, term) {
-					var generatedColor = null;
-
-					if ("custom" !== colorScheme) {
-						generatedColor = _this.genRandomColor(colorScheme);
-					} else if (widgetSettings.words_colors) {
-						generatedColor = Math.floor(Math.random() * colors.length);
-
-						generatedColor = colors[generatedColor];
-					}
-
-					if (generatedColor) {
-						$(term)
-							.find(".premium-tcloud-term-link")
-							.css(
-								("background" === widgetSettings.colors_target
-									? "background-"
-									: "") + "color",
-								generatedColor,
-							);
-					}
-				});
-
-				setTimeout(function () {
-					$("#premium-tcloud-canvas-" + widgetID).tagcanvas(
-						{
-							decel: "yes" === widgetSettings.stop_onDrag ? 0.95 : 1,
-
-							overlap: false,
-							textColour: null,
-
-							weight: "yes" === widgetSettings.sphere_weight,
-							weightFrom: "data-weight",
-							weightSizeMin:
-								"yes" === widgetSettings.sphere_weight
-									? widgetSettings.weight_min.size
-									: 10,
-							weightSizeMax:
-								"yes" === widgetSettings.sphere_weight
-									? widgetSettings.weight_max.size
-									: 20,
-
-							textHeight: widgetSettings.text_height || 15,
-							textFont: widgetSettings.font_family,
-							textWeight: widgetSettings.font_weight,
-
-							wheelZoom: "yes" === widgetSettings.wheel_zoom,
-							reverse: "yes" === widgetSettings.reverse,
-							dragControl: "yes" === widgetSettings.drag_control,
-							initial: [
-								widgetSettings.start_xspeed.size,
-								widgetSettings.start_yspeed.size,
-							],
-
-							bgColour: "tag",
-
-							padding:
-								"background" === widgetSettings.colors_target
-									? widgetSettings.sphere_term_padding.size
-									: 0,
-							bgRadius:
-								"background" === widgetSettings.colors_target
-									? widgetSettings.sphere_term_radius.size
-									: 0,
-
-							outlineColour: "rgba(2,2,2,0)",
-							maxSpeed: 0.03,
-							depth: 0.75,
-						},
-						"premium-tcloud-terms-container-" + widgetID,
-					);
-				}, 100);
-			},
-
-			handleTermsGrid: function () {
-				var widgetSettings = this.getElementSettings(),
-					$termWrap = this.elements.$termWrap,
-					_this = this;
-
-				var colorScheme = widgetSettings.colors_select;
-
-				if ("custom" === colorScheme && widgetSettings.words_colors) {
-					var colors = widgetSettings.words_colors.split("\n");
-				}
-
-				$termWrap.map(function (index, term) {
-					var generatedColor = null,
-						fontSize = $(term)
-							.find(".premium-tcloud-term-link")
-							.css("font-size")
-							.replace("px", "");
-
-					if (widgetSettings.fsize_scale.size > 0)
-						fontSize =
-							parseFloat(fontSize) +
-							$(term).find(".premium-tcloud-term-link").data("weight") *
-							widgetSettings.fsize_scale.size;
-
-					if ("custom" !== colorScheme) {
-						generatedColor = _this.genRandomColor(colorScheme, "grid");
-
-						var opacities = {
-							original: "random-light" === colorScheme ? "0.15)" : "80%)",
-							replaced: "random-light" === colorScheme ? "0.3)" : "100%)",
-						};
-
-						$(term)
-							.get(0)
-							.style.setProperty(
-								"--tag-hover-color",
-								generatedColor.replace(opacities.original, opacities.replaced),
-							);
-						$(term)
-							.get(0)
-							.style.setProperty(
-								"--tag-text-color",
-								"random-dark" === colorScheme
-									? "#fff"
-									: generatedColor.replace("42%,0.15)", "35%,100%)"),
-							);
-					} else if (widgetSettings.words_colors) {
-						generatedColor = Math.floor(Math.random() * colors.length);
-
-						generatedColor = colors[generatedColor];
-
-						$(term)
-							.get(0)
-							.style.setProperty("--tag-hover-color", generatedColor);
-					}
-
-					$(term).get(0).style.setProperty("--tag-color", generatedColor);
-
-					if (widgetSettings.fsize_scale.size > 0)
-						$(term)
-							.find(".premium-tcloud-term-link")
-							.css("font-size", Math.ceil(fontSize) + "px");
-
-					if ("ribbon" === widgetSettings.words_order) {
-						$(term)
-							.get(0)
-							.style.setProperty(
-								"--tag-ribbon-size",
-								Math.ceil($(term).outerHeight(false)) / 2 + "px",
-							);
-					}
-				});
-			},
-
-			renderWordCloud: function () {
-				var widgetID = this.getID(),
-					widgetSettings = this.getElementSettings(),
-					$container = this.elements.$container,
-					settings = $container.data("chart");
-
-				var wordsArr = settings.wordsArr,
-					colors = [],
-					rotationRatio = (rotationSteps = null),
-					minRot = -90 * (Math.PI / 180),
-					maxRot = 90 * (Math.PI / 180);
-
-				switch (widgetSettings.rotation_select) {
-					case "horizontal":
-						rotationRatio = 0;
-						rotationSteps = 0;
-						break;
-
-					case "vertical":
-						rotationRatio = 1;
-						rotationSteps = 2;
-						break;
-
-					case "hv":
-						rotationRatio = 0.5;
-						rotationSteps = 2;
-						break;
-
-					case "custom":
-						rotationRatio = widgetSettings.rotation.size || 0.3;
-
-						minRot = widgetSettings.degrees.size * (Math.PI / 180) || 45;
-						maxRot = widgetSettings.degrees.size * (Math.PI / 180) || 45;
-
-						break;
-
-					case "random":
-						rotationRatio = Math.random();
-						rotationSteps = 0;
-
-						break;
-
-					default:
-						rotationRatio = 0.3;
-						break;
-				}
-
-				if ("custom" === widgetSettings.colors_select) {
-					colors = widgetSettings.words_colors.split("\n");
-				}
-
-				WordCloud(
-					document.getElementById("premium-tcloud-canvas-" + widgetID),
-					{
-						backgroundColor: "rgba(0, 0, 0, 0)",
-						shuffle: false,
-
-						list: wordsArr,
-						shape: widgetSettings.shape,
-						color: widgetSettings.colors_select,
-						wordsColors: colors,
-
-						wait: widgetSettings.interval.size * 1000 || 0,
-
-						gridSize: widgetSettings.grid_size.size || 8,
-
-						weightFactor: widgetSettings.weight_scale || 5,
-
-						minRotation: minRot,
-						maxRotation: maxRot,
-
-						rotateRatio: rotationRatio,
-						rotationSteps: rotationSteps,
-
-						fontFamily: widgetSettings.font_family || "Arial",
-						fontWeight: widgetSettings.font_weight,
-
-						click: function (item) {
-							if (!elementorFrontend.isEditMode()) {
-								var link = item[2];
-
-								window.open(
-									link,
-									"yes" === widgetSettings.new_tab ? "_blank" : "_top",
-								);
-							}
-						},
-
-						// minSize: 10
-						// rotationSteps: 90
-					},
-				);
-			},
-
-			genRandomColor: function (scheme, shape) {
-				var min = 50,
-					max = 90;
-
-				if ("random-dark" === scheme) {
-					min = 10;
-					max = 50;
-				}
-
-				var lightandOpacity =
-					(Math.random() * (max - min) + min).toFixed() + "%, 100%";
-				if (shape) {
-					lightandOpacity =
-						"42%," + ("random-dark" === scheme ? "80%" : "0.15");
-				}
-
-				return (
-					"hsla(" +
-					(Math.random() * 360).toFixed() +
-					"," +
-					"100%," +
-					lightandOpacity +
-					")"
-				);
-			},
-
-			genRandomRotate: function () {
-				return Math.floor(Math.random() * 361);
 			},
 		});
 
@@ -4251,9 +3910,9 @@
 							$scope.find(".premium-world-clock__meridiem").text(time.meridiem);
 						} else {
 							var meridiemIcons = {
-								AM: '<svg id="Weather_Icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#333;}</style></defs><g id="Clear_Sky"><circle class="cls-1" cx="12" cy="12" r="5.5"/><path class="cls-1" d="m21.76,12.74h-1.95c-.98,0-.98-1.47,0-1.47h1.95c.98,0,.98,1.47,0,1.47Z"/><path class="cls-1" d="m19.39,5.62l-1.38,1.38c-.29.29-.75.29-1.04,0-.29-.29-.29-.75,0-1.04l1.38-1.38c.29-.28.75-.28,1.04,0,.28.29.28.75,0,1.04Z"/><path class="cls-1" d="m12.74,2.24v1.95c0,.4-.33.73-.73.73s-.74-.33-.74-.73v-1.95c0-.41.33-.74.74-.74s.73.33.73.74Z"/><path class="cls-1" d="m5.96,7.03l-1.38-1.38c-.32-.31-.29-.75,0-1.04s.72-.31,1.03,0l1.38,1.38c.69.69-.34,1.73-1.03,1.04Z"/><path class="cls-1" d="m4.19,12.74h-1.95c-.98,0-.98-1.47,0-1.47h1.95c.98,0,.98,1.47,0,1.47Z"/><path class="cls-1" d="m7.02,18.04l-1.38,1.38c-.31.31-.75.29-1.04,0s-.31-.72,0-1.03l1.38-1.38c.32-.31.75-.29,1.04,0,.29.28.31.72,0,1.03Z"/><path class="cls-1" d="m12.74,19.82v1.95c0,.98-1.47.98-1.47,0v-1.95c0-.98,1.47-.98,1.47,0Z"/><path class="cls-1" d="m19.43,19.4c-.29.28-.73.31-1.04,0l-1.38-1.39c-.31-.31-.29-.75,0-1.03.28-.29.72-.31,1.03,0l1.39,1.38c.31.31.28.75,0,1.04Z"/></g></svg>',
-								PM: '<svg id="Weather_Icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#333;}</style></defs><path id="Moon" class="cls-1" d="m21.93,17.23c-1.89,3.24-5.4,5.27-9.26,5.27-5.89,0-10.67-4.7-10.67-10.51S6.37,1.87,11.95,1.5c.4-.02.67.41.46.76-.83,1.42-1.28,3.04-1.28,4.73,0,5.25,4.33,9.51,9.68,9.51.22,0,.44,0,.65-.02.4-.03.67.4.47.75Z"/></svg>',
-							},
+									AM: '<svg id="Weather_Icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#333;}</style></defs><g id="Clear_Sky"><circle class="cls-1" cx="12" cy="12" r="5.5"/><path class="cls-1" d="m21.76,12.74h-1.95c-.98,0-.98-1.47,0-1.47h1.95c.98,0,.98,1.47,0,1.47Z"/><path class="cls-1" d="m19.39,5.62l-1.38,1.38c-.29.29-.75.29-1.04,0-.29-.29-.29-.75,0-1.04l1.38-1.38c.29-.28.75-.28,1.04,0,.28.29.28.75,0,1.04Z"/><path class="cls-1" d="m12.74,2.24v1.95c0,.4-.33.73-.73.73s-.74-.33-.74-.73v-1.95c0-.41.33-.74.74-.74s.73.33.73.74Z"/><path class="cls-1" d="m5.96,7.03l-1.38-1.38c-.32-.31-.29-.75,0-1.04s.72-.31,1.03,0l1.38,1.38c.69.69-.34,1.73-1.03,1.04Z"/><path class="cls-1" d="m4.19,12.74h-1.95c-.98,0-.98-1.47,0-1.47h1.95c.98,0,.98,1.47,0,1.47Z"/><path class="cls-1" d="m7.02,18.04l-1.38,1.38c-.31.31-.75.29-1.04,0s-.31-.72,0-1.03l1.38-1.38c.32-.31.75-.29,1.04,0,.29.28.31.72,0,1.03Z"/><path class="cls-1" d="m12.74,19.82v1.95c0,.98-1.47.98-1.47,0v-1.95c0-.98,1.47-.98,1.47,0Z"/><path class="cls-1" d="m19.43,19.4c-.29.28-.73.31-1.04,0l-1.38-1.39c-.31-.31-.29-.75,0-1.03.28-.29.72-.31,1.03,0l1.39,1.38c.31.31.28.75,0,1.04Z"/></g></svg>',
+									PM: '<svg id="Weather_Icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#333;}</style></defs><path id="Moon" class="cls-1" d="m21.93,17.23c-1.89,3.24-5.4,5.27-9.26,5.27-5.89,0-10.67-4.7-10.67-10.51S6.37,1.87,11.95,1.5c.4-.02.67.41.46.76-.83,1.42-1.28,3.04-1.28,4.73,0,5.25,4.33,9.51,9.68,9.51.22,0,.44,0,.65-.02.4-.03.67.4.47.75Z"/></svg>',
+								},
 								currentIcon =
 									6 <= time.hoursNotPadded && time.hoursNotPadded <= 17
 										? meridiemIcons["AM"]
@@ -4286,8 +3945,8 @@
 
 						$daysWrapper.html(
 							'<span class="premium-world-clock__day-name current-day">' +
-							currentDay +
-							"</span>",
+								currentDay +
+								"</span>",
 						);
 
 						for (var i = 1; i <= parseInt(daysNum); i++) {
@@ -4304,13 +3963,13 @@
 
 							$daysWrapper.prepend(
 								'<span class="premium-world-clock__day-name">' +
-								daysMap[dayBefore] +
-								"</span>",
+									daysMap[dayBefore] +
+									"</span>",
 							);
 							$daysWrapper.append(
 								'<span class="premium-world-clock__day-name">' +
-								daysMap[dayAfter] +
-								"</span>",
+									daysMap[dayAfter] +
+									"</span>",
 							);
 						}
 
@@ -4452,8 +4111,8 @@
 				$postsWrapper.on("init", function (event, slick) {
 					var $currentTyping = $postsWrapper.find(
 						'[data-slick-index="' +
-						slick.currentSlide +
-						'"] .premium-post-ticker__post-title a',
+							slick.currentSlide +
+							'"] .premium-post-ticker__post-title a',
 					);
 
 					typeTitle($currentTyping);
@@ -4463,19 +4122,19 @@
 					"beforeChange",
 					function (event, slick, currentSlide, nextSlide) {
 						var $typedItem = $postsWrapper.find(
-							'[data-slick-index="' +
-							currentSlide +
-							'"] .premium-post-ticker__post-title',
-						),
+								'[data-slick-index="' +
+									currentSlide +
+									'"] .premium-post-ticker__post-title',
+							),
 							$currentTyping = $postsWrapper.find(
 								'[data-slick-index="' +
-								currentSlide +
-								'"] .premium-post-ticker__post-title a',
+									currentSlide +
+									'"] .premium-post-ticker__post-title a',
 							),
 							$nextTyping = $postsWrapper.find(
 								'[data-slick-index="' +
-								nextSlide +
-								'"] .premium-post-ticker__post-title a',
+									nextSlide +
+									'"] .premium-post-ticker__post-title a',
 							),
 							speed = slick.options.speed,
 							typingDelay = Math.floor(speed / 3);
@@ -4651,8 +4310,8 @@
 			}
 
 			var forecastHeight = $scope
-				.find(".premium-weather__outer-wrapper")
-				.data("pa-height"),
+					.find(".premium-weather__outer-wrapper")
+					.data("pa-height"),
 				$forecastSlider =
 					"layout-2" === settings.layout
 						? $scope.find(".premium-weather__extra-outer-wrapper")
@@ -4665,7 +4324,7 @@
 					: false,
 				dailyEqWidth =
 					!forecastTabs &&
-						!dailyForecastCarousel &
+					!dailyForecastCarousel &
 						!$scope.hasClass("premium-daily-forecast__style-4")
 						? true
 						: false;
@@ -4692,7 +4351,7 @@
 				"vertical" === settings.hourlyLayout
 			) {
 				var prevArrow =
-					'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-chevron-left" aria-hidden="true"></i></a>',
+						'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-chevron-left" aria-hidden="true"></i></a>',
 					nextArrow =
 						'<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-chevron-right" aria-hidden="true"></i></a>';
 
@@ -4783,7 +4442,7 @@
 					];
 				} else {
 					var prevArrow =
-						'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-chevron-left" aria-hidden="true"></i></a>',
+							'<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-chevron-left" aria-hidden="true"></i></a>',
 						nextArrow =
 							'<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-chevron-right" aria-hidden="true"></i></a>';
 
@@ -4960,8 +4619,8 @@
 
 			function getSlickSettings(settings) {
 				var prevArrow = settings.arrows
-					? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
-					: "",
+						? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
+						: "",
 					nextArrow = settings.arrows
 						? '<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>'
 						: "";
@@ -5040,8 +4699,8 @@
 						setTimeout(function () {
 							$(
 								"#premium-board-content-" +
-								id +
-								" .premium-pinterest-feed__pins-wrapper",
+									id +
+									" .premium-pinterest-feed__pins-wrapper",
 							).isotope(getIsoTopeSettings());
 						}, 100);
 					}
@@ -5058,7 +4717,7 @@
 			if (!isBoardQuery) {
 				if ("masonry" === settings.layout && !settings.carousel) {
 					$pinsWrapper
-						.imagesLoaded(function () { })
+						.imagesLoaded(function () {})
 						.done(function () {
 							$pinsWrapper.isotope(getIsoTopeSettings());
 						});
@@ -5132,8 +4791,8 @@
 
 			function getSlickSettings(settings) {
 				var prevArrow = settings.arrows
-					? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
-					: "",
+						? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
+						: "",
 					nextArrow = settings.arrows
 						? '<a type="button" data-role="none" class="carousel-arrow carousel-next" aria-label="Next" role="button" style=""><i class="fas fa-angle-right" aria-hidden="true"></i></a>'
 						: "",
@@ -5205,8 +4864,8 @@
 
 			if ("infinite" === animationType) {
 				var $mediaItemsContainer = $outerContainer.find(
-					".premium-adv-carousel__items",
-				),
+						".premium-adv-carousel__items",
+					),
 					lightbox_type = settings.lightbox_type;
 
 				if ("load" === settings.renderEvent) {
@@ -5363,8 +5022,8 @@
 						if (!$templateContent.length) {
 							$(this).html(
 								'<div class="premium-error-notice"><span>Container with ID <b>' +
-								containerID +
-								"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
+									containerID +
+									"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
 							);
 
 							return;
@@ -5502,9 +5161,9 @@
 					}
 
 					var slidesSpacing =
-						getComputedStyle($scope[0]).getPropertyValue(
-							"--pa-wheel-spacing",
-						) || 0,
+							getComputedStyle($scope[0]).getPropertyValue(
+								"--pa-wheel-spacing",
+							) || 0,
 						factor = "normal" === scrollDir ? -1 : 1,
 						accumlativeWidth = 0;
 
@@ -5538,7 +5197,7 @@
 					var fullWidth =
 						horAlignWidth +
 						$scope.find(".premium-adv-carousel__item").length *
-						parseFloat(slidesSpacing);
+							parseFloat(slidesSpacing);
 					var animation = gsap.to(
 						$scope.find(".premium-adv-carousel__item-outer-wrapper"),
 						{
@@ -5582,9 +5241,9 @@
 					}
 
 					var slidesSpacing =
-						getComputedStyle($scope[0]).getPropertyValue(
-							"--pa-wheel-spacing",
-						) || 0,
+							getComputedStyle($scope[0]).getPropertyValue(
+								"--pa-wheel-spacing",
+							) || 0,
 						factor = "normal" === scrollDir ? -1 : 1,
 						accumlativeHeight = 0;
 
@@ -5608,7 +5267,7 @@
 					var fullHeight =
 						verAlignWidth +
 						$scope.find(".premium-adv-carousel__item").length *
-						parseFloat(slidesSpacing);
+							parseFloat(slidesSpacing);
 
 					var animation = gsap.to(
 						$scope.find(".premium-adv-carousel__item-outer-wrapper"),
@@ -5712,32 +5371,32 @@
 					colsNumber =
 						"skin4" !== settings.skin
 							? parseInt(
-								100 /
-								settings.testimonials_per_row.substr(
-									0,
-									settings.testimonials_per_row.indexOf("%"),
-								),
-							)
+									100 /
+										settings.testimonials_per_row.substr(
+											0,
+											settings.testimonials_per_row.indexOf("%"),
+										),
+								)
 							: 1,
 					colsTablet =
 						"skin4" !== settings.skin
 							? parseInt(
-								100 /
-								settings.testimonials_per_row_tablet.substr(
-									0,
-									settings.testimonials_per_row_tablet.indexOf("%"),
-								),
-							)
+									100 /
+										settings.testimonials_per_row_tablet.substr(
+											0,
+											settings.testimonials_per_row_tablet.indexOf("%"),
+										),
+								)
 							: 1,
 					colsMobile =
 						"skin4" !== settings.skin
 							? parseInt(
-								100 /
-								settings.testimonials_per_row_mobile.substr(
-									0,
-									settings.testimonials_per_row_mobile.indexOf("%"),
-								),
-							)
+									100 /
+										settings.testimonials_per_row_mobile.substr(
+											0,
+											settings.testimonials_per_row_mobile.indexOf("%"),
+										),
+								)
 							: 1,
 					slidesToScroll = parseFloat(
 						getComputedStyle(this.$element[0]).getPropertyValue(
@@ -5899,10 +5558,10 @@
 
 		var PremiumTextualShowcaseHandler = function ($scope, $) {
 			var trigger = $scope
-				.find(".pa-txt-sc__outer-container")
-				.hasClass("pa-trigger-on-viewport")
-				? "viewport"
-				: "hover",
+					.find(".pa-txt-sc__outer-container")
+					.hasClass("pa-trigger-on-viewport")
+					? "viewport"
+					: "hover",
 				hasGrowEffect = $scope.find(".pa-txt-sc__effect-grow").length,
 				entranceAnimation = $scope
 					.find(".pa-txt-sc__outer-container")
@@ -6204,8 +5863,8 @@
 							clearHighlights();
 
 							var $textElems = $(searchTarget)
-								.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
-								.not(".elementor-element-overlay *"),
+									.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
+									.not(".elementor-element-overlay *"),
 								$fadeElems = $(settings.fadeout_target).find(
 									"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
 								);
@@ -6340,8 +5999,8 @@
 
 			function getSlickSettings() {
 				var cols = getComputedStyle($scope[0]).getPropertyValue(
-					"--pa-search-carousel-slides",
-				),
+						"--pa-search-carousel-slides",
+					),
 					prevArrow = settings.arrows
 						? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
 						: "",
@@ -6685,7 +6344,6 @@
 			"premium-img-gallery": PremiumGridWidgetHandler,
 			"premium-addon-banner": PremiumBannerHandler,
 			"premium-svg-drawer": PremiumSVGDrawerHandler,
-			"premium-tcloud": PremiumTermsCloud,
 			"premium-icon-list": PremiumBulletListHandler,
 			"premium-addon-testimonials": PremiumTestimonialsHandler,
 			"premium-mobile-menu": PremiumMobileMenuHandler,

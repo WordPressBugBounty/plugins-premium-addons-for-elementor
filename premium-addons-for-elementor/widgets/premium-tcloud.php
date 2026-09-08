@@ -9,6 +9,7 @@ namespace PremiumAddons\Widgets;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Plugin;
 use Elementor\Widget_Base;
+use Elementor\Repeater;
 use Elementor\Utils;
 use Elementor\Control_Media;
 use Elementor\Controls_Manager;
@@ -86,7 +87,7 @@ class Premium_Tcloud extends Widget_Base {
 
 		if ( $is_edit ) {
 
-			$scripts = array( 'pa-glass', 'pa-awesomecloud', 'pa-tagcanvas' );
+			$scripts = array( 'pa-glass', 'pa-awesomecloud', 'pa-tagcanvas', 'pa-matter' );
 
 		} else {
 			$settings = $this->get_settings();
@@ -99,10 +100,12 @@ class Premium_Tcloud extends Widget_Base {
 				$scripts[] = 'pa-tagcanvas';
 			} elseif ( 'shape' === $settings['words_order'] ) {
 				$scripts[] = 'pa-awesomecloud';
+			} elseif ( 'default' === $settings['words_order'] && 'yes' === $settings['throwable_effect'] ) {
+				$scripts[] = 'pa-matter';
 			}
 		}
 
-		$scripts[] = 'premium-addons';
+		$scripts[] = 'pa-tcloud';
 
 		return $scripts;
 	}
@@ -191,6 +194,8 @@ class Premium_Tcloud extends Widget_Base {
 			)
 		);
 
+		$terms_condition = array_merge( $options['source_condition'], array( 'source' => 'terms' ) );
+
 		$this->add_control(
 			'words_order',
 			array(
@@ -227,6 +232,7 @@ class Premium_Tcloud extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'words_order!' => $options['order_condition'],
+					'source'       => 'terms',
 				),
 			)
 		);
@@ -239,6 +245,7 @@ class Premium_Tcloud extends Widget_Base {
 				'type'        => Controls_Manager::NUMBER,
 				'condition'   => array(
 					'words_order!' => $options['order_condition'],
+					'source'       => 'terms',
 				),
 			)
 		);
@@ -252,6 +259,7 @@ class Premium_Tcloud extends Widget_Base {
 				'condition' => array(
 					'words_order'       => array( 'default', 'ribbon' ),
 					'get_from_current!' => 'yes',
+					'source'            => 'terms',
 				),
 			)
 		);
@@ -266,28 +274,12 @@ class Premium_Tcloud extends Widget_Base {
 				'condition'   => array(
 					'words_order!'  => $options['order_condition'],
 					'words_number!' => '',
+					'source'        => 'terms',
 				),
 			)
 		);
 
-		if ( ! $papro_activated ) {
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'tcloud-widget', 'wp-editor', 'get-pro' );
-
-			$this->add_control(
-				'tcloud_notice',
-				array(
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => __( 'This option is available in Premium Addons Pro.', 'premium-addons-for-elementor' ) . '<a href="' . esc_url( $get_pro ) . '" target="_blank">' . __( 'Upgrade now!', 'premium-addons-for-elementor' ) . '</a>',
-					'content_classes' => 'papro-upgrade-notice',
-					'condition'       => array(
-						'words_order' => $options['order_condition'],
-					),
-				)
-			);
-
-		} else {
-			do_action( 'pa_tcloud_shape_controls', $this );
-		}
+		do_action( 'pa_tcloud_shape_controls', $this );
 
 		$this->add_control(
 			'new_tab',
@@ -298,6 +290,7 @@ class Premium_Tcloud extends Widget_Base {
 				'frontend_available' => true,
 				'condition'          => array(
 					'words_order!' => $options['order_condition'],
+					'source'       => 'terms',
 				),
 			)
 		);
@@ -339,9 +332,7 @@ class Premium_Tcloud extends Widget_Base {
 			)
 		);
 
-		if ( $papro_activated ) {
-			do_action( 'pa_tcloud_sphere_controls', $this );
-		}
+		do_action( 'pa_tcloud_sphere_controls', $this );
 
 		$this->add_responsive_control(
 			'direction',
@@ -367,15 +358,30 @@ class Premium_Tcloud extends Widget_Base {
 				'condition'    => array(
 					'words_order!' => $options['order_condition'],
 				),
+				'conditions'   => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'     => 'words_order',
+							'operator' => '!==',
+							'value'    => 'default',
+						),
+						array(
+							'name'     => 'throwable_effect',
+							'operator' => '!==',
+							'value'    => 'yes',
+						),
+					),
+				),
 			)
 		);
 
 		$this->add_responsive_control(
 			'align',
 			array(
-				'label'     => __( 'Alignment', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
+				'label'      => __( 'Alignment', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::CHOOSE,
+				'options'    => array(
 					'flex-start' => array(
 						'title' => __( 'Start', 'premium-addons-for-elementor' ),
 						'icon'  => is_rtl() ? 'eicon-text-align-right' : 'eicon-text-align-left',
@@ -389,17 +395,57 @@ class Premium_Tcloud extends Widget_Base {
 						'icon'  => is_rtl() ? 'eicon-text-align-left' : 'eicon-text-align-right',
 					),
 				),
-				'default'   => 'flex-start',
-				'toggle'    => false,
-				'selectors' => array(
+				'default'    => 'flex-start',
+				'toggle'     => false,
+				'selectors'  => array(
 					'{{WRAPPER}}.premium-tcloud__row .premium-tcloud-canvas-container' => 'justify-content: {{VALUE}};',
 					'{{WRAPPER}}.premium-tcloud__column .premium-tcloud-canvas-container' => 'align-items: {{VALUE}};',
 				),
-				'condition' => array(
+				'condition'  => array(
 					'words_order!' => $options['order_condition'],
+				),
+				'conditions' => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'     => 'words_order',
+							'operator' => '!==',
+							'value'    => 'default',
+						),
+						array(
+							'name'     => 'throwable_effect',
+							'operator' => '!==',
+							'value'    => 'yes',
+						),
+					),
 				),
 			)
 		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'throwable_section',
+			array(
+				'label'     => __( 'Throwable Effect', 'premium-addons-for-elementor' ),
+				'condition' => array(
+					'words_order' => 'default',
+				),
+			)
+		);
+
+		$this->add_control(
+			'throwable_effect',
+			array(
+				'label'              => apply_filters( 'pa_pro_label', __( 'Throwable Effect (Pro)', 'premium-addons-for-elementor' ) ),
+				'description'        => __( 'Terms fall into place and can be dragged and thrown.', 'premium-addons-for-elementor' ),
+				'type'               => Controls_Manager::SWITCHER,
+				'render_type'        => 'template',
+				'frontend_available' => true,
+			)
+		);
+
+		do_action( 'pa_tcloud_throwable_controls', $this );
 
 		$this->end_controls_section();
 
@@ -409,6 +455,100 @@ class Premium_Tcloud extends Widget_Base {
 				'label'     => __( 'Query', 'premium-addons-for-elementor' ),
 				'condition' => array(
 					'words_order!' => $options['order_condition'],
+				),
+			)
+		);
+
+		$this->add_control(
+			'source',
+			array(
+				'label'       => __( 'Source', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'label_block' => true,
+				'options'     => array(
+					'terms'  => __( 'Taxonomy Terms', 'premium-addons-for-elementor' ),
+					'custom' => __( 'Custom Words', 'premium-addons-for-elementor' ),
+				),
+				'default'     => 'terms',
+			)
+		);
+
+		$repeater = new Repeater();
+
+		$repeater->add_control(
+			'word',
+			array(
+				'label'       => __( 'Word', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'label_block' => true,
+				'dynamic'     => array(
+					'active' => true,
+				),
+			)
+		);
+
+		$repeater->add_control(
+			'link',
+			array(
+				'label'       => __( 'Link', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::URL,
+				'label_block' => true,
+				'placeholder' => 'https://premiumaddons.com/',
+				'dynamic'     => array(
+					'active' => true,
+				),
+			)
+		);
+
+		$repeater->add_control(
+			'weight',
+			array(
+				'label'       => __( 'Weight', 'premium-addons-for-elementor' ),
+				'description' => __( 'Higher weight makes the word larger. Works with Font Size Scale, Shape and Sphere layouts.', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SLIDER,
+				'range'       => array(
+					'px' => array(
+						'min'  => 1,
+						'max'  => 10,
+						'step' => 1,
+					),
+				),
+				'default'     => array(
+					'size' => 1,
+				),
+			)
+		);
+
+		$this->add_control(
+			'custom_words',
+			array(
+				'label'         => __( 'Words', 'premium-addons-for-elementor' ),
+				'type'          => Controls_Manager::REPEATER,
+				'fields'        => $repeater->get_controls(),
+				'default'       => array(
+					array(
+						'word'   => __( 'Design', 'premium-addons-for-elementor' ),
+						'weight' => array(
+							'size' => 3,
+						),
+					),
+					array(
+						'word'   => __( 'Marketing', 'premium-addons-for-elementor' ),
+						'weight' => array(
+							'size' => 2,
+						),
+					),
+					array(
+						'word'   => __( 'Development', 'premium-addons-for-elementor' ),
+						'weight' => array(
+							'size' => 1,
+						),
+					),
+				),
+				'title_field'   => '{{{ word }}}',
+				'prevent_empty' => false,
+				'condition'     => array(
+					'source' => 'custom',
 				),
 			)
 		);
@@ -430,16 +570,19 @@ class Premium_Tcloud extends Widget_Base {
 				'label_block' => true,
 				'options'     => $post_types,
 				'default'     => 'post',
+				'condition'   => array(
+					'source' => 'terms',
+				),
 			)
 		);
 
 		$this->add_control(
 			'filter_tabs_type',
 			array(
-				'label'     => __( 'Source', 'premium-addons-for-elementor' ),
+				'label'     => __( 'Taxonomy', 'premium-addons-for-elementor' ),
 				'type'      => Premium_Tax_Filter::TYPE,
 				'default'   => 'category',
-				'condition' => $options['source_condition'],
+				'condition' => $terms_condition,
 			)
 		);
 
@@ -450,7 +593,7 @@ class Premium_Tcloud extends Widget_Base {
 				'type'            => Controls_Manager::RAW_HTML,
 				'classes'         => 'premium-live-temp-title control-hidden',
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-				'condition'       => $options['source_condition'],
+				'condition'       => $terms_condition,
 			)
 		);
 
@@ -460,7 +603,7 @@ class Premium_Tcloud extends Widget_Base {
 				'label'       => __( 'Get from Current Page', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'description' => __( 'Use this to get the terms of the current page. Useful when building a Single Post/Product template.', 'premium-addons-for-elementor' ),
-				'condition'   => $options['source_condition'],
+				'condition'   => $terms_condition,
 			)
 		);
 
@@ -469,7 +612,7 @@ class Premium_Tcloud extends Widget_Base {
 			array(
 				'label'     => __( 'Show Parent Terms Only', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
-				'condition' => $options['source_condition'],
+				'condition' => $terms_condition,
 			)
 		);
 
@@ -478,7 +621,7 @@ class Premium_Tcloud extends Widget_Base {
 			array(
 				'label'     => __( 'Number of Terms to Show', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::NUMBER,
-				'condition' => $options['source_condition'],
+				'condition' => $terms_condition,
 			)
 		);
 
@@ -498,7 +641,7 @@ class Premium_Tcloud extends Widget_Base {
 					'count'       => __( 'Posts Number', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'none',
-				'condition'   => $options['source_condition'],
+				'condition'   => $terms_condition,
 			)
 		);
 
@@ -513,7 +656,7 @@ class Premium_Tcloud extends Widget_Base {
 					'DESC' => __( 'Descending', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'ASC',
-				'condition'   => $options['source_condition'],
+				'condition'   => $terms_condition,
 			)
 		);
 
@@ -849,32 +992,31 @@ class Premium_Tcloud extends Widget_Base {
 	}
 
 	/**
-	 * Render Image Separator widget output on the frontend.
+	 * Get Term Words.
 	 *
-	 * Written in PHP and used to generate the final HTML.
+	 * Builds the words array from the queried taxonomy terms.
 	 *
-	 * @since 1.0.0
-	 * @access protected
+	 * @since 4.11.103
+	 * @access private
+	 *
+	 * @param array $settings widget settings.
+	 *
+	 * @return array $words_array words.
 	 */
-	protected function render() {
-
-		$settings = $this->get_settings_for_display();
-
-		$papro_activated = Helper_Functions::check_papro_version();
-
-		if ( ! $papro_activated && ( 'shape' === $settings['words_order'] || 'post' !== $settings['post_type_filter'] ) ) {
-			return;
-		}
+	private function get_term_words( $settings ) {
 
 		$tax = $settings['filter_tabs_type'];
 
-		$id = $this->get_id();
-
 		$terms = $this->get_taxs( $tax );
+
+		$target = 'yes' === $settings['new_tab'] ? '_blank' : '_top';
 
 		$words_array = array();
 
-		foreach ( $terms as $index => $term ) {
+		foreach ( $terms as $term ) {
+
+			// get_terms() keys can have gaps (empty parents are unset), so the position comes from the array being built.
+			$index = count( $words_array );
 
 			$term_id = $term->term_id;
 
@@ -921,39 +1063,157 @@ class Premium_Tcloud extends Widget_Base {
 				$name .= $settings['suffix_word'];
 			}
 
-			if ( in_array( $settings['words_order'], array( 'shape', 'sphere' ), true ) && '' !== $settings['text_transform'] ) {
-
-				switch ( $settings['text_transform'] ) {
-
-					case 'uppercase':
-						$name = strtoupper( $name );
-						break;
-
-					case 'lowercase':
-						$name = strtolower( $name );
-						break;
-
-					case 'capitalize':
-						$name = ucwords( $name );
-						break;
-
-				}
-			}
-
 			if ( 'yes' === $settings['get_from_current'] ) {
 				$term->count = 1;
 			}
 
 			$child_terms_count = 'yes' === $settings['show_parents_only'] ? $this->get_child_terms_count( $tax, $term_id ) : 0;
 
-			$words_array[] = array(
-				$name,
-				$term->count + $child_terms_count,
-				get_term_link( $term_id, $tax ),
-				$full_name,
-				$term->count + $child_terms_count,
+			$weight = $term->count + $child_terms_count;
+
+			$link = get_term_link( $term_id, $tax );
+
+			$this->add_render_attribute( 'term-wrap-' . $index, 'class', 'premium-tcloud-term-wrap' );
+
+			$this->add_render_attribute(
+				'term-link-' . $index,
+				array(
+					'class'       => 'premium-tcloud-term-link',
+					'data-weight' => $weight,
+					'href'        => $link,
+					'title'       => $full_name,
+					'target'      => $target,
+				)
 			);
 
+			$words_array[] = array( $name, $weight, $link, $full_name, $weight, $target );
+
+		}
+
+		return $words_array;
+	}
+
+	/**
+	 * Get Custom Words.
+	 *
+	 * Builds the words array from the Custom Words repeater.
+	 *
+	 * @since 4.11.103
+	 * @access private
+	 *
+	 * @param array $settings widget settings.
+	 *
+	 * @return array $words_array words.
+	 */
+	private function get_custom_words( $settings ) {
+
+		$words_array = array();
+
+		foreach ( $settings['custom_words'] as $item ) {
+
+			if ( '' === $item['word'] ) {
+				continue;
+			}
+
+			$index = count( $words_array );
+
+			// A cleared slider saves an empty size, which Shape layout would draw at zero size.
+			$weight = max( 1, (int) $item['weight']['size'] );
+
+			$target = ! empty( $item['link']['is_external'] ) ? '_blank' : '_top';
+
+			$this->add_render_attribute(
+				'term-wrap-' . $index,
+				'class',
+				array(
+					'premium-tcloud-term-wrap',
+					'elementor-repeater-item-' . $item['_id'],
+				)
+			);
+
+			$this->add_render_attribute(
+				'term-link-' . $index,
+				array(
+					'class'       => 'premium-tcloud-term-link',
+					'data-weight' => $weight,
+					'title'       => $item['word'],
+				)
+			);
+
+			$this->add_link_attributes( 'term-link-' . $index, $item['link'] );
+
+			$words_array[] = array( $item['word'], $weight, $item['link']['url'], $item['word'], $weight, $target );
+		}
+
+		return $words_array;
+	}
+
+	/**
+	 * Transform Word Case.
+	 *
+	 * @since 4.11.103
+	 * @access private
+	 *
+	 * @param string $word word.
+	 * @param string $transform uppercase, lowercase or capitalize.
+	 *
+	 * @return string $word transformed word.
+	 */
+	private function transform_word_case( $word, $transform ) {
+
+		switch ( $transform ) {
+
+			case 'uppercase':
+				return strtoupper( $word );
+
+			case 'lowercase':
+				return strtolower( $word );
+
+			case 'capitalize':
+				return ucwords( $word );
+
+		}
+
+		return $word;
+	}
+
+	/**
+	 * Render Tags Cloud widget output on the frontend.
+	 *
+	 * Written in PHP and used to generate the final HTML.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 */
+	protected function render() {
+
+		$settings = $this->get_settings_for_display();
+
+		$papro_activated = Helper_Functions::check_papro_version();
+
+		$queries_pro_post_type = 'custom' !== $settings['source'] && 'post' !== $settings['post_type_filter'];
+
+		if ( ! $papro_activated && ( 'shape' === $settings['words_order'] || 'yes' === $settings['throwable_effect'] || $queries_pro_post_type ) ) {
+
+			?>
+				<div class="premium-error-notice">
+					<?php
+						$message = __( 'This option is available in <b>Premium Addons Pro</b>.', 'premium-addons-for-elementor' );
+						echo wp_kses_post( $message );
+					?>
+				</div>
+				<?php
+				return false;
+		}
+
+		$id = $this->get_id();
+
+		$words_array = 'custom' === $settings['source'] ? $this->get_custom_words( $settings ) : $this->get_term_words( $settings );
+
+		if ( in_array( $settings['words_order'], array( 'shape', 'sphere' ), true ) && ! empty( $settings['text_transform'] ) ) {
+			foreach ( $words_array as $index => $word ) {
+				$words_array[ $index ][0] = $this->transform_word_case( $word[0], $settings['text_transform'] );
+			}
 		}
 
 		$chart_settings = array(
@@ -971,6 +1231,10 @@ class Premium_Tcloud extends Widget_Base {
 			)
 		);
 
+		if ( 'yes' === $settings['throwable_effect'] ) {
+			$this->add_render_attribute( 'container', 'class', 'premium-tcloud-throwable' );
+		}
+
 		if ( in_array( $settings['words_order'], array( 'shape', 'sphere' ), true ) ) {
 
 			$this->add_render_attribute( 'container', 'class', 'premium-tcloud-hidden' );
@@ -985,8 +1249,6 @@ class Premium_Tcloud extends Widget_Base {
 				)
 			);
 		}
-
-		$target = 'yes' === $settings['new_tab'] ? '_blank' : '_top';
 
 		if ( 'shape' !== $settings['words_order'] ) {
 			$this->add_render_attribute( 'term', 'class', 'premium-tcloud-term' );
@@ -1019,10 +1281,10 @@ class Premium_Tcloud extends Widget_Base {
 
 							<?php if ( '' !== $word[0] ) : ?>
 
-								<div class="premium-tcloud-term-wrap">
+								<div <?php $this->print_render_attribute_string( 'term-wrap-' . $index ); ?>>
 
 									<span <?php $this->print_render_attribute_string( 'term' ); ?>>
-										<a class="premium-tcloud-term-link" data-weight="<?php echo esc_attr( $word[1] ); ?>" href="<?php echo esc_url( $word[2] ); ?>" title="<?php echo esc_attr( $word[3] ); ?>" target="<?php echo esc_attr( $target ); ?>"><?php echo wp_kses_post( $word[0] ); ?><?php if ( in_array( $settings['words_order'], array( 'default', 'ribbon' ), true ) && 'yes' === $settings['show_posts_number'] ) : ?>
+										<a <?php $this->print_render_attribute_string( 'term-link-' . $index ); ?>><?php echo wp_kses_post( $word[0] ); ?><?php if ( 'terms' === $settings['source'] && in_array( $settings['words_order'], array( 'default', 'ribbon' ), true ) && 'yes' === $settings['show_posts_number'] ) : ?>
 											<span class="premium-tcloud-number">(<?php echo wp_kses_post( $word[4] ); ?>)</span><?php endif; ?></a>
 									</span>
 								</div>

@@ -1168,27 +1168,7 @@ class Premium_Media_Wheel extends Widget_Base {
 			)
 		);
 
-		if ( $this->papro_activated ) {
-
-			do_action( 'pa_adv_carousel_options', $this );
-
-		} else {
-
-			$get_pro = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro', 'adv-carousel-widget', 'wp-editor', 'get-pro' );
-
-			$this->add_control(
-				'effect_notice',
-				array(
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => __( 'This option is available in Premium Addons Pro. ', 'premium-addons-for-elementor' ) . '<a href="' . esc_url( $get_pro ) . '" target="_blank">' . __( 'Upgrade now!', 'premium-addons-for-elementor' ) . '</a>',
-					'content_classes' => 'papro-upgrade-notice',
-					'condition'       => array(
-						'media_wheel_animation!' => 'infinite',
-					),
-				)
-			);
-
-		}
+		do_action( 'pa_adv_carousel_options', $this );
 
 		$this->add_control(
 			'media_wheel_scroll',

@@ -606,7 +606,7 @@ class Admin_Helper {
 		// If PRO version is not active, add a promotional link to upgrade.
 		if ( ! $is_papro_active ) {
 
-			// Get the campaign link for the Black Friday deal.
+			// Get the campaign link for the deal.
 			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'plugins-page', 'wp-dash', 'get-pro' );
 
 			// Create a styled promotional link encouraging users to save money by upgrading.

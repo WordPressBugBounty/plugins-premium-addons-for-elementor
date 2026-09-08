@@ -576,6 +576,7 @@ class Assets_Manager {
 				'premium-smart-post-listing',
 				'premium-notifications',
 				'premium-site-logo',
+				'premium-tcloud',
 			);
 
 		}
@@ -1296,6 +1297,14 @@ class Assets_Manager {
 		wp_register_script(
 			'pa-tilt',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/universal-tilt' . $suffix . '.js',
+			array( 'jquery' ),
+			PREMIUM_ADDONS_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'pa-tcloud',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-tcloud' . $suffix . '.js',
 			array( 'jquery' ),
 			PREMIUM_ADDONS_VERSION,
 			true

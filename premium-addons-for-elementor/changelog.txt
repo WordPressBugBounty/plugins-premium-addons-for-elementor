@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.11.103 - 8/9/2026 =
+
+- New: Added Custom Words source in Premium Tags Cloud widget to show your own words with links and weights instead of taxonomy terms - [here](https://premiumaddons.com/elementor-tags-cloud-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=tcloud).
+- Tweak: Updated claude.ai connection steps in Premium Addons MCP settings to match the new Customize > Connectors location.
+
 = 4.11.102 - 3/9/2026 =
 
 - New: Added compatibility with Angie plugin, Angie can now use Premium Addons widgets and pre-made templates while building your pages - [here](https://premiumaddons.com/docs/angie-premium-addons-elementor/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=angie).
