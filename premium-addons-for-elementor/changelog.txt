@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.11.104 - 13/9/2026 =
+
+- Tweak: Added Compare option to the Date condition in Display Conditions addon to show or hide elements before or after a specific date.
+- Tweak: Premium Addons AI Abilities are now available on Elementor MCP, so AI clients connected to Elementor can use Premium Addons widgets and templates without a separate connection.
+
 = 4.11.103 - 8/9/2026 =
 
 - New: Added Custom Words source in Premium Tags Cloud widget to show your own words with links and weights instead of taxonomy terms - [here](https://premiumaddons.com/elementor-tags-cloud-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=tcloud).

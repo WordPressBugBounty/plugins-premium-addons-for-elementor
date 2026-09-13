@@ -244,6 +244,25 @@ class Display_Conditions {
 			)
 		);
 
+		$repeater->add_control(
+			'pa_condition_validate',
+			array(
+				'label'       => __( 'Compare', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'default',
+				'label_block' => true,
+				'options'     => array(
+					'default' => __( 'Default', 'premium-addons-for-elementor' ),
+					'after'   => __( 'After', 'premium-addons-for-elementor' ),
+					'before'  => __( 'Before', 'premium-addons-for-elementor' ),
+				),
+				'condition'   => array(
+					'pa_condition_key'      => 'date',
+					'pa_condition_operator' => 'is',
+				),
+			)
+		);
+
 		$controls_obj->add_repeater_compare_controls( $repeater );
 
 		$repeater->add_control(

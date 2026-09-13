@@ -54,7 +54,7 @@ class Date extends Condition {
 	 * @param array       $settings       element settings.
 	 * @param string      $operator       condition operator.
 	 * @param string      $value          condition value.
-	 * @param string      $compare_val    compare value.
+	 * @param string      $compare_val    comparison mode: default, after or before.
 	 * @param string|bool $tz        time zone.
 	 *
 	 * @return bool|void
@@ -65,7 +65,20 @@ class Date extends Condition {
 
 		$today = 'local' === $tz ? strtotime( Helper_Functions::get_local_time( 'd-m-Y' ) ) : strtotime( Helper_Functions::get_site_server_time( 'd-m-Y' ) );
 
-		$condition_result = ! empty( $value ) && $today === $value ? true : false;
+		// The control is hidden for the Is Not operator, and Elementor nulls hidden
+		// controls while reading the settings, so the comparison falls back to the
+		// exact match on its own. Anything unrecognised degrades the same way.
+		$compare = isset( $compare_val ) && '' !== $compare_val ? $compare_val : 'default';
+
+		if ( empty( $value ) ) {
+			$condition_result = false;
+		} elseif ( 'after' === $compare ) {
+			$condition_result = $today > $value;
+		} elseif ( 'before' === $compare ) {
+			$condition_result = $today < $value;
+		} else {
+			$condition_result = $today === $value;
+		}
 
 		return Helper_Functions::get_final_result( $condition_result, $operator );
 	}

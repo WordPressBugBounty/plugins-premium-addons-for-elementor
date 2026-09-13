@@ -107,6 +107,14 @@ class Bootstrap {
 		// Accept ability input that clients such as Angie send as a JSON string.
 		Input_Normalizer::init();
 
+		// Expose the enabled abilities on Elementor MCP as well, so one
+		// connection covers both servers.
+		Elementor_MCP::init();
+
+		// Remind the build tools of the design rules in their own results, on
+		// whichever adapter server runs them (Premium Addons MCP or Elementor MCP).
+		add_filter( 'mcp_adapter_tool_call_result', array( Design\Design_Guide::class, 'filter_tool_result' ), 10, 3 );
+
 		// Boot the MCP adapter on the MCP endpoint and WP-CLI only.
 		add_action( 'rest_api_init', array( $this, 'maybe_boot_mcp_adapter' ), 5 );
 
@@ -166,9 +174,6 @@ class Bootstrap {
 		\WP\MCP\Core\McpAdapter::instance();
 
 		add_action( 'mcp_adapter_init', array( $this, 'register_server' ), 20 );
-
-		// Remind the build tools of the design rules in their own results.
-		add_filter( 'mcp_adapter_tool_call_result', array( Design\Design_Guide::class, 'filter_tool_result' ), 10, 3 );
 	}
 
 	/**
@@ -254,14 +259,7 @@ class Bootstrap {
 			return;
 		}
 
-		$this->load_abilities_classes();
-
-		$tools = array_values(
-			array_intersect(
-				$this->get_registered_ability_names(),
-				$this->registry->get_enabled_names()
-			)
-		);
+		$tools = $this->get_server_tool_names();
 
 		// Return if no enabled abilities.
 		if ( empty( $tools ) ) {
@@ -284,6 +282,29 @@ class Bootstrap {
 			array(),
 			$design_prompt ? array( $design_prompt ) : array(),
 			OAuth\Bootstrap::is_registered() ? array( OAuth\Bearer::class, 'permission_callback' ) : null
+		);
+	}
+
+	/**
+	 * Get the ability names to expose as MCP tools.
+	 *
+	 * The intersection of the Premium Addons abilities registered with
+	 * WordPress and the ones enabled in the dashboard. Shared by the Premium
+	 * Addons server and the Elementor MCP bridge so both expose one set.
+	 *
+	 * Must run after init: wp_get_abilities() boots the abilities registry.
+	 *
+	 * @since 4.11.104
+	 * @return string[]
+	 */
+	public function get_server_tool_names() {
+		$this->load_abilities_classes();
+
+		return array_values(
+			array_intersect(
+				$this->get_registered_ability_names(),
+				$this->registry->get_enabled_names()
+			)
 		);
 	}
 
