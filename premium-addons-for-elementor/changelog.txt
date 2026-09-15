@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.11.105 - 15/9/2026 =
+
+- Fixed: SVG icons losing their colors and styles when the SVG file keeps its CSS inside a style tag.
+- Fixed: Heading and Dual Heading widgets missing the freemium badge in Premium Addons dashboard and setup wizard.
+
 = 4.11.104 - 13/9/2026 =
 
 - Tweak: Added Compare option to the Date condition in Display Conditions addon to show or hide elements before or after a specific date.

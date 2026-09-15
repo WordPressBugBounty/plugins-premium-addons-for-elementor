@@ -81,6 +81,10 @@ class Premium_Dual_Header extends Widget_Base {
 		$scripts = array();
 		if ( $is_edit ) {
 			$scripts[] = 'pa-glass';
+
+			if ( Helper_Functions::check_papro_version() ) {
+				$scripts[] = 'pa-clip-scroll';
+			}
 		} else {
 
 			$settings = $this->get_settings();
@@ -88,11 +92,75 @@ class Premium_Dual_Header extends Widget_Base {
 			if ( 'none' !== $settings['first_lq_effect'] || 'none' !== $settings['second_lq_effect'] ) {
 				$scripts[] = 'pa-glass';
 			}
+
+			if ( Helper_Functions::check_papro_version() && ( $this->fills_on_scroll( $settings ) || $this->description_fills_on_scroll( $settings ) ) ) {
+				$scripts[] = 'pa-clip-scroll';
+			}
 		}
 
 		$scripts[] = 'premium-addons';
 
 		return $scripts;
+	}
+
+	/**
+	 * Check if the description runs the fill on scroll effect.
+	 *
+	 * @since 4.11.105
+	 * @access private
+	 *
+	 * @param array $settings widget settings.
+	 *
+	 * @return bool
+	 */
+	private function description_fills_on_scroll( $settings ) {
+		return 'yes' === $settings['premium_dual_header_desc_switcher'] && 'yes' === $settings['desc_clip_scroll'];
+	}
+
+	/**
+	 * Check if the fill on scroll effect runs.
+	 *
+	 * Re-checks the control conditions because Elementor keeps stale values.
+	 *
+	 * @since 4.11.105
+	 * @access private
+	 *
+	 * @param array $settings widget settings.
+	 *
+	 * @return bool
+	 */
+	private function fills_on_scroll( $settings ) {
+		return 'yes' === $settings['clip_scroll']
+			&& 'yes' !== $settings['mask_switcher']
+			&& 'yes' !== $settings['noise_first']
+			&& 'yes' !== $settings['noise_second'];
+	}
+
+	/**
+	 * Wrap each word in its own span so the fill effect can run word by word.
+	 *
+	 * @since 4.11.105
+	 * @access private
+	 *
+	 * @param string $text heading text.
+	 *
+	 * @return string words markup.
+	 */
+	private function get_clipped_words( $text ) {
+
+		$words = preg_split( '/\s+/u', trim( $text ), -1, PREG_SPLIT_NO_EMPTY );
+
+		if ( empty( $words ) ) {
+			return '';
+		}
+
+		$words_html = '';
+
+		foreach ( $words as $word ) {
+			$words_html .= '<span class="pa-clip-word">' . esc_html( $word ) . '</span> ';
+		}
+
+		return trim( $words_html );
 	}
 
 	/**
@@ -226,7 +294,7 @@ class Premium_Dual_Header extends Widget_Base {
 				'default'      => 'inline',
 				'prefix_class' => 'premium-header-',
 				'selectors'    => array(
-					'{{WRAPPER}} .premium-dual-header-first-header span' => 'display: {{VALUE}}',
+					'{{WRAPPER}} .premium-dual-header-first-span, {{WRAPPER}} .premium-dual-header-second-header' => 'display: {{VALUE}}',
 				),
 				'label_block'  => true,
 			)
@@ -713,6 +781,49 @@ class Premium_Dual_Header extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'clip_scroll',
+			array(
+				'label'       => apply_filters( 'pa_pro_label', __( 'Fill on Scroll (Pro)', 'premium-addons-for-elementor' ) ),
+				'description' => __( 'Fill the heading words one by one while scrolling. The After Fill Colors are set from the Style tab.', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'separator'   => 'before',
+				'render_type' => 'template',
+				'condition'   => array(
+					'mask_switcher!' => 'yes',
+					'noise_first!'   => 'yes',
+					'noise_second!'  => 'yes',
+				),
+			)
+		);
+
+		do_action(
+			'pa_fill_on_scroll_controls',
+			$this,
+			array(
+				'condition' => array(
+					'clip_scroll'    => 'yes',
+					'mask_switcher!' => 'yes',
+					'noise_first!'   => 'yes',
+					'noise_second!'  => 'yes',
+				),
+				'lock'      => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'  => 'clip_scroll',
+							'value' => 'yes',
+						),
+						array(
+							'name'  => 'desc_clip_scroll',
+							'value' => 'yes',
+						),
+					),
+				),
+				'notice'    => __( 'The section stays pinned until both the title and the description finish filling.', 'premium-addons-for-elementor' ),
+			)
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -740,6 +851,31 @@ class Premium_Dual_Header extends Widget_Base {
 				'default'   => __( 'Extend Your Elementor Website with Numerous Widgets, Global Addons, and Features.', 'premium-addons-for-elementor' ),
 				'condition' => array(
 					'premium_dual_header_desc_switcher' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'desc_clip_scroll',
+			array(
+				'label'       => apply_filters( 'pa_pro_label', __( 'Fill on Scroll (Pro)', 'premium-addons-for-elementor' ) ),
+				'description' => __( 'Fill the description words one by one while scrolling. The After Fill Color is set from the Style tab.', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'condition'   => array(
+					'premium_dual_header_desc_switcher' => 'yes',
+				),
+			)
+		);
+
+		do_action(
+			'pa_fill_on_scroll_controls',
+			$this,
+			array(
+				'prefix'    => 'desc_',
+				'condition' => array(
+					'premium_dual_header_desc_switcher' => 'yes',
+					'desc_clip_scroll'                  => 'yes',
 				),
 			)
 		);
@@ -924,8 +1060,11 @@ class Premium_Dual_Header extends Widget_Base {
 		$this->add_control(
 			'premium_dual_header_first_animated',
 			array(
-				'label' => __( 'Animated Background', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::SWITCHER,
+				'label'     => __( 'Animated Background', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'condition' => array(
+					'clip_scroll!' => 'yes',
+				),
 			)
 		);
 
@@ -941,22 +1080,52 @@ class Premium_Dual_Header extends Widget_Base {
 					'clipped' => __( 'Clipped', 'premium-addons-for-elementor' ),
 				),
 				'label_block' => true,
+				'condition'   => array(
+					'clip_scroll!' => 'yes',
+				),
 			)
 		);
 
 		$this->add_control(
 			'premium_dual_header_first_color',
 			array(
-				'label'     => __( 'Text Color', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'global'    => array(
+				'label'      => __( 'Text Color', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::COLOR,
+				'global'     => array(
 					'default' => Global_Colors::COLOR_PRIMARY,
 				),
-				'condition' => array(
-					'premium_dual_header_first_back_clip' => 'color',
+				'conditions' => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'  => 'premium_dual_header_first_back_clip',
+							'value' => 'color',
+						),
+						array(
+							'name'  => 'clip_scroll',
+							'value' => 'yes',
+						),
+					),
 				),
-				'selectors' => array(
+				'selectors'  => array(
 					'{{WRAPPER}} .premium-dual-header-first-span'   => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'first_after_clip_color',
+			array(
+				'label'     => __( 'After Fill Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-dual-header-first-span' => '--pa-clip-after: {{VALUE}};',
+				),
+				'condition' => array(
+					'clip_scroll'    => 'yes',
+					'mask_switcher!' => 'yes',
+					'noise_first!'   => 'yes',
+					'noise_second!'  => 'yes',
 				),
 			)
 		);
@@ -1010,6 +1179,7 @@ class Premium_Dual_Header extends Widget_Base {
 				'type'      => Controls_Manager::SWITCHER,
 				'condition' => array(
 					'premium_dual_header_first_back_clip' => 'clipped',
+					'clip_scroll!'                        => 'yes',
 				),
 			)
 		);
@@ -1081,6 +1251,7 @@ class Premium_Dual_Header extends Widget_Base {
 				'condition'    => array(
 					'premium_dual_header_first_back_clip' => 'clipped',
 					'premium_dual_header_first_stroke!'   => 'yes',
+					'clip_scroll!'                        => 'yes',
 				),
 			)
 		);
@@ -1130,9 +1301,16 @@ class Premium_Dual_Header extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
-				'name'     => 'premium_dual_header_first_text_shadow',
-				'selector' => '{{WRAPPER}} .premium-dual-header-first-span',
+				'label'          => __( 'Shadow', 'premium-addons-for-elementor' ),
+				'name'           => 'premium_dual_header_first_text_shadow',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}} .premium-dual-header-first-span:not(.pa-clipped-scroll)' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} .premium-dual-header-first-span.pa-clipped-scroll .pa-clip-word' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+						),
+					),
+				),
 			)
 		);
 
@@ -1224,8 +1402,11 @@ class Premium_Dual_Header extends Widget_Base {
 		$this->add_control(
 			'premium_dual_header_second_animated',
 			array(
-				'label' => __( 'Animated Background', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::SWITCHER,
+				'label'     => __( 'Animated Background', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'condition' => array(
+					'clip_scroll!' => 'yes',
+				),
 			)
 		);
 
@@ -1241,22 +1422,52 @@ class Premium_Dual_Header extends Widget_Base {
 					'clipped' => __( 'Clipped', 'premium-addons-for-elementor' ),
 				),
 				'label_block' => true,
+				'condition'   => array(
+					'clip_scroll!' => 'yes',
+				),
 			)
 		);
 
 		$this->add_control(
 			'premium_dual_header_second_color',
 			array(
-				'label'     => __( 'Text Color', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'global'    => array(
+				'label'      => __( 'Text Color', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::COLOR,
+				'global'     => array(
 					'default' => Global_Colors::COLOR_SECONDARY,
 				),
-				'condition' => array(
-					'premium_dual_header_second_back_clip' => 'color',
+				'conditions' => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'  => 'premium_dual_header_second_back_clip',
+							'value' => 'color',
+						),
+						array(
+							'name'  => 'clip_scroll',
+							'value' => 'yes',
+						),
+					),
 				),
-				'selectors' => array(
+				'selectors'  => array(
 					'{{WRAPPER}} .premium-dual-header-second-header'   => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'second_after_clip_color',
+			array(
+				'label'     => __( 'After Fill Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-dual-header-second-header' => '--pa-clip-after: {{VALUE}};',
+				),
+				'condition' => array(
+					'clip_scroll'    => 'yes',
+					'mask_switcher!' => 'yes',
+					'noise_first!'   => 'yes',
+					'noise_second!'  => 'yes',
 				),
 			)
 		);
@@ -1310,6 +1521,7 @@ class Premium_Dual_Header extends Widget_Base {
 				'type'      => Controls_Manager::SWITCHER,
 				'condition' => array(
 					'premium_dual_header_second_back_clip' => 'clipped',
+					'clip_scroll!'                         => 'yes',
 				),
 			)
 		);
@@ -1381,6 +1593,7 @@ class Premium_Dual_Header extends Widget_Base {
 				'condition'    => array(
 					'premium_dual_header_second_back_clip' => 'clipped',
 					'premium_dual_header_second_stroke!'   => 'yes',
+					'clip_scroll!'                         => 'yes',
 				),
 			)
 		);
@@ -1430,9 +1643,16 @@ class Premium_Dual_Header extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'label'    => __( 'Shadow', 'premium-addons-for-elementor' ),
-				'name'     => 'premium_dual_header_second_text_shadow',
-				'selector' => '{{WRAPPER}} .premium-dual-header-second-header',
+				'label'          => __( 'Shadow', 'premium-addons-for-elementor' ),
+				'name'           => 'premium_dual_header_second_text_shadow',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}} .premium-dual-header-second-header:not(.pa-clipped-scroll)' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} .premium-dual-header-second-header.pa-clipped-scroll .pa-clip-word' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+						),
+					),
+				),
 			)
 		);
 
@@ -1524,6 +1744,20 @@ class Premium_Dual_Header extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'desc_after_clip_color',
+			array(
+				'label'     => __( 'After Fill Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-dh-description' => '--pa-clip-after: {{VALUE}};',
+				),
+				'condition' => array(
+					'desc_clip_scroll' => 'yes',
+				),
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -1538,8 +1772,15 @@ class Premium_Dual_Header extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'name'     => 'premium_dual_header_desc_text_shadow',
-				'selector' => '{{WRAPPER}} .premium-dh-description',
+				'name'           => 'premium_dual_header_desc_text_shadow',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}} .premium-dh-description:not(.pa-clipped-scroll)' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} .premium-dh-description.pa-clipped-scroll .pa-clip-word' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+						),
+					),
+				),
 			)
 		);
 
@@ -1713,6 +1954,18 @@ class Premium_Dual_Header extends Widget_Base {
 
 		$second_title_text = $settings['premium_dual_header_second_header_text'];
 
+		$clip_on_scroll = $this->fills_on_scroll( $settings );
+		$desc_clip      = $this->description_fills_on_scroll( $settings ) && ! empty( $settings['premium_dual_header_desc_text'] );
+
+		if ( ( $clip_on_scroll || $desc_clip ) && ! Helper_Functions::check_papro_version() ) {
+			?>
+			<div class="premium-error-notice">
+				<?php echo wp_kses_post( __( 'This option is available in <b>Premium Addons Pro</b>.', 'premium-addons-for-elementor' ) ); ?>
+			</div>
+			<?php
+			return false;
+		}
+
 		$first_clip = '';
 
 		$second_clip = '';
@@ -1721,11 +1974,12 @@ class Premium_Dual_Header extends Widget_Base {
 
 		$second_stroke = '';
 
-		if ( 'clipped' === $settings['premium_dual_header_first_back_clip'] ) {
+		// Fill on scroll owns the same spans, so the effects that paint on them are dropped.
+		if ( ! $clip_on_scroll && 'clipped' === $settings['premium_dual_header_first_back_clip'] ) {
 			$first_clip = 'premium-dual-header-first-clip';
 		}
 
-		if ( 'clipped' === $settings['premium_dual_header_second_back_clip'] ) {
+		if ( ! $clip_on_scroll && 'clipped' === $settings['premium_dual_header_second_back_clip'] ) {
 			$second_clip = 'premium-dual-header-second-clip';
 		}
 
@@ -1742,18 +1996,31 @@ class Premium_Dual_Header extends Widget_Base {
 		$second_animation = $settings['premium_dual_header_second_animated'];
 		$second_wave      = $settings['second_wave_switcher'];
 
-		$first_grad = ( 'yes' === $first_animation && 'yes' !== $first_wave ) ? ' gradient' : '';
+		$first_grad = ( ! $clip_on_scroll && 'yes' === $first_animation && 'yes' !== $first_wave ) ? ' gradient' : '';
 
-		$second_grad = ( 'yes' === $second_animation && 'yes' !== $second_wave ) ? ' gradient' : '';
+		$second_grad = ( ! $clip_on_scroll && 'yes' === $second_animation && 'yes' !== $second_wave ) ? ' gradient' : '';
 
 		$first_noise = 'yes' === $settings['noise_first'] ? 'data-text="' . $first_title_text . '"' : '';
 
 		$second_noise = 'yes' === $settings['noise_second'] ? 'data-text="' . $second_title_text . '"' : '';
 
-		$full_title = '<' . $first_title_tag . ' class="premium-dual-header-first-header ' . $first_clip . $first_stroke . $first_grad . '"><span class="premium-dual-header-first-span" ' . $first_noise . ' >' . $first_title_text . '</span>';
+		$first_span_class  = 'premium-dual-header-first-span';
+		$second_span_class = 'premium-dual-header-second-header ' . $second_clip . $second_stroke . $second_grad;
+
+		if ( $clip_on_scroll ) {
+			$first_span_class  .= ' pa-clipped-scroll';
+			$second_span_class .= ' pa-clipped-scroll';
+
+			$first_title_text  = $this->get_clipped_words( $first_title_text ) . ' ';
+			$second_title_text = $this->get_clipped_words( $second_title_text );
+
+			$this->add_render_attribute( 'container', 'data-clip-speed', $settings['clip_scroll_speed']['size'] );
+		}
+
+		$full_title = '<' . $first_title_tag . ' class="premium-dual-header-first-header ' . $first_clip . $first_stroke . $first_grad . '"><span class="' . $first_span_class . '" ' . $first_noise . ' >' . $first_title_text . '</span>';
 
 		if ( ! empty( $second_title_text ) ) {
-			$full_title .= '<span class="premium-dual-header-second-header ' . $second_clip . $second_stroke . $second_grad . '" ' . $second_noise . ' >' . $second_title_text . '</span>';
+			$full_title .= '<span class="' . $second_span_class . '" ' . $second_noise . ' >' . $second_title_text . '</span>';
 		}
 
 		$full_title .= '</' . $first_title_tag . '> ';
@@ -1775,6 +2042,22 @@ class Premium_Dual_Header extends Widget_Base {
 
 		if ( $show_desc ) {
 			$this->add_render_attribute( 'dh_description', 'class', 'premium-dh-description' );
+		}
+
+		if ( $desc_clip ) {
+			// The words are wrapped by the handler, so the rich text keeps its markup here.
+			$this->add_render_attribute(
+				'dh_description',
+				array(
+					'class'           => 'pa-clipped-scroll',
+					'data-clip-speed' => $settings['desc_clip_scroll_speed']['size'],
+					'data-clip-split' => 'true',
+				)
+			);
+		}
+
+		if ( ( $clip_on_scroll || $desc_clip ) && 'yes' === $settings['clip_scroll_lock'] ) {
+			$this->add_render_attribute( 'container', 'data-clip-lock', 'true' );
 		}
 
 		?>
@@ -1829,10 +2112,33 @@ class Premium_Dual_Header extends Widget_Base {
 
 			secondStroke = '';
 
-			if( 'clipped' === settings.premium_dual_header_first_back_clip )
+			var paProActive = <?php echo Helper_Functions::check_papro_version() ? 'true' : 'false'; ?>;
+
+			// Fill on scroll owns the same spans, so the effects that paint on them are dropped.
+			var clipOnScroll = 'yes' === settings.clip_scroll
+				&& 'yes' !== settings.mask_switcher
+				&& 'yes' !== settings.noise_first
+				&& 'yes' !== settings.noise_second;
+
+			var descClip = 'yes' === settings.premium_dual_header_desc_switcher
+				&& 'yes' === settings.desc_clip_scroll
+				&& '' !== settings.premium_dual_header_desc_text;
+
+			// Kept before the words are split so the noise effect still reads the plain text.
+			var firstRawText = firstText,
+				secondRawText = secondText;
+
+			view.addRenderAttribute( 'description', 'class', [ 'premium-dh-description', descClip ? 'pa-clipped-scroll' : '' ] );
+
+			if ( descClip ) {
+				view.addRenderAttribute( 'description', 'data-clip-speed', settings.desc_clip_scroll_speed && settings.desc_clip_scroll_speed.size ? settings.desc_clip_scroll_speed.size : 0.5 );
+				view.addRenderAttribute( 'description', 'data-clip-split', 'true' );
+			}
+
+			if( ! clipOnScroll && 'clipped' === settings.premium_dual_header_first_back_clip )
 				firstClip = "premium-dual-header-first-clip";
 
-			if( 'clipped' === settings.premium_dual_header_second_back_clip )
+			if( ! clipOnScroll && 'clipped' === settings.premium_dual_header_second_back_clip )
 				secondClip = "premium-dual-header-second-clip";
 
 			if( 'yes' === settings.premium_dual_header_first_stroke )
@@ -1846,13 +2152,44 @@ class Premium_Dual_Header extends Widget_Base {
 				secondAnimation = settings.premium_dual_header_second_animated,
 				secondWave = settings.second_wave_switcher;
 
-			var firstGrad = ('yes' === firstAnimation && 'yes' !== firstWave)  ? ' gradient' : '',
-				secondGrad = ('yes' === secondAnimation && 'yes' !== secondWave) ? ' gradient' : '';
+			var firstGrad = ( ! clipOnScroll && 'yes' === firstAnimation && 'yes' !== firstWave)  ? ' gradient' : '',
+				secondGrad = ( ! clipOnScroll && 'yes' === secondAnimation && 'yes' !== secondWave) ? ' gradient' : '';
+
+			// Each word gets its own span so the fill effect can run word by word.
+			var clipWords = function( text ) {
+
+				var wordsHTML = '';
+
+				( text || '' ).trim().split( /\s+/ ).forEach( function( word ) {
+					if( '' !== word )
+						wordsHTML += '<span class="pa-clip-word">' + _.escape( word ) + '</span> ';
+				} );
+
+				return wordsHTML.trim();
+			};
+
+			if( clipOnScroll ) {
+
+				firstText = clipWords( firstText ) + ' ';
+
+				secondText = clipWords( secondText );
+
+				var clipSpeed = settings.clip_scroll_speed && settings.clip_scroll_speed.size ? settings.clip_scroll_speed.size : 0.5;
+
+				view.addRenderAttribute('container', 'data-clip-speed', clipSpeed );
+			}
+
+			if ( ( clipOnScroll || descClip ) && 'yes' === settings.clip_scroll_lock ) {
+				view.addRenderAttribute( 'container', 'data-clip-lock', 'true' );
+			}
+
+				view.addRenderAttribute('first_span', 'class', ['premium-dual-header-first-span', clipOnScroll ? 'pa-clipped-scroll' : '' ] );
+				view.addRenderAttribute('first_span', 'data-text', firstRawText );
 
 				view.addRenderAttribute('first_title', 'class', ['premium-dual-header-first-header', firstClip, firstGrad, firstStroke ] );
-				view.addRenderAttribute('second_title', 'class', ['premium-dual-header-second-header', secondClip, secondGrad, secondStroke ] );
+				view.addRenderAttribute('second_title', 'class', ['premium-dual-header-second-header', secondClip, secondGrad, secondStroke, clipOnScroll ? 'pa-clipped-scroll' : '' ] );
 
-				view.addRenderAttribute('second_title', 'data-text', 'yes' === settings.noise_second ? secondText : '' );
+				view.addRenderAttribute('second_title', 'data-text', 'yes' === settings.noise_second ? secondRawText : '' );
 
 			var link = '';
 			if( 'yes' === settings.premium_dual_header_link_switcher ) {
@@ -1876,13 +2213,18 @@ class Premium_Dual_Header extends Widget_Base {
 
 		#>
 
+		<# if ( ( clipOnScroll || descClip ) && ! paProActive ) { #>
+			<div class="premium-error-notice">
+				<?php echo wp_kses_post( __( 'This option is available in <b>Premium Addons Pro</b>.', 'premium-addons-for-elementor' ) ); ?>
+			</div>
+		<# } else { #>
 		<div class="elementor-widget-container">
 			<div {{{ view.getRenderAttributeString('container') }}}>
 				<# if( 'yes' === settings.premium_dual_header_link_switcher && '' !== link ) { #>
 					<a {{{ view.getRenderAttributeString('button') }}}>
 				<# } #>
 				<{{{firstTag}}} {{{ view.getRenderAttributeString('first_title') }}}>
-					<span class="premium-dual-header-first-span" data-text="{{ firstText }}">{{{ firstText }}}</span>
+					<span {{{ view.getRenderAttributeString('first_span') }}}>{{{ firstText }}}</span>
 					<# if ( '' != secondText ) { #>
 						<span {{{ view.getRenderAttributeString('second_title') }}}>{{{ secondText }}}</span>
 					<# } #>
@@ -1891,10 +2233,11 @@ class Premium_Dual_Header extends Widget_Base {
 					</a>
 				<# } #>
 				<# if ( 'yes' === settings.premium_dual_header_desc_switcher && '' !== settings.premium_dual_header_desc_text ) { #>
-					<div class="premium-dh-description">{{{ settings.premium_dual_header_desc_text }}}</div>
+					<div {{{ view.getRenderAttributeString('description') }}}>{{{ settings.premium_dual_header_desc_text }}}</div>
 				<# } #>
 			</div>
 		</div>
+		<# } #>
 
 		<?php
 	}

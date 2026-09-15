@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.104
+Stable Tag: 4.11.105
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -274,6 +274,11 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.105 - 15/9/2026 =
+
+- Fixed: SVG icons losing their colors and styles when the SVG file keeps its CSS inside a style tag.
+- Fixed: Heading and Dual Heading widgets missing the freemium badge in Premium Addons dashboard and setup wizard.
 
 = 4.11.104 - 13/9/2026 =
 

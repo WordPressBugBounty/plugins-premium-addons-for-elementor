@@ -124,6 +124,26 @@
   animation: pa-text-gradient 8s infinite;
 }
 
+.pa-clipped-scroll {
+  background-image: none;
+  -webkit-animation: none;
+  animation: none;
+}
+.pa-clipped-scroll .pa-clip-word {
+  --animation-progress: 0;
+  display: inline-block;
+  background-image: -webkit-linear-gradient(left, var(--pa-clip-after, var(--e-global-color-accent, currentcolor)) 0%, var(--pa-clip-after, var(--e-global-color-accent, currentcolor)) -webkit-calc(50% - var(--pa-clip-edge, 10%)), var(--pa-clip-before, currentcolor) -webkit-calc(50% + var(--pa-clip-edge, 10%)), var(--pa-clip-before, currentcolor) 100%);
+  background-image: linear-gradient(90deg, var(--pa-clip-after, var(--e-global-color-accent, currentcolor)) 0%, var(--pa-clip-after, var(--e-global-color-accent, currentcolor)) calc(50% - var(--pa-clip-edge, 10%)), var(--pa-clip-before, currentcolor) calc(50% + var(--pa-clip-edge, 10%)), var(--pa-clip-before, currentcolor) 100%);
+  background-repeat: no-repeat;
+  background-size: 300% 100%;
+  background-position-x: -webkit-calc(100% - 100% * var(--animation-progress));
+  background-position-x: calc(100% - 100% * var(--animation-progress));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  will-change: background-position;
+}
+
 @-webkit-keyframes pa-text-gradient {
   0%, 100% {
     -webkit-filter: hue-rotate(0deg);

@@ -2245,6 +2245,12 @@ class Helper_Functions {
 				'class' => array(),
 				'id'    => array(),
 			),
+			// Illustrator/Affinity/Boxy exports keep their class rules in <defs><style>.
+			// wp_kses filters style="" attributes through safe_style_css, but never the CSS inside a <style> block.
+			'style'    => array(
+				'type'  => array(),
+				'class' => array(),
+			),
 			'clippath' => array(
 				'class' => array(),
 				'id'    => array(),

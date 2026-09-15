@@ -127,6 +127,9 @@ class Premium_Title extends Widget_Base {
 
 			$scripts = array_merge( $draw_scripts, array( 'pa-glass', 'lottie-js' ) );
 
+			if ( Helper_Functions::check_papro_version() ) {
+				$scripts[] = 'pa-clip-scroll';
+			}
 		} else {
 			$settings = $this->get_settings();
 
@@ -142,11 +145,76 @@ class Premium_Title extends Widget_Base {
 			if ( 'none' !== $settings['heading_lq_effect'] ) {
 				$scripts[] = 'pa-glass';
 			}
+
+			if ( Helper_Functions::check_papro_version() && ( $this->fills_on_scroll( $settings ) || $this->description_fills_on_scroll( $settings ) ) ) {
+				$scripts[] = 'pa-clip-scroll';
+			}
 		}
 
 		$scripts[] = 'premium-addons';
 
 		return $scripts;
+	}
+
+	/**
+	 * Check if the description runs the fill on scroll effect.
+	 *
+	 * @since 4.11.105
+	 * @access private
+	 *
+	 * @param array $settings widget settings.
+	 *
+	 * @return bool
+	 */
+	private function description_fills_on_scroll( $settings ) {
+		return 'yes' === $settings['premium_title_desc_switcher'] && 'yes' === $settings['desc_clip_scroll'];
+	}
+
+	/**
+	 * Check if the fill on scroll effect runs.
+	 *
+	 * Re-checks the control conditions because Elementor keeps stale values.
+	 *
+	 * @since 4.11.105
+	 * @access private
+	 *
+	 * @param array $settings widget settings.
+	 *
+	 * @return bool
+	 */
+	private function fills_on_scroll( $settings ) {
+		return 'yes' === $settings['clip_scroll']
+			&& ! in_array( $settings['premium_title_style'], array( 'style8', 'style9' ), true )
+			&& 'yes' !== $settings['noise']
+			&& 'yes' !== $settings['stroke_switcher']
+			&& 'yes' !== $settings['mask_switcher'];
+	}
+
+	/**
+	 * Wrap each word in its own span so the fill effect can run word by word.
+	 *
+	 * @since 4.11.105
+	 * @access private
+	 *
+	 * @param string $text heading text.
+	 *
+	 * @return string words markup.
+	 */
+	private function get_clipped_words( $text ) {
+
+		$words = preg_split( '/\s+/u', trim( $text ), -1, PREG_SPLIT_NO_EMPTY );
+
+		if ( empty( $words ) ) {
+			return '';
+		}
+
+		$words_html = '';
+
+		foreach ( $words as $word ) {
+			$words_html .= '<span class="pa-clip-word">' . esc_html( $word ) . '</span> ';
+		}
+
+		return trim( $words_html );
 	}
 
 	/**
@@ -393,6 +461,52 @@ class Premium_Title extends Widget_Base {
 				'condition'   => array(
 					'link_selection' => 'link',
 				),
+			)
+		);
+
+		$this->add_control(
+			'clip_scroll',
+			array(
+				'label'        => apply_filters( 'pa_pro_label', __( 'Fill on Scroll (Pro)', 'premium-addons-for-elementor' ) ),
+				'description'  => __( 'Fill the title words one by one while scrolling. The After Fill Color is set from the Style tab.', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'premium-fill-on-scroll-',
+				'separator'    => 'before',
+				'render_type'  => 'template',
+				'condition'    => array(
+					'premium_title_style!' => array( 'style8', 'style9' ),
+					'noise!'               => 'yes',
+					'mask_switcher!'       => 'yes',
+					'stroke_switcher!'     => 'yes',
+				),
+			)
+		);
+
+		do_action(
+			'pa_fill_on_scroll_controls',
+			$this,
+			array(
+				'condition' => array(
+					'clip_scroll'          => 'yes',
+					'premium_title_style!' => array( 'style8', 'style9' ),
+					'noise!'               => 'yes',
+					'mask_switcher!'       => 'yes',
+					'stroke_switcher!'     => 'yes',
+				),
+				'lock'      => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'  => 'clip_scroll',
+							'value' => 'yes',
+						),
+						array(
+							'name'  => 'desc_clip_scroll',
+							'value' => 'yes',
+						),
+					),
+				),
+				'notice'    => __( 'The section stays pinned until both the title and the description finish filling.', 'premium-addons-for-elementor' ),
 			)
 		);
 
@@ -1239,6 +1353,31 @@ class Premium_Title extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'desc_clip_scroll',
+			array(
+				'label'       => apply_filters( 'pa_pro_label', __( 'Fill on Scroll (Pro)', 'premium-addons-for-elementor' ) ),
+				'description' => __( 'Fill the description words one by one while scrolling. The After Fill Color is set from the Style tab.', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'condition'   => array(
+					'premium_title_desc_switcher' => 'yes',
+				),
+			)
+		);
+
+		do_action(
+			'pa_fill_on_scroll_controls',
+			$this,
+			array(
+				'prefix'    => 'desc_',
+				'condition' => array(
+					'premium_title_desc_switcher' => 'yes',
+					'desc_clip_scroll'            => 'yes',
+				),
+			)
+		);
+
 		$this->add_responsive_control(
 			'premium_title_desc_display',
 			array(
@@ -1412,6 +1551,24 @@ class Premium_Title extends Widget_Base {
 		);
 
 		$this->add_control(
+			'title_after_clip_color',
+			array(
+				'label'     => __( 'After Fill Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-title-text' => '--pa-clip-after: {{VALUE}};',
+				),
+				'condition' => array(
+					'clip_scroll'          => 'yes',
+					'premium_title_style!' => array( 'style8', 'style9' ),
+					'noise!'               => 'yes',
+					'mask_switcher!'       => 'yes',
+					'stroke_switcher!'     => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
 			'premium_title_blur_color',
 			array(
 				'label'     => __( 'Blur Color', 'premium-addons-for-elementor' ),
@@ -1475,6 +1632,7 @@ class Premium_Title extends Widget_Base {
 				'separator'    => 'before',
 				'condition'    => array(
 					'premium_title_style!' => array( 'style8', 'style9' ),
+					'clip_scroll!'         => 'yes',
 				),
 			)
 		);
@@ -1628,8 +1786,8 @@ class Premium_Title extends Widget_Base {
 				'fields_options' => array(
 					'text_shadow' => array(
 						'selectors' => array(
-							'{{WRAPPER}}:not(.premium-title-gradient-yes) .premium-title-header' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
-							'{{WRAPPER}}.premium-title-gradient-yes .premium-title-header' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+							'{{WRAPPER}}:not(.premium-title-gradient-yes, .premium-fill-on-scroll-yes) .premium-title-header' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}}.premium-title-gradient-yes .premium-title-header, {{WRAPPER}}.premium-fill-on-scroll-yes .premium-title-header .pa-clip-word' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
 						),
 					),
 				),
@@ -1724,6 +1882,7 @@ class Premium_Title extends Widget_Base {
 					'mask_switcher!'       => 'yes',
 					'stroke_switcher!'     => 'yes',
 					'background_style'     => 'color',
+					'clip_scroll!'         => 'yes',
 				),
 			)
 		);
@@ -1749,6 +1908,7 @@ class Premium_Title extends Widget_Base {
 					'mask_switcher!'         => 'yes',
 					'stroke_switcher!'       => 'yes',
 					'background_style'       => 'color',
+					'clip_scroll!'           => 'yes',
 				),
 			)
 		);
@@ -1765,6 +1925,7 @@ class Premium_Title extends Widget_Base {
 					'mask_switcher!'         => 'yes',
 					'stroke_switcher!'       => 'yes',
 					'background_style'       => 'color',
+					'clip_scroll!'           => 'yes',
 				),
 			)
 		);
@@ -1893,6 +2054,24 @@ class Premium_Title extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'focused_after_clip_color',
+			array(
+				'label'     => __( 'After Fill Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-title-text .premium-title__focused-word' => '--pa-clip-after: {{VALUE}};',
+				),
+				'condition' => array(
+					'clip_scroll'          => 'yes',
+					'premium_title_style!' => array( 'style8', 'style9' ),
+					'noise!'               => 'yes',
+					'mask_switcher!'       => 'yes',
+					'stroke_switcher!'     => 'yes',
+				),
+			)
+		);
+
 		$this->add_responsive_control(
 			'focused_stroke_width',
 			array(
@@ -1959,8 +2138,15 @@ class Premium_Title extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'name'     => 'focused_word_shadow',
-				'selector' => '{{WRAPPER}} .premium-title-text .premium-title__focused-word',
+				'name'           => 'focused_word_shadow',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}} .premium-title-text:not(.pa-clipped-scroll) .premium-title__focused-word' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} .premium-title-text.pa-clipped-scroll .premium-title__focused-word .pa-clip-word' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+						),
+					),
+				),
 			)
 		);
 
@@ -2258,6 +2444,20 @@ class Premium_Title extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'desc_after_clip_color',
+			array(
+				'label'     => __( 'After Fill Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-title-description' => '--pa-clip-after: {{VALUE}};',
+				),
+				'condition' => array(
+					'desc_clip_scroll' => 'yes',
+				),
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -2272,8 +2472,15 @@ class Premium_Title extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'name'     => 'premium_title_desc_text_shadow',
-				'selector' => '{{WRAPPER}} .premium-title-description',
+				'name'           => 'premium_title_desc_text_shadow',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}} .premium-title-description:not(.pa-clipped-scroll)' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} .premium-title-description.pa-clipped-scroll .pa-clip-word' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+						),
+					),
+				),
 			)
 		);
 
@@ -2729,6 +2936,39 @@ class Premium_Title extends Widget_Base {
 			$this->add_render_attribute( 'title_description', 'class', 'premium-title-description' );
 		}
 
+		$clip_on_scroll = $this->fills_on_scroll( $settings );
+		$desc_clip      = $show_desc && $this->description_fills_on_scroll( $settings );
+
+		if ( ( $clip_on_scroll || $desc_clip ) && ! Helper_Functions::check_papro_version() ) {
+			?>
+			<div class="premium-error-notice">
+				<?php echo wp_kses_post( __( 'This option is available in <b>Premium Addons Pro</b>.', 'premium-addons-for-elementor' ) ); ?>
+			</div>
+			<?php
+			return false;
+		}
+
+		if ( $clip_on_scroll ) {
+			$this->add_render_attribute( 'premium_title_text', 'class', 'pa-clipped-scroll' );
+			$this->add_render_attribute( 'container', 'data-clip-speed', $settings['clip_scroll_speed']['size'] );
+		}
+
+		if ( $desc_clip ) {
+			// The words are wrapped by the handler, so the rich text keeps its markup here.
+			$this->add_render_attribute(
+				'title_description',
+				array(
+					'class'           => 'pa-clipped-scroll',
+					'data-clip-speed' => $settings['desc_clip_scroll_speed']['size'],
+					'data-clip-split' => 'true',
+				)
+			);
+		}
+
+		if ( ( $clip_on_scroll || $desc_clip ) && 'yes' === $settings['clip_scroll_lock'] ) {
+			$this->add_render_attribute( 'container', 'data-clip-lock', 'true' );
+		}
+
 		?>
 
 		<div class="premium-title-wrapper">
@@ -2806,6 +3046,23 @@ class Premium_Title extends Widget_Base {
 
 								$text .= esc_html( $pieces[3] );
 							endforeach;
+						elseif ( $clip_on_scroll ) :
+							$segments = preg_split( '/(\{\{.+?\}\})/u', $settings['premium_title_text'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
+							$text     = '';
+
+							foreach ( $segments as $segment ) :
+								$is_focused = preg_match( '/^\{\{(.+)\}\}$/u', $segment, $matches );
+								$words_html = $this->get_clipped_words( $is_focused ? $matches[1] : $segment );
+
+								if ( '' === $words_html ) :
+									continue;
+								endif;
+
+								// The focused word keeps its own wrapper so its style tab controls still apply.
+								$text .= $is_focused ? '<span class="premium-title__focused-word">' . $words_html . '</span> ' : $words_html . ' ';
+							endforeach;
+
+							$text = trim( $text );
 						else :
 							$text = str_replace( array( '{{', '}}' ), array( '<span class="premium-title__focused-word">', '</span>' ), $settings['premium_title_text'] );
 						endif;

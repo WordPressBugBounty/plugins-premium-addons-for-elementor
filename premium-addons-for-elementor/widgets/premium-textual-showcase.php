@@ -128,8 +128,12 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 			$scripts = array_merge( $draw_scripts, array( 'pa-glass', 'lottie-js' ) );
 
+			if ( Helper_Functions::check_papro_version() ) {
+				$scripts[] = 'pa-clip-scroll';
+			}
 		} else {
-			$settings = $this->get_settings();
+			$settings        = $this->get_settings();
+			$papro_activated = Helper_Functions::check_papro_version();
 
 			if ( ! empty( $settings['content'] ) ) {
 				foreach ( $settings['content'] as $item ) {
@@ -149,7 +153,12 @@ class Premium_Textual_Showcase extends Widget_Base {
 						$scripts[] = 'pa-glass';
 					}
 
-					if ( isset( $draw_js ) && isset( $lottie_js ) ) {
+					if ( $papro_activated && $this->item_fills_on_scroll( $item ) ) {
+						$scripts[] = 'pa-clip-scroll';
+						$clip_js   = true;
+					}
+
+					if ( isset( $draw_js ) && isset( $lottie_js ) && isset( $clip_js ) ) {
 						break;
 					}
 				}
@@ -531,7 +540,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 				$repeater,
 				'textual',
 				$svg_draw_conds,
-				'',
+				1,
 				'conditions'
 			);
 		}
@@ -775,9 +784,16 @@ class Premium_Textual_Showcase extends Widget_Base {
 		$repeater->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'name'      => 'item_text_shadow',
-				'selector'  => '{{WRAPPER}} {{CURRENT_ITEM}} .pa-txt-sc__item-text.pa-txt-sc__main-item',
-				'condition' => array(
+				'name'           => 'item_text_shadow',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}} {{CURRENT_ITEM}} .pa-txt-sc__item-text.pa-txt-sc__main-item:not(.pa-clipped-scroll)' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} {{CURRENT_ITEM}} .pa-txt-sc__item-text.pa-txt-sc__main-item.pa-clipped-scroll .pa-clip-word' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+						),
+					),
+				),
+				'condition'      => array(
 					'item_type' => 'text',
 				),
 			)
@@ -1486,8 +1502,8 @@ class Premium_Textual_Showcase extends Widget_Base {
 				'label'     => __( 'Stroke', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'condition' => array(
-					'clipped_bg_hov!' => 'yes',
-					'item_type_hov'   => 'text',
+					'clipped_bg!'   => 'yes',
+					'item_type_hov' => 'text',
 				),
 			)
 		);
@@ -1501,9 +1517,9 @@ class Premium_Textual_Showcase extends Widget_Base {
 					'{{WRAPPER}} {{CURRENT_ITEM}} .pa-txt-sc__hov-item' => '-webkit-text-stroke-color: {{VALUE}};',
 				),
 				'condition' => array(
-					'clipped_bg_hov!' => 'yes',
-					'item_type_hov'   => 'text',
-					'stroke_sw_hov'   => 'yes',
+					'clipped_bg!'   => 'yes',
+					'item_type_hov' => 'text',
+					'stroke_sw_hov' => 'yes',
 				),
 			)
 		);
@@ -1521,9 +1537,9 @@ class Premium_Textual_Showcase extends Widget_Base {
 					'{{WRAPPER}} {{CURRENT_ITEM}} .pa-txt-sc__hov-item' => '-webkit-text-stroke-width: {{SIZE}}px',
 				),
 				'condition' => array(
-					'clipped_bg_hov!' => 'yes',
-					'item_type_hov'   => 'text',
-					'stroke_sw_hov'   => 'yes',
+					'clipped_bg!'   => 'yes',
+					'item_type_hov' => 'text',
+					'stroke_sw_hov' => 'yes',
 				),
 			)
 		);
@@ -1683,18 +1699,6 @@ class Premium_Textual_Showcase extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'min_mask_notice',
-			array(
-				'raw'             => __( 'Please note that Minimal Mask Effect works only on Text Elements ', 'premium-addons-for-elementor' ),
-				'type'            => Controls_Manager::RAW_HTML,
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-				'condition'       => array(
-					'enable_background_overlay' => 'yes',
-				),
-			)
-		);
-
-		$repeater->add_control(
 			'effect_color',
 			array(
 				'label'       => __( 'Color', 'premium-addons-for-elementor' ),
@@ -1801,6 +1805,42 @@ class Premium_Textual_Showcase extends Widget_Base {
 							),
 						),
 					),
+				),
+			)
+		);
+
+		$repeater->add_control(
+			'clip_scroll',
+			array(
+				'label'       => apply_filters( 'pa_pro_label', __( 'Fill on Scroll (Pro)', 'premium-addons-for-elementor' ) ),
+				'description' => __( 'Fill the words with the After Fill Color while scrolling. Text Color is the starting color.', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'separator'   => 'before',
+				'render_type' => 'template',
+				'condition'   => array(
+					'item_type'   => 'text',
+					'clipped_bg!' => 'yes',
+					'stroke_sw!'  => 'yes',
+					'txt_effect!' => 'min-mask',
+				),
+			)
+		);
+
+		$repeater->add_control(
+			'after_clip_color',
+			array(
+				'label'     => __( 'After Fill Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				// No global default on purpose: the editor resolves repeater-row globals against the widget container, so a default would override custom picks in the preview. CSS falls back to the accent color instead.
+				'selectors' => array(
+					'{{WRAPPER}} {{CURRENT_ITEM}} .pa-txt-sc__item-text.pa-txt-sc__main-item' => '--pa-clip-after: {{VALUE}};',
+				),
+				'condition' => array(
+					'item_type'   => 'text',
+					'clip_scroll' => 'yes',
+					'clipped_bg!' => 'yes',
+					'stroke_sw!'  => 'yes',
+					'txt_effect!' => 'min-mask',
 				),
 			)
 		);
@@ -1986,6 +2026,15 @@ class Premium_Textual_Showcase extends Widget_Base {
 				'fields'        => $repeater->get_controls(),
 				'title_field'   => '<# if ( "icon" === item_type ) { #> {{{ elementor.helpers.renderIcon( this, icon, {}, "i", "panel" ) }}}<#} else if( "text" === item_type ) { #> {{item_txt}} <# } else if( "image" === item_type) {#> <img class="editor-pa-img" src="{{content_image.url}}"> <# } else if ("svg" === item_type) { #> {{ "SVG Code" }} <# } else { #> {{ "Lottie" }} <# }#>',
 				'prevent_empty' => false,
+			)
+		);
+
+		// The effect is enabled per item, which a widget level condition cannot read.
+		do_action(
+			'pa_fill_on_scroll_controls',
+			$this,
+			array(
+				'notice' => __( 'The section stays pinned until every filling item finishes.', 'premium-addons-for-elementor' ),
 			)
 		);
 
@@ -2184,8 +2233,15 @@ class Premium_Textual_Showcase extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			array(
-				'name'     => 'text_shadow',
-				'selector' => '{{WRAPPER}} .pa-txt-sc__item-text',
+				'name'           => 'text_shadow',
+				'fields_options' => array(
+					'text_shadow' => array(
+						'selectors' => array(
+							'{{WRAPPER}} .pa-txt-sc__item-text:not(.pa-clipped-scroll)' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} .pa-txt-sc__item-text.pa-clipped-scroll .pa-clip-word' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}})',
+						),
+					),
+				),
 			)
 		);
 
@@ -2347,6 +2403,15 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 		$this->add_render_attribute( 'container', 'class', 'pa-txt-sc__outer-container pa-trigger-on-' . $settings['trigger'] );
 
+		// The sub-options are registered by the Pro plugin, and the per item Pro notice renders below this.
+		if ( Helper_Functions::check_papro_version() && array_filter( $content, array( $this, 'item_fills_on_scroll' ) ) ) {
+			$this->add_render_attribute( 'container', 'data-clip-speed', $settings['clip_scroll_speed']['size'] );
+
+			if ( 'yes' === $settings['clip_scroll_lock'] ) {
+				$this->add_render_attribute( 'container', 'data-clip-lock', 'true' );
+			}
+		}
+
 		if ( $entrance_animation ) {
 			$anime_dur = 'animated-' . $settings['en_anime_dur'];
 			$this->add_render_attribute( 'container', 'data-list-animation', array( $entrance_animation, $anime_dur ) );
@@ -2361,6 +2426,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 					if ( 'svg' === $item['item_type'] ||
 						( 'text' === $item['item_type'] && 'yes' === $item['clipped_bg'] ) ||
+						$this->item_fills_on_scroll( $item ) ||
 						( 'text' === $item['item_type'] && ! in_array( $item['txt_effect'], array( 'none', 'strikethrough', 'underline' ), true ) ) ||
 						( 'text' !== $item['item_type'] && ! in_array( $item['effect'], array( 'none', 'hvr-pulse-grow', 'rotate' ), true ) )
 					) {
@@ -2607,15 +2673,68 @@ class Premium_Textual_Showcase extends Widget_Base {
 
 		$min_mask_cls = empty( $elem_type ) && 'min-mask' === $effect ? 'premium-mask-' . $item['mask_dir'] : '';
 
+		$fills_on_scroll = empty( $elem_type ) && $this->item_fills_on_scroll( $item );
+
 		if ( empty( $elem_type ) && ! in_array( $effect, array( 'none', 'min-mask', 'underline' ), true ) ) {
 			echo $this->get_effect_svg( $effect ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_effect_svg() returns a hard-coded inline SVG from a fixed allowlist.
 		}
 
 		$this->add_render_attribute( 'item-content-' . $item['_id'] . $elem_type, 'class', 'pa-txt-sc__item-text ' . $min_mask_cls );
 
+		if ( $fills_on_scroll ) {
+			$this->add_render_attribute( 'item-content-' . $item['_id'] . $elem_type, 'class', 'pa-clipped-scroll' );
+		}
+
 		?>
-			<<?php echo wp_kses_post( $txt_tag . ' ' . $this->get_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ) ); ?>> <?php echo esc_html( $item[ 'item_txt' . $elem_type ] ); ?></<?php echo wp_kses_post( $txt_tag ); ?>>
+			<<?php echo wp_kses_post( $txt_tag . ' ' . $this->get_render_attribute_string( 'item-content-' . $item['_id'] . $elem_type ) ); ?>> <?php echo $fills_on_scroll ? wp_kses_post( $this->get_clipped_words( $item[ 'item_txt' . $elem_type ] ) ) : esc_html( $item[ 'item_txt' . $elem_type ] ); ?></<?php echo wp_kses_post( $txt_tag ); ?>>
 		<?php
+	}
+
+	/**
+	 * Check if a repeater item runs the fill on scroll effect.
+	 *
+	 * Re-checks the control conditions because Elementor keeps stale values.
+	 *
+	 * @since 4.11.105
+	 * @access private
+	 *
+	 * @param array $item repeater item settings.
+	 *
+	 * @return bool
+	 */
+	private function item_fills_on_scroll( $item ) {
+		return 'text' === $item['item_type']
+			&& 'yes' === $item['clip_scroll']
+			&& 'yes' !== $item['clipped_bg']
+			&& 'yes' !== $item['stroke_sw']
+			&& 'min-mask' !== $item['txt_effect'];
+	}
+
+	/**
+	 * Wrap each word in its own span so the fill effect can run word by word.
+	 *
+	 * @since 4.11.105
+	 * @access private
+	 *
+	 * @param string $text item text.
+	 *
+	 * @return string words markup.
+	 */
+	private function get_clipped_words( $text ) {
+
+		$words = preg_split( '/\s+/u', trim( $text ), -1, PREG_SPLIT_NO_EMPTY );
+
+		if ( empty( $words ) ) {
+			return '';
+		}
+
+		$words_html = '';
+
+		foreach ( $words as $word ) {
+			$words_html .= '<span class="pa-clip-word">' . esc_html( $word ) . '</span> ';
+		}
+
+		return trim( $words_html );
 	}
 
 	private function get_effect_svg( $effect ) {
