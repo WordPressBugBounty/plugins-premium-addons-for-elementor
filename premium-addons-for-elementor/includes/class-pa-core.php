@@ -177,6 +177,11 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			delete_option( 'pa_complete_wizard' );
 			delete_option( 'pa_install_time' );
 			delete_option( 'pa_review_notice' );
+			delete_option( 'pa-connect-ai-not' );
+			delete_option( 'pa-angie-not' );
+
+			// Per-user feature-notice dismissals, network-wide.
+			delete_metadata( 'user', 0, 'pa_dismissed_notices', '', true );
 
 			if ( is_multisite() ) {
 				// 'number' => 0 overrides WP_Site_Query's default of 100; without it

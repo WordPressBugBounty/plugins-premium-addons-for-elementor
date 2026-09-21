@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.11.106 - 21/9/2026 =
+
+- Fixed: Mini Cart widget opening automatically for visitors who did not add anything to the cart when Open on Cart Update option is enabled.
+- Fixed: Mini Cart widget not opening after a product is added to the cart when Open on Cart Update option is enabled.
+- Fixed: Masonry layout not working in Elementor editor on Chrome in Media Grid, Blog, Testimonials, Pinterest Feed and TikTok Feed widgets.
+- Fixed: Improved code security enforcement in Video Box, Lottie Animations, Bullet List, Mega Menu and Woo CTA widgets, and in Premium Templates library.
+
 = 4.11.105 - 15/9/2026 =
 
 - Fixed: SVG icons losing their colors and styles when the SVG file keeps its CSS inside a style tag.

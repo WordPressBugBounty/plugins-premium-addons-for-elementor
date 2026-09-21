@@ -80,8 +80,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'pa-connect-ai-not',
-			'pa-angie-not',
+			'pa-claude-design-not',
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -151,11 +150,7 @@ class Admin_Notices {
 			return;
 		}
 
-		if ( defined( 'ANGIE_VERSION' ) ) {
-			$this->get_angie_notice();
-		} else {
-			$this->get_connect_ai_notice();
-		}
+		$this->get_claude_design_notice();
 	}
 
 	/**
@@ -328,99 +323,93 @@ class Admin_Notices {
 	}
 
 	/**
-	 * Announces the Angie compatibility layer on sites running Angie.
+	 * Checks if the current user dismissed a per-user notice.
 	 *
-	 * Shown instead of the ChatGPT/Claude notice, never alongside it, so the
-	 * dashboard never carries two AI notices at once.
-	 *
-	 * @since 4.11.102
+	 * @since 4.11.106
 	 * @access private
 	 *
-	 * @return void
+	 * @param string $key notice key.
+	 * @return bool
 	 */
-	private function get_angie_notice() {
+	private static function is_dismissed_by_user( $key ) {
 
-		if ( '1' === self::get_notice_state( 'pa-angie-not' ) ) {
-			return;
-		}
+		$dismissed = get_user_meta( get_current_user_id(), 'pa_dismissed_notices', true );
 
-		$angie_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/angie-premium-addons-elementor', 'angie-notification', 'wp-dash', 'angie' );
-
-		?>
-
-		<div class="error pa-notice-wrap pa-new-feature-notice">
-			<div class="pa-img-wrap">
-				<img src="<?php echo esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>" alt="">
-			</div>
-			<div class="pa-text-wrap">
-				<p>
-					<strong><?php esc_html_e( 'New:', 'premium-addons-for-elementor' ); ?></strong>
-					<?php
-						printf(
-							/* translators: 1: Angie guide link opening tag, 2: link closing tag. */
-							esc_html__( 'Angie can now browse the Premium Templates library and use Premium Addons widgets to build your Elementor pages. %1$sCheck it Out!%2$s', 'premium-addons-for-elementor' ),
-							'<a href="' . esc_url( $angie_link ) . '" target="_blank">',
-							'</a>'
-						);
-					?>
-				</p>
-			</div>
-			<div class="pa-notice-close" data-notice="pa-angie-not">
-				<span class="dashicons dashicons-dismiss"></span>
-			</div>
-		</div>
-
-		<?php
+		return is_array( $dismissed ) && in_array( $key, $dismissed, true );
 	}
 
 	/**
-	 * Points users to the ChatGPT/Claude connection guides.
+	 * Claude Design → Elementor notice, with the sale CTA per license tier.
+	 * Admins only, dismissed per user.
 	 *
-	 * Keyed separately from the older AI notice, so users who dismissed that one
-	 * still get this.
-	 *
-	 * @since 4.11.100
+	 * @since 4.11.106
 	 * @access private
 	 *
 	 * @return void
 	 */
-	private function get_connect_ai_notice() {
+	private function get_claude_design_notice() {
 
-		if ( '1' === self::get_notice_state( 'pa-connect-ai-not' ) ) {
+		$notice_key = 'pa-claude-design-not';
+
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		$chatgpt_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website', 'connect-ai-notification', 'wp-dash', 'connect-ai' );
-		$claude_link  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages', 'connect-ai-notification', 'wp-dash', 'connect-ai' );
-		$mcp_link     = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mcp-and-ai-abilities/', 'connect-ai-notification', 'wp-dash', 'connect-ai' );
+		if ( self::is_dismissed_by_user( $notice_key ) ) {
+			return;
+		}
 
-		?>
+		$tier = Admin_Helper::get_license_tier();
 
-		<div class="error pa-notice-wrap pa-new-feature-notice pa-connect-ai-notice">
-			<div class="pa-img-wrap">
-				<img src="<?php echo esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>" alt="">
-			</div>
-			<div class="pa-text-wrap">
-				<p>
-					<strong><?php esc_html_e( 'New:', 'premium-addons-for-elementor' ); ?></strong>
-					<?php
-						printf(
-							/* translators: 1: ChatGPT link opening tag, 2: Claude link opening tag, 3: Elementor MCP page link opening tag, 4: link closing tag. */
-							esc_html__( 'Connect %1$sChatGPT%4$s/%2$sClaude%4$s to your website and make them build Elementor pages for you. %3$sCheck it Out!%4$s', 'premium-addons-for-elementor' ),
-							'<a href="' . esc_url( $chatgpt_link ) . '" target="_blank">',
-							'<a href="' . esc_url( $claude_link ) . '" target="_blank">',
-							'<a href="' . esc_url( $mcp_link ) . '" target="_blank">',
-							'</a>'
-						);
-					?>
-				</p>
-			</div>
-			<div class="pa-notice-close" data-notice="pa-connect-ai-not">
-				<span class="dashicons dashicons-dismiss"></span>
-			</div>
-		</div>
+		$doc_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/convert-claude-design-to-elementor/', 'claude-design-notification', 'wp-dash', 'claude-design', $tier );
 
-		<?php
+		$sale_line = '';
+		$sale_btn  = '';
+
+		if ( 'free' === $tier ) {
+
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'claude-design-notification', 'wp-dash', 'summer26', 'free' );
+			$sale_line = __( 'With Pro, Claude can also build with Elementor Pro and any other widget on your site. Summer sale: 30% off.', 'premium-addons-for-elementor' );
+			$sale_btn  = __( 'Get Pro – 30% Off', 'premium-addons-for-elementor' );
+
+		} elseif ( 'pro' === $tier ) {
+
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'claude-design-notification', 'wp-dash', 'summer26', 'pro' );
+			$sale_line = __( 'Pay only the difference to go Lifetime, with an extra 30% off.', 'premium-addons-for-elementor' );
+			$sale_btn  = __( 'Upgrade to Lifetime', 'premium-addons-for-elementor' );
+		}
+
+		$html  = '<div class="pa-notice-row">';
+		$html .= '<img class="pa-notice-logo" src="' . esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ) . '" alt="" width="40" height="40">';
+		$html .= '<div class="pa-notice-text">';
+		$html .= '<strong class="pa-notice-title">' . esc_html__( 'Convert Claude Design into Elementor Pages', 'premium-addons-for-elementor' ) . '</strong>';
+		$html .= '<span class="pa-notice-desc">' . esc_html__( 'Export your Claude Design as HTML, drop it into a Claude chat, and it gets rebuilt on your site as an editable Elementor page.', 'premium-addons-for-elementor' ) . '</span>';
+
+		if ( '' !== $sale_line ) {
+			$html .= '<span class="pa-notice-sub">' . esc_html( $sale_line ) . '</span>';
+		}
+
+		$html .= '</div>';
+		$html .= '<div class="pa-notice-actions">';
+		$html .= '<a class="button button-primary" href="' . esc_url( $doc_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'See How It Works', 'premium-addons-for-elementor' ) . '</a>';
+
+		if ( '' !== $sale_btn ) {
+			$html .= '<a class="button" href="' . esc_url( $sale_link ) . '" target="_blank" rel="noopener">' . esc_html( $sale_btn ) . '</a>';
+		}
+
+		$html .= '</div>';
+		$html .= '</div>';
+
+		wp_admin_notice(
+			$html,
+			array(
+				'type'               => 'info',
+				'dismissible'        => true,
+				'paragraph_wrap'     => false,
+				'additional_classes' => array( 'pa-notice', 'pa-claude-design-notice' ),
+				'attributes'         => array( 'data-notice' => $notice_key ),
+			)
+		);
 	}
 
 	/**
@@ -528,6 +517,21 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
+			if ( 'pa-claude-design-not' === $key ) {
+
+				// Per user: other admins keep seeing it.
+				$uid       = get_current_user_id();
+				$dismissed = get_user_meta( $uid, 'pa_dismissed_notices', true );
+				$dismissed = is_array( $dismissed ) ? $dismissed : array();
+
+				if ( ! in_array( $key, $dismissed, true ) ) {
+					$dismissed[] = $key;
+					update_user_meta( $uid, 'pa_dismissed_notices', $dismissed );
+				}
+
+				wp_send_json_success();
+			}
+
 			// Make sure new features notices will not appear again.
 			if ( false !== strpos( $key, 'not' ) ) {
 				update_option( $key, '1', true );
@@ -616,23 +620,18 @@ class Admin_Notices {
 
 		$papro_path = 'premium-addons-pro/premium-addons-pro-for-elementor.php';
 
-		$license_data = get_transient( 'pa_license_info' );
-		$highlight    = false;
+		$highlight = false;
 
-		if ( isset( $license_data['status'] ) && 'valid' === $license_data['status'] ) {
+		if ( 'pro' === Admin_Helper::get_license_tier() ) {
 
-			if ( isset( $license_data['id'] ) && '4' !== $license_data['id'] ) {
-
-				$highlight = true;
-				array_unshift(
-					$stories['posts'],
-					array(
-						'title' => 'Switch to Premium Addons Pro Lifetime, Pay the Difference & Save 30% Today!',
-						'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'summer26-dash-widget', 'summer26' ),
-					)
-				);
-
-			}
+			$highlight = true;
+			array_unshift(
+				$stories['posts'],
+				array(
+					'title' => 'Upgrade to Premium Addons Pro Lifetime, Pay the Difference & Save 30% Today!',
+					'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'summer26-dash-widget', 'summer26' ),
+				)
+			);
 		}
 
 		?>

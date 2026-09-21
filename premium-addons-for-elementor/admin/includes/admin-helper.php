@@ -972,6 +972,30 @@ class Admin_Helper {
 	}
 
 	/**
+	 * Gets the license tier. PAPRO without a valid license counts as free.
+	 *
+	 * @since 4.11.106
+	 * @access public
+	 *
+	 * @return string 'free' | 'pro' | 'lifetime'.
+	 */
+	public static function get_license_tier() {
+
+		if ( ! Helper_Functions::check_papro_version() ) {
+			return 'free';
+		}
+
+		$info = get_transient( 'pa_license_info' );
+
+		if ( ! is_array( $info ) || empty( $info['status'] ) || 'valid' !== $info['status'] ) {
+			return 'free';
+		}
+
+		// Plan id 4 is the only lifetime plan.
+		return ( isset( $info['id'] ) && '4' === (string) $info['id'] ) ? 'lifetime' : 'pro';
+	}
+
+	/**
 	 * Retrieves banner strings.
 	 *
 	 * @access public
@@ -979,17 +1003,18 @@ class Admin_Helper {
 	 */
 	public function get_banner_strings() {
 
-		$license_info = get_transient( 'pa_license_info' );
+		$tier = self::get_license_tier();
 
-		if ( ! Helper_Functions::check_papro_version() || ! $license_info ) {
+		if ( 'free' === $tier ) {
 			return array(
 				'title' => __( 'Summer SALE 2026', 'premium-addons-for-elementor' ),
 				'desc'  => __( 'Supercharge your Elementor with PRO Widgets & Addons that you won\'t find anywhere else.', 'premium-addons-for-elementor' ) . '<span class="papro-sale-notice">' . __( 'save up to 30%!', 'premium-addons-for-elementor' ) . '</span>',
 				'btn'   => __( 'Get Pro', 'premium-addons-for-elementor' ),
 				'cta'   => 'https://premiumaddons.com/get/papro/#get-pa-pro',
 			);
+		}
 
-		} if ( isset( $license_info['id'] ) && '4' !== $license_info['id'] ) {
+		if ( 'pro' === $tier ) {
 
 			$upgrade_link = Helper_Functions::get_campaign_link( 'http://premiumaddons.com/docs/upgrade-premium-addons-license/', 'dashboard-banner', 'wp-dash', 'upgrade-pro' );
 
@@ -999,8 +1024,9 @@ class Admin_Helper {
 				'btn'   => __( 'Upgrade Now', 'premium-addons-for-elementor' ),
 				'cta'   => $upgrade_link,
 			);
-
 		}
+
+		return null;
 	}
 
 	/**

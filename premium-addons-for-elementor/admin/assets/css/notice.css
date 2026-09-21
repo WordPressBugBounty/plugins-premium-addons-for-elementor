@@ -103,6 +103,86 @@
 	margin-inline-start: 0.3em;
 }
 
-.error.pa-connect-ai-notice .pa-text-wrap a:not(:first-of-type) {
-	margin-inline-start: 0;
+/* Feature notices (core wp_admin_notice markup + .pa-notice). */
+.notice.pa-notice {
+	padding-block: 12px;
+	padding-inline: 12px 38px;
+	border-left-color: #252c59;
+}
+
+/* Core RTL moves the accent border to the right. */
+body.rtl .notice.pa-notice {
+	border-right-color: #252c59;
+}
+
+.pa-notice .pa-notice-actions .button-primary {
+	background-color: #252c59;
+	border-color: #252c59;
+}
+
+.pa-notice .pa-notice-actions .button-primary:hover,
+.pa-notice .pa-notice-actions .button-primary:focus {
+	background-color: #1b2044;
+	border-color: #1b2044;
+}
+
+.pa-notice .pa-notice-actions .button:not(.button-primary) {
+	color: #252c59;
+	border-color: #252c59;
+	background-color: transparent;
+}
+
+.pa-notice .pa-notice-actions .button:not(.button-primary):hover,
+.pa-notice .pa-notice-actions .button:not(.button-primary):focus {
+	color: #fff;
+	background-color: #252c59;
+	border-color: #252c59;
+}
+
+.pa-notice .pa-notice-row {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.pa-notice .pa-notice-logo {
+	width: 40px;
+	height: 40px;
+	flex: none;
+}
+
+.pa-notice .pa-notice-text {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	flex: 1 1 320px;
+	min-width: 0;
+}
+
+.pa-notice .pa-notice-title {
+	font-size: 14px;
+}
+
+.pa-notice .pa-notice-desc {
+	color: #1d2327;
+}
+
+.pa-notice .pa-notice-sub {
+	color: #646970;
+	font-size: 12px;
+}
+
+.pa-notice .pa-notice-actions {
+	display: flex;
+	gap: 8px;
+	flex: none;
+	margin-inline-start: auto;
+}
+
+@media (width <= 782px) {
+	.pa-notice .pa-notice-actions {
+		margin-inline-start: 0;
+		width: 100%;
+	}
 }

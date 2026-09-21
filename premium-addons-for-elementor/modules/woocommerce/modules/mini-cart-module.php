@@ -176,13 +176,11 @@ class Mini_Cart_Module extends Module_Base {
 		$item_key = sanitize_text_field( wp_unslash( $_POST['itemKey'] ) );
 		$quantity = absint( wp_unslash( $_POST['quantity'] ) );
 
-		if ( $quantity > 0 && WC()->cart->get_cart_item( $_POST['itemKey'] ) ) {
-			WC()->cart->set_quantity( $_POST['itemKey'], $_POST['quantity'], true );
+		if ( $quantity > 0 && WC()->cart->get_cart_item( $item_key ) ) {
+			WC()->cart->set_quantity( $item_key, $quantity, true );
 		}
 
 		\WC_AJAX::get_refreshed_fragments();
-
-		wp_send_json_success();
 	}
 
 	/**
@@ -196,15 +194,13 @@ class Mini_Cart_Module extends Module_Base {
 			return;
 		}
 
-		$item_key = sanitize_text_field( $_POST['itemKey'] );
+		$item_key = sanitize_text_field( wp_unslash( $_POST['itemKey'] ) );
 
-		if ( WC()->cart->get_cart_item( $_POST['itemKey'] ) ) {
-			WC()->cart->remove_cart_item( $_POST['itemKey'] );
+		if ( WC()->cart->get_cart_item( $item_key ) ) {
+			WC()->cart->remove_cart_item( $item_key );
 		}
 
 		\WC_AJAX::get_refreshed_fragments();
-
-		wp_send_json_success();
 	}
 
 	/**
@@ -217,13 +213,11 @@ class Mini_Cart_Module extends Module_Base {
 		WC()->cart->empty_cart();
 
 		\WC_AJAX::get_refreshed_fragments();
-
-		wp_send_json_success();
 	}
 
-		/**
-		 * Delete a cart item by item key.
-		 */
+	/**
+	 * Apply a coupon to the cart.
+	 */
 	public function pa_apply_coupon() {
 
 		check_ajax_referer( 'pa-mini-cart-nonce', 'nonce' );
@@ -232,7 +226,7 @@ class Mini_Cart_Module extends Module_Base {
 			return;
 		}
 
-		$coupon_code = sanitize_text_field( $_POST['couponCode'] );
+		$coupon_code = sanitize_text_field( wp_unslash( $_POST['couponCode'] ) );
 
 		$coupon = new \WC_Coupon( $coupon_code );
 
@@ -243,8 +237,6 @@ class Mini_Cart_Module extends Module_Base {
 				WC()->cart->apply_coupon( $coupon_code );
 
 				wp_send_json_success( 'Coupon was applied successfully.' );
-
-				\WC_AJAX::get_refreshed_fragments();
 
 			} else {
 				wp_send_json_error( 'This code was already applied.', 409 );
@@ -261,7 +253,7 @@ class Mini_Cart_Module extends Module_Base {
 			wp_send_json_error( 'No coupon code provided.', 400 );
 		}
 
-		$coupon_code = sanitize_text_field( $_POST['couponCode'] );
+		$coupon_code = sanitize_text_field( wp_unslash( $_POST['couponCode'] ) );
 
 		if ( WC()->cart->has_discount( $coupon_code ) ) {
 
@@ -275,14 +267,50 @@ class Mini_Cart_Module extends Module_Base {
 	}
 
 	/**
-	 * Set product added to cart flag.
-	 * Used to determine whether to open the mini cart automatically on page load.
+	 * Flags this visitor's session so the mini cart can open itself on the page that loads next.
+	 *
+	 * AJAX adds are not flagged: they never reload the page, so nothing would consume the flag
+	 * and the cart would open again on whatever page the visitor opens after that.
+	 * premium-mini-cart.js already opens the cart for those through the added_to_cart event.
 	 *
 	 * @see premium-mini-cart.js
-	 * @see assets-manager.php [$product_added_to_cart] to pass the transient value to JS.
+	 * @see Assets_Manager::consume_mini_cart_auto_open_flag()
 	 */
 	public function pa_set_product_added_to_cart_flag() {
-		// Set a transient that will be available on the next page load.
-		set_transient( 'pa_product_added_to_cart', true, 60 );
+
+		if ( ! $this->is_full_page_add_to_cart_request() ) {
+			return;
+		}
+
+		if ( ! WC()->session ) {
+			return;
+		}
+
+		WC()->session->set( 'pa_product_added_to_cart', time() );
+	}
+
+	/**
+	 * Whether this add to cart happened in a request the visitor will see reloaded.
+	 *
+	 * wc-ajax is checked on its own because WooCommerce's front end add to cart endpoint does
+	 * not go through admin-ajax.php, so we do not depend on whether DOING_AJAX has been defined
+	 * by the time this hook fires.
+	 *
+	 * @since 4.11.106
+	 * @access private
+	 *
+	 * @return bool
+	 */
+	private function is_full_page_add_to_cart_request() {
+
+		if ( wp_doing_ajax() || isset( $_GET['wc-ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Request type check only, the value is never read.
+			return false;
+		}
+
+		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+			return false;
+		}
+
+		return ! is_admin() && ! wp_doing_cron();
 	}
 }

@@ -2317,7 +2317,7 @@ class Woo_CTA extends Widget_Base {
 									<td>
 									<div class='pa-qty-wrapper'>
 										<div class="quantity-grouped-wrapper">
-											<input type="number" class="grouped_product_qty" name="<?php echo wp_kses_post( $child_id ); ?>" value="0" min="0" max="<?php echo esc_attr( $max_stock ); ?>" aria-label="Product quantity">
+											<input type="number" class="grouped_product_qty" name="<?php echo esc_attr( $child_id ); ?>" value="0" min="0" max="<?php echo esc_attr( $max_stock ); ?>" aria-label="Product quantity">
 											<div class="add-to-cart-icons-quantity-wrapper">
 												<i type="button" class="fas fa-plus quantity-button g-plus" aria-hidden="true"></i>
 												<i type="button" class="fas fa-minus quantity-button g-minus" aria-hidden="true"></i>
@@ -2337,15 +2337,15 @@ class Woo_CTA extends Widget_Base {
 							<?php foreach ( $attributes as $attribute_name => $terms ) : ?>
 								<tr>
 									<th class="label">
-										<label for="<?php echo wp_kses_post( $attribute_name ); ?>">
+										<label for="<?php echo esc_attr( $attribute_name ); ?>">
 											<?php echo wp_kses_post( wc_attribute_label( $attribute_name ) ); ?>
 										</label>
 									</th>
 									<td class="value">
-										<select id="<?php echo wp_kses_post( $attribute_name ); ?>" class="product-attribute" name="attribute_<?php echo wp_kses_post( $attribute_name ); ?>" data-attribute_name="attribute_<?php echo wp_kses_post( $attribute_name ); ?>" data-show_option_none="yes">
+										<select id="<?php echo esc_attr( $attribute_name ); ?>" class="product-attribute" name="attribute_<?php echo esc_attr( $attribute_name ); ?>" data-attribute_name="attribute_<?php echo esc_attr( $attribute_name ); ?>" data-show_option_none="yes">
 											<option value="">Choose an option</option>
 												<?php foreach ( $terms as $term ) : ?>
-											<option value="<?php echo wp_kses_post( is_object( $term ) ? $term->slug : $term ); ?>" class="attached enabled">
+											<option value="<?php echo esc_attr( is_object( $term ) ? $term->slug : $term ); ?>" class="attached enabled">
 													<?php echo wp_kses_post( is_object( $term ) ? $term->name : $term ); ?>
 											</option>
 												<?php endforeach; ?>

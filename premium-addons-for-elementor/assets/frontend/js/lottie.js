@@ -23201,8 +23201,6 @@
 					.remove();
 			}
 
-			var layout = "";
-
 			$.each(settings.lottieLayers, function (index, layer) {
 				layer.lottie_url =
 					"url" === layer.source ? layer.lottie_url : layer.lottie_file.url;
@@ -23216,16 +23214,15 @@
 				var renderer = layer.lottie_renderer;
 
 				if (!isEditor) {
-					layout +=
-						'<div class="premium-lottie-layer premium-lottie-animation premium-lottie-' +
-						renderer +
-						" elementor-repeater-item-" +
-						layer._id +
-						'"></div>';
-
-					target.prepend(layout);
-
-					layout = "";
+					target.prepend(
+						$("<div>", {
+							class:
+								"premium-lottie-layer premium-lottie-animation premium-lottie-" +
+								renderer +
+								" elementor-repeater-item-" +
+								layer._id,
+						}),
+					);
 				}
 
 				var $layer = jQuery(".elementor-repeater-item-" + layer._id);

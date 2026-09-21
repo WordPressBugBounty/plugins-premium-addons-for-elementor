@@ -1,4 +1,82 @@
 (function ($) {
+	var instanceCounter = 0;
+
+	/**
+	 * data-id is not unique: the same Elementor element can be printed twice on one page, for
+	 * example a responsive header duplicate, and both copies carry the same id. Handlers bound
+	 * on document.body need a separator that follows the DOM node instead.
+	 */
+	function getInstanceNamespace($widget) {
+		var namespace = $widget.data("paMcNs");
+
+		if (!namespace) {
+			namespace = "paMc" + ++instanceCounter;
+			$widget.data("paMcNs", namespace);
+		}
+
+		return namespace;
+	}
+
+	function eachMiniCart(callback) {
+		$(".elementor-widget-premium-mini-cart").each(function () {
+			var $widget = $(this),
+				widgetSettings = $widget
+					.find(".pa-woo-mc__outer-container")
+					.data("settings");
+
+			if (widgetSettings) {
+				callback($widget, widgetSettings);
+			}
+		});
+	}
+
+	/** Unlike toggleMiniCart, calling this on an already open cart does nothing. */
+	function openMiniCart($widget, widgetSettings) {
+		var widgetId = $widget.data("id"),
+			$content = $widget.find(".pa-woo-mc__content-wrapper-" + widgetId);
+
+		if (!$content.length || $content.hasClass("pa-woo-mc__open")) {
+			return;
+		}
+
+		clearTimeout($widget.data("paMcCloseTimer"));
+
+		if ("slide" === widgetSettings.type) {
+			$widget
+				.find(".pa-woo-mc__overlay-" + widgetId)
+				.removeClass("premium-addons__v-hidden");
+		}
+
+		$content
+			.removeClass("premium-addons__v-hidden")
+			.addClass("pa-woo-mc__open");
+
+		if ($widget.find(".slick-slider").length) {
+			$widget.find(".pa-woo-mc__cross-sells").slick("setPosition");
+		}
+	}
+
+	/**
+	 * WooCommerce fires added_to_cart once per AJAX add, on the body. One listener for the whole
+	 * page serves every mini cart on it, so re-running the widget handler, which Elementor does
+	 * on every element_ready, cannot stack listeners or toggle the cart back closed.
+	 */
+	function bindAutoOpenOnAjaxAdd() {
+		$(document.body)
+			.off("added_to_cart.paMiniCart")
+			.on("added_to_cart.paMiniCart", function () {
+				eachMiniCart(function ($widget, widgetSettings) {
+					if (!widgetSettings.openAutomatically) {
+						return;
+					}
+
+					setTimeout(function () {
+						openMiniCart($widget, widgetSettings);
+					}, widgetSettings.cartDelay || 0);
+				});
+			});
+	}
+
 	var PremiumMiniCartHandler = function ($scope, $) {
 		var settings = $scope.find(".pa-woo-mc__outer-container").data("settings");
 
@@ -9,10 +87,9 @@
 		var triggerEvent = settings.trigger,
 			type = settings.type,
 			id = $scope.data("id"),
+			instanceNs = getInstanceNamespace($scope),
 			openAutomatically = settings.openAutomatically,
 			cartDelay = settings.cartDelay,
-			cartDebounce = false,
-			hoverTimeout,
 			paodometer,
 			paSubtotalOdometer;
 
@@ -21,6 +98,9 @@
 			.off(
 				"click.paToggleMiniCart mouseenter.paToggleMiniCart mouseleave.paToggleMiniCart",
 			);
+
+		// The hover close handler is bound on $scope itself, so it needs its own cleanup.
+		$scope.off("mouseleave.paToggleMiniCart");
 
 		initWidgetEvents();
 
@@ -37,44 +117,33 @@
 		}
 
 		/**
-		 * Open the cart automatically on page load if it's caused by a product being added to the cart only.
+		 * A non-AJAX add reloads the page, so there is no added_to_cart event to react to.
+		 * The server tells us the reload was caused by this visitor's own add to cart.
 		 */
 		if (openAutomatically && PAWooMCartSettings.productAddedToCart) {
 			setTimeout(function () {
-				if (
-					!$scope
-						.find(".pa-woo-mc__content-wrapper-" + id)
-						.hasClass("pa-woo-mc__open")
-				) {
-					toggleMiniCart();
-				}
+				openMiniCart($scope, settings);
 			}, cartDelay || 0);
 		}
 
-		if (openAutomatically) {
-			if (!cartDebounce) {
-				elementorFrontend.elements.$body.on(
-					"added_to_cart",
-					function (event, data) {
-						setTimeout(function () {
-							var $contentWrapper = $scope.find(
-								".pa-woo-mc__content-wrapper-" + id,
-							);
-
-							if (!$contentWrapper.hasClass("pa-woo-mc__open")) {
-								toggleMiniCart(event, data);
-							}
-							cartDebounce = true;
-						}, cartDelay || 0);
-					},
-				);
-			}
-		}
+		bindAutoOpenOnAjaxAdd();
 
 		// Reinitialize the event listeners after the mini cart is refreshed.
-		$(document.body).on(
-			"wc_fragments_loaded wc_fragments_refreshed",
-			function (e) {
+		var fragmentEvents =
+			"wc_fragments_loaded." +
+			instanceNs +
+			" wc_fragments_refreshed." +
+			instanceNs;
+
+		$(document.body)
+			.off(fragmentEvents)
+			.on(fragmentEvents, function () {
+				// A theme or Elementor re-render can replace the widget node; drop the stale binding.
+				if (!$.contains(document.documentElement, $scope[0])) {
+					$(document.body).off("." + instanceNs);
+					return;
+				}
+
 				hideContentIfEmptyCart();
 				initCartContentEvents();
 				updateCartDynamicText();
@@ -85,31 +154,10 @@
 					}, 0);
 				}
 
-				// counting effect.
 				if ($scope.hasClass("premium-mc-counting-yes")) {
-					setTimeout(function () {
-						var newCount = $scope.find(".pa-woo-mc__count-placeholder").text(),
-							newSubtotal = $scope
-								.find(
-									".pa-woo-mc__text-wrapper .pa-woo-mc__subtotal-placeholder",
-								)
-								.text();
-
-						if ($scope.find(".pa-woo-mc__badge.pa-counting").length) {
-							paodometer.update(newCount);
-						}
-
-						if (
-							$scope.find(
-								".pa-woo-mc__subtotal.pa-counting .pa-woo-mc__subtotal-val",
-							).length
-						) {
-							paSubtotalOdometer.update(newSubtotal);
-						}
-					}, 0);
+					setTimeout(updateCountingEffect, 0);
 				}
-			},
-		);
+			});
 
 		if (settings.cssSelector) {
 			var cartSelector = settings.cssSelector,
@@ -165,6 +213,25 @@
 			}
 		}
 
+		function updateCountingEffect() {
+			var newCount = $scope.find(".pa-woo-mc__count-placeholder").text(),
+				newSubtotal = $scope
+					.find(".pa-woo-mc__text-wrapper .pa-woo-mc__subtotal-placeholder")
+					.text();
+
+			if (paodometer && $scope.find(".pa-woo-mc__badge.pa-counting").length) {
+				paodometer.update(newCount);
+			}
+
+			if (
+				paSubtotalOdometer &&
+				$scope.find(".pa-woo-mc__subtotal.pa-counting .pa-woo-mc__subtotal-val")
+					.length
+			) {
+				paSubtotalOdometer.update(newSubtotal);
+			}
+		}
+
 		function initCrossSellsCarousel() {
 			$scope.find(".pa-woo-mc__cross-sells").slick({
 				infinite: true,
@@ -182,6 +249,7 @@
 			//cross sells nav.
 			$scope
 				.find(".pa-woo-mc__cross-sells-arrows a")
+				.off("click.paCrossSellsNav")
 				.on("click.paCrossSellsNav", function () {
 					if ($(this).hasClass("prev-arrow")) {
 						$scope.find(".pa-woo-mc__cross-sells").slick("slickPrev");
@@ -223,7 +291,7 @@
 		function toggleMiniCart(e) {
 			if ("hover" === triggerEvent) {
 				e.stopPropagation();
-				clearTimeout(hoverTimeout);
+				clearTimeout($scope.data("paMcCloseTimer"));
 
 				$scope
 					.find(".pa-woo-mc__content-wrapper-" + id)
@@ -559,12 +627,15 @@
 					.find(".pa-woo-mc__inner-container")
 					.on("mouseenter.paToggleMiniCart", toggleMiniCart);
 
-				$scope.on("mouseleave.paToggleMiniCart", function (e) {
-					hoverTimeout = setTimeout(function () {
-						$scope
-							.find(".pa-woo-mc__content-wrapper-" + id)
-							.removeClass("pa-woo-mc__open");
-					}, 300);
+				$scope.on("mouseleave.paToggleMiniCart", function () {
+					$scope.data(
+						"paMcCloseTimer",
+						setTimeout(function () {
+							$scope
+								.find(".pa-woo-mc__content-wrapper-" + id)
+								.removeClass("pa-woo-mc__open");
+						}, 300),
+					);
 				});
 			}
 

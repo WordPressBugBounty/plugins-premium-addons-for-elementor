@@ -10,6 +10,6 @@
 <div id="premium-template-modal-header-refresh" class="elementor-template-library-header-item" title="<?php echo esc_attr__( 'Refresh Templates', 'premium-addons-for-elementor' ); ?>">
 	<i class="eicon-sync"></i>
 </div>
-<div id="premium-template-modal-header-close-modal" class="elementor-template-library-header-item" title="<?php echo wp_kses_post( __( 'Close', 'premium-addons-for-elementor' ) ); ?>">
+<div id="premium-template-modal-header-close-modal" class="elementor-template-library-header-item" title="<?php echo esc_attr__( 'Close', 'premium-addons-for-elementor' ); ?>">
 	<i class="eicon-close" title="Close"></i>
 </div>

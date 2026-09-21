@@ -1576,14 +1576,7 @@ class Assets_Manager {
 				)
 			);
 
-			/**
-			 * Localize the $product_added_to_cart flag to mini cart script.
-			 * The transient is deleted to be used only once.
-			 */
-			$product_added_to_cart = get_transient( 'pa_product_added_to_cart' );
-			if ( $product_added_to_cart ) {
-				delete_transient( 'pa_product_added_to_cart' );
-			}
+			$product_added_to_cart = $this->consume_mini_cart_auto_open_flag();
 
 			wp_localize_script(
 				'premium-mini-cart',
@@ -1595,7 +1588,7 @@ class Assets_Manager {
 					'mini_cart_nonce'    => wp_create_nonce( 'pa-mini-cart-nonce' ),
 					'qv_nonce'           => wp_create_nonce( 'pa-woo-qv-nonce' ),
 					'stock_msg'          => __( '*The current stock is only ', 'premium-addons-for-elementor' ),
-					'productAddedToCart' => (bool) $product_added_to_cart,
+					'productAddedToCart' => $product_added_to_cart,
 				)
 			);
 
@@ -1654,6 +1647,42 @@ class Assets_Manager {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Reads and clears this visitor's pending mini cart auto open.
+	 *
+	 * This used to be a transient, which is site wide: one shopper's add to cart opened the mini
+	 * cart for every other visitor on the site for the next minute. Visitors with no WooCommerce
+	 * session simply never auto open — creating a session here would hand every anonymous page
+	 * view a cookie and defeat full page caching.
+	 *
+	 * Runs on every front end page view, so the flag is consumed whether or not that page renders
+	 * a mini cart. Elementor enqueues widget script dependencies at render time, long after this
+	 * point, so there is nothing cheap to test here.
+	 *
+	 * @since 4.11.106
+	 * @access private
+	 *
+	 * @return bool
+	 */
+	private function consume_mini_cart_auto_open_flag() {
+
+		$session = WC()->session;
+
+		if ( ! $session ) {
+			return false;
+		}
+
+		$added_at = absint( $session->get( 'pa_product_added_to_cart' ) );
+
+		if ( ! $added_at ) {
+			return false;
+		}
+
+		$session->set( 'pa_product_added_to_cart', null );
+
+		return ( time() - $added_at ) < MINUTE_IN_SECONDS;
 	}
 
 	/**

@@ -3476,12 +3476,11 @@
 							.find(".premium-bullet-list-text")
 							.filter(":not(:has(+ .premium-bullet-list-badge))");
 
-						var badgeText =
-							'<div class="premium-bullet-list-badge elementor-repeater-item-' +
-							badge._id +
-							'"><span>' +
-							badge.badge_title +
-							"</span></div>";
+						var $badge = $("<div>", {
+							class:
+								"premium-bullet-list-badge elementor-repeater-item-" +
+								badge._id,
+						}).append($("<span>").html(badge.badge_title));
 
 						var numOfApplies =
 							Math.floor(
@@ -3501,7 +3500,7 @@
 									).length > 0;
 
 							if (!wasBadgedBefore) {
-								$(notBadgedItems[randomIndex]).after(badgeText);
+								$(notBadgedItems[randomIndex]).after($badge.clone());
 							}
 						}
 					}

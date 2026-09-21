@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.105
+Stable Tag: 4.11.106
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -274,6 +274,13 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.106 - 21/9/2026 =
+
+- Fixed: Mini Cart widget opening automatically for visitors who did not add anything to the cart when Open on Cart Update option is enabled.
+- Fixed: Mini Cart widget not opening after a product is added to the cart when Open on Cart Update option is enabled.
+- Fixed: Masonry layout not working in Elementor editor on Chrome in Media Grid, Blog, Testimonials, Pinterest Feed and TikTok Feed widgets.
+- Fixed: Improved code security enforcement in Video Box, Lottie Animations, Bullet List, Mega Menu and Woo CTA widgets, and in Premium Templates library.
 
 = 4.11.105 - 15/9/2026 =
 

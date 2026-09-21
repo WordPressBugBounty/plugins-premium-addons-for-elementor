@@ -784,7 +784,7 @@
 		}
 
 		function addBadge(badge, targetsIndex) {
-			var badgeHtml = getBadgeHtml(badge),
+			var $badge = getBadgeElement(badge),
 				targets = $scope.find(
 					".premium-nav-menu-container " +
 						badge.selector +
@@ -806,25 +806,21 @@
 						.find(targets[targetsIndex[index] - 1])
 						.css("position", "relative")
 						.addClass("has-pa-badge " + hoverEffectClass)
-						.append(badgeHtml);
+						.append($badge.clone());
 				}
 
 				$scope
 					.find(mobileTargets[targetsIndex[index] - 1])
 					.css("position", "relative")
 					.addClass("has-pa-badge " + hoverEffectClass)
-					.append(badgeHtml);
+					.append($badge.clone());
 			}
 		}
 
-		function getBadgeHtml(badge) {
-			return (
-				'<span class="premium-rn-badge elementor-repeater-item-' +
-				badge.id +
-				'">' +
-				badge.text +
-				"</span>"
-			);
+		function getBadgeElement(badge) {
+			return $("<span>", {
+				class: "premium-rn-badge elementor-repeater-item-" + badge.id,
+			}).html(badge.text);
 		}
 
 		/**

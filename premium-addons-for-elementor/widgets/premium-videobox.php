@@ -2867,28 +2867,29 @@ class Premium_Videobox extends Widget_Base {
 				$hosted_url = $settings['premium_video_box_self_hosted_remote'];
 			}
 
-			$video_params = '';
+			$video_params = array();
 
 			if ( $controls ) {
-				$video_params .= 'controls ';
+				$video_params['controls'] = '';
 			}
 			if ( $mute ) {
-				$video_params .= 'muted ';
+				$video_params['muted'] = '';
 			}
 			if ( $loop ) {
-				$video_params .= 'loop ';
+				$video_params['loop'] = '';
 			}
 			$viewport_autoplay = 'yes' === $settings['autoplay_viewport'];
 
 			if ( $autoplay && ! $viewport_autoplay ) {
 
-				$video_params .= 'playsinline autoplay ';
+				$video_params['playsinline'] = '';
+				$video_params['autoplay']    = '';
 
 			} else {
 
 				if ( $autoplay ) {
 
-					$video_params .= 'playsinline ';
+					$video_params['playsinline'] = '';
 
 					$this->add_render_attribute( 'container', 'data-play-viewport', 'true' );
 
@@ -2897,20 +2898,22 @@ class Premium_Videobox extends Widget_Base {
 					}
 				}
 
-				$video_params .= ' preload="' . $settings['preload'] . '"';
+				$video_params['preload'] = $settings['preload'];
 			}
 
 			if ( $playsinline ) {
-				$video_params .= 'playsinline ';
+				$video_params['playsinline'] = '';
 			}
 
 			if ( ! $settings['download_button'] ) {
-				$video_params .= ' controlsList="nodownload"';
+				$video_params['controlsList'] = 'nodownload';
 			}
 
 			if ( ! empty( $settings['poster']['url'] ) ) {
-				$video_params .= ' poster="' . esc_url( $settings['poster']['url'] ) . '"';
+				$video_params['poster'] = esc_url_raw( $settings['poster']['url'] );
 			}
+
+			$this->add_render_attribute( 'video', $video_params );
 		} else {
 			// youtube - vimeo - dailymotion.
 			$link = $params['link'];
@@ -3242,7 +3245,7 @@ class Premium_Videobox extends Widget_Base {
 							<?php endif; ?>
 
 							<?php if ( 'self' === $video_type ) : ?>
-								<video src="<?php echo esc_url( $hosted_url ); ?>" <?php echo wp_kses_post( $video_params ); ?>></video>
+								<video src="<?php echo esc_url( $hosted_url ); ?>" <?php $this->print_render_attribute_string( 'video' ); ?>></video>
 							<?php endif; ?>
 						</div>
 							<div <?php $this->print_render_attribute_string( 'image_container' ); ?>></div>
