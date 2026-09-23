@@ -1,6 +1,6 @@
 <?php
 /**
- * AI-client tab navigation and config panels.
+ * AI-client picker and config panels.
  *
  * Included from mcp-config.php into its scope, once per connection method.
  * Expects from that scope:
@@ -8,6 +8,9 @@
  * - $tabs_prefix  Branch id prefix (e.g. 'pw', 'oauth') — both branches live in
  *                 the DOM at once, so every element id must be branch-unique.
  * - $mcp_is_local / $mcp_scheme for the bridge TLS note.
+ *
+ * Two levels: three group cards, each opening into its clients. No panel
+ * shows until a group is opened; opening one selects its first client.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,31 +22,82 @@ use PremiumAddons\Admin\Includes\MCP_Settings;
 // Read by every mcp-copy-block.php include below, directly and through
 // mcp-oauth-setup.php, which this file includes into its own scope.
 $copy_alias = MCP_Settings::default_server_name();
+
+$client_groups = MCP_Settings::grouped_clients( $configs );
+$group_labels  = MCP_Settings::group_labels();
+$client_kinds  = MCP_Settings::client_kinds();
+$panel_prefix  = 'pa-mcp-' . $tabs_prefix;
+
+// Wordmark logo, or a placeholder square when none ships. Decorative: the
+// card name stays in the markup as the accessible label.
+$render_logo = static function ( $logo, $mark ) {
+	if ( '' === $logo ) {
+		echo '<span class="pa-mcp-client-logo is-placeholder" aria-hidden="true">' . esc_html( $mark ) . '</span>';
+		return;
+	}
+
+	$allowed_svg = array(
+		'svg'  => array(
+			'viewbox' => true,
+			'fill'    => true,
+		),
+		'path' => array(
+			'd'    => true,
+			'fill' => true,
+		),
+	);
+
+	echo '<span class="pa-mcp-client-logo" aria-hidden="true">' . wp_kses( $logo, $allowed_svg ) . '</span>';
+};
 ?>
 
-				<div class="pa-mcp-clients-nav">
-					<?php
-					$is_first = true;
+				<div class="pa-mcp-client-picker">
+					<p class="pa-mcp-field-label"><?php esc_html_e( 'Your AI client', 'premium-addons-for-elementor' ); ?></p>
 
-					foreach ( $configs as $client_key => $config ) :
-						?>
-						<button type="button" class="pa-mcp-client-tab<?php echo esc_attr( $is_first ? ' is-active' : '' ); ?>" data-pa-mcp-panel="pa-mcp-<?php echo esc_attr( $tabs_prefix ); ?>-panel-<?php echo esc_attr( $client_key ); ?>">
-							<?php echo esc_html( (string) $config['label'] ); ?>
-						</button>
+					<div class="pa-mcp-client-groups">
+						<?php foreach ( $client_groups as $group_slug => $group_clients ) : ?>
+							<?php $group_logo = MCP_Settings::client_logo( $group_slug ); ?>
+							<button type="button" class="pa-mcp-group<?php echo '' !== $group_logo ? ' has-logo' : ''; ?>" data-pa-mcp-group="<?php echo esc_attr( $group_slug ); ?>">
+								<?php $render_logo( $group_logo, $group_labels[ $group_slug ]['mark'] ); ?>
+								<span class="pa-mcp-card-name">
+									<span<?php echo '' !== $group_logo ? ' class="screen-reader-text"' : ''; ?>><?php echo esc_html( $group_labels[ $group_slug ]['label'] ); ?></span>
+									<small><?php echo esc_html( $group_labels[ $group_slug ]['desc'] ); ?></small>
+								</span>
+							</button>
+						<?php endforeach; ?>
+					</div>
+
+					<?php foreach ( $client_groups as $group_slug => $group_clients ) : ?>
 						<?php
-						$is_first = false;
-					endforeach;
-					?>
+						// A vendor group's clients would all repeat the group's logo, so they stay text-only.
+						$group_has_logo = '' !== MCP_Settings::client_logo( $group_slug );
+						?>
+						<div class="pa-mcp-client-cards" data-pa-mcp-group="<?php echo esc_attr( $group_slug ); ?>" hidden>
+							<button type="button" class="pa-mcp-clients-back"><?php esc_html_e( 'Go back', 'premium-addons-for-elementor' ); ?></button>
+
+							<div class="pa-mcp-client-grid" role="group" aria-label="<?php esc_attr_e( 'Choose your AI client', 'premium-addons-for-elementor' ); ?>">
+								<?php foreach ( $group_clients as $client_key => $config ) : ?>
+									<?php $client_logo = $group_has_logo ? '' : MCP_Settings::client_logo( $client_key ); ?>
+									<button type="button" class="pa-mcp-client-card<?php echo '' !== $client_logo ? ' has-logo' : ''; ?>" aria-pressed="false" data-pa-mcp-panel="<?php echo esc_attr( $panel_prefix . '-panel-' . $client_key ); ?>">
+										<?php if ( ! $group_has_logo ) : ?>
+											<?php $render_logo( $client_logo, ucfirst( mb_substr( (string) $config['label'], 0, 2 ) ) ); ?>
+										<?php endif; ?>
+										<span class="pa-mcp-card-name">
+											<span<?php echo '' !== $client_logo ? ' class="screen-reader-text"' : ''; ?>><?php echo esc_html( (string) $config['label'] ); ?></span>
+											<?php if ( isset( $client_kinds[ $client_key ] ) ) : ?>
+												<small><?php echo esc_html( $client_kinds[ $client_key ] ); ?></small>
+											<?php endif; ?>
+										</span>
+									</button>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					<?php endforeach; ?>
 				</div>
 
 				<div class="pa-mcp-client-panels">
-					<?php
-					$is_first = true;
-
-					foreach ( $configs as $client_key => $config ) :
-						$panel_prefix = 'pa-mcp-' . $tabs_prefix;
-						?>
-						<div class="pa-mcp-client-panel" id="<?php echo esc_attr( $panel_prefix . '-panel-' . $client_key ); ?>"<?php echo esc_attr( $is_first ? '' : ' hidden' ); ?>>
+					<?php foreach ( $configs as $client_key => $config ) : ?>
+						<div class="pa-mcp-client-panel" id="<?php echo esc_attr( $panel_prefix . '-panel-' . $client_key ); ?>" hidden>
 							<?php if ( ! empty( $config['oauth'] ) ) : ?>
 								<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-oauth-setup.php'; ?>
 							<?php elseif ( ! empty( $config['code'] ) ) : ?>
@@ -105,8 +159,5 @@ $copy_alias = MCP_Settings::default_server_name();
 								?>
 							<?php endif; ?>
 						</div>
-						<?php
-						$is_first = false;
-					endforeach;
-					?>
+					<?php endforeach; ?>
 				</div>

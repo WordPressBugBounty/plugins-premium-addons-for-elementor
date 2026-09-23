@@ -72,7 +72,7 @@ $user = wp_get_current_user();
 				?>
 			</div>
 
-			<p class="warn"><?php esc_html_e( 'Only approve connections you started yourself. You can disconnect all clients anytime from the AI tab in the Premium Addons dashboard.', 'premium-addons-for-elementor' ); ?></p>
+			<p class="warn"><?php esc_html_e( 'Only approve connections you started yourself. You can turn off MCP access anytime from the MCP Config & AI Abilities tab in the Premium Addons dashboard.', 'premium-addons-for-elementor' ); ?></p>
 
 			<form method="post" action="<?php echo esc_url( home_url( Authorize::PATH ) ); ?>">
 				<?php foreach ( array( 'client_id', 'redirect_uri', 'response_type', 'code_challenge', 'code_challenge_method', 'state' ) as $field ) : ?>

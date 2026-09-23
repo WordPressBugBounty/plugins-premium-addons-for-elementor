@@ -3428,7 +3428,7 @@
 }
 
 /*
-* MCP Configuration Tab
+* MCP Config & AI Abilities Tab
 */
 .pa-mcp-config {
 	max-width: 920px;
@@ -3445,35 +3445,6 @@
 	font-size: 20px;
 	font-weight: 600;
 	color: #1d2327;
-}
-
-.pa-mcp-step-badge {
-	-js-display: flex;
-	display: inline-flex;
-	-ms-flex-pack: center;
-	-webkit-justify-content: center;
-	justify-content: center;
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-	align-items: center;
-	-ms-flex: 0 0 auto;
-	-webkit-flex: 0 0 auto;
-	flex: 0 0 auto;
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	background: #1d2327;
-	color: #fff;
-	font-size: 15px;
-	font-weight: 600;
-}
-
-.pa-mcp-connected-notice {
-	margin: 0 0 18px;
-}
-
-.pa-mcp-connected-notice p {
-	margin: 6px 0;
 }
 
 .pa-mcp-setup-fold {
@@ -3517,33 +3488,8 @@
 	max-width: 340px;
 }
 
-.pa-mcp-endpoint {
-	-js-display: flex;
-	display: flex;
-	-ms-flex-align: end;
-	-webkit-align-items: flex-end;
-	align-items: flex-end;
-	gap: 8px;
-	margin-top: 18px;
-}
-
-.pa-mcp-endpoint-field {
-	-ms-flex: 1;
-	-webkit-flex: 1;
-	flex: 1;
-}
-
-.pa-mcp-endpoint .regular-text {
-	width: 100%;
-	max-width: 680px;
-}
-
 .pa-mcp-advisory {
 	margin: 12px 0 0;
-}
-
-.pa-mcp-http-warning {
-	border-left-color: #d63638;
 }
 
 /* Align the paste-form result notices with the input field's left edge. */
@@ -3564,51 +3510,165 @@
 }
 
 /*
-* MCP Configuration — Connect Your AI Client
+* MCP Config & AI Abilities — Connect Your AI Client
 */
 .pa-mcp-connect {
 	margin-top: 4px;
 }
 
-.pa-mcp-clients-nav {
-	-js-display: flex;
-	display: flex;
-	-ms-flex-wrap: wrap;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	gap: 8px;
+/* Client picker: group cards open into client cards; both levels share one grid. */
+.pa-mcp-client-picker {
 	margin: 0 0 16px;
 }
 
-.pa-mcp-client-tab {
-	padding: 6px 14px;
+.pa-mcp-client-groups,
+.pa-mcp-client-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 10px;
+	margin-top: 8px;
+}
+
+.pa-mcp-client-groups[hidden],
+.pa-mcp-client-cards[hidden] {
+	display: none;
+}
+
+.pa-mcp-group,
+.pa-mcp-client-card {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	margin: 0;
+	padding: 14px 16px;
 	border: 1px solid #c3c4c7;
-	border-radius: 16px;
+	border-radius: 10px;
 	background: #fff;
-	color: #50575e;
-	font-size: 13px;
-	font-weight: 500;
+	color: #1d2327;
+	font: inherit;
+	font-size: 14px;
 	line-height: 1.4;
+	text-align: start;
 	cursor: pointer;
 	-webkit-transition:
-		color 0.15s ease,
-		background 0.15s ease,
-		border-color 0.15s ease;
+		border-color 0.15s ease,
+		box-shadow 0.15s ease;
 	transition:
-		color 0.15s ease,
-		background 0.15s ease,
-		border-color 0.15s ease;
+		border-color 0.15s ease,
+		box-shadow 0.15s ease;
 }
 
-.pa-mcp-client-tab:hover {
+.pa-mcp-group:hover,
+.pa-mcp-client-card:hover {
 	border-color: #2271b1;
-	color: #2271b1;
 }
 
-.pa-mcp-client-tab.is-active {
+.pa-mcp-group:focus-visible,
+.pa-mcp-client-card:focus-visible,
+.pa-mcp-clients-back:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+.pa-mcp-client-card[aria-pressed="true"] {
 	border-color: #1d2327;
-	background: #1d2327;
-	color: #fff;
+	box-shadow: inset 0 0 0 1px #1d2327;
+}
+
+.pa-mcp-card-name {
+	min-width: 0;
+	font-weight: 500;
+}
+
+.pa-mcp-client-card[aria-pressed="true"] .pa-mcp-card-name {
+	font-weight: 600;
+}
+
+.pa-mcp-card-name small {
+	display: block;
+	color: #787c82;
+	font-size: 11.5px;
+	font-weight: 400;
+}
+
+.pa-mcp-client-logo {
+	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
+	flex-shrink: 0;
+	width: 34px;
+	height: 34px;
+	border-radius: 9px;
+}
+
+.pa-mcp-group.has-logo,
+.pa-mcp-client-card.has-logo {
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	gap: 8px;
+}
+
+.has-logo .pa-mcp-client-logo {
+	width: auto;
+	max-width: 100%;
+	height: 20px;
+	border-radius: 0;
+}
+
+.pa-mcp-client-logo svg {
+	display: block;
+	width: auto;
+	max-width: 100%;
+	height: 100%;
+}
+
+.pa-mcp-client-logo.is-placeholder {
+	-js-display: inline-flex;
+	display: inline-flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	background: #e7e8ed;
+	color: #787c82;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.pa-mcp-client-cards {
+	margin-top: 8px;
+}
+
+.pa-mcp-clients-back {
+	margin: 0 0 2px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: #2271b1;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.pa-mcp-clients-back::before {
+	content: "‹ ";
+}
+
+.rtl .pa-mcp-clients-back::before {
+	content: "› ";
+}
+
+.pa-mcp-clients-back:hover {
+	text-decoration: underline;
 }
 
 .pa-mcp-connect-prompt {
@@ -3822,18 +3882,103 @@
 	display: none;
 }
 
-.pa-mcp-oauth-disconnect-row {
+/* Connection check: last block of the setup. Rows render only after the button runs. */
+.pa-mcp-check {
 	margin-top: 18px;
-	padding-top: 16px;
-	border-top: 1px solid #dcdcde;
+	padding: 16px;
+	border: 1px solid #c3c4c7;
+	border-radius: 8px;
+	background: #fff;
 }
 
-.pa-mcp-oauth-disconnect-row[hidden] {
+.pa-mcp-check-head {
+	-js-display: flex;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-pack: justify;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	gap: 10px 14px;
+}
+
+.pa-mcp-check-head > div {
+	-ms-flex: 1 1 320px;
+	-webkit-flex: 1 1 320px;
+	flex: 1 1 320px;
+	min-width: 0;
+}
+
+.pa-mcp-config .pa-mcp-check .pa-mcp-field-label {
+	margin-bottom: 0;
+}
+
+.pa-mcp-check-desc {
+	margin: 4px 0 0;
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.pa-mcp-check-results {
+	margin: 14px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pa-mcp-check-results[hidden] {
 	display: none;
 }
 
-.pa-mcp-oauth-disconnect-row .description {
-	margin-top: 6px;
+.pa-mcp-check-row {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 8px 0;
+	border-top: 1px solid #dcdcde;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.pa-mcp-check-row:first-child {
+	padding-top: 0;
+	border-top: 0;
+}
+
+.pa-mcp-check-mark {
+	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
+	flex-shrink: 0;
+	width: 1.2em;
+	color: #50575e;
+	font-weight: 600;
+	text-align: center;
+}
+
+.pa-mcp-check-row.is-pass .pa-mcp-check-mark {
+	color: #2c7a2c;
+}
+
+.pa-mcp-check-row.is-fail .pa-mcp-check-mark,
+.pa-mcp-check-row.is-fail .pa-mcp-check-state {
+	color: #b32d2e;
+}
+
+.pa-mcp-check-state {
+	font-weight: 600;
+}
+
+.pa-mcp-check-body small {
+	display: block;
+	color: #50575e;
+	font-size: 12.5px;
 }
 
 .pa-ai-links {
@@ -3846,7 +3991,30 @@
 	height: auto;
 }
 
-/* AI Abilities tab: outer accordion (MCP setup / abilities), shown once the feature is on. */
+/* AI Abilities tab: the master switch sits beside its heading because it governs the whole tab. */
+.pa-ai-enable-head {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 14px;
+}
+
+.pa-ai-enable-head .pa-section-info-cta {
+	margin-top: 0;
+}
+
+.pa-section-info-wrap p.pa-mcp-status-line {
+	margin-top: 14px;
+}
+
+/* Everything below the Enable card. Hidden client-side the moment the switch goes off. */
+.pa-ai-below[hidden] {
+	display: none;
+}
+
+/* AI Abilities tab: main column (connection card, setup fold, abilities) and the optional news sidebar. */
 .pa-ai-layout {
 	-js-display: flex;
 	display: flex;
@@ -4018,7 +4186,7 @@
 	outline-offset: -2px;
 }
 
-/* Connection state shown on the MCP accordion header. */
+/* Connection state: the status line under the Enable card and the chip on each route row. */
 .pa-mcp-status-pill {
 	-js-display: inline-flex;
 	display: inline-flex;
@@ -4028,8 +4196,7 @@
 	-ms-flex-negative: 0;
 	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
-	-webkit-margin-end: 18px;
-	margin-inline-end: 18px;
+	gap: 6px;
 	padding: 3px 10px;
 	border-radius: 11px;
 	font-size: 12px;
@@ -4038,9 +4205,12 @@
 	white-space: nowrap;
 }
 
-.pa-mcp-status-pill.is-active {
-	background: #e3f0fa;
-	color: #1c5f96;
+.pa-mcp-status-pill::before {
+	content: "";
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: currentcolor;
 }
 
 .pa-mcp-status-pill.is-connected {
@@ -4082,6 +4252,214 @@
 
 .pa-ai-accordion-body[hidden] {
 	display: none;
+}
+
+/* Your AI client connection: one row per MCP server that already carries the abilities. */
+.pa-mcp-routes {
+	margin-top: 16px;
+	padding: 24px 18px;
+	border: 1px solid #ededed;
+	border-radius: 10px;
+	background: #f7f7f7;
+}
+
+.pa-mcp-routes-title {
+	margin: 0;
+	font-family: "Red Hat Display", sans-serif;
+	font-size: 17px;
+	font-weight: 700;
+	color: #252c59;
+}
+
+.pa-mcp-routes-intro {
+	margin: 6px 0 0;
+	color: #50575e;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.pa-mcp-route-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 10px;
+	margin: 16px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pa-mcp-route {
+	-js-display: flex;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-pack: justify;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	gap: 8px 12px;
+	margin: 0;
+	padding: 14px 16px;
+	border: 1px solid #c3c4c7;
+	border-radius: 8px;
+	background: #fff;
+	font-size: 13px;
+}
+
+.pa-mcp-route.is-self {
+	border-style: dashed;
+	background: transparent;
+}
+
+.pa-mcp-route-meta {
+	-js-display: flex;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 8px 12px;
+}
+
+.pa-mcp-route-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.pa-mcp-route .button-link {
+	font-size: 13px;
+}
+
+/* Premium Addons MCP setup fold: a card when it is the only route, a text link inside the connection card otherwise. */
+.pa-mcp-server-fold > summary {
+	list-style: none;
+	cursor: pointer;
+}
+
+.pa-mcp-server-fold > summary::-webkit-details-marker {
+	display: none;
+}
+
+.pa-mcp-server-fold > summary:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: -2px;
+}
+
+.pa-mcp-server-fold.is-card {
+	margin-top: 16px;
+	border: 1px solid #ededed;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.pa-mcp-server-fold.is-card > summary {
+	-js-display: flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 10px;
+	padding: 18px;
+	background: #f7f7f7;
+	font-family: "Red Hat Display", sans-serif;
+	font-size: 17px;
+	font-weight: 700;
+	color: #252c59;
+}
+
+.pa-mcp-server-fold.is-card > summary::before {
+	content: "";
+	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
+	flex-shrink: 0;
+	width: 6px;
+	height: 6px;
+	border-right: 2px solid #252c59;
+	border-bottom: 2px solid #252c59;
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	-webkit-transition: -webkit-transform 0.15s ease;
+	transition:
+		transform 0.15s ease,
+		-webkit-transform 0.15s ease;
+}
+
+.pa-mcp-server-fold.is-card[open] > summary::before {
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.pa-mcp-server-fold.is-card > .pa-mcp-server-body {
+	padding: 24px 18px;
+}
+
+.pa-mcp-server-fold.is-link {
+	margin-top: 16px;
+}
+
+.pa-mcp-server-fold.is-link > summary {
+	-js-display: inline-flex;
+	display: inline-flex;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 6px;
+	color: #2271b1;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.pa-mcp-server-fold.is-link > summary::after {
+	content: "›";
+	font-size: 18px;
+	line-height: 1;
+	-webkit-transition: -webkit-transform 0.15s ease;
+	transition:
+		transform 0.15s ease,
+		-webkit-transform 0.15s ease;
+}
+
+.pa-mcp-server-fold.is-link[open] > summary::after {
+	-webkit-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.rtl .pa-mcp-server-fold.is-link > summary::after {
+	content: "‹";
+}
+
+.rtl .pa-mcp-server-fold.is-link[open] > summary::after {
+	-webkit-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+}
+
+.pa-mcp-server-fold.is-link > .pa-mcp-server-body {
+	margin-top: 14px;
+	padding: 18px;
+	border: 1px solid #c3c4c7;
+	border-radius: 8px;
+	background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pa-mcp-server-fold > summary::before,
+	.pa-mcp-server-fold > summary::after,
+	.pa-ai-accordion-icon,
+	.pa-mcp-group,
+	.pa-mcp-client-card,
+	.pa-mcp-method-card {
+		-webkit-transition: none;
+		transition: none;
+	}
 }
 
 /* AI Abilities tab: abilities grouped by category (accordion). */

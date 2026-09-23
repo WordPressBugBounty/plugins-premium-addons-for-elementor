@@ -363,6 +363,9 @@ class Admin_Notices {
 
 		$doc_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/convert-claude-design-to-elementor/', 'claude-design-notification', 'wp-dash', 'claude-design', $tier );
 
+		$claude_link  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/', 'claude-design-notification', 'wp-dash', 'connect-ai', $tier );
+		$chatgpt_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website/', 'claude-design-notification', 'wp-dash', 'connect-ai', $tier );
+
 		$sale_line = '';
 		$sale_btn  = '';
 
@@ -383,7 +386,15 @@ class Admin_Notices {
 		$html .= '<img class="pa-notice-logo" src="' . esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ) . '" alt="" width="40" height="40">';
 		$html .= '<div class="pa-notice-text">';
 		$html .= '<strong class="pa-notice-title">' . esc_html__( 'Convert Claude Design into Elementor Pages', 'premium-addons-for-elementor' ) . '</strong>';
-		$html .= '<span class="pa-notice-desc">' . esc_html__( 'Export your Claude Design as HTML, drop it into a Claude chat, and it gets rebuilt on your site as an editable Elementor page.', 'premium-addons-for-elementor' ) . '</span>';
+		$html .= '<span class="pa-notice-desc">' . esc_html__( 'Export your Claude Design as HTML, drop it into a Claude chat, and it gets rebuilt on your site as an editable Elementor page.', 'premium-addons-for-elementor' ) . ' ';
+		$html .= sprintf(
+			/* translators: 1: ChatGPT guide link opening tag, 2: Claude guide link opening tag, 3: link closing tag. */
+			esc_html__( 'Not connected yet? See how to connect %1$sChatGPT%3$s or %2$sClaude%3$s to your site.', 'premium-addons-for-elementor' ),
+			'<a href="' . esc_url( $chatgpt_link ) . '" target="_blank" rel="noopener">',
+			'<a href="' . esc_url( $claude_link ) . '" target="_blank" rel="noopener">',
+			'</a>'
+		);
+		$html .= '</span>';
 
 		if ( '' !== $sale_line ) {
 			$html .= '<span class="pa-notice-sub">' . esc_html( $sale_line ) . '</span>';

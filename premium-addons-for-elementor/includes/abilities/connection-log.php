@@ -106,19 +106,14 @@ class Connection_Log {
 	}
 
 	/**
-	 * Drop the connection record of a user who has no application password left.
+	 * Drop the connection record of a user who has no Premium Addons credential left.
 	 *
 	 * @param int $user_id User the password was deleted from.
 	 * @return void
 	 */
 	public static function forget( $user_id ) {
 
-		if ( ! empty( \WP_Application_Passwords::get_user_application_passwords( $user_id ) ) ) {
-			return;
-		}
-
-		// A live OAuth token still authenticates this user's clients.
-		if ( self::has_oauth_token( $user_id ) ) {
+		if ( self::has_own_credential( $user_id ) ) {
 			return;
 		}
 
@@ -126,33 +121,55 @@ class Connection_Log {
 	}
 
 	/**
+	 * Whether a user holds something a Premium Addons MCP client could
+	 * authenticate with: an application password not created by another MCP
+	 * plugin, or a live OAuth token. An "Elementor MCP - …" or "Novamira…"
+	 * password proves a connection elsewhere, not here.
+	 *
+	 * @since 4.11.107
+	 *
+	 * @param int $user_id User ID.
+	 * @return bool
+	 */
+	private static function has_own_credential( $user_id ) {
+
+		foreach ( \WP_Application_Passwords::get_user_application_passwords( $user_id ) as $password ) {
+			if ( '' === Route_Detector::password_route( $password['name'] ) ) {
+				return true;
+			}
+		}
+
+		return self::has_oauth_token( $user_id );
+	}
+
+	/**
 	 * Whether a user holds a live OAuth access or refresh token. Guarded on the
 	 * autoloaded opt-in flag so sites that never enabled OAuth (and have no
 	 * token table) never query it.
 	 *
-	 * @param int $user_id User ID. Defaults to the current user.
+	 * @param int $user_id User ID.
 	 * @return bool
 	 */
-	private static function has_oauth_token( $user_id = 0 ) {
+	private static function has_oauth_token( $user_id ) {
 
 		if ( ! get_option( OAuth\Bootstrap::OPTION_ENABLED ) ) {
 			return false;
 		}
 
-		return OAuth\Store::user_has_live_token( $user_id ? $user_id : get_current_user_id() );
+		return OAuth\Store::user_has_live_token( $user_id );
 	}
 
 	/**
 	 * Describe how this site currently stands with AI clients.
 	 *
 	 * Answered for the viewing user only: another administrator who never
-	 * connected sees the setup steps, not someone else's connection. Live
-	 * sessions win over the handshake record, since they prove a client is
-	 * talking to the site right now while the record only proves it once did.
+	 * connected sees the setup steps, not someone else's connection. A user
+	 * with no Premium Addons credential is back where a new user starts no
+	 * matter what was recorded earlier.
 	 *
-	 * A user holding no application password and no live OAuth token has
-	 * nothing an AI client could authenticate with, so they are back where a
-	 * new user starts no matter what was recorded earlier.
+	 * The handshake record is required before live sessions count: the
+	 * adapter stores sessions per user with no server id, so a session opened
+	 * through Elementor MCP looks identical here.
 	 *
 	 * @return array {
 	 *     @type string $state One of the STATE_* constants.
@@ -168,11 +185,14 @@ class Connection_Log {
 			'count' => 0,
 		);
 
-		if ( empty( \WP_Application_Passwords::get_user_application_passwords( get_current_user_id() ) ) && ! self::has_oauth_token() ) {
+		$user_id   = get_current_user_id();
+		$connected = self::get_user_connection( $user_id );
+
+		if ( ! $connected || ! self::has_own_credential( $user_id ) ) {
 			return $none;
 		}
 
-		$sessions = self::get_active_sessions();
+		$sessions = self::get_active_sessions( $user_id );
 
 		if ( null !== $sessions ) {
 			return array(
@@ -182,17 +202,23 @@ class Connection_Log {
 			);
 		}
 
-		$connected = self::get_user_connection();
-
-		if ( ! $connected ) {
-			return $none;
-		}
-
 		return array(
 			'state' => self::STATE_CONNECTED,
 			'time'  => $connected,
 			'count' => 0,
 		);
+	}
+
+	/**
+	 * Whether the viewing user has a Premium Addons MCP connection. The
+	 * dashboard shows two states only; the active/connected split stays internal.
+	 *
+	 * @since 4.11.107
+	 *
+	 * @return bool
+	 */
+	public static function is_connected() {
+		return self::STATE_NONE !== self::get_state()['state'];
 	}
 
 	/**

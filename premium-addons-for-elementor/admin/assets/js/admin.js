@@ -342,8 +342,18 @@
 						self.saveElementsSettings("elements", "default", true);
 					}
 				} else if ("premium-ai-abilities" === $(this).attr("id")) {
-					$(".pa-ai-layout").prop("hidden", !$(this).prop("checked"));
-					self.saveElementsSettings("elements", "default");
+					var aiEnabled = $(this).prop("checked");
+
+					// Route cards, the setup fold and the status pill are server-rendered,
+					// so turning the feature on reloads once the save has landed.
+					$(".pa-ai-below").prop("hidden", !aiEnabled);
+					self.saveElementsSettings(
+						"elements",
+						"default",
+						false,
+						null,
+						aiEnabled ? window.location.reload.bind(window.location) : null,
+					);
 				} else {
 					self.saveElementsSettings("elements", "default");
 				}
@@ -726,7 +736,7 @@
 				.trigger("hashchange");
 		};
 
-		// Configure MCP Server: copy connection details + switch AI-client panels.
+		// MCP Config & AI Abilities tab: copy connection details + switch AI-client panels.
 		self.initMcpConfig = function () {
 			var $section = $("#pa-section-ai-abilities");
 
@@ -845,25 +855,64 @@
 					});
 			});
 
-			// Tab and panel handlers are scoped to the enclosing
+			// Client picker: group cards open into their clients, and a client
+			// card shows its panel. Everything is scoped to the enclosing
 			// .pa-mcp-connect container: the password and OAuth branches both
-			// render a full set of client tabs into the DOM at once.
-			$section.on("click", ".pa-mcp-client-tab", function () {
-				var $tab = $(this),
-					$connect = $tab.closest(".pa-mcp-connect");
+			// render a full picker into the DOM at once.
+			$section.on("click", ".pa-mcp-client-card", function () {
+				var $card = $(this),
+					$connect = $card.closest(".pa-mcp-connect");
 
-				$connect.find(".pa-mcp-client-tab").removeClass("is-active");
-				$tab.addClass("is-active");
+				$connect.find(".pa-mcp-client-card").attr("aria-pressed", "false");
+				$card.attr("aria-pressed", "true");
 				$connect.find(".pa-mcp-client-panel").prop("hidden", true);
 				$connect
-					.find("#" + $tab.attr("data-pa-mcp-panel"))
+					.find("#" + $card.attr("data-pa-mcp-panel"))
 					.prop("hidden", false);
+			});
+
+			$section.on("click", ".pa-mcp-group", function () {
+				var $group = $(this),
+					$connect = $group.closest(".pa-mcp-connect"),
+					$cards = $connect.find(
+						'.pa-mcp-client-cards[data-pa-mcp-group="' +
+							$group.attr("data-pa-mcp-group") +
+							'"]',
+					);
+
+				$connect.find(".pa-mcp-client-groups").prop("hidden", true);
+				$connect.find(".pa-mcp-client-cards").prop("hidden", true);
+				$cards.prop("hidden", false);
+
+				// A panel is always showing once a group is open.
+				$cards
+					.find(".pa-mcp-client-card")
+					.first()
+					.trigger("click")
+					.trigger("focus");
+			});
+
+			// Go back returns focus to the group card the user came from.
+			$section.on("click", ".pa-mcp-clients-back", function () {
+				var $cards = $(this).closest(".pa-mcp-client-cards"),
+					$connect = $cards.closest(".pa-mcp-connect");
+
+				$cards.prop("hidden", true);
+				$connect.find(".pa-mcp-client-groups").prop("hidden", false);
+				$connect
+					.find(
+						'.pa-mcp-group[data-pa-mcp-group="' +
+							$cards.attr("data-pa-mcp-group") +
+							'"]',
+					)
+					.trigger("focus");
 			});
 
 			// Connection-method chooser. Both branches are server-rendered (the
 			// OAuth snippets embed no secret), so switching is visibility —
 			// except the first OAuth selection, which runs the opt-in AJAX that
-			// creates the tables and sets the flag.
+			// creates the tables and sets the flag. A null method hides both:
+			// nothing is picked on a first visit.
 			var $methodStatus = $section.find(".pa-mcp-method-status");
 
 			function showMcpBranch(method) {
@@ -918,6 +967,13 @@
 				showMcpBranch("password");
 			}
 
+			function selectMcpMethod(method) {
+				$section
+					.find('input[name="pa-mcp-method"][value="' + method + '"]')
+					.prop("checked", true);
+				showMcpBranch(method);
+			}
+
 			$section.on("change", 'input[name="pa-mcp-method"]', function () {
 				var $radio = $(this),
 					method = $radio.val();
@@ -953,7 +1009,6 @@
 
 						$radio.attr("data-pa-oauth-enabled", "1");
 						$methodStatus.text((response.data && response.data.message) || "");
-						$section.find(".pa-mcp-oauth-disconnect-row").prop("hidden", false);
 						storeMcpMethod("oauth");
 						showMcpBranch("oauth");
 					})
@@ -965,54 +1020,95 @@
 					});
 			});
 
-			// "Manage or revoke access" in the connected notice: bring the
-			// disconnect control into view rather than acting on it.
-			$section.on("click", ".pa-mcp-oauth-manage", function () {
-				var $row = $section.find(".pa-mcp-oauth-disconnect-row"),
-					$btn = $section.find("#pa-mcp-oauth-disconnect");
+			// Connection check: one request per click, rows rendered as returned.
+			// Nothing runs on page load and nothing is cached.
+			var CHECK_MARKS = { pass: "✓", fail: "✕", unknown: "?" };
 
-				if (!$row.length || $row.prop("hidden")) {
-					return;
+			function checkRow(row) {
+				var $row = $("<li>", { class: "pa-mcp-check-row is-" + row.status }),
+					$body = $("<div>", { class: "pa-mcp-check-body" }),
+					$detail = $("<small>", { text: row.detail + " " });
+
+				if (row.doc) {
+					$detail.append(
+						$("<a>", {
+							href: row.doc,
+							target: "_blank",
+							rel: "noopener noreferrer",
+							text: row.doc_label,
+						}),
+					);
 				}
 
-				if ($row.get(0).scrollIntoView) {
-					$row.get(0).scrollIntoView({ behavior: "smooth", block: "center" });
-				}
+				$body.append(
+					$("<span>", { class: "pa-mcp-check-state", text: row.status_label }),
+					" ",
+					$("<span>", { class: "pa-mcp-check-label", text: row.label }),
+					$detail,
+				);
 
-				$btn.trigger("focus");
-			});
+				return $row.append(
+					$("<span>", {
+						class: "pa-mcp-check-mark",
+						"aria-hidden": "true",
+						text: CHECK_MARKS[row.status] || CHECK_MARKS.unknown,
+					}),
+					$body,
+				);
+			}
 
-			$section.on("click", "#pa-mcp-oauth-disconnect", function () {
-				var $btn = $(this);
+			$section.on("click", ".pa-mcp-check-run", function () {
+				var $btn = $(this),
+					$results = $btn
+						.closest(".pa-mcp-check")
+						.find(".pa-mcp-check-results"),
+					label = $btn.text();
 
-				if (!window.confirm($btn.attr("data-pa-confirm"))) {
-					return;
-				}
-
-				$btn.prop("disabled", true);
+				$btn.prop("disabled", true).text(settings.i18n.checkRunning);
+				$results.prop("hidden", true).empty();
 
 				$.ajax({
 					url: settings.ajaxurl,
 					type: "POST",
 					dataType: "json",
 					data: {
-						action: "pa_disable_oauth_connect",
+						action: "pa_mcp_connection_check",
 						security: settings.nonce,
 					},
 				})
 					.done(function (response) {
-						if (!response.success) {
-							oauthFailed(response);
-							$btn.prop("disabled", false);
-							return;
+						var rows =
+							response.success && response.data ? response.data.rows : null;
+
+						if (!rows) {
+							$results.append(
+								$("<li>", {
+									class: "pa-mcp-check-row is-unknown",
+									text:
+										(response.data && response.data.message) ||
+										settings.i18n.oauthRequestFailed,
+								}),
+							);
+						} else {
+							rows.forEach(function (row) {
+								$results.append(checkRow(row));
+							});
 						}
 
-						// The chooser state and connection pill are server-rendered.
-						window.location.reload();
+						$results.prop("hidden", false);
 					})
 					.fail(function () {
-						oauthFailed();
-						$btn.prop("disabled", false);
+						$results
+							.append(
+								$("<li>", {
+									class: "pa-mcp-check-row is-unknown",
+									text: settings.i18n.oauthRequestFailed,
+								}),
+							)
+							.prop("hidden", false);
+					})
+					.always(function () {
+						$btn.prop("disabled", false).text(label);
 					});
 			});
 
@@ -1020,7 +1116,11 @@
 			// when it is already enabled — selecting it otherwise would fire the
 			// opt-in request on page load. Nothing flashes: the tab is still
 			// display:none this early, so no branch has been painted yet.
-			if ("oauth" === storedMcpMethod()) {
+			var storedMethod = storedMcpMethod();
+
+			if ("password" === storedMethod) {
+				selectMcpMethod("password");
+			} else if ("oauth" === storedMethod) {
 				var $oauthRadio = $section.find(
 					'input[name="pa-mcp-method"][value="oauth"]',
 				);
@@ -1030,8 +1130,7 @@
 					!$oauthRadio.prop("disabled") &&
 					"1" === $oauthRadio.attr("data-pa-oauth-enabled")
 				) {
-					$oauthRadio.prop("checked", true);
-					showMcpBranch("oauth");
+					selectMcpMethod("oauth");
 				}
 			}
 
@@ -1056,11 +1155,11 @@
 				savedScroll = null;
 			}
 
-			// Read once and dropped. The open panel is the server's marker that this
+			// Read once and dropped. The open fold is the server's marker that this
 			// load is the form's own response.
 			if (
 				null !== savedScroll &&
-				!$section.find("#pa-ai-panel-mcp").prop("hidden")
+				$section.find("#pa-mcp-server").prop("open")
 			) {
 				window.scrollTo(0, parseInt(savedScroll, 10) || 0);
 			}
@@ -1115,12 +1214,14 @@
 		 * @param {String} source elements source, wizard|default (dashboard).
 		 * @param {Boolean} updateCustomTemplate true if we need to update the Mini Cart custom template option.
 		 * @param {String|null} redirectURL wizard redirection URL.
+		 * @param {Function|null} onComplete runs after the request settles when no redirect is set.
 		 */
 		self.saveElementsSettings = function (
 			action,
 			source,
 			updateCustomTemplate = false,
 			redirectURL,
+			onComplete,
 		) {
 			var $form = null,
 				defaultAddons = "";
@@ -1173,6 +1274,8 @@
 				complete: function () {
 					if (redirectURL) {
 						window.location.href = redirectURL;
+					} else if (onComplete) {
+						onComplete();
 					}
 				},
 			});

@@ -74,7 +74,8 @@ if ( ! class_exists( 'PA_Core' ) ) {
 		 *
 		 * Stands up the bundled MCP server. Gated by the premium-ai-abilities
 		 * switcher; the Abilities API capability check (in core since 6.9) lives
-		 * in Abilities\Bootstrap, so it is not repeated here.
+		 * in Abilities\Bootstrap. Route_Detector repeats it because it binds
+		 * before the switcher gate.
 		 *
 		 * @since 4.11.74
 		 * @access public
@@ -87,6 +88,12 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			// a callback even while the feature is switched off, or the daily event
 			// fires into nothing and expired tokens are never cleared.
 			add_action( 'pa_oauth_gc', array( Abilities\OAuth\Store::class, 'gc' ) );
+
+			// Also before the gate: the dashboard must know which other MCP servers
+			// already carry Premium Addons abilities the moment the switch is turned on.
+			if ( function_exists( 'wp_register_ability' ) ) {
+				Abilities\Route_Detector::init();
+			}
 
 			$enabled_elements = \PremiumAddons\Admin\Includes\Admin_Helper::get_enabled_elements();
 

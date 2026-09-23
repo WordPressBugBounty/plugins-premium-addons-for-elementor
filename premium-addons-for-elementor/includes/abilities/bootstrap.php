@@ -94,7 +94,7 @@ class Bootstrap {
 			return;
 		}
 
-		// Track MCP connections and clear them on application password revoke.
+		// Track MCP connections and clear them when an application password is deleted.
 		Connection_Log::init();
 
 		// OAuth connect method. Hooks only here; its gates run on init.

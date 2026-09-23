@@ -12,7 +12,7 @@ Diagnose in this order: connection → auth → permissions → ability availabi
 
 - **Access token expiry (1 hour)** — clients refresh in the background; a mid-session 401 usually self-heals on retry. If not: reconnect.
 - **Client registration fails** — registration only works within ~30 minutes of opening the AI Abilities tab. Have the user reload **Premium Addons → AI Abilities**, then connect promptly.
-- **Registration refused at 50 clients** — the site hit its registered-client cap; revoke old clients in the AI Abilities tab. Note: revocation is all-or-nothing per the tab's controls.
+- **Registration refused at 50 clients** — the site hit its registered-client cap. Clients with no live token are pruned automatically once they are a day old, so have the user retry later; the dashboard has no control to remove clients.
 
 ## Permission failures
 

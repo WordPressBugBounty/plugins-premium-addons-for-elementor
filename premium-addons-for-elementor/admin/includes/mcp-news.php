@@ -19,6 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class MCP_News {
 
+	// Sidebar and submenu dot stay hidden until the MCP & AI Abilities video
+	// tutorials are published; the feed drew too little traffic on its own.
+	const ENABLED = false;
+
 	const ENDPOINT = 'https://premiumaddons.com/wp-json/mcp-news/v2/get';
 
 	const FEED_OPTION = 'pa_mcp_news_feed';

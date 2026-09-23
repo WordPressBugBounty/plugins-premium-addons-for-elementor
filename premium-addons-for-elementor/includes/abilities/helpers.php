@@ -104,7 +104,7 @@ class Helpers {
 
 		$has_pro   = Helper_Functions::check_papro_version();
 		$settings  = Admin_Helper::get_ai_abilities_settings();
-		$switch_on = ! isset( $settings['third_party_widgets'] ) || ! empty( $settings['third_party_widgets'] );
+		$switch_on = ! empty( $settings['third_party_widgets'] );
 
 		// If the user has Pro and the switch is on, allow third-party widgets.
 		if ( $has_pro && $switch_on ) {
@@ -1101,9 +1101,8 @@ class Helpers {
 	 * value that re-enables it, echoing what it set back to the caller.
 	 *
 	 * The enabling values are the documented fallback trio (background => classic,
-	 * border => solid, typography => custom). Deriving them generically from
-	 * Elementor's group-control metadata (groupType / groupPrefix) is deferred
-	 * until those arg keys are verified against Elementor core.
+	 * border => solid, typography => custom), hard-coded rather than derived
+	 * from Elementor's group-control metadata.
 	 *
 	 * @param array $controls The control stack from Controls_Stack::get_controls().
 	 * @param array $settings The caller-provided settings.

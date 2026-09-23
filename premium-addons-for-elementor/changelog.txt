@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.11.107 - 23/9/2026 =
+
+- New: Added Connection check button in MCP Config & AI Abilities tab that reports what blocks an AI client from connecting.
+- Tweak: Premium Addons abilities now compatible with Elementor MCP.
+- Tweak: MCP Config & AI Abilities tab rebuilt for a better experience.
+- Tweak: Compatibility with Elementor v4.3.
+
 = 4.11.106 - 21/9/2026 =
 
 - Fixed: Mini Cart widget opening automatically for visitors who did not add anything to the cart when Open on Cart Update option is enabled.

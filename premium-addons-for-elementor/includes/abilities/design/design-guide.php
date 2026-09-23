@@ -151,7 +151,7 @@ class Design_Guide {
 	/**
 	 * Get the just-in-time design note.
 	 *
-	 * Kept in lockstep with pafe-design.md and the rules ledger.
+	 * Kept in lockstep with skills/pafe-design/SKILL.md.
 	 *
 	 * @return string
 	 */

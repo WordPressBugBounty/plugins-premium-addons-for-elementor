@@ -163,7 +163,7 @@ class Metadata {
 	/**
 	 * Emit a JSON document and exit. Discovery is an anonymous front-end GET:
 	 * it must not be cacheable, or a full-page cache serves the pre-opt-in 404
-	 * (or a post-disconnect document) forever.
+	 * forever.
 	 *
 	 * @param array $doc Document.
 	 * @return void

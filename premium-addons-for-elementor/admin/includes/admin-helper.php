@@ -120,8 +120,8 @@ class Admin_Helper {
 		add_action( 'wp_ajax_pa_save_additional_settings', array( $this, 'pa_save_additional_settings' ) );
 		add_action( 'wp_ajax_pa_save_ai_abilities', array( $this, 'pa_save_ai_abilities' ) );
 		add_action( 'wp_ajax_pa_mcp_news_seen', array( $this, 'pa_mcp_news_seen' ) );
+		add_action( 'wp_ajax_pa_mcp_connection_check', array( $this, 'pa_mcp_connection_check' ) );
 		add_action( 'wp_ajax_pa_enable_oauth_connect', array( $this, 'pa_enable_oauth_connect' ) );
-		add_action( 'wp_ajax_pa_disable_oauth_connect', array( $this, 'pa_disable_oauth_connect' ) );
 		add_action( 'wp_ajax_pa_extend_oauth_window', array( $this, 'pa_extend_oauth_window' ) );
 		add_action( 'wp_ajax_pa_scan_widgets_usage', array( $this, 'pa_scan_widgets_usage' ) );
 		add_action( 'wp_ajax_pa_disable_unused_widgets', array( $this, 'pa_disable_unused_widgets' ) );
@@ -352,6 +352,7 @@ class Admin_Helper {
 						'aiAbilitiesSaveFailed' => __( 'AI ability settings could not be saved.', 'premium-addons-for-elementor' ),
 						'oauthEnabling'         => __( 'Enabling OAuth…', 'premium-addons-for-elementor' ),
 						'oauthRequestFailed'    => __( 'The request failed. Please try again.', 'premium-addons-for-elementor' ),
+						'checkRunning'          => __( 'Checking…', 'premium-addons-for-elementor' ),
 						'unusedButton'          => __( 'Scan & Disable Unused Widgets', 'premium-addons-for-elementor' ),
 						'unusedScanning'        => __( 'Scanning your site…', 'premium-addons-for-elementor' ),
 						'unusedFailed'          => __( 'Scan Failed', 'premium-addons-for-elementor' ),
@@ -800,7 +801,7 @@ class Admin_Helper {
 			// Unread MCP news dot. Computed from the cached feed only — the menu
 			// renders on every admin page, so it must never trigger a remote fetch.
 			// Inline-styled because admin.css loads only on PA screens.
-			if ( 'ai-abilities' === $key && MCP_News::has_unread() ) {
+			if ( 'ai-abilities' === $key && MCP_News::ENABLED && MCP_News::has_unread() ) {
 				$menu_title .= '<span class="pa-mcp-news-dot" style="display:inline-block;width:8px;height:8px;margin-inline-start:6px;vertical-align:middle;border-radius:50%;background:#d63638;"></span>';
 			}
 
@@ -1368,6 +1369,29 @@ class Admin_Helper {
 	}
 
 	/**
+	 * Run the MCP connection check and return its rows. Nothing is cached:
+	 * every click runs the checks again.
+	 *
+	 * @since 4.11.107
+	 * @return void
+	 */
+	public function pa_mcp_connection_check() {
+
+		check_ajax_referer( 'pa-settings-tab', 'security' );
+
+		if ( ! self::check_user_can( 'manage_options' ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'You are not allowed to do this action.', 'premium-addons-for-elementor' ),
+				),
+				403
+			);
+		}
+
+		wp_send_json_success( array( 'rows' => MCP_Settings::run_connection_check() ) );
+	}
+
+	/**
 	 * Enable the OAuth connect method: install the tables, set the flag, and
 	 * verify anonymous REST is actually reachable.
 	 *
@@ -1464,38 +1488,6 @@ class Admin_Helper {
 		OAuth\Bootstrap::open_registration_window();
 
 		wp_send_json_success();
-	}
-
-	/**
-	 * Disable the OAuth connect method — the kill switch. Deletes every issued
-	 * token; tables and client registrations survive so re-enabling does not
-	 * force clients to re-register.
-	 *
-	 * @since 4.11.90
-	 * @return void
-	 */
-	public function pa_disable_oauth_connect() {
-
-		check_ajax_referer( 'pa-settings-tab', 'security' );
-
-		if ( ! self::check_user_can( 'manage_options' ) ) {
-			wp_send_json_error(
-				array(
-					'message' => __( 'You are not allowed to do this action.', 'premium-addons-for-elementor' ),
-				)
-			);
-		}
-
-		delete_option( OAuth\Bootstrap::OPTION_ENABLED );
-		OAuth\Store::revoke_all_tokens();
-		wp_clear_scheduled_hook( OAuth\Bootstrap::CRON_HOOK );
-		OAuth\Bootstrap::flush_page_caches();
-
-		wp_send_json_success(
-			array(
-				'message' => __( 'OAuth disabled. Every connected client has been disconnected.', 'premium-addons-for-elementor' ),
-			)
-		);
 	}
 
 	/**

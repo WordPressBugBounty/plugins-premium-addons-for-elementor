@@ -481,22 +481,6 @@ class Store {
 	}
 
 	/**
-	 * Delete every issued token — the Disconnect kill switch. Client rows
-	 * survive so a re-enabled site does not force clients to re-register.
-	 *
-	 * @return void
-	 */
-	public static function revoke_all_tokens() {
-		global $wpdb;
-
-		if ( ! self::is_installed() ) {
-			return;
-		}
-
-		$wpdb->query( 'DELETE FROM ' . self::tokens_table() ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared -- custom table, no user input.
-	}
-
-	/**
 	 * Whether a user holds at least one unexpired token.
 	 *
 	 * @param int $user_id User ID.

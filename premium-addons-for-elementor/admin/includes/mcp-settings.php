@@ -5,14 +5,18 @@
 
 namespace PremiumAddons\Admin\Includes;
 
+use PremiumAddons\Includes\Abilities\Bootstrap as Abilities_Bootstrap;
+use PremiumAddons\Includes\Abilities\OAuth;
+use PremiumAddons\Includes\Helper_Functions;
+
 // Block direct access to the file.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 /**
- * Admin controller backing the Configure MCP Server step. The dashboard tabs
- * themselves are registered in Admin_Helper::set_admin_tabs().
+ * Admin controller backing the MCP Config & AI Abilities tab. The dashboard
+ * tabs themselves are registered in Admin_Helper::set_admin_tabs().
  *
  * @since 4.11.74
  */
@@ -88,7 +92,7 @@ class MCP_Settings {
 	/**
 	 * Process the use-existing password submission.
 	 *
-	 * Called once at the top of the MCP config template. The pasted value
+	 * Called once from the AI Abilities tab template (ai-abilities.php). The pasted value
 	 * is only echoed back into the connection details, never stored on the site.
 	 *
 	 * @return array {
@@ -147,10 +151,9 @@ class MCP_Settings {
 	 * Supported AI clients shown in the "Connect Your AI Client" section.
 	 *
 	 * Every client connects the same way — a streamable-HTTP MCP server
-	 * authenticated with a WordPress application password or OAuth. The array
-	 * order is the tab display order: the clients with a guided setup (steps or
-	 * a copy-paste snippet) come first, then the prompt-only clients. Keep it in
-	 * sync with the Compatible AI clients list in the product vision.
+	 * authenticated with a WordPress application password or OAuth. The picker's
+	 * grouping and order come from client_groups(), not from this array. Keep it
+	 * in sync with the Compatible AI clients list in the product vision.
 	 *
 	 * @since 4.11.74
 	 *
@@ -161,9 +164,9 @@ class MCP_Settings {
 		return array(
 			'claude-code'    => 'Claude Code',
 			'claude-desktop' => 'Claude Desktop',
-			'claude-ai'      => 'Claude (claude.ai)',
+			'claude-ai'      => 'claude.ai',
 			'chatgpt'        => 'ChatGPT',
-			'codex-chatgpt'  => 'Codex in ChatGPT Desktop',
+			'codex-chatgpt'  => 'Codex in ChatGPT',
 			'codex'          => 'Codex CLI',
 			'cursor'         => 'Cursor',
 			'vs-code'        => 'VS Code',
@@ -175,6 +178,350 @@ class MCP_Settings {
 			'kilo-code'      => 'Kilo Code',
 			'opencode'       => 'OpenCode',
 		);
+	}
+
+	/**
+	 * Client picker groups: group slug => client keys in display order. The
+	 * first present client of an opened group is the one selected.
+	 *
+	 * @since 4.11.107
+	 *
+	 * @return array<string,string[]>
+	 */
+	public static function client_groups() {
+
+		return array(
+			'claude'  => array( 'claude-ai', 'claude-desktop', 'claude-code' ),
+			'chatgpt' => array( 'chatgpt', 'codex-chatgpt', 'codex' ),
+			'other'   => array( 'cursor', 'vs-code', 'antigravity', 'github-copilot', 'windsurf', 'cline', 'gemini-cli', 'kilo-code', 'opencode' ),
+		);
+	}
+
+	/**
+	 * Group card copy: label, the one-line list of what the group holds, and
+	 * the mark shown in the placeholder square until a logo ships.
+	 *
+	 * @since 4.11.107
+	 *
+	 * @return array<string,array{label:string,desc:string,mark:string}>
+	 */
+	public static function group_labels() {
+
+		return array(
+			'claude'  => array(
+				'label' => __( 'Claude', 'premium-addons-for-elementor' ),
+				'desc'  => __( 'claude.ai, Desktop, Code', 'premium-addons-for-elementor' ),
+				'mark'  => 'C',
+			),
+			'chatgpt' => array(
+				'label' => __( 'ChatGPT', 'premium-addons-for-elementor' ),
+				'desc'  => __( 'ChatGPT, Codex in ChatGPT, Codex CLI', 'premium-addons-for-elementor' ),
+				'mark'  => 'G',
+			),
+			'other'   => array(
+				'label' => __( 'Cursor & other clients', 'premium-addons-for-elementor' ),
+				'desc'  => __( 'Cursor, VS Code, Copilot, Windsurf and more', 'premium-addons-for-elementor' ),
+				'mark'  => '+',
+			),
+		);
+	}
+
+	/**
+	 * Where each client runs, shown under its name on the client card.
+	 *
+	 * @since 4.11.107
+	 *
+	 * @return array<string,string>
+	 */
+	public static function client_kinds() {
+
+		$browser  = __( 'Browser', 'premium-addons-for-elementor' );
+		$terminal = __( 'Terminal', 'premium-addons-for-elementor' );
+		$editor   = __( 'Editor', 'premium-addons-for-elementor' );
+
+		return array(
+			'claude-ai'      => $browser,
+			'claude-desktop' => __( 'App', 'premium-addons-for-elementor' ),
+			'claude-code'    => $terminal,
+			'chatgpt'        => $browser,
+			'codex-chatgpt'  => __( 'Desktop app', 'premium-addons-for-elementor' ),
+			'codex'          => $terminal,
+			'cursor'         => $editor,
+			'vs-code'        => $editor,
+			'antigravity'    => $editor,
+			'github-copilot' => $editor,
+			'windsurf'       => $editor,
+			'cline'          => $editor,
+			'gemini-cli'     => $terminal,
+			'kilo-code'      => $editor,
+			'opencode'       => $terminal,
+		);
+	}
+
+	/**
+	 * Split a branch's client configs into picker groups, keeping catalog
+	 * order and dropping clients the branch does not carry. A client missing
+	 * from every group lands in the last one, so adding a client to
+	 * get_supported_clients() can never make it disappear from the picker.
+	 *
+	 * @since 4.11.107
+	 *
+	 * @param array<string,array<string,mixed>> $configs Client configuration map for one branch.
+	 * @return array<string,array<string,array<string,mixed>>> Group slug => client key => config.
+	 */
+	public static function grouped_clients( $configs ) {
+
+		$groups = array();
+		$placed = array();
+
+		foreach ( self::client_groups() as $slug => $keys ) {
+
+			$groups[ $slug ] = array();
+
+			foreach ( $keys as $key ) {
+				if ( isset( $configs[ $key ] ) ) {
+					$groups[ $slug ][ $key ] = $configs[ $key ];
+					$placed[ $key ]          = true;
+				}
+			}
+		}
+
+		$last = array_key_last( $groups );
+
+		foreach ( array_diff_key( $configs, $placed ) as $key => $config ) {
+			$groups[ $last ][ $key ] = $config;
+		}
+
+		return array_filter( $groups );
+	}
+
+	/**
+	 * Inline SVG logo for a client key or group slug, or '' when none ships
+	 * for it (the card then shows a neutral placeholder square).
+	 *
+	 * @since 4.11.107
+	 *
+	 * @param string $slug Client key or group slug.
+	 * @return string
+	 */
+	public static function client_logo( $slug ) {
+
+		static $logos = null;
+
+		if ( null === $logos ) {
+			$logos = include PREMIUM_ADDONS_PATH . 'admin/includes/mcp-client-logos.php';
+		}
+
+		$aliases = array(
+			'antigravity' => 'google-antigravity',
+			'gemini-cli'  => 'gemini',
+		);
+
+		$logo_slug = isset( $aliases[ $slug ] ) ? $aliases[ $slug ] : $slug;
+
+		return isset( $logos[ $logo_slug ] ) ? $logos[ $logo_slug ] : '';
+	}
+
+	/**
+	 * Run the connection check: the conditions that most often block an AI
+	 * client. The two remote rows use an anonymous loopback request so they
+	 * travel the path a client uses; a host that blocks loopback yields
+	 * "unknown", never a false failure. Nothing is cached — the button is the
+	 * whole contract. The discovery row exists only while OAuth is registered,
+	 * since the documents are not served before then.
+	 *
+	 * @since 4.11.107
+	 *
+	 * @return array<int,array<string,string>> Rows: id, label, status (pass|fail|unknown), status_label, detail, doc, doc_label.
+	 */
+	public static function run_connection_check() {
+
+		$rows = array(
+			self::check_row(
+				'https',
+				__( 'HTTPS', 'premium-addons-for-elementor' ),
+				self::oauth_transport_allowed() ? 'pass' : 'fail',
+				self::oauth_transport_allowed()
+					? __( 'Tokens and passwords travel encrypted.', 'premium-addons-for-elementor' )
+					: __( 'OAuth is unavailable on an HTTP site. Application Password still works.', 'premium-addons-for-elementor' )
+			),
+			self::check_row(
+				'permalinks',
+				__( 'Permalinks', 'premium-addons-for-elementor' ),
+				'' !== (string) get_option( 'permalink_structure' ) ? 'pass' : 'fail',
+				'' !== (string) get_option( 'permalink_structure' )
+					? __( 'Set to a structure other than Plain.', 'premium-addons-for-elementor' )
+					: __( 'Choose any structure other than Plain.', 'premium-addons-for-elementor' ),
+				admin_url( 'options-permalink.php' ),
+				__( 'Open Settings → Permalinks', 'premium-addons-for-elementor' )
+			),
+			self::check_row(
+				'app_passwords',
+				__( 'Application passwords', 'premium-addons-for-elementor' ),
+				wp_is_application_passwords_available() ? 'pass' : 'fail',
+				wp_is_application_passwords_available()
+					? __( 'Available on this site.', 'premium-addons-for-elementor' )
+					: __( 'Your host or a security plugin has disabled application passwords.', 'premium-addons-for-elementor' )
+			),
+			self::rest_check_row(),
+		);
+
+		if ( OAuth\Bootstrap::is_registered() ) {
+			$rows[] = self::discovery_check_row();
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Whether an anonymous request from outside reaches the MCP endpoint.
+	 * The endpoint asks for credentials with WordPress's own rest_forbidden
+	 * 401; any other answer means something sits in front of it.
+	 *
+	 * @return array<string,string>
+	 */
+	private static function rest_check_row() {
+
+		$label    = __( 'REST reachable from outside', 'premium-addons-for-elementor' );
+		$response = self::loopback( rest_url( Abilities_Bootstrap::server_route() ) );
+
+		if ( is_wp_error( $response ) ) {
+			return self::check_row( 'rest', $label, 'unknown', self::loopback_blocked_detail() );
+		}
+
+		$code  = (int) wp_remote_retrieve_response_code( $response );
+		$body  = json_decode( wp_remote_retrieve_body( $response ), true );
+		$error = is_array( $body ) && isset( $body['code'] ) ? (string) $body['code'] : '';
+
+		if ( 401 === $code && 'rest_forbidden' === $error ) {
+			return self::check_row( 'rest', $label, 'pass', __( 'The MCP endpoint answers and asks AI clients to sign in.', 'premium-addons-for-elementor' ) );
+		}
+
+		if ( 404 === $code ) {
+			return self::check_row( 'rest', $label, 'fail', __( 'The MCP endpoint is not registered. Turn on at least one ability, and make sure permalinks are not set to Plain.', 'premium-addons-for-elementor' ) );
+		}
+
+		$message = is_array( $body ) && isset( $body['message'] ) ? wp_strip_all_tags( (string) $body['message'] ) : '';
+
+		return self::check_row(
+			'rest',
+			$label,
+			'fail',
+			sprintf(
+				/* translators: 1: HTTP status code, 2: error message from the response, prefixed with a colon, or empty. */
+				__( 'Something answers before the endpoint (HTTP %1$d%2$s). A lock plugin, firewall or cache is in the way.', 'premium-addons-for-elementor' ),
+				$code,
+				'' !== $message ? ': ' . $message : ''
+			),
+			self::connection_docs_url(),
+			__( 'Read the fix', 'premium-addons-for-elementor' )
+		);
+	}
+
+	/**
+	 * Whether the OAuth discovery document reaches WordPress. Some hosts
+	 * answer /.well-known/ at the edge (SiteGround, Hostinger, Varnish), and
+	 * then no client can find the authorization server.
+	 *
+	 * @return array<string,string>
+	 */
+	private static function discovery_check_row() {
+
+		$label    = __( '/.well-known/ reachable', 'premium-addons-for-elementor' );
+		$response = self::loopback( home_url( OAuth\Metadata::PATH_AUTH_SERVER ) );
+
+		if ( is_wp_error( $response ) ) {
+			return self::check_row( 'well_known', $label, 'unknown', self::loopback_blocked_detail() );
+		}
+
+		$code = (int) wp_remote_retrieve_response_code( $response );
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( 200 === $code && is_array( $body ) && ! empty( $body['issuer'] ) ) {
+			return self::check_row( 'well_known', $label, 'pass', __( 'The OAuth discovery document is served by WordPress.', 'premium-addons-for-elementor' ) );
+		}
+
+		return self::check_row(
+			'well_known',
+			$label,
+			'fail',
+			sprintf(
+				/* translators: %d: HTTP status code. */
+				__( 'Your host answers /.well-known/ before WordPress does (HTTP %d), so browser sign-in cannot find the OAuth server. Ask them to pass that path through, or use an application password instead.', 'premium-addons-for-elementor' ),
+				$code
+			),
+			self::connection_docs_url(),
+			__( 'Read the fix', 'premium-addons-for-elementor' )
+		);
+	}
+
+	/**
+	 * One check row with its translated status word.
+	 *
+	 * @param string $id        Row id.
+	 * @param string $label     Check name.
+	 * @param string $status    pass|fail|unknown.
+	 * @param string $detail    One sentence.
+	 * @param string $doc       Optional link.
+	 * @param string $doc_label Link text.
+	 * @return array<string,string>
+	 */
+	private static function check_row( $id, $label, $status, $detail, $doc = '', $doc_label = '' ) {
+
+		$status_labels = array(
+			'pass'    => __( 'Passed', 'premium-addons-for-elementor' ),
+			'fail'    => __( 'Failed', 'premium-addons-for-elementor' ),
+			'unknown' => __( 'Not tested', 'premium-addons-for-elementor' ),
+		);
+
+		return array(
+			'id'           => $id,
+			'label'        => $label,
+			'status'       => $status,
+			'status_label' => $status_labels[ $status ],
+			'detail'       => $detail,
+			'doc'          => 'pass' === $status ? '' : $doc,
+			'doc_label'    => 'pass' === $status ? '' : $doc_label,
+		);
+	}
+
+	/**
+	 * Anonymous GET to this site, the way an AI client reaches it: no cookies,
+	 * no auth header. SSL verification follows the same default Site Health
+	 * uses for its loopback test.
+	 *
+	 * @param string $url URL on this site.
+	 * @return array|\WP_Error
+	 */
+	private static function loopback( $url ) {
+
+		return wp_remote_get( // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_remote_get_wp_remote_get -- loopback to this site, run only when the admin clicks the check.
+			$url,
+			array(
+				'timeout'   => 3,
+				/** This filter is documented in wp-includes/class-wp-http.php */
+				'sslverify' => apply_filters( 'https_local_ssl_verify', false, $url ),
+				'headers'   => array( 'Accept' => 'application/json' ),
+			)
+		);
+	}
+
+	/**
+	 * Detail for a row the site could not test itself.
+	 *
+	 * @return string
+	 */
+	private static function loopback_blocked_detail() {
+		return __( 'Could not be tested from the site itself: the host blocks loopback requests.', 'premium-addons-for-elementor' );
+	}
+
+	/**
+	 * The MCP connection guide, tagged for the check's links.
+	 *
+	 * @return string
+	 */
+	private static function connection_docs_url() {
+		return Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-ai-abilities-mcp-tools-tutorial/', 'mcp-check', 'wp-dash', 'dashboard' );
 	}
 
 	/**
@@ -293,7 +640,6 @@ class MCP_Settings {
 		return array(
 			'label'    => $client_label,
 			'shape'    => null !== $client_shape ? $client_shape['shape'] : null,
-			'lang'     => null !== $client_shape ? $client_shape['lang'] : null,
 			'hint'     => null !== $client_shape && isset( $client_shape['hint'] ) ? $client_shape['hint'] : null,
 			'code'     => $code,
 			'steps'    => null !== $code ? self::client_setup_steps( $client_key, $code, $windows_code ) : array(),
@@ -450,7 +796,6 @@ class MCP_Settings {
 			),
 			'claude-ai'      => array(
 				'type'     => 'steps',
-				'app'      => 'claude.ai',
 				'deeplink' => 'claude-ai',
 				'note'     => __( 'Works on every Claude plan (free plans can add one custom connector). On Team and Enterprise an administrator may have to allow custom connectors first. Claude connects from Anthropic\'s cloud, so your site must be reachable from the internet.', 'premium-addons-for-elementor' ),
 				'docs'     => 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/',
@@ -603,33 +948,27 @@ class MCP_Settings {
 			'claude-code'    => array(
 				'shape'   => 'shell',
 				'variant' => 'claude-mcp-add',
-				'lang'    => 'shell',
 			),
 			'claude-desktop' => array(
 				'shape'   => 'bridge',
 				'variant' => 'mcp-remote',
-				'lang'    => 'json',
 			),
 			'codex-chatgpt'  => array(
 				'shape'   => 'toml',
 				'variant' => 'mcp_servers',
-				'lang'    => 'toml',
 			),
 			'codex'          => array(
 				'shape'   => 'toml',
 				'variant' => 'mcp_servers',
-				'lang'    => 'toml',
 			),
 			'cursor'         => array(
 				'shape'   => 'native',
 				'variant' => 'mcpServers',
-				'lang'    => 'json',
 				'hint'    => __( 'Configuration file: ~/.cursor/mcp.json (or project .cursor/mcp.json)', 'premium-addons-for-elementor' ),
 			),
 			'vs-code'        => array(
 				'shape'   => 'native',
 				'variant' => 'servers',
-				'lang'    => 'json',
 				'hint'    => __( 'Command Palette → "MCP: Open User Configuration" (available in all workspaces).', 'premium-addons-for-elementor' ),
 			),
 		);

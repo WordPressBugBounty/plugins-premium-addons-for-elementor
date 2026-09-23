@@ -239,8 +239,12 @@ class Bootstrap {
 	 */
 	public static function unavailable_reason() {
 
-		if ( empty( Admin_Helper::get_enabled_elements()['premium-ai-abilities'] ) || ! function_exists( 'wp_register_ability' ) ) {
-			return __( 'OAuth requires the AI Abilities feature, which needs WordPress 7.0 or later.', 'premium-addons-for-elementor' );
+		if ( ! function_exists( 'wp_register_ability' ) ) {
+			return __( 'OAuth requires the MCP & AI Abilities feature, which needs WordPress 7.0 or later.', 'premium-addons-for-elementor' );
+		}
+
+		if ( empty( Admin_Helper::get_enabled_elements()['premium-ai-abilities'] ) ) {
+			return __( 'Turn on MCP & AI Abilities to use OAuth.', 'premium-addons-for-elementor' );
 		}
 
 		if ( ! MCP_Settings::oauth_transport_allowed() ) {
@@ -294,8 +298,8 @@ class Bootstrap {
 
 	/**
 	 * Best-effort full-page cache purge. Discovery documents are anonymous
-	 * front-end GETs, so enabling/disabling OAuth must invalidate any cached
-	 * pre-opt-in 404 (or post-disconnect document).
+	 * front-end GETs, so enabling OAuth must invalidate any cached pre-opt-in
+	 * 404.
 	 *
 	 * @return void
 	 */

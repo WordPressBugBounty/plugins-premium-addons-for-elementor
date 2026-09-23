@@ -75,7 +75,6 @@ class Transfer_Store {
 			array(
 				'payload'    => $encoded,
 				'compressed' => $compressed,
-				'expires_at' => time() + $ttl,
 			),
 			$ttl
 		);

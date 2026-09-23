@@ -17,7 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 		<h4 class="pa-mcp-step-heading">
-			<span class="pa-mcp-step-badge">1</span>
 			<?php esc_html_e( 'Create an Application Password', 'premium-addons-for-elementor' ); ?>
 		</h4>
 

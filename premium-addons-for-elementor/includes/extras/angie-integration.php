@@ -241,7 +241,7 @@ if ( ! class_exists( 'Angie_Integration' ) ) {
 		}
 
 		/**
-		 * Shared request guard for both AJAX endpoints.
+		 * Shared request guard for the AJAX endpoints.
 		 *
 		 * @since 4.11.102
 		 */
