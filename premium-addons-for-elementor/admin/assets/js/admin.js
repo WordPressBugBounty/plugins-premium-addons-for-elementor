@@ -1134,11 +1134,63 @@
 				}
 			}
 
+			// Manage Connections: revoke one row. The status pill, route row and
+			// setup fold all follow the connection state server-side, so when the
+			// last row goes the page reloads instead of mirroring that logic here.
+			$section.on("click", ".pa-mcp-revoke", function () {
+				if (!window.confirm(settings.i18n.revokeConfirm)) {
+					return;
+				}
+
+				var $btn = $(this),
+					$row = $btn.closest(".pa-mcp-connection"),
+					$status = $section.find(".pa-ai-abilities-status"),
+					label = $btn.text();
+
+				$btn.prop("disabled", true).text(settings.i18n.revoking);
+				$status.text("");
+
+				$.ajax({
+					url: settings.ajaxurl,
+					type: "POST",
+					dataType: "json",
+					data: {
+						action: "pa_mcp_revoke_connection",
+						security: settings.nonce,
+						kind: $row.attr("data-pa-kind"),
+						id: $row.attr("data-pa-id"),
+					},
+				})
+					.done(function (response) {
+						if (!response.success) {
+							$btn.prop("disabled", false).text(label);
+							$status.text(
+								(response.data && response.data.message) ||
+									settings.i18n.revokeFailed,
+							);
+							return;
+						}
+
+						if (0 === response.data.remaining) {
+							window.location.reload();
+							return;
+						}
+
+						$row.remove();
+					})
+					.fail(function () {
+						$btn.prop("disabled", false).text(label);
+						$status.text(settings.i18n.revokeFailed);
+					});
+			});
+
 			// The password form posts back to this page: land the reload on the
 			// offset it was submitted from, not at the top of the tab.
 			var SCROLL_KEY = "paMcpSubmitScroll";
 
 			$section.on("submit", ".pa-mcp-password-form", function () {
+				$(this).find('button[type="submit"]').prop("disabled", true);
+
 				try {
 					window.sessionStorage.setItem(SCROLL_KEY, window.scrollY);
 				} catch (e) {
@@ -1156,12 +1208,14 @@
 			}
 
 			// Read once and dropped. The open fold is the server's marker that this
-			// load is the form's own response.
+			// load is the form's own response. That response created a password, so
+			// a reload must become a plain GET instead of re-posting the form.
 			if (
 				null !== savedScroll &&
 				$section.find("#pa-mcp-server").prop("open")
 			) {
 				window.scrollTo(0, parseInt(savedScroll, 10) || 0);
+				window.history.replaceState(null, "", window.location.href);
 			}
 		};
 

@@ -49,6 +49,17 @@ class Connection_Log {
 	const SESSION_META_KEY = 'mcp_adapter_sessions';
 
 	/**
+	 * Name prefix of every application password the dashboard generates.
+	 * Lives here, not in MCP_Settings: read on REST requests where the admin
+	 * classes are not loaded.
+	 *
+	 * @since 4.11.108
+	 *
+	 * @var string
+	 */
+	const PASSWORD_PREFIX = 'Premium Addons MCP - ';
+
+	/**
 	 * A client is talking to the site right now.
 	 *
 	 * @var string
@@ -219,6 +230,62 @@ class Connection_Log {
 	 */
 	public static function is_connected() {
 		return self::STATE_NONE !== self::get_state()['state'];
+	}
+
+	/**
+	 * One user's Premium Addons MCP connections, newest first: the application
+	 * passwords the dashboard generated and the live OAuth grants. A password
+	 * the user named by hand cannot be told from another app's, so it is not
+	 * listed even though has_own_credential() still counts it.
+	 *
+	 * @since 4.11.108
+	 *
+	 * @param int $user_id User ID. Defaults to the current user.
+	 * @return array<int,array{kind:string,id:string,name:string,created:int,last_used:int|null,expires:int|null}>
+	 */
+	public static function get_connections( $user_id = 0 ) {
+
+		$user_id     = $user_id ? $user_id : get_current_user_id();
+		$connections = array();
+
+		foreach ( \WP_Application_Passwords::get_user_application_passwords( $user_id ) as $password ) {
+
+			if ( 0 !== strpos( $password['name'], self::PASSWORD_PREFIX ) ) {
+				continue;
+			}
+
+			$connections[] = array(
+				'kind'      => 'password',
+				'id'        => (string) $password['uuid'],
+				'name'      => (string) $password['name'],
+				'created'   => (int) $password['created'],
+				'last_used' => isset( $password['last_used'] ) ? (int) $password['last_used'] : null,
+				'expires'   => null,
+			);
+		}
+
+		if ( get_option( OAuth\Bootstrap::OPTION_ENABLED ) ) {
+
+			foreach ( OAuth\Store::user_refresh_tokens( $user_id ) as $token ) {
+				$connections[] = array(
+					'kind'      => 'oauth',
+					'id'        => (string) $token['id'],
+					'name'      => '' !== $token['client_name'] ? $token['client_name'] : __( 'MCP Client', 'premium-addons-for-elementor' ),
+					'created'   => $token['created_at'],
+					'last_used' => null,
+					'expires'   => $token['expires_at'],
+				);
+			}
+		}
+
+		usort(
+			$connections,
+			static function ( $a, $b ) {
+				return $b['created'] <=> $a['created'];
+			}
+		);
+
+		return $connections;
 	}
 
 	/**

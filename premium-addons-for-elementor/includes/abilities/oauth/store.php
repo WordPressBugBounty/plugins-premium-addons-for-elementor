@@ -503,6 +503,56 @@ class Store {
 	}
 
 	/**
+	 * Live refresh tokens of one user with their client's name, newest first.
+	 * The refresh token is the grant a client holds; its access token hangs
+	 * off it through refresh_of and goes with it on revoke.
+	 *
+	 * @since 4.11.108
+	 *
+	 * @param int $user_id User ID.
+	 * @return array<int,array{id:int,client_name:string,created_at:int,expires_at:int}>
+	 */
+	public static function user_refresh_tokens( $user_id ) {
+		global $wpdb;
+
+		if ( ! self::is_installed() ) {
+			return array();
+		}
+
+		$tokens  = self::tokens_table();
+		$clients = self::clients_table();
+
+		$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom tables.
+			$wpdb->prepare(
+				"SELECT t.id, t.created_at, t.expires_at, c.client_name
+				FROM {$tokens} t
+				LEFT JOIN {$clients} c ON c.client_id = t.client_id
+				WHERE t.user_id = %d AND t.token_type = 'refresh' AND t.expires_at > %d
+				ORDER BY t.created_at DESC", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table names from trusted helpers.
+				$user_id,
+				time()
+			),
+			ARRAY_A
+		);
+
+		if ( ! is_array( $rows ) ) {
+			return array();
+		}
+
+		return array_map(
+			static function ( $row ) {
+				return array(
+					'id'          => (int) $row['id'],
+					'client_name' => (string) $row['client_name'],
+					'created_at'  => (int) $row['created_at'],
+					'expires_at'  => (int) $row['expires_at'],
+				);
+			},
+			$rows
+		);
+	}
+
+	/**
 	 * Fixed-window rate limit per client IP. Returns whether the request is
 	 * allowed. The get/set counter is non-atomic, so this is a speed bump, not
 	 * a hard cap — the client cap in count_clients() is the atomic backstop.

@@ -10,6 +10,8 @@
 
 namespace PremiumAddons\Includes\Abilities;
 
+use PremiumAddons\Admin\Includes\Admin_Helper;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -43,7 +45,8 @@ class Route_Detector {
 	const HANDSHAKE_METHODS = array( 'initialize', 'tools/call' );
 
 	/**
-	 * Hook the handshake recorder and the credential rescans.
+	 * Hook the handshake recorder, the credential rescans, and the Elementor
+	 * MCP switch.
 	 *
 	 * Bound before the AI Abilities switch gate, so evidence is already on
 	 * record the moment the feature is turned on.
@@ -54,6 +57,28 @@ class Route_Detector {
 		add_filter( 'rest_request_after_callbacks', array( __CLASS__, 'record_handshake' ), 10, 3 );
 		add_action( 'wp_create_application_password', array( __CLASS__, 'scan_credentials' ) );
 		add_action( 'wp_delete_application_password', array( __CLASS__, 'scan_credentials' ) );
+
+		// Elementor MCP's Turn On adds the option the first time and updates it
+		// after; the new value is the second argument of both hooks.
+		add_action( 'add_option_elementor_mcp_enabled', array( __CLASS__, 'follow_elementor_mcp_switch' ), 10, 2 );
+		add_action( 'update_option_elementor_mcp_enabled', array( __CLASS__, 'follow_elementor_mcp_switch' ), 10, 2 );
+	}
+
+	/**
+	 * Turn AI Abilities on when Elementor MCP is turned on. Turning it off
+	 * changes nothing: only the user turns AI Abilities off.
+	 *
+	 * @param mixed $unused  Option name (add) or previous value (update).
+	 * @param mixed $enabled New value of the Elementor MCP switch.
+	 * @return void
+	 */
+	public static function follow_elementor_mcp_switch( $unused, $enabled ) {
+
+		if ( ! $enabled || ! empty( Admin_Helper::get_enabled_elements()['premium-ai-abilities'] ) ) {
+			return;
+		}
+
+		Admin_Helper::update_elements_settings( array( 'premium-ai-abilities' => true ) );
 	}
 
 	/**

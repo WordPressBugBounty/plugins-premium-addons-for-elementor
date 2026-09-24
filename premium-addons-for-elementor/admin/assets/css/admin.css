@@ -3466,33 +3466,17 @@
 	line-height: 1.6;
 }
 
-.pa-mcp-steps {
-	margin: 0 0 14px 18px;
-	max-width: 640px;
-	color: #50575e;
-	font-size: 14px;
-	line-height: 1.7;
-}
-
-.pa-mcp-steps li {
-	margin-bottom: 6px;
-}
-
 .pa-mcp-config .pa-mcp-field-label {
 	display: block;
 	margin-bottom: 4px;
 	font-weight: 600;
 }
 
-.pa-mcp-config input.regular-text {
-	max-width: 340px;
-}
-
 .pa-mcp-advisory {
 	margin: 12px 0 0;
 }
 
-/* Align the paste-form result notices with the input field's left edge. */
+/* Align the generate-form result notices with the button's left edge. */
 .pa-mcp-config form .notice {
 	margin-left: 0;
 	margin-right: 0;
@@ -4677,6 +4661,81 @@
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.02em;
+}
+
+/* Manage Connections: one row per generated password or OAuth grant. */
+.pa-mcp-connection-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pa-mcp-connection {
+	-js-display: flex;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-pack: justify;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	gap: 10px 16px;
+	padding: 14px 18px;
+	border: 1px solid #ededed;
+	border-radius: 10px;
+	background: #f7f7f7;
+}
+
+.pa-mcp-connection + .pa-mcp-connection {
+	margin-top: 10px;
+}
+
+.pa-mcp-connection-meta {
+	min-width: 0;
+}
+
+.pa-mcp-connection-head {
+	-js-display: flex;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 6px 10px;
+}
+
+.pa-mcp-connection-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #1d2327;
+	word-break: break-word;
+}
+
+.pa-mcp-connection-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 10px;
+	background: #f0f0f1;
+	color: #50575e;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.pa-mcp-connection-dates {
+	margin: 4px 0 0;
+	color: #50575e;
+	font-size: 13px;
+}
+
+.pa-mcp-connection-sep {
+	margin: 0 6px;
 }
 
 .pa-mcp-ability-desc {

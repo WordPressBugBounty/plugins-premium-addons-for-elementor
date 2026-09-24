@@ -6,6 +6,7 @@
 namespace PremiumAddons\Admin\Includes;
 
 use PremiumAddons\Includes\Abilities\Bootstrap as Abilities_Bootstrap;
+use PremiumAddons\Includes\Abilities\Connection_Log;
 use PremiumAddons\Includes\Abilities\OAuth;
 use PremiumAddons\Includes\Helper_Functions;
 
@@ -51,6 +52,25 @@ class MCP_Settings {
 	const MCP_REMOTE_VERSION = '0.1.38';
 
 	/**
+	 * Transient prefix (suffix: user ID) holding the one-shot token of the
+	 * generate-password form.
+	 *
+	 * @since 4.11.108
+	 *
+	 * @var string
+	 */
+	const FORM_TOKEN_TRANSIENT = 'pa_mcp_generate_token_';
+
+	/**
+	 * How long a rendered generate-password form stays submittable, in seconds.
+	 *
+	 * @since 4.11.108
+	 *
+	 * @var int
+	 */
+	const FORM_TOKEN_TTL = 10 * MINUTE_IN_SECONDS;
+
+	/**
 	 * @var MCP_Settings|null
 	 */
 	private static $instance = null;
@@ -90,35 +110,36 @@ class MCP_Settings {
 	}
 
 	/**
-	 * Process the use-existing password submission.
+	 * Process the generate-password submission.
 	 *
-	 * Called once from the AI Abilities tab template (ai-abilities.php). The pasted value
-	 * is only echoed back into the connection details, never stored on the site.
+	 * Called once from the AI Abilities tab template (ai-abilities.php). There is
+	 * no redirect, so the created plaintext can be shown a single time in the
+	 * connection details; it is never stored on the site.
 	 *
 	 * @return array {
-	 *     @type string|null    $existing_password Plaintext value pasted by the user.
-	 *     @type \WP_Error|null  $existing_error    Validation error for the pasted value.
+	 *     @type string|null    $password Plaintext of the password just created.
+	 *     @type \WP_Error|null $error    Why it could not be created.
 	 * }
 	 */
 	public function maybe_handle_password_forms() {
 
 		$result = array(
-			'existing_password' => null,
-			'existing_error'    => null,
+			'password' => null,
+			'error'    => null,
 		);
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return $result;
 		}
 
-		if ( isset( $_POST['pa_mcp_use_existing_password'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is verified in validate_existing_password().
+		if ( isset( $_POST['pa_mcp_generate_password'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is verified in create_password().
 
-			$is_existing = $this->validate_existing_password();
+			$created = $this->create_password();
 
-			if ( is_wp_error( $is_existing ) ) {
-				$result['existing_error'] = $is_existing;
+			if ( is_wp_error( $created ) ) {
+				$result['error'] = $created;
 			} else {
-				$result['existing_password'] = $is_existing;
+				$result['password'] = $created;
 			}
 		}
 
@@ -126,25 +147,83 @@ class MCP_Settings {
 	}
 
 	/**
-	 * Validate an application password pasted by the user.
+	 * Create an application password for the current user, named with the
+	 * Premium Addons MCP prefix so the dashboard can list it later.
 	 *
-	 * @return string|\WP_Error Trimmed value on success, WP_Error otherwise.
+	 * @since 4.11.108
+	 *
+	 * @return string|\WP_Error Plaintext password on success, WP_Error otherwise.
 	 */
-	private function validate_existing_password() {
+	private function create_password() {
 
-		check_admin_referer( 'pa_mcp_use_existing_password' );
+		check_admin_referer( 'pa_mcp_generate_password' );
 
-		$value = isset( $_POST['pa_mcp_existing_password'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['pa_mcp_existing_password'] ) ) ) : '';
-
-		if ( '' === $value ) {
-			return new \WP_Error( 'empty', __( 'Paste the application password value before submitting.', 'premium-addons-for-elementor' ) );
+		if ( ! self::consume_form_token() ) {
+			return new \WP_Error( 'replayed', __( 'This form was already submitted. Reload the page to generate another password.', 'premium-addons-for-elementor' ) );
 		}
 
-		if ( strlen( $value ) < 16 ) {
-			return new \WP_Error( 'too_short', __( 'That does not look like an application password. WordPress application passwords are at least 16 characters long.', 'premium-addons-for-elementor' ) );
+		$status = self::app_passwords_status();
+
+		if ( ! $status['available'] ) {
+			return new \WP_Error( 'unavailable', $status['message'] );
 		}
 
-		return $value;
+		if ( ! wp_is_application_passwords_available_for_user( wp_get_current_user() ) ) {
+			return new \WP_Error( 'unavailable', __( 'Application Passwords are disabled for your account, likely by a security plugin. Re-enable them to connect an AI client.', 'premium-addons-for-elementor' ) );
+		}
+
+		$created = \WP_Application_Passwords::create_new_application_password(
+			get_current_user_id(),
+			array( 'name' => Connection_Log::PASSWORD_PREFIX . gmdate( 'Y-m-d H:i:s' ) )
+		);
+
+		if ( is_wp_error( $created ) ) {
+
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( 'Premium Addons MCP: application password not created: ' . $created->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- debug builds only.
+			}
+
+			return new \WP_Error( 'create_failed', __( 'Could not create the application password. Try again.', 'premium-addons-for-elementor' ) );
+		}
+
+		return $created[0];
+	}
+
+	/**
+	 * Issue the one-shot token a rendered generate-password form carries. The
+	 * latest render always wins, so a stale tab cannot submit twice.
+	 *
+	 * @since 4.11.108
+	 *
+	 * @return string
+	 */
+	public static function issue_form_token() {
+
+		$token = wp_generate_password( 32, false );
+
+		set_transient( self::FORM_TOKEN_TRANSIENT . get_current_user_id(), $token, self::FORM_TOKEN_TTL );
+
+		return $token;
+	}
+
+	/**
+	 * Consume the submitted form token. The stored copy is dropped whether or
+	 * not it matches, so a replayed POST — a browser reload of the response
+	 * page — can never create a second password.
+	 *
+	 * @since 4.11.108
+	 *
+	 * @return bool Whether the submitted token was the issued one.
+	 */
+	private static function consume_form_token() {
+
+		$key    = self::FORM_TOKEN_TRANSIENT . get_current_user_id();
+		$stored = get_transient( $key );
+		$posted = isset( $_POST['pa_mcp_generate_token'] ) ? sanitize_text_field( wp_unslash( $_POST['pa_mcp_generate_token'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is verified by the caller.
+
+		delete_transient( $key );
+
+		return is_string( $stored ) && '' !== $stored && hash_equals( $stored, $posted );
 	}
 
 	/**

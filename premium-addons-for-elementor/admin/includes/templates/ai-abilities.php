@@ -51,16 +51,18 @@ if ( $abilities_ready ) {
 	$pa_connected = Connection_Log::is_connected();
 
 	$oauth_enabled = OAuth\Bootstrap::is_registered();
-	$profile_url   = admin_url( 'profile.php#application-passwords-section' );
 
 	// Handled here, not in mcp-config.php: that file is included into the setup
 	// fold, after the fold has already decided whether it is open.
 	$mcp            = MCP_Settings::get_instance();
 	$password_state = $mcp->maybe_handle_password_forms();
-	$used_password  = $password_state['existing_password'];
-	$used_error     = $password_state['existing_error'];
+	$new_password   = $password_state['password'];
+	$password_error = $password_state['error'];
 
-	$mcp_panel_open = null !== $used_password || null !== $used_error;
+	$mcp_panel_open = null !== $new_password || null !== $password_error;
+
+	// Read after the form handler so a password created on this request is listed.
+	$connections = Connection_Log::get_connections();
 
 	// Premium Addons MCP is named first when it is one of the connected routes.
 	$connected_names = array_values( wp_list_pluck( $routes, 'label' ) );
@@ -339,6 +341,10 @@ if ( $abilities_ready ) {
 
 						</div>
 					</div>
+
+					<?php if ( ! empty( $connections ) ) : ?>
+						<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-connections.php'; ?>
+					<?php endif; ?>
 
 				</div>
 

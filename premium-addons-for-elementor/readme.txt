@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.107
+Stable Tag: 4.11.108
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -274,6 +274,12 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.108 - 24/9/2026 =
+
+- New: Added Generate Password button in MCP Config & AI Abilities tab to create the application password for your AI client in one click.
+- New: Added Manage Connections section in MCP Config & AI Abilities tab to view and revoke the application passwords and OAuth connections used by your AI clients.
+- Tweak: Premium Addons AI Abilities are now enabled automatically when Elementor MCP is turned on.
 
 = 4.11.107 - 23/9/2026 =
 

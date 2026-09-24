@@ -28,7 +28,7 @@ $form_action = esc_url( admin_url( 'admin.php?page=' . self::$page_slug . '#tab=
 
 // A client this user already connected turns the setup steps into a reference
 // they open on purpose, instead of a wall of instructions on every visit.
-// $mcp, $pa_connected, $oauth_enabled, $used_password and $used_error come
+// $mcp, $pa_connected, $oauth_enabled, $new_password and $password_error come
 // from ai-abilities.php, which includes this file into its scope.
 $setup_steps = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-setup-steps.php';
 $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-tabs.php';
@@ -61,7 +61,7 @@ $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-ta
 				<label class="pa-mcp-method-card">
 					<input type="radio" name="pa-mcp-method" value="password">
 					<span class="pa-mcp-method-title"><?php esc_html_e( 'Application Password', 'premium-addons-for-elementor' ); ?></span>
-					<span class="pa-mcp-method-desc"><?php esc_html_e( 'Create a WordPress application password and paste it into your client configuration.', 'premium-addons-for-elementor' ); ?></span>
+					<span class="pa-mcp-method-desc"><?php esc_html_e( 'Generate an application password here and paste the configuration into your client.', 'premium-addons-for-elementor' ); ?></span>
 				</label>
 			</div>
 
@@ -72,7 +72,7 @@ $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-ta
 
 			<?php if ( $pa_connected ) : ?>
 				<?php // Stays open after a submission so the form's own result is not hidden. ?>
-				<details class="pa-mcp-setup-fold"<?php echo null !== $used_password || null !== $used_error ? ' open' : ''; ?>>
+				<details class="pa-mcp-setup-fold"<?php echo null !== $new_password || null !== $password_error ? ' open' : ''; ?>>
 					<summary><?php esc_html_e( 'Connect another client or reconnect', 'premium-addons-for-elementor' ); ?></summary>
 					<?php include $setup_steps; ?>
 				</details>
@@ -81,9 +81,9 @@ $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-ta
 			<?php endif; ?>
 
 			<?php
-			// "Connect Your AI Client" — shown only right after a password is pasted,
+			// "Connect Your AI Client" — shown only right after a password is created,
 			// never on a normal page load, since the connection details embed the secret.
-			$connect_password = $used_password;
+			$connect_password = $new_password;
 
 			if ( null !== $connect_password ) :
 				$mcp_username = wp_get_current_user()->user_login;
@@ -106,7 +106,7 @@ $client_tabs = PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-client-ta
 					<?php include $client_tabs; ?>
 
 					<p class="description pa-mcp-connect-note">
-						<?php esc_html_e( 'These connection details contain your application password. Treat them like a password: the config file stores the credential, and anyone with it can act on your site as you. If it is exposed, go to Users → Profile and revoke the application password.', 'premium-addons-for-elementor' ); ?>
+						<?php esc_html_e( 'These connection details contain your application password. Treat them like a password: the config file stores the credential, and anyone with it can act on your site as you. If it is exposed, revoke it under Manage Connections below.', 'premium-addons-for-elementor' ); ?>
 					</p>
 
 				</div>

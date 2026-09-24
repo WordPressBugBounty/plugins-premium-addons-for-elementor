@@ -6,6 +6,7 @@
 namespace PremiumAddons\Admin\Includes;
 
 use PremiumAddons\Includes\Abilities\Bootstrap;
+use PremiumAddons\Includes\Abilities\Connection_Log;
 use PremiumAddons\Includes\Abilities\OAuth;
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Assets_Manager;
@@ -121,6 +122,7 @@ class Admin_Helper {
 		add_action( 'wp_ajax_pa_save_ai_abilities', array( $this, 'pa_save_ai_abilities' ) );
 		add_action( 'wp_ajax_pa_mcp_news_seen', array( $this, 'pa_mcp_news_seen' ) );
 		add_action( 'wp_ajax_pa_mcp_connection_check', array( $this, 'pa_mcp_connection_check' ) );
+		add_action( 'wp_ajax_pa_mcp_revoke_connection', array( $this, 'pa_mcp_revoke_connection' ) );
 		add_action( 'wp_ajax_pa_enable_oauth_connect', array( $this, 'pa_enable_oauth_connect' ) );
 		add_action( 'wp_ajax_pa_extend_oauth_window', array( $this, 'pa_extend_oauth_window' ) );
 		add_action( 'wp_ajax_pa_scan_widgets_usage', array( $this, 'pa_scan_widgets_usage' ) );
@@ -353,6 +355,9 @@ class Admin_Helper {
 						'oauthEnabling'         => __( 'Enabling OAuth…', 'premium-addons-for-elementor' ),
 						'oauthRequestFailed'    => __( 'The request failed. Please try again.', 'premium-addons-for-elementor' ),
 						'checkRunning'          => __( 'Checking…', 'premium-addons-for-elementor' ),
+						'revokeConfirm'         => __( 'Revoke this connection? The client stops working right away.', 'premium-addons-for-elementor' ),
+						'revoking'              => __( 'Revoking…', 'premium-addons-for-elementor' ),
+						'revokeFailed'          => __( 'The connection could not be revoked. Please try again.', 'premium-addons-for-elementor' ),
 						'unusedButton'          => __( 'Scan & Disable Unused Widgets', 'premium-addons-for-elementor' ),
 						'unusedScanning'        => __( 'Scanning your site…', 'premium-addons-for-elementor' ),
 						'unusedFailed'          => __( 'Scan Failed', 'premium-addons-for-elementor' ),
@@ -1389,6 +1394,82 @@ class Admin_Helper {
 		}
 
 		wp_send_json_success( array( 'rows' => MCP_Settings::run_connection_check() ) );
+	}
+
+	/**
+	 * Revoke one of the current user's Premium Addons MCP connections. The row
+	 * must be in that user's own list, which is the ownership check.
+	 *
+	 * @since 4.11.108
+	 *
+	 * @return void
+	 */
+	public function pa_mcp_revoke_connection() {
+
+		check_ajax_referer( 'pa-settings-tab', 'security' );
+
+		if ( ! self::check_user_can( 'manage_options' ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'You are not allowed to do this action.', 'premium-addons-for-elementor' ),
+				),
+				403
+			);
+		}
+
+		$kind = isset( $_POST['kind'] ) ? sanitize_key( $_POST['kind'] ) : '';
+		$id   = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
+
+		if ( ! in_array( $kind, array( 'password', 'oauth' ), true ) || '' === $id ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'Invalid connection.', 'premium-addons-for-elementor' ),
+				),
+				400
+			);
+		}
+
+		$user_id    = get_current_user_id();
+		$connection = wp_list_filter(
+			Connection_Log::get_connections( $user_id ),
+			array(
+				'kind' => $kind,
+				'id'   => $id,
+			)
+		);
+
+		if ( empty( $connection ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'That connection no longer exists. Reload the page.', 'premium-addons-for-elementor' ),
+				),
+				404
+			);
+		}
+
+		$revoked = 'password' === $kind
+			? true === \WP_Application_Passwords::delete_application_password( $user_id, $id )
+			: OAuth\Store::revoke_token( (int) $id );
+
+		if ( ! $revoked ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'The connection could not be revoked. Try again.', 'premium-addons-for-elementor' ),
+				),
+				500
+			);
+		}
+
+		// The wp_delete_application_password hook runs this too, but only while
+		// the abilities feature is on, and OAuth has no core hook at all.
+		Connection_Log::forget( $user_id );
+
+		wp_send_json_success(
+			array(
+				'remaining' => count( Connection_Log::get_connections( $user_id ) ),
+				'connected' => Connection_Log::is_connected(),
+			)
+		);
 	}
 
 	/**
