@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.108
+Stable Tag: 4.11.109
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -30,6 +30,10 @@ Premium Addons MCP server registers WordPress Abilities and exposes them as MCP 
 Connecting takes one click from the Premium Addons dashboard, over OAuth or with an application password, and there is no API key to manage. The dashboard walks you through the setup for Claude Desktop, Claude Code, Claude.ai, ChatGPT, Codex, Cursor, VS Code, GitHub Copilot, Windsurf, Cline, Gemini CLI, Antigravity, Kilo Code and OpenCode. Elementor's Angie needs no connection at all: it finds Premium Addons widgets and templates on its own.
 
 Setup guides: [Connect ChatGPT to Your WordPress/Elementor Website](https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=connect-chatgpt) | [Connect Claude to Build WordPress/Elementor Pages](https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=connect-claude) | [Use Premium Addons with Angie](https://premiumaddons.com/docs/angie-premium-addons-elementor/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=angie)
+
+Watch the video tutorial: connect Claude, ChatGPT or Cursor and build Elementor pages with Premium Addons MCP and AI Abilities.
+
+https://www.youtube.com/watch?v=f1XB6s3TsV4
 
 ### Elementor Mega Menu & Mobile Menu Builder
 Build responsive navigation menus and mega menus with four layouts, Elementor templates inside dropdowns, badges, icons and dozens of style options. Pair it with the Mobile Menu widget for an off-canvas mobile navigation in a few clicks. [Mega Menu Demo](https://premiumaddons.com/elementor-mega-menu-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=mega-menu) | [Mobile Menu Demo](https://premiumaddons.com/elementor-mobile-menu-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=mobile-menu)
@@ -274,6 +278,12 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.109 - 28/9/2026 =
+
+- Tweak: Added a notice in Google Maps widget explaining how to style maps that use a Map ID.
+- Tweak: Google Maps widget no longer passes JSON styles when a Map ID is set, to avoid console warnings.
+- Tweak: License tab redesigned in Premium Addons dashboard.
 
 = 4.11.108 - 24/9/2026 =
 

@@ -124,6 +124,15 @@ class Import_Elements implements Ability_Handler {
 							),
 						),
 					),
+					'upsell'               => array(
+						'type'        => 'object',
+						'description' => __( 'Present when a pro_gated warning was raised: what unlocks those widgets. Relay message to the user.', 'premium-addons-for-elementor' ),
+						'properties'  => array(
+							'requires'     => array( 'type' => 'string' ),
+							'message'      => array( 'type' => 'string' ),
+							'upgrade_link' => array( 'type' => 'string' ),
+						),
+					),
 				),
 			),
 			'permission_callback' => function ( $input = null ) {
@@ -264,12 +273,20 @@ class Import_Elements implements Ability_Handler {
 			);
 		}
 
-		return array(
+		$result = array(
 			'inserted_element_ids' => $inserted_element_ids,
 			'edit_url'             => $document->get_edit_url(),
 			'templates'            => $installed['report'],
 			'warnings'             => $this->dedupe_warnings( $warnings ),
 		);
+
+		$upsell = empty( $availability['pro_gated'] ) ? null : Helpers::get_pro_upsell();
+
+		if ( $upsell ) {
+			$result['upsell'] = $upsell;
+		}
+
+		return $result;
 	}
 
 	/**

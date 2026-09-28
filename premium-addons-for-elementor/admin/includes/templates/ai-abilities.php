@@ -348,7 +348,7 @@ if ( $abilities_ready ) {
 
 				</div>
 
-				<?php if ( ! empty( $news_entries ) ) : ?>
+				<?php if ( MCP_News::ENABLED ) : ?>
 					<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-news.php'; ?>
 				<?php endif; ?>
 

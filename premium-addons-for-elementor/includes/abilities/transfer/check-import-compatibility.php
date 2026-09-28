@@ -74,6 +74,15 @@ class Check_Import_Compatibility implements Ability_Handler {
 						'items'       => array( 'type' => 'string' ),
 						'description' => __( 'Widget types that import but stay inert until a Premium Addons Pro license is present.', 'premium-addons-for-elementor' ),
 					),
+					'upsell'          => array(
+						'type'        => 'object',
+						'description' => __( 'Present when pro_gated is not empty: what unlocks those widgets. Relay message to the user.', 'premium-addons-for-elementor' ),
+						'properties'  => array(
+							'requires'     => array( 'type' => 'string' ),
+							'message'      => array( 'type' => 'string' ),
+							'upgrade_link' => array( 'type' => 'string' ),
+						),
+					),
 					'templates'       => array(
 						'type'        => 'array',
 						'description' => __( 'Elementor templates the copied content renders, packaged with it. The ones missing here are created on import; the ones already here are reused untouched.', 'premium-addons-for-elementor' ),
@@ -191,12 +200,20 @@ class Check_Import_Compatibility implements Ability_Handler {
 				'templates'     => $templates,
 			);
 
-		return array(
+		$result = array(
 			'compatible'      => empty( $availability['missing'] ) && empty( $availability['pro_gated'] ),
 			'missing_widgets' => $availability['missing'],
 			'pro_gated'       => $availability['pro_gated'],
 			'templates'       => $templates,
 			'summary'         => $summary,
 		);
+
+		$upsell = empty( $availability['pro_gated'] ) ? null : Helpers::get_pro_upsell();
+
+		if ( $upsell ) {
+			$result['upsell'] = $upsell;
+		}
+
+		return $result;
 	}
 }

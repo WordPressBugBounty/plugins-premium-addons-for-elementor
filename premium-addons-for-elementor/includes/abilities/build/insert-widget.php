@@ -149,6 +149,13 @@ class Insert_Widget implements Ability_Handler {
 		// Addons widget disabled in the dashboard is never registered — so bail
 		// loudly instead of persisting nothing.
 		if ( ! $type_object ) {
+
+			$pro_error = Helpers::guard_missing_pro_widget( $widget_type );
+
+			if ( $pro_error ) {
+				return $pro_error;
+			}
+
 			return new \WP_Error(
 				'premium_addons_invalid_widget_type',
 				/* translators: %s: widget type name. */

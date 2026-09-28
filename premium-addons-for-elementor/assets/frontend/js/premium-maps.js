@@ -77,8 +77,10 @@ jQuery(window).on("elementor/frontend/init", function () {
 					fullscreenControl: fullscreenControl,
 					zoomControl: zoomControl,
 					mapTypeControl: mapTypeControl,
-					styles: mapStyle,
 				};
+
+			// Google ignores JSON styles when a Map ID is set, and logs a warning if both are passed.
+			if (!args.mapId && mapStyle) args.styles = mapStyle;
 
 			if ("yes" === mapSettings.drag) args.gestureHandling = "none";
 

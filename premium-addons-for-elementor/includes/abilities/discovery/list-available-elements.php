@@ -71,7 +71,7 @@ class List_Available_Elements implements Ability_Handler {
 				'properties'  => array(
 					'widgets'  => array(
 						'type'        => 'array',
-						'description' => __( 'Registered widgets. Empty when type is element.', 'premium-addons-for-elementor' ),
+						'description' => __( 'Registered widgets, plus, when Premium Addons Pro is not installed, the Premium Addons Pro widgets it would add (available false, with an upgrade_link and demo_url to show the user). Empty when type is element.', 'premium-addons-for-elementor' ),
 						'items'       => array(
 							'type'       => 'object',
 							'properties' => array(
@@ -97,11 +97,19 @@ class List_Available_Elements implements Ability_Handler {
 								),
 								'available'         => array(
 									'type'        => 'boolean',
-									'description' => __( 'True when this install may use the widget through these abilities. False for a third-party widget while Premium Addons Pro is inactive.', 'premium-addons-for-elementor' ),
+									'description' => __( 'True when this install may use the widget through these abilities. False for a third-party widget while Premium Addons Pro is inactive, and for a Premium Addons Pro widget when Pro is not installed.', 'premium-addons-for-elementor' ),
 								),
 								'upgrade_link'      => array(
 									'type'        => array( 'string', 'null' ),
 									'description' => __( 'The Premium Addons Pro upgrade URL when the widget is locked, or null when available.', 'premium-addons-for-elementor' ),
+								),
+								'requires'          => array(
+									'type'        => 'string',
+									'description' => __( 'Present only on a Premium Addons Pro widget that is not installed here: premium-addons-pro.', 'premium-addons-for-elementor' ),
+								),
+								'demo_url'          => array(
+									'type'        => 'string',
+									'description' => __( 'Present only on a Premium Addons Pro widget that is not installed here: its live demo, to show the user with the upgrade link.', 'premium-addons-for-elementor' ),
 								),
 							),
 						),
@@ -180,6 +188,7 @@ class List_Available_Elements implements Ability_Handler {
 			$pa_names = array_flip( Admin_Helper::get_pa_elements_names() );
 
 			$allow_third_party = Helper_Functions::check_papro_version();
+			$upsell            = $allow_third_party ? null : Helpers::get_pro_upsell();
 
 			foreach ( $widget_types as $name => $type_object ) {
 
@@ -208,8 +217,12 @@ class List_Available_Elements implements Ability_Handler {
 					'is_premium_addons' => $is_premium_addons,
 					'insertable'        => ! $is_atomic && ! $locked,
 					'available'         => ! $locked,
-					'upgrade_link'      => $locked ? Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'ai-abilities', 'mcp', 'get-pro' ) : null,
+					'upgrade_link'      => $locked ? $upsell['upgrade_link'] : null,
 				);
+			}
+
+			if ( ! $allow_third_party ) {
+				$widgets = array_merge( $widgets, $this->list_missing_pro_widgets( $widget_types, $matches, $upsell ) );
 			}
 		}
 
@@ -238,5 +251,43 @@ class List_Available_Elements implements Ability_Handler {
 			'widgets'  => $widgets,
 			'elements' => $elements,
 		);
+	}
+
+	/**
+	 * Premium Addons Pro widgets absent from a free site, listed so an AI client
+	 * can tell the user the widget exists and what unlocks it.
+	 *
+	 * @param array    $widget_types Registered widget types keyed by name.
+	 * @param callable $matches      The search filter.
+	 * @param array    $upsell       Helpers::get_pro_upsell() result.
+	 * @return array
+	 */
+	private function list_missing_pro_widgets( $widget_types, $matches, $upsell ) {
+
+		$rows = array();
+
+		foreach ( Admin_Helper::get_pro_elements() as $element ) {
+
+			$name  = $element['name'] ?? '';
+			$title = $element['title'] ?? '';
+
+			if ( '' === $name || isset( $widget_types[ $name ] ) || ! $matches( $name, $title ) ) {
+				continue;
+			}
+
+			$rows[] = array(
+				'name'              => $name,
+				'title'             => $title,
+				'is_atomic'         => false,
+				'is_premium_addons' => true,
+				'insertable'        => false,
+				'available'         => false,
+				'upgrade_link'      => $upsell['upgrade_link'],
+				'requires'          => 'premium-addons-pro',
+				'demo_url'          => Helpers::get_pro_element_demo_link( $element ),
+			);
+		}
+
+		return $rows;
 	}
 }

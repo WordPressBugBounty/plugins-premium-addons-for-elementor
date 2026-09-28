@@ -80,7 +80,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'pa-claude-design-not',
+			'pa-mcp-video-not',
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -150,7 +150,7 @@ class Admin_Notices {
 			return;
 		}
 
-		$this->get_claude_design_notice();
+		$this->get_mcp_video_notice();
 	}
 
 	/**
@@ -339,7 +339,7 @@ class Admin_Notices {
 	}
 
 	/**
-	 * Claude Design → Elementor notice, with the sale CTA per license tier.
+	 * Premium Addons MCP video tutorial notice, with the sale CTA per license tier.
 	 * Admins only, dismissed per user.
 	 *
 	 * @since 4.11.106
@@ -347,9 +347,9 @@ class Admin_Notices {
 	 *
 	 * @return void
 	 */
-	private function get_claude_design_notice() {
+	private function get_mcp_video_notice() {
 
-		$notice_key = 'pa-claude-design-not';
+		$notice_key = 'pa-mcp-video-not';
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -361,23 +361,24 @@ class Admin_Notices {
 
 		$tier = Admin_Helper::get_license_tier();
 
-		$doc_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/convert-claude-design-to-elementor/', 'claude-design-notification', 'wp-dash', 'claude-design', $tier );
+		// Plain YouTube URL on purpose: no UTM parameters on the video link.
+		$video_link = 'https://youtu.be/f1XB6s3TsV4';
 
-		$claude_link  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/', 'claude-design-notification', 'wp-dash', 'connect-ai', $tier );
-		$chatgpt_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website/', 'claude-design-notification', 'wp-dash', 'connect-ai', $tier );
+		$claude_link  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/', 'mcp-video-notification', 'wp-dash', 'connect-ai', $tier );
+		$chatgpt_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website/', 'mcp-video-notification', 'wp-dash', 'connect-ai', $tier );
 
 		$sale_line = '';
 		$sale_btn  = '';
 
 		if ( 'free' === $tier ) {
 
-			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'claude-design-notification', 'wp-dash', 'summer26', 'free' );
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'mcp-video-notification', 'wp-dash', 'summer26', 'free' );
 			$sale_line = __( 'With Pro, Claude can also build with Elementor Pro and any other widget on your site. Summer sale: 30% off.', 'premium-addons-for-elementor' );
 			$sale_btn  = __( 'Get Pro – 30% Off', 'premium-addons-for-elementor' );
 
 		} elseif ( 'pro' === $tier ) {
 
-			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'claude-design-notification', 'wp-dash', 'summer26', 'pro' );
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'mcp-video-notification', 'wp-dash', 'summer26', 'pro' );
 			$sale_line = __( 'Pay only the difference to go Lifetime, with an extra 30% off.', 'premium-addons-for-elementor' );
 			$sale_btn  = __( 'Upgrade to Lifetime', 'premium-addons-for-elementor' );
 		}
@@ -385,11 +386,11 @@ class Admin_Notices {
 		$html  = '<div class="pa-notice-row">';
 		$html .= '<img class="pa-notice-logo" src="' . esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ) . '" alt="" width="40" height="40">';
 		$html .= '<div class="pa-notice-text">';
-		$html .= '<strong class="pa-notice-title">' . esc_html__( 'Convert Claude Design into Elementor Pages', 'premium-addons-for-elementor' ) . '</strong>';
-		$html .= '<span class="pa-notice-desc">' . esc_html__( 'Export your Claude Design as HTML, drop it into a Claude chat, and it gets rebuilt on your site as an editable Elementor page.', 'premium-addons-for-elementor' ) . ' ';
+		$html .= '<strong class="pa-notice-title">' . esc_html__( 'New Video: Build Elementor Pages With Claude, ChatGPT or Cursor', 'premium-addons-for-elementor' ) . '</strong>';
+		$html .= '<span class="pa-notice-desc">' . esc_html__( 'Watch how to connect Claude, ChatGPT or Cursor to your site and let them build Elementor pages with Premium Addons MCP and AI Abilities.', 'premium-addons-for-elementor' ) . ' ';
 		$html .= sprintf(
 			/* translators: 1: ChatGPT guide link opening tag, 2: Claude guide link opening tag, 3: link closing tag. */
-			esc_html__( 'Not connected yet? See how to connect %1$sChatGPT%3$s or %2$sClaude%3$s to your site.', 'premium-addons-for-elementor' ),
+			esc_html__( 'Prefer reading? See how to connect %1$sChatGPT%3$s or %2$sClaude%3$s to your site.', 'premium-addons-for-elementor' ),
 			'<a href="' . esc_url( $chatgpt_link ) . '" target="_blank" rel="noopener">',
 			'<a href="' . esc_url( $claude_link ) . '" target="_blank" rel="noopener">',
 			'</a>'
@@ -402,7 +403,7 @@ class Admin_Notices {
 
 		$html .= '</div>';
 		$html .= '<div class="pa-notice-actions">';
-		$html .= '<a class="button button-primary" href="' . esc_url( $doc_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'See How It Works', 'premium-addons-for-elementor' ) . '</a>';
+		$html .= '<a class="button button-primary" href="' . esc_url( $video_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'Watch the Tutorial', 'premium-addons-for-elementor' ) . '</a>';
 
 		if ( '' !== $sale_btn ) {
 			$html .= '<a class="button" href="' . esc_url( $sale_link ) . '" target="_blank" rel="noopener">' . esc_html( $sale_btn ) . '</a>';
@@ -417,7 +418,7 @@ class Admin_Notices {
 				'type'               => 'info',
 				'dismissible'        => true,
 				'paragraph_wrap'     => false,
-				'additional_classes' => array( 'pa-notice', 'pa-claude-design-notice' ),
+				'additional_classes' => array( 'pa-notice', 'pa-mcp-video-notice' ),
 				'attributes'         => array( 'data-notice' => $notice_key ),
 			)
 		);
@@ -528,7 +529,7 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			if ( 'pa-claude-design-not' === $key ) {
+			if ( 'pa-mcp-video-not' === $key ) {
 
 				// Per user: other admins keep seeing it.
 				$uid       = get_current_user_id();

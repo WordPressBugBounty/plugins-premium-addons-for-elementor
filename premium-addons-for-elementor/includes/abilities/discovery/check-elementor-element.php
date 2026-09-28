@@ -11,7 +11,6 @@ namespace PremiumAddons\Includes\Abilities\Discovery;
 
 use PremiumAddons\Admin\Includes\Admin_Helper;
 use PremiumAddons\Includes\Abilities\Helpers;
-use PremiumAddons\Includes\Helper_Functions;
 
 use PremiumAddons\Includes\Abilities\Contracts\Ability_Handler;
 
@@ -65,7 +64,7 @@ class Check_Elementor_Element implements Ability_Handler {
 					'type'         => array(
 						'type'        => array( 'string', 'null' ),
 						'enum'        => array( 'element', 'widget', null ),
-						'description' => __( 'element for structural types (container, e-flexbox, section), widget for widgets, null when not registered.', 'premium-addons-for-elementor' ),
+						'description' => __( 'element for structural types (container, e-flexbox, section), widget for widgets (also for a Premium Addons Pro widget that is not installed here), null when not registered.', 'premium-addons-for-elementor' ),
 					),
 					'title'        => array(
 						'type'        => 'string',
@@ -73,7 +72,7 @@ class Check_Elementor_Element implements Ability_Handler {
 					),
 					'available'    => array(
 						'type'        => 'boolean',
-						'description' => __( 'True when this install may use the type through these abilities. False for a third-party widget while Premium Addons Pro is inactive.', 'premium-addons-for-elementor' ),
+						'description' => __( 'True when this install may use the type through these abilities. False for a third-party widget while Premium Addons Pro is inactive, and for a Premium Addons Pro widget when Pro is not installed.', 'premium-addons-for-elementor' ),
 					),
 					'requires'     => array(
 						'type'        => array( 'string', 'null' ),
@@ -82,6 +81,14 @@ class Check_Elementor_Element implements Ability_Handler {
 					'upgrade_link' => array(
 						'type'        => array( 'string', 'null' ),
 						'description' => __( 'The Premium Addons Pro upgrade URL when the type is locked, or null when available.', 'premium-addons-for-elementor' ),
+					),
+					'demo_url'     => array(
+						'type'        => array( 'string', 'null' ),
+						'description' => __( 'Live demo of a Premium Addons Pro widget that is not installed here. Show it to the user with the upgrade link.', 'premium-addons-for-elementor' ),
+					),
+					'message'      => array(
+						'type'        => array( 'string', 'null' ),
+						'description' => __( 'A sentence to relay to the user when the type is locked, naming what unlocks it.', 'premium-addons-for-elementor' ),
 					),
 				),
 			),
@@ -140,7 +147,9 @@ class Check_Elementor_Element implements Ability_Handler {
 
 		if ( $widget_type ) {
 
-			$locked = is_wp_error( Helpers::guard_widget_source( $widget_type, $name ) );
+			$source_error = Helpers::guard_widget_source( $widget_type, $name );
+			$locked       = is_wp_error( $source_error );
+			$upsell       = $locked ? $source_error->get_error_data() : null;
 
 			return array(
 				'exists'       => true,
@@ -148,7 +157,27 @@ class Check_Elementor_Element implements Ability_Handler {
 				'title'        => $widget_type->get_title(),
 				'available'    => ! $locked,
 				'requires'     => $locked ? 'premium-addons-pro' : null,
-				'upgrade_link' => $locked ? Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'ai-abilities', 'mcp', 'get-pro' ) : null,
+				'upgrade_link' => $upsell['upgrade_link'] ?? null,
+				'demo_url'     => null,
+				'message'      => $locked ? $source_error->get_error_message() : null,
+			);
+		}
+
+		$pro_error = Helpers::guard_missing_pro_widget( $name );
+
+		if ( $pro_error ) {
+
+			$upsell = $pro_error->get_error_data();
+
+			return array(
+				'exists'       => false,
+				'type'         => 'widget',
+				'title'        => $upsell['title'],
+				'available'    => false,
+				'requires'     => 'premium-addons-pro',
+				'upgrade_link' => $upsell['upgrade_link'],
+				'demo_url'     => $upsell['demo_url'],
+				'message'      => $upsell['message'],
 			);
 		}
 
@@ -158,6 +187,8 @@ class Check_Elementor_Element implements Ability_Handler {
 			'available'    => false,
 			'requires'     => null,
 			'upgrade_link' => null,
+			'demo_url'     => null,
+			'message'      => null,
 		);
 	}
 }

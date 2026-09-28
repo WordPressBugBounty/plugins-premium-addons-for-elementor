@@ -718,6 +718,27 @@ class Premium_Maps extends Widget_Base {
 				'ai'          => array(
 					'active' => false,
 				),
+				'condition'   => array(
+					'premium_map_id' => '',
+				),
+			)
+		);
+
+		$map_style_doc = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/google-maps-widget-tutorial/#snazzy-maps-with-map-id', 'maps-widget', 'wp-editor', 'get-support' );
+
+		$this->add_control(
+			'map_style_cloud_notice',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => sprintf(
+					/* translators: %s: link to the Google Maps widget documentation. */
+					esc_html__( 'Google doesn\'t apply JSON styles to a map that has a Map ID. Style this map from Map Styles in your Google Cloud Console, then link the style to your Map ID. %s', 'premium-addons-for-elementor' ),
+					'<a href="' . esc_url( $map_style_doc ) . '" target="_blank">' . esc_html__( 'Learn how', 'premium-addons-for-elementor' ) . '</a>'
+				),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition'       => array(
+					'premium_map_id!' => '',
+				),
 			)
 		);
 
@@ -1270,7 +1291,8 @@ class Premium_Maps extends Widget_Base {
 			array(
 				'class'         => array( 'premium_maps_map_height', 'premium-addons__v-hidden' ),
 				'data-settings' => wp_json_encode( $map_settings ),
-				'data-style'    => $settings['premium_maps_custom_styling'],
+				// Google ignores JSON styles when a Map ID is set, so skip them to avoid a console warning.
+				'data-style'    => empty( $settings['premium_map_id'] ) ? $settings['premium_maps_custom_styling'] : '',
 			)
 		);
 

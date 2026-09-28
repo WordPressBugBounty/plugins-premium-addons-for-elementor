@@ -123,6 +123,15 @@ class Insert_Premium_Template implements Ability_Handler {
 							),
 						),
 					),
+					'upsell'               => array(
+						'type'        => 'object',
+						'description' => __( 'Present when a pro_gated warning was raised: what unlocks those widgets. Relay message to the user.', 'premium-addons-for-elementor' ),
+						'properties'  => array(
+							'requires'     => array( 'type' => 'string' ),
+							'message'      => array( 'type' => 'string' ),
+							'upgrade_link' => array( 'type' => 'string' ),
+						),
+					),
 				),
 			),
 			'permission_callback' => function ( $input = null ) {
@@ -214,9 +223,13 @@ class Insert_Premium_Template implements Ability_Handler {
 		// The server withholds a pro template's content when the site has no
 		// valid Pro license.
 		if ( ! empty( $body['is_pro'] ) && empty( $body['license'] ) && empty( $body['content'] ) ) {
+
+			$upsell = Helpers::get_pro_upsell();
+
 			return new \WP_Error(
 				'premium_addons_missing_pro_license',
-				__( 'This template requires Premium Addons Pro.', 'premium-addons-for-elementor' )
+				trim( __( 'This template requires Premium Addons Pro.', 'premium-addons-for-elementor' ) . ' ' . ( $upsell['message'] ?? '' ) ),
+				$upsell
 			);
 		}
 
@@ -272,13 +285,21 @@ class Insert_Premium_Template implements Ability_Handler {
 			);
 		}
 
-		return array(
+		$result = array(
 			'inserted_element_ids' => $inserted_element_ids,
 			'post_id'              => $post_id,
 			'edit_url'             => $document->get_edit_url(),
 			'templates'            => $installed,
 			'warnings'             => $this->dedupe_warnings( $warnings ),
 		);
+
+		$upsell = empty( $availability['pro_gated'] ) ? null : Helpers::get_pro_upsell();
+
+		if ( $upsell ) {
+			$result['upsell'] = $upsell;
+		}
+
+		return $result;
 	}
 
 	/**

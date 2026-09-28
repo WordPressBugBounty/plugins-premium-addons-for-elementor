@@ -1,8 +1,10 @@
 <?php
 /**
- * What's New sidebar — recent MCP/AI updates fetched from premiumaddons.com.
- * $news_entries comes from ai-abilities.php, which includes this file into its
- * own scope. Entry strings are remote English copy — escaped, never translated.
+ * What's New sidebar — the MCP & AI Abilities video banner, then recent MCP/AI
+ * updates fetched from premiumaddons.com. $news_entries comes from
+ * ai-abilities.php, which includes this file into its own scope; it is empty
+ * when the feed is unreachable, and the banner still shows.
+ * Entry strings are remote English copy — escaped, never translated.
  */
 
 use PremiumAddons\Admin\Includes\MCP_News;
@@ -24,25 +26,34 @@ $type_labels = array(
 
 	<h3 class="pa-mcp-news-title"><?php esc_html_e( "What's New", 'premium-addons-for-elementor' ); ?></h3>
 
-	<ul class="pa-mcp-news-list">
+	<a class="pa-mcp-news-video" href="<?php echo esc_url( MCP_News::VIDEO_URL ); ?>" target="_blank" rel="noopener">
+		<img src="<?php echo esc_url( MCP_News::VIDEO_THUMBNAIL ); ?>" alt="<?php esc_attr_e( 'Watch: Build Elementor Pages with AI in Premium Addons MCP', 'premium-addons-for-elementor' ); ?>" width="1280" height="720" loading="lazy">
+		<span class="pa-mcp-news-play" aria-hidden="true"></span>
+	</a>
 
-		<?php foreach ( $news_entries as $entry ) : ?>
+	<?php if ( ! empty( $news_entries ) ) : ?>
 
-			<li class="pa-mcp-news-item">
-				<div class="pa-mcp-news-meta">
-					<span class="pa-mcp-news-type is-<?php echo esc_attr( $entry['type'] ); ?>"><?php echo esc_html( isset( $type_labels[ $entry['type'] ] ) ? $type_labels[ $entry['type'] ] : $entry['type'] ); ?></span>
-					<time class="pa-mcp-news-date" datetime="<?php echo esc_attr( $entry['date'] ); ?>"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $entry['date'] ) ) ); ?></time>
-				</div>
+		<ul class="pa-mcp-news-list">
 
-				<a class="pa-mcp-news-link" href="<?php echo esc_url( Helper_Functions::get_campaign_link( $entry['link'], 'wp-dash', 'link', 'mcp-news', $entry['id'] ) ); ?>" target="_blank" rel="noopener">
-					<?php echo esc_html( $entry['title'] ); ?>
-				</a>
+			<?php foreach ( $news_entries as $entry ) : ?>
 
-				<p class="pa-mcp-news-desc"><?php echo esc_html( $entry['description'] ); ?></p>
-			</li>
+				<li class="pa-mcp-news-item">
+					<div class="pa-mcp-news-meta">
+						<span class="pa-mcp-news-type is-<?php echo esc_attr( $entry['type'] ); ?>"><?php echo esc_html( isset( $type_labels[ $entry['type'] ] ) ? $type_labels[ $entry['type'] ] : $entry['type'] ); ?></span>
+						<time class="pa-mcp-news-date" datetime="<?php echo esc_attr( $entry['date'] ); ?>"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $entry['date'] ) ) ); ?></time>
+					</div>
 
-		<?php endforeach; ?>
+					<a class="pa-mcp-news-link" href="<?php echo esc_url( Helper_Functions::get_campaign_link( $entry['link'], 'wp-dash', 'link', 'mcp-news', $entry['id'] ) ); ?>" target="_blank" rel="noopener">
+						<?php echo esc_html( $entry['title'] ); ?>
+					</a>
 
-	</ul>
+					<p class="pa-mcp-news-desc"><?php echo esc_html( $entry['description'] ); ?></p>
+				</li>
+
+			<?php endforeach; ?>
+
+		</ul>
+
+	<?php endif; ?>
 
 </aside>

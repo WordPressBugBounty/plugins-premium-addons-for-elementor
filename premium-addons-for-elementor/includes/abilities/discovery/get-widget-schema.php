@@ -155,6 +155,13 @@ class Get_Widget_Schema implements Ability_Handler {
 		// Disabled Premium Addons widgets are never registered, so this is also
 		// how the build abilities discover an unavailable type.
 		if ( ! $type_object ) {
+
+			$pro_error = Helpers::guard_missing_pro_widget( $name );
+
+			if ( $pro_error ) {
+				return $pro_error;
+			}
+
 			return new \WP_Error(
 				'premium_addons_invalid_element',
 				/* translators: %s: element or widget type name. */

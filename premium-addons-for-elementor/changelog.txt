@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.11.109 - 28/9/2026 =
+
+- Tweak: Added a notice in Google Maps widget explaining how to style maps that use a Map ID.
+- Tweak: Google Maps widget no longer passes JSON styles when a Map ID is set, to avoid console warnings.
+- Tweak: License tab redesigned in Premium Addons dashboard.
+
 = 4.11.108 - 24/9/2026 =
 
 - New: Added Generate Password button in MCP Config & AI Abilities tab to create the application password for your AI client in one click.

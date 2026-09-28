@@ -10,6 +10,7 @@
 namespace PremiumAddons\Includes\Abilities\Templates;
 
 use PremiumAddons\Admin\Includes\Admin_Helper;
+use PremiumAddons\Includes\Abilities\Helpers;
 
 use PremiumAddons\Includes\Abilities\Contracts\Ability_Handler;
 
@@ -138,6 +139,10 @@ class List_Premium_Templates implements Ability_Handler {
 									'type'        => 'boolean',
 									'description' => __( 'Present on Pro templates when this site has no valid Premium Addons Pro license — inserting it will fail until the user upgrades.', 'premium-addons-for-elementor' ),
 								),
+								'upgrade_link'         => array(
+									'type'        => 'string',
+									'description' => __( 'Present with requires_pro_upgrade: where the user unlocks the template. Show it when proposing a Pro template.', 'premium-addons-for-elementor' ),
+								),
 								'preview_url'          => array(
 									'type'        => 'string',
 									'description' => __( 'A live preview page. Show this link to the user when proposing the template.', 'premium-addons-for-elementor' ),
@@ -217,6 +222,7 @@ class List_Premium_Templates implements Ability_Handler {
 		}
 
 		$license_valid = Templates_Api::is_license_valid();
+		$upsell        = $license_valid ? null : Helpers::get_pro_upsell();
 		$templates     = array();
 
 		foreach ( $envelope['templates'] as $template ) {
@@ -236,6 +242,7 @@ class List_Premium_Templates implements Ability_Handler {
 
 			if ( $row['pro'] && ! $license_valid ) {
 				$row['requires_pro_upgrade'] = true;
+				$row['upgrade_link']         = $upsell['upgrade_link'] ?? null;
 			}
 
 			$templates[] = $row;

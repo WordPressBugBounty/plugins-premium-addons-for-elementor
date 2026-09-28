@@ -122,16 +122,157 @@ class Helpers {
 			);
 		}
 
-		$pro_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'ai-abilities', 'mcp', 'get-pro' );
+		$upsell = self::get_pro_upsell();
 
 		return new \WP_Error(
 			'premium_addons_widget_source_locked',
 			sprintf(
-				/* translators: 1: widget type name, 2: Premium Addons Pro URL. */
-				__( 'The widget type %1$s is a third-party widget. Premium Addons free supports Elementor and Premium Addons widgets. Upgrade to Premium Addons Pro to build with third-party widgets: %2$s', 'premium-addons-for-elementor' ),
+				/* translators: 1: widget type name, 2: upsell sentence with the upgrade URL. */
+				__( 'The widget type %1$s is a third-party widget. Premium Addons free supports Elementor and Premium Addons widgets; Premium Addons Pro adds third-party widgets. %2$s', 'premium-addons-for-elementor' ),
 				$name,
-				$pro_link
-			)
+				$upsell['message']
+			),
+			$upsell
+		);
+	}
+
+	/**
+	 * Premium Addons Pro purchase URL tagged for the AI abilities surface.
+	 *
+	 * @return string
+	 */
+	public static function get_pro_upgrade_link() {
+		return Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'ai-abilities', 'mcp', 'get-pro', Admin_Helper::get_license_tier() );
+	}
+
+	/**
+	 * The upsell block attached to Pro-gated responses, worded for the AI client to relay.
+	 *
+	 * A site running Premium Addons Pro with an inactive license is pointed at the
+	 * License tab instead of the store. Returns null when Pro is installed and
+	 * licensed, because there is nothing left to sell.
+	 *
+	 * @return array|null { requires: string, message: string, upgrade_link: string }
+	 */
+	public static function get_pro_upsell() {
+
+		if ( Helper_Functions::check_papro_version() ) {
+
+			if ( 'free' !== Admin_Helper::get_license_tier() ) {
+				return null;
+			}
+
+			$license_url = admin_url( 'admin.php?page=' . Admin_Helper::$page_slug . '#tab=license' );
+
+			return array(
+				'requires'     => 'premium-addons-pro',
+				'message'      => sprintf(
+					/* translators: %s: License tab URL. */
+					__( 'Premium Addons Pro is installed but its license is not active. Activate it to unlock this: %s', 'premium-addons-for-elementor' ),
+					$license_url
+				),
+				'upgrade_link' => $license_url,
+			);
+		}
+
+		$offer_label  = __( '30% OFF', 'premium-addons-for-elementor' );
+		$upgrade_link = self::get_pro_upgrade_link();
+
+		return array(
+			'requires'     => 'premium-addons-pro',
+			'message'      => sprintf(
+				/* translators: 1: offer label, 2: upgrade URL. */
+				__( 'Upgrade to Premium Addons Pro to unlock this, currently %1$s: %2$s', 'premium-addons-for-elementor' ),
+				$offer_label,
+				$upgrade_link
+			),
+			'upgrade_link' => $upgrade_link,
+		);
+	}
+
+	/**
+	 * Find a Premium Addons Pro widget by its Elementor type name or dashboard key.
+	 *
+	 * @param string $name Type name (premium-addon-tabs) or dashboard key (premium-tabs).
+	 * @return array|null The elements.php entry, or null when the name is not a Pro widget.
+	 */
+	public static function find_pro_element( $name ) {
+
+		$name = strtolower( trim( (string) $name ) );
+
+		if ( '' === $name ) {
+			return null;
+		}
+
+		foreach ( Admin_Helper::get_pro_elements() as $element ) {
+
+			$type_name = strtolower( $element['name'] ?? '' );
+			$key       = strtolower( $element['key'] ?? '' );
+
+			if ( $name === $type_name || $name === $key ) {
+				return $element;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Demo URL of a Pro widget re-tagged for the AI abilities surface.
+	 *
+	 * elements.php builds demo links for the dashboard, so their UTM tags would
+	 * credit clicks from AI clients to wp-dash.
+	 *
+	 * @param array $element elements.php entry.
+	 * @return string
+	 */
+	public static function get_pro_element_demo_link( $element ) {
+
+		if ( empty( $element['demo'] ) ) {
+			return '';
+		}
+
+		$bare = remove_query_arg( array( 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content' ), $element['demo'] );
+
+		return Helper_Functions::get_campaign_link( $bare, 'ai-abilities', 'mcp', 'demo', Admin_Helper::get_license_tier() );
+	}
+
+	/**
+	 * Guard: a Premium Addons Pro widget requested on a site without Pro.
+	 *
+	 * Pro widgets are only registered by Premium Addons Pro, so on a free site
+	 * they look identical to an unknown type. This names the widget, its demo
+	 * and the offer instead of "not registered".
+	 *
+	 * @param string $name Requested type name.
+	 * @return \WP_Error|null Null when Pro is installed or the name is not a Pro widget.
+	 */
+	public static function guard_missing_pro_widget( $name ) {
+
+		if ( Helper_Functions::check_papro_version() ) {
+			return null;
+		}
+
+		$element = self::find_pro_element( $name );
+
+		if ( ! $element ) {
+			return null;
+		}
+
+		$upsell             = self::get_pro_upsell();
+		$upsell['title']    = $element['title'] ?? $name;
+		$upsell['demo_url'] = self::get_pro_element_demo_link( $element );
+
+		return new \WP_Error(
+			'premium_addons_pro_widget_missing',
+			sprintf(
+				/* translators: 1: widget title, 2: demo URL, 3: upsell sentence with the upgrade URL. */
+				__( '%1$s is a Premium Addons Pro widget and Premium Addons Pro is not installed on this site. Demo: %2$s. %3$s', 'premium-addons-for-elementor' ),
+				$upsell['title'],
+				$upsell['demo_url'],
+				$upsell['message']
+			),
+			$upsell
 		);
 	}
 
