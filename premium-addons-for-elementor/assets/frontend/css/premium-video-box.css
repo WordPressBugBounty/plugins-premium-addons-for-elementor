@@ -23,6 +23,7 @@
 .premium-video-box-container > div {
   position: relative;
   overflow: hidden;
+  aspect-ratio: var(--pa-video-ratio, 16/9);
 }
 
 .premium-video-box-image-container {
@@ -271,8 +272,8 @@
 .premium-video-box-container.premium-video-box-sticky-apply .premium-video-box-inner-wrap {
   position: fixed !important;
   z-index: 99999;
-  height: 225px;
-  width: 400px;
+  width: var(--pa-video-sticky-width, 400px);
+  aspect-ratio: var(--pa-video-ratio, 16/9);
   background: #fff;
 }
 .premium-video-box-container.premium-video-box-sticky-apply .premium-video-box-vimeo-wrap,

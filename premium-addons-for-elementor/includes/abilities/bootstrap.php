@@ -193,6 +193,10 @@ class Bootstrap {
 				'label'       => __( 'Page/Post Management', 'premium-addons-for-elementor' ),
 				'description' => __( 'Abilities that create and manage WordPress pages and posts as Elementor documents.', 'premium-addons-for-elementor' ),
 			),
+			'pa-menus'                => array(
+				'label'       => __( 'Menus', 'premium-addons-for-elementor' ),
+				'description' => __( 'Abilities that create and edit WordPress menus and Premium Mega Menu items.', 'premium-addons-for-elementor' ),
+			),
 			'pa-build'                => array(
 				'label'       => __( 'Build', 'premium-addons-for-elementor' ),
 				'description' => __( 'Abilities that create, edit, and remove Elementor elements on a page — containers, atomic flexbox, element settings, and deletion.', 'premium-addons-for-elementor' ),
@@ -385,6 +389,9 @@ class Bootstrap {
 			Transfer\Import_Elements::class,
 			Templates\List_Premium_Templates::class,
 			Templates\Insert_Premium_Template::class,
+			Menus\List_Menus::class,
+			Menus\Save_Menu::class,
+			Menus\Configure_Menu_Item::class,
 		);
 	}
 

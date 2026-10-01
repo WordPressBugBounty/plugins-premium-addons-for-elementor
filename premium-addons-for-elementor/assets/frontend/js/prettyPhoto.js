@@ -8,6 +8,9 @@
             p = new RegExp(i).exec(e);
         return null == p ? "" : p[1];
     }
+    function escapeAttribute(t) {
+        return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
     (w.prettyPhoto = { version: "3.1.6" }),
         (w.fn.prettyPhoto = function (e) {
             function i() {
@@ -385,10 +388,7 @@
                             ) {
                                 case "image":
 
-                                    var selfHostedURL = pp_images[set_position];
-
-                                    selfHostedURL = selfHostedURL.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(
-                                        /"/g, "&quot;");
+                                    var selfHostedURL = escapeAttribute(pp_images[set_position]);
 
                                     (imgPreloader = new Image()),
                                         (nextImage = new Image()),
@@ -419,7 +419,7 @@
                                             .replace(/{width}/g, r.width)
                                             .replace(/{height}/g, r.height)
                                             .replace(/{wmode}/g, settings.wmode)
-                                            .replace(/{path}/g, movie));
+                                            .replace(/{path}/g, escapeAttribute(movie)));
                                     break;
                                 case "vimeo":
                                     (r = o(movie_width, movie_height)), (movie_id = pp_images[set_position]);
@@ -428,7 +428,7 @@
                                         (movie = "//player.vimeo.com/video/" + t[3] + "?title=0&amp;byline=0&amp;portrait=0"),
                                             settings.autoplay && (movie += "&autoplay=1;");
                                     } else {
-                                        movie = movie_id;
+                                        movie = escapeAttribute(movie_id);
                                     }
                                     (vimeo_width = r.width + "/embed/?moog_width=" + r.width),
                                         (toInject = settings.iframe_markup
@@ -444,15 +444,12 @@
                                             .replace(/{width}/g, r.width)
                                             .replace(/{height}/g, r.height)
                                             .replace(/{wmode}/g, settings.wmode)
-                                            .replace(/{path}/g, pp_images[set_position])
+                                            .replace(/{path}/g, escapeAttribute(pp_images[set_position]))
                                             .replace(/{autoplay}/g, settings.autoplay));
                                     break;
                                 case "localvideo":
 
-                                    var selfHostedURL = pp_images[set_position];
-
-                                    selfHostedURL = selfHostedURL.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(
-                                        /"/g, "&quot;");
+                                    var selfHostedURL = escapeAttribute(pp_images[set_position]);
 
                                     ((r = o(movie_width, movie_height)).height += 15),
                                         (r.contentHeight += 15),
@@ -474,7 +471,7 @@
                                             .replace(/{width}/g, r.width)
                                             .replace(/{height}/g, r.height)
                                             .replace(/{wmode}/g, settings.wmode)
-                                            .replace(/{path}/g, filename + "?" + flash_vars));
+                                            .replace(/{path}/g, escapeAttribute(filename + "?" + flash_vars)));
                                     break;
                                 case "iframe":
                                     (r = o(movie_width, movie_height)),
@@ -483,7 +480,7 @@
                                         (toInject = settings.iframe_markup
                                             .replace(/{width}/g, r.width)
                                             .replace(/{height}/g, r.height)
-                                            .replace(/{path}/g, frame_url));
+                                            .replace(/{path}/g, escapeAttribute(frame_url)));
                                     break;
                                 case "ajax":
                                     (doresize = !1),

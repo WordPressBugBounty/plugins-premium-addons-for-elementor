@@ -1,5 +1,18 @@
 == Changelog ==
 
+= 4.11.110 - 1/10/2026 =
+
+- New: Added Menus AI abilities to list, create and edit WordPress menus and set up Mega Menu items and their content templates.
+- Tweak: Security enhancements for video and lightbox URLs in Video Box widget.
+- Tweak: Removed unused style controls from Mini Cart and Woo Products widgets.
+- Fixed: Sticky video size and aspect ratio not applied correctly in Video Box widget.
+- Fixed: Sticky video not removing the mask and drop shadow in Video Box widget.
+- Fixed: Privacy Mode not applied to YouTube videos opened in a lightbox in Video Box widget.
+- Fixed: Advanced Border Radius option not applied in Video Box widget.
+- Fixed: Layout 2 columns issue in Video Box playlist.
+- Fixed: Navigation arrows height and position options not working in Weather widget.
+- Fixed: Icon Stroke Color option not showing in Woo CTA widget.
+
 = 4.11.109 - 28/9/2026 =
 
 - Tweak: Added a notice in Google Maps widget explaining how to style maps that use a Map ID.

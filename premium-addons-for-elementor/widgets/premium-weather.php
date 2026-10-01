@@ -2850,7 +2850,7 @@ class Premium_Weather extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .carousel-arrow' => 'height: {{SIZE}}{{UNIT}};',
 				),
-				'condition'  => array(
+				'conditions' => array(
 					'relation' => 'or',
 					'terms'    => array(
 						array(
@@ -2884,7 +2884,7 @@ class Premium_Weather extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .carousel-arrow' => 'top: {{SIZE}}px;',
 				),
-				'condition'  => array(
+				'conditions' => array(
 					'relation' => 'or',
 					'terms'    => array(
 						array(

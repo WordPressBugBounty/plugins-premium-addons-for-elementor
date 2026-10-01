@@ -616,42 +616,6 @@ class Woo_Products extends Widget_Base {
 			)
 		);
 
-		$this->add_responsive_control(
-			'dots_hoffset',
-			array(
-				'label'      => __( 'Horizontal Offset', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-woo-dots-above ul.slick-dots' => 'left: {{SIZE}}{{UNIT}}',
-				),
-				'condition'  => array(
-					'dots'          => 'yes',
-					'dots_position' => 'above',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
-			'dots_voffset',
-			array(
-				'label'      => __( 'Vertical Offset', 'premium-addons-for-elementor' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', 'em', '%' ),
-				'default'    => array(
-					'unit' => '%',
-					'size' => 50,
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .premium-woo-dots-above ul.slick-dots' => 'top: {{SIZE}}{{UNIT}}',
-				),
-				'condition'  => array(
-					'dots'          => 'yes',
-					'dots_position' => 'above',
-				),
-			)
-		);
-
 		$this->add_control(
 			'total_carousel_products',
 			array(

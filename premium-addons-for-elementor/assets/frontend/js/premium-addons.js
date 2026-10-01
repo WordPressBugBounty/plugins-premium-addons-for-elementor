@@ -413,109 +413,103 @@
 					playVideo();
 				});
 
-				var stickyWaypoint = new IntersectionObserver(
-					function (entries) {
-						entries.forEach(function (entry) {
-							if (entry.isIntersecting) {
-								if ("down" === window.paDirection) {
-									$videoBoxElement
-										.removeClass("premium-video-box-sticky-hide")
-										.addClass(
-											"premium-video-box-sticky-apply premium-video-box-filter-sticky",
-										);
+				var stickyWaypoint = new IntersectionObserver(function (entries) {
+					entries.forEach(function (entry) {
+						var scrolledPast =
+							!entry.isIntersecting && entry.boundingClientRect.top < 0;
 
-									//Fix conflict with Elementor motion effects
-									if ($scope.hasClass("elementor-motion-effects-parent")) {
-										$scope
-											.removeClass("elementor-motion-effects-perspective")
-											.find(".elementor-widget-container")
-											.addClass("premium-video-box-transform");
-									}
+						if (scrolledPast) {
+							$videoBoxElement
+								.removeClass("premium-video-box-sticky-hide")
+								.addClass(
+									"premium-video-box-sticky-apply premium-video-box-filter-sticky",
+								);
 
-									if ($videoBoxElement.data("mask")) {
-										//Fix Sticky position issue when drop-shadow is applied
-										$scope
-											.find(".premium-video-box-mask-filter")
-											.removeClass("premium-video-box-mask-filter");
-
-										$videoBoxElement
-											.find(":first-child")
-											.removeClass("premium-video-box-mask-media");
-
-										$videoImageContainer
-											.removeClass(hoverEffect)
-											.removeClass("premium-video-box-mask-media")
-											.css({
-												transition: "width 0.2s, height 0.2s",
-												"-webkit-transition": "width 0.2s, height 0.2s",
-											});
-									}
-
-									$(document).trigger("premium_after_sticky_applied", [$scope]);
-
-									// Entrance Animation Option
-									if (
-										$videoInnerContainer.data("video-animation") &&
-										" " != $videoInnerContainer.data("video-animation")
-									) {
-										$videoInnerContainer.css("opacity", "0");
-										var animationDelay =
-											$videoInnerContainer.data("delay-animation");
-										setTimeout(function () {
-											$videoInnerContainer
-												.css("opacity", "1")
-												.addClass(
-													"animated " +
-														$videoInnerContainer.data("video-animation"),
-												);
-										}, animationDelay * 1000);
-									}
-								} else {
-									$videoBoxElement
-										.removeClass(
-											"premium-video-box-sticky-apply  premium-video-box-filter-sticky",
-										)
-										.addClass("premium-video-box-sticky-hide");
-
-									//Fix conflict with Elementor motion effects
-									if ($scope.hasClass("elementor-motion-effects-parent")) {
-										$scope
-											.addClass("elementor-motion-effects-perspective")
-											.find(".elementor-widget-container")
-											.removeClass("premium-video-box-transform");
-									}
-
-									if ($videoBoxElement.data("mask")) {
-										//Fix Sticky position issue when drop-shadow is applied
-										$videoBoxElement
-											.parent()
-											.addClass("premium-video-box-mask-filter");
-
-										$videoBoxElement
-											.find(":first-child")
-											.eq(0)
-											.addClass("premium-video-box-mask-media");
-										$videoImageContainer.addClass(
-											"premium-video-box-mask-media",
-										);
-									}
-
-									$videoImageContainer.addClass(hoverEffect).css({
-										transition: "all 0.2s",
-										"-webkit-transition": "all 0.2s",
-									});
-
-									$videoInnerContainer.removeClass(
-										"animated " + $videoInnerContainer.data("video-animation"),
-									);
-								}
+							//Fix conflict with Elementor motion effects
+							if ($scope.hasClass("elementor-motion-effects-parent")) {
+								$scope
+									.removeClass("elementor-motion-effects-perspective")
+									.find(".elementor-widget-container")
+									.addClass("premium-video-box-transform");
 							}
-						});
-					},
-					{
-						threshold: 1,
-					},
-				);
+
+							if ($videoBoxElement.data("pa-mask")) {
+								//Fix Sticky position issue when drop-shadow is applied
+								$scope
+									.find(".premium-video-box-mask-filter")
+									.removeClass("premium-video-box-mask-filter");
+
+								$videoBoxElement
+									.find(":first-child")
+									.removeClass("premium-video-box-mask-media");
+
+								$videoImageContainer
+									.removeClass(hoverEffect)
+									.removeClass("premium-video-box-mask-media")
+									.css({
+										transition: "width 0.2s, height 0.2s",
+										"-webkit-transition": "width 0.2s, height 0.2s",
+									});
+							}
+
+							$(document).trigger("premium_after_sticky_applied", [$scope]);
+
+							// Entrance Animation Option
+							if (
+								$videoInnerContainer.data("video-animation") &&
+								" " != $videoInnerContainer.data("video-animation")
+							) {
+								$videoInnerContainer.css("opacity", "0");
+								var animationDelay =
+									$videoInnerContainer.data("delay-animation");
+								setTimeout(function () {
+									$videoInnerContainer
+										.css("opacity", "1")
+										.addClass(
+											"animated " +
+												$videoInnerContainer.data("video-animation"),
+										);
+								}, animationDelay * 1000);
+							}
+						} else {
+							$videoBoxElement
+								.removeClass(
+									"premium-video-box-sticky-apply  premium-video-box-filter-sticky",
+								)
+								.addClass("premium-video-box-sticky-hide");
+
+							//Fix conflict with Elementor motion effects
+							if ($scope.hasClass("elementor-motion-effects-parent")) {
+								$scope
+									.addClass("elementor-motion-effects-perspective")
+									.find(".elementor-widget-container")
+									.removeClass("premium-video-box-transform");
+							}
+
+							if ($videoBoxElement.data("pa-mask")) {
+								//Fix Sticky position issue when drop-shadow is applied
+								$videoBoxElement
+									.parent()
+									.addClass("premium-video-box-mask-filter");
+
+								$videoBoxElement
+									.find(":first-child")
+									.eq(0)
+									.addClass("premium-video-box-mask-media");
+								$videoImageContainer.addClass("premium-video-box-mask-media");
+							}
+
+							$videoImageContainer.addClass(hoverEffect).css({
+								transition: "all 0.2s",
+								"-webkit-transition": "all 0.2s",
+							});
+
+							$videoInnerContainer.removeClass(
+								"animated " + $videoInnerContainer.data("video-animation"),
+							);
+						}
+					});
+				});
 
 				stickyWaypoint.observe($videoBoxElement[0]);
 
@@ -539,7 +533,7 @@
 								.removeClass("premium-video-box-transform");
 						}
 
-						if ($videoBoxElement.data("mask")) {
+						if ($videoBoxElement.data("pa-mask")) {
 							//Fix Sticky position issue when drop-shadow is applied
 							$videoBoxElement
 								.parent()

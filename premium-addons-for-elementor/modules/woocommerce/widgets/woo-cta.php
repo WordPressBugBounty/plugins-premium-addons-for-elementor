@@ -1051,12 +1051,9 @@ class Woo_CTA extends Widget_Base {
 										'value' => 'yes',
 									),
 									array(
-										'name'  => 'icon_type',
-										'value' => 'icon',
-									),
-									array(
-										'name'  => 'icon_type',
-										'value' => 'svg',
+										'name'     => 'icon_type',
+										'operator' => 'in',
+										'value'    => array( 'icon', 'svg' ),
 									),
 								),
 							),

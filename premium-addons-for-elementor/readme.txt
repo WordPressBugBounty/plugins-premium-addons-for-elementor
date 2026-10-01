@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.109
+Stable Tag: 4.11.110
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,19 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.110 - 1/10/2026 =
+
+- New: Added Menus AI abilities to list, create and edit WordPress menus and set up Mega Menu items and their content templates.
+- Tweak: Security enhancements for video and lightbox URLs in Video Box widget.
+- Tweak: Removed unused style controls from Mini Cart and Woo Products widgets.
+- Fixed: Sticky video size and aspect ratio not applied correctly in Video Box widget.
+- Fixed: Sticky video not removing the mask and drop shadow in Video Box widget.
+- Fixed: Privacy Mode not applied to YouTube videos opened in a lightbox in Video Box widget.
+- Fixed: Advanced Border Radius option not applied in Video Box widget.
+- Fixed: Layout 2 columns issue in Video Box playlist.
+- Fixed: Navigation arrows height and position options not working in Weather widget.
+- Fixed: Icon Stroke Color option not showing in Woo CTA widget.
 
 = 4.11.109 - 28/9/2026 =
 

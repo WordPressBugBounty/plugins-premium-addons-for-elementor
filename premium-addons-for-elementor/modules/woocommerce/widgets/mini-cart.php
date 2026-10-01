@@ -2783,21 +2783,6 @@ class Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'pa_txt_color_hov',
-			array(
-				'label'     => __( 'Cart Text Color', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} .pa-woo-mc__link:hover .pa-woo-mc__text,
-					{{WRAPPER}} .pa-woo-mc__inner-container:hover .pa-woo-mc__text' => 'color: {{VALUE}}',
-				),
-				'condition' => array(
-					'cart_txt!' => '',
-				),
-			)
-		);
-
-		$this->add_control(
 			'pa_txt_color_subtotal_hov',
 			array(
 				'label'      => __( 'Subtotal Color', 'premium-addons-for-elementor' ),

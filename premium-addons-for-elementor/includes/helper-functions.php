@@ -586,7 +586,7 @@ class Helper_Functions {
 	 */
 	public static function get_video_thumbnail( $video_id, $type, $size = '' ) {
 
-		$thumbnail_src = 'transparent';
+		$thumbnail_src = '';
 
 		if ( 'youtube' === $type ) {
 			if ( '' === $size ) {
@@ -606,7 +606,8 @@ class Helper_Functions {
 
 			$thumbnail_src = get_transient( $cache_key );
 
-			if ( false === $thumbnail_src ) {
+			// Before 4.11.110 failures were cached for a week as 'transparent'; refetch those instead of serving them.
+			if ( false === $thumbnail_src || 'transparent' === $thumbnail_src ) {
 
 				$video_data = wp_remote_get(
 					'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url',
@@ -617,15 +618,15 @@ class Helper_Functions {
 				);
 
 				if ( is_wp_error( $video_data ) || 200 !== wp_remote_retrieve_response_code( $video_data ) ) {
-					$thumbnail_src = 'transparent';
+					$thumbnail_src = '';
 				} else {
 					$video_data = wp_remote_retrieve_body( $video_data );
 					$video_data = json_decode( $video_data );
 
-					$thumbnail_src = isset( $video_data->thumbnail_url ) ? $video_data->thumbnail_url : 'transparent';
+					$thumbnail_src = isset( $video_data->thumbnail_url ) ? $video_data->thumbnail_url : '';
 				}
 
-				set_transient( $cache_key, $thumbnail_src, WEEK_IN_SECONDS );
+				set_transient( $cache_key, $thumbnail_src, '' === $thumbnail_src ? 5 * MINUTE_IN_SECONDS : WEEK_IN_SECONDS );
 
 			}
 		}

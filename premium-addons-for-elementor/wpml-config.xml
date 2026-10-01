@@ -368,7 +368,6 @@
 
         <widget name="premium-mini-cart">
             <fields>
-                <field type="Mini Cart: Cart Text" editor_type="LINE">cart_txt</field>
                 <field type="Mini Cart: Cart Link" editor_type="LINK">cart_link>url</field>
                 <field type="Mini Cart: Cart Header" editor_type="LINE">cart_header</field>
                 <field type="Mini Cart: Cart Header" editor_type="LINE">subtotal_txt</field>
