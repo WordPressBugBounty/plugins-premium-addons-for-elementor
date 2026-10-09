@@ -642,7 +642,7 @@ $elements = array(
 				'title'       => __( 'Woo Categories', 'premium-addons-for-elementor' ),
 				'name'        => 'premium-woo-categories',
 				'demo'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-categories-widget/', 'cats', 'wp-dash', 'dashboard' ),
-				'doc'         => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'cats', 'wp-dash', 'dashboard' ),
+				'doc'         => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woo-categories-listing-tutorial/', 'cats', 'wp-dash', 'dashboard' ),
 				'is_freemium' => true,
 			),
 			array(
@@ -1117,7 +1117,7 @@ $elements = array(
 				'title'       => __( 'Woo Categories', 'premium-addons-for-elementor' ),
 				'name'        => 'premium-woo-categories',
 				'demo'        => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-woocommerce-categories-widget/', 'cats', 'wp-dash', 'dashboard' ),
-				'doc'         => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woocommerce-products-listing-tutorial/', 'cats', 'wp-dash', 'dashboard' ),
+				'doc'         => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-woo-categories-listing-tutorial/', 'cats', 'wp-dash', 'dashboard' ),
 				'is_freemium' => true,
 			),
 			array(

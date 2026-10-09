@@ -1237,7 +1237,7 @@ class Premium_Maps extends Widget_Base {
 			$marker_cluster = 'yes' === $settings['premium_maps_map_option_cluster'];
 
 			if ( $marker_cluster ) {
-				$cluster_icon      = $settings['cluster_icon']['url'];
+				$cluster_icon      = esc_url_raw( $settings['cluster_icon']['url'] );
 				$cluster_icon_size = $settings['cluster_icon_size']['size'];
 			}
 		}

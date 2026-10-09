@@ -347,7 +347,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 				'label'       => apply_filters( 'pa_pro_label', __( 'Exclude IDs (PRO)', 'premium-addons-for-elementor' ) ),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
-				'description' => 'Enter the video IDs you want to ecxclude separated by ","',
+				'description' => 'Enter the video IDs you want to exclude separated by ","',
 				'dynamic'     => array( 'active' => true ),
 				'render_type' => 'template',
 				'condition'   => array(
@@ -1071,12 +1071,17 @@ class Premium_Tiktok_Feed extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'slides_to_scroll',
 			array(
-				'label'     => __( 'Slides To Scroll', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::NUMBER,
-				'condition' => array(
+				'label'       => __( 'Slides To Scroll', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => 1,
+				'render_type' => 'template',
+				'selectors'   => array(
+					'{{WRAPPER}}' => '--pa-carousel-slides: {{VALUE}}',
+				),
+				'condition'   => array(
 					'carousel' => 'yes',
 				),
 			)
@@ -1763,7 +1768,7 @@ class Premium_Tiktok_Feed extends Widget_Base {
 		$this->add_control(
 			'tiktok_icon_heading',
 			array(
-				'label'     => __( 'Tiktok Icon', 'premium-addons-for-elementor' ),
+				'label'     => __( 'TikTok Icon', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => array(

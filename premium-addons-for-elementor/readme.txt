@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.110
+Stable Tag: 4.11.111
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,14 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.111 - 9/10/2026 =
+
+- Tweak: Security enhancements in Google Maps widget.
+- Fixed: Slides To Scroll option ignoring responsive values in TikTok Feed widget.
+- Fixed: Order By option showing incorrect values in Woo Categories widget.
+- Fixed: Incorrect documentation link for Woo Categories widget.
+- Fixed: Special characters showing as HTML entities in product category names in WooCommerce widgets and Display Conditions.
 
 = 4.11.110 - 1/10/2026 =
 

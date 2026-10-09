@@ -1,10 +1,8 @@
 <?php
 /**
- * What's New sidebar — the MCP & AI Abilities video banner, then recent MCP/AI
- * updates fetched from premiumaddons.com. $news_entries comes from
- * ai-abilities.php, which includes this file into its own scope; it is empty
- * when the feed is unreachable, and the banner still shows.
- * Entry strings are remote English copy — escaped, never translated.
+ * What's New sidebar — the MCP & AI Abilities playlist videos fetched from
+ * premiumaddons.com. $news_videos comes from ai-abilities.php, which includes
+ * this file into its own scope only when the feed holds videos.
  */
 
 use PremiumAddons\Admin\Includes\MCP_News;
@@ -14,46 +12,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$type_labels = array(
-	'new'         => 'New',
-	'improvement' => 'Improved',
-	'fix'         => 'Fixed',
-);
-
 ?>
 
 <aside class="pa-mcp-news"<?php echo MCP_News::has_unread() ? ' data-unread="1"' : ''; ?>>
 
 	<h3 class="pa-mcp-news-title"><?php esc_html_e( "What's New", 'premium-addons-for-elementor' ); ?></h3>
 
-	<a class="pa-mcp-news-video" href="<?php echo esc_url( MCP_News::VIDEO_URL ); ?>" target="_blank" rel="noopener">
-		<img src="<?php echo esc_url( MCP_News::VIDEO_THUMBNAIL ); ?>" alt="<?php esc_attr_e( 'Watch: Build Elementor Pages with AI in Premium Addons MCP', 'premium-addons-for-elementor' ); ?>" width="1280" height="720" loading="lazy">
-		<span class="pa-mcp-news-play" aria-hidden="true"></span>
-	</a>
+	<?php foreach ( $news_videos as $index => $video_id ) : ?>
 
-	<?php if ( ! empty( $news_entries ) ) : ?>
+		<a class="pa-mcp-news-video" href="<?php echo esc_url( 'https://youtu.be/' . $video_id ); ?>" target="_blank" rel="noopener">
+			<?php /* translators: %d: video position in the What's New list. */ ?>
+			<img src="<?php echo esc_url( Helper_Functions::get_video_thumbnail( $video_id, 'youtube' ) ); ?>" alt="<?php echo esc_attr( sprintf( __( 'Watch MCP & AI Abilities video %d on YouTube', 'premium-addons-for-elementor' ), $index + 1 ) ); ?>" width="1280" height="720" loading="lazy">
+			<span class="pa-mcp-news-play" aria-hidden="true"></span>
+		</a>
 
-		<ul class="pa-mcp-news-list">
-
-			<?php foreach ( $news_entries as $entry ) : ?>
-
-				<li class="pa-mcp-news-item">
-					<div class="pa-mcp-news-meta">
-						<span class="pa-mcp-news-type is-<?php echo esc_attr( $entry['type'] ); ?>"><?php echo esc_html( isset( $type_labels[ $entry['type'] ] ) ? $type_labels[ $entry['type'] ] : $entry['type'] ); ?></span>
-						<time class="pa-mcp-news-date" datetime="<?php echo esc_attr( $entry['date'] ); ?>"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $entry['date'] ) ) ); ?></time>
-					</div>
-
-					<a class="pa-mcp-news-link" href="<?php echo esc_url( Helper_Functions::get_campaign_link( $entry['link'], 'wp-dash', 'link', 'mcp-news', $entry['id'] ) ); ?>" target="_blank" rel="noopener">
-						<?php echo esc_html( $entry['title'] ); ?>
-					</a>
-
-					<p class="pa-mcp-news-desc"><?php echo esc_html( $entry['description'] ); ?></p>
-				</li>
-
-			<?php endforeach; ?>
-
-		</ul>
-
-	<?php endif; ?>
+	<?php endforeach; ?>
 
 </aside>

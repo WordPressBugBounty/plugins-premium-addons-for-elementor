@@ -353,12 +353,11 @@ class Woo_Categories extends Widget_Base {
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'name',
 				'options' => array(
-					'name'       => __( 'Name', 'premium-addons-for-elementor' ),
-					'slug'       => __( 'Slug', 'premium-addons-for-elementor' ),
-					'date'       => __( 'Date', 'premium-addons-for-elementor' ),
-					'desc'       => __( 'Description', 'premium-addons-for-elementor' ),
-					'count'      => __( 'Count', 'premium-addons-for-elementor' ),
-					'menu_order' => __( 'Menu Order', 'premium-addons-for-elementor' ),
+					'name'        => __( 'Name', 'premium-addons-for-elementor' ),
+					'slug'        => __( 'Slug', 'premium-addons-for-elementor' ),
+					'description' => __( 'Description', 'premium-addons-for-elementor' ),
+					'count'       => __( 'Count', 'premium-addons-for-elementor' ),
+					'menu_order'  => __( 'Menu Order', 'premium-addons-for-elementor' ),
 				),
 			)
 		);

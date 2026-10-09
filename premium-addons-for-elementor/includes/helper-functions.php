@@ -1155,7 +1155,7 @@ class Helper_Functions {
 			foreach ( $product_categories as $key => $category ) {
 
 				$cat_id                 = 'slug' === $id ? $category->slug : $category->term_id;
-				$product_cat[ $cat_id ] = $category->name;
+				$product_cat[ $cat_id ] = wp_specialchars_decode( $category->name, ENT_QUOTES );
 
 			}
 		}

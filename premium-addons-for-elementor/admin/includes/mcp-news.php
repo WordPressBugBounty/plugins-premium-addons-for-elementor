@@ -12,8 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class MCP_News
  *
- * Remote "What's New" feed shown in the MCP Config & AI Abilities tab.
- * Feed content is remote English copy — never translated, escaped on output.
+ * Remote "What's New" video feed shown in the MCP Config & AI Abilities tab:
+ * the YouTube video IDs of the MCP & AI Abilities playlist.
  *
  * @since 4.11.102
  */
@@ -22,17 +22,14 @@ class MCP_News {
 	// Kill switch for the sidebar and the submenu dot.
 	const ENABLED = true;
 
-	const VIDEO_URL = 'https://youtu.be/f1XB6s3TsV4';
+	const ENDPOINT = 'https://premiumaddons.com/wp-json/mcp-videos/v2/get';
 
-	const VIDEO_THUMBNAIL = 'https://i.ytimg.com/vi/f1XB6s3TsV4/maxresdefault.jpg';
+	// New keys, not the pa_mcp_news_* ones: those still hold the retired articles feed.
+	const VIDEOS_OPTION = 'pa_mcp_videos';
 
-	const ENDPOINT = 'https://premiumaddons.com/wp-json/mcp-news/v2/get';
+	const SEEN_OPTION = 'pa_mcp_videos_seen';
 
-	const FEED_OPTION = 'pa_mcp_news_feed';
-
-	const SEEN_OPTION = 'pa_mcp_news_seen';
-
-	const FRESH_TRANSIENT = 'pa_mcp_news_fresh';
+	const FRESH_TRANSIENT = 'pa_mcp_videos_fresh';
 
 	const CACHE_TTL = 2 * DAY_IN_SECONDS;
 
@@ -40,40 +37,42 @@ class MCP_News {
 
 	const RENDER_LIMIT = 10;
 
+	const VIDEO_ID_PATTERN = '/^[A-Za-z0-9_-]{11}$/';
+
 	/**
-	 * Get the latest feed entries, refreshing the cache when it expired.
+	 * Get the playlist video IDs, refreshing the cache when it expired.
 	 *
-	 * @since 4.11.102
+	 * @since 4.11.111
 	 * @access public
 	 *
 	 * @return array
 	 */
-	public static function get_entries() {
+	public static function get_videos() {
 
 		if ( false === get_transient( self::FRESH_TRANSIENT ) ) {
 			self::refresh();
 		}
 
-		return array_slice( self::get_cached_entries(), 0, self::RENDER_LIMIT );
+		return self::get_cached_videos();
 	}
 
 	/**
-	 * Get the cached entries without triggering a remote fetch.
+	 * Get the cached video IDs without triggering a remote fetch.
 	 *
-	 * @since 4.11.102
-	 * @access public
+	 * @since 4.11.111
+	 * @access private
 	 *
 	 * @return array
 	 */
-	public static function get_cached_entries() {
+	private static function get_cached_videos() {
 
-		$entries = get_option( self::FEED_OPTION, array() );
+		$videos = get_option( self::VIDEOS_OPTION, array() );
 
-		return is_array( $entries ) ? $entries : array();
+		return is_array( $videos ) ? $videos : array();
 	}
 
 	/**
-	 * Whether the cached feed holds an entry newer than the last-seen marker.
+	 * Whether the cache holds a video the site has not seen yet.
 	 * Reads the cache only — rendering the admin menu must never fetch.
 	 *
 	 * @since 4.11.102
@@ -83,28 +82,18 @@ class MCP_News {
 	 */
 	public static function has_unread() {
 
-		$entries = self::get_cached_entries();
-
-		if ( empty( $entries ) ) {
-			return false;
-		}
-
-		return $entries[0]['date'] > get_option( self::SEEN_OPTION, '' );
+		return ! empty( array_diff( self::get_cached_videos(), get_option( self::SEEN_OPTION, array() ) ) );
 	}
 
 	/**
-	 * Mark the cached feed as seen.
+	 * Mark the cached videos as seen.
 	 *
 	 * @since 4.11.102
 	 * @access public
 	 */
 	public static function mark_seen() {
 
-		$entries = self::get_cached_entries();
-
-		if ( ! empty( $entries ) ) {
-			update_option( self::SEEN_OPTION, $entries[0]['date'], false );
-		}
+		update_option( self::SEEN_OPTION, self::get_cached_videos(), false );
 	}
 
 	/**
@@ -123,58 +112,35 @@ class MCP_News {
 			return;
 		}
 
-		$entries = self::sanitize_entries( json_decode( wp_remote_retrieve_body( $response ), true ) );
+		$videos = self::sanitize_videos( json_decode( wp_remote_retrieve_body( $response ), true ) );
 
-		update_option( self::FEED_OPTION, $entries, false );
+		update_option( self::VIDEOS_OPTION, $videos, false );
 		set_transient( self::FRESH_TRANSIENT, 1, self::CACHE_TTL );
 	}
 
 	/**
-	 * Keep only complete entries, newest first.
+	 * Keep only well-formed YouTube video IDs, in playlist order.
 	 *
-	 * @since 4.11.102
+	 * @since 4.11.111
 	 * @access private
 	 *
 	 * @param mixed $data decoded response body.
 	 *
 	 * @return array
 	 */
-	private static function sanitize_entries( $data ) {
+	private static function sanitize_videos( $data ) {
 
 		if ( ! is_array( $data ) ) {
 			return array();
 		}
 
-		$fields  = array( 'id', 'date', 'title', 'description', 'link', 'type' );
-		$entries = array();
-
-		foreach ( $data as $entry ) {
-
-			if ( ! is_array( $entry ) ) {
-				continue;
-			}
-
-			$clean = array();
-
-			foreach ( $fields as $field ) {
-
-				if ( empty( $entry[ $field ] ) || ! is_string( $entry[ $field ] ) ) {
-					continue 2;
-				}
-
-				$clean[ $field ] = 'link' === $field ? esc_url_raw( $entry[ $field ] ) : sanitize_text_field( $entry[ $field ] );
-			}
-
-			$entries[] = $clean;
-		}
-
-		usort(
-			$entries,
-			function ( $a, $b ) {
-				return strcmp( $b['date'], $a['date'] );
+		$videos = array_filter(
+			$data,
+			function ( $video_id ) {
+				return is_string( $video_id ) && preg_match( self::VIDEO_ID_PATTERN, $video_id );
 			}
 		);
 
-		return $entries;
+		return array_slice( array_values( $videos ), 0, self::RENDER_LIMIT );
 	}
 }

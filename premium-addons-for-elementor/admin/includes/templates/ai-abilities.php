@@ -100,7 +100,7 @@ if ( $abilities_ready ) {
 
 	// The refresh (at most once per TTL) rides on the dashboard render; the admin
 	// menu dot never fetches — it reads the cache only.
-	$news_entries = $is_enabled && MCP_News::ENABLED ? MCP_News::get_entries() : array();
+	$news_videos = $is_enabled && MCP_News::ENABLED ? MCP_News::get_videos() : array();
 }
 
 ?>
@@ -348,7 +348,7 @@ if ( $abilities_ready ) {
 
 				</div>
 
-				<?php if ( MCP_News::ENABLED ) : ?>
+				<?php if ( ! empty( $news_videos ) ) : ?>
 					<?php include PREMIUM_ADDONS_PATH . 'admin/includes/templates/mcp/mcp-news.php'; ?>
 				<?php endif; ?>
 

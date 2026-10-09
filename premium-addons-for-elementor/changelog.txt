@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 4.11.111 - 9/10/2026 =
+
+- Tweak: Security enhancements in Google Maps widget.
+- Fixed: Slides To Scroll option ignoring responsive values in TikTok Feed widget.
+- Fixed: Order By option showing incorrect values in Woo Categories widget.
+- Fixed: Incorrect documentation link for Woo Categories widget.
+- Fixed: Special characters showing as HTML entities in product category names in WooCommerce widgets and Display Conditions.
+
 = 4.11.110 - 1/10/2026 =
 
 - New: Added Menus AI abilities to list, create and edit WordPress menus and set up Mega Menu items and their content templates.

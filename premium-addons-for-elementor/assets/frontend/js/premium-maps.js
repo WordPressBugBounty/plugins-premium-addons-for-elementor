@@ -133,38 +133,27 @@ jQuery(window).on("elementor/frontend/init", function () {
 					markers: premiumMapMarkers,
 					renderer: {
 						render: function (options) {
-							var count = options.count;
-							var position = options.position;
-							var clusterIcon = document.createElement("div");
-							var iconSize = mapSettings.cluster_icon_size || 50;
-							var iconUrl =
+							var clusterIcon = document.createElement("div"),
+								img = document.createElement("img"),
+								countLabel = document.createElement("div"),
+								iconSize = mapSettings.cluster_icon_size || 50;
+
+							img.src =
 								mapSettings.cluster_icon ||
 								"https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m1.png";
+							img.width = iconSize;
+							img.height = iconSize;
+							img.style.cssText =
+								"position: absolute; transform: translate(-50%, -50%);";
 
-							// Customize cluster icon appearance
-							clusterIcon.innerHTML =
-								'<img src="' +
-								iconUrl +
-								'" ' +
-								'width="' +
-								iconSize +
-								'" ' +
-								'height="' +
-								iconSize +
-								'" ' +
-								'style="position: absolute; transform: translate(-50%, -50%);">' +
-								'<div style="position: absolute; ' +
-								"top: 50%; " +
-								"left: 50%; " +
-								"transform: translate(-50%, -50%); " +
-								"color: white; " +
-								"font-weight: bold; " +
-								'font-size: 11px;">' +
-								count +
-								"</div>";
+							countLabel.style.cssText =
+								"position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; font-size: 11px;";
+							countLabel.textContent = options.count;
+
+							clusterIcon.append(img, countLabel);
 
 							var clusterMarker = new google.maps.marker.AdvancedMarkerElement({
-								position: position,
+								position: options.position,
 								content: clusterIcon,
 							});
 

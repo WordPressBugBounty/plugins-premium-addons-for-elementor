@@ -4611,6 +4611,15 @@
 			}
 
 			function getSlickSettings(settings) {
+				var slidesToScroll =
+					parseFloat(
+						getComputedStyle($scope[0]).getPropertyValue(
+							"--pa-carousel-slides",
+						),
+					) ||
+					settings.slidesToScroll ||
+					1;
+
 				var prevArrow = settings.arrows
 						? '<a type="button" data-role="none" class="carousel-arrow carousel-prev" aria-label="Previous" role="button" style=""><i class="fas fa-angle-left" aria-hidden="true"></i></a>'
 						: "",
@@ -4623,20 +4632,20 @@
 					draggable: true,
 					rows: 0,
 					slidesToShow: settings.slidesToShow,
-					slidesToScroll: settings.slidesToScroll || 1,
+					slidesToScroll: slidesToScroll,
 					responsive: [
 						{
 							breakpoint: 1025,
 							settings: {
 								slidesToShow: settings.slidesToShowTab,
-								slidesToScroll: 1,
+								slidesToScroll: slidesToScroll,
 							},
 						},
 						{
 							breakpoint: 768,
 							settings: {
 								slidesToShow: settings.slidesToShowMobile,
-								slidesToScroll: 1,
+								slidesToScroll: slidesToScroll,
 							},
 						},
 					],
