@@ -22,6 +22,7 @@ use Elementor\Group_Control_Css_Filter;
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Premium_Template_Tags as Blog_Helper;
 use PremiumAddons\Includes\Helper_Functions;
+use PremiumAddons\Includes\Helpers\Query_Helper;
 use PremiumAddons\Includes\Controls\Premium_Post_Filter;
 use PremiumAddons\Includes\Controls\Premium_Tax_Filter;
 
@@ -3378,7 +3379,7 @@ class Premium_Search_Form extends Widget_Base {
 
 					<?php
 					if ( 'yes' === $settings['type_select'] ) :
-						$post_types = Blog_Helper::get_posts_types();
+						$post_types = Query_Helper::get_searchable_post_types( $settings['post_types_excluded'] );
 						?>
 						<div class="premium-search__type-filter">
 							<select class="premium-search__type-select">
@@ -3391,15 +3392,12 @@ class Premium_Search_Form extends Widget_Base {
 									if ( $count < 1 ) {
 										continue;
 									}
+
+									if ( 'yes' === $settings['show_posts_number'] ) {
+										$label = $label . ' (' . $count . ')';
+									}
 									?>
-									<?php
-									if ( ! in_array( $id, $settings['post_types_excluded'], true ) ) :
-										if ( 'yes' === $settings['show_posts_number'] ) {
-											$label = $label . ' (' . $count . ')';
-										}
-										?>
-										<option value="<?php echo esc_attr( $id ); ?>"><?php echo wp_kses_post( $label ); ?></option>
-									<?php endif; ?>
+									<option value="<?php echo esc_attr( $id ); ?>"><?php echo wp_kses_post( $label ); ?></option>
 								<?php endforeach; ?>
 							</select>
 						</div>

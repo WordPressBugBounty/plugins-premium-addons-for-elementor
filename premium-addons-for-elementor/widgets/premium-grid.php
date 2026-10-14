@@ -3301,7 +3301,7 @@ class Premium_Grid extends Widget_Base {
 					$lightbox_key,
 					array(
 						'class' => 'pa-gallery-magnific-image',
-						'href'  => $href,
+						'href'  => esc_url( $href ),
 					)
 				);
 

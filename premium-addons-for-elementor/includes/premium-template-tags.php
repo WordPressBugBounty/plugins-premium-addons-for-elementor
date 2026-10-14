@@ -8,6 +8,7 @@ namespace PremiumAddons\Includes;
 // Elementor Classes.
 use PremiumAddons\Includes\Helpers\ACF_Helper;
 use PremiumAddons\Includes\Helpers\Query_Helper;
+use PremiumAddons\Includes\Helpers\Document_Helper;
 
 use PremiumAddonsPro\Includes\Smart_Post_Listing_Helper as Smart_List_Helper;
 
@@ -966,36 +967,23 @@ class Premium_Template_Tags {
 			return;
 		}
 
-		$doc_id     = isset( $_POST['page_id'] ) ? sanitize_text_field( wp_unslash( $_POST['page_id'] ) ) : '';
+		$doc_id     = absint( $_POST['page_id'] );
 		$elem_id    = isset( $_POST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) : '';
 		$active_cat = isset( $_POST['category'] ) ? wp_unslash( $_POST['category'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$page_num   = isset( $_POST['page_number'] ) ? sanitize_text_field( wp_unslash( $_POST['page_number'] ) ) : '';
 		$req_type   = isset( $_POST['req_type'] ) ? sanitize_text_field( wp_unslash( $_POST['req_type'] ) ) : '';
 
-		$elementor = Plugin::$instance;
-		$meta      = $elementor->documents->get( $doc_id )->get_elements_data();
+		$widget = Document_Helper::get_widget( $doc_id, $elem_id, array( 'premium-addon-blog', 'premium-smart-post-listing' ) );
 
-		$widget_data = $this->find_element_recursive( $meta, $elem_id );
+		if ( ! $widget ) {
+			wp_send_json_error( __( 'Widget not found.', 'premium-addons-for-elementor' ), 404 );
+		}
 
 		$data = array(
-			'ID'     => '',
-			'posts'  => '',
-			'paging' => '',
+			'ID'     => $widget->get_id(),
+			'posts'  => $this->inner_render( $widget, $active_cat, $page_num, $req_type ),
+			'paging' => $this->inner_pagination_render(),
 		);
-
-		if ( null !== $widget_data ) {
-
-			$widget = $elementor->elements_manager->create_element_instance( $widget_data );
-
-			$posts = $this->inner_render( $widget, $active_cat, $page_num, $req_type );
-
-			$pagination = $this->inner_pagination_render();
-
-			$data['paging'] = $pagination;
-
-			$data['ID']    = $widget->get_id();
-			$data['posts'] = $posts;
-		}
 
 		wp_send_json_success( $data );
 	}
@@ -1012,49 +1000,75 @@ class Premium_Template_Tags {
 
 		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
 
-		add_filter( 'posts_search', array( $this, 'handle_search_source' ), 10, 2 );
-
 		if ( ! isset( $_POST['page_id'] ) || ! isset( $_POST['widget_id'] ) ) {
 			return;
 		}
 
-		$doc_id   = isset( $_POST['page_id'] ) ? sanitize_text_field( wp_unslash( $_POST['page_id'] ) ) : '';
+		$doc_id   = absint( $_POST['page_id'] );
 		$elem_id  = isset( $_POST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) : '';
 		$query    = isset( $_POST['query'] ) ? sanitize_text_field( wp_unslash( $_POST['query'] ) ) : '';
 		$page_num = isset( $_POST['page_number'] ) ? sanitize_text_field( wp_unslash( $_POST['page_number'] ) ) : '';
 
-		$elementor = Plugin::$instance;
-		$meta      = $elementor->documents->get( $doc_id )->get_elements_data();
+		$widget = Document_Helper::get_widget( $doc_id, $elem_id, array( 'premium-search-form' ) );
 
-		$widget_data = $this->find_element_recursive( $meta, $elem_id );
+		if ( ! $widget ) {
+			wp_send_json_error( __( 'Search widget not found.', 'premium-addons-for-elementor' ), 404 );
+		}
+
+		$requested_type = isset( $_POST['post_type'] ) && is_string( $_POST['post_type'] ) ? sanitize_key( wp_unslash( $_POST['post_type'] ) ) : '';
+		$post_type      = $this->get_allowed_search_post_type( $widget, $requested_type );
+
+		if ( false === $post_type ) {
+			wp_send_json_error( __( 'Invalid post type.', 'premium-addons-for-elementor' ), 400 );
+		}
+
+		$results_number = isset( $_POST['results_number'] ) ? sanitize_text_field( wp_unslash( $_POST['results_number'] ) ) : '';
+
+		add_filter( 'posts_search', array( $this, 'handle_search_source' ), 10, 2 );
 
 		$data = array(
-			'ID'         => '',
-			'posts'      => '',
-			'pagination' => '',
+			'ID'         => $widget->get_id(),
+			'posts'      => $this->render_search_results( $widget, $query, $post_type, $results_number ),
+			'pagination' => $this->inner_pagination_render(),
 		);
-
-		if ( null !== $widget_data ) {
-
-			$widget = $elementor->elements_manager->create_element_instance( $widget_data );
-
-			$post_type      = isset( $_POST['post_type'] ) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : '';
-			$results_number = isset( $_POST['results_number'] ) ? sanitize_text_field( wp_unslash( $_POST['results_number'] ) ) : '';
-
-			$posts = $this->render_search_results( $widget, $query, $post_type, $results_number );
-
-			$pagination = $this->inner_pagination_render();
-
-			$data['posts'] = $posts;
-
-			$data['pagination'] = $pagination;
-
-			$data['ID'] = $widget->get_id();
-		}
 
 		remove_filter( 'posts_search', array( $this, 'handle_search_source' ), 10, 2 );
 
 		wp_send_json_success( $data );
+	}
+
+	/**
+	 * Get Allowed Search Post Type
+	 *
+	 * Validates the requested post type against the widget's Post Type Select options.
+	 *
+	 * @since 4.11.112
+	 * @access private
+	 *
+	 * @param \Elementor\Widget_Base $widget         search widget.
+	 * @param string                 $requested_type requested post type.
+	 *
+	 * @return string|array|false empty string to use the widget query, false when not allowed.
+	 */
+	private function get_allowed_search_post_type( $widget, $requested_type ) {
+
+		if ( '' === $requested_type ) {
+			return '';
+		}
+
+		$settings = $widget->get_settings_for_display();
+
+		if ( 'yes' !== $settings['type_select'] ) {
+			return false;
+		}
+
+		$allowed = array_keys( Query_Helper::get_searchable_post_types( (array) $settings['post_types_excluded'] ) );
+
+		if ( 'any' === $requested_type ) {
+			return empty( $allowed ) ? false : $allowed;
+		}
+
+		return in_array( $requested_type, $allowed, true ) ? $requested_type : false;
 	}
 
 	/**

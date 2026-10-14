@@ -2872,6 +2872,8 @@ class Premium_Media_Wheel extends Widget_Base {
 			</div>
 		<?php
 
+		$link = esc_url_raw( $link );
+
 		return empty( $link ) ? false : $link;
 	}
 
@@ -3065,7 +3067,7 @@ class Premium_Media_Wheel extends Widget_Base {
 				$lightbox_key,
 				array(
 					'class' => 'pa-media-magnific-image',
-					'href'  => $href,
+					'href'  => esc_url( $href ),
 				)
 			);
 

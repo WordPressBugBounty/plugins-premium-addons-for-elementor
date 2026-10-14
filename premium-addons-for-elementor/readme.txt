@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.111
+Stable Tag: 4.11.112
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,16 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.112 - 13/10/2026 =
+
+- Tweak: Added Floating Effects support for Containers.
+- Tweak: Added Perspective option for 3D Rotate effects in Floating Effects addon.
+- Tweak: Added Disable On option to turn off Floating Effects on selected devices.
+- Tweak: Added Return To Start On Hover Out option in Floating Effects addon.
+- Tweak: Security enhancements in Media Wheel, Media Grid, Search Form, Blog, Woo Products and Pinterest Feed widgets, Cross Domain Copy & Paste feature and AI abilities.
+- Fixed: Floating Effects animation stopping in the editor after changing settings.
+- Fixed: Opacity effect not applied after Floating Effects animation stops.
 
 = 4.11.111 - 9/10/2026 =
 

@@ -133,7 +133,7 @@
 
 					if (pinterestToken) {
 						jQuery.ajax({
-							type: "GET",
+							type: "POST",
 							url: PremiumSettings.ajaxurl,
 							dataType: "JSON",
 							data: {

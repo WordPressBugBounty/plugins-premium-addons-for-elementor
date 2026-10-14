@@ -354,6 +354,22 @@ class Helpers {
 	}
 
 	/**
+	 * Whether the current user may publish posts of this post's type.
+	 *
+	 * @since 4.11.112
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return bool
+	 */
+	public static function can_publish_post( $post_id ) {
+
+		$post_type = get_post_type_object( get_post_type( $post_id ) );
+
+		return $post_type && Admin_Helper::check_user_can( $post_type->cap->publish_posts );
+	}
+
+	/**
 	 * Format an attachment as the payload the media abilities return.
 	 *
 	 * These are the fields a text-only client picks an image by. Shared so

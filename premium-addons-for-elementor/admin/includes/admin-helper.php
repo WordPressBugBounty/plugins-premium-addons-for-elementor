@@ -1013,7 +1013,7 @@ class Admin_Helper {
 
 		if ( 'free' === $tier ) {
 			return array(
-				'title' => __( 'Summer SALE 2026', 'premium-addons-for-elementor' ),
+				'title' => __( 'Autumn SALE 2026', 'premium-addons-for-elementor' ),
 				'desc'  => __( 'Supercharge your Elementor with PRO Widgets & Addons that you won\'t find anywhere else.', 'premium-addons-for-elementor' ) . '<span class="papro-sale-notice">' . __( 'save up to 30%!', 'premium-addons-for-elementor' ) . '</span>',
 				'btn'   => __( 'Get Pro', 'premium-addons-for-elementor' ),
 				'cta'   => 'https://premiumaddons.com/get/papro/#get-pa-pro',

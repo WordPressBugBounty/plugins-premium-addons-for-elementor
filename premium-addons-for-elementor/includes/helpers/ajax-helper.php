@@ -66,12 +66,21 @@ trait AJAX_Helper {
 
 		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
 
-		$post_type = isset( $_POST['post_type'] ) ? wp_unslash( $_POST['post_type'] ) : '';
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( __( 'Insufficient user permission.', 'premium-addons-for-elementor' ), 403 );
+		}
 
-		$post_type = array_map( 'sanitize_text_field', $post_type );
+		if ( empty( $_POST['post_type'] ) || ! is_array( $_POST['post_type'] ) ) {
+			wp_send_json_error( __( 'Empty Post Type.', 'premium-addons-for-elementor' ), 400 );
+		}
 
+		$allowed_types = array_keys( Query_Helper::get_posts_types() );
+
+		$post_type = array_values( array_intersect( array_map( 'sanitize_key', wp_unslash( $_POST['post_type'] ) ), $allowed_types ) );
+
+		// Sources like 'main' or 'related' are not post types; the editor expects an empty list for them.
 		if ( empty( $post_type ) ) {
-			wp_send_json_error( __( 'Empty Post Type.', 'premium-addons-for-elementor' ) );
+			wp_send_json_success( wp_json_encode( array() ) );
 		}
 
 		$args = array(
@@ -118,6 +127,10 @@ trait AJAX_Helper {
 	public function get_related_tax() {
 
 		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( __( 'Insufficient user permission.', 'premium-addons-for-elementor' ), 403 );
+		}
 
 		$post_type = isset( $_POST['post_type'] ) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : '';
 
@@ -305,22 +318,24 @@ trait AJAX_Helper {
 
 		check_ajax_referer( 'pa-blog-widget-nonce', 'nonce' );
 
-		if ( ! isset( $_GET['token'] ) ) {
-			wp_send_json_error();
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( __( 'Insufficient user permission.', 'premium-addons-for-elementor' ), 403 );
 		}
 
-		$token = sanitize_text_field( wp_unslash( $_GET['token'] ) );
+		if ( empty( $_POST['token'] ) ) {
+			wp_send_json_error( __( 'Missing token.', 'premium-addons-for-elementor' ), 400 );
+		}
 
-		$transient_name = 'pa_pinterest_boards_' . substr( $token, 0, 15 );
+		$token = sanitize_text_field( wp_unslash( $_POST['token'] ) );
+
+		$transient_name = 'pa_pinterest_boards_' . md5( $token );
 
 		$body = get_transient( $transient_name );
 
 		if ( false === $body ) {
 
-			$api_url = 'https://api.pinterest.com/v5/boards?page_size=60';
-
 			$response = wp_remote_get(
-				$api_url,
+				'https://api.pinterest.com/v5/boards?page_size=60',
 				array(
 					'headers' => array(
 						'Authorization' => 'Bearer ' . $token,
@@ -328,16 +343,18 @@ trait AJAX_Helper {
 				)
 			);
 
-			$body = wp_remote_retrieve_body( $response );
-			$body = json_decode( $body, true );
+			$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+			if ( 200 !== wp_remote_retrieve_response_code( $response ) || ! isset( $body['items'] ) ) {
+				wp_send_json_error( __( 'Could not load Pinterest boards.', 'premium-addons-for-elementor' ), 502 );
+			}
 
 			set_transient( $transient_name, $body, 30 * MINUTE_IN_SECONDS );
-
 		}
 
 		$boards = array();
 
-		foreach ( $body['items'] as $index => $board ) {
+		foreach ( $body['items'] as $board ) {
 			$boards[ $board['id'] ] = $board['name'];
 		}
 

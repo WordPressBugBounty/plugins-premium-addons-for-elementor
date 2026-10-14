@@ -10,8 +10,8 @@
 
 namespace PremiumAddons\Modules\Woocommerce\Modules;
 
-use Elementor\Plugin;
 use PremiumAddons\Includes\Module_Base;
+use PremiumAddons\Includes\Helpers\Document_Helper;
 use PremiumAddons\Modules\Woocommerce\TemplateBlocks;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -94,42 +94,25 @@ class Products_Module extends Module_Base {
 			return;
 		}
 
-		$post_id   = sanitize_text_field( wp_unslash( $_POST['pageID'] ) );
+		$post_id   = absint( $_POST['pageID'] );
 		$widget_id = sanitize_text_field( wp_unslash( $_POST['elemID'] ) );
 		$style_id  = sanitize_text_field( wp_unslash( $_POST['skin'] ) );
 
-		$elementor = Plugin::$instance;
-		$meta      = $elementor->documents->get( $post_id )->get_elements_data();
+		$widget = Document_Helper::get_widget( $post_id, $widget_id, array( 'premium-woo-products' ) );
 
-		$widget_data = $this->find_element_recursive( $meta, $widget_id );
+		if ( ! $widget ) {
+			wp_send_json_error( __( 'Widget not found.', 'premium-addons-for-elementor' ), 404 );
+		}
+
+		$skin = TemplateBlocks\Skin_Init::get_instance( $style_id );
 
 		$data = array(
 			'message'    => __( 'Saved', 'premium-addons-for-elementor' ),
-			'ID'         => '',
-			'skin_id'    => '',
-			'html'       => '',
-			'pagination' => '',
+			'ID'         => $widget->get_id(),
+			'skin_id'    => $widget->get_current_skin_id(),
+			'html'       => $skin->inner_render( $style_id, $widget, true ),
+			'pagination' => $skin->page_render( $style_id, $widget ),
 		);
-
-		if ( null !== $widget_data ) {
-
-			// Restore default values.
-			$widget = $elementor->elements_manager->create_element_instance( $widget_data );
-
-			// Return data and call your function according to your need for ajax call.
-			// You will have access to settings variable as well as some widget functions.
-			$skin = TemplateBlocks\Skin_Init::get_instance( $style_id );
-
-			// Here you will just need posts based on ajax request to attache in layout.
-			$html = $skin->inner_render( $style_id, $widget, true );
-
-			$pagination = $skin->page_render( $style_id, $widget );
-
-			$data['ID']         = $widget->get_id();
-			$data['skin_id']    = $widget->get_current_skin_id();
-			$data['html']       = $html;
-			$data['pagination'] = $pagination;
-		}
 
 		wp_send_json_success( $data );
 	}
@@ -179,28 +162,23 @@ class Products_Module extends Module_Base {
 			die();
 		}
 
-		$post_id   = isset( $_POST['pageID'] ) ? sanitize_text_field( wp_unslash( $_POST['pageID'] ) ) : 0;
-		$widget_id = isset( $_POST['elemID'] ) ? sanitize_text_field( wp_unslash( $_POST['elemID'] ) ) : 0;
+		$post_id    = isset( $_POST['pageID'] ) ? absint( $_POST['pageID'] ) : 0;
+		$widget_id  = isset( $_POST['elemID'] ) ? sanitize_text_field( wp_unslash( $_POST['elemID'] ) ) : '';
+		$product_id = absint( $_REQUEST['product_id'] );
 
-		$elementor = Plugin::$instance;
-		$meta      = $elementor->documents->get( $post_id )->get_elements_data();
+		$widget = Document_Helper::get_widget( $post_id, $widget_id, array( 'premium-woo-products' ) );
 
-		$widget_data = $this->find_element_recursive( $meta, $widget_id );
-
-		if ( null === $widget_data ) {
-
-			wp_send_json_error( 'Widget settings not found.' );
-
+		if ( ! $widget ) {
+			wp_send_json_error( __( 'Widget settings not found.', 'premium-addons-for-elementor' ), 404 );
 		}
 
-		// Restore default values.
-		$widget = $elementor->elements_manager->create_element_instance( $widget_data );
+		if ( post_password_required( $product_id ) ) {
+			wp_send_json_error( __( 'This product is password protected.', 'premium-addons-for-elementor' ), 403 );
+		}
 
 		$settings = $widget->get_settings();
 
 		$this->quick_view_content_actions();
-
-		$product_id = intval( $_REQUEST['product_id'] );
 
 		// set the main wp query for the product.
 		wp( 'p=' . $product_id . '&post_type=product' );

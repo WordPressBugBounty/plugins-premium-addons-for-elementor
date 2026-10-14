@@ -94,7 +94,8 @@ if ( ! class_exists( 'Cross_Copy_Paste' ) ) {
 
 			check_ajax_referer( 'premium_cross_cp_import', 'nonce' );
 
-			if ( ! current_user_can( 'edit_posts' ) ) {
+			// Importing pasted content side-loads its media into the library.
+			if ( ! current_user_can( 'edit_posts' ) || ! current_user_can( 'upload_files' ) ) {
 				wp_send_json_error(
 					__( 'Not a valid user', 'premium-addons-for-elementor' ),
 					403

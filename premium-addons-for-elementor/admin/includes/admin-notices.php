@@ -80,7 +80,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'pa-mcp-video-not',
+			'pa-connect-ai-v2-not',
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -88,6 +88,8 @@ class Admin_Notices {
 		}
 
 		add_action( 'wp_dashboard_setup', array( $this, 'show_story_widget' ), 111 );
+
+		include_once PREMIUM_ADDONS_PATH . 'admin/includes/promotion-pointer.php';
 	}
 
 	/**
@@ -150,7 +152,7 @@ class Admin_Notices {
 			return;
 		}
 
-		$this->get_mcp_video_notice();
+		$this->get_connect_ai_notice();
 	}
 
 	/**
@@ -339,17 +341,17 @@ class Admin_Notices {
 	}
 
 	/**
-	 * Premium Addons MCP video tutorial notice, with the sale CTA per license tier.
+	 * Points admins to the ChatGPT/Claude connection guides, with the sale CTA per license tier.
 	 * Admins only, dismissed per user.
 	 *
-	 * @since 4.11.106
+	 * @since 4.11.100
 	 * @access private
 	 *
 	 * @return void
 	 */
-	private function get_mcp_video_notice() {
+	private function get_connect_ai_notice() {
 
-		$notice_key = 'pa-mcp-video-not';
+		$notice_key = 'pa-connect-ai-v2-not';
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -361,24 +363,22 @@ class Admin_Notices {
 
 		$tier = Admin_Helper::get_license_tier();
 
-		// Plain YouTube URL on purpose: no UTM parameters on the video link.
-		$video_link = 'https://youtu.be/f1XB6s3TsV4';
-
-		$claude_link  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/', 'mcp-video-notification', 'wp-dash', 'connect-ai', $tier );
-		$chatgpt_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website/', 'mcp-video-notification', 'wp-dash', 'connect-ai', $tier );
+		$chatgpt_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-chatgpt-to-wordpress-elementor-website/', 'connect-ai-notification', 'wp-dash', 'connect-ai', $tier );
+		$claude_link  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/', 'connect-ai-notification', 'wp-dash', 'connect-ai', $tier );
+		$mcp_link     = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mcp-and-ai-abilities/', 'connect-ai-notification', 'wp-dash', 'connect-ai', $tier );
 
 		$sale_line = '';
 		$sale_btn  = '';
 
 		if ( 'free' === $tier ) {
 
-			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'mcp-video-notification', 'wp-dash', 'summer26', 'free' );
-			$sale_line = __( 'With Pro, Claude can also build with Elementor Pro and any other widget on your site. Summer sale: 30% off.', 'premium-addons-for-elementor' );
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'connect-ai-notification', 'wp-dash', 'autumn26', 'free' );
+			$sale_line = __( 'With Pro, Claude can also build with Elementor Pro and any other widget on your site. Autumn sale: 30% off.', 'premium-addons-for-elementor' );
 			$sale_btn  = __( 'Get Pro – 30% Off', 'premium-addons-for-elementor' );
 
 		} elseif ( 'pro' === $tier ) {
 
-			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'mcp-video-notification', 'wp-dash', 'summer26', 'pro' );
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'connect-ai-notification', 'wp-dash', 'autumn26', 'pro' );
 			$sale_line = __( 'Pay only the difference to go Lifetime, with an extra 30% off.', 'premium-addons-for-elementor' );
 			$sale_btn  = __( 'Upgrade to Lifetime', 'premium-addons-for-elementor' );
 		}
@@ -386,11 +386,10 @@ class Admin_Notices {
 		$html  = '<div class="pa-notice-row">';
 		$html .= '<img class="pa-notice-logo" src="' . esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ) . '" alt="" width="40" height="40">';
 		$html .= '<div class="pa-notice-text">';
-		$html .= '<strong class="pa-notice-title">' . esc_html__( 'New Video: Build Elementor Pages With Claude, ChatGPT or Cursor', 'premium-addons-for-elementor' ) . '</strong>';
-		$html .= '<span class="pa-notice-desc">' . esc_html__( 'Watch how to connect Claude, ChatGPT or Cursor to your site and let them build Elementor pages with Premium Addons MCP and AI Abilities.', 'premium-addons-for-elementor' ) . ' ';
+		$html .= '<span class="pa-notice-desc"><strong>' . esc_html__( 'New:', 'premium-addons-for-elementor' ) . '</strong> ';
 		$html .= sprintf(
 			/* translators: 1: ChatGPT guide link opening tag, 2: Claude guide link opening tag, 3: link closing tag. */
-			esc_html__( 'Prefer reading? See how to connect %1$sChatGPT%3$s or %2$sClaude%3$s to your site.', 'premium-addons-for-elementor' ),
+			esc_html__( 'Connect %1$sChatGPT%3$s/%2$sClaude%3$s to your website and make them build Elementor pages for you.', 'premium-addons-for-elementor' ),
 			'<a href="' . esc_url( $chatgpt_link ) . '" target="_blank" rel="noopener">',
 			'<a href="' . esc_url( $claude_link ) . '" target="_blank" rel="noopener">',
 			'</a>'
@@ -403,7 +402,7 @@ class Admin_Notices {
 
 		$html .= '</div>';
 		$html .= '<div class="pa-notice-actions">';
-		$html .= '<a class="button button-primary" href="' . esc_url( $video_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'Watch the Tutorial', 'premium-addons-for-elementor' ) . '</a>';
+		$html .= '<a class="button button-primary" href="' . esc_url( $mcp_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'Check it Out!', 'premium-addons-for-elementor' ) . '</a>';
 
 		if ( '' !== $sale_btn ) {
 			$html .= '<a class="button" href="' . esc_url( $sale_link ) . '" target="_blank" rel="noopener">' . esc_html( $sale_btn ) . '</a>';
@@ -418,7 +417,7 @@ class Admin_Notices {
 				'type'               => 'info',
 				'dismissible'        => true,
 				'paragraph_wrap'     => false,
-				'additional_classes' => array( 'pa-notice', 'pa-mcp-video-notice' ),
+				'additional_classes' => array( 'pa-notice', 'pa-connect-ai-notice' ),
 				'attributes'         => array( 'data-notice' => $notice_key ),
 			)
 		);
@@ -529,7 +528,7 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			if ( 'pa-mcp-video-not' === $key ) {
+			if ( 'pa-connect-ai-v2-not' === $key ) {
 
 				// Per user: other admins keep seeing it.
 				$uid       = get_current_user_id();
@@ -641,7 +640,7 @@ class Admin_Notices {
 				$stories['posts'],
 				array(
 					'title' => 'Upgrade to Premium Addons Pro Lifetime, Pay the Difference & Save 30% Today!',
-					'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'summer26-dash-widget', 'summer26' ),
+					'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'autumn26-dash-widget', 'autumn26' ),
 				)
 			);
 		}
@@ -712,7 +711,7 @@ class Admin_Notices {
 							<div class="pa-story-img-container">
 								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'summer26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'autumn26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>

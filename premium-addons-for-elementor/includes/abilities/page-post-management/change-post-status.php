@@ -84,7 +84,15 @@ class Change_Post_Status implements Ability_Handler {
 				),
 			),
 			'permission_callback' => function ( $input = null ) {
-				return Helpers::can_edit_input_post( $input );
+
+				if ( ! Helpers::can_edit_input_post( $input ) ) {
+					return false;
+				}
+
+				// Publishing or making private needs the publish cap, as in the post editor.
+				$needs_publish_cap = in_array( $input['status'], array( 'publish', 'private' ), true );
+
+				return ! $needs_publish_cap || Helpers::can_publish_post( absint( $input['post_id'] ) );
 			},
 			'meta'                => array(
 				'show_in_rest' => true,

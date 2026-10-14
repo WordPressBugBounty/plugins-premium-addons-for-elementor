@@ -96,6 +96,12 @@ class Query_Helper {
 
 		}
 
+		// The target type comes from the request, so only public searchable types may pass.
+		if ( ! empty( $target_post_type ) ) {
+			$searchable       = array_keys( self::get_searchable_post_types() );
+			$target_post_type = array_values( array_intersect( (array) $target_post_type, $searchable ) );
+		}
+
 		$post_args = array(
 			'post_type'        => ! empty( $target_post_type ) ? $target_post_type : $post_type,
 			'posts_per_page'   => empty( $settings['premium_blog_number_of_posts'] ) ? 9999 : $settings['premium_blog_number_of_posts'],
@@ -417,6 +423,42 @@ class Query_Helper {
 		foreach ( $post_types as $post_type ) {
 
 			if ( 'attachment' === $post_type->name ) {
+				continue;
+			}
+
+			$options[ $post_type->name ] = $post_type->label;
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Get searchable post types
+	 *
+	 * Public post types that are not excluded from search.
+	 *
+	 * @since 4.11.112
+	 * @access public
+	 *
+	 * @param array $excluded post types to leave out.
+	 *
+	 * @return array post type name => label.
+	 */
+	public static function get_searchable_post_types( $excluded = array() ) {
+
+		$post_types = get_post_types(
+			array(
+				'public'              => true,
+				'exclude_from_search' => false,
+			),
+			'objects'
+		);
+
+		$options = array();
+
+		foreach ( $post_types as $post_type ) {
+
+			if ( 'attachment' === $post_type->name || in_array( $post_type->name, $excluded, true ) ) {
 				continue;
 			}
 
