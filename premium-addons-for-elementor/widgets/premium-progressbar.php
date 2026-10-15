@@ -1394,7 +1394,7 @@ class Premium_Progressbar extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-progressbar-circle-icon' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'icon_type' => array( 'icon', 'svg' ),
@@ -1415,7 +1415,7 @@ class Premium_Progressbar extends Widget_Base {
 						'icon_type' => array( 'icon', 'svg' ),
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);

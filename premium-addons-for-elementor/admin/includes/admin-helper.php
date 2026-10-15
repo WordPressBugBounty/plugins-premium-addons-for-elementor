@@ -120,7 +120,6 @@ class Admin_Helper {
 		add_action( 'wp_ajax_pa_disable_elementor_mc_template', array( $this, 'pa_disable_elementor_mc_template' ) );
 		add_action( 'wp_ajax_pa_save_additional_settings', array( $this, 'pa_save_additional_settings' ) );
 		add_action( 'wp_ajax_pa_save_ai_abilities', array( $this, 'pa_save_ai_abilities' ) );
-		add_action( 'wp_ajax_pa_mcp_news_seen', array( $this, 'pa_mcp_news_seen' ) );
 		add_action( 'wp_ajax_pa_mcp_connection_check', array( $this, 'pa_mcp_connection_check' ) );
 		add_action( 'wp_ajax_pa_mcp_revoke_connection', array( $this, 'pa_mcp_revoke_connection' ) );
 		add_action( 'wp_ajax_pa_enable_oauth_connect', array( $this, 'pa_enable_oauth_connect' ) );
@@ -799,22 +798,13 @@ class Admin_Helper {
 			100
 		);
 
-		foreach ( self::$tabs as $key => $tab ) {
-
-			$menu_title = $tab['title'];
-
-			// Unread MCP news dot. Computed from the cached feed only — the menu
-			// renders on every admin page, so it must never trigger a remote fetch.
-			// Inline-styled because admin.css loads only on PA screens.
-			if ( 'ai-abilities' === $key && MCP_News::ENABLED && MCP_News::has_unread() ) {
-				$menu_title .= '<span class="pa-mcp-news-dot" style="display:inline-block;width:8px;height:8px;margin-inline-start:6px;vertical-align:middle;border-radius:50%;background:#d63638;"></span>';
-			}
+		foreach ( self::$tabs as $tab ) {
 
 			call_user_func(
 				'add_submenu_page',
 				self::$page_slug,
 				$tab['title'],
-				$menu_title,
+				$tab['title'],
 				'manage_options',
 				$tab['slug'],
 				'__return_null'
@@ -1346,31 +1336,6 @@ class Admin_Helper {
 				'disabled_abilities' => $disabled,
 			)
 		);
-	}
-
-	/**
-	 * Mark the MCP news feed as seen. Fired when the AI Abilities tab is opened,
-	 * so the submenu dot clears on the next admin page load.
-	 *
-	 * @since 4.11.102
-	 * @return void
-	 */
-	public function pa_mcp_news_seen() {
-
-		check_ajax_referer( 'pa-settings-tab', 'security' );
-
-		if ( ! self::check_user_can( 'manage_options' ) ) {
-			wp_send_json_error(
-				array(
-					'message' => __( 'You are not allowed to do this action.', 'premium-addons-for-elementor' ),
-				),
-				403
-			);
-		}
-
-		MCP_News::mark_seen();
-
-		wp_send_json_success();
 	}
 
 	/**

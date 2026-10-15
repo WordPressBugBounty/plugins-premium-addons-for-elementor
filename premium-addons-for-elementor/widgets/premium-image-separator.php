@@ -810,7 +810,7 @@ class Premium_Image_Separator extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-image-separator-container i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} .premium-image-separator-container > svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'separator_type' => array( 'icon', 'svg' ),
@@ -829,7 +829,7 @@ class Premium_Image_Separator extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-image-separator-container i:hover' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-drawable-icon:hover *, {{WRAPPER}} svg:not([class*="premium-"]):hover' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .premium-drawable-icon:hover *, {{WRAPPER}} .premium-image-separator-container > svg:not([class*="premium-"]):hover' => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'separator_type' => array( 'icon', 'svg' ),
@@ -851,7 +851,7 @@ class Premium_Image_Separator extends Widget_Base {
 						'separator_type' => array( 'icon', 'svg' ),
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} .premium-image-separator-container > svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
 					),
 				)
 			);

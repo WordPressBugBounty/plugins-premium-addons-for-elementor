@@ -87,6 +87,9 @@ class Addons_Integration {
 
 		// Load Editor CSS Files.
 		add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_preview_styles' ) );
+
+		// Runs after every widget and addon has enqueued its preview scripts.
+		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'load_preview_lottie_on_demand' ), 999 );
 		add_action( 'elementor/editor/before_enqueue_styles', array( $this, 'enqueue_editor_styles' ) );
 
 		// Load Editor JS Files.
@@ -222,6 +225,42 @@ class Addons_Integration {
 		wp_enqueue_style( 'premium-addons' );
 
 		wp_enqueue_style( 'pa-slick' );
+	}
+
+	/**
+	 * Load Lottie in the editor preview only when an element needs it.
+	 *
+	 * Elementor enqueues the script dependencies of every registered widget in the
+	 * preview, so the ~250 KB Lottie library loaded on every editor load.
+	 *
+	 * @since 4.11.113
+	 * @access public
+	 */
+	public function load_preview_lottie_on_demand() {
+
+		if ( ! wp_script_is( 'lottie-js', 'enqueued' ) ) {
+			return;
+		}
+
+		$lottie = wp_scripts()->query( 'lottie-js', 'registered' );
+
+		wp_dequeue_script( 'lottie-js' );
+
+		wp_enqueue_script(
+			'pa-lottie-loader',
+			PREMIUM_ADDONS_URL . 'assets/editor/js/pa-lottie-loader.js',
+			array( 'jquery' ),
+			PREMIUM_ADDONS_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'pa-lottie-loader',
+			'paLottieLoader',
+			array(
+				'src' => add_query_arg( 'ver', $lottie->ver, $lottie->src ),
+			)
+		);
 	}
 
 	/**

@@ -2207,7 +2207,7 @@ class Premium_Post_Ticker extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-post-ticker__icon-wrapper:not(.premium-repeater-item) i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .premium-post-ticker__icon-wrapper:not(.premium-repeater-item) .premium-drawable-icon *,
-                    {{WRAPPER}} .premium-post-ticker__icon-wrapper:not(.premium-repeater-item) svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+                    {{WRAPPER}} .premium-post-ticker__icon-wrapper:not(.premium-repeater-item) svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'ticker_icon_sw' => 'yes',
@@ -2230,7 +2230,7 @@ class Premium_Post_Ticker extends Widget_Base {
 					),
 					'selectors' => array(
 						'{{WRAPPER}} .premium-post-ticker__icon-wrapper:not(.premium-repeater-item) .premium-drawable-icon *,
-                        {{WRAPPER}} .premium-post-ticker__icon-wrapper:not(.premium-repeater-item) svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+                        {{WRAPPER}} .premium-post-ticker__icon-wrapper:not(.premium-repeater-item) svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);
@@ -2522,7 +2522,7 @@ class Premium_Post_Ticker extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-post-ticker__icon-wrapper.premium-repeater-item i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .premium-post-ticker__icon-wrapper.premium-repeater-item .premium-drawable-icon *,
-                    {{WRAPPER}} .premium-post-ticker__icon-wrapper.premium-repeater-item svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+                    {{WRAPPER}} .premium-post-ticker__icon-wrapper.premium-repeater-item svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'post_type_filter' => 'text',
@@ -2543,7 +2543,7 @@ class Premium_Post_Ticker extends Widget_Base {
 						'post_type_filter' => 'text',
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);

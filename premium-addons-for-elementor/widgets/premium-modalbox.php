@@ -1819,7 +1819,7 @@ class Premium_Modalbox extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .premium-modal-box-modal-title' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-modal-box-modal-title svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .premium-modal-box-modal-title svg:not(.premium-lottie-animation svg)' => 'fill: {{VALUE}}',
 				),
 			)
 		);

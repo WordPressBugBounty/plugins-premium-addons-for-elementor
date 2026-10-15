@@ -23494,7 +23494,7 @@
 		};
 	};
 
-	$(window).on("elementor/frontend/init", function () {
+	function registerLottieHandlers() {
 		elementorFrontend.hooks.addAction(
 			"frontend/element_ready/widget",
 			PremiumLottieHandler,
@@ -23508,7 +23508,20 @@
 			"frontend/element_ready/container",
 			PremiumLottieAddonHandler,
 		);
-	});
+	}
+
+	function runLottieHandlersOnRenderedElements() {
+		$(".elementor-element").each(function () {
+			var $element = $(this),
+				type = $element.data("element_type");
+
+			if ("widget" === type) {
+				PremiumLottieHandler($element, $);
+			} else if ("section" === type || "container" === type) {
+				PremiumLottieAddonHandler($element);
+			}
+		});
+	}
 
 	window.premiumEffects = function (element, settings, lottieInstance) {
 		var self = this,
@@ -23691,4 +23704,13 @@
 			$el.css(rule, cssValue);
 		};
 	};
+
+	// The editor preview loads this file on demand (pa-lottie-loader.js), after
+	// elementor/frontend/init has fired and the elements are already rendered.
+	if (window.paLottieLoadedOnDemand) {
+		registerLottieHandlers();
+		runLottieHandlersOnRenderedElements();
+	} else {
+		$(window).on("elementor/frontend/init", registerLottieHandlers);
+	}
 })(jQuery);

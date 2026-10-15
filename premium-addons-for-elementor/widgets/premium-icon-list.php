@@ -908,7 +908,7 @@ class Premium_Icon_List extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-bullet-list-wrapper i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}} svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}} svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .premium-bullet-list-blur:hover {{CURRENT_ITEM}} .premium-bullet-list-wrapper i, {{WRAPPER}} .premium-bullet-list-blur:hover {{CURRENT_ITEM}} .premium-bullet-list-wrapper svg' => 'text-shadow: 0 0 3px {{VALUE}}',
 				),
 				'condition' => array(
@@ -932,7 +932,7 @@ class Premium_Icon_List extends Widget_Base {
 						'show_global_style' => 'yes',
 					),
 					'selectors' => array(
-						'{{WRAPPER}} {{CURRENT_ITEM}} .premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}} svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} {{CURRENT_ITEM}} .premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}} svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);
@@ -1053,7 +1053,7 @@ class Premium_Icon_List extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-list-wrapper i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .premium-bullet-list-blur {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-list-wrapper i, {{WRAPPER}} .premium-bullet-list-blur {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-bullet-list-wrapper svg' => 'text-shadow: none !important; color: {{VALUE}} !important',
 				),
 				'condition' => array(
@@ -1077,7 +1077,7 @@ class Premium_Icon_List extends Widget_Base {
 						'show_global_style' => 'yes',
 					),
 					'selectors' => array(
-						'{{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover .premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}}.premium-bullet-list-content:hover svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);
@@ -1939,7 +1939,7 @@ class Premium_Icon_List extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-bullet-list-wrapper i, {{WRAPPER}} .premium-bullet-list-icon-text p' => 'color: {{VALUE}}',
-					$selector . '{{WRAPPER}} svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					$selector . '{{WRAPPER}} svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .premium-bullet-list-blur:hover .premium-bullet-list-wrapper i, {{WRAPPER}} .premium-bullet-list-blur:hover .premium-bullet-list-wrapper svg, {{WRAPPER}} .premium-bullet-list-blur:hover .premium-bullet-list-wrapper .premium-bullet-list-icon-text p' => 'text-shadow: 0 0 3px {{VALUE}};',
 				),
 			)
@@ -1955,7 +1955,7 @@ class Premium_Icon_List extends Widget_Base {
 						'default' => Global_Colors::COLOR_PRIMARY,
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);
@@ -1972,7 +1972,7 @@ class Premium_Icon_List extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .premium-bullet-list-content:hover .premium-bullet-list-wrapper i, {{WRAPPER}} .premium-bullet-list-content:hover .premium-bullet-list-icon-text p' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .premium-bullet-list-blur .premium-bullet-list-content:hover .premium-bullet-list-wrapper i, {{WRAPPER}} .premium-bullet-list-blur .premium-bullet-list-content:hover  .premium-bullet-list-icon-text p' => 'text-shadow: none !important; color: {{VALUE}} !important;',
-					$hover_selector . '{{WRAPPER}} .premium-bullet-list-content:hover svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					$hover_selector . '{{WRAPPER}} .premium-bullet-list-content:hover svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 				),
 			)
 		);
@@ -1987,7 +1987,7 @@ class Premium_Icon_List extends Widget_Base {
 						'default' => Global_Colors::COLOR_PRIMARY,
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-bullet-list-content:hover .premium-drawable-icon *, {{WRAPPER}} .premium-bullet-list-content:hover svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .premium-bullet-list-content:hover .premium-drawable-icon *, {{WRAPPER}} .premium-bullet-list-content:hover svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);

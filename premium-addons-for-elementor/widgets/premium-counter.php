@@ -843,7 +843,7 @@ class Premium_Counter extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-counter-area .premium-counter-icon .icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} .premium-counter-icon svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} .premium-counter-icon svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'premium_counter_icon_image' => array( 'icon', 'svg' ),
@@ -865,7 +865,7 @@ class Premium_Counter extends Widget_Base {
 						'premium_counter_icon_image' => array( 'icon', 'svg' ),
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .premium-drawable-icon *, {{WRAPPER}} svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);

@@ -1,5 +1,14 @@
 == Changelog ==
 
+= 4.11.113 - 15/10/2026 =
+
+- Tweak: Improved Premium Templates library loading speed in the editor.
+- Tweak: Improved editor performance by loading Lottie library only when it's used on the page.
+- Tweak: Improved editor performance for Global Tooltips addon.
+- Fixed: Disabled widgets getting enabled again after saving settings from Premium Addons dashboard.
+- Fixed: Icon color and stroke styles applied to Lottie animations in Heading, Image Separator, Counter, Progress Bar, Icon List, Pricing Table, Recent Posts Notification, Post Ticker, Modal Box and Woo CTA widgets.
+- Fixed: Global Tooltips not removed in the editor after disabling it or changing the CSS selector.
+
 = 4.11.112 - 13/10/2026 =
 
 - New: Added Floating Effects support for Containers.

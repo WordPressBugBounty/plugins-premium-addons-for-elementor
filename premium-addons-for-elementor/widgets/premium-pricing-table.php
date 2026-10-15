@@ -1156,7 +1156,7 @@ class Premium_Pricing_Table extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} {{CURRENT_ITEM}} .premium-pricing-feature-icon' => 'color: {{VALUE}}',
-					'{{WRAPPER}} {{CURRENT_ITEM}}.premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}}.premium-pricing-list-item svg:not([class*="premium-"])' => 'fill: {{VALUE}} !important',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}}.premium-pricing-list-item svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}} !important',
 				),
 				'condition' => array(
 					'icon_type' => 'icon',
@@ -1175,7 +1175,7 @@ class Premium_Pricing_Table extends Widget_Base {
 						'icon_type' => array( 'icon', 'svg' ),
 					),
 					'selectors' => array(
-						'{{WRAPPER}} {{CURRENT_ITEM}}.premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}}.premium-pricing-list-item svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} {{CURRENT_ITEM}}.premium-drawable-icon *, {{WRAPPER}} {{CURRENT_ITEM}}.premium-pricing-list-item svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);
@@ -1876,7 +1876,7 @@ class Premium_Pricing_Table extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-pricing-icon-container i'  => 'color: {{VALUE}};',
-					'{{WRAPPER}} .premium-pricing-icon-container .premium-drawable-icon *, {{WRAPPER}} .premium-pricing-icon-container svg:not([class*="premium-"])'  => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .premium-pricing-icon-container .premium-drawable-icon *, {{WRAPPER}} .premium-pricing-icon-container svg:not([class*="premium-"]):not(.premium-lottie-animation svg)'  => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'icon_type' => 'icon',
@@ -1897,7 +1897,7 @@ class Premium_Pricing_Table extends Widget_Base {
 						'icon_type' => array( 'icon', 'svg' ),
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .premium-pricing-icon-container .premium-drawable-icon *, {{WRAPPER}} .premium-pricing-icon-container svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .premium-pricing-icon-container .premium-drawable-icon *, {{WRAPPER}} .premium-pricing-icon-container svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);
@@ -2695,7 +2695,7 @@ class Premium_Pricing_Table extends Widget_Base {
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .premium-pricing-feature-icon'  => 'color: {{VALUE}}',
-					'{{WRAPPER}} .premium-pricing-list-item .premium-drawable-icon *, {{WRAPPER}} .premium-pricing-list-item svg:not([class*="premium-"])'  => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .premium-pricing-list-item .premium-drawable-icon *, {{WRAPPER}} .premium-pricing-list-item svg:not([class*="premium-"]):not(.premium-lottie-animation svg)'  => 'fill: {{VALUE}};',
 				),
 			)
 		);

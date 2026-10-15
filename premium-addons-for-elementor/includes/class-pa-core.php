@@ -184,6 +184,7 @@ if ( ! class_exists( 'PA_Core' ) ) {
 			delete_option( 'pa_review_notice' );
 			delete_option( 'pa-connect-ai-not' );
 			delete_option( 'pa-angie-not' );
+			delete_option( 'pa_mcp_videos_seen' );
 
 			// Per-user feature-notice dismissals, network-wide.
 			delete_metadata( 'user', 0, 'pa_dismissed_notices', '', true );

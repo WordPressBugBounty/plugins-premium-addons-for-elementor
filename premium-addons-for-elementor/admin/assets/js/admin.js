@@ -60,44 +60,6 @@
 			self.initMcpConfig();
 
 			self.initAiAbilities();
-
-			self.initMcpNews();
-		};
-
-		// What's New sidebar: opening the AI Abilities tab marks the feed as seen
-		// and clears the submenu dot.
-		self.initMcpNews = function () {
-			var $news = $("#pa-section-ai-abilities .pa-mcp-news[data-unread]");
-
-			if (!$news.length) {
-				return;
-			}
-
-			function markSeen() {
-				if (!$news.attr("data-unread")) {
-					return;
-				}
-
-				$news.removeAttr("data-unread");
-				$("#adminmenu .pa-mcp-news-dot").remove();
-
-				$.ajax({
-					url: settings.ajaxurl,
-					type: "POST",
-					data: {
-						action: "pa_mcp_news_seen",
-						security: settings.nonce,
-					},
-				});
-			}
-
-			$(window)
-				.on("hashchange", function () {
-					if (window.location.hash.indexOf("tab=ai-abilities") > -1) {
-						markSeen();
-					}
-				})
-				.trigger("hashchange");
 		};
 
 		// AI Abilities tab: accordion and per-category/per-ability persistence.
@@ -475,9 +437,7 @@
 						disabled = response.data.disabled;
 
 					$.each(disabled, function (index, key) {
-						$("#pa-modules .pa-switcher." + key)
-							.find("input")
-							.prop("checked", false);
+						$('#pa-modules input[name="' + key + '"]').prop("checked", false);
 					});
 
 					swal

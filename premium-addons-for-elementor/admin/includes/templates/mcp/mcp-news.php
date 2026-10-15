@@ -5,7 +5,6 @@
  * this file into its own scope only when the feed holds videos.
  */
 
-use PremiumAddons\Admin\Includes\MCP_News;
 use PremiumAddons\Includes\Helper_Functions;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<aside class="pa-mcp-news"<?php echo MCP_News::has_unread() ? ' data-unread="1"' : ''; ?>>
+<aside class="pa-mcp-news">
 
 	<h3 class="pa-mcp-news-title"><?php esc_html_e( "What's New", 'premium-addons-for-elementor' ); ?></h3>
 

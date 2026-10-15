@@ -84,20 +84,7 @@ abstract class Premium_Templates_Source_Base {
 	 * @param array $value
 	 */
 	public function set_templates_cache( $value ) {
-
-		$localhost = array(
-			'127.0.0.1',
-			'::1',
-		);
-
-		if ( ! isset( $_SERVER['REMOTE_ADDR'] ) ) {
-			return;
-		}
-
-		// Load templates remotely if localhost.
-		if ( ! in_array( $_SERVER['REMOTE_ADDR'], $localhost ) ) {
-			set_transient( $this->templates_key(), $value, $this->transient_lifetime() );
-		}
+		set_transient( $this->templates_key(), $value, $this->transient_lifetime() );
 	}
 
 	/**

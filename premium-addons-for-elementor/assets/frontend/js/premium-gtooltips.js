@@ -7,8 +7,48 @@
 	 */
 
 	$(window).on("elementor/frontend/init", function () {
+		// Elementor keeps the element wrapper when the switcher is turned off in the editor,
+		// so the tooltip created while it was on must be removed explicitly.
+		function destroyGlobalTooltip($scope) {
+			var $target = $scope.data("paTooltipTarget"),
+				id = $scope.data("paTooltipId"),
+				observer = $scope.data("paTooltipObserver");
+
+			if (!$target) {
+				return;
+			}
+
+			if (observer) {
+				observer.disconnect();
+			}
+
+			// Not filtered by the .tooltipstered class: re-rendered editor markup can carry
+			// the class on nodes that have no tooltipster instance, and destroy throws on those.
+			$target
+				.filter(function () {
+					return 0 !== $.tooltipster.instances(this).length;
+				})
+				.tooltipster("destroy");
+
+			$target.removeAttr("pa-tooltip-selector data-tooltip-content");
+
+			$scope
+				.removeAttr("data-tooltip-content")
+				.off("mousemove.paTooltipsFollower" + id)
+				.off("mouseenter.paRand" + id + " click.paRand" + id)
+				.removeData("paTooltipTarget paTooltipId paTooltipObserver");
+		}
+
+		function isSameTarget($previous, $current) {
+			return (
+				$previous.length === $current.length &&
+				$previous.filter($current).length === $previous.length
+			);
+		}
+
 		var premiumGlobalTooltipsHandler = function ($scope, $) {
 			if (!$scope.hasClass("premium-global-tooltips-yes")) {
+				destroyGlobalTooltip($scope);
 				return;
 			}
 
@@ -41,6 +81,8 @@
 				});
 
 				eleObserver.observe($scope[0]);
+
+				$scope.data("paTooltipObserver", eleObserver);
 			}
 
 			/**
@@ -108,17 +150,25 @@
 				settings.triggerHover = triggerHover;
 
 				var $tooltipTarget =
-					"" !== settings.target
-						? $scope
-								.attr("data-tooltip-content", "#tooltip_content-" + id)
-								.find(settings.target)
-						: $scope.attr("data-tooltip-content", "#tooltip_content-" + id);
+						"" !== settings.target ? $scope.find(settings.target) : $scope,
+					$previousTarget = $scope.data("paTooltipTarget");
+
+				if ($previousTarget && !isSameTarget($previousTarget, $tooltipTarget)) {
+					destroyGlobalTooltip($scope);
+				}
+
+				// Tooltipster reads its initial content from this attribute on the node it is attached to.
+				$scope
+					.add($tooltipTarget)
+					.attr("data-tooltip-content", "#tooltip_content-" + id);
 				// init tooltipster.
 				if (elementorFrontend.isEditMode()) {
 					closeTooltips($tooltipTarget);
 				}
 
 				$tooltipTarget.tooltipster(getTooltipsterSettings(settings));
+
+				$scope.data({ paTooltipTarget: $tooltipTarget, paTooltipId: id });
 
 				// if ('' !== settings.target) {
 				// 	$scope.attr('data-tooltip-content', '#tooltip_content-' + id).find(settings.target).tooltipster(getTooltipsterSettings(settings));

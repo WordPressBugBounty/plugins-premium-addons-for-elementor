@@ -1007,7 +1007,7 @@ class Woo_CTA extends Widget_Base {
 					),
 					'selectors'  => array(
 						'{{WRAPPER}} .premium-woo-cta-button i' => 'color: {{VALUE}};',
-						'{{WRAPPER}} .premium-woo-btn-icon *' => 'fill: {{VALUE}}',
+						'{{WRAPPER}} .premium-woo-btn-icon:not(.premium-lottie-animation) *' => 'fill: {{VALUE}}',
 					),
 					'conditions' => array(
 						'relation' => 'or',
@@ -1039,7 +1039,7 @@ class Woo_CTA extends Widget_Base {
 						'default' => Global_Colors::COLOR_ACCENT,
 					),
 					'selectors'  => array(
-						'{{WRAPPER}} .premium-woo-btn-icon *' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .premium-woo-btn-icon:not(.premium-lottie-animation) *' => 'stroke: {{VALUE}};',
 					),
 					'conditions' => array(
 						'relation' => 'or',
@@ -1169,7 +1169,7 @@ class Woo_CTA extends Widget_Base {
 				),
 				'selectors'  => array(
 					'{{WRAPPER}} .premium-woo-cta-button:hover i' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .premium-woo-cta-button:hover .premium-woo-btn-icon *' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .premium-woo-cta-button:hover .premium-woo-btn-icon:not(.premium-lottie-animation) *' => 'fill: {{VALUE}}',
 				),
 				'conditions' => array(
 					'relation' => 'or',

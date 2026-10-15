@@ -2082,7 +2082,7 @@ class Premium_Notifications extends Widget_Base {
 				'label'     => __( 'Icon/Text Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .pa-rec-not-icon-wrap .premium-drawable-icon *, {{WRAPPER}} .pa-rec-not-icon-wrap svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .pa-rec-not-icon-wrap .premium-drawable-icon *, {{WRAPPER}} .pa-rec-not-icon-wrap svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .premium-not-icon-text' => 'color: {{VALUE}};',
 				),
 				'condition' => array(
@@ -2104,7 +2104,7 @@ class Premium_Notifications extends Widget_Base {
 						'icon_type' => array( 'icon', 'svg' ),
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .pa-rec-not-icon-wrap .premium-drawable-icon *, {{WRAPPER}} .pa-rec-not-icon-wrap svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .pa-rec-not-icon-wrap .premium-drawable-icon *, {{WRAPPER}} .pa-rec-not-icon-wrap svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);
@@ -2226,7 +2226,7 @@ class Premium_Notifications extends Widget_Base {
 				'label'     => __( 'Icon/Text Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .pa-rec-not-icon-wrap:hover *, {{WRAPPER}} .pa-rec-not-icon-wrap:hover svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .pa-rec-not-icon-wrap:hover *, {{WRAPPER}} .pa-rec-not-icon-wrap:hover svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .pa-rec-not-icon-wrap:hover .premium-not-icon-text' => 'color: {{VALUE}};',
 				),
 				'condition' => array(
@@ -2248,7 +2248,7 @@ class Premium_Notifications extends Widget_Base {
 						'icon_type' => array( 'icon', 'svg' ),
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .pa-rec-not-icon-wrap:hover .premium-drawable-icon *, {{WRAPPER}} .pa-rec-not-icon-wrap:hover svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .pa-rec-not-icon-wrap:hover .premium-drawable-icon *, {{WRAPPER}} .pa-rec-not-icon-wrap:hover svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);
@@ -2737,7 +2737,7 @@ class Premium_Notifications extends Widget_Base {
 				'label'     => __( 'Icon Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .pa-rec-title-icon-wrap .premium-drawable-icon *, {{WRAPPER}} .pa-rec-title-icon-wrap svg:not([class*="premium-"])' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .pa-rec-title-icon-wrap .premium-drawable-icon *, {{WRAPPER}} .pa-rec-title-icon-wrap svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'fill: {{VALUE}};',
 				),
 				'condition' => array(
 					'header_icon_sw'    => 'yes',
@@ -2760,7 +2760,7 @@ class Premium_Notifications extends Widget_Base {
 						'header_icon_type' => array( 'icon', 'svg' ),
 					),
 					'selectors' => array(
-						'{{WRAPPER}} .pa-rec-title-icon-wrap .premium-drawable-icon *, {{WRAPPER}} .pa-rec-title-icon-wrap svg:not([class*="premium-"])' => 'stroke: {{VALUE}};',
+						'{{WRAPPER}} .pa-rec-title-icon-wrap .premium-drawable-icon *, {{WRAPPER}} .pa-rec-title-icon-wrap svg:not([class*="premium-"]):not(.premium-lottie-animation svg)' => 'stroke: {{VALUE}};',
 					),
 				)
 			);

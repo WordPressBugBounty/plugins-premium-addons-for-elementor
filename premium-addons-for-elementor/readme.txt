@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.112
+Stable Tag: 4.11.113
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,15 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.113 - 15/10/2026 =
+
+- Tweak: Improved Premium Templates library loading speed in the editor.
+- Tweak: Improved editor performance by loading Lottie library only when it's used on the page.
+- Tweak: Improved editor performance for Global Tooltips addon.
+- Fixed: Disabled widgets getting enabled again after saving settings from Premium Addons dashboard.
+- Fixed: Icon color and stroke styles applied to Lottie animations in Heading, Image Separator, Counter, Progress Bar, Icon List, Pricing Table, Recent Posts Notification, Post Ticker, Modal Box and Woo CTA widgets.
+- Fixed: Global Tooltips not removed in the editor after disabling it or changing the CSS selector.
 
 = 4.11.112 - 13/10/2026 =
 

@@ -19,15 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class MCP_News {
 
-	// Kill switch for the sidebar and the submenu dot.
+	// Kill switch for the sidebar.
 	const ENABLED = true;
 
 	const ENDPOINT = 'https://premiumaddons.com/wp-json/mcp-videos/v2/get';
 
 	// New keys, not the pa_mcp_news_* ones: those still hold the retired articles feed.
 	const VIDEOS_OPTION = 'pa_mcp_videos';
-
-	const SEEN_OPTION = 'pa_mcp_videos_seen';
 
 	const FRESH_TRANSIENT = 'pa_mcp_videos_fresh';
 
@@ -69,31 +67,6 @@ class MCP_News {
 		$videos = get_option( self::VIDEOS_OPTION, array() );
 
 		return is_array( $videos ) ? $videos : array();
-	}
-
-	/**
-	 * Whether the cache holds a video the site has not seen yet.
-	 * Reads the cache only — rendering the admin menu must never fetch.
-	 *
-	 * @since 4.11.102
-	 * @access public
-	 *
-	 * @return bool
-	 */
-	public static function has_unread() {
-
-		return ! empty( array_diff( self::get_cached_videos(), get_option( self::SEEN_OPTION, array() ) ) );
-	}
-
-	/**
-	 * Mark the cached videos as seen.
-	 *
-	 * @since 4.11.102
-	 * @access public
-	 */
-	public static function mark_seen() {
-
-		update_option( self::SEEN_OPTION, self::get_cached_videos(), false );
 	}
 
 	/**
