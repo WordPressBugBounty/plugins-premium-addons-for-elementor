@@ -21,6 +21,18 @@ class Addons_Integration {
 	use AJAX_Helper;
 
 	/**
+	 * Vendor script handles the editor preview loads only when an element needs them,
+	 * keyed by the name pa-preview-libs.js loads them by.
+	 *
+	 * @var array
+	 */
+	const PREVIEW_ON_DEMAND_LIBS = array(
+		'isotope' => 'isotope-js',
+		'lottie'  => 'lottie-js',
+		'luxon'   => 'pa-luxon',
+	);
+
+	/**
 	 * Class instance
 	 *
 	 * @var instance
@@ -89,7 +101,7 @@ class Addons_Integration {
 		add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_preview_styles' ) );
 
 		// Runs after every widget and addon has enqueued its preview scripts.
-		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'load_preview_lottie_on_demand' ), 999 );
+		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'load_preview_libs_on_demand' ), 999 );
 		add_action( 'elementor/editor/before_enqueue_styles', array( $this, 'enqueue_editor_styles' ) );
 
 		// Load Editor JS Files.
@@ -228,39 +240,56 @@ class Addons_Integration {
 	}
 
 	/**
-	 * Load Lottie in the editor preview only when an element needs it.
+	 * Load the PREVIEW_ON_DEMAND_LIBS libraries in the editor preview only when an element needs them.
 	 *
 	 * Elementor enqueues the script dependencies of every registered widget in the
-	 * preview, so the ~250 KB Lottie library loaded on every editor load.
+	 * preview, so these libraries loaded on every editor load. Consumers now either ask
+	 * paPreviewLibs.load() for them or call a stand-in that loads the real library
+	 * ($.fn.isotope in pa-preview-libs.js, premiumLottieAnimations in pa-lottie-loader.js).
 	 *
-	 * @since 4.11.113
+	 * @since 4.11.114
 	 * @access public
 	 */
-	public function load_preview_lottie_on_demand() {
+	public function load_preview_libs_on_demand() {
 
-		if ( ! wp_script_is( 'lottie-js', 'enqueued' ) ) {
+		$sources = array();
+
+		foreach ( self::PREVIEW_ON_DEMAND_LIBS as $name => $handle ) {
+
+			if ( ! wp_script_is( $handle, 'enqueued' ) ) {
+				continue;
+			}
+
+			$script = wp_scripts()->query( $handle, 'registered' );
+
+			wp_dequeue_script( $handle );
+
+			$sources[ $name ] = add_query_arg( 'ver', $script->ver, $script->src );
+		}
+
+		if ( empty( $sources ) ) {
 			return;
 		}
 
-		$lottie = wp_scripts()->query( 'lottie-js', 'registered' );
-
-		wp_dequeue_script( 'lottie-js' );
-
 		wp_enqueue_script(
-			'pa-lottie-loader',
-			PREMIUM_ADDONS_URL . 'assets/editor/js/pa-lottie-loader.js',
+			'pa-preview-libs',
+			PREMIUM_ADDONS_URL . 'assets/editor/js/pa-preview-libs.js',
 			array( 'jquery' ),
 			PREMIUM_ADDONS_VERSION,
 			true
 		);
 
-		wp_localize_script(
-			'pa-lottie-loader',
-			'paLottieLoader',
-			array(
-				'src' => add_query_arg( 'ver', $lottie->ver, $lottie->src ),
-			)
-		);
+		wp_localize_script( 'pa-preview-libs', 'paPreviewLibsSrc', $sources );
+
+		if ( isset( $sources['lottie'] ) ) {
+			wp_enqueue_script(
+				'pa-lottie-loader',
+				PREMIUM_ADDONS_URL . 'assets/editor/js/pa-lottie-loader.js',
+				array( 'jquery', 'pa-preview-libs' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+		}
 	}
 
 	/**

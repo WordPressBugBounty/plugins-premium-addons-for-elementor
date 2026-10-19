@@ -1,5 +1,14 @@
 (function ($) {
 	var PremiumWorldClockHandler = function ($scope, $) {
+		// The editor preview loads Luxon on demand (pa-preview-libs.js).
+		if (!window.luxon) {
+			window.paPreviewLibs.load("luxon").then(function () {
+				PremiumWorldClockHandler($scope, $);
+			});
+
+			return;
+		}
+
 		var _ = luxon,
 			id = $scope.data("id"),
 			settings = $scope

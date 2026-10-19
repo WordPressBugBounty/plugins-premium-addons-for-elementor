@@ -109,12 +109,11 @@ class Equal_Height {
 		$element->add_control(
 			'premium_eq_height_switcher',
 			array(
-				'label'              => __( 'Enable Equal Height', 'premium-addons-for-elementor' ),
-				'type'               => Controls_Manager::SWITCHER,
-				'return_value'       => 'yes',
-				'render_type'        => 'template',
-				'prefix_class'       => 'premium-equal-height-',
-				'frontend_available' => true,
+				'label'        => __( 'Enable Equal Height', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'render_type'  => 'template',
+				'prefix_class' => 'premium-equal-height-',
 			)
 		);
 
@@ -137,13 +136,12 @@ class Equal_Height {
 		$element->add_control(
 			'premium_eq_height_target',
 			array(
-				'label'              => __( 'Widgets', 'premium-addons-for-elementor' ),
-				'type'               => Premium_Select::TYPE,
-				'render_type'        => 'template',
-				'label_block'        => true,
-				'multiple'           => true,
-				'frontend_available' => true,
-				'condition'          => array(
+				'label'       => __( 'Widgets', 'premium-addons-for-elementor' ),
+				'type'        => Premium_Select::TYPE,
+				'render_type' => 'template',
+				'label_block' => true,
+				'multiple'    => true,
+				'condition'   => array(
 					'premium_eq_height_switcher' => 'yes',
 					'premium_eq_height_type'     => 'widget',
 				),

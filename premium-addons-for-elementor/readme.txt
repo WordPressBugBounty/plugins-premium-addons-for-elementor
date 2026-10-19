@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.113
+Stable Tag: 4.11.114
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,17 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.114 - 19/10/2026 =
+
+- Tweak: Added Slides Direction option to Carousel widget.
+- Tweak: Improved editor performance by loading Isotope and Luxon libraries only when they're used on the page.
+- Tweak: Improved editor performance for Display Conditions, Shape Divider and Wrapper Link addons.
+- Fixed: Vertical navigation arrows not centered in Carousel widget.
+- Fixed: Headline height jumping while typing in Animated Text widget when cursor is hidden.
+- Fixed: Space between titles removed in Dual Heading widget when Minimal mask animation is enabled.
+- Fixed: Equal Height addon slowing down the editor after editing the element multiple times.
+- Fixed: Shape Divider not adjusting on window resize when multiple dividers are used on the same page.
 
 = 4.11.113 - 15/10/2026 =
 

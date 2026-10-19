@@ -1,40 +1,14 @@
 (function ($) {
-
-	$(window).on('elementor/frontend/init', function () {
-
+	$(window).on("elementor/frontend/init", function () {
 		//Time range condition cookie.
-		var localTimeZone = new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1],
-			isSecured = (document.location.protocol === 'https:') ? 'secure' : '';
+		var timeZoneMatch = new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/);
 
-		if (-1 != localTimeZone.indexOf("(")) {
-			localTimeZone = localTimeZone.split('(')[0];
-		}
+		if (!timeZoneMatch) return;
 
-		document.cookie = "localTimeZone=" + localTimeZone + ";SameSite=Strict;" + isSecured;
+		var localTimeZone = timeZoneMatch[1].split("(")[0],
+			isSecured = document.location.protocol === "https:" ? "secure" : "";
 
-		var premiumDisplayConditionsHandler = function ($scope) {
-
-			if (!$scope.hasClass('pa-display-conditions-yes'))
-				return;
-
-			var isEditMode = elementorFrontend.isEditMode();
-
-			if (isEditMode) {
-
-				$scope.append('<div class="pa-display-conditions-label">DC</div>');
-
-				$scope.find('.pa-display-conditions-label').on('click', function (e) {
-
-					window.PAWidgetsEditor.activateControlsTab('section_pa_display_conditions', 'advanced');
-
-				});
-
-			}
-
-		};
-
-		elementorFrontend.hooks.addAction("frontend/element_ready/global", premiumDisplayConditionsHandler);
-
+		document.cookie =
+			"localTimeZone=" + localTimeZone + ";path=/;SameSite=Strict;" + isSecured;
 	});
-
 })(jQuery);

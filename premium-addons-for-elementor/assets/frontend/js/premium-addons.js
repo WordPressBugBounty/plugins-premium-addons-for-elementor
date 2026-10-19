@@ -1767,6 +1767,12 @@
 				$scope.find("#premium-carousel-nav-" + widgetID).slick(navOptions);
 			}
 
+			function isRtl() {
+				return settings.direction
+					? "rtl" === settings.direction
+					: elementorFrontend.config.is_rtl;
+			}
+
 			function getSlickOptions(settings) {
 				var options = {
 					vertical: settings.vertical,
@@ -1776,7 +1782,7 @@
 					speed: settings.speed,
 					rows: 0,
 					draggable: settings.draggable,
-					rtl: !settings.vertical && elementorFrontend.config.is_rtl,
+					rtl: !settings.vertical && isRtl(),
 				};
 
 				if (settings.hasNavSlider) {
@@ -2028,28 +2034,6 @@
 						}
 					});
 				});
-			}
-
-			var marginFix = {
-				element: $("a.ver-carousel-arrow"),
-				getWidth: function () {
-					var width = this.element.outerWidth();
-					return width / 2;
-				},
-				setWidth: function (type) {
-					type = type || "vertical";
-					if (type == "vertical") {
-						this.element.css("margin-left", "-" + this.getWidth() + "px");
-					} else {
-						this.element.css("margin-top", "-" + this.getWidth() + "px");
-					}
-				},
-			};
-
-			if (!settings.hasNavSlider) {
-				marginFix.setWidth();
-				marginFix.element = $("a.carousel-arrow");
-				//marginFix.setWidth("horizontal");
 			}
 
 			$(document).ready(function () {
@@ -3652,6 +3636,13 @@
 					$(this).empty().append(frag);
 				});
 
+			// Mask makes both title spans inline-block, which trims the space inside them.
+			var $firstSpan = $scope.find(".premium-dual-header-first-span");
+
+			if ($firstSpan.next().length) {
+				$firstSpan.after(document.createTextNode(" "));
+			}
+
 			// Using IntersectionObserverAPI.
 			var eleObserver = new IntersectionObserver(function (entries) {
 				entries.forEach(function (entry) {
@@ -3808,6 +3799,15 @@
 		});
 
 		var PremiumWorldClockHandler = function ($scope, $) {
+			// The editor preview loads Luxon on demand (pa-preview-libs.js).
+			if (!window.luxon) {
+				window.paPreviewLibs.load("luxon").then(function () {
+					PremiumWorldClockHandler($scope, $);
+				});
+
+				return;
+			}
+
 			var _ = luxon,
 				id = $scope.data("id"),
 				settings = $scope

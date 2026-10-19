@@ -1051,6 +1051,14 @@ class Assets_Manager {
 		);
 
 		wp_register_style(
+			'pa-mask',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/minimal-mask' . $suffix . '.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
+		wp_register_style(
 			'pa-load-animations',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/load-animations' . $suffix . '.css',
 			array(),

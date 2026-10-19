@@ -103,6 +103,7 @@ class Premium_Title extends Widget_Base {
 		return array(
 			'pa-glass',
 			'pa-btn',
+			'pa-mask',
 			'premium-addons',
 		);
 	}

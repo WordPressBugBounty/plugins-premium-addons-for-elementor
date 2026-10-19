@@ -343,21 +343,18 @@ class PA_Controls_Handler {
 	 */
 	public function should_render( $should_render, $element ) {
 
-		$settings = $element->get_settings_for_display();
-
-		if ( 'yes' === $element->get_settings_for_display( 'pa_display_conditions_switcher' ) ) {
-
-			$element_id      = $element->get_id();
-			$conditions_list = $settings['pa_condition_repeater'];
-			$action          = $settings['pa_display_action'];
-
-			$this->store_condition_results( $settings, $element_id, $conditions_list );
-
-			return $this->check_visiblity( $element_id, $settings['pa_display_when'], $action );
-
+		if ( 'yes' !== $element->get_settings( 'pa_display_conditions_switcher' ) ) {
+			return $should_render;
 		}
 
-		return $should_render;
+		$settings        = $element->get_settings_for_display();
+		$element_id      = $element->get_id();
+		$conditions_list = $settings['pa_condition_repeater'];
+		$action          = $settings['pa_display_action'];
+
+		$this->store_condition_results( $settings, $element_id, $conditions_list );
+
+		return $this->check_visiblity( $element_id, $settings['pa_display_when'], $action );
 	}
 
 	/**

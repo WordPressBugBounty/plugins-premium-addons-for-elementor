@@ -599,6 +599,27 @@ class Premium_Carousel extends Widget_Base {
 		);
 
 		$this->add_control(
+			'slides_direction',
+			array(
+				'label'        => __( 'Slides Direction', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'prefix_class' => 'pa-carousel-dir-',
+				'render_type'  => 'template',
+				'options'      => array(
+					'default' => __( 'Default', 'premium-addons-for-elementor' ),
+					'ltr'     => __( 'Left to Right', 'premium-addons-for-elementor' ),
+					'rtl'     => __( 'Right to Left', 'premium-addons-for-elementor' ),
+				),
+				'default'      => 'default',
+				'description'  => __( 'Default follows the site language direction.', 'premium-addons-for-elementor' ),
+				'condition'    => array(
+					'premium_carousel_slider_type' => 'horizontal',
+					'thumbnail_slider!'            => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
 			'premium_carousel_responsive_desktop',
 			array(
 				'label'     => __( 'Desktop Slides', 'premium-addons-for-elementor' ),
@@ -3320,6 +3341,10 @@ class Premium_Carousel extends Widget_Base {
 			'mouseTilt'          => 'true' === $settings['mouse_tilt'],
 			'mouseTiltRev'       => 'true' === $settings['mouse_tilt_rev'],
 		);
+
+		if ( in_array( $settings['slides_direction'], array( 'ltr', 'rtl' ), true ) ) {
+			$carousel_settings['direction'] = $settings['slides_direction'];
+		}
 
 		if ( $has_nav_slider ) {
 			// Thumbnail slider settings.

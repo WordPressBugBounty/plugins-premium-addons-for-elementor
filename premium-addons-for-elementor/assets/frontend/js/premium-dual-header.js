@@ -32,6 +32,13 @@
 				$(this).text("").append(frag);
 			});
 
+		// Mask makes both title spans inline-block, which trims the space inside them.
+		var $firstSpan = $scope.find(".premium-dual-header-first-span");
+
+		if ($firstSpan.next().length) {
+			$firstSpan.after(document.createTextNode(" "));
+		}
+
 		// Using IntersectionObserverAPI.
 		var eleObserver = new IntersectionObserver(function (entries) {
 			entries.forEach(function (entry) {

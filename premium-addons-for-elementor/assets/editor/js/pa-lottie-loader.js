@@ -1,26 +1,12 @@
 // Loads lottie.js into the editor preview only once an element on the canvas needs it,
-// instead of on every editor load (see Addons_Integration::load_preview_lottie_on_demand()).
+// instead of on every editor load (see Addons_Integration::load_preview_libs_on_demand()).
 (function ($) {
 	"use strict";
 
-	var lottieRequest = null;
-
 	function loadLottie() {
-		if (!lottieRequest) {
-			lottieRequest = new Promise(function (resolve, reject) {
-				var script = document.createElement("script");
+		window.paLottieLoadedOnDemand = true;
 
-				window.paLottieLoadedOnDemand = true;
-
-				script.src = window.paLottieLoader.src;
-				script.onload = resolve;
-				script.onerror = reject;
-
-				document.body.appendChild(script);
-			});
-		}
-
-		return lottieRequest;
+		return window.paPreviewLibs.load("lottie");
 	}
 
 	function usesLottie($scope) {

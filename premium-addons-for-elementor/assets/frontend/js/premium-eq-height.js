@@ -1,89 +1,115 @@
 (function ($) {
+	$(window).on("elementor/frontend/init", function () {
+		var scrollObservers = {};
 
-    $(window).on('elementor/frontend/init', function () {
+		// The editor re-renders the element with the same ID, so the previous render's listeners must go.
+		// Only in the editor: on the frontend a template placed twice repeats the ID.
+		function releasePreviousRender(id) {
+			$(window).off("resize.premiumEqHeight-" + id);
 
-        var PremiumEqualHeightHandler = function ($scope) {
+			if (scrollObservers[id]) {
+				scrollObservers[id].disconnect();
+				delete scrollObservers[id];
+			}
+		}
 
-            if (!$scope.hasClass("premium-equal-height-yes"))
-                return;
+		var PremiumEqualHeightHandler = function ($scope) {
+			if (elementorFrontend.isEditMode())
+				releasePreviousRender($scope.data("id"));
 
-            var timeToWait = $scope.find('.premium-carousel-inner, ul.products').length ? 1500 : 10;
+			if (!$scope.hasClass("premium-equal-height-yes")) return;
 
-            setTimeout(function () {
-                premiumEqHeightHandler($scope);
-            }, timeToWait);
-        }
+			var timeToWait = $scope.find(".premium-carousel-inner, ul.products")
+				.length
+				? 1500
+				: 10;
 
-        function premiumEqHeightHandler($scope) {
+			setTimeout(function () {
+				// The editor may have re-rendered the element during the wait.
+				if (!$.contains(document, $scope[0])) return;
 
-            var section = $scope,
-                editMode = elementorFrontend.isEditMode(),
-                dataHolder = (editMode) ? section.find('#premium-temp-equal-height-' + section.data('id')) : section,
-                addonSettings = dataHolder.data('pa-eq-height');
+				premiumEqHeightHandler($scope);
+			}, timeToWait);
+		};
 
-            if (!addonSettings)
-                return;
+		function premiumEqHeightHandler($scope) {
+			var section = $scope,
+				id = section.data("id"),
+				editMode = elementorFrontend.isEditMode(),
+				dataHolder = editMode
+					? section.find("#premium-temp-equal-height-" + id)
+					: section,
+				addonSettings = dataHolder.data("pa-eq-height");
 
-            var enableOn = addonSettings.enableOn;
+			if (!addonSettings) return;
 
-            if (0 === Object.keys(addonSettings).length) {
-                return false;
-            }
+			var enableOn = addonSettings.enableOn;
 
-            if ('scroll' === addonSettings.trigger) {
-                // elementorFrontend.waypoint($scope, function () {
-                //     triggerEqualHeight();
-                // });
-                var eleObserver = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            triggerEqualHeight();
-                            eleObserver.unobserve(entry.target); // to only execute the callback func once.
-                        }
-                    });
-                });
+			if (0 === Object.keys(addonSettings).length) {
+				return false;
+			}
 
-                eleObserver.observe($scope[0]);
-            } else {
-                triggerEqualHeight();
-            }
+			if ("scroll" === addonSettings.trigger) {
+				var eleObserver = new IntersectionObserver(function (entries) {
+					if (
+						entries.some(function (entry) {
+							return entry.isIntersecting;
+						})
+					) {
+						triggerEqualHeight();
+						eleObserver.disconnect();
+						delete scrollObservers[id];
+					}
+				});
 
-            function matchHeight(selector) {
-                var $targets = section.find(selector),
-                    heights = [];
+				scrollObservers[id] = eleObserver;
+				eleObserver.observe($scope[0]);
+			} else {
+				triggerEqualHeight();
+			}
 
-                //If the current widget doesn't have elementor-widget-container wrapper (Optimize Markup), then apply the effect on the outer container.
-                if ($targets.length < 1) {
-                    selector = selector.replace('.elementor-widget-container', '');
-                    $targets = section.find(selector);
-                }
+			function matchHeight(selector) {
+				var $targets = section.find(selector),
+					heights = [];
 
-                $targets.css('minHeight', 'unset');
+				//If the current widget doesn't have elementor-widget-container wrapper (Optimize Markup), then apply the effect on the outer container.
+				if ($targets.length < 1) {
+					selector = selector.replace(".elementor-widget-container", "");
+					$targets = section.find(selector);
+				}
 
-                jQuery.each($targets, function (key, valueObj) {
-                    heights.push($(valueObj).outerHeight(true));
-                });
+				$targets.css("minHeight", "unset");
 
-                $targets.css('minHeight', Math.max.apply(null, heights));
-            }
+				jQuery.each($targets, function (key, valueObj) {
+					heights.push($(valueObj).outerHeight(true));
+				});
 
-            function triggerEqualHeight() {
-                if (enableOn.includes(elementorFrontend.getCurrentDeviceMode()) && 0 !== addonSettings.target.length) {
+				$targets.css("minHeight", Math.max.apply(null, heights));
+			}
 
-                    addonSettings.target.forEach(function (target) {
-                        matchHeight(target);
-                    });
-                } else {
-                    section.find(addonSettings.target).css('minHeight', 'unset');
-                }
-            }
+			function triggerEqualHeight() {
+				if (
+					enableOn.includes(elementorFrontend.getCurrentDeviceMode()) &&
+					0 !== addonSettings.target.length
+				) {
+					addonSettings.target.forEach(function (target) {
+						matchHeight(target);
+					});
+				} else {
+					section.find(addonSettings.target).css("minHeight", "unset");
+				}
+			}
 
-            $(window).on('resize.premiumEqHeight', triggerEqualHeight);
-        };
+			$(window).on("resize.premiumEqHeight-" + id, triggerEqualHeight);
+		}
 
-        elementorFrontend.hooks.addAction("frontend/element_ready/section", PremiumEqualHeightHandler);
-        elementorFrontend.hooks.addAction("frontend/element_ready/container", PremiumEqualHeightHandler);
-
-    });
-
+		elementorFrontend.hooks.addAction(
+			"frontend/element_ready/section",
+			PremiumEqualHeightHandler,
+		);
+		elementorFrontend.hooks.addAction(
+			"frontend/element_ready/container",
+			PremiumEqualHeightHandler,
+		);
+	});
 })(jQuery);

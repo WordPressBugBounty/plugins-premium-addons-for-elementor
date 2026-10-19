@@ -39,13 +39,13 @@
 	display: none;
 }
 
-.pa-display-conditions-label {
+.pa-display-conditions-yes::after {
 	position: absolute;
 	content: "DC";
 	background-color: rgb(240, 171, 252);
 	color: #000;
 	top: 0;
-	left: 0;
+	inset-inline-start: 0;
 	font-size: 12px;
 	padding: 1px 4px;
 	font-weight: 600;

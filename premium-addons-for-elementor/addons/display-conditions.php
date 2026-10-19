@@ -47,9 +47,6 @@ class Display_Conditions {
 	 */
 	public function __construct() {
 
-		// Enqueue the required JS file.
-		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
 		add_action( 'elementor/element/section/section_advanced/after_section_end', array( $this, 'register_controls' ), 10 );
 		add_action( 'elementor/element/column/section_advanced/after_section_end', array( $this, 'register_controls' ), 10 );
 		add_action( 'elementor/element/common/_section_style/after_section_end', array( $this, 'register_controls' ), 10 );
@@ -136,26 +133,26 @@ class Display_Conditions {
 		$element->add_control(
 			'pa_display_conditions_switcher',
 			array(
-				'label'              => __( 'Enable Display Conditions', 'premium-addons-for-elementor' ),
-				'type'               => Controls_Manager::SWITCHER,
-				'return_value'       => 'yes',
-				'render_type'        => 'template',
-				'prefix_class'       => 'pa-display-conditions-',
-				'frontend_available' => true,
+				'label'        => __( 'Enable Display Conditions', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'render_type'  => 'ui',
+				'prefix_class' => 'pa-display-conditions-',
 			)
 		);
 
 		$element->add_control(
 			'pa_display_action',
 			array(
-				'label'     => __( 'Action', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'show',
-				'options'   => array(
+				'label'       => __( 'Action', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'show',
+				'render_type' => 'none',
+				'options'     => array(
 					'show' => __( 'Show Element', 'premium-addons-for-elementor' ),
 					'hide' => __( 'Hide Element', 'premium-addons-for-elementor' ),
 				),
-				'condition' => array(
+				'condition'   => array(
 					'pa_display_conditions_switcher' => 'yes',
 				),
 			)
@@ -164,14 +161,15 @@ class Display_Conditions {
 		$element->add_control(
 			'pa_display_when',
 			array(
-				'label'     => __( 'Display When', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'any',
-				'options'   => array(
+				'label'       => __( 'Display When', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'any',
+				'render_type' => 'none',
+				'options'     => array(
 					'any' => __( 'Any Condition is Met', 'premium-addons-for-elementor' ),
 					'all' => __( 'All Conditions Are Met', 'premium-addons-for-elementor' ),
 				),
-				'condition' => array(
+				'condition'   => array(
 					'pa_display_conditions_switcher' => 'yes',
 				),
 			)
@@ -282,7 +280,7 @@ class Display_Conditions {
 			)
 		);
 
-		$values = $repeater->get_controls();
+		$fields = $this->without_editor_render( $repeater->get_controls() );
 
 		$element->add_control(
 			'pa_condition_repeater',
@@ -290,7 +288,8 @@ class Display_Conditions {
 				'label'         => __( 'Conditions', 'premium-addons-for-elementor' ),
 				'type'          => Controls_Manager::REPEATER,
 				'label_block'   => true,
-				'fields'        => $values,
+				'render_type'   => 'none',
+				'fields'        => $fields,
 				'title_field'   => '<# print( pa_condition_key.replace(/_/g, " ").split(" ").map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(" ")) #>',
 				'prevent_empty' => false,
 				'condition'     => array(
@@ -302,6 +301,26 @@ class Display_Conditions {
 		$this->add_helpful_information( $element );
 
 		$element->end_controls_section();
+	}
+
+	/**
+	 * Stop repeater fields from re-rendering the element in the editor.
+	 *
+	 * Conditions are only evaluated on the frontend, so editing them changes nothing on the canvas.
+	 *
+	 * @since 4.11.114
+	 * @access private
+	 * @param array $fields repeater controls.
+	 *
+	 * @return array
+	 */
+	private function without_editor_render( $fields ) {
+
+		foreach ( $fields as $key => $field ) {
+			$fields[ $key ]['render_type'] = 'none';
+		}
+
+		return $fields;
 	}
 
 	/**
@@ -374,9 +393,7 @@ class Display_Conditions {
 			return;
 		}
 
-		$settings = $element->get_active_settings();
-
-		if ( ! empty( $settings['pa_display_conditions_switcher'] ) ) {
+		if ( 'yes' === $element->get_settings( 'pa_display_conditions_switcher' ) ) {
 
 			$this->enqueue_scripts();
 

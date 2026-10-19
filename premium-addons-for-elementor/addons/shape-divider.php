@@ -243,7 +243,7 @@ class Shape_Divider {
 			array(
 				'label'       => __( 'Position', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::CHOOSE,
-				'render_type' => 'template',
+				'render_type' => 'ui',
 				'options'     => array(
 					'top'    => array(
 						'title' => __( 'Top', 'premium-addons-for-elementor' ),
@@ -457,7 +457,7 @@ class Shape_Divider {
 				'label'        => __( 'Animate', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'prefix_class' => 'premium-shape-divider-anime-',
-				'render_type'  => 'template',
+				'render_type'  => 'ui',
 				'default'      => 'yes',
 				'condition'    => array(
 					'premium_global_divider_sw' => 'yes',
@@ -473,7 +473,7 @@ class Shape_Divider {
 				'description'  => __( 'This option is used if you want to animate the divider without stretching the SVG.', 'premium-addons-for-elementor' ),
 				'prefix_class' => 'premium-sh-no-stretch-',
 				'default'      => 'yes',
-				'render_type'  => 'template',
+				'render_type'  => 'ui',
 				'condition'    => array(
 					'premium_global_divider_sw'  => 'yes',
 					'premium_gdivider_animate'   => 'yes',
@@ -549,7 +549,7 @@ class Shape_Divider {
 			array(
 				'label'        => __( 'Horizontal Flip', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'render_type'  => 'template',
+				'render_type'  => 'ui',
 				'prefix_class' => 'premium-sh-divider-hflip-',
 				'condition'    => array(
 					'premium_global_divider_sw' => 'yes',
@@ -565,7 +565,7 @@ class Shape_Divider {
 				'label'        => __( 'Vertical Flip', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'prefix_class' => 'premium-sh-divider-vflip-',
-				'render_type'  => 'template',
+				'render_type'  => 'ui',
 				'condition'    => array(
 					'premium_global_divider_sw' => 'yes',
 					'premium_gdivider_animate!' => 'yes',
@@ -946,62 +946,62 @@ class Shape_Divider {
 	 */
 	public function before_render( $element ) {
 
-		$id              = $element->get_id();
-		$settings        = $element->get_settings_for_display();
-		$divider_enabled = $settings['premium_global_divider_sw'];
-
-		if ( 'yes' === $divider_enabled ) {
-
-			if ( ! $this->papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.8', '<' ) ) {
-
-				$is_pro_shape = 'default' === $settings['premium_gdivider_source'] && str_replace( 'shape', '', $settings['premium_gdivider_defaults'] ) > 25;
-
-				if ( $is_pro_shape || 'custom' === $settings['premium_gdivider_source'] || 'color' !== $settings['premium_gdivider_bg_type'] || in_array( $settings['premium_gdivider_pos'], array( 'left', 'right' ), true ) ) {
-
-					?>
-					<div class="premium-error-notice">
-						<?php
-							$message = __( 'This option is available in <b>Premium Addons Pro</b>.', 'premium-addons-for-elementor' );
-							echo wp_kses_post( $message );
-						?>
-					</div>
-					<?php
-					return false;
-
-				}
-			}
-
-			$source        = $settings['premium_gdivider_source'];
-			$hidden_style  = 'visibility:hidden; position: absolute; opacity:0;';
-			$shape         = '';
-			$custom_fill   = 'color' !== $settings['premium_gdivider_bg_type'];
-			$shape_classes = Helper_Functions::get_element_classes( $settings['premium_gdivider_hide'], array( 'premium-shape-divider__shape-container' ) );
-
-			if ( 'default' !== $source ) {
-				$shape = $settings['premium_gdivider_custom'];
-			} else {
-				$shape = '' !== $settings['premium_gdivider_defaults'] ? Helper_Functions::get_svg_shapes( $settings['premium_gdivider_defaults'] ) : '';
-			}
-
-			if ( $custom_fill ) {
-				$this->add_custom_fill( $id, $settings );
-			}
-
-			$element->add_render_attribute(
-				'shape_divider_cont' . $id,
-				array(
-					'class' => $shape_classes,
-					'id'    => 'premium-shape-divider-' . esc_attr( $id ),
-					'style' => $hidden_style,
-				)
-			);
-
-			?>
-				<div <?php $element->print_render_attribute_string( 'shape_divider_cont' . $id ); ?>>
-					<?php echo $shape; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				</div>
-			<?php
+		if ( 'yes' !== $element->get_settings( 'premium_global_divider_sw' ) ) {
+			return;
 		}
+
+		$id       = $element->get_id();
+		$settings = $element->get_settings_for_display();
+
+		if ( ! $this->papro_activated || version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.8', '<' ) ) {
+
+			$is_pro_shape = 'default' === $settings['premium_gdivider_source'] && str_replace( 'shape', '', $settings['premium_gdivider_defaults'] ) > 25;
+
+			if ( $is_pro_shape || 'custom' === $settings['premium_gdivider_source'] || 'color' !== $settings['premium_gdivider_bg_type'] || in_array( $settings['premium_gdivider_pos'], array( 'left', 'right' ), true ) ) {
+
+				?>
+				<div class="premium-error-notice">
+					<?php
+						$message = __( 'This option is available in <b>Premium Addons Pro</b>.', 'premium-addons-for-elementor' );
+						echo wp_kses_post( $message );
+					?>
+				</div>
+				<?php
+				return false;
+
+			}
+		}
+
+		$source        = $settings['premium_gdivider_source'];
+		$hidden_style  = 'visibility:hidden; position: absolute; opacity:0;';
+		$shape         = '';
+		$custom_fill   = 'color' !== $settings['premium_gdivider_bg_type'];
+		$shape_classes = Helper_Functions::get_element_classes( $settings['premium_gdivider_hide'], array( 'premium-shape-divider__shape-container' ) );
+
+		if ( 'default' !== $source ) {
+			$shape = $settings['premium_gdivider_custom'];
+		} else {
+			$shape = '' !== $settings['premium_gdivider_defaults'] ? Helper_Functions::get_svg_shapes( $settings['premium_gdivider_defaults'] ) : '';
+		}
+
+		if ( $custom_fill ) {
+			$this->add_custom_fill( $id, $settings );
+		}
+
+		$element->add_render_attribute(
+			'shape_divider_cont' . $id,
+			array(
+				'class' => $shape_classes,
+				'id'    => 'premium-shape-divider-' . esc_attr( $id ),
+				'style' => $hidden_style,
+			)
+		);
+
+		?>
+			<div <?php $element->print_render_attribute_string( 'shape_divider_cont' . $id ); ?>>
+				<?php echo $shape; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			</div>
+		<?php
 	}
 
 
@@ -1083,9 +1083,7 @@ class Shape_Divider {
 			return;
 		}
 
-		$settings = $element->get_active_settings();
-
-		if ( ! empty( $settings['premium_global_divider_sw'] ) ) {
+		if ( 'yes' === $element->get_settings( 'premium_global_divider_sw' ) ) {
 
 			$this->enqueue_styles();
 			$this->enqueue_scripts();

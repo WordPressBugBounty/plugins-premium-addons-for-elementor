@@ -103,7 +103,7 @@ class Premium_Textual_Showcase extends Widget_Base {
 		return array(
 			'pa-glass',
 			'font-awesome-5-all',
-			'pa-btn',
+			'pa-mask',
 			'premium-addons',
 		);
 	}
