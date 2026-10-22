@@ -347,6 +347,7 @@
 
 .premium-gallery-load-more {
   position: relative;
+  z-index: 4;
 }
 .premium-gallery-load-more .premium-gallery-load-more-btn {
   box-shadow: none;

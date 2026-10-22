@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.11.115 - 22/10/2026 =
+
+- Tweak: Upload Media AI ability now supports videos.
+- Fixed: Elementor MCP widget schema tools failing when Carousel, Media Wheel, Modal Box or Vertical Scroll widgets are enabled.
+- Fixed: Icons overlapping the Load More button in Media Grid widget.
+
 = 4.11.114 - 19/10/2026 =
 
 - Tweak: Added Slides Direction option to Carousel widget.

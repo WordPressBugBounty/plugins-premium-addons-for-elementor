@@ -7491,6 +7491,7 @@ ul[data-list-animation*=animated-] .premium-bullet-list-divider-inline {
 
 .premium-gallery-load-more {
   position: relative;
+  z-index: 4;
 }
 
 .premium-gallery-load-more .premium-gallery-load-more-btn {

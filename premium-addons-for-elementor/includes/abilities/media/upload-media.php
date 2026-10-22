@@ -2,8 +2,8 @@
 /**
  * Upload Media.
  *
- * Downloads an image from a URL into the WordPress media library and returns the
- * attachment ID and URL for a build ability to place.
+ * Downloads an image or video from a URL into the WordPress media library and
+ * returns the attachment ID and URL for a build ability to place.
  *
  * @package PremiumAddons
  */
@@ -30,15 +30,30 @@ class Upload_Media implements Ability_Handler {
 	const SOURCE_URL_META = '_pa_media_source_url';
 
 	/**
-	 * Largest file accepted from a remote URL.
+	 * Largest image accepted from a remote URL.
 	 */
-	const MAX_FILE_SIZE = 5 * MB_IN_BYTES;
+	const MAX_IMAGE_SIZE = 5 * MB_IN_BYTES;
+
+	/**
+	 * Largest video accepted from a remote URL.
+	 */
+	const MAX_VIDEO_SIZE = 50 * MB_IN_BYTES;
 
 	/**
 	 * Seconds to wait for the download. Core defaults to 300, far too long for a
-	 * tool call an agent is waiting on.
+	 * tool call an agent is waiting on, but a video needs more than an image.
 	 */
-	const DOWNLOAD_TIMEOUT = 30;
+	const DOWNLOAD_TIMEOUT = 60;
+
+	/**
+	 * Seconds to wait for the HEAD request that sizes the download.
+	 */
+	const PROBE_TIMEOUT = 10;
+
+	/**
+	 * The type fileinfo reports for a file it cannot name, common for video.
+	 */
+	const BINARY_MIME_TYPE = 'application/octet-stream';
 
 	/**
 	 * Get the short ability name.
@@ -56,8 +71,8 @@ class Upload_Media implements Ability_Handler {
 	 */
 	public function get_registration_args() {
 		return array(
-			'label'               => __( 'Upload Image to Media Library', 'premium-addons-for-elementor' ),
-			'description'         => __( 'Adds an image from a URL to the media library. Only run it after the user has approved the upload.', 'premium-addons-for-elementor' ),
+			'label'               => __( 'Upload Image or Video to Media Library', 'premium-addons-for-elementor' ),
+			'description'         => __( 'Adds an image or video from a URL to the media library. Only run it after the user has approved the upload.', 'premium-addons-for-elementor' ),
 			'category'            => 'pa-media',
 			'input_schema'        => array(
 				'type'                 => 'object',
@@ -66,15 +81,15 @@ class Upload_Media implements Ability_Handler {
 				'properties'           => array(
 					'source_url' => array(
 						'type'        => 'string',
-						'description' => __( 'The public http(s) URL of the image to download. Private, loopback and internal addresses are rejected.', 'premium-addons-for-elementor' ),
+						'description' => __( 'The public http(s) URL of the image or video to download. Images are capped at 5 MB and videos at 50 MB. Private, loopback and internal addresses are rejected.', 'premium-addons-for-elementor' ),
 					),
 					'filename'   => array(
 						'type'        => 'string',
-						'description' => __( 'The filename to store the image under, with its extension. Derived from the source URL when omitted.', 'premium-addons-for-elementor' ),
+						'description' => __( 'The filename to store the file under, with its extension. Derived from the source URL when omitted.', 'premium-addons-for-elementor' ),
 					),
 					'alt'        => array(
 						'type'        => 'string',
-						'description' => __( 'The alt text to store on the new attachment. Describe what the image shows.', 'premium-addons-for-elementor' ),
+						'description' => __( 'The alt text to store on the new attachment. Describe what the image or video shows.', 'premium-addons-for-elementor' ),
 					),
 					'title'      => array(
 						'type'        => 'string',
@@ -88,7 +103,7 @@ class Upload_Media implements Ability_Handler {
 			),
 			'output_schema'       => array(
 				'type'        => 'object',
-				'description' => __( 'The attachment the image was stored as.', 'premium-addons-for-elementor' ),
+				'description' => __( 'The attachment the file was stored as.', 'premium-addons-for-elementor' ),
 				'properties'  => array(
 					'id'        => array(
 						'type'        => 'integer',
@@ -96,15 +111,15 @@ class Upload_Media implements Ability_Handler {
 					),
 					'url'       => array(
 						'type'        => 'string',
-						'description' => __( 'The full size image URL on this site.', 'premium-addons-for-elementor' ),
+						'description' => __( 'The full size file URL on this site.', 'premium-addons-for-elementor' ),
 					),
 					'width'     => array(
 						'type'        => 'integer',
-						'description' => __( 'The full size width in pixels, 0 when the file carries no dimensions.', 'premium-addons-for-elementor' ),
+						'description' => __( 'The full size width in pixels of the image or video, 0 when the file carries no dimensions.', 'premium-addons-for-elementor' ),
 					),
 					'height'    => array(
 						'type'        => 'integer',
-						'description' => __( 'The full size height in pixels, 0 when the file carries no dimensions.', 'premium-addons-for-elementor' ),
+						'description' => __( 'The full size height in pixels of the image or video, 0 when the file carries no dimensions.', 'premium-addons-for-elementor' ),
 					),
 					'mime_type' => array(
 						'type'        => 'string',
@@ -166,7 +181,7 @@ class Upload_Media implements Ability_Handler {
 		if ( '' === $source_url ) {
 			return new \WP_Error(
 				'premium_addons_missing_source_url',
-				__( 'A source URL is required to add an image to the media library.', 'premium-addons-for-elementor' )
+				__( 'A source URL is required to add a file to the media library.', 'premium-addons-for-elementor' )
 			);
 		}
 
@@ -190,18 +205,33 @@ class Upload_Media implements Ability_Handler {
 			return array_merge( Helpers::format_attachment( $existing ), array( 'reused' => true ) );
 		}
 
+		$site_limit = $this->get_site_upload_limit();
+
+		if ( 0 === $site_limit ) {
+			return new \WP_Error(
+				'premium_addons_not_initialized',
+				__( 'This site has used up its upload space. Delete files from the media library before adding more.', 'premium-addons-for-elementor' )
+			);
+		}
+
+		$size_cap = $this->get_size_cap( $source_url, $site_limit );
+
+		if ( is_wp_error( $size_cap ) ) {
+			return $size_cap;
+		}
+
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 		require_once ABSPATH . 'wp-admin/includes/media.php';
 		require_once ABSPATH . 'wp-admin/includes/image.php';
 
-		$tmp_file = $this->download( $source_url );
+		$tmp_file = $this->download( $source_url, $size_cap );
 
 		if ( is_wp_error( $tmp_file ) ) {
 			return $tmp_file;
 		}
 
 		$filename = ! empty( $input['filename'] ) ? sanitize_file_name( $input['filename'] ) : $this->filename_from_url( $source_url );
-		$error    = $this->validate_file( $tmp_file, $filename );
+		$error    = $this->validate_file( $tmp_file, $filename, $size_cap );
 
 		if ( is_wp_error( $error ) ) {
 			wp_delete_file( $tmp_file );
@@ -264,6 +294,90 @@ class Upload_Media implements Ability_Handler {
 	}
 
 	/**
+	 * Get the bytes this site may still store, on a multisite network.
+	 *
+	 * Core enforces the network's per-file limit and space quota from a filter
+	 * that only loads in wp-admin and that wp_die()s on failure, so neither runs
+	 * for a sideload on a REST request.
+	 *
+	 * @return int|null The byte limit, 0 when the quota is used up, or null when unlimited.
+	 */
+	private function get_site_upload_limit() {
+
+		if ( ! is_multisite() || get_site_option( 'upload_space_check_disabled' ) ) {
+			return null;
+		}
+
+		$file_limit = KB_IN_BYTES * (int) get_site_option( 'fileupload_maxk', 1500 );
+
+		return min( $file_limit, (int) get_upload_space_available() );
+	}
+
+	/**
+	 * Get the most bytes to download, from a HEAD request.
+	 *
+	 * The type decides the cap, but download_url() needs the limit before the
+	 * body lands. The response headers are only a hint to size the download:
+	 * validate_file() still decides the type from the contents. Without a usable
+	 * answer the larger video cap applies.
+	 *
+	 * @param string   $source_url The URL to download.
+	 * @param int|null $site_limit The site's upload limit, null when unlimited.
+	 *
+	 * @return int|\WP_Error The byte cap, or an error when the file is known to exceed it.
+	 */
+	private function get_size_cap( $source_url, $site_limit ) {
+
+		$response = Helpers::fetch_public_url(
+			'premium_addons_invalid_source_url',
+			function () use ( $source_url ) {
+				return wp_safe_remote_head(
+					$source_url,
+					array(
+						'timeout'     => self::PROBE_TIMEOUT,
+						'redirection' => 5,
+					)
+				);
+			}
+		);
+
+		$is_usable    = 200 === wp_remote_retrieve_response_code( $response );
+		$content_type = $is_usable ? wp_remote_retrieve_header( $response, 'content-type' ) : '';
+		$is_image     = is_string( $content_type ) && 0 === strpos( $content_type, 'image/' );
+		$size_cap     = $is_image ? self::MAX_IMAGE_SIZE : self::MAX_VIDEO_SIZE;
+
+		if ( null !== $site_limit ) {
+			$size_cap = min( $size_cap, $site_limit );
+		}
+
+		$length = $is_usable ? wp_remote_retrieve_header( $response, 'content-length' ) : '';
+
+		if ( is_numeric( $length ) && (int) $length > $size_cap ) {
+			return $this->file_size_error( $size_cap );
+		}
+
+		return $size_cap;
+	}
+
+	/**
+	 * Build the error for a file over the size cap.
+	 *
+	 * @param int $size_cap The cap in bytes.
+	 *
+	 * @return \WP_Error
+	 */
+	private function file_size_error( $size_cap ) {
+		return new \WP_Error(
+			'premium_addons_invalid_file_size',
+			sprintf(
+				/* translators: %s: the maximum file size. */
+				__( 'The file is larger than the %s limit. Use a smaller or more compressed file.', 'premium-addons-for-elementor' ),
+				size_format( $size_cap )
+			)
+		);
+	}
+
+	/**
 	 * Download a remote file to a temp path, bounded by the size cap.
 	 *
 	 * download_url() takes no size argument and streams the whole body to disk,
@@ -275,18 +389,19 @@ class Upload_Media implements Ability_Handler {
 	 *
 	 * Helpers::fetch_public_url() adds the second guard, rejecting the addresses
 	 * core treats as public on every redirect hop. The downloaded body could never
-	 * reach the library anyway — validate_file() only accepts real images — but the
+	 * reach the library anyway — validate_file() only accepts real images and videos — but the
 	 * distinct error codes and response timing would still answer "is this internal
 	 * host up" for whoever drives the agent.
 	 *
 	 * @param string $source_url The URL to download.
+	 * @param int    $size_cap   The most bytes to accept.
 	 *
 	 * @return string|\WP_Error The temp file path, or an error.
 	 */
-	private function download( $source_url ) {
+	private function download( $source_url, $size_cap ) {
 
-		$limit_size = function ( $args ) {
-			$args['limit_response_size'] = self::MAX_FILE_SIZE + 1;
+		$limit_size = function ( $args ) use ( $size_cap ) {
+			$args['limit_response_size'] = $size_cap + 1;
 
 			return $args;
 		};
@@ -333,56 +448,149 @@ class Upload_Media implements Ability_Handler {
 	}
 
 	/**
-	 * Check a downloaded file is an image this site accepts.
+	 * Check a downloaded file is an image or video this site accepts.
 	 *
 	 * Reads the type out of the file contents, so a script renamed to .png is
-	 * rejected and an image URL carrying no extension at all — the shape most CDNs
+	 * rejected and a URL carrying no extension at all — the shape most CDNs
 	 * serve — still resolves. wp_check_filetype_and_ext() cannot do the second: it
-	 * only inspects the bytes once the passed filename already names an image
-	 * extension, so an extension-less name comes back as "not an image".
+	 * only inspects the bytes once the passed filename already names a known
+	 * extension. SVG carries no image header and so is rejected, matching core's
+	 * default.
 	 *
-	 * wp_get_image_mime() reads the file header and only ever returns an image
-	 * type, which covers the is-it-an-image question on its own. SVG carries no
-	 * such header and so is rejected here, matching core's default.
+	 * The type is checked before the size because the cap depends on it.
 	 *
 	 * @param string $tmp_file The downloaded temp file path.
 	 * @param string $filename The filename it will be stored under (by reference,
 	 *                         re-extensioned to match the real contents).
+	 * @param int    $size_cap The download cap from get_size_cap().
 	 *
-	 * @return \WP_Error|null Error when the file is not an accepted image.
+	 * @return \WP_Error|null Error when the file is not an accepted image or video.
 	 */
-	private function validate_file( $tmp_file, &$filename ) {
+	private function validate_file( $tmp_file, &$filename, $size_cap ) {
 
-		if ( filesize( $tmp_file ) > self::MAX_FILE_SIZE ) {
+		$file_type = $this->resolve_file_type( $tmp_file, $filename );
+
+		if ( ! $file_type ) {
 			return new \WP_Error(
-				'premium_addons_invalid_file_size',
-				sprintf(
-					/* translators: %s: the maximum file size. */
-					__( 'The image is larger than the %s limit. Use a smaller or more compressed file.', 'premium-addons-for-elementor' ),
-					size_format( self::MAX_FILE_SIZE )
-				)
+				'premium_addons_invalid_file_type',
+				__( 'The downloaded file is not an image or video type this site accepts. Check that the URL points directly at an image or video file. SVG files are not supported.', 'premium-addons-for-elementor' )
 			);
 		}
 
-		$mime_type = wp_get_image_mime( $tmp_file );
+		// The download cap also applies: a video the headers called an image was
+		// cut off at the image cap, so a body at that cap is incomplete.
+		$type_cap = $this->is_video( $file_type['type'] ) ? self::MAX_VIDEO_SIZE : self::MAX_IMAGE_SIZE;
+		$max_size = min( $type_cap, $size_cap );
 
-		// get_allowed_mime_types() is keyed by an extension pattern (jpg|jpeg|jpe),
-		// so the lookup answers "may this site store it" and names it in one step.
-		$extensions = $mime_type ? array_search( $mime_type, get_allowed_mime_types(), true ) : false;
-
-		if ( ! $extensions ) {
-			return new \WP_Error(
-				'premium_addons_invalid_file_type',
-				__( 'The downloaded file is not an image type this site accepts. Check that the URL points directly at an image file. SVG files are not supported.', 'premium-addons-for-elementor' )
-			);
+		if ( filesize( $tmp_file ) > $max_size ) {
+			return $this->file_size_error( $max_size );
 		}
 
 		// The URL often implies no extension, or the wrong one.
-		if ( wp_check_filetype( $filename )['type'] !== $mime_type ) {
-			$filename = pathinfo( $filename, PATHINFO_FILENAME ) . '.' . strtok( $extensions, '|' );
+		if ( wp_check_filetype( $filename )['type'] !== $file_type['type'] ) {
+			$filename = pathinfo( $filename, PATHINFO_FILENAME ) . '.' . $file_type['ext'];
 		}
 
 		return null;
+	}
+
+	/**
+	 * Resolve the type and extension a downloaded file is stored with.
+	 *
+	 * fileinfo often names a video differently from the site's MIME list
+	 * (video/x-msvideo for .avi) or not at all (application/octet-stream), so,
+	 * like core's own upload check, a video keeps the type its filename names
+	 * when the contents are video or unnamed binary.
+	 *
+	 * @param string $tmp_file The downloaded temp file path.
+	 * @param string $filename The filename it will be stored under.
+	 *
+	 * @return array|false Array with `ext` and `type`, or false when the site does not accept the file.
+	 */
+	private function resolve_file_type( $tmp_file, $filename ) {
+
+		$mime_type = $this->detect_mime_type( $tmp_file );
+
+		if ( ! $mime_type ) {
+			return false;
+		}
+
+		$named_type = wp_check_filetype( $filename );
+		$is_video   = $this->is_video( $mime_type ) || self::BINARY_MIME_TYPE === $mime_type;
+
+		if ( $is_video && $named_type['type'] && $this->is_video( $named_type['type'] ) ) {
+			return $named_type;
+		}
+
+		// Unnamed binary passes only as a named video, never through a site
+		// that happens to allow application/octet-stream.
+		if ( self::BINARY_MIME_TYPE === $mime_type ) {
+			return false;
+		}
+
+		// get_allowed_mime_types() is keyed by an extension pattern (jpg|jpeg|jpe),
+		// so the lookup answers "may this site store it" and names it in one step.
+		$extensions = array_search( $mime_type, get_allowed_mime_types(), true );
+
+		if ( ! $extensions ) {
+			return false;
+		}
+
+		return array(
+			'ext'  => strtok( $extensions, '|' ),
+			'type' => $mime_type,
+		);
+	}
+
+	/**
+	 * Read a downloaded file's type from its contents.
+	 *
+	 * wp_get_image_mime() reads image headers only, and core has no video
+	 * equivalent, so fileinfo sniffs the rest. Its answer is kept only when it is
+	 * a video type or unnamed binary: fileinfo names any file, scripts included.
+	 *
+	 * @param string $tmp_file The downloaded temp file path.
+	 *
+	 * @return string|false The MIME type, or false when it is neither an image nor a video.
+	 */
+	private function detect_mime_type( $tmp_file ) {
+
+		$image_mime = wp_get_image_mime( $tmp_file );
+
+		if ( $image_mime ) {
+			return $image_mime;
+		}
+
+		if ( ! extension_loaded( 'fileinfo' ) ) {
+			return false;
+		}
+
+		$finfo = finfo_open( FILEINFO_MIME_TYPE );
+
+		if ( ! $finfo ) {
+			return false;
+		}
+
+		$mime_type = finfo_file( $finfo, $tmp_file );
+
+		finfo_close( $finfo );
+
+		if ( ! $mime_type ) {
+			return false;
+		}
+
+		return $this->is_video( $mime_type ) || self::BINARY_MIME_TYPE === $mime_type ? $mime_type : false;
+	}
+
+	/**
+	 * Whether a MIME type is a video type.
+	 *
+	 * @param string $mime_type The MIME type.
+	 *
+	 * @return bool
+	 */
+	private function is_video( $mime_type ) {
+		return 0 === strpos( $mime_type, 'video/' );
 	}
 
 	/**
@@ -398,6 +606,6 @@ class Upload_Media implements Ability_Handler {
 
 		// A URL with no usable path segment still needs a name to sideload under;
 		// validate_file() replaces it with the one the contents call for.
-		return '' !== $filename ? $filename : 'image';
+		return '' !== $filename ? $filename : 'media';
 	}
 }

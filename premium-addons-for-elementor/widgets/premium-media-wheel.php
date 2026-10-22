@@ -166,7 +166,8 @@ class Premium_Media_Wheel extends Widget_Base {
 
 		$is_edit = Plugin::instance()->editor->is_edit_mode();
 
-		if ( $is_edit ) {
+		// Registry type instances have no settings; Elementor MCP reads their config.
+		if ( $is_edit || $this->is_type_instance() ) {
 			return false;
 		}
 

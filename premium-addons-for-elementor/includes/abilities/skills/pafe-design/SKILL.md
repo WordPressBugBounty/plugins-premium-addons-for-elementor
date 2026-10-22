@@ -146,7 +146,7 @@ The live toolset outranks this list. Params shown only where non-obvious.
 **Media (2)**
 
 - `premium-addons-list-media` — browse the site's media library. Preferred image source.
-- `premium-addons-upload-media` — upload an image. Consent + licensing first.
+- `premium-addons-upload-media` — upload an image or video. Consent + licensing first.
 
 **Dashboard (6)**
 

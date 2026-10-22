@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.114
+Stable Tag: 4.11.115
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,12 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.115 - 22/10/2026 =
+
+- Tweak: Upload Media AI ability now supports videos.
+- Fixed: Elementor MCP widget schema tools failing when Carousel, Media Wheel, Modal Box or Vertical Scroll widgets are enabled.
+- Fixed: Icons overlapping the Load More button in Media Grid widget.
 
 = 4.11.114 - 19/10/2026 =
 
