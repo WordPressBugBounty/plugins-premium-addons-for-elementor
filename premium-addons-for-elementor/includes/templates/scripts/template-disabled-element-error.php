@@ -2,6 +2,11 @@
 /**
  * Templates Loader Error
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 
 <div class="elementor-library-error">

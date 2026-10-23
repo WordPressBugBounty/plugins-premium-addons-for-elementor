@@ -3,6 +3,10 @@
  * Template Library Header Tabs
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 
 ?>
 

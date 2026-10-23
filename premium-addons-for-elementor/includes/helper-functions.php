@@ -1917,7 +1917,7 @@ class Helper_Functions {
 			'post_status'      => 'publish',
 			'posts_per_page'   => 1,
 			'title'            => $title,
-			'suppress_filters' => true,
+			'suppress_filters' => true, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.SuppressFilters_suppress_filters -- match the title in any language; wpml_object_id translates the id after.
 		);
 
 		$query = new \WP_Query( $args );

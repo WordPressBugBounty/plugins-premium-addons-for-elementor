@@ -244,10 +244,10 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			global $wpdb;
 
-			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.NotPrepared -- uninstall cleanup of plugin tables.
-			$wpdb->query( 'DROP TABLE IF EXISTS ' . Abilities\OAuth\Store::tokens_table() );
-			$wpdb->query( 'DROP TABLE IF EXISTS ' . Abilities\OAuth\Store::clients_table() );
-			// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange -- uninstall cleanup of plugin tables.
+			$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', Abilities\OAuth\Store::tokens_table() ) );
+			$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', Abilities\OAuth\Store::clients_table() ) );
+			// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 
 			delete_option( Abilities\OAuth\Bootstrap::OPTION_ENABLED );
 			delete_option( Abilities\OAuth\Bootstrap::DCR_WINDOW );

@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 if ( ! function_exists( 'rplg_urlopen' ) ) {
 
 	define( 'RPLG_USER_AGENT', 'RPLG-WPPlugin/1.0' );

@@ -315,7 +315,7 @@ class Route_Detector {
 			}
 
 			$live = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- third-party table.
-				$wpdb->prepare( 'SELECT 1 FROM ' . $table . ' WHERE revoked = 0 AND expires_at > %s LIMIT 1', $now ) // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is $wpdb->prefix plus a literal.
+				$wpdb->prepare( 'SELECT 1 FROM %i WHERE revoked = 0 AND expires_at > %s LIMIT 1', $table, $now )
 			);
 
 			if ( $live ) {

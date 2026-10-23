@@ -310,7 +310,7 @@ abstract class Skin_Style {
 					'post_status'    => 'publish',
 					'posts_per_page' => -1,
 					'paged'          => 1,
-					'post__not_in'   => array(),
+					'post__not_in'   => array(), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- excludes the current product.
 				);
 
 				if ( 'grid' === $settings['layout_type'] || 'masonry' === $settings['layout_type'] ) {
@@ -566,7 +566,7 @@ abstract class Skin_Style {
 				'post_status'    => 'publish',
 				'posts_per_page' => -1,
 				'paged'          => 1,
-				'post__not_in'   => array(),
+				'post__not_in'   => array(), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- excludes the current product.
 			);
 
 			if ( 'grid' === $settings['layout_type'] || 'masonry' === $settings['layout_type'] ) {
@@ -601,7 +601,7 @@ abstract class Skin_Style {
 			$query_args['order']   = $ordering_args['order'];
 
 			if ( $ordering_args['meta_key'] ) {
-				$query_args['meta_key'] = $ordering_args['meta_key'];
+				$query_args['meta_key'] = $ordering_args['meta_key']; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- WooCommerce catalog ordering.
 			}
 
 			if ( 'sale' === $settings['filter_by'] ) {

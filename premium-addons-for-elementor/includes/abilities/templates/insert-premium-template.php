@@ -418,7 +418,7 @@ class Insert_Premium_Template implements Ability_Handler {
 				'post_status'            => 'publish',
 				'posts_per_page'         => 1,
 				'title'                  => $title,
-				'suppress_filters'       => true,
+				'suppress_filters'       => true, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.SuppressFilters_suppress_filters -- match the exact title, unfiltered by language or access plugins.
 				'no_found_rows'          => true,
 				'update_post_term_cache' => false,
 			)

@@ -107,26 +107,20 @@ class Woo_Category extends Condition {
 
 				$product_cats = array_merge( $product_cats, $product->get_category_ids() );
 			}
-		} else {
+		} elseif ( is_user_logged_in() ) {
 
 			$args = array(
-				'numberposts' => -1,
-				'meta_key'    => '_customer_user',
-				'meta_value'  => get_current_user_id(),
-				'post_type'   => wc_get_order_types(),
-				'post_status' => array_keys( wc_get_is_paid_statuses() ),
+				'limit'       => -1,
+				'customer_id' => get_current_user_id(),
+				'status'      => wc_get_is_paid_statuses(),
 			);
 
-			$customer_orders = get_posts( $args );
+			$customer_orders = wc_get_orders( $args );
 
 			$product_ids = array();
 
 			foreach ( $customer_orders as $order ) {
 
-				$order = wc_get_order( $order->ID );
-				if ( ! $order ) {
-					continue;
-				}
 				$items = $order->get_items();
 				foreach ( $items as $item ) {
 					$product_id    = $item->get_product_id();

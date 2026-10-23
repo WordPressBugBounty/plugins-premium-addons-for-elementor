@@ -619,7 +619,7 @@ class Premium_Blog extends Widget_Base {
 					'rand'          => __( 'Random', 'premium-addons-for-elementor' ),
 					'menu_order'    => __( 'Menu Order', 'premium-addons-for-elementor' ),
 					'comment_count' => __( 'Number of Comments', 'premium-addons-for-elementor' ),
-					'meta_value'    => __( 'Meta Value', 'premium-addons-for-elementor' ),
+					'meta_value'    => __( 'Meta Value', 'premium-addons-for-elementor' ), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- select option key, not a query arg.
 				),
 				'default'     => 'date',
 				'condition'   => array(

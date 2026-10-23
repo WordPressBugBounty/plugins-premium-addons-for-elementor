@@ -718,7 +718,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			array(
 				'name'      => 'qv_slashed_price_typography',
 				'selector'  => '#premium-woo-quick-view-{{ID}} .price del',
-				'exclude'   => array( 'word_spacing' ),
+				'exclude'   => array( 'word_spacing' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- control field list, not a query arg.
 				'condition' => array(
 					'qv_price!' => 'yes',
 				),
@@ -1387,7 +1387,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'global'   => array(
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				),
-				'exclude'  => array( 'word_spacing' ),
+				'exclude'  => array( 'word_spacing' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- control field list, not a query arg.
 				'selector' => '{{WRAPPER}} .premium-woocommerce li.product .price del',
 			)
 		);

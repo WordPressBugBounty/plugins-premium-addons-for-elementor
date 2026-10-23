@@ -3,6 +3,10 @@
  * Template Insert Button
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 <# if ( 'valid' === window.PremiumTempsData.license.status || ! pro ) { #>
 

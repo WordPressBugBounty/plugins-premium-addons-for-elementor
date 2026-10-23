@@ -3,6 +3,10 @@
  * WP language locales.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 $wp_lang_locale = array(
 	'af'    => array(
 		'name'      => 'Afrikaans',

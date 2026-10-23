@@ -3,6 +3,10 @@
  * Template Item
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 
 <div class="elementor-template-library-template-body">

@@ -3,6 +3,10 @@
  * Template Library Header
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 <div id="premium-template-modal-header-logo-area"></div>
 <div id="premium-template-modal-header-tabs"></div>

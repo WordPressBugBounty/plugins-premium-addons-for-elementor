@@ -74,7 +74,7 @@ if ( ! function_exists( 'pa_render_layout_1' ) ) {
 				<div class="pa-woo-mc__price-row">
 					<div class="pa-woo-mc__item-qty">
 						<svg class="pa-woo-mc__qty-btn minus <?php echo esc_attr( $disabled_cls ); ?>" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="21.5" height="21.5" viewBox="0 0 21.5 21.5"><defs><style>.pa-qty-minus{fill:#333;}</style></defs><g id="Minus"><path class="pa-qty-minus" d="M16.75,11.5H4.75c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h12c.41,0,.75.34.75.75s-.34.75-.75.75Z"/></g></svg>
-						<input class="pa-woo-mc__input" type="number" name="cart-<?php echo $cart_item_key; ?>" value="<?php echo esc_attr( $cart_item['quantity'] ); ?>" min="1" step="1" max="<?php echo esc_attr( $_product->get_stock_quantity() ); ?>">
+						<input class="pa-woo-mc__input" type="number" name="cart-<?php echo esc_attr( $cart_item_key ); ?>" value="<?php echo esc_attr( $cart_item['quantity'] ); ?>" min="1" step="1" max="<?php echo esc_attr( $_product->get_stock_quantity() ); ?>">
 						<svg class="pa-woo-mc__qty-btn plus" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="21.5" height="21.5" viewBox="0 0 21.5 21.5"><defs><style>.pa-qty-plus{fill:#333;}</style></defs><g id="Plus"><path class="pa-qty-plus" d="M17.5,10.75c0,.41-.34.75-.75.75h-5.25v5.25c0,.41-.34.75-.75.75s-.75-.34-.75-.75v-5.25h-5.25c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h5.25v-5.25c0-.41.34-.75.75-.75s.75.34.75.75v5.25h5.25c.41,0,.75.34.75.75Z"/></g></svg>
 					</div>
 

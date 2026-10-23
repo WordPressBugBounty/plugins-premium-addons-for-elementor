@@ -3,6 +3,10 @@
  * Templates Search Field
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 
 <label for="elementor-template-library-filter-text" class="elementor-screen-only"><?php echo esc_html( __( 'Search Templates:', 'premium-addons-for-elementor' ) ); ?></label>

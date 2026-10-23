@@ -5,6 +5,10 @@
  * @package PA
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 <div id="premium-woo-quick-view-<?php echo esc_attr( $widget_id ); ?>" class="premium-woo-quick-view-<?php echo esc_attr( $widget_id ); ?>">
 	<div class="premium-woo-quick-view-back">

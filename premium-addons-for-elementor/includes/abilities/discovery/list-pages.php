@@ -134,7 +134,7 @@ class List_Pages implements Ability_Handler {
 				'ignore_sticky_posts'    => true,
 				'update_post_meta_cache' => false,
 				'update_post_term_cache' => false,
-				'meta_query'             => array(
+				'meta_query'             => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- no indexed equivalent for the builder flag; capped at 100 rows.
 					array(
 						'key'   => '_elementor_edit_mode',
 						'value' => 'builder',

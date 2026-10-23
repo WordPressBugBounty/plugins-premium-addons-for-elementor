@@ -5,6 +5,10 @@
 
 use PremiumAddons\Includes\Helper_Functions;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 $elements = array(
 	'cat-1'  => array(
 		'icon'     => 'all',

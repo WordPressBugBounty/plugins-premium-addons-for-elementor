@@ -1354,7 +1354,8 @@ class Assets_Manager {
 			'pa-headroom',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/headroom' . $suffix . '.js',
 			array( 'jquery' ),
-			PREMIUM_ADDONS_VERSION
+			PREMIUM_ADDONS_VERSION,
+			true
 		);
 
 		wp_register_script(
@@ -1402,7 +1403,8 @@ class Assets_Manager {
 			'pa-flipster',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/flipster' . $suffix . '.js',
 			array( 'jquery' ),
-			PREMIUM_ADDONS_VERSION
+			PREMIUM_ADDONS_VERSION,
+			true
 		);
 
 		wp_register_script(

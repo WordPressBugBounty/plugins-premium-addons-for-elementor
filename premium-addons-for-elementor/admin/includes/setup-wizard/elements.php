@@ -2,6 +2,10 @@
 
 	use PremiumAddons\Includes\Helper_Functions;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 	$ecommerce_widgets = array(
 		array(
 			'key'         => 'woo-products',

@@ -5,6 +5,10 @@
  * @package PA
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 while ( have_posts() ) :
 	the_post();
 

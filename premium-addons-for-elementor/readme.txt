@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.115
+Stable Tag: 4.11.116
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,12 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.116 - 23/10/2026 =
+
+- Tweak: Headroom and Flipster scripts now load in the footer for better page performance in Mega Menu and Media Wheel widgets.
+- Fixed: "Purchased" option not working as expected in WooCommerce Category display condition.
+- Fixed: Improved code security enforcement.
 
 = 4.11.115 - 22/10/2026 =
 

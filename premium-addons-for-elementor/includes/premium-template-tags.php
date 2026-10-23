@@ -112,7 +112,7 @@ class Premium_Template_Tags {
 			'post_status'      => 'publish',
 			'posts_per_page'   => 1,
 			'title'            => $title,
-			'suppress_filters' => true,
+			'suppress_filters' => true, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.SuppressFilters_suppress_filters -- match the title in any language; wpml_object_id translates the id after.
 		);
 
 		$query = new \WP_Query( $args );
@@ -161,6 +161,11 @@ class Premium_Template_Tags {
 			$id = apply_filters( 'wpml_object_id', $id, 'elementor_library', true );
 		} else {
 			$id = $title;
+		}
+
+		// The ID comes from widget settings, which any editor-level user can point at another user's draft or private post.
+		if ( ! Document_Helper::can_read_document( $id ) ) {
+			return '';
 		}
 
 		$template_content = $frontend->get_builder_content_for_display( $id, true );
@@ -305,7 +310,7 @@ class Premium_Template_Tags {
 			--$rendering_depth;
 
 			if ( ! empty( $content ) ) {
-				echo $content;
+				echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor builder output, escaped by Elementor.
 			} else {
 				// Normal Post Content [ not built with elementor ].
 				// Print post full content.
@@ -355,8 +360,8 @@ class Premium_Template_Tags {
 
 		$button_class = $add_btn_class ? 'elementor-button' : '';
 
-		echo '<div class="' . $link_class_prefix . 'excerpt-link-wrap">';
-			echo '<a href="' . esc_url( get_permalink() ) . '" target="' . esc_attr( $post_target ) . '" class="' . $link_class_prefix . 'excerpt-link ' . $button_class . '">';
+		echo '<div class="' . esc_attr( $link_class_prefix ) . 'excerpt-link-wrap">';
+			echo '<a href="' . esc_url( get_permalink() ) . '" target="' . esc_attr( $post_target ) . '" class="' . esc_attr( $link_class_prefix ) . 'excerpt-link ' . esc_attr( $button_class ) . '">';
 				echo wp_kses_post( $read_more );
 			echo '</a>';
 		echo '</div>';
@@ -556,7 +561,7 @@ class Premium_Template_Tags {
 		<?php
 		// Get post content.
 		if ( 'excerpt' === $options['source'] ) :
-			echo '<p class="' . $options['class'] . '">';
+			echo '<p class="' . esc_attr( $options['class'] ) . '">';
 		endif;
 			echo wp_kses_post( $this->render_post_content( $options['source'], $options['length'], $options['excerpt_type'], $options['excerpt_text'], $options['excerpt_all'] ) );
 		if ( 'excerpt' === $options['source'] ) :
@@ -1652,7 +1657,7 @@ class Premium_Template_Tags {
 			 */
 			$template_output = preg_replace( $pattern, '<div class="premium-extra-item"></div>', $template_output );
 
-			echo '<div class="premium-smart-listing__posts-wrapper">' . $template_output . '</div>';
+			echo '<div class="premium-smart-listing__posts-wrapper">' . $template_output . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor template output, escaped by Elementor.
 		} else {
 			// display a message here.
 		}
@@ -1982,10 +1987,9 @@ class Premium_Template_Tags {
 			<<?php echo wp_kses_post( $post_tag . ' ' . $this->get_render_attribute_string( $wrap_key ) ); ?>>
 				<?php
 				if ( $show_thumbnail ) :
-					$bg_css = ! $thumbnail_src ? '' : 'style="background-image:url(' . $thumbnail_src[0] . ')"';
 					?>
 					<div class="premium-smart-listing__post-thumbnail-wrapper">
-						<div class="premium-smart-listing__thumbnail-container" <?php echo $bg_css; ?> >
+						<div class="premium-smart-listing__thumbnail-container" <?php echo $thumbnail_src ? 'style="background-image:url(' . esc_url( $thumbnail_src[0] ) . ')"' : ''; ?> >
 						<?php // $this->get_post_thumbnail( '_blank', 'magazine' ); ?>
 						</div>
 						<div class="premium-smart-listing__thumbnail-overlay">

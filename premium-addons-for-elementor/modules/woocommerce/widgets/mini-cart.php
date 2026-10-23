@@ -5409,7 +5409,7 @@ class Mini_Cart extends Widget_Base {
 										?>
 											<!-- <span class='pa-rtl-counting'> -->
 												<span class="pa-woo-mc__subtotal-val" ><?php echo esc_html( $subtotal_display['raw_subtotal_amount'] ); ?></span>
-												<span class="pa-woo-mc__subtotal-currency"> <?php echo get_woocommerce_currency_symbol(); ?></span>
+												<span class="pa-woo-mc__subtotal-currency"> <?php echo esc_html( get_woocommerce_currency_symbol() ); ?></span>
 											<!-- </span> -->
 											<?php
 									} else {
@@ -5537,7 +5537,7 @@ class Mini_Cart extends Widget_Base {
 						)
 					);
 				} else {
-					echo $this->getTriggerIcon( $settings['default_icons'] );
+					echo $this->getTriggerIcon( $settings['default_icons'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded SVG markup.
 				}
 
 				break;

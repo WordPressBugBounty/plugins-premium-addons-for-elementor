@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 $class_map = array(
 	'premium-banner'           => 'PremiumAddons\Widgets\Premium_Banner',
 	'premium-blog'             => 'PremiumAddons\Widgets\Premium_Blog',

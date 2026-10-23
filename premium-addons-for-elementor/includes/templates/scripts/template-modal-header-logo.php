@@ -5,6 +5,10 @@
 
 use PremiumAddons\Includes\Helper_Functions;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 <span class="premium-template-modal-header-logo-icon">
 	<img src="<?php echo esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ); ?>">

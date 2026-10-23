@@ -910,7 +910,7 @@ class Woo_Products extends Widget_Base {
 				'default'   => 'post__in',
 				'options'   => array(
 					'post__in'     => __( 'Match Product', 'premium-addons-for-elementor' ),
-					'post__not_in' => __( 'Exclude Product', 'premium-addons-for-elementor' ),
+					'post__not_in' => __( 'Exclude Product', 'premium-addons-for-elementor' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- select option key, not a query arg.
 				),
 				'condition' => array(
 					'query_type' => 'custom',

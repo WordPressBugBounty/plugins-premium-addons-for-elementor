@@ -3,6 +3,10 @@
  * Templates Loader View
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 <div class="premium-filters-list"></div>
 <div class="premium-templates-wrap">

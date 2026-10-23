@@ -5,6 +5,10 @@ use PremiumAddons\Includes\Helper_Functions;
 // Premium Addons Pro Classes
 use PremiumAddonsPro\Includes\White_Label\Helper;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 
 <table class="widefat" cellspacing="0">

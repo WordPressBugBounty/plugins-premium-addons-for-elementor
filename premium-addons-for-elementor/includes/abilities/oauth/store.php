@@ -156,7 +156,7 @@ class Store {
 		global $wpdb;
 
 		foreach ( array( self::clients_table(), self::tokens_table() ) as $table ) {
-			$found = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- confirms custom OAuth tables were created.
+			$found = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- confirms custom OAuth tables were created.
 
 			if ( $table !== $found ) {
 				return false;
@@ -263,7 +263,7 @@ class Store {
 		global $wpdb;
 
 		$row = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom table.
-			$wpdb->prepare( 'SELECT * FROM ' . self::clients_table() . ' WHERE client_id = %s', $client_id ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from trusted helper.
+			$wpdb->prepare( 'SELECT * FROM %i WHERE client_id = %s', self::clients_table(), $client_id ),
 			ARRAY_A
 		);
 
@@ -289,7 +289,7 @@ class Store {
 	public static function count_clients() {
 		global $wpdb;
 
-		return (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . self::clients_table() ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- custom table, no user input.
+		return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM %i', self::clients_table() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom table, no user input.
 	}
 
 	/**
@@ -301,20 +301,17 @@ class Store {
 	public static function prune_clients() {
 		global $wpdb;
 
-		$clients = self::clients_table();
-		$tokens  = self::tokens_table();
-
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- custom tables; names from trusted helpers.
-		$wpdb->query(
+		$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom tables.
 			$wpdb->prepare(
-				"DELETE c FROM {$clients} c
-				LEFT JOIN {$tokens} t ON t.client_id = c.client_id AND t.expires_at > %d
-				WHERE t.id IS NULL AND c.created_at < %d",
+				'DELETE c FROM %i c
+				LEFT JOIN %i t ON t.client_id = c.client_id AND t.expires_at > %d
+				WHERE t.id IS NULL AND c.created_at < %d',
+				self::clients_table(),
+				self::tokens_table(),
 				time(),
 				time() - DAY_IN_SECONDS
 			)
 		);
-		// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/**
@@ -420,7 +417,8 @@ class Store {
 
 		$row = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom table.
 			$wpdb->prepare(
-				'SELECT * FROM ' . self::tokens_table() . ' WHERE token_hash = %s AND token_type = %s AND expires_at > %d', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from trusted helper.
+				'SELECT * FROM %i WHERE token_hash = %s AND token_type = %s AND expires_at > %d',
+				self::tokens_table(),
 				Util::hash_token( $token ),
 				$type,
 				time()
@@ -474,8 +472,8 @@ class Store {
 	public static function revoke_token( $id ) {
 		global $wpdb;
 
-		$token_deleted  = $wpdb->delete( self::tokens_table(), array( 'id' => $id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- custom table.
-		$access_deleted = $wpdb->delete( self::tokens_table(), array( 'refresh_of' => $id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- custom table.
+		$token_deleted  = $wpdb->delete( self::tokens_table(), array( 'id' => $id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom table.
+		$access_deleted = $wpdb->delete( self::tokens_table(), array( 'refresh_of' => $id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom table.
 
 		return false !== $token_deleted && false !== $access_deleted;
 	}
@@ -495,7 +493,8 @@ class Store {
 
 		return (bool) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom table.
 			$wpdb->prepare(
-				'SELECT 1 FROM ' . self::tokens_table() . ' WHERE user_id = %d AND expires_at > %d LIMIT 1', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from trusted helper.
+				'SELECT 1 FROM %i WHERE user_id = %d AND expires_at > %d LIMIT 1',
+				self::tokens_table(),
 				$user_id,
 				time()
 			)
@@ -519,16 +518,15 @@ class Store {
 			return array();
 		}
 
-		$tokens  = self::tokens_table();
-		$clients = self::clients_table();
-
 		$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom tables.
 			$wpdb->prepare(
 				"SELECT t.id, t.created_at, t.expires_at, c.client_name
-				FROM {$tokens} t
-				LEFT JOIN {$clients} c ON c.client_id = t.client_id
+				FROM %i t
+				LEFT JOIN %i c ON c.client_id = t.client_id
 				WHERE t.user_id = %d AND t.token_type = 'refresh' AND t.expires_at > %d
-				ORDER BY t.created_at DESC", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table names from trusted helpers.
+				ORDER BY t.created_at DESC",
+				self::tokens_table(),
+				self::clients_table(),
 				$user_id,
 				time()
 			),
@@ -599,7 +597,7 @@ class Store {
 	private static function acquire_lock( $name ) {
 		global $wpdb;
 
-		return 1 === (int) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK( %s, 0 )', $name ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- short-lived advisory lock for custom OAuth records.
+		return 1 === (int) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK( %s, 0 )', $name ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- short-lived advisory lock for custom OAuth records.
 	}
 
 	/**
@@ -611,7 +609,7 @@ class Store {
 	private static function release_lock( $name ) {
 		global $wpdb;
 
-		$wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK( %s )', $name ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- release the advisory lock acquired above.
+		$wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK( %s )', $name ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- release the advisory lock acquired above.
 	}
 	/**
 	 * Housekeeping: drop expired tokens and stale clients. Runs daily on the
@@ -629,7 +627,7 @@ class Store {
 			return;
 		}
 
-		$wpdb->query( $wpdb->prepare( 'DELETE FROM ' . self::tokens_table() . ' WHERE expires_at < %d', time() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared -- custom table.
+		$wpdb->query( $wpdb->prepare( 'DELETE FROM %i WHERE expires_at < %d', self::tokens_table(), time() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom table.
 
 		self::prune_clients();
 	}

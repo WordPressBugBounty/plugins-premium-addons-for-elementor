@@ -84,7 +84,7 @@ function get_tiktok_data( $id, $settings ) {
 		if ( 'ok' !== $response['error']['code'] ) {
 			?>
 			<div class="premium-error-notice">
-				<?php echo esc_html( __( 'Something went wrong: Code ', 'premium-addons-for-elementor' ) ) . $response['error']['code'] . ' => ' . $response['error']['message']; ?>
+				<?php echo esc_html( __( 'Something went wrong: Code ', 'premium-addons-for-elementor' ) ) . esc_html( $response['error']['code'] ) . ' => ' . esc_html( $response['error']['message'] ); ?>
 			</div>
 			<?php
 			return;
@@ -151,7 +151,7 @@ function get_tiktok_profile_data( $id, $settings ) {
 		if ( 'ok' !== $response['error']['code'] ) {
 			?>
 			<div class="premium-error-notice">
-				<?php echo esc_html( __( 'Something went wrong: Code ', 'premium-addons-for-elementor' ) ) . $response['error']['code'] . ' => ' . $response['error']['message']; ?>
+				<?php echo esc_html( __( 'Something went wrong: Code ', 'premium-addons-for-elementor' ) ) . esc_html( $response['error']['code'] ) . ' => ' . esc_html( $response['error']['message'] ); ?>
 			</div>
 			<?php
 			return 'error';

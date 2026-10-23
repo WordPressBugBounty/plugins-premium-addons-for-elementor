@@ -116,6 +116,10 @@ if ( ! class_exists( 'Live_Editor' ) ) {
 
 			check_ajax_referer( 'pa-live-editor', 'security' );
 
+			if ( ! current_user_can( 'publish_posts' ) ) {
+				wp_send_json_error( 'Insufficient user permission', 403 );
+			}
+
 			if ( ! isset( $_POST['key'] ) ) { // Widget ID ( + Control ID in case of repeater items ).
 				wp_send_json_error();
 			}
@@ -239,7 +243,7 @@ if ( ! class_exists( 'Live_Editor' ) ) {
 				'post_status'      => 'publish',
 				'posts_per_page'   => 1,
 				'title'            => $decoded_title,
-				'suppress_filters' => true,
+				'suppress_filters' => true, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.SuppressFilters_suppress_filters -- match the exact title, unfiltered by language or access plugins.
 			);
 
 			$query = new \WP_Query( $args );
@@ -291,6 +295,10 @@ if ( ! class_exists( 'Live_Editor' ) ) {
 			$temp_id   = isset( $_POST['templateID'] ) ? sanitize_text_field( wp_unslash( $_POST['templateID'] ) ) : '';
 			$temp_type = isset( $_POST['tempType'] ) ? sanitize_text_field( wp_unslash( $_POST['tempType'] ) ) : '';
 
+			if ( ! self::is_dynamic_template( $temp_id ) ) {
+				wp_send_json_error( 'Only live editor templates can be removed', 403 );
+			}
+
 			if ( 'loop' === $temp_type ) {
 				/** @var LoopDocument $document */
 				$template_content = PluginPro::elementor()->documents->get( $temp_id );
@@ -312,6 +320,21 @@ if ( ! class_exists( 'Live_Editor' ) ) {
 			}
 
 			wp_send_json_success( $res );
+		}
+
+		/**
+		 * Whether a post is a template created by the live editor.
+		 *
+		 * @since 4.11.116
+		 *
+		 * @param int|string $post_id post ID.
+		 * @return bool
+		 */
+		private static function is_dynamic_template( $post_id ) {
+
+			$post = get_post( $post_id );
+
+			return $post && 'elementor_library' === $post->post_type && 0 === strpos( $post->post_name, 'pa-dynamic-temp-' );
 		}
 
 		/**

@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.11.116 - 23/10/2026 =
+
+- Tweak: Headroom and Flipster scripts now load in the footer for better page performance in Mega Menu and Media Wheel widgets.
+- Fixed: "Purchased" option not working as expected in WooCommerce Category display condition.
+- Fixed: Improved code security enforcement.
+
 = 4.11.115 - 22/10/2026 =
 
 - Tweak: Upload Media AI ability now supports videos.

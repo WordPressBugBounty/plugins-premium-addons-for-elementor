@@ -124,7 +124,8 @@ class List_Templates implements Ability_Handler {
 		$template_type = ! empty( $input['template_type'] ) ? $input['template_type'] : '';
 
 		if ( '' !== $template_type ) {
-			$args['meta_query'] = array(
+			// Not the elementor_library_type term: templates inserted without the editor carry only the meta.
+			$args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- capped at 100 rows.
 				array(
 					'key'   => '_elementor_template_type',
 					'value' => $template_type,

@@ -124,7 +124,7 @@ class Query_Helper {
 		$post_args['order']   = $settings['premium_blog_order'];
 
 		if ( 'meta_value' === $settings['premium_blog_order_by'] ) {
-			$post_args['meta_key'] = $settings['premium_blog_meta_key'];
+			$post_args['meta_key'] = $settings['premium_blog_meta_key']; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- user-selected order by meta value.
 		}
 
 		if ( isset( $settings['posts_from'] ) ) {
@@ -259,7 +259,7 @@ class Query_Helper {
 			$excluded_posts[] = $post_id;
 		}
 
-		$post_args['post__not_in'] = $excluded_posts;
+		$post_args['post__not_in'] = $excluded_posts; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- user-selected exclusions.
 
 		return $post_args;
 	}
@@ -349,12 +349,13 @@ class Query_Helper {
 
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- get_posts() would load full post objects for every post; result is cached below.
 		$list = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT ID, post_title FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish'",
 				$post_type
 			)
-		); // phpcs:ignore
+		);
 
 		$options = array();
 

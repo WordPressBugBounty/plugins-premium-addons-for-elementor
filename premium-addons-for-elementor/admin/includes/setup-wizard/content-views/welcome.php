@@ -32,6 +32,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 		),
 	);
 
+	$pa_wz_icon_tags = array(
+		'svg'   => array(
+			'xmlns'       => array(),
+			'aria-hidden' => array(),
+			'width'       => array(),
+			'height'      => array(),
+			'viewbox'     => array(),
+		),
+		'defs'  => array(),
+		'style' => array(),
+		'g'     => array( 'id' => array() ),
+		'path'  => array(
+			'class' => array(),
+			'd'     => array(),
+		),
+	);
+
 	?>
 
 	<span class="pa-welcome-msg-wrapper pa-wz-flex pa-wz-flex-d-col pa-wz-justify-content-center">
@@ -50,23 +67,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 				">
 					<span class="pa-site-icon-wrapper">
-					<?php echo $site['icon']; ?>
+					<?php echo wp_kses( $site['icon'], $pa_wz_icon_tags ); ?>
 					</span>
 					<span class="pa-wz-separator"></span>
 					<span class="pa-site-title-wrapper">
 						<span class="pa-wz-site-title-txt">
-						<?php printf( __( '%1$s', 'premium-addons-for-elementor' ), esc_html( $key ) ); ?>
+						<?php printf( esc_html__( '%1$s', 'premium-addons-for-elementor' ), esc_html( $key ) ); ?>
 						</span>
 					</span>
 					<span class="pa-tooltip-holder pa-wz-flex">
 						<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16.93" height="16.93" viewBox="0 0 16.93 16.93"><defs><style>.pa-site-info-1{fill:#7C7C7C;}</style></defs><path class="pa-site-info-1" d="M8.47,16.93c4.63,0,8.47-3.84,8.47-8.47S13.09,0,8.46,0,0,3.83,0,8.47s3.84,8.47,8.47,8.47ZM8.47,15.52c-3.92,0-7.05-3.14-7.05-7.06S4.54,1.41,8.46,1.41s7.06,3.14,7.06,7.06-3.14,7.06-7.06,7.06ZM8.39,5.59c.61,0,1.08-.48,1.08-1.09s-.47-1.09-1.08-1.09-1.08.48-1.08,1.09.48,1.09,1.08,1.09ZM7.01,13.12h3.38c.34,0,.61-.25.61-.59s-.27-.58-.61-.58h-1.03v-4.23c0-.45-.22-.75-.65-.75h-1.56c-.34,0-.61.26-.61.58,0,.34.27.59.61.59h.89v3.8h-1.03c-.34,0-.61.26-.61.58,0,.34.27.59.61.59Z"/></svg>
 						<span class="pa-site-tooltip-content pa-wz-flex pa-wz-align-items-center pa-wz-justify-content-center">
-							<span><?php printf( __( '%1$s', 'premium-addons-for-elementor' ), esc_html( $site['tooltip'] ) ); ?></span>
+							<span><?php printf( esc_html__( '%1$s', 'premium-addons-for-elementor' ), esc_html( $site['tooltip'] ) ); ?></span>
 							<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio="none"  aria-hidden="true" width='272' height='56.33' viewBox='0 0 272 56.33'><defs><style>.pa-site-tooltip-bg{fill:#e9e9eb;}</style></defs><path class='pa-site-tooltip-bg' d='M272,18v20c0,9.94-8.06,18-18,18H23c-4.1,0-7.88-1.37-10.91-3.69-1.68,1.83-6.8,4.68-11.98,3.88-1-.61,5-2,5-12.5,0-.45-.01-2.16-.01-3.76-.07-.63-.1-1.28-.1-1.93v-20C5,8.06,13.06,0,23,0h231c9.94,0,18,8.06,18,18Z'/></svg>
 						</span>
 					</span>
 
-					<input type="radio" name="pa-wz-site-type" class="pa-wz-option" value="<?php printf( __( '%1$s', 'premium-addons-for-elementor' ), esc_attr( $site['value'] ) ); ?>">
+					<input type="radio" name="pa-wz-site-type" class="pa-wz-option" value="<?php printf( esc_attr__( '%1$s', 'premium-addons-for-elementor' ), esc_attr( $site['value'] ) ); ?>">
 				</label>
 				<?php
 		}

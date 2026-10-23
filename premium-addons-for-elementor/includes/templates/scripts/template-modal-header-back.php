@@ -3,6 +3,10 @@
  * Templates Back to Library Button
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 <button type="button" class="premium-template-modal-back">
 	<i class="dashicons dashicons-arrow-left-alt2"></i>

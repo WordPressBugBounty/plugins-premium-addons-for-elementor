@@ -122,7 +122,7 @@ class Feedback {
 		$plugin_data = get_plugin_data( PREMIUM_ADDONS_FILE );
 
 		?>
-			<div class="pa-deactivation-popup hidden" data-type="wrapper" data-slug="<?php echo $plugin_data['TextDomain']; ?>">
+			<div class="pa-deactivation-popup hidden" data-type="wrapper" data-slug="<?php echo esc_attr( $plugin_data['TextDomain'] ); ?>">
 				<div class="overlay">
 					<div class="close"><i class="dashicons dashicons-no"></i></div>
 					<div class="body">
@@ -188,8 +188,8 @@ class Feedback {
 							<p class="options-wrap pa-info-notice">
 								<?php
 								$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/fix-elementor-editor-panel-loading-issues/', 'plugins-page', 'wp-dash', 'deactivate-form' );
-								echo __( 'Having speed issues or Elementor editor not loading? Your website PHP limits might be the reason. Here\'s ', 'premium-addons-for-elementor' ) .
-										sprintf( '<a target="_blank" href="%s">%s</a>', $link, __( 'how to increase the PHP limits', 'premium-addons-for-elementor' ) );
+								echo esc_html__( 'Having speed issues or Elementor editor not loading? Your website PHP limits might be the reason. Here\'s ', 'premium-addons-for-elementor' ) .
+										sprintf( '<a target="_blank" href="%s">%s</a>', esc_url( $link ), esc_html__( 'how to increase the PHP limits', 'premium-addons-for-elementor' ) );
 								?>
 							</p>
 

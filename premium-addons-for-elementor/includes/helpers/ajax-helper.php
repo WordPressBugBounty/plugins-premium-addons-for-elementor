@@ -9,6 +9,7 @@ namespace PremiumAddons\Includes\Helpers;
 
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\Helpers\Query_Helper;
+use PremiumAddons\Includes\Helpers\Document_Helper;
 use PremiumAddons\Includes\Premium_Template_Tags;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -92,7 +93,8 @@ trait AJAX_Helper {
 
 		// Exclude the premium-grid and loop-items templates for 'elementor_library' source.
 		if ( in_array( 'elementor_library', $post_type, true ) ) {
-			$args['meta_query'] = array(
+			// Not the elementor_library_type term: templates inserted without the editor carry only the meta.
+			$args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- editor-only request.
 				array(
 					'key'     => '_elementor_template_type',
 					'value'   => array( 'premium-grid', 'loop-item' ),
@@ -254,15 +256,8 @@ trait AJAX_Helper {
 			wp_send_json_error( 'Invalid Template ID' );
 		}
 
-		// Check if post is published or user has permission to view
-		if ( 'publish' !== $post->post_status ) {
-			$current_user_id = get_current_user_id();
-			$is_author       = ( $current_user_id === (int) $post->post_author );
-			$is_admin        = current_user_can( 'manage_options' );
-
-			if ( ! $is_admin && ! $is_author ) {
-				wp_send_json_error( 'Permission denied' );
-			}
+		if ( ! Document_Helper::can_read_document( $post->ID ) ) {
+			wp_send_json_error( 'Permission denied', 403 );
 		}
 
 		$template_content = Helper_Functions::render_elementor_template( $template, $is_ID );

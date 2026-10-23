@@ -68,7 +68,7 @@ class Pa_Weather_Handler {
 
 		$req_url .= '?lat=' . $settings['lat'] . '&lon=' . $settings['long'] . '&units=' . $settings['unit'] . '&lang=' . $settings['lang'];
 
-		$req_url .= '&exclude=minutely,alerts';
+		$req_url .= '&exclude=minutely,alerts'; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- OpenWeather API param, not a query arg.
 
 		$forecast_tabs = isset( $settings['forecast_tabs'] ) && $settings['forecast_tabs'] ? true : false;
 

@@ -3,6 +3,10 @@
  * Templates Loader View
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 <div class="elementor-loader-wrapper">
 	<div class="elementor-loader">

@@ -327,7 +327,7 @@ class Woo_Categories extends Widget_Base {
 					'all'     => __( 'Show All', 'premium-addons-for-elementor' ),
 					'top'     => __( 'Show Top Level', 'premium-addons-for-elementor' ),
 					'include' => __( 'Match Categories', 'premium-addons-for-elementor' ),
-					'exclude' => __( 'Exclude Categories', 'premium-addons-for-elementor' ),
+					'exclude' => __( 'Exclude Categories', 'premium-addons-for-elementor' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- select option key, not a query arg.
 				),
 			)
 		);
@@ -1090,7 +1090,7 @@ class Woo_Categories extends Widget_Base {
 		} elseif ( 'exclude' === $settings['category_filter_rule'] && is_array( $settings['category_filter'] ) ) {
 			$exclude_ids = array_filter( array_map( 'trim', $settings['category_filter'] ) );
 
-			$args['exclude'] = $exclude_ids;
+			$args['exclude'] = $exclude_ids; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- get_terms() exclusion, not a posts query.
 		}
 
 		$categories = get_terms( $args );

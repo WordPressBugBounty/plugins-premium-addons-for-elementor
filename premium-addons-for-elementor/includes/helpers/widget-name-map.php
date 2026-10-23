@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 $names_maps = array(
 	'premium-blog'             => 'premium-addon-blog',
 	'premium-image-hotspots'   => 'premium-addon-image-hotspots',

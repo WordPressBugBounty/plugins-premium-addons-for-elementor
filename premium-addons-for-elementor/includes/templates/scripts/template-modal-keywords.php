@@ -3,6 +3,10 @@
  * Templates Keywords Filter
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // If this file is called directly, abort.
+}
+
 ?>
 <#
 	if ( ! _.isEmpty( keywords ) ) {
