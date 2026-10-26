@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.11.117 - 26/10/2026 =
+
+- Tweak: Upload Media AI ability can now upload files from the AI agent's computer, not only public URLs.
+- Fixed: Mega Menu dropdown closing while moving the cursor from a menu item to its mega content.
+- Fixed: "Undefined array key" warning showing above Shape Divider addon on the frontend.
+- Fixed: Improved code security enforcement in Upload Media AI ability.
+
 = 4.11.116 - 23/10/2026 =
 
 - Tweak: Headroom and Flipster scripts now load in the footer for better page performance in Mega Menu and Media Wheel widgets.

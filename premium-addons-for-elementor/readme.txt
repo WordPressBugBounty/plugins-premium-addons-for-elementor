@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.116
+Stable Tag: 4.11.117
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,13 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.117 - 26/10/2026 =
+
+- Tweak: Upload Media AI ability can now upload files from the AI agent's computer, not only public URLs.
+- Fixed: Mega Menu dropdown closing while moving the cursor from a menu item to its mega content.
+- Fixed: "Undefined array key" warning showing above Shape Divider addon on the frontend.
+- Fixed: Improved code security enforcement in Upload Media AI ability.
 
 = 4.11.116 - 23/10/2026 =
 

@@ -2,8 +2,9 @@
 /**
  * Upload Media.
  *
- * Downloads an image or video from a URL into the WordPress media library and
- * returns the attachment ID and URL for a build ability to place.
+ * Downloads an image or video from a URL into the WordPress media library, or
+ * hands out an upload link for a local file, and returns the attachment ID and
+ * URL for a build ability to place.
  *
  * @package PremiumAddons
  */
@@ -72,20 +73,20 @@ class Upload_Media implements Ability_Handler {
 	public function get_registration_args() {
 		return array(
 			'label'               => __( 'Upload Image or Video to Media Library', 'premium-addons-for-elementor' ),
-			'description'         => __( 'Adds an image or video from a URL to the media library. Only run it after the user has approved the upload.', 'premium-addons-for-elementor' ),
+			'description'         => __( 'Adds an image or video to the media library from a URL or from a file you upload. Only run it after the user has approved the upload.', 'premium-addons-for-elementor' ),
 			'category'            => 'pa-media',
 			'input_schema'        => array(
 				'type'                 => 'object',
 				'additionalProperties' => false,
-				'required'             => array( 'source_url', 'consent' ),
+				'required'             => array( 'consent' ),
 				'properties'           => array(
 					'source_url' => array(
 						'type'        => 'string',
-						'description' => __( 'The public http(s) URL of the image or video to download. Images are capped at 5 MB and videos at 50 MB. Private, loopback and internal addresses are rejected.', 'premium-addons-for-elementor' ),
+						'description' => __( 'The public http(s) URL of the image or video to download. Images are capped at 5 MB and videos at 50 MB. Private, loopback and internal addresses are rejected. Leave it out to get an upload link instead.', 'premium-addons-for-elementor' ),
 					),
 					'filename'   => array(
 						'type'        => 'string',
-						'description' => __( 'The filename to store the file under, with its extension. Derived from the source URL when omitted.', 'premium-addons-for-elementor' ),
+						'description' => __( 'The filename to store the file under, with its extension. Required when source_url is left out; otherwise derived from the source URL when omitted.', 'premium-addons-for-elementor' ),
 					),
 					'alt'        => array(
 						'type'        => 'string',
@@ -103,50 +104,77 @@ class Upload_Media implements Ability_Handler {
 			),
 			'output_schema'       => array(
 				'type'        => 'object',
-				'description' => __( 'The attachment the file was stored as.', 'premium-addons-for-elementor' ),
+				'description' => __( 'The attachment the file was stored as, or, without a source_url, the upload link to send the file to.', 'premium-addons-for-elementor' ),
 				'properties'  => array(
-					'id'        => array(
+					'id'            => array(
 						'type'        => 'integer',
 						'description' => __( 'The attachment ID. Pass it with the URL as the media control value in premium-addons/insert-widget or premium-addons/update-element-settings.', 'premium-addons-for-elementor' ),
 					),
-					'url'       => array(
+					'url'           => array(
 						'type'        => 'string',
 						'description' => __( 'The full size file URL on this site.', 'premium-addons-for-elementor' ),
 					),
-					'width'     => array(
+					'width'         => array(
 						'type'        => 'integer',
 						'description' => __( 'The full size width in pixels of the image or video, 0 when the file carries no dimensions.', 'premium-addons-for-elementor' ),
 					),
-					'height'    => array(
+					'height'        => array(
 						'type'        => 'integer',
 						'description' => __( 'The full size height in pixels of the image or video, 0 when the file carries no dimensions.', 'premium-addons-for-elementor' ),
 					),
-					'mime_type' => array(
+					'mime_type'     => array(
 						'type'        => 'string',
 						'description' => __( 'The stored MIME type.', 'premium-addons-for-elementor' ),
 					),
-					'alt'       => array(
+					'alt'           => array(
 						'type'        => 'string',
 						'description' => __( 'The alt text stored on the attachment.', 'premium-addons-for-elementor' ),
 					),
-					'reused'    => array(
+					'reused'        => array(
 						'type'        => 'boolean',
-						'description' => __( 'True when this URL was already in the library, so the existing attachment was returned instead of downloading it again. Any alt text or title passed with the call is still applied.', 'premium-addons-for-elementor' ),
+						'description' => __( 'True when this URL was already in the library, so the existing attachment was returned instead of downloading it again. Any alt text or title passed with the call is applied only when you can edit that attachment.', 'premium-addons-for-elementor' ),
+					),
+					'upload_url'    => array(
+						'type'        => 'string',
+						'description' => __( 'The address to send the file to.', 'premium-addons-for-elementor' ),
+					),
+					'upload_method' => array(
+						'type'        => 'string',
+						'description' => __( 'The HTTP method to send the file with. If the host refuses it, POST the same body instead, still with Content-Type: application/octet-stream (a form content type breaks on real files). POST bodies are also capped by the host\'s post_max_size.', 'premium-addons-for-elementor' ),
+					),
+					'token_header'  => array(
+						'type'        => 'string',
+						'description' => __( 'The request header that carries upload_token.', 'premium-addons-for-elementor' ),
+					),
+					'upload_token'  => array(
+						'type'        => 'string',
+						'description' => __( 'Send it in the token_header header. Works once, for 5 minutes.', 'premium-addons-for-elementor' ),
+					),
+					'expires_at'    => array(
+						'type'        => 'string',
+						'description' => __( 'When the link stops working, in ISO 8601 UTC.', 'premium-addons-for-elementor' ),
+					),
+					'max_bytes'     => array(
+						'type'        => 'integer',
+						'description' => __( 'The largest file the link accepts. Images are still capped at 5 MB.', 'premium-addons-for-elementor' ),
+					),
+					'curl_command'  => array(
+						'type'        => 'string',
+						'description' => __( 'Run it from your code-execution sandbox or shell with the file path filled in. The response is the stored attachment. An HTML 413 page means the web server allows smaller uploads than max_bytes. A 401 or 403 with a code other than premium_addons_* (such as rest_not_logged_in) means a security plugin blocks logged-out REST requests, so this site cannot take uploads this way. In that case, or without a shell or code execution, ask the user for a public URL or to upload the file in WordPress instead.', 'premium-addons-for-elementor' ),
 					),
 				),
 			),
 			'permission_callback' => function () {
 				return Admin_Helper::check_user_can( 'upload_files' );
 			},
-			// Idempotent: a repeat call with the same source_url returns the
-			// attachment already stored for it rather than adding a second copy.
+			// Not idempotent: every call without a source_url mints a new link.
 			'meta'                => array(
 				'show_in_rest' => true,
 				'mcp'          => array( 'public' => true ),
 				'annotations'  => array(
 					'readonly'    => false,
 					'destructive' => false,
-					'idempotent'  => true,
+					'idempotent'  => false,
 				),
 			),
 		);
@@ -179,10 +207,7 @@ class Upload_Media implements Ability_Handler {
 		$source_url = isset( $input['source_url'] ) ? trim( $input['source_url'] ) : '';
 
 		if ( '' === $source_url ) {
-			return new \WP_Error(
-				'premium_addons_missing_source_url',
-				__( 'A source URL is required to add a file to the media library.', 'premium-addons-for-elementor' )
-			);
+			return $this->mint_upload_link( $input );
 		}
 
 		// wp_http_validate_url() rejects anything that is not public http(s) —
@@ -199,8 +224,10 @@ class Upload_Media implements Ability_Handler {
 		if ( $existing ) {
 
 			// The file is already here, but this call may carry better alt text or
-			// a better title than the one that first brought it in.
-			$this->apply_input_meta( $existing, $input );
+			// a better title. upload_files alone must not rewrite another user's file.
+			if ( Admin_Helper::check_user_can( 'edit_post', $existing ) ) {
+				$this->apply_input_meta( $existing, $input );
+			}
 
 			return array_merge( Helpers::format_attachment( $existing ), array( 'reused' => true ) );
 		}
@@ -208,10 +235,7 @@ class Upload_Media implements Ability_Handler {
 		$site_limit = $this->get_site_upload_limit();
 
 		if ( 0 === $site_limit ) {
-			return new \WP_Error(
-				'premium_addons_not_initialized',
-				__( 'This site has used up its upload space. Delete files from the media library before adding more.', 'premium-addons-for-elementor' )
-			);
+			return $this->upload_space_error();
 		}
 
 		$size_cap = $this->get_size_cap( $source_url, $site_limit );
@@ -221,8 +245,6 @@ class Upload_Media implements Ability_Handler {
 		}
 
 		require_once ABSPATH . 'wp-admin/includes/file.php';
-		require_once ABSPATH . 'wp-admin/includes/media.php';
-		require_once ABSPATH . 'wp-admin/includes/image.php';
 
 		$tmp_file = $this->download( $source_url, $size_cap );
 
@@ -231,7 +253,110 @@ class Upload_Media implements Ability_Handler {
 		}
 
 		$filename = ! empty( $input['filename'] ) ? sanitize_file_name( $input['filename'] ) : $this->filename_from_url( $source_url );
-		$error    = $this->validate_file( $tmp_file, $filename, $size_cap );
+		$stored   = $this->store_file( $tmp_file, $filename, $input, $size_cap );
+
+		if ( ! is_wp_error( $stored ) ) {
+			update_post_meta( $stored['id'], self::SOURCE_URL_META, esc_url_raw( $source_url ) );
+		}
+
+		return $stored;
+	}
+
+	/**
+	 * Create a link the agent sends a local file to.
+	 *
+	 * @param array $input Ability input.
+	 *
+	 * @return array|\WP_Error
+	 */
+	private function mint_upload_link( $input ) {
+
+		$filename = isset( $input['filename'] ) ? sanitize_file_name( $input['filename'] ) : '';
+
+		if ( '' === $filename ) {
+			return new \WP_Error(
+				'premium_addons_missing_filename',
+				__( 'A filename with its extension is required to get an upload link. Pass source_url instead to add a file from a public URL.', 'premium-addons-for-elementor' )
+			);
+		}
+
+		// Caught here, a wrong file type costs the agent a call instead of a used-up link.
+		if ( ! $this->is_media_filename( $filename ) ) {
+			return new \WP_Error(
+				'premium_addons_invalid_filename',
+				__( 'The filename must end in an image or video extension this site accepts, such as .jpg, .png, .webp or .mp4. SVG files are not supported.', 'premium-addons-for-elementor' )
+			);
+		}
+
+		$site_limit = $this->get_site_upload_limit();
+
+		if ( 0 === $site_limit ) {
+			return $this->upload_space_error();
+		}
+
+		$max_bytes = null === $site_limit ? self::MAX_VIDEO_SIZE : min( self::MAX_VIDEO_SIZE, $site_limit );
+
+		return Upload_Link::mint( array_merge( $input, array( 'filename' => $filename ) ), $max_bytes );
+	}
+
+	/**
+	 * Whether a filename names an image or video type this site stores.
+	 *
+	 * SVG is excluded because validate_file() can never accept it.
+	 *
+	 * @since 4.11.117
+	 *
+	 * @param string $filename The filename.
+	 *
+	 * @return bool
+	 */
+	private function is_media_filename( $filename ) {
+
+		$mime_type = wp_check_filetype( $filename )['type'];
+
+		if ( ! $mime_type || 'image/svg+xml' === $mime_type ) {
+			return false;
+		}
+
+		return $this->is_video( $mime_type ) || 0 === strpos( $mime_type, 'image/' );
+	}
+
+	/**
+	 * Build the error for a site with no upload space left.
+	 *
+	 * @since 4.11.117
+	 *
+	 * @return \WP_Error
+	 */
+	public function upload_space_error() {
+		return new \WP_Error(
+			'premium_addons_not_initialized',
+			__( 'This site has used up its upload space. Delete files from the media library before adding more.', 'premium-addons-for-elementor' )
+		);
+	}
+
+	/**
+	 * Check a temp file and add it to the media library.
+	 *
+	 * Shared by the URL mode and the upload link route. The temp file is
+	 * deleted on every failure.
+	 *
+	 * @since 4.11.117
+	 *
+	 * @param string $tmp_file The temp file path.
+	 * @param string $filename The filename to store it under.
+	 * @param array  $input    The alt text and title to apply.
+	 * @param int    $size_cap The most bytes to accept.
+	 *
+	 * @return array|\WP_Error The attachment, or an error.
+	 */
+	public function store_file( $tmp_file, $filename, $input, $size_cap ) {
+
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/media.php';
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+
+		$error = $this->validate_file( $tmp_file, $filename, $size_cap );
 
 		if ( is_wp_error( $error ) ) {
 			wp_delete_file( $tmp_file );
@@ -255,8 +380,6 @@ class Upload_Media implements Ability_Handler {
 
 		$this->apply_input_meta( $attachment_id, $input );
 
-		update_post_meta( $attachment_id, self::SOURCE_URL_META, esc_url_raw( $source_url ) );
-
 		return array_merge( Helpers::format_attachment( $attachment_id ), array( 'reused' => false ) );
 	}
 
@@ -279,8 +402,8 @@ class Upload_Media implements Ability_Handler {
 			$title = sanitize_text_field( $input['title'] );
 
 			// wp_update_post() re-stamps post_modified and fires save_post even when
-			// the title is unchanged, so a repeated call would move the library this
-			// ability claims idempotence over. update_post_meta() above already
+			// the title is unchanged, so a repeated URL-mode call for a reused file
+			// would still change the library. update_post_meta() above already
 			// no-ops on an unchanged value.
 			if ( get_post_field( 'post_title', $attachment_id, 'raw' ) !== $title ) {
 				wp_update_post(
@@ -302,7 +425,7 @@ class Upload_Media implements Ability_Handler {
 	 *
 	 * @return int|null The byte limit, 0 when the quota is used up, or null when unlimited.
 	 */
-	private function get_site_upload_limit() {
+	public function get_site_upload_limit() {
 
 		if ( ! is_multisite() || get_site_option( 'upload_space_check_disabled' ) ) {
 			return null;
@@ -366,7 +489,7 @@ class Upload_Media implements Ability_Handler {
 	 *
 	 * @return \WP_Error
 	 */
-	private function file_size_error( $size_cap ) {
+	public function file_size_error( $size_cap ) {
 		return new \WP_Error(
 			'premium_addons_invalid_file_size',
 			sprintf(

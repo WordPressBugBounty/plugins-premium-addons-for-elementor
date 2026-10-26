@@ -121,6 +121,9 @@ class Bootstrap {
 		// Serve copy payloads to Destination sites. Signature authorized, no WordPress auth.
 		add_action( 'rest_api_init', array( Transfer\Transfer_Controller::class, 'register_routes' ) );
 
+		// Receive files sent to upload-media links. Token authorized, as the user who created the link.
+		add_action( 'rest_api_init', array( Media\Upload_Link::class, 'register_routes' ) );
+
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			add_action( 'init', array( $this, 'boot_mcp_adapter' ), 5 );
 		}

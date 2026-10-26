@@ -957,7 +957,8 @@ class Shape_Divider {
 
 			$is_pro_shape = 'default' === $settings['premium_gdivider_source'] && str_replace( 'shape', '', $settings['premium_gdivider_defaults'] ) > 25;
 
-			if ( $is_pro_shape || 'custom' === $settings['premium_gdivider_source'] || 'color' !== $settings['premium_gdivider_bg_type'] || in_array( $settings['premium_gdivider_pos'], array( 'left', 'right' ), true ) ) {
+			// Position is a UI-only control, so Elementor drops it from frontend settings until it is saved.
+			if ( $is_pro_shape || 'custom' === $settings['premium_gdivider_source'] || 'color' !== $settings['premium_gdivider_bg_type'] || in_array( $settings['premium_gdivider_pos'] ?? '', array( 'left', 'right' ), true ) ) {
 
 				?>
 				<div class="premium-error-notice">

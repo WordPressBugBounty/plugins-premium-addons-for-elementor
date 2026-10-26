@@ -172,17 +172,26 @@
 
 						clearTimeout(hoverTimeout);
 
-						$(this).siblings().removeClass("premium-item-hovered"); // unset hovered items only for this menu.
+						var $item = $(this);
 
-						$(this).addClass("premium-item-hovered");
+						// the cursor may cross siblings on its way into an open panel, so don't close it right away.
+						if (
+							$item.siblings(".menu-item-has-children.premium-item-hovered")
+								.length
+						) {
+							hoverTimeout = setTimeout(function () {
+								setHoveredItem($item);
+							}, delay);
 
-						if ($(this).hasClass("premium-sub-menu-item"))
-							$(this)
-								.parents(".premium-nav-menu-item")
-								.addClass("premium-item-hovered");
+							return;
+						}
+
+						setHoveredItem($item);
 					});
 
 				$scope.on("mouseleave.PaItemHover", function (e) {
+					clearTimeout(hoverTimeout);
+
 					hoverTimeout = setTimeout(function () {
 						$scope
 							.find(".premium-item-hovered")
@@ -205,11 +214,15 @@
 						$menuItem.addClass("premium-item-hovered");
 					})
 					.on("mouseleave.PaItemHover", function (e) {
+						var $menuItem = $(this).parents(".premium-nav-menu-item").first();
+
+						// moving back to the item's own link keeps the panel open.
+						if ($menuItem.has(e.relatedTarget).length) {
+							return;
+						}
+
 						clearTimeout(hoverTimeout);
-						$(this)
-							.parents(".premium-nav-menu-item")
-							.first()
-							.removeClass("premium-item-hovered");
+						$menuItem.removeClass("premium-item-hovered");
 					});
 			} else {
 				// click
@@ -821,6 +834,20 @@
 			return $("<span>", {
 				class: "premium-rn-badge elementor-repeater-item-" + badge.id,
 			}).html(badge.text);
+		}
+
+		/**
+		 * @param {object} $item .premium-nav-menu-item
+		 */
+		function setHoveredItem($item) {
+			$item.siblings().removeClass("premium-item-hovered"); // unset hovered items only for this menu.
+
+			$item.addClass("premium-item-hovered");
+
+			if ($item.hasClass("premium-sub-menu-item"))
+				$item
+					.parents(".premium-nav-menu-item")
+					.addClass("premium-item-hovered");
 		}
 
 		/**
