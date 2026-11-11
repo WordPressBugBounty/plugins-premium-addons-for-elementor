@@ -154,7 +154,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'key'   => 'premium-dual-header',
 					'name'  => 'premium-addon-dual-header',
 					'title' => __( 'Dual Heading', 'premium-addons-for-elementor' ),
-					'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/dual-header-widget-for-elementor-page-builder/', 'dual', 'wp-dash', 'wizard' ),
+					'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-dual-heading-widget/', 'dual', 'wp-dash', 'wizard' ),
 					'type'  => 'basic',
 				),
 			),
@@ -577,7 +577,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'key'   => 'premium-dual-header',
 				'name'  => 'premium-addon-dual-header',
 				'title' => __( 'Dual Heading', 'premium-addons-for-elementor' ),
-				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/dual-header-widget-for-elementor-page-builder/', 'dual', 'wp-dash', 'wizard' ),
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-dual-heading-widget/', 'dual', 'wp-dash', 'wizard' ),
 			),
 			array(
 				'key'   => 'premium-blog',

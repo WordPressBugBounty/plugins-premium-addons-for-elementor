@@ -1662,7 +1662,7 @@ class Helper_Functions {
 					'type'        => Controls_Manager::NOTICE,
 					'notice_type' => 'info',
 					'dismissible' => false,
-					'content'     => __( '<b>Build smarter and faster</b> with premium widgets, 580+ container blocks, and advanced customization controls — all available in the <a href="' . esc_url( $pro_link ) . '" target="_blank">PA Pro</a>. <b>Save up to 30%!</b>.', 'premium-addons-for-elementor' ),
+					'content'     => __( '<b>Build smarter and faster</b> with premium widgets, 580+ container blocks, and advanced customization controls — all available in the <a href="' . esc_url( $pro_link ) . '" target="_blank">PA Pro</a>. <b>Save up to 25%!</b>.', 'premium-addons-for-elementor' ),
 				)
 			);
 
@@ -1833,10 +1833,24 @@ class Helper_Functions {
 			return '';
 		}
 
+		// PA Pro below 2.9.70 still passes rendered attribute strings.
+		$is_legacy_string = is_string( $attributes ) && self::check_papro_version() && version_compare( PREMIUM_PRO_ADDONS_VERSION, '2.9.70', '<' );
+
+		if ( ! $is_legacy_string ) {
+			// Arrays only: parsing a rendered string with parse_str() splits on & and URL-decodes, so values could forge attributes.
+			$attributes = array_filter(
+				is_array( $attributes ) ? $attributes : array(),
+				function ( $key ) {
+					return (bool) preg_match( '/^[a-zA-Z0-9_:-]+$/', $key );
+				},
+				ARRAY_FILTER_USE_KEY
+			);
+		}
+
 		// If icon library is SVG, then go to Elementor. Used for widgets where this function is called in all cases.
 		if ( false === strpos( $icon['library'], 'fa-' ) ) {
 
-			if ( is_string( $attributes ) ) {
+			if ( $is_legacy_string ) {
 				$attributes = str_replace( '"', '', $attributes );
 			}
 
@@ -1861,9 +1875,16 @@ class Helper_Functions {
 
 		$view_box = '0 0 ' . $icon['width'] . ' ' . $icon['height'];
 
-		if ( is_array( $attributes ) ) {
+		if ( $is_legacy_string ) {
+
+			$svg_html .= str_replace( 'class="', 'class="svg-inline--' . $i_class . ' ', $attributes );
+
+		} else {
 
 			foreach ( $attributes as $key => $value ) {
+
+				// Elementor render attributes store each value as an array.
+				$value = esc_attr( is_array( $value ) ? implode( ' ', $value ) : $value );
 
 				if ( 'class' === $key ) {
 
@@ -1873,11 +1894,6 @@ class Helper_Functions {
 					$svg_html .= " {$key}='{$value}' ";
 				}
 			}
-		} else {
-
-			$attributes = str_replace( 'class="', 'class="svg-inline--' . $i_class . ' ', $attributes );
-
-			$svg_html .= $attributes;
 		}
 
 		$svg_html .= " aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='{$view_box}'>";

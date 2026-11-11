@@ -2694,7 +2694,7 @@ class Premium_Modalbox extends Widget_Base {
 						if ( 'yes' === $settings['premium_modal_box_icon_switcher'] && 'before' === $settings['premium_modal_box_icon_position'] ) :
 							if ( 'icon' === $icon_type ) :
 
-								echo Helper_Functions::get_svg_by_icon( $settings['premium_modal_box_button_icon_selection_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_modal_box_button_icon_selection_updated'], $this->get_render_attributes( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							else :
 								?>
@@ -2714,7 +2714,7 @@ class Premium_Modalbox extends Widget_Base {
 						if ( 'yes' === $settings['premium_modal_box_icon_switcher'] && 'after' === $settings['premium_modal_box_icon_position'] ) :
 							if ( 'icon' === $icon_type ) :
 
-								echo Helper_Functions::get_svg_by_icon( $settings['premium_modal_box_button_icon_selection_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_modal_box_button_icon_selection_updated'], $this->get_render_attributes( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							else :
 								?>

@@ -582,7 +582,7 @@ class Addons_Integration {
 				'title'   => sprintf( __( 'Premium %s', 'premium-addons-for-elementor' ), $element['title'] ),
 				/* translators: %s: Widget title. */
 				'content' => sprintf( __( 'Get Premium %s widget and more pro widgets and addons to build better sites, faster.', 'premium-addons-for-elementor' ), $element['title'] ),
-				'ctaText' => __( 'Get PRO (30% OFF)', 'premium-addons-for-elementor' ),
+				'ctaText' => __( 'Get PRO (25% OFF)', 'premium-addons-for-elementor' ),
 				'ctaUrl'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#pro-pricing-section', 'panel-' . $element['key'], 'wp-editor', 'get-pro' ),
 			);
 		}

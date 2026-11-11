@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use PremiumAddons\Includes\Helper_Functions;
 
-$offer_label  = __( '30% OFF', 'premium-addons-for-elementor' );
+$offer_label  = __( '25% OFF', 'premium-addons-for-elementor' );
 $get_pro_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'free-license-page', 'wp-dash', 'get-pro', 'free' );
 $compare_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/', 'free-license-page', 'wp-dash', 'compare', 'free' );
 $account_link = Helper_Functions::get_campaign_link( 'https://clients.leap13.com/', 'free-license-page', 'wp-dash', 'account', 'free' );
@@ -29,7 +29,7 @@ $account_link = Helper_Functions::get_campaign_link( 'https://clients.leap13.com
 							<h4><?php esc_html_e( 'Extend the free version with Pro', 'premium-addons-for-elementor' ); ?></h4>
 							<span class="pa-license-offer">
 								<?php
-								/* translators: %s: offer label, e.g. 30% OFF. */
+								/* translators: %s: offer label, e.g. 25% OFF. */
 								echo esc_html( sprintf( __( '%s new licenses', 'premium-addons-for-elementor' ), $offer_label ) );
 								?>
 							</span>

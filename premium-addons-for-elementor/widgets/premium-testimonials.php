@@ -1130,9 +1130,9 @@ class Premium_Testimonials extends Widget_Base {
 		$this->add_responsive_control(
 			'job_align',
 			array(
-				'label'     => __( 'Alignment', 'premium-addons-for-elementor' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
+				'label'                => __( 'Alignment', 'premium-addons-for-elementor' ),
+				'type'                 => Controls_Manager::CHOOSE,
+				'options'              => array(
 					'flex-start' => array(
 						'title' => __( 'Left', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-left',
@@ -1146,10 +1146,15 @@ class Premium_Testimonials extends Widget_Base {
 						'icon'  => 'eicon-text-align-right',
 					),
 				),
-				'default'   => 'center',
-				'toggle'    => false,
-				'selectors' => array(
-					'{{WRAPPER}} .premium-testimonial-author-info' => 'align-items: {{VALUE}}',
+				'selectors_dictionary' => array(
+					'flex-start' => 'align-items: flex-start; text-align: start',
+					'center'     => 'align-items: center; text-align: center',
+					'flex-end'   => 'align-items: flex-end; text-align: end',
+				),
+				'default'              => 'center',
+				'toggle'               => false,
+				'selectors'            => array(
+					'{{WRAPPER}} .premium-testimonial-author-info' => '{{VALUE}}',
 				),
 			)
 		);
@@ -1172,7 +1177,7 @@ class Premium_Testimonials extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'company_name_typography',
-				'selector' => '{{WRAPPER}} .premium-testimonial-company-link',
+				'selector' => '{{WRAPPER}} .premium-testimonial-job',
 			)
 		);
 

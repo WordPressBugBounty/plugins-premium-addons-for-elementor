@@ -1,5 +1,14 @@
 == Changelog ==
 
+= 4.11.118 - 11/11/2026 =
+
+- Tweak: Compatibility with Elementor v4.4.
+- Fixed: Layout shift on page load in Mega Menu widget.
+- Fixed: SEO issue caused by an empty link in Heading widget.
+- Fixed: Author job alignment ignored when the text wraps in Testimonial widget.
+- Fixed: Author job line height option not working in Testimonial widget.
+- Fixed: Improved code security enforcement in Display Conditions addon and widget icons.
+
 = 4.11.117 - 26/10/2026 =
 
 - Tweak: Upload Media AI ability can now upload files from the AI agent's computer, not only public URLs.

@@ -2921,6 +2921,8 @@ class Premium_Title extends Widget_Base {
 
 		}
 
+		$this->add_render_attribute( 'link', 'class', 'premium-title-link' );
+
 		if ( ! empty( $settings['background_text'] ) ) {
 			$this->add_render_attribute(
 				'container',
@@ -2984,6 +2986,10 @@ class Premium_Title extends Widget_Base {
 						<div class="premium-title-style7-inner">
 					<?php endif; ?>
 
+					<?php if ( ! empty( $link ) ) : ?>
+						<a <?php $this->print_render_attribute_string( 'link' ); ?>>
+					<?php endif; ?>
+
 					<?php if ( 'yes' === $settings['premium_title_icon_switcher'] ) : ?>
 						<?php if ( 'icon' === $icon_type ) : ?>
 							<?php
@@ -2997,7 +3003,7 @@ class Premium_Title extends Widget_Base {
 								);
 							else :
 
-								echo Helper_Functions::get_svg_by_icon( $settings['premium_title_icon_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_title_icon_updated'], $this->get_render_attributes( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							endif;
 							?>
@@ -3083,11 +3089,12 @@ class Premium_Title extends Widget_Base {
 						?>
 					<?php endif; ?>
 
+					<?php if ( ! empty( $link ) ) : ?>
+						</a>
+					<?php endif; ?>
+
 					<?php if ( 'style7' === $selected_style ) : ?>
 						</div>
-					<?php endif; ?>
-					<?php if ( ! empty( $link ) ) : ?>
-						<a <?php $this->print_render_attribute_string( 'link' ); ?>></a>
 					<?php endif; ?>
 
 					<?php if ( 'none' !== $settings['hover_effect'] ) : ?>

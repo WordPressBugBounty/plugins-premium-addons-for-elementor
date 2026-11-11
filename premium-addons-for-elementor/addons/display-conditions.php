@@ -43,6 +43,13 @@ class Display_Conditions {
 	private static $instance = null;
 
 	/**
+	 * IDs of condition-gated elements, and their descendants, for the document save in progress.
+	 *
+	 * @var array
+	 */
+	private $gated_elements = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -54,6 +61,84 @@ class Display_Conditions {
 		add_action( 'elementor/frontend/before_render', array( $this, 'check_script_enqueue' ) );
 
 		add_action( 'elementor/element/container/section_layout/after_section_end', array( $this, 'register_controls' ), 10 );
+
+		// Elementor renders every widget into post_content on save, outside the
+		// should_render filters, so gated content would reach excerpts, feeds and search.
+		add_action( 'elementor/document/before_save', array( $this, 'collect_gated_elements' ), 10, 2 );
+		add_filter( 'elementor/widget/render_content', array( $this, 'strip_gated_plain_content' ), 10, 2 );
+		add_action( 'elementor/document/after_save', array( $this, 'reset_gated_elements' ) );
+	}
+
+	/**
+	 * Collects condition-gated element IDs before Elementor writes the post_content copy.
+	 *
+	 * @since 4.11.118
+	 * @access public
+	 *
+	 * @param object $document Elementor document.
+	 * @param array  $data     Document data being saved.
+	 */
+	public function collect_gated_elements( $document, $data ) {
+
+		if ( ! empty( $data['elements'] ) ) {
+			$this->walk_gated_elements( $data['elements'] );
+		}
+	}
+
+	/**
+	 * Walks the elements tree, marking gated elements and everything inside them.
+	 *
+	 * @since 4.11.118
+	 * @access private
+	 *
+	 * @param array $elements Elements data.
+	 * @param bool  $gated    Whether an ancestor has Display Conditions enabled.
+	 */
+	private function walk_gated_elements( $elements, $gated = false ) {
+
+		foreach ( $elements as $element ) {
+
+			$is_gated = $gated || 'yes' === ( $element['settings']['pa_display_conditions_switcher'] ?? '' );
+
+			if ( $is_gated ) {
+				$this->gated_elements[ $element['id'] ] = true;
+			}
+
+			if ( ! empty( $element['elements'] ) ) {
+				$this->walk_gated_elements( $element['elements'], $is_gated );
+			}
+		}
+	}
+
+	/**
+	 * Leaves gated widgets out of the post_content copy while a document save is in progress.
+	 *
+	 * @since 4.11.118
+	 * @access public
+	 *
+	 * @param string $content Widget markup.
+	 * @param object $widget  Elementor widget.
+	 *
+	 * @return string
+	 */
+	public function strip_gated_plain_content( $content, $widget ) {
+
+		if ( isset( $this->gated_elements[ $widget->get_id() ] ) ) {
+			return '';
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Clears the gated element IDs once the document save is done.
+	 *
+	 * @since 4.11.118
+	 * @access public
+	 */
+	public function reset_gated_elements() {
+
+		$this->gated_elements = array();
 	}
 
 	/**

@@ -347,6 +347,14 @@ class PA_Controls_Handler {
 			return $should_render;
 		}
 
+		// Conditions describe a visitor. Feeds, REST, cron and CLI have none and their
+		// output is cached or reused, so a gated element is left out instead of being
+		// evaluated against whoever made the request. Query flags are checked last:
+		// cron, CLI and REST run before the main query, where is_feed() is undefined.
+		if ( wp_doing_cron() || ( defined( 'WP_CLI' ) && WP_CLI ) || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || is_feed() ) {
+			return false;
+		}
+
 		$settings        = $element->get_settings_for_display();
 		$element_id      = $element->get_id();
 		$conditions_list = $settings['pa_condition_repeater'];

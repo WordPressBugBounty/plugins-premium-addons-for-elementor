@@ -5007,7 +5007,7 @@ class Premium_Nav_Menu extends Widget_Base {
 					}
 				} else {
 					?>
-					<div class="premium-nav-menu-container">
+					<div class="premium-nav-menu-container premium-nav-default">
 						<ul class="premium-nav-menu premium-main-nav-menu">
 							<?php
 							$menu_html = $this->get_custom_menu();

@@ -1919,7 +1919,7 @@ class Premium_Banner extends Widget_Base {
 						)
 					);
 
-					echo Helper_Functions::get_svg_by_icon( $settings['premium_banner_selected_icon'], $this->get_render_attribute_string( 'banner_drawable_icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+					echo Helper_Functions::get_svg_by_icon( $settings['premium_banner_selected_icon'], $this->get_render_attributes( 'banner_drawable_icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 				else :
 

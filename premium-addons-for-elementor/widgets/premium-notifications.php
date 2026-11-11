@@ -3855,7 +3855,7 @@ class Premium_Notifications extends Widget_Base {
 						);
 					else :
 
-						echo Helper_Functions::get_svg_by_icon( $settings['icon'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+						echo Helper_Functions::get_svg_by_icon( $settings['icon'], $this->get_render_attributes( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 					endif;
 					?>
@@ -3926,7 +3926,7 @@ class Premium_Notifications extends Widget_Base {
 										)
 									);
 								else :
-									echo Helper_Functions::get_svg_by_icon( $settings['header_icon'], $this->get_render_attribute_string( 'header_icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+									echo Helper_Functions::get_svg_by_icon( $settings['header_icon'], $this->get_render_attributes( 'header_icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 								endif;
 								?>

@@ -2109,7 +2109,7 @@ class Premium_Progressbar extends Widget_Base {
 							)
 						);
 					else :
-						echo Helper_Functions::get_svg_by_icon( $settings['icon_select'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+						echo Helper_Functions::get_svg_by_icon( $settings['icon_select'], $this->get_render_attributes( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 					endif;
 
 				elseif ( 'svg' === $icon_type ) :

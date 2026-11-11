@@ -372,14 +372,14 @@ class Admin_Notices {
 
 		if ( 'free' === $tier ) {
 
-			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'connect-ai-notification', 'wp-dash', 'autumn26', 'free' );
-			$sale_line = __( 'With Pro, Claude can also build with Elementor Pro and any other widget on your site. Autumn sale: 30% off.', 'premium-addons-for-elementor' );
-			$sale_btn  = __( 'Get Pro – 30% Off', 'premium-addons-for-elementor' );
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'connect-ai-notification', 'wp-dash', 'halloween26', 'free' );
+			$sale_line = __( 'With Pro, Claude can also build with Elementor Pro and any other widget on your site. Halloween sale: 25% off.', 'premium-addons-for-elementor' );
+			$sale_btn  = __( 'Get Pro – 25% Off', 'premium-addons-for-elementor' );
 
 		} elseif ( 'pro' === $tier ) {
 
-			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'connect-ai-notification', 'wp-dash', 'autumn26', 'pro' );
-			$sale_line = __( 'Pay only the difference to go Lifetime, with an extra 30% off.', 'premium-addons-for-elementor' );
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'connect-ai-notification', 'wp-dash', 'halloween26', 'pro' );
+			$sale_line = __( 'Pay only the difference to go Lifetime, with an extra 25% off.', 'premium-addons-for-elementor' );
 			$sale_btn  = __( 'Upgrade to Lifetime', 'premium-addons-for-elementor' );
 		}
 
@@ -639,8 +639,8 @@ class Admin_Notices {
 			array_unshift(
 				$stories['posts'],
 				array(
-					'title' => 'Upgrade to Premium Addons Pro Lifetime, Pay the Difference & Save 30% Today!',
-					'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'autumn26-dash-widget', 'autumn26' ),
+					'title' => 'Upgrade to Premium Addons Pro Lifetime, Pay the Difference & Save 25% Today!',
+					'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'halloween26-dash-widget', 'halloween26' ),
 				)
 			);
 		}
@@ -711,7 +711,7 @@ class Admin_Notices {
 							<div class="pa-story-img-container">
 								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'autumn26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'halloween26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>

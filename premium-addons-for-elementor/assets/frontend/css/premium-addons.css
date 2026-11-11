@@ -16249,6 +16249,14 @@ body:not(.rtl) .premium-reversed-yes .premium-post-ticker__post-date {
   font-size: 18px;
 }
 
+.premium-testimonial-job .premium-testimonial-company-link {
+  font: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  text-transform: inherit;
+  text-decoration: inherit;
+}
+
 .premium-testimonial-container {
   position: relative;
   width: 100%;
@@ -17464,12 +17472,16 @@ body:not(.rtl) .premium-reversed-yes .premium-post-ticker__post-date {
   object-fit: cover;
 }
 
-.premium-title-container .premium-title-header a {
-  position: absolute;
-  top: 0;
-  inset-inline-start: 0;
-  width: 100%;
-  height: 100%;
+.premium-title-container .premium-title-header .premium-title-link {
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
+  -webkit-align-items: inherit;
+  -ms-flex-align: inherit;
+  align-items: inherit;
+  color: inherit;
+  text-decoration: none;
 }
 
 .premium-title-container .premium-lottie-animation {

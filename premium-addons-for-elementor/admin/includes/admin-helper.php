@@ -615,7 +615,7 @@ class Admin_Helper {
 			$link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/pro/#get-pa-pro', 'plugins-page', 'wp-dash', 'get-pro' );
 
 			// Create a styled promotional link encouraging users to save money by upgrading.
-			$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #FF6000; font-weight: bold;">%s</a>', $link, __( 'Save 30%', 'premium-addons-for-elementor' ) );
+			$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #FF6000; font-weight: bold;">%s</a>', $link, __( 'Save 25%', 'premium-addons-for-elementor' ) );
 
 			// Add the promotional link to the array.
 			$new_links[] = $pro_link;
@@ -829,8 +829,8 @@ class Admin_Helper {
 			call_user_func(
 				'add_submenu_page',
 				self::$page_slug,
-				'<span style="color: #FF6000;" class="pa_pro_upgrade">Get PRO (Up to 30% OFF)</span>',
-				'<span style="color: #FF6000;" class="pa_pro_upgrade">Get PRO (Up to 30% OFF)</span>',
+				'<span style="color: #FF6000;" class="pa_pro_upgrade">Get PRO (Flat 25% OFF)</span>',
+				'<span style="color: #FF6000;" class="pa_pro_upgrade">Get PRO (Flat 25% OFF)</span>',
 				'manage_options',
 				'https://premiumaddons.com/pro/#get-pa-pro',
 				''
@@ -1003,8 +1003,8 @@ class Admin_Helper {
 
 		if ( 'free' === $tier ) {
 			return array(
-				'title' => __( 'Autumn SALE 2026', 'premium-addons-for-elementor' ),
-				'desc'  => __( 'Supercharge your Elementor with PRO Widgets & Addons that you won\'t find anywhere else.', 'premium-addons-for-elementor' ) . '<span class="papro-sale-notice">' . __( 'save up to 30%!', 'premium-addons-for-elementor' ) . '</span>',
+				'title' => __( 'Halloween SALE 2026', 'premium-addons-for-elementor' ),
+				'desc'  => __( 'Supercharge your Elementor with PRO Widgets & Addons that you won\'t find anywhere else.', 'premium-addons-for-elementor' ) . '<span class="papro-sale-notice">' . __( 'FLAT 25%!', 'premium-addons-for-elementor' ) . '</span>',
 				'btn'   => __( 'Get Pro', 'premium-addons-for-elementor' ),
 				'cta'   => 'https://premiumaddons.com/get/papro/#get-pa-pro',
 			);
@@ -1016,7 +1016,7 @@ class Admin_Helper {
 
 			return array(
 				'title' => __( 'Upgrade to Lifetime!', 'premium-addons-for-elementor' ),
-				'desc'  => __( 'Pay only the difference and enjoy an <span class="papro-sale-notice"> EXTRA 30% OFF</span> when you upgrade your Premium Addons Pro license to Lifetime — no renewals, no hassle, just lifetime access forever.', 'premium-addons-for-elementor' ),
+				'desc'  => __( 'Pay only the difference and enjoy an <span class="papro-sale-notice"> EXTRA 25% OFF</span> when you upgrade your Premium Addons Pro license to Lifetime — no renewals, no hassle, just lifetime access forever.', 'premium-addons-for-elementor' ),
 				'btn'   => __( 'Upgrade Now', 'premium-addons-for-elementor' ),
 				'cta'   => $upgrade_link,
 			);

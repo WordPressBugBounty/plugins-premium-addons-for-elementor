@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.117
+Stable Tag: 4.11.118
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -108,7 +108,7 @@ From [5-star reviews on WordPress.org](https://wordpress.org/support/plugin/prem
 * [**Content Toggle**](https://premiumaddons.com/elementor-content-toggle-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=content-switcher) *(PRO)*: Present multiple content in a smart way.
 * [**Animated Text Widget**](https://premiumaddons.com/elementor-animated-text-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=animated-text) *(FREE)*: Animated fancy text for attractive marketing messages.
 * [**Heading Widget**](https://premiumaddons.com/heading-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=heading) *(FREE)*: Heading with ready-made styles and many customization options.
-* [**Dual Heading Widget**](https://premiumaddons.com/dual-header-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=dual-heading) *(FREE)*: Create a headline with 2 different unique styles.
+* [**Dual Heading Widget**](https://premiumaddons.com/elementor-dual-heading-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=dual-heading) *(FREE)*: Create a headline with 2 different unique styles.
 
 ### Image & Video Widgets
 * [**Site Logo Widget**](https://premiumaddons.com/elementor-site-logo-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme&utm_content=site-logo) *(PRO)*: Logo from an image, SVG or Lottie animation with many options.
@@ -278,6 +278,15 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.118 - 11/11/2026 =
+
+- Tweak: Compatibility with Elementor v4.4.
+- Fixed: Layout shift on page load in Mega Menu widget.
+- Fixed: SEO issue caused by an empty link in Heading widget.
+- Fixed: Author job alignment ignored when the text wraps in Testimonial widget.
+- Fixed: Author job line height option not working in Testimonial widget.
+- Fixed: Improved code security enforcement in Display Conditions addon and widget icons.
 
 = 4.11.117 - 26/10/2026 =
 

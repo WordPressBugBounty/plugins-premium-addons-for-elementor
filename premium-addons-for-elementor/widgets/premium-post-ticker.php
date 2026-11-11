@@ -3983,7 +3983,7 @@ class Premium_Post_Ticker extends Widget_Base {
 
 						if ( 'icon' === $icon_type ) {
 
-							echo Helper_Functions::get_svg_by_icon( $settings['pa_ticker_icon'], $this->get_render_attribute_string( 'icon' . $index ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+							echo Helper_Functions::get_svg_by_icon( $settings['pa_ticker_icon'], $this->get_render_attributes( 'icon' . $index ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 						}
 					}

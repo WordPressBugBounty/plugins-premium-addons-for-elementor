@@ -175,7 +175,7 @@ class Helpers {
 			);
 		}
 
-		$offer_label  = __( '30% OFF', 'premium-addons-for-elementor' );
+		$offer_label  = __( '25% OFF', 'premium-addons-for-elementor' );
 		$upgrade_link = self::get_pro_upgrade_link();
 
 		return array(

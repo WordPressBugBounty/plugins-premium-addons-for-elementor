@@ -1872,7 +1872,7 @@ class Premium_Button extends Widget_Base {
 						<?php if ( 'icon' === $icon_type ) : ?>
 							<?php
 
-								echo Helper_Functions::get_svg_by_icon( $settings['premium_button_icon_selection_updated'], $this->get_render_attribute_string( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
+								echo Helper_Functions::get_svg_by_icon( $settings['premium_button_icon_selection_updated'], $this->get_render_attributes( 'icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_svg_by_icon() returns sanitized inline SVG/icon markup.
 
 							?>
 						<?php elseif ( 'svg' === $icon_type ) : ?>
