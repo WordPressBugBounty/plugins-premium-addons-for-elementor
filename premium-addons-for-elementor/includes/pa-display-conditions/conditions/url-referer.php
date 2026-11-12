@@ -67,7 +67,7 @@ param2=value2',
 		$url = wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
 
 		if ( ! $url || ! isset( $url['query'] ) || empty( $url['query'] ) ) {
-			return false;
+			return Helper_Functions::get_final_result( false, $operator );
 		}
 
 		$query_params = explode( '&', $url['query'] );

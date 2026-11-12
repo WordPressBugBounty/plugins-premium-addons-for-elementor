@@ -70,6 +70,6 @@ class Post_Type extends Condition {
 			}
 		}
 
-		return false;
+		return Helper_Functions::get_final_result( false, $operator );
 	}
 }

@@ -64,16 +64,15 @@ class Page extends Condition {
 		if ( is_array( $value ) && ! empty( $value ) ) {
 			foreach ( $value as $index => $page_id ) {
 
+				// Map the stored ID to the current language (WPML/Polylang).
+				$page_id = apply_filters( 'wpml_object_id', $page_id, 'page', true );
+
 				if ( intval( $page_id ) === $current_id ) {
-
-					if ( 'is' === $operator ) {
-
-						return Helper_Functions::get_final_result( true, $operator );
-					}
+					return Helper_Functions::get_final_result( true, $operator );
 				}
 			}
 		}
 
-		return false;
+		return Helper_Functions::get_final_result( false, $operator );
 	}
 }

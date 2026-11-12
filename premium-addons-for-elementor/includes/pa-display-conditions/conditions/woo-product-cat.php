@@ -80,7 +80,15 @@ class Woo_Product_Cat extends Condition {
 
 		$product_cats = $product ? $product->get_category_ids() : array();
 
-		$condition_result = ! empty( array_intersect( (array) $value, $product_cats ) ) ? true : false;
+		// Map the stored IDs to the current language (WPML/Polylang).
+		$value = array_map(
+			function ( $cat_id ) {
+				return apply_filters( 'wpml_object_id', $cat_id, 'product_cat', true );
+			},
+			(array) $value
+		);
+
+		$condition_result = ! empty( array_intersect( $value, $product_cats ) ) ? true : false;
 
 		return Helper_Functions::get_final_result( $condition_result, $operator );
 	}

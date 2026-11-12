@@ -86,7 +86,7 @@ class Woo_Total_Price extends Condition {
 		$cart = WC()->cart;
 
 		if ( $cart->is_empty() ) {
-			return false;
+			return Helper_Functions::get_final_result( false, $operator );
 		}
 
 		if ( 'total' === $value ) {

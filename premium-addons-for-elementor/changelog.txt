@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.11.119 - 12/11/2026 =
+
+- Fixed: Some texts not translatable with WPML in Heading, Dual Heading, Image Scroll, Search Form, Tags Cloud, Post Ticker, Countdown and Video Box widgets and Global Tooltip addon.
+- Fixed: Page, Post and category display conditions not working on WPML translated pages.
+- Fixed: "Is Not" operator not working as expected in some display conditions.
+
 = 4.11.118 - 11/11/2026 =
 
 - Tweak: Compatibility with Elementor v4.4.

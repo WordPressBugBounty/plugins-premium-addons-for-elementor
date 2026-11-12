@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.118
+Stable Tag: 4.11.119
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,12 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.119 - 12/11/2026 =
+
+- Fixed: Some texts not translatable with WPML in Heading, Dual Heading, Image Scroll, Search Form, Tags Cloud, Post Ticker, Countdown and Video Box widgets and Global Tooltip addon.
+- Fixed: Page, Post and category display conditions not working on WPML translated pages.
+- Fixed: "Is Not" operator not working as expected in some display conditions.
 
 = 4.11.118 - 11/11/2026 =
 

@@ -69,6 +69,14 @@ class Woo_Cat_Page extends Condition {
 
 		$cat_id = $category->term_id;
 
+		// Map the stored IDs to the current language (WPML/Polylang).
+		$value = array_map(
+			function ( $id ) {
+				return apply_filters( 'wpml_object_id', $id, 'product_cat', true );
+			},
+			(array) $value
+		);
+
 		$condition_result = false !== array_search( $cat_id, $value ) ? true : false;
 
 		return Helper_Functions::get_final_result( $condition_result, $operator );

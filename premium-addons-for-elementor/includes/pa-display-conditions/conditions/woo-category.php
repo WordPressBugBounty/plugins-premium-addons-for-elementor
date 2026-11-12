@@ -91,7 +91,7 @@ class Woo_Category extends Condition {
 		if ( 'in-cart' === $value ) {
 
 			if ( $cart->is_empty() ) {
-				return false;
+				return Helper_Functions::get_final_result( false, $operator );
 			}
 
 			foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {

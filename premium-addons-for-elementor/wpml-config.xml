@@ -38,8 +38,8 @@
 
         <widget name="premium-countdown-timer">
             <fields>
-                <field type="Countdown: Expiration Message" editor_type="AREA">premium_countdown_expiry_text_</field>
-                <field type="Countdown: Digits Separator" editor_type="LINE">premium_countdown_separator_text</field>
+                <field type="Countdown: Expiration Message" editor_type="VISUAL">expiration_text</field>
+                <field type="Countdown: Digits Separator" editor_type="LINE">custom_separator</field>
                 <field type="Countdown: Day Singular" editor_type="LINE">premium_countdown_day_singular</field>
                 <field type="Countdown: Day Plural" editor_type="LINE">premium_countdown_day_plural</field>
                 <field type="Countdown: Week Singular" editor_type="LINE">premium_countdown_week_singular</field>
@@ -54,7 +54,7 @@
                 <field type="Countdown: Minute Plural" editor_type="LINE">premium_countdown_minute_plural</field>
                 <field type="Countdown: Second Singular" editor_type="LINE">premium_countdown_second_singular</field>
                 <field type="Countdown: Second Plural" editor_type="LINE">premium_countdown_second_plural</field>
-                <field type="Countdown: Direction URL" editor_type="LINE">premium_countdown_expiry_redirection_</field>
+                <field type="Countdown: Direction URL" editor_type="LINK">expiration_url</field>
             </fields>
         </widget>
 
@@ -63,6 +63,7 @@
                 <field type="Dual Heading: First Heading" editor_type="LINE">premium_dual_header_first_header_text</field>
                 <field type="Dual Heading: Second Heading" editor_type="LINE">premium_dual_header_second_header_text</field>
                 <field type="Dual Heading: Background Text" editor_type="LINE">background_text</field>
+                <field type="Dual Heading: Description" editor_type="VISUAL">premium_dual_header_desc_text</field>
                 <field type="Advanced Heading: Heading URL" editor_type="LINK">premium_dual_heading_link>url</field>
             </fields>
         </widget>
@@ -122,6 +123,7 @@
         <widget name="premium-image-scroll">
             <fields>
                 <field type="Image Scroll: Link Title" editor_type="LINE">link_text</field>
+                <field type="Image Scroll: Label" editor_type="LINE">label_text</field>
                 <field type="Image Scroll: URL" editor_type="LINK">link>url</field>
             </fields>
         </widget>
@@ -226,6 +228,7 @@
             <fields>
                 <field type="Title: Text" editor_type="LINE">premium_title_text</field>
                 <field type="Title: Background Text" editor_type="LINE">background_text</field>
+                <field type="Title: Description" editor_type="VISUAL">premium_title_desc_text</field>
                 <field type="Title: Link" editor_type="LINK">custom_link>url</field>
             </fields>
         </widget>
@@ -233,7 +236,7 @@
         <widget name="premium-addon-video-box">
             <fields>
                 <field type="Video Box: Description" editor_type="AREA">premium_video_box_description_text</field>
-                <field type="Video Box: Link" editor_type="LINK">premium_video_box_link>url</field>
+                <field type="Video Box: Link" editor_type="LINK">premium_video_box_link</field>
             </fields>
         </widget>
 
@@ -302,20 +305,18 @@
             <fields>
                 <field type="Post Ticker: Title" editor_type="LINE">ticker_title</field>
                 <field type="Post Ticker: Empty Query Message" editor_type="LINE">empty_query_text</field>
-                <fields-in-item items_of="text_content">
-                    <field type="Item: Text" editor_type="LINE">text</field>
-                    <field type="Item: Link" editor_type="LINK">item_link>url</field>
-                </fields-in-item>
             </fields>
+            <fields-in-item items_of="text_content">
+                <field type="Item: Text" editor_type="LINE">text</field>
+                <field type="Item: Link" editor_type="LINK">item_link>url</field>
+            </fields-in-item>
         </widget>
 
         <widget name="premium-tcloud">
-            <fields>
-                <fields-in-item items_of="custom_words">
-                    <field type="Tags Cloud: Word" editor_type="LINE">word</field>
-                    <field type="Tags Cloud: Link" editor_type="LINK">link>url</field>
-                </fields-in-item>
-            </fields>
+            <fields-in-item items_of="custom_words">
+                <field type="Tags Cloud: Word" editor_type="LINE">word</field>
+                <field type="Tags Cloud: Link" editor_type="LINK">link>url</field>
+            </fields-in-item>
         </widget>
 
         <widget name="premium-pinterest-feed">
@@ -355,15 +356,17 @@
         </widget>
 
         <widget name="premium-search-form">
-            <field type="Empty Query Text" editor_type="LINE">empty_query_text</field>
-            <field type="Label Text" editor_type="LINE">label_text</field>
-            <field type="Results Number Text" editor_type="LINE">results_number_text</field>
-            <field type="Placeholder Text" editor_type="LINE">placeholder_text</field>
-            <field type="Button Text" editor_type="LINE">button_text</field>
-            <field type="Search Page Link" editor_type="LINK">search_page_link</field>
-            <field type="Read More Text" editor_type="LINE">excerpt_text</field>
-            <field type="Previous Page" editor_type="LINE">premium_blog_prev_text</field>
-            <field type="Next Page" editor_type="LINE">premium_blog_next_text</field>
+            <fields>
+                <field type="Empty Query Text" editor_type="LINE">empty_query_text</field>
+                <field type="Label Text" editor_type="LINE">label_text</field>
+                <field type="Results Number Text" editor_type="LINE">results_number_text</field>
+                <field type="Placeholder Text" editor_type="LINE">placeholder_text</field>
+                <field type="Button Text" editor_type="LINE">button_text</field>
+                <field type="Search Page Link" editor_type="LINK">search_page_link</field>
+                <field type="Read More Text" editor_type="LINE">excerpt_text</field>
+                <field type="Previous Page" editor_type="LINE">premium_blog_prev_text</field>
+                <field type="Next Page" editor_type="LINE">premium_blog_next_text</field>
+            </fields>
         </widget>
 
         <widget name="premium-mini-cart">
@@ -376,6 +379,43 @@
                 <field type="Mini Cart: Cross-Sells Text" editor_type="LINE">cross_sells_txt</field>
                 <field type="Mini Cart: Free Shipping Text" editor_type="LINE">progressbar_txt</field>
                 <field type="Mini Cart: Free Shipping Complete Text" editor_type="LINE">complete_txt</field>
+            </fields>
+        </widget>
+
+        <!-- Global Tooltip: its controls are added to every widget, container, section and column. -->
+        <widget name="premium-global-tooltip-widget">
+            <conditions>
+                <condition key="elType">widget</condition>
+            </conditions>
+            <fields>
+                <field type="Global Tooltip: Text" editor_type="AREA">premium_tooltip_text</field>
+            </fields>
+        </widget>
+
+        <widget name="premium-global-tooltip-container">
+            <conditions>
+                <condition key="elType">container</condition>
+            </conditions>
+            <fields>
+                <field type="Global Tooltip: Text" editor_type="AREA">premium_tooltip_text</field>
+            </fields>
+        </widget>
+
+        <widget name="premium-global-tooltip-section">
+            <conditions>
+                <condition key="elType">section</condition>
+            </conditions>
+            <fields>
+                <field type="Global Tooltip: Text" editor_type="AREA">premium_tooltip_text</field>
+            </fields>
+        </widget>
+
+        <widget name="premium-global-tooltip-column">
+            <conditions>
+                <condition key="elType">column</condition>
+            </conditions>
+            <fields>
+                <field type="Global Tooltip: Text" editor_type="AREA">premium_tooltip_text</field>
             </fields>
         </widget>
     </elementor-widgets>

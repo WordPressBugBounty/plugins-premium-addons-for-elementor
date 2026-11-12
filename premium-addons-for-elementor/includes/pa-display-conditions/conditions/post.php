@@ -62,12 +62,15 @@ class Post extends Condition {
 		if ( is_array( $value ) && ! empty( $value ) ) {
 			foreach ( $value as $index => $post_id ) {
 
+				// Map the stored ID to the current language (WPML/Polylang).
+				$post_id = apply_filters( 'wpml_object_id', $post_id, 'post', true );
+
 				if ( is_single( $post_id ) || is_singular( $post_id ) ) {
 					return Helper_Functions::get_final_result( true, $operator );
 				}
 			}
 		}
 
-		return false;
+		return Helper_Functions::get_final_result( false, $operator );
 	}
 }

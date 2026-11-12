@@ -60,7 +60,7 @@ class User_Role extends Condition {
 	 */
 	public function compare_value( $settings, $operator, $value, $compare_val, $tz ) {
 
-		if ( ! is_user_logged_in() || empty( $value ) ) {
+		if ( empty( $value ) ) {
 			return false;
 		}
 
