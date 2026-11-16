@@ -10,6 +10,7 @@ namespace PremiumAddons\Addons;
 // PremiumAddons Classes.
 use PremiumAddons\Includes\Helper_Functions;
 use PremiumAddons\Includes\PA_Controls_Handler;
+use PremiumAddons\Includes\PA_Display_Conditions\Conditions\Return_Visitor;
 
 // Elementor Classes.
 use Elementor\Repeater;
@@ -67,6 +68,10 @@ class Display_Conditions {
 		add_action( 'elementor/document/before_save', array( $this, 'collect_gated_elements' ), 10, 2 );
 		add_filter( 'elementor/widget/render_content', array( $this, 'strip_gated_plain_content' ), 10, 2 );
 		add_action( 'elementor/document/after_save', array( $this, 'reset_gated_elements' ) );
+
+		if ( function_exists( 'wp_add_cookie_info' ) ) {
+			add_action( 'init', array( Return_Visitor::class, 'register_cookie_info' ) );
+		}
 	}
 
 	/**

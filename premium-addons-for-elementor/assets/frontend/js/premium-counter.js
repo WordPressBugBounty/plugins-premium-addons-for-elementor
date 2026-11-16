@@ -1,53 +1,53 @@
 (function ($) {
+	var PremiumCounterHandler = function ($scope, $) {
+		var $counterElement = $scope.find(".premium-counter"),
+			isHScrollWidget = $counterElement.closest(".premium-hscroll-temp"),
+			counterSettings = $counterElement.data(),
+			incrementElement = $counterElement.find(".premium-counter-init"),
+			iconElement = $counterElement.find(".icon");
 
-    var PremiumCounterHandler = function ($scope, $) {
+		// The markup holds the final value for crawlers; numerator() reads the text as its start when fromValue is 0.
+		incrementElement.text(counterSettings.fromValue);
 
-        var $counterElement = $scope.find(".premium-counter"),
-            isHScrollWidget = $counterElement.closest(".premium-hscroll-temp"),
-            counterSettings = $counterElement.data(),
-            incrementElement = $counterElement.find(".premium-counter-init"),
-            iconElement = $counterElement.find(".icon");
+		if (!isHScrollWidget.length) {
+			// Using IntersectionObserverAPI.
+			var eleObserver = new IntersectionObserver(function (entries) {
+				entries.forEach(function (entry) {
+					if (entry.isIntersecting) {
+						$(incrementElement).numerator(counterSettings);
 
-        if (!isHScrollWidget.length) {
-            // Using IntersectionObserverAPI.
-            var eleObserver = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        $(incrementElement).numerator(counterSettings);
+						$(iconElement).addClass(
+							"animated " + iconElement.data("animation"),
+						);
 
-                        $(iconElement).addClass("animated " + iconElement.data("animation"));
+						eleObserver.unobserve(entry.target); // to only execute the callback func once.
+					}
+				});
+			});
 
-                        eleObserver.unobserve(entry.target); // to only execute the callback func once.
-                    }
-                });
-            });
+			eleObserver.observe($counterElement[0]);
+			// elementorFrontend.waypoint($counterElement, function () {
 
-            eleObserver.observe($counterElement[0]);
-            // elementorFrontend.waypoint($counterElement, function () {
+			//     $(incrementElement).numerator(counterSettings);
 
-            //     $(incrementElement).numerator(counterSettings);
+			//     $(iconElement).addClass("animated " + iconElement.data("animation"));
 
-            //     $(iconElement).addClass("animated " + iconElement.data("animation"));
+			// });
+		} else {
+			$(window).on("scroll", function () {
+				if ($(window).scrollTop() >= isHScrollWidget.data("scroll-offset")) {
+					$(incrementElement).numerator(counterSettings);
 
-            // });
-        } else {
+					$(iconElement).addClass("animated " + iconElement.data("animation"));
+				}
+			});
+		}
+	};
 
-            $(window).on("scroll", function () {
-
-                if ($(window).scrollTop() >= isHScrollWidget.data("scroll-offset")) {
-                    $(incrementElement).numerator(counterSettings);
-
-                    $(iconElement).addClass("animated " + iconElement.data("animation"));
-                }
-
-            });
-
-        }
-
-    };
-
-    $(window).on('elementor/frontend/init', function () {
-        elementorFrontend.hooks.addAction('frontend/element_ready/premium-counter.default', PremiumCounterHandler);
-    });
+	$(window).on("elementor/frontend/init", function () {
+		elementorFrontend.hooks.addAction(
+			"frontend/element_ready/premium-counter.default",
+			PremiumCounterHandler,
+		);
+	});
 })(jQuery);
-

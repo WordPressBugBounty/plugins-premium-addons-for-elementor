@@ -1443,8 +1443,6 @@ class Premium_Counter extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$start_value = $settings['premium_counter_start_value'];
-
 		$this->add_render_attribute( 'content_wrapper', 'class', array( 'premium-init-wrapper', $settings['title_display'] ) );
 
 		?>
@@ -1456,7 +1454,7 @@ class Premium_Counter extends Widget_Base {
 					<span id="prefix" class="counter-su-pre"><?php echo wp_kses_post( $settings['premium_counter_preffix'] ); ?></span>
 				<?php endif; ?>
 
-				<span class="premium-counter-init" id="counter-<?php echo esc_attr( $this->get_id() ); ?>"><?php echo wp_kses_post( $start_value ); ?></span>
+				<span class="premium-counter-init" id="counter-<?php echo esc_attr( $this->get_id() ); ?>"><?php echo wp_kses_post( $this->get_final_value_text( $settings ) ); ?></span>
 
 				<?php if ( ! empty( $settings['premium_counter_suffix'] ) ) : ?>
 					<span id="suffix" class="counter-su-pre"><?php echo wp_kses_post( $settings['premium_counter_suffix'] ); ?></span>
@@ -1589,6 +1587,54 @@ class Premium_Counter extends Widget_Base {
 		</div>
 
 		<?php
+	}
+
+	/**
+	 * Get the final value formatted the way numerator() prints it when counting ends.
+	 *
+	 * @since 4.11.120
+	 * @access private
+	 *
+	 * @param array $settings Widget settings.
+	 *
+	 * @return string
+	 */
+	private function get_final_value_text( $settings ) {
+
+		$end_value = $settings['premium_counter_end_value'];
+
+		if ( ! is_numeric( $end_value ) ) {
+			return $end_value;
+		}
+
+		$decimals = max( 0, (int) $settings['premium_counter_d_after'] );
+
+		// numerator() truncates with parseInt() when there are no decimals.
+		$number = $decimals ? (float) $end_value : (int) $end_value;
+
+		return number_format( $number, $decimals, '.', $settings['premium_counter_t_separator'] );
+	}
+
+	/**
+	 * Render the counter as plain text for Elementor's Markdown output.
+	 *
+	 * @since 4.11.120
+	 * @access public
+	 *
+	 * @return string
+	 */
+	public function render_markdown(): string {
+
+		$settings = $this->get_settings_for_display();
+
+		$parts = array( $settings['premium_counter_preffix'] . $this->get_final_value_text( $settings ) . $settings['premium_counter_suffix'] );
+
+		if ( ! empty( $settings['premium_counter_title'] ) ) {
+			$parts[] = $settings['premium_counter_title'];
+			$parts[] = $settings['premium_counter_desc'];
+		}
+
+		return implode( ' - ', array_filter( array_map( 'wp_strip_all_tags', $parts ), 'strlen' ) );
 	}
 
 	/**

@@ -61,7 +61,14 @@ class Admin_Notices {
 	 *
 	 * @var string
 	 */
-	const STORIES_TRANSIENT = 'pa_stories';
+	const STORIES_TRANSIENT = 'pa_stories_bf';
+
+	/**
+	 * Connect AI notice key. Changing it shows the notice again to admins who dismissed an older version.
+	 *
+	 * @var string
+	 */
+	const CONNECT_AI_NOTICE = 'pa-connect-ai-bf26-not';
 
 	/**
 	 * Constructor for the class
@@ -80,7 +87,7 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'pa-connect-ai-v2-not',
+			self::CONNECT_AI_NOTICE,
 		);
 
 		if ( Helper_Functions::check_hide_notifications() ) {
@@ -351,7 +358,7 @@ class Admin_Notices {
 	 */
 	private function get_connect_ai_notice() {
 
-		$notice_key = 'pa-connect-ai-v2-not';
+		$notice_key = self::CONNECT_AI_NOTICE;
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -367,29 +374,32 @@ class Admin_Notices {
 		$claude_link  = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/connect-claude-to-build-wordpress-elementor-pages/', 'connect-ai-notification', 'wp-dash', 'connect-ai', $tier );
 		$mcp_link     = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mcp-and-ai-abilities/', 'connect-ai-notification', 'wp-dash', 'connect-ai', $tier );
 
+		$label     = __( 'New:', 'premium-addons-for-elementor' );
 		$sale_line = '';
 		$sale_btn  = '';
 
 		if ( 'free' === $tier ) {
 
-			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'connect-ai-notification', 'wp-dash', 'halloween26', 'free' );
-			$sale_line = __( 'With Pro, Claude can also build with Elementor Pro and any other widget on your site. Halloween sale: 25% off.', 'premium-addons-for-elementor' );
-			$sale_btn  = __( 'Get Pro – 25% Off', 'premium-addons-for-elementor' );
+			$label     = __( 'Black Friday:', 'premium-addons-for-elementor' );
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/get/papro/#get-pa-pro', 'connect-ai-notification', 'wp-dash', 'bf26', 'free' );
+			$sale_line = __( 'Go Pro and they can build with any widget you\'ve installed, including ones from Elementor Pro and other plugins. Up to 40% off.', 'premium-addons-for-elementor' );
+			$sale_btn  = __( 'Get Pro – Up to 40% Off', 'premium-addons-for-elementor' );
 
 		} elseif ( 'pro' === $tier ) {
 
-			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'connect-ai-notification', 'wp-dash', 'halloween26', 'pro' );
-			$sale_line = __( 'Pay only the difference to go Lifetime, with an extra 25% off.', 'premium-addons-for-elementor' );
-			$sale_btn  = __( 'Upgrade to Lifetime', 'premium-addons-for-elementor' );
+			$label     = __( 'Black Friday:', 'premium-addons-for-elementor' );
+			$sale_link = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/upgrade-to-premium-addons-pro-lifetime-license/', 'connect-ai-notification', 'wp-dash', 'bf26', 'pro' );
+			$sale_line = __( 'Let your AI build on every site you own. Upgrade to Unlimited Lifetime, pay only the difference, up to 40% off.', 'premium-addons-for-elementor' );
+			$sale_btn  = __( 'Go Unlimited Lifetime', 'premium-addons-for-elementor' );
 		}
 
 		$html  = '<div class="pa-notice-row">';
 		$html .= '<img class="pa-notice-logo" src="' . esc_url( PREMIUM_ADDONS_URL . 'admin/images/pa-logo-symbol.png' ) . '" alt="" width="40" height="40">';
 		$html .= '<div class="pa-notice-text">';
-		$html .= '<span class="pa-notice-desc"><strong>' . esc_html__( 'New:', 'premium-addons-for-elementor' ) . '</strong> ';
+		$html .= '<span class="pa-notice-desc"><strong>' . esc_html( $label ) . '</strong> ';
 		$html .= sprintf(
 			/* translators: 1: ChatGPT guide link opening tag, 2: Claude guide link opening tag, 3: link closing tag. */
-			esc_html__( 'Connect %1$sChatGPT%3$s/%2$sClaude%3$s to your website and make them build Elementor pages for you.', 'premium-addons-for-elementor' ),
+			esc_html__( '%1$sChatGPT%3$s and %2$sClaude%3$s can build Elementor pages for you.', 'premium-addons-for-elementor' ),
 			'<a href="' . esc_url( $chatgpt_link ) . '" target="_blank" rel="noopener">',
 			'<a href="' . esc_url( $claude_link ) . '" target="_blank" rel="noopener">',
 			'</a>'
@@ -402,12 +412,14 @@ class Admin_Notices {
 
 		$html .= '</div>';
 		$html .= '<div class="pa-notice-actions">';
-		$html .= '<a class="button button-primary" href="' . esc_url( $mcp_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'Check it Out!', 'premium-addons-for-elementor' ) . '</a>';
 
 		if ( '' !== $sale_btn ) {
-			$html .= '<a class="button" href="' . esc_url( $sale_link ) . '" target="_blank" rel="noopener">' . esc_html( $sale_btn ) . '</a>';
+			$html .= '<a class="button button-primary" href="' . esc_url( $sale_link ) . '" target="_blank" rel="noopener">' . esc_html( $sale_btn ) . '</a>';
 		}
 
+		$learn_more_class = '' !== $sale_btn ? 'button' : 'button button-primary';
+
+		$html .= '<a class="' . $learn_more_class . '" href="' . esc_url( $mcp_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'Check it Out!', 'premium-addons-for-elementor' ) . '</a>';
 		$html .= '</div>';
 		$html .= '</div>';
 
@@ -528,7 +540,7 @@ class Admin_Notices {
 
 		if ( ! empty( $key ) && in_array( $key, self::$notices, true ) ) {
 
-			if ( 'pa-connect-ai-v2-not' === $key ) {
+			if ( self::CONNECT_AI_NOTICE === $key ) {
 
 				// Per user: other admins keep seeing it.
 				$uid       = get_current_user_id();
@@ -639,8 +651,8 @@ class Admin_Notices {
 			array_unshift(
 				$stories['posts'],
 				array(
-					'title' => 'Upgrade to Premium Addons Pro Lifetime, Pay the Difference & Save 25% Today!',
-					'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/upgrade-premium-addons-license/', 'wp-dash', 'halloween26-dash-widget', 'halloween26' ),
+					'title' => 'Upgrade to Premium Addons Pro Lifetime, Pay the Difference & Save 40% Today!',
+					'link'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/upgrade-to-premium-addons-pro-lifetime-license/', 'wp-dash', 'bf26-dash-widget', 'bf26' ),
 				)
 			);
 		}
@@ -711,7 +723,7 @@ class Admin_Notices {
 							<div class="pa-story-img-container">
 								<img src="<?php echo esc_url( $banner['image'] ); ?>" alt="<?php echo esc_attr( $banner['description'] ); ?>">
 							</div>
-							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'halloween26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
+							<a href="<?php echo esc_url( Helper_Functions::get_campaign_link( $banner['link'], 'wp-dash', 'dash-widget', 'bf26' ) ); ?>" target="_blank" title="<?php echo esc_attr( $banner['description'] ); ?>"></a>
 						</div>
 
 					<?php endif; ?>

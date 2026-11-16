@@ -1091,6 +1091,9 @@
 				incrementElement = $counterElement.find(".premium-counter-init"),
 				iconElement = $counterElement.find(".icon");
 
+			// The markup holds the final value for crawlers; numerator() reads the text as its start when fromValue is 0.
+			incrementElement.text(counterSettings.fromValue);
+
 			if (!isHScrollWidget.length) {
 				// Using IntersectionObserverAPI.
 				var eleObserver = new IntersectionObserver(function (entries) {

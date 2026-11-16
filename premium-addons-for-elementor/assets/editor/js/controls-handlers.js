@@ -49,7 +49,7 @@
 
 							var button = document.createElement("a");
 							var buttonText = document.createTextNode(
-								"Upgrade Premium Addons (Save 25%)",
+								"Upgrade Premium Addons (Save 40%)",
 							);
 
 							button.setAttribute(

@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.119
+Stable Tag: 4.11.120
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,13 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.120 - 16/11/2026 =
+
+- Tweak: Returning Visitor display condition is now compatible with WP Consent API.
+- Tweak: Counter widget now renders the final number in the page HTML for search engines and AI crawlers.
+- Fixed: Security issue in Lottie animations.
+- Fixed: Product title not showing after pagination or Load More in Woo Products widget.
 
 = 4.11.119 - 12/11/2026 =
 
