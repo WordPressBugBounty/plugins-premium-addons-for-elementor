@@ -163,10 +163,17 @@
 					height > $window.outerHeight() &&
 					height - $window.outerHeight() >= 50
 				) {
-					$section
-						.find(checkTemps ? ".elementor" : ".elementor-container")
-						.first()
-						.wrapInner("<div id='scroller-" + sectionId + "'></div>");
+					var $sectionContent = $section
+						.find(checkTemps ? ".elementor" : ".e-con-inner")
+						.first();
+
+					if (!$sectionContent.length) {
+						return;
+					}
+
+					$sectionContent.wrapInner(
+						$("<div>", { id: "scroller-" + sectionId }),
+					);
 
 					var isSafari =
 							"mobile" === elementorFrontend.getCurrentDeviceMode() &&
@@ -614,11 +621,8 @@
 				// make sure only one tool tip is showing.
 				$(".premium-vscroll-tooltip").remove();
 
-				$(
-					'<div class="premium-vscroll-tooltip"><span>' +
-						settings.dotsText[index] +
-						"</span></div>",
-				)
+				$('<div class="premium-vscroll-tooltip">')
+					.append($("<span>").text(settings.dotsText[index]))
 					.hide()
 					.appendTo($this)
 					.fadeIn(200);

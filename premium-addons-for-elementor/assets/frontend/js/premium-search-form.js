@@ -44,14 +44,15 @@
 					$resultsContainer.html("").addClass("query-hidden");
 
 				if ("" === searchQuery) {
-					var $textElems = $(searchTarget)
+					var $textElems = $(document)
+						.find(searchTarget)
 						.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
 						.not(".elementor-element-overlay *");
 					$textElems.css("filter", "blur(0px)");
 
-					var $fadeElems = $(settings.fadeout_target).find(
-						"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
-					);
+					var $fadeElems = $(document)
+						.find(settings.fadeout_target)
+						.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg");
 					$fadeElems.css("opacity", "1");
 				}
 			});
@@ -207,12 +208,13 @@
 						// Restore the previous query's highlights before re-scanning.
 						clearHighlights();
 
-						var $textElems = $(searchTarget)
+						var $textElems = $(document)
+								.find(searchTarget)
 								.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
 								.not(".elementor-element-overlay *"),
-							$fadeElems = $(settings.fadeout_target).find(
-								"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
-							);
+							$fadeElems = $(document)
+								.find(settings.fadeout_target)
+								.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg");
 
 						$textElems.css("transition", "filter 0.3s ease-in-out");
 						$fadeElems.css("transition", "opacity 0.3s ease-in-out");
@@ -273,7 +275,8 @@
 		}
 
 		function clearHighlights() {
-			$(searchTarget)
+			$(document)
+				.find(searchTarget)
 				.find(".pa-highlighted-text-" + widgetID)
 				.each(function () {
 					var parent = this.parentNode;

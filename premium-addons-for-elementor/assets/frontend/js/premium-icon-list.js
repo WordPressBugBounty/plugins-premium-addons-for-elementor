@@ -178,7 +178,9 @@
 
 					randomBadges.forEach(function (badge, index) {
 						if ("" != badge.rbadge_selector) {
-							var notBadgedItems = $(badge.rbadge_selector)
+							// find() never parses markup, unlike $(string).
+							var notBadgedItems = $(document)
+								.find(badge.rbadge_selector)
 								.find(".premium-bullet-list-text")
 								.filter(":not(:has(+ .premium-bullet-list-badge))");
 
@@ -186,7 +188,7 @@
 								class:
 									"premium-bullet-list-badge elementor-repeater-item-" +
 									badge._id,
-							}).append($("<span>").html(badge.badge_title));
+							}).append($("<span>").text(badge.badge_title));
 
 							var numOfApplies =
 								Math.floor(
@@ -195,8 +197,6 @@
 
 							// Get a random number of elements from the list.
 							for (var i = 0; i < numOfApplies; i++) {
-								// notBadgedItems = $(badge.rbadge_selector).find('.premium-bullet-list-text').filter(':not(:has(+ .premium-bullet-list-badge))');
-
 								var randomIndex = Math.floor(
 										Math.random() * notBadgedItems.length,
 									),

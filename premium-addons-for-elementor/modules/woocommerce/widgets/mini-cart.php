@@ -5592,7 +5592,7 @@ class Mini_Cart extends Widget_Base {
 					$raw_subtotal            = WC()->cart ? WC()->cart->get_cart_contents_total() : 0;
 					if ( $free_shipping_threshold ) :
 						?>
-							<div class="pa-woo-mc__progressbar-wrapper" data-pa-progress-txt="<?php echo wp_kses_data( $this->format_free_shipping_txt( $settings, $free_shipping_threshold, $raw_subtotal ) ); ?>" data-pa-progress-threshold="<?php echo esc_attr( $free_shipping_threshold ); ?>" data-pa-progress-complete="<?php echo esc_attr( $settings['complete_txt'] ); ?>">
+							<div class="pa-woo-mc__progressbar-wrapper" data-pa-progress-txt="<?php echo esc_attr( wp_kses_data( $this->format_free_shipping_txt( $settings, $free_shipping_threshold, $raw_subtotal ) ) ); ?>" data-pa-progress-threshold="<?php echo esc_attr( $free_shipping_threshold ); ?>" data-pa-progress-complete="<?php echo esc_attr( $settings['complete_txt'] ); ?>">
 								<span class="pa-woo-mc__subtotal-placeholder" style="display:none"><?php echo esc_html( $raw_subtotal ); ?></span>
 								<span class="pa-woo-mc__progress-heading"></span>
 								<div class="pa-woo-mc__progressbar" role="progressbar" aria-valuenow="<?php echo esc_attr( $this->get_purchase_percentage( $free_shipping_threshold ) ); ?>" aria-valuemin="0" aria-valuemax="100">

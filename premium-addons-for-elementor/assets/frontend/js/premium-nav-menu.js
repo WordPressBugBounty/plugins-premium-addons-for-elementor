@@ -45,9 +45,10 @@
 			var $currentItem = $(elem),
 				targetElement = $currentItem.data("mega-content");
 
-			if ($(targetElement).length > 0) {
-				var $targetElement = $(targetElement);
+			// find() never parses markup, unlike $(string).
+			var $targetElement = $(document).find(targetElement);
 
+			if ($targetElement.length > 0) {
 				$targetElement.attr("data-menu-id", $scope.data("id"));
 
 				$currentItem.append(
@@ -494,7 +495,7 @@
 			var customSelector = $($item).data("full-width-selector");
 
 			if (customSelector) {
-				var $parentSec = $(customSelector);
+				var $parentSec = $(document).find(customSelector);
 			} else {
 				var isContainer =
 						elementorFrontend.config.experimentalFeatures.container,
@@ -613,7 +614,7 @@
 
 				// Add spacer to save the sticky target space in the dom.
 				if (0 === $("." + stickyProps.spacerClass).length) {
-					$('<div class="' + stickyProps.spacerClass + '"></div>').insertBefore(
+					$("<div>", { class: stickyProps.spacerClass }).insertBefore(
 						$cachedStickyTarget,
 					);
 				}
@@ -833,7 +834,7 @@
 		function getBadgeElement(badge) {
 			return $("<span>", {
 				class: "premium-rn-badge elementor-repeater-item-" + badge.id,
-			}).html(badge.text);
+			}).text(badge.text);
 		}
 
 		/**

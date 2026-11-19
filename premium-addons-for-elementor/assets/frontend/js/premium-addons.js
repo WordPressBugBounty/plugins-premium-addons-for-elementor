@@ -1665,11 +1665,12 @@
 						var $templateContent = $("#" + containerID);
 
 						if (!$templateContent.length) {
-							$(this).html(
-								'<div class="premium-error-notice"><span>Container with ID <b>' +
-									containerID +
-									"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
-							);
+							$(this)
+								.html(
+									'<div class="premium-error-notice"><span>Container with ID <b></b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>',
+								)
+								.find("b")
+								.text(containerID);
 
 							return;
 						}
@@ -2175,11 +2176,12 @@
 					$templateContent = $("#" + containerID);
 
 				if (!$templateContent.length) {
-					$(this).html(
-						'<div class="premium-error-notice"><span>Container with ID <b>' +
-							containerID +
-							"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.</span></div>",
-					);
+					$modalTemplate
+						.html(
+							'<div class="premium-error-notice"><span>Container with ID <b></b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.</span></div>',
+						)
+						.find("b")
+						.text(containerID);
 					return;
 				}
 
@@ -3453,7 +3455,9 @@
 
 				randomBadges.forEach(function (badge, index) {
 					if ("" != badge.rbadge_selector) {
-						var notBadgedItems = $(badge.rbadge_selector)
+						// find() never parses markup, unlike $(string).
+						var notBadgedItems = $(document)
+							.find(badge.rbadge_selector)
 							.find(".premium-bullet-list-text")
 							.filter(":not(:has(+ .premium-bullet-list-badge))");
 
@@ -3461,7 +3465,7 @@
 							class:
 								"premium-bullet-list-badge elementor-repeater-item-" +
 								badge._id,
-						}).append($("<span>").html(badge.badge_title));
+						}).append($("<span>").text(badge.badge_title));
 
 						var numOfApplies =
 							Math.floor(
@@ -3470,8 +3474,6 @@
 
 						// Get a random number of elements from the list.
 						for (var i = 0; i < numOfApplies; i++) {
-							// notBadgedItems = $(badge.rbadge_selector).find('.premium-bullet-list-text').filter(':not(:has(+ .premium-bullet-list-badge))');
-
 							var randomIndex = Math.floor(
 									Math.random() * notBadgedItems.length,
 								),
@@ -5025,11 +5027,12 @@
 						var $templateContent = $("#" + containerID);
 
 						if (!$templateContent.length) {
-							$(this).html(
-								'<div class="premium-error-notice"><span>Container with ID <b>' +
-									containerID +
-									"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
-							);
+							$(this)
+								.html(
+									'<div class="premium-error-notice"><span>Container with ID <b></b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>',
+								)
+								.find("b")
+								.text(containerID);
 
 							return;
 						}
@@ -5700,14 +5703,15 @@
 						$resultsContainer.html("").addClass("query-hidden");
 
 					if ("" === searchQuery) {
-						var $textElems = $(searchTarget)
+						var $textElems = $(document)
+							.find(searchTarget)
 							.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
 							.not(".elementor-element-overlay *");
 						$textElems.css("filter", "blur(0px)");
 
-						var $fadeElems = $(settings.fadeout_target).find(
-							"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
-						);
+						var $fadeElems = $(document)
+							.find(settings.fadeout_target)
+							.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg");
 						$fadeElems.css("opacity", "1");
 					}
 				});
@@ -5867,12 +5871,13 @@
 							// Restore the previous query's highlights before re-scanning.
 							clearHighlights();
 
-							var $textElems = $(searchTarget)
+							var $textElems = $(document)
+									.find(searchTarget)
 									.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg")
 									.not(".elementor-element-overlay *"),
-								$fadeElems = $(settings.fadeout_target).find(
-									"li,h1,h2,h3,h4,h5,h6,p,span,i,svg",
-								);
+								$fadeElems = $(document)
+									.find(settings.fadeout_target)
+									.find("li,h1,h2,h3,h4,h5,h6,p,span,i,svg");
 
 							$textElems.css("transition", "filter 0.3s ease-in-out");
 							$fadeElems.css("transition", "opacity 0.3s ease-in-out");
@@ -5935,7 +5940,8 @@
 			}
 
 			function clearHighlights() {
-				$(searchTarget)
+				$(document)
+					.find(searchTarget)
 					.find(".pa-highlighted-text-" + widgetID)
 					.each(function () {
 						var parent = this.parentNode;

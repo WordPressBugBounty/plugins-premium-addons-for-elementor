@@ -229,9 +229,20 @@ class Products_Module extends Module_Base {
 
 		check_ajax_referer( 'pa-woo-cta-nonce', 'nonce' );
 
-		$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : 0;
-		$variation_id = isset( $_POST['variation_id'] ) ? sanitize_text_field( wp_unslash( $_POST['variation_id'] ) ) : 0;
-		$quantity     = isset( $_POST['quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['quantity'] ) ) : 0;
+		$product_id   = isset( $_POST['product_id'] ) ? absint( $_POST['product_id'] ) : 0;
+		$variation_id = isset( $_POST['variation_id'] ) ? absint( $_POST['variation_id'] ) : 0;
+		$quantity     = isset( $_POST['quantity'] ) ? wc_stock_amount( sanitize_text_field( wp_unslash( $_POST['quantity'] ) ) ) : 0;
+
+		$product      = wc_get_product( $variation_id ? $variation_id : $product_id );
+		$min_quantity = $product ? $product->get_min_purchase_quantity() : 1;
+
+		if ( $quantity < $min_quantity ) {
+			wp_send_json_error( __( 'Invalid quantity.', 'premium-addons-for-elementor' ), 400 );
+		}
+
+		if ( ! apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, array() ) ) {
+			wp_send_json_error( __( 'Product could not be added to the cart.', 'premium-addons-for-elementor' ), 422 );
+		}
 
 		if ( $variation_id ) {
 			WC()->cart->add_to_cart( $product_id, $quantity, $variation_id );

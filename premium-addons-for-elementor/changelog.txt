@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.11.121 - 19/11/2026 =
+
+- Fixed: Improved code security enforcement.
+- Fixed: Missing container notice not showing in Modal Box widget.
+- Fixed: JS error in Vertical Scroll widget when using Flexbox containers.
+- Fixed: Divider showing after the last item in Bullet List widget.
+
 = 4.11.120 - 16/11/2026 =
 
 - Tweak: Returning Visitor display condition is now compatible with WP Consent API.

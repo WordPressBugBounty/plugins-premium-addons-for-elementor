@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 6.6
 Tested Up To: 7.1
 Requires PHP: 7.4
-Stable Tag: 4.11.120
+Stable Tag: 4.11.121
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -278,6 +278,13 @@ Through the Patchstack Vulnerability Disclosure Program. The Patchstack team val
 14. Premium Progress Bar Widget
 
 == Changelog ==
+
+= 4.11.121 - 19/11/2026 =
+
+- Fixed: Improved code security enforcement.
+- Fixed: Missing container notice not showing in Modal Box widget.
+- Fixed: JS error in Vertical Scroll widget when using Flexbox containers.
+- Fixed: Divider showing after the last item in Bullet List widget.
 
 = 4.11.120 - 16/11/2026 =
 

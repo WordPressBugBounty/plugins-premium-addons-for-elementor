@@ -170,11 +170,12 @@
 					var $templateContent = $("#" + containerID);
 
 					if (!$templateContent.length) {
-						$(this).html(
-							'<div class="premium-error-notice"><span>Container with ID <b>' +
-								containerID +
-								"</b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>",
-						);
+						$(this)
+							.html(
+								'<div class="premium-error-notice"><span>Container with ID <b></b> does not exist on this page. Please make sure that container ID is properly set from section settings -> Advanced tab -> CSS ID.<span></div>',
+							)
+							.find("b")
+							.text(containerID);
 
 						return;
 					}

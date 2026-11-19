@@ -143,6 +143,11 @@ li.premium-bullet-list-content.premium-bullet-list-content-inline:first-child {
   margin: 0 3px 0 0;
 }
 
+.premium-bullet-list-divider,
+.premium-bullet-list-divider-inline {
+  list-style: none;
+}
+
 .premium-bullet-list-divider:not(:last-child) {
   width: 100%;
   -webkit-flex: 0 0 100%;

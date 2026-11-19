@@ -567,6 +567,9 @@
 						}, 200);
 					}
 				},
+				error: function () {
+					$this.removeClass("adding").find(".premium-woo-cart-loader").remove();
+				},
 			});
 		};
 

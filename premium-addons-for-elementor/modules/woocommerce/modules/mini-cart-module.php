@@ -176,7 +176,9 @@ class Mini_Cart_Module extends Module_Base {
 		$item_key = sanitize_text_field( wp_unslash( $_POST['itemKey'] ) );
 		$quantity = absint( wp_unslash( $_POST['quantity'] ) );
 
-		if ( $quantity > 0 && WC()->cart->get_cart_item( $item_key ) ) {
+		$cart_item = WC()->cart->get_cart_item( $item_key );
+
+		if ( $quantity > 0 && $cart_item && apply_filters( 'woocommerce_update_cart_validation', true, $item_key, $cart_item, $quantity ) ) {
 			WC()->cart->set_quantity( $item_key, $quantity, true );
 		}
 

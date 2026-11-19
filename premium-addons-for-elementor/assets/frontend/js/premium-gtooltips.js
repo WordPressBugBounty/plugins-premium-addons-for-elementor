@@ -554,15 +554,16 @@
 			}
 
 			function updateGalleryContent(src) {
-				var randSrc = getRandomImage(src),
-					newContent =
-						'<div id="tooltip_content-' +
-						id +
-						'" class="premium-global-tooltip-content premium-tooltip-content-wrapper-' +
-						id +
-						'"><span class="premium-tooltip-gallery"><img src="' +
-						randSrc +
-						'"></span></div></div>';
+				var newContent = $("<div>", {
+					id: "tooltip_content-" + id,
+					class:
+						"premium-global-tooltip-content premium-tooltip-content-wrapper-" +
+						id,
+				}).append(
+					$('<span class="premium-tooltip-gallery">').append(
+						$("<img>").attr("src", getRandomImage(src)),
+					),
+				);
 
 				if ("" !== settings.target) {
 					$scope.find(settings.target).tooltipster("content", newContent);

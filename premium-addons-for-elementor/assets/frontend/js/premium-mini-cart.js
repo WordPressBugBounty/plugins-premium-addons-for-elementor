@@ -163,7 +163,8 @@
 			var cartSelector = settings.cssSelector,
 				selectorName = cartSelector.replace(/^[.#]/, "");
 
-			$(cartSelector)
+			$(document)
+				.find(cartSelector)
 				.off("click.paCustomTrigger")
 				.on("click.paCustomTrigger", function (e) {
 					e.preventDefault();
@@ -338,7 +339,8 @@
 				0 === $subtotal.find(".pa-woo-mc__tax-label").length
 			) {
 				$subtotal.append(
-					' <small class="pa-woo-mc__tax-label">' + labelText + "</small>",
+					" ",
+					$("<small>", { class: "pa-woo-mc__tax-label" }).text(labelText),
 				);
 			}
 
@@ -347,7 +349,8 @@
 				0 === $footerSubtotal.find(".pa-woo-mc__tax-label").length
 			) {
 				$footerSubtotal.append(
-					' <small class="pa-woo-mc__tax-label">' + labelText + "</small>",
+					" ",
+					$("<small>", { class: "pa-woo-mc__tax-label" }).text(labelText),
 				);
 			}
 		}
@@ -377,13 +380,15 @@
 				} else {
 					if (countTxt.includes("{{count}}")) {
 						// all layouts but layout 3.
-						var newTxt = countTxt.replace(
-							"{{count}}",
-							'<span class="pa-woo-mc__cart-count">' + itemCount + "</span>",
-						);
+						var countParts = countTxt.split("{{count}}");
+
 						$scope
 							.find(".pa-woo-mc__cart-footer .pa-woo-mc__subtotal-heading")
-							.html(newTxt);
+							.text(countParts[0])
+							.append(
+								$("<span>", { class: "pa-woo-mc__cart-count" }).text(itemCount),
+								document.createTextNode(countParts.slice(1).join("{{count}}")),
+							);
 					}
 				}
 			}
@@ -443,9 +448,9 @@
 
 				// update its message if the purchase threshold is met.
 				if (subtotal >= freeShippingThreshold && completeTxt) {
-					$scope.find(".pa-woo-mc__progress-heading").html(completeTxt);
+					$scope.find(".pa-woo-mc__progress-heading").text(completeTxt);
 				} else {
-					$scope.find(".pa-woo-mc__progress-heading").html(progressTxt);
+					$scope.find(".pa-woo-mc__progress-heading").text(progressTxt);
 				}
 			}
 		}

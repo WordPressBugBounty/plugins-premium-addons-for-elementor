@@ -2601,6 +2601,22 @@ class Premium_Icon_List extends Widget_Base {
 
 		$this->add_render_attribute( 'title_wrapper', 'class', 'premium-bullet-list-text-wrapper' );
 
+		if ( 'linear gradient' === $settings['hover_effect_type'] ) {
+			$this->add_render_attribute( 'title_wrapper', 'class', 'premium-bullet-list-gradient-effect' );
+		}
+
+		if ( 'yes' === $settings['show_divider'] ) {
+			$divider_class = 'row' === $settings['layout_type'] ? 'premium-bullet-list-divider-inline' : 'premium-bullet-list-divider';
+
+			$this->add_render_attribute(
+				'divider',
+				array(
+					'class'       => $divider_class,
+					'aria-hidden' => 'true',
+				)
+			);
+		}
+
 		if ( $blur_trans_effect ) {
 			$this->add_render_attribute( 'box', 'class', 'premium-bullet-list-' . $settings['hover_effect_type'] );
 		}
@@ -2759,10 +2775,6 @@ class Premium_Icon_List extends Widget_Base {
 
 									}
 
-									if ( 'linear gradient' === $settings['hover_effect_type'] ) {
-										$this->add_render_attribute( 'title_wrapper', 'class', 'premium-bullet-list-gradient-effect' );
-									}
-
 									if ( in_array( $settings['hover_effect_type'], array( 'show-bullet', 'translate-bullet' ), true ) ) {
 										$this->add_render_attribute( 'wrapper-' . $index, 'class', 'pa-' . $settings['hover_effect_type'] );
 
@@ -2849,17 +2861,11 @@ class Premium_Icon_List extends Widget_Base {
 							</li>
 
 							<?php
-							if ( 'yes' === $settings['show_divider'] ) {
-								$layout        = $settings['layout_type'];
-								$divider_class = 'premium-bullet-list-divider';
+							$is_last_item = $index === $items_count - 1;
 
-								if ( 'row' === $layout ) {
-									$divider_class .= '-inline';
-								}
-
-								$this->add_render_attribute( 'divider', 'class', $divider_class );
+							if ( 'yes' === $settings['show_divider'] && ! $is_last_item ) {
 								?>
-										<div <?php $this->print_render_attribute_string( 'divider' ); ?>></div>
+										<li <?php $this->print_render_attribute_string( 'divider' ); ?>></li>
 									<?php
 							}
 					}
